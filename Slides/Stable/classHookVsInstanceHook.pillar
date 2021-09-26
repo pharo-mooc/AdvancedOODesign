@@ -1,0 +1,111 @@
+{
+    "title":"About hooks: customization degrees",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+${slide:title=Hook}$
+
+- Granularity of hooks
+- Can we or not customize instance creation
+- Customisation of instance creation
+
+${slide:title=Introducing a hook}$
+
+[[[
+CHInterpreter >> visit...
+
+	scope := CHClassScope new xxx
+	...
+	scope
+]]]
+
+
+
+${slide:title=Extract a class}$
+
+[[[
+CHInterpreter >> visit...
+
+	scope := self classScopeClass new xxx
+	...
+	scope
+]]]
+
+
+[[[
+CHInterpreter >> classScopeClass
+
+	^ CHClassScope
+]]]
+
+
+${slide:title=A subclass can push a different class}$
+
+[[[
+CHInterpreter2 >> classScopeClass
+
+	^ MyClassScope
+]]]
+
+Ok it works!
+
+${slide:title=Analysis }$
+
+- What if we have a more complex instantiation?
+- And we want to encapsulate it and let the extender changes it.
+- ==self classScopeClass new xxx== is not at the good granularity
+
+[[[
+CHInterpreter >> visit...
+
+	scope := self classScopeClass new xxx
+	...
+	scope
+]]]
+
+
+${slide:title=Instance creation }$
+
+
+[[[
+CHInterpreter >> visit...
+
+	scope := self newClassScope.
+	...
+	scope
+]]]
+
+[[[
+CHInterpreter >> newClassScope
+
+	scope := self newClassScope xxx
+
+]]]
+
+${slide:title=Imagine}$
+
+- Imagine that you can only pass a class, you cannot customize and access extra protocols
+- If you can only pass a class you will have to do circumvoluted tricks (wrapping)
+
+
+${slide:title=Passing object as context}$
+
+[[[
+CHInterpreter >> visit...
+
+	scope := self classScopeClass newFor: self
+	...
+	scope
+]]]
+
+- When we pass ==self==, we give the class the possibility to customise instantiation 
+- For example, 
+
+
+${slide:title=Conclusion}$
+
+- ==newClassScope== captures the creation context of the instance 
+- and not only just the class.
+
+
