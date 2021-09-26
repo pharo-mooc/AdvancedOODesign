@@ -6,12 +6,10 @@
 \edef\input@path{{_result/pdf/_support/templates/beamer/}{_result/pdf/_support/templates/beamer/imgs}{_support/templates/beamer/}\input@path}
 \makeatother
 
+%Apparently luc created an alias named root in each subfolder that pointed to the root folder.
 
 \documentclass[aspectratio=169]{pharoslides} % format 16/9
 % \documentclass{pharoslides} % format 4/3
-
-%\usepackage{import}
-%\subimport{_support/templates/beamer/}{common.tex}
 
 \graphicspath{{./}{figures/}{../figures/}{_support/templates/beamer/imgs/}{_support/templates/beamer/}}
 

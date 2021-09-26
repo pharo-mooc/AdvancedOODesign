@@ -66,7 +66,7 @@ moredelim=[is][]{&lt;rcv&gt;}{&lt;/rcv&gt;},
 moredelim=[is][\itshape]{&lt;symb&gt;}{&lt;/symb&gt;},
 moredelim=[is][\scshape]{&lt;class&gt;}{&lt;/class&gt;},
 morekeywords={true,false,nil,self,super,thisContext},
-identifierstyle=\idstyle,
+%identifierstyle=\idstyle, commented because I would not make it work I got errors with ifnum undefined... :(
 }
 
 \makeatletter
@@ -120,3 +120,5 @@ colback=white!95!Pharo-blue,colframe=white!50!Pharo-blue,listing only, listing o
 % \robustify{\codeinline}
 
 \newcommand{\code}[1]{{\codefont{}#1}}
+
+

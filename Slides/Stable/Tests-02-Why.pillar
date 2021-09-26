@@ -9,32 +9,6 @@ ${slide:title=Goal}$
 - What are their advantages?
 - What are the techniques to write good tests?
 
-${slide:title=Pros}$
-
-- Tests are your life insurance
-- Increase trust that a change did not break something
-- Making sure to reduce the fear of changes
-- Understanding code
-
-
-${slide:title=Tests Positive Properties}$
-
-- Find bugs when they appear
-- improve customer trust
-- Reproduce complex scenari
-- Guarantee old bugs is caught if reappear
-- Isolate the problem
-
-${slide:title=Some Characteristics of a Good Test Suite}$
-
-- Check extreme cases (e.g., null, 0 and empty)
-- Check complex cases (e.g., exceptions, network pbs)
-- 1 test for each bug (at least)
-- Good coverage
-- Check abstractions
-- Check units independently
-
-
 ${slide:title=Understanding Code ;/ }$
 
 [[[
@@ -100,36 +74,7 @@ testShiftOneLeftThenRight
         equals: 1].
 ]]]
 
-${slide:title=Test Positive Properties}$
 
-- Give simple and reproducible examples
-- Illustrate the API
-- Give up-to-date documentation
-- Check conformity of new code
-- Offer a first client to new code
-- Force a modular design
-
-${slide:title=Test Positive Properties}$
-
-- Accelerate bug detection
-- Accelerate new code checking
-- Ease refactorings
-- Prevent regressions
-
-${slide:title=Characteristics of a Good Test Suite}$
-
-- Deterministic
-- Automatic
-- Self-explained
-- Simple
-- Unit
-
-
-${slide:title= Characteristics of a Good Test Suite}$
-
-- Change less frequently than the rest
-- Good code coverage
-- Deterministic
 
 ${slide:title=Collateral Advantages}$
 

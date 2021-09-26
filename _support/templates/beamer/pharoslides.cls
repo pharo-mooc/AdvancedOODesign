@@ -11,6 +11,7 @@
 %-------------------------------------------------------------------------------
 
 \newcommand{\usepharobeamertheme}{\usetheme{PharoMooc}}
+%This is to used the files beamercolorthemePharoMooc.sty and friends
 
 \newcommand\@slidesid{{\color{red}WXSYY}}
 \newcommand\slidesid[1]{
@@ -87,6 +88,8 @@
 \RequirePackage{calc}
 \RequirePackage{ifthen}
 
+% I added the following because I could not understand how it was working
+%\RequirePackage{PharoSourceCode}
 %-------------------------------------------------------------------------------
 %                Beamer Pharo Theme
 %-------------------------------------------------------------------------------
