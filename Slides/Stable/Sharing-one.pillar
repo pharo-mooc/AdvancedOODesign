@@ -1,6 +1,6 @@
 {
 	"title":"Sharing with Instance Specific Possibilities",
-	"author":"S. Ducasse"
+	"author":"S. Ducasse",
 	"slidesid":"From the Design Corner"
 }
 
@@ -8,14 +8,14 @@
 ${slide:title=Goal}$
 
 - Thinking about sharing
-- How can we share by default a ressource
+- How can we share by default a ressource?
 - How can we share by default a ressource and still get instance-based use possible?
 
 
 ${slide:title=Tracks of solution}$
 
 - Instance variables (most of the time) hold instance specific values
-- Static / classvariable hold values that are shared among all instances
+- Shared variables (old named class variables) hold values that are shared among all instances
 
 
 ${slide:title=But this shared or nothing?}$
@@ -39,23 +39,24 @@ Scanner new
 ${slide:title=The Scanner class}$
 
 [[[
-Object subclass: #Scanner
-	instanceVariableNames: 'source mark prevEnd hereChar token tokenType saveComments
-	currentComment buffer typeTable ' 
-	classVariableNames: 'TypeTable '
+Object << #Scanner
+	slots: {#source . #mark . #prevEnd . #hereChar . #token . #tokenType . #saveComments .
+	#currentComment . #buffer . #typeTable};
+	sharedVariables: { #TypeTable }
+	package: 'Scanning'
 ]]]
 
-- What? a bug!
+- What? TypeTable and typeTable are defined. A bug!
 - No this is a nice design
 
 ${slide:title=Scanner class enigma}$
 
-Why having an instance variable and a classVariable pointing the same object (the scanner table)?
+Why having an instance variable and a shared variables pointing the same object (the scanner table)?
 
 ${slide:title=Further investigation}$
 
-- TypeTable is used to initialize ""once"" the table 
-- typeTable is used by every instance method
+- ==TypeTable== is initialized ""once"" to hold the table of kind of elements 
+- ==typeTable== is used by every instance method
 - All methods only access the instance variable and never the shared one
 
 Does it ring a bell?
@@ -63,7 +64,6 @@ Does it ring a bell?
 ${slide:title=Sharing by default / instance based possible}$
 
 +.>file://figures/Sharing.pdf|width=60+
-
 
 
 ${slide:title=Shared variable points to the share table}$
@@ -100,7 +100,7 @@ ${slide:title=One instance specific state}$
 	Scanner new setTypeTable: (Scanner defaultTypeTable copy) andHack
 ]]]
 
-A subclass has just to specialize ==initScanner== without copying the initialization of the table
+A subclass has just to specialize ==initScanner== without copying the initialization of the table.
 
 [[[
 MyScanner >> initScanner 
