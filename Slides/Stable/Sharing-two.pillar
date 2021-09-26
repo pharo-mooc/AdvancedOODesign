@@ -1,5 +1,5 @@
 {
-    "title":"About Sharing",
+    "title":"More about sharing",
     "subtitle":"",
     "author":"Stéphane Ducasse"
 }
@@ -7,7 +7,13 @@
 
 ${slide:title=Thinking more about sharing}$
 
-Check shared variable and instance variable in Scanner
+- In another lecture we saw that we can have sharing by default and possible instance based customization.
+- Here is another variation on that theme taken from Bloc.
+
+
+${slide:title=Overview}$
+
++>file://figures/SharableBloc.pdf+
 
 ${slide:title=BlElementVisuals and setup}$
 	 
@@ -83,7 +89,7 @@ ${slide:title=There is a catch}$
 Users should always store the result of the setters sent to a visuals
 
 [[[
-BlElement >>background: aBlBackground
+BlElement >> background: aBlBackground
 	"Change my background to a given one.
 	Color and Form can be used as background - they will be converted to an appropriate background object.
 	It is also possible to create a more complicated composite background with the help of BlBackgroundBuilder.
@@ -97,6 +103,13 @@ BlElement >>background: aBlBackground
 	...
 ]]]
 
+- It is not really nice to hijack setter semantics this way.
+- The 
 
 
+${slide:title=What is the difference with the TypeTable/typeTable}$
+
+- Here we group different values in a single object.
+- We avoid to have one instance variable per customisation point.
+- But still we have instance-based and sharing.
 
