@@ -1,17 +1,21 @@
 {
 	"title":"SharedPools",
+	"subtitle":"",
 	"author":"S. Ducasse"
 }
 
 ${slide:title=Sharing across different hierarchies}$
 
-- We can share values over multiple subclass within the same hierarchy using sharedVariable
+- We can share values over multiple subclasses within the same hierarchy using shared variables.
 
 ${slide:title=Sharing within a hierarchy}$
 
-- a shared variable can be accessed from the instance and class side of a class
+- A shared variable can be accessed from the instance and class side of a class
 - But also from its subclasses
 - Usually a shared variable is initialized from the class side. 
+
+
+${slide:title=Shared Variable example}$
 
 Here there will be a picture with a hierarchy
 
@@ -19,6 +23,9 @@ ${slide:title=Shared Variable example}$
 
 Need an example with instance and class side and subclass usage.
 
+[[[
+Smalltalk allClasses select: [:each | each classVariablesString isEmpty not]
+]]]
 
 ${slide:title=Sharing across different hierarchies}$
 
@@ -105,6 +112,21 @@ Timespan << #Week
 Week class >> indexOfDay: aSymbol
 
 	^ DayNames indexOf: aSymbol 
+]]]
+
+${slide:title=Mixing shared var and sharedPools}$
+
+[[[
+Timespan << #Week
+	sharedVariables: { #StartDay };
+	sharedPools: { ChronologyConstants };
+	package: 'Kernel-Chronology-Extras'
+]]]
+
+[[[
+Week class >> startDay
+
+	^ StartDay ifNil: [ StartDay := DayNames first ]
 ]]]
 
 
