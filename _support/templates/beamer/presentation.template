@@ -1,0 +1,71 @@
+% -*- mode: latex; -*- mustache tags: {{=« »=}} «! the '&' below prevents HTML escaping. »
+
+% add the PATH to retrieve cls and sty beamer styles files
+\makeatletter
+\providecommand*{\input@path}{}
+\edef\input@path{{_result/pdf/_support/templates/beamer/}{_result/pdf/_support/templates/beamer/imgs}{_support/templates/beamer/}\input@path}
+\makeatother
+
+
+\documentclass[aspectratio=169]{pharoslides} % format 16/9
+% \documentclass{pharoslides} % format 4/3
+
+%\usepackage{import}
+%\subimport{_support/templates/beamer/}{common.tex}
+
+\graphicspath{{./}{figures/}{../figures/}{_support/templates/beamer/imgs/}{_support/templates/beamer/}}
+
+
+%Information to be included in the title page:
+\title{«& title»}
+\subtitle{«& subtitle»}
+\author{«& author»}
+\institute{«& complement»}
+\slidesid{«& slidesid»}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+«& content»
+
+% \setlength{\textwidth}{\originaltextwidth}
+\setbeamertemplate{background canvas}{\insertBorderForHandout}
+
+\begin{frame}[plain]
+
+\begin{minipage}{\originaltextwidth}
+\centering
+\large
+
+\vspace{2em}
+
+A course by 
+
+\vspace{1.2em}
+
+Stéphane Ducasse\\
+\url{http://stephane.ducasse.free.fr}\\
+\vspace{1em}
+{\normalsize and}\\ 
+\vspace{1em}
+Luc Fabresse\\
+\url{http://car.mines-douai.fr/luc}
+
+\vspace{2em}
+
+\vspace{2.5em}
+
+\includegraphics[width=50px]{by-nc-nd.png} 
+
+\medskip
+
+\tiny
+Except where otherwise noted, this work is licensed under CC BY-NC-ND 3.0 France
+
+\url{https://creativecommons.org/licenses/by-nc-nd/3.0/fr/} 
+
+\end{minipage}
+\end{frame}
+
+\end{document}

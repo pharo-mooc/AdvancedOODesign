@@ -1,0 +1,12 @@
+{
+    "title":"This is sample with a figures",
+    "subtitle":"Why Testing is Important"
+}
+
+${slide:title=Goal}$
+
+I could not find how to make latex work. 
+- So I put the figures inside the Stable folder
+- and I put the figures in the path. Apparently the includespath is ignored ;(
++>file://figures/DDSokoban.png|width=100+
+
