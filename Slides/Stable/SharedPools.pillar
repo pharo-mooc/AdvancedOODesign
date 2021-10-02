@@ -132,12 +132,13 @@ Week class >> startDay
 ${slide:title=Warning! Only for constants}$
 
 - Do not store non constant objects in shared pools
-- Else you are creating global variables
+- Else you are creating global variables and you are breaking testability in isolation
 
 ${slide:title=Conclusion}$
 
-- Shared Pools are super handy for bindings to C libraries
-- To share constants over multiple classes
+Shared pools are 
+- super handy to manage constants for bindings to C-libraries
+- to share constants over multiple classes
 
 
 
