@@ -4,16 +4,16 @@
 	"author":"S. Ducasse"
 }
 
-${slide:title=Sharing across different hierarchies}$
+${slide:title=Goal}$
 
-- We can share values over multiple subclasses within the same hierarchy using shared variables.
+- Using shared variables, we can share values over multiple subclasses within the ""same"" hierarchy.
+- How can we share across ""different"" hierarchies
 
 ${slide:title=Sharing within a hierarchy}$
 
 - A shared variable can be accessed from the instance and class side of a class
 - But also from its subclasses
 - Usually a shared variable is initialized from the class side. 
-
 
 ${slide:title=Shared Variable example}$
 
@@ -27,9 +27,9 @@ Need an example with instance and class side and subclass usage.
 Smalltalk allClasses select: [:each | each classVariablesString isEmpty not]
 ]]]
 
-${slide:title=Sharing across different hierarchies}$
+${slide:title=Need for sharing across different hierarchies}$
 
-- Sometimes we need to share values (generally constant) over multiple hierarchyies
+- Sometimes we need to share values (generally constant) over ""multiple"" hierarchies
 - We don't want to repeat the shared variables and their initialization.
 
 ${slide:title=SharedPools to the rescue}$
@@ -129,7 +129,10 @@ Week class >> startDay
 	^ StartDay ifNil: [ StartDay := DayNames first ]
 ]]]
 
+${slide:title=Warning! Only for constants}$
 
+- Do not store non constant objects in shared pools
+- Else you are creating global variables
 
 ${slide:title=Conclusion}$
 
