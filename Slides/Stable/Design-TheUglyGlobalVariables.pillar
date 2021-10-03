@@ -1,15 +1,16 @@
 {
-    "title":"About the Singleton Hell",
-    "slidesid":"From the Design Corner"
+    "title":"About Global Variables",
+    "author":"",
+    "slidesid":""
 }
 
 
 ${slide:title=Outline}$
 
-- Singleton is hell
+- Singleton is not nice because globally shared
 - Singleton may take different forms
 
-${slide:title=Case: Global Variable}$
+${slide:title=Autopsy of an Error}$
 
 [[[
 MyApp >> menu
@@ -60,26 +61,24 @@ MyApp >> menu
 
 [[[
 MyAppSuperclass >> iconNamed: aSymbol
-... 
-	look for my icons may be delegate to an icon manager instance
+	... 
+	look for my icons (and may be delegate to an icon manager instance)
 	potentially do a 
 	super iconNamed: #window
-...
+	...
 ]]]
 
-${slide:title=Step back}$
+${slide:title=Why is this better?}$
 
 - Modular.
-- Each receiver may do something.
+- Each receiver may do something different.
 - Each user may be configured differently.
 - Still we can share the common behavior.
 
 
-
-
-
 ${slide:title=Case: asClass}$
-Accessing programmatically a class is usually done
+
+Accessing programmatically a class is usually done as:
 
 [[[
 Smalltalk globals at: #Point
@@ -96,7 +95,9 @@ Symbol >> asClass
 	^ Smalltalk globals at: self
 ]]]
 
-But there is a difference
+- But there is a difference!
+- A huge one
+
 
 ${slide:title=Case: asClass Analysis}$
 
@@ -106,7 +107,7 @@ ${slide:title=Case: asClass Analysis}$
 - No way to dispatch.
 
 
-${slide:title=Case: Smalltalk tools}$
+${slide:title=Case: Smalltalk tools - The ugly}$
 
 [[[
 browseMethodFull
@@ -121,14 +122,14 @@ browseMethodFull
 
 ${slide:title=Case: Smalltalk tools Analysis}$
 
-- One global entry point
+- One global entry point.
 - Everybody refers to this single point! Yes this is call monolithic thinking.
-- Only one toolset possible at the same time (could be ok)
+- Only one toolset possible at the same time (could be ok).
 
 ${slide:title=Case: Smalltalk tools Possible Solution}$
 
 - Each object that should refer to tools should do it via a parameter / instance variable.
-- No direct reference to a global singleton
+- No direct reference to a global singleton.
 
 [[[
 Browser >> initialize
@@ -140,7 +141,10 @@ Browser >> openDebugger
 	self toolEnvironment debugger
 ]]]
 
-Points to consider: How to manage the fact that a tool may change
+
+${slide:title=Points to consider}$
+
+- How to manage the fact that a tool may change?
 - Browser may register to ToolEnvironment to be notified and update its instance
 
 
@@ -148,6 +152,6 @@ ${slide:title=Conclusion}$
 
 - Avoid Singleton as a global 
 - Think modular
-- Give a chance to object to specialize message
+- Give a chance to object to specialize messages
 
 

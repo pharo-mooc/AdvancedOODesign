@@ -48,7 +48,7 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 ${slide:title=Problems}$
 
 - Only one syntax
-- Checks for the file extension was hardcoded
+- Checks for the file extension were hardcoded
 - Difficult to know if a file was part of a project (books)
 - Access to project configuration (user option) was cumbersome
 
@@ -82,11 +82,11 @@ PRInputDocument >> parser
 
 ${slide:title=PRInputDocument}$
 
-- Still not yet there.
-- We do not have to have single point check 
+- First step
+- We do not distribute responsibility
 
 [[[
-select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
+... select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
 ]]]
 
 - Not modular
@@ -98,7 +98,10 @@ ${slide:title=Support for .mic/.md files}$
 - Different syntax!
 - Different parser!
 
-${slide:title=Refining InputDocument into a simple hierarchy}$
+${slide:title=Refining InputDocument into a Simple Hierarchy}$
+
+- Different classes
+- Move behavior to such classes
 
 [[[
 PRInputDocument << #PRPillarInputDocument
@@ -110,7 +113,7 @@ PRInputDocument << #PRMicrodownInputDocument
 	package: 'Pillar-Microdown'
 ]]]
 
-${slide:title=Now document as the file for its parser}$
+${slide:title= InputFile is responsible for its parser}$
 
 [[[
 PRAbstractOutputDocument >> parseInputFile: anInputFile	
@@ -129,6 +132,9 @@ PRMicrodownInputDocument >> parsedDocument
 
 
 ${slide:title=Registration mechanism to support modularity}$
+
+- We need to create objects of the right kind
+- Use a registration mechanism, so that input documents can declare their existence
 
 [[[
 PRInputDocument class >> inputClassForFile: aFile
@@ -164,6 +170,7 @@ ${slide:title=Conclusion}$
 
 - Turning implicit into an object
 - Turning one object into objects of different but polymorphic classes
+- Moving behavior to be able to delegate 
 - Using registration to create modular design
 
 
