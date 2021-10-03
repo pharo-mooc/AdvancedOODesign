@@ -1,0 +1,78 @@
+{
+    "title":"Tests",
+    "subtitle":"Why Testing is Important"
+}
+
+${slide:title=Testing Abstractions}$
+
+How do you test contracts of abstract types?
+
+${slide:title=Testing Abstractions}$
+
+How do you test that one and only one state is active at any time?
+
++file://figures/tests-actions.png|width=50+
+
+${slide:title=Testing Abstractions}$
+
++file://figures/tests-actions-abstract-classes.png|width=70+
+
+[[[
+testOnlyOneValidStateAtEachMoment
+   | action |
+   action := self createAction.
+   self assert: action isReady.
+   self deny: action isInProgress. self deny: action isFinished.
+
+   [ action isFinished ] whileFalse: [
+      action doStep.
+      self deny: action isReady.
+      self assert: action isFinished = action isInProgress not ].
+
+   self deny: action isReady. self deny: action isInProgress.
+   self assert: action isFinished
+]]]
+
+${slide:title=Testing Abstractions}$
+
+- Parallel hierarchies
+- Tests must be in the highest abstraction
+- Factory method
+
++file://figures/tests-actions-parallel-hierarchies.png|width=80+
+
+${slide:title=Mocking}$
+
+How do you test that a questionnaire only accepts compatible answers from the user?
+
++file://figures/tests-questionnaire-model.png|width=100+
+
+${slide:title=Mocking}$
+
+How do you test that a questionnaire only accepts compatible answers from the user?
+
++file://figures/tests-questionnaire-mocks.png|width=100+
+
+${slide:title=Mocking}$
+
++file://figures/tests-questionnaire-mocks.png|width=60+
+
+[[[
+readAnswerAsLongAsItIsNotCompatible
+   | nbRejectsBeforeAccept question ui |
+   nbRejectsBeforeAccept := 3.
+   question := MockQuestion new nbRejects: nbRejectsBeforeAccept.
+   ui := MockQuestionnaireUI new.
+   self assert: ui nbReadAnswers equals: 0.
+   self assert: question nbAcceptAnswerCalls equals: 0.
+   questionnaire runQuestion: question on: ui.
+   self assert: ui nbReadAnswers equals: nbRejectsBeforeAccept + 1.
+   self assert: question nbAcceptAnswerCalls equals: nbRejectsBeforeAccept + 1.
+]]]
+
+${slide:title=Mocking}$
+
++file://figures/tests-questionnaire-mocks.png|width=100+
+
+- Mocks are reusable across tests
+- Mocks can be generated with mocking frameworks
