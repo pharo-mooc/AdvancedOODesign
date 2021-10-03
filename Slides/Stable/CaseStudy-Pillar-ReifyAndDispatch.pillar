@@ -10,20 +10,21 @@ ${slide:title=Goal}$
 - Creating an object and delegating creates dispatch spaces
 - From one kind of files to multiple kinds
 
-${slide:title=Case study: Pillar supports .pillar }$
+${slide:title=Case study: Pillar managing .pillar file}$
 
 - How to get a parsed document?
-- We ask the parser (implies that there is only one)
-
-${slide:title=Case study: Pillar supports .pillar }$
 
 Long time ago
-- there was only one parser
+- We ask the parser!
 - parser turns pillar file into document tree
+- There was ONLY one parser associated to a document
+- The idea was to avoid to hardcode everywhere PRParser
+- Worked for trying different version of PetitParser parsers.
 
 [[[
-	PRDocument parser parseFile: aFileReference
+PRDocument parser parseFile: aFileReference
 ]]]
+
 
 ${slide:title=Case study: Pillar supports .pillar }$
 
@@ -46,15 +47,16 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 
 ${slide:title=Problems}$
 
-- Only one parser
+- Only one syntax
 - Checks for the file extension was hardcoded
 - Difficult to know if a file was part of a project (books)
-- Access to project configuration was cumbersome
+- Access to project configuration (user option) was cumbersome
 
 ${slide:title=Solution: Introduced InputDocument}$
 
-- Instead of manipulating on file
+- First step: instead of manipulating files
 - Manipulate InputDocument objects
+- InputDocument wrap files and more information
 
 ${slide:title=Introduced the notion of InputDocument}$
 
