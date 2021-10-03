@@ -1,0 +1,86 @@
+{
+	"title":"From Global to Parameter",
+	"author":""
+}
+
+${slide:title=Goal}$
+
+- Globals are not a fatality
+
+${slide:title=Roadmap}$
+- Analysis of Transcript usage
+- Cure
+- Analysis
+- Related to the ugly Singleton Design Pattern Plague
+
+
+${slide:title=The case}$
+
+[[[
+myMethod
+	Transcript show: 'foo' ; cr.
+	self doSomething.
+]]]
+
+
+[[[
+MicAbstractBlock >> closeMe
+	Transcript << 'Closing ' << self class name; cr; endEntry
+]]]
+
+This one was a helper left after development.
+
+
+${slide:title=Analysis}$
+
+- You do not want to get extra dependencies in your code
+
+- You do not want to dirty your build log with spurious 
+
+Far worse and more important
+
+- Your log can be mixed with other logs.
+- You cannot reliably write tests to be sure that the log is correctly happening
+
+
+
+${slide:title=The solution: Use locality and encapsulation}$
+
+Add an instance variable to hold a stream
+
+[[[
+MicAbstractBlock >>initialize
+	super initialize.
+	logStream := WriteStream on: (String new: 1000)
+]]]
+
+Write to THAT stream
+
+[[[
+MicAbstractBlock >>closeMe
+	logStream << 'Closing ' << self class name; cr
+]]]
+
+
+${slide:title=Get the butter and the money}$
+
+Make sure that you can plug another stream to your stream.
+
+[[[
+MicAbstractBlock >> logStream: aStream 
+	logStream := aStream
+]]]
+
+Now you can pass a Transcript and get the same as before but better.
+
+You can write tests in isolation
+
+
+${slide:title=Avoid Globals}$
+
+- Avoid Singleton
+- Avoid Global 
+- They make your code less modular, less testable
+- Related to Singleton and Disguised Singleton Lecture
+
+
