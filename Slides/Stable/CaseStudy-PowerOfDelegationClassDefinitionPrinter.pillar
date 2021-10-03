@@ -1,6 +1,7 @@
 {
-	"title":"Delegating behavior at Work",
-	"subtitle":""
+	"title":"Delegating Behavior at Work",
+	"subtitle":"The case of the class printer",
+	"author":""
 }
 
 
@@ -8,6 +9,7 @@ ${slide:title=Goal}$
 
 - Looking at the class definition printer
 - Support Old Squeak syntax, Pharo previous and Fluid new one
+- Should handle class, metaclass, trait...
 - Modularly
 - Dynamically changes
 - Can remove one any time without recompilation
@@ -78,7 +80,13 @@ Object << #Point
 	package: 'Kernel'
 ]]]
 
+- Modular
+- Compact
+- Extensible
+
 ${slide:title=The Case of Complex Slots}$
+
+- Previous Pharo class definition did not support well slots
 
 [[[
 SpAbstractWidgetPresenter << #SpDiffPresenter
@@ -95,7 +103,7 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 		package: 'Spec2-Core'
 ]]]
 
-- Previous Pharo class definition did not support well slots.
+
 
 ${slide:title=Challenges}$
 
@@ -104,13 +112,13 @@ ${slide:title=Challenges}$
 -- Slots should not be displayed in Old Pharo
 - How to avoid to check everywhere?
 
-${slide:title=First Hacked version In Pharo 70/80}$
+${slide:title=First Hacked version in Pharo 70/80}$
 
 [[[
 ClassDescription >> definition
 
-	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
+	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) 
+		ifTrue: [ ^ self definitionWithSlots ].
 
 	^ self definitionWithoutSlots
 ]]]
@@ -118,8 +126,8 @@ ClassDescription >> definition
 [[[
 Metaclass >> definition
 
-	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) ifTrue: [ 
-		^ self definitionWithSlots ].
+	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) 
+		ifTrue: [ ^ self definitionWithSlots ].
 	^ self definitionWithoutSlots
 ]]]
 
@@ -155,7 +163,11 @@ ClassDefinitionPrinter ( forClass )
 	OldPharoClassDefinitionPrinter
 ]]]
 
+
+${slide:title=Solution: Delegating to a ClassDefinition Printer}$
+
 +>file://figures/ClassPrinter.pdf+
+
 
 ${slide:title=From Class}$
 
