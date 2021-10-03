@@ -1,0 +1,169 @@
+{
+    "title":"Reifying and delegating behavior",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+
+${slide:title=Goal}$
+
+- Creating an object and delegating creates dispatch spaces
+- From one kind of files to multiple kinds
+
+${slide:title=Case study: Pillar supports .pillar }$
+
+- How to get a parsed document?
+- We ask the parser (implies that there is only one)
+
+${slide:title=Case study: Pillar supports .pillar }$
+
+Long time ago
+- there was only one parser
+- parser turns pillar file into document tree
+
+[[[
+	PRDocument parser parseFile: aFileReference
+]]]
+
+${slide:title=Case study: Pillar supports .pillar }$
+
+[[[	
+PRAbstractOutputDocument >> buildOn: aPRProject 
+	
+	| parsedDocument transformedDocument writtenFile |
+	parsedDocument := self parseInputFile: file.
+	parsedDocument properties: (self metadataConfigurationForDocument: parsedDocument).
+	transformedDocument := self transformDocument: parsedDocument.
+	writtenFile := self writeDocument: transformedDocument.
+	self postWriteTransform: writtenFile.
+	^ PRSuccess new.
+]]]
+
+[[[	
+PRAbstractOutputDocument >> parseInputFile: anInputFile
+	^ PRDocument parser parse: anInputFile file	
+]]]
+
+${slide:title=Problems}$
+
+- Only one parser
+- Checks for the file extension was hardcoded
+- Difficult to know if a file was part of a project (books)
+- Access to project configuration was cumbersome
+
+${slide:title=Solution: Introduced InputDocument}$
+
+- Instead of manipulating on file
+- Manipulate InputDocument objects
+
+${slide:title=Introduced the notion of InputDocument}$
+
+[[[
+PRBuilAllStrategy >> filesToBuildOn: aProject
+
+	^ children flatCollect: [ :each |
+		each allChildren
+			select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
+			thenCollect: [ :file | 
+				PRInputDocument new
+					project: aProject;
+					file: file;
+					yourself ] ]
+]]]
+
+[[[			
+PRInputDocument >> parser
+	file extension = 'pillar'
+		ifTrue: [ ^ PRDocument parser ].
+	self error: 'No parser for document extension: ', file extension
+]]]
+
+${slide:title=PRInputDocument}$
+
+- Still not yet there.
+- We do not have to have single point check 
+
+[[[
+select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
+]]]
+
+- Not modular
+
+
+${slide:title=Support for .mic/.md files}$
+
+- Now Pillar compilation chain should accept .md file
+- Different syntax!
+- Different parser!
+
+${slide:title=Refining InputDocument into a simple hierarchy}$
+
+[[[
+PRInputDocument << #PRPillarInputDocument
+	package: 'Pillar-ExporterCore'
+]]]
+
+[[[
+PRInputDocument << #PRMicrodownInputDocument
+	package: 'Pillar-Microdown'
+]]]
+
+${slide:title=Now document as the file for its parser}$
+
+[[[
+PRAbstractOutputDocument >> parseInputFile: anInputFile	
+	^ anInputFile parsedDocument
+]]]
+
+[[[
+PRPillarInputDocument >> parsedDocument
+	^ self parserClass parse: file
+]]]
+
+[[[
+PRMicrodownInputDocument >> parsedDocument
+	^ (self parserClass parse: file) asPillar
+]]]
+
+
+${slide:title=Registration mechanism to support modularity}$
+
+[[[
+PRInputDocument class >> inputClassForFile: aFile
+	
+	^ self subclasses
+		detect: [ :each | each doesHandleExtension: aFile extension ]
+		ifNone: [ PRNoInputDocument  ]
+]]]
+
+[[[		
+PRPillarInputDocument >> doesHandleExtension: anExtension
+	^ anExtension = 'pillar'		
+]]]
+
+[[[
+PRMicrodownInputDocument >> doesHandleExtension: anExtension
+	^ anExtension = 'mic'
+]]]
+
+${slide:title=Creating the right kind of InputDocument objects}$
+
+[[[
+PRBuilAllStrategy >> filesToBuildOn: aProject
+
+	^ files collect: [ :file | 
+		(PRInputDocument inputClassForFile: file asFileReference) new
+			project: aProject;
+			file: (aProject baseDirectory resolve: file);
+			yourself ]
+]]]
+
+${slide:title=Conclusion}$
+
+- Turning implicit into an object
+- Turning one object into objects of different but polymorphic classes
+- Using registration to create modular design
+
+
+
+

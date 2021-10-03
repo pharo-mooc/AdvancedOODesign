@@ -1,0 +1,200 @@
+{
+    "title" : "a Die + a DieHandle: A Case of Double Dispatch",
+    "slidesid" : "",
+    "author" : ""
+}
+
+
+${slide:title=What You Will Learn}$
+
+- How conditionals can be turned into extensible design using messages
+- Basis for more complex situation such as the Visitor Design Pattern
+
+${slide:title=Remember Die and DieHandle}$
+
+We create a die handle and add some die to it
+
+[[[
+| handle |
+handle := DieHandle new 
+		addDie: (Die withFaces: 6);
+		addDie: (Die withFaces: 10);
+		yourself.
+handle roll
+]]]
+
+
+${slide:title=Remember DieHandle}$
+
+We add dieHandle together as in role playing games
+
+[[[
+DieHandleTest >> testSumming
+	| handle |
+	handle := 2 D20 + 3 D10.
+	self assert: handle diceNumber = 5.
+]]]
+
+- We could add dices to a dice handle
+- We could add dice handle to another dice handle
+
+
+${slide:title=New Requirements}$
+
+We want to add two dices together
+
+[[[
+(Die withFaces: 6) + (Die withFaces: 6)
+]]]
+
+Now  we want to be able to add a dice to an dice handle
+
+
+
+[[[
+(Die withFaces: 6) + 2 D20
+]]]
+
+
+[[[
+2 D20 + (Die withFaces: 6)
+]]]
+
+
+${slide:title=aNewRequirement asTest }$
+
+[[[
+DieTest >> testAddTwoDice
+
+	| hd |
+	hd := (Die withFaces: 6) + (Die withFaces: 6).
+	self assert: hd dice size = 2.
+]]]
+
+
+[[[
+DieTest >> testAddingADieAndHandle
+	| hd |
+	hd := (Die faces: 6)
+		+
+		(DieHandle new
+			addDie: 6;
+			yourself).
+	self assert: hd dice size equals: 2
+]]]
+
+
+${slide:title=Propose a solution!}$
+
+${slide:title=Our approach}$
+
+- When we add two elements (die or dieHandle) together.
+We always do the same:
+- we tell ""the argument"" that we want to add the receiver
+- we are explicit about the receiver state since we know it
+-- when the receiver is a die we say to the argument that we want to add a die
+-- when the receiver is a die handle we say to the argument that we want to add a die handle
+
+Let us do it now!
+
+${slide:title=First adding two dice}$
+
+[[[	
+Die >> + aDie
+	
+	^ DieHandle new 
+			addDie: self; 
+			addDie: aDie; 
+			yourself
+]]]
+
+
+${slide:title=Limits}$
+
+[[[	
+Die >> + aDie
+	
+	^ DieHandle new 
+			addDie: self; 
+			addDie: aDie; 
+			yourself
+]]]
+
+But aDie can be 
+- a dice
+- a die handle
+
+
+${slide:title=A first step}$
+
+Adding two dice is usefull, let us keep it and rename it:
+
+[[[
+Die >> sumWithDie: aDie
+
+	^ DieHandle new 
+			addDie: self; 
+			addDie: aDie; yourself
+]]]
+
+Now we just say to the argument that we want to add a die
+[[[
+Die >> + aDicable	
+		^ aDicable sumWithDie: self
+]]]
+
+
+${slide:title=Adding Two Dice and Ready for More}$
+
++>file://figures/DieDoubleDispatchPartialArgDie.pdf|width=100+
+
+${slide:title=Handling DieHandle as Argument}$
+
++>file://figures/DieDoubleDispatchPartialArgDieHandle.pdf|width=100+
+
+${slide:title=Sending a Message is Making a Choice}$
+
++>file://figures/DieDoubleDispatchPartial.pdf|width=80+
+
+
+
+${slide:title=DieHandle as a receiver}$
+
+We apply the same principle
+
+[[[
+DieHandle >> + aDicable
+	^ aDicable sumWithHandle: self
+]]]
+
+[[[
+DieHandle >> sumWithHandle: aDieHandle
+	| handle |
+	handle := self class new.
+	self dice do: [ :each | handle addDie: each ].
+	aDieHandle dice do: [ :each | handle addDie: each ].
+	^ handle
+]]]
+
+
+${slide:title=Now the argument can be a die }$
+
+[[[
+Die >> sumWithHandle: aDieHandle
+	| handle |
+	handle := DieHandle new.
+	aDieHandle dice do: [ :each | handle addDie: each ].
+	handle addDie: self
+	^ handle
+]]]
+
+${slide:title=Double Dispatch between Die and DieHandle }$
+
++>file://figures/DieDoubleDispatchFull.pdf|width=100+
+
+${slide:title=Conclusion}$
+
+- Basis for advanced design such as the Visitor Design Pattern
+- Powerful
+- Modular (compiler with 70 nodes scales without problems)
+- Just sending an extra message to an argument and using late binding once again

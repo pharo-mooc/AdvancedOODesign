@@ -4,10 +4,11 @@
     "author":"Stéphane Ducasse"
 }
 
-${slide:title=Hook}$
+${slide:title=Goal}$
 
-- Granularity of hooks
-- Can we or not customize instance creation
+- Thinking about hooks
+- Granularity of hooks: class vs instance creation
+- Do we or not customize instance creation
 - Customisation of instance creation
 
 ${slide:title=Introducing a hook}$
@@ -19,7 +20,6 @@ CHInterpreter >> visit...
 	...
 	scope
 ]]]
-
 
 
 ${slide:title=Extract a class}$

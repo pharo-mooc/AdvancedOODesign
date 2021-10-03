@@ -1,0 +1,153 @@
+{
+    "title":"About the Singleton Hell",
+    "slidesid":"From the Design Corner"
+}
+
+
+${slide:title=Outline}$
+
+- Singleton is hell
+- Singleton may take different forms
+
+${slide:title=Case: Global Variable}$
+
+[[[
+MyApp >> menu
+...
+    icon: Smalltalk icons iconNamed: #window
+...
+]]]
+
+
+${slide:title=Case: Global Variable}$
+
+- One global variable.
+- What if as an application I want to extend, slightly change icons for my application only!
+- What if I want to be able to have two icon sets and the same time to compare.
+
+${slide:title=Case: Disguised Global Variable}$
+
+Since in Pharo we can extend core libraries we could think 
+this is any better.
+
+[[[
+Symbol >> asIcon
+	 ^ Smalltalk icons iconNamed: self
+]]]
+
+[[[
+MyApp >> menu
+...
+    icon: #window asIcon
+...
+]]]
+
+${slide:title=Case: Disguised Global Variable}$
+
+- One global variable but disguished: only one place to edit but still fundamentally one big giant global.
+- There is only one icon table.
+- MyApp cannot extend or slightly change icons for my application only!
+- What if I want to be able to have two icon sets and the same time to compare.
+
+${slide:title=A much better approach}$
+
+[[[
+MyApp >> menu
+...
+    icon: (self iconNamed: #window)
+...
+]]]
+
+[[[
+MyAppSuperclass >> iconNamed: aSymbol
+... 
+	look for my icons may be delegate to an icon manager instance
+	potentially do a 
+	super iconNamed: #window
+...
+]]]
+
+${slide:title=Step back}$
+
+- Modular.
+- Each receiver may do something.
+- Each user may be configured differently.
+- Still we can share the common behavior.
+
+
+
+
+
+${slide:title=Case: asClass}$
+Accessing programmatically a class is usually done
+
+[[[
+Smalltalk globals at: #Point
+]]]
+
+People started to want a shorter version
+
+[[[
+#Point asClass
+]]]
+
+[[[
+Symbol >> asClass
+	^ Smalltalk globals at: self
+]]]
+
+But there is a difference
+
+${slide:title=Case: asClass Analysis}$
+
+- Another global entry point.
+- We can only have one namespace. 
+- We cannot inject a special namespace for test for example.
+- No way to dispatch.
+
+
+${slide:title=Case: Smalltalk tools}$
+
+[[[
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	self currentClassOrMetaClass ifNotNil: [ 
+		Smalltalk tools browser 
+			openOnClass: self currentClassOrMetaClass
+			selector: self currentMessageName ]
+]]]
+
+
+${slide:title=Case: Smalltalk tools Analysis}$
+
+- One global entry point
+- Everybody refers to this single point! Yes this is call monolithic thinking.
+- Only one toolset possible at the same time (could be ok)
+
+${slide:title=Case: Smalltalk tools Possible Solution}$
+
+- Each object that should refer to tools should do it via a parameter / instance variable.
+- No direct reference to a global singleton
+
+[[[
+Browser >> initialize
+	toolEnvironment := ToolEnvironment new 
+]]]
+
+[[[
+Browser >> openDebugger
+	self toolEnvironment debugger
+]]]
+
+Points to consider: How to manage the fact that a tool may change
+- Browser may register to ToolEnvironment to be notified and update its instance
+
+
+${slide:title=Conclusion}$
+
+- Avoid Singleton as a global 
+- Think modular
+- Give a chance to object to specialize message
+
+
