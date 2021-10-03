@@ -1,0 +1,184 @@
+{
+	"title":"Shared Variables",
+	"subtitle":"",
+	"author":"S. Ducasse"
+}
+
+${slide:title=Goal}$
+
+- Revisit Shared Variables (ClassVariables)
+- Think about scope of sharing
+
+${slide:title=Instance variables are local to one object}$
+
+- An instance variable value is only accessible to the object
+- If you modify an instance variable, you only modify that variable
+
+
+${slide:title=Shared variables are shared by all the instances of a hierarchy}$
+
+- In traditional Smalltalk systems shared variables are called ClassVariables.
+- All the instances of a class and its subclasses share the SAME shared variable
+- If you modify a shared variables it impacts all the instances
+- A shared variable is usually initialized at class load time (class initialize method)
+
+${slide:title=Color example}$
+
+All the instances of ==Color== and its subclasses share ==ComponentMask==
+
+[[[
+Object << #Color
+	slots: { #rgb . #cachedDepth . #cachedBitPattern . #alpha };
+	sharedVariables: { #RedShift . #CachedColormaps . #IndexedColors . 
+	#ComponentMax . #ComponentMask . #ColorRegistry . #GreenShift . #BlueShift };
+	package: 'Colors'
+]]]
+
+
+${slide:title=Shared variables are accessed by both instance and class methods}$
+
+[[[
+Color >> setRed: r green: g blue: b 
+	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  
+	Encoded in a single variable as 3 integers in [0..1023]."
+	
+	rgb == nil ifFalse: [ self attemptToMutateError ].
+	rgb := (((r * ComponentMax) rounded bitAnd: ComponentMask) bitShift: RedShift)
+		 + (((g * ComponentMax) rounded bitAnd: ComponentMask) bitShift: GreenShift) 
+		 + ((b * ComponentMax) rounded bitAnd: ComponentMask).
+	cachedDepth := nil.
+	cachedBitPattern := nil
+]]]
+
+${slide:title=Shared variables are accessed by both instance and class methods}$
+
+[[[
+Color class >> initialize
+	
+	ComponentMask := 1023.
+	HalfComponentMask := 512.	"used to round up in integer calculations"
+	ComponentMax := 1023.0.	"a Float used to normalize components"
+	RedShift := 20.
+	GreenShift := 10.
+	BlueShift := 0.
+	self initializeIndexedColors.
+	self initializeColorRegistry.
+	self initializeGrayToIndexMap.
+]]]
+
+
+${slide:title=Color}$
+
++>file://figures/SharedVariableColor.pdf+
+
+
+${slide:title=Shared Variable example 2}$
+
++>file://figures/SharedVariableString.pdf+
+
+${slide:title=Shared Variable example 2}$
+
+[[[
+ArrayedCollection << #String
+	slots: {};
+	sharedVariables: { #CaseSensitiveOrder . #CSSeparators . #CSNonSeparators . #UppercasingTable . 
+	#CSLineEnders . #LowercasingTable . #CaseInsensitiveOrder . #TypeTable . #Tokenish . #AsciiOrder };
+	package: 'Collections-Strings'
+]]]
+
+
+${slide:title=Shared Variable accessed in subclass method}$
+
+[[[
+ByteSymbol >> beginsWith: prefix
+	"Answer whether the receiver begins with the given prefix string.
+	The comparison is case-sensitive."
+
+	"(#pharo beginsWith: #pharoProject) >>> false"
+	"(#pharo beginsWith: #phuro) >>> false"
+	"(#pharo beginsWith: #pha) >>> true"
+	
+	prefix class isBytes ifFalse: [^super beginsWith: prefix].
+	
+	self size < prefix size ifTrue: [^ false].
+	^ (self findSubstring: prefix in: self startingAt: 1
+			matchTable: CaseSensitiveOrder) = 1
+]]]
+
+${slide:title=Shared Variable accessed in subclass class method}$
+
+[[[
+Symbol class >> selectorsContaining: aString
+	"Answer a list of selectors that contain aString within them. Case-insensitive.  
+	Does return symbols that begin with a capital letter."
+
+	...
+
+	self allSymbolTablesDo: [:each |
+		each size >= size ifTrue:
+			[(each findSubstring: aString in: each startingAt: 1 
+				matchTable: CaseInsensitiveOrder) > 0
+						ifTrue: [selectorList add: each]]].
+	...
+]]]
+
+
+${slide:title=Study...}$
+
+[[[
+Smalltalk globals allClasses 
+	select: [:each | each classVariablesString isEmpty not
+				and: [  each hasSubclasses ]]
+]]]
+
+
+
+${slide:title=Implications}$
+
+- There is a difference between Shared variables and instance variable of the metaclass.
+- There is a difference between: 
+
+[[[
+Object << #BorderStyle
+	sharedVariables: { #Default };
+	package: 'Morphic-Core'
+]]]
+
+and 
+
+[[[
+BorderStyle class
+	slots: {#default};
+	package: 'Morphic-Core'
+]]]
+
+
+${slide:title=Implications: One for all }$
+
+
+
+[[[
+Object << #BorderStyle
+	sharedVariables: { #Default };
+	package: 'Morphic-Core'
+]]]
+
+There is only one instance of borderstyle for all the subclasses: ==SimpleBorderStyle== ==BottomBorderStyle== ==ComplexBorderStyle== CompositeBorderStyle DashedBorderStyle FillBorderStyle InsetBorderStyle MarginBorderStyle RaisedBorderStyle RoundedBorderStyle SimpleBorder TabPanelBorderStyle BottomBorder ComplexBorder CompositeBorder DashedBorder FillStyleBorder InsetBorder MarginBorder RaisedBorder RoundedBorder Pharo3TabPanelBorderStyle TabPanelBorder Pharo3TabPanelBorder)
+
+
+${slide:title=Implications: One for each }$
+
+
+
+[[[
+BorderStyle class
+	slots: {#default};
+	package: 'Morphic-Core'
+]]]
+
+There is  one instance for EACH of all the subclasses (potentially the same depending on the creation logic)
+
+${slide:title=Conclusion}$
+
+- Pay attention modifying SharedVariable potentially impacts many objects.
+- 
