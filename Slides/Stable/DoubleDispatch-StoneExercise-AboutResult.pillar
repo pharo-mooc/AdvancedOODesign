@@ -87,10 +87,10 @@ Paper new vs: Paper new
 [[[
 Paper >> playAgainstStone: aStone 
 	onDraw: aDrawerBlock 
-	onReceiverWin: aWinerBlock 
+	onReceiverWin: aWinnerBlock 
 	onReceiverLose: aLoserBlock
 
-	^ aWinerBlock value
+	^ aWinnerBlock value
 ]]]
 
 It feels that there are too many parameters.
@@ -106,7 +106,9 @@ Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
 	^ aResultHandler paperWon
 ]]]
 
-It feels like the "Do not not ask tell"
+- It feels like the "Do not not ask tell"
+- We can have different result handlers
+
 
 ${slide:title=Conclusion}$
 

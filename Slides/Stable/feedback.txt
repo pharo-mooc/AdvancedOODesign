@@ -1,0 +1,20 @@
+
+
+Die 
+- show if if if
+- Tests in Die 
+	saying yes it passes and this one fails.
+
+
+- Non symmetrical
+
+
+
+
+Stone Paper Scissors
+	- present better
+	- vs:.
+	- Table vs: dd
+	- Extensions
+	- aganst
+	Paper/Paper

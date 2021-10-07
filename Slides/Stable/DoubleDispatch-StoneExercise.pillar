@@ -1,17 +1,16 @@
 {
     "title" : "Stone Paper Scissors",
-    "slidesid" : "From the Design Corner",
-    "author" : "Stéphane Ducasse"
+    "slidesid" : "with Double Dispatch",
+    "author" : ""
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - In the quest of dispatch
-- Basis for Visitor Design pattern
 - No conditionals!
 
 [[[
-(Stone new play: Paper new)
+(Stone new vs: Paper new)
 >>> #paper
 ]]]
 
@@ -20,24 +19,24 @@ ${slide:title=Stone Paper Scissors: one Test}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new play: Paper new) equals: #paper
+	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 ${slide:title=Stone Paper Scissors via Tests}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new play: Paper new) equals: #paper
+	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
 StonePaperScissorsTest >> testStoneAgainsStone
-	self assert: (Stone new play: Stone new) equals: #draw
+	self assert: (Stone new vs: Stone new) equals: #draw
 ]]]
 
 [[[
 StonePaperScissorsTest >> testStoneIsWinning
-	self assert: (Stone new play: Scissors new) equals: #stone
+	self assert: (Stone new vs: Scissors new) equals: #stone
 ]]]
 
 
@@ -48,11 +47,11 @@ ${slide:title=Let us start}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new play: Paper new) equals: #paper
+	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
-Stone >> play: anotherTool
+Stone >> vs: anotherTool
 	^ ...
 ]]]
 
@@ -68,11 +67,11 @@ ${slide:title= Paper playAgainstStone: }$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new play: Paper new) equals: #paper
+	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
-Stone >> play: anotherTool
+Stone >> vs: anotherTool
 	^ anotherTool playAgainstStone: self
 ]]]
 
@@ -85,17 +84,17 @@ ${slide:title= Paper playAgainstStone: }$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new play: Paper new) equals: #paper
+	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
-Stone >> play: anotherTool
+Stone >> vs: anotherTool
 	^ anotherTool playAgainstStone: self
 ]]]
 
 [[[
 Paper >> playAgainstStone: aStone
-	^ #paper
+>> ^ #paper
 ]]]
 
 
@@ -117,16 +116,16 @@ ${slide:title=Scissors now }$
 
 [[[
 StonePaperScissorsTest >> testScissorsIsWinning
-	self assert: (Scissors new play: Paper new) = #scissors
+	self assert: (Scissors new vs: Paper new) = #scissors
 ]]]
 
 [[[
-Scissors >> play: anotherTool
+Scissors >> vs: anotherTool
 	^ anotherTool playAgainstScissors: self
 ]]]
 
 [[[
-Scissors >> playAganstScissors: aScissors
+Scissors >> playAgainstScissors: aScissors
 	^ #draw
 ]]]
 
@@ -142,7 +141,7 @@ Stone >> playAgainstScissors: aScissors
 
 ${slide:title=Paper now }$
 [[[
-Paper >> play: anotherTool
+Paper >> vs: anotherTool
 	^ anotherTool playAgainstPaper: self
 ]]]
 
@@ -179,10 +178,9 @@ Scissors >> playAgainstPaper
 	^ #scissors
 ]]]
 
-${slide:title=Thinking more...}$
 
-- It is half of double dispatch because ==playAgainstPaper:== could invoke a method of the argument too
-- We will see that in the other examples. 
+
+
 
 
 ${slide:title=Thinking more...}$
