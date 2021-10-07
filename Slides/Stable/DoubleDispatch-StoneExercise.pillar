@@ -22,12 +22,19 @@ StonePaperScissorsTest >> testPaperIsWinning
 	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
-${slide:title=Stone Paper Scissors via Tests}$
+${slide:title=The inverse too}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
 	self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+	self assert: (Paper new vs: Stone new) equals: #paper
+]]]
+
+${slide:title=More Tests}$
 
 [[[
 StonePaperScissorsTest >> testStoneAgainsStone
@@ -58,17 +65,13 @@ Stone >> vs: anotherTool
 
 ${slide:title=Hints}$
 
-- Solution does not contain an explicit condition
+- The solution does not contain an explicit condition
 - Remember sending a message is making a choice
 - Sending a message is selecting the right method
+-- when we send the message ==vs:== the method of the receiver is executed
 - What if we introduce another method?
 
 ${slide:title= Paper playAgainstStone: }$
-
-[[[
-StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new vs: Paper new) equals: #paper
-]]]
 
 [[[
 Stone >> vs: anotherTool
@@ -77,15 +80,10 @@ Stone >> vs: anotherTool
 
 [[[
 Paper >> playAgainstStone: aStone
-	...
+	^ ...
 ]]]
 
 ${slide:title= Paper playAgainstStone: }$
-
-[[[
-StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new vs: Paper new) equals: #paper
-]]]
 
 [[[
 Stone >> vs: anotherTool
@@ -97,6 +95,23 @@ Paper >> playAgainstStone: aStone
 >> ^ #paper
 ]]]
 
+${slide:title= Paper playAgainstStone: }$
+
+Works for 
+[[[
+Stone new vs: Paper new
+>>> #paper
+]]]
+
+But not for 
+
+[[[
+Stone new vs: Scissor new
+>>> #stone
+]]]
+
+- How to fix this?
+- Easy!
 
 
 ${slide:title=Other playAgainstStone: }$
@@ -112,12 +127,18 @@ Stone >> playAgainstStone: aStone
 ]]]
 
 
-${slide:title=Scissors now }$
+${slide:title=Stepping back}$
 
-[[[
-StonePaperScissorsTest >> testScissorsIsWinning
-	self assert: (Scissors new vs: Paper new) = #scissors
-]]]
+- We know that a method is executed on a class (here ==Stone==)
+- We SEND another message to the argument to select another method (here ==playAgainstStone:==)
+- We sent two messages to be able to select a method based on its receiver AND argument
+
+
+
+
+
+
+${slide:title=Scissors now }$
 
 [[[
 Scissors >> vs: anotherTool
@@ -162,7 +183,7 @@ Stone >> playAgainstPaper: aPaper
 
 ${slide:title=Overview}$
 
-+An overview of a possible solution using double dispatch.>file://figures/StonePaperScissors.pdf|width=80+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorisLizardSpock.jpg|width=80+
 
 ${slide:title=Remark}$
 
@@ -179,21 +200,9 @@ Scissors >> playAgainstPaper
 ]]]
 
 
+${slide:title=Extending it...}$
 
-
-
-
-${slide:title=Thinking more...}$
-
-When we return a token or a number we should check to do something after.
-So passing blocks may be better.
-
-[[[
-Paper new competeWith: Paper new
-	onDraw: [ Game incrementDraw ]
-	onReceiverWin: [ ]
-	onReceiverLose: [ ]
-]]]
++>file://figures/StonePaperScissorsLizzardSpock.pdf|width=80+
 
 ${slide:title=Conclusion}$
 

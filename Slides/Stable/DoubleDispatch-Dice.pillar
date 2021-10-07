@@ -1,19 +1,20 @@
 {
     "title" : "a Die + a DieHandle: ",
-    "subtitle":"A Case of Double Dispatch"
+    "subtitle":"A Case of Double Dispatch",
+    "slideid" : "",
     "slidesid" : "",
     "author" : ""
 }
 
 
-${slide:title=What You Will Learn}$
+${slide:title=Goals}$
 
 - How conditionals can be turned into extensible design using messages
 - Basis for more complex situation such as the Visitor Design Pattern
 
 ${slide:title=Remember Die and DieHandle}$
 
-We create a die handle and add some die to it
+We create a die handle, add some die to it, and roll it.
 
 [[[
 | handle |
@@ -33,23 +34,22 @@ We add dieHandle together as in role playing games
 DieHandleTest >> testSumming
 	| handle |
 	handle := 2 D20 + 3 D10.
-	self assert: handle diceNumber = 5.
+	self assert: handle diceNumber equals: 5
 ]]]
 
-- We could add dices to a dice handle
-- We could add dice handle to another dice handle
 
+${slide:title=New Requirement One}$
 
-${slide:title=New Requirements}$
-
-We want to add two dices together
+We want to add two dices together and get a DieHandle
 
 [[[
 (Die withFaces: 6) + (Die withFaces: 6)
 ]]]
 
-Now  we want to be able to add a dice to an dice handle
 
+${slide:title=New Requirements Two}$
+
+Now  we want to be able to add a dice to an dice handle and the inverse
 
 
 [[[
@@ -69,7 +69,7 @@ DieTest >> testAddTwoDice
 
 	| hd |
 	hd := (Die withFaces: 6) + (Die withFaces: 6).
-	self assert: hd dice size = 2.
+	self assert: hd dice size equals: 2.
 ]]]
 
 
@@ -85,16 +85,51 @@ DieTest >> testAddingADieAndHandle
 ]]]
 
 
-${slide:title=Propose a solution!}$
+${slide:title=Possible solution with conditions}$
 
-${slide:title=Our approach}$
+[[[
+DieHandle >> + aDieOrADieHandle
 
-- When we add two elements (die or dieHandle) together.
-We always do the same:
-- we tell ""the argument"" that we want to add the receiver
-- we are explicit about the receiver state since we know it
--- when the receiver is a die we say to the argument that we want to add a die
--- when the receiver is a die handle we say to the argument that we want to add a die handle
+	^ (aDieOrADieHandle class = DieHandle)
+		ifTrue: [ | handle |
+					handle := self class new.
+					self dice do: [ :each | handle addDie: each ].
+					aDieOrADieHandle dice do: [ :each | handle addDie: each ].
+					handle ]
+		ifFalse: [ | handle |
+					handle := self class new.
+					self dice do: [ :each | handle addDie: each ].
+					handle addDie: aDieOrADieHandle.
+					handle  ]
+]]]
+
+[[[
+Die >> + aDieOrADieHandle
+	| selfAsDieHandle |
+	selfAsDieHandle := DieHandle new addDie: self.
+	^ selfAsDieHandle + aDieOrADieHandle
+]]]
+
+${slide:title=Limits of this approach}$
+
+- It does not scale.
+- What if we have different objects that should interact with different operations e.g.,
+-- different kinds of text objects: list, figures, paragraph, section, title, text, reference...
+-- different operations: rendering text, HTML, LaTeX
+
+${slide:title=Hints}$
+
+- Sending a message is making a choice
+-- the system selects the correct method for a given receiver and executes it 
+- To select a method based on the receiver AND the argument, we have to send a message to the argument
+
+${slide:title=Sketch of the solution}$
+
+- When we add two elements (die or dieHandle) together. 
+- We tell ""the argument"" that we want to add the receiver
+- We are explicit about the receiver state since we know it
+-- when the receiver is a die we say to the argument that we want to "add a die"
+-- when the receiver is a die handle we say to the argument that we want to "add a die handle"
 
 Let us do it now!
 
@@ -124,11 +159,15 @@ Die >> + aDie
 But aDie can be 
 - a dice
 - a die handle
+For example as in 
+[[[
+(Die withFaces: 6) + 2 D20
+]]]
 
 
-${slide:title=A first step}$
+${slide:title=Introducing sumWithDie: }$
 
-Adding two dice is usefull, let us keep it and rename it:
+Adding two dice is useful, let us keep it and rename it:
 
 [[[
 Die >> sumWithDie: aDie
@@ -141,22 +180,42 @@ Die >> sumWithDie: aDie
 Now we just say to the argument that we want to add a die
 [[[
 Die >> + aDicable	
-		^ aDicable sumWithDie: self
+	^ aDicable sumWithDie: self
 ]]]
-
 
 ${slide:title=Adding Two Dice and Ready for More}$
 
-+>file://figures/DieDoubleDispatchPartialArgDie.pdf|width=100+
++>file://figures/DieDoubleDispatchPartialArgDie0.pdf|width=90+
 
 ${slide:title=Handling DieHandle as Argument}$
 
-+>file://figures/DieDoubleDispatchPartialArgDieHandle.pdf|width=100+
+[[[
+(Die withFaces: 6) + 2 D20
+]]]
+
+[[[
+DieHandle >> sumWithDie: aDie
+	| handle |
+	handle := self class new.
+	self dice do: [ :each | handle addDie: each ].
+	handle addDie: aDie.
+	^ handle
+]]]
+
+
+${slide:title=Handling DieHandle as Argument}$
+
++>file://figures/DieDoubleDispatchPartialArgDieHandle.pdf|width=90+
 
 ${slide:title=Sending a Message is Making a Choice}$
 
 +>file://figures/DieDoubleDispatchPartial.pdf|width=80+
 
+${slide:title=Sending a Message is Making a Choice}$
+
+- We get two messages/choices
+-- one message for ==\+== 
+--  one message for ==sumWithDie:==
 
 
 ${slide:title=DieHandle as a receiver}$
@@ -180,6 +239,8 @@ DieHandle >> sumWithHandle: aDieHandle
 
 ${slide:title=Now the argument can be a die }$
 
+Since the argument can be a die, we define ==sumeWithHandle also on ==Die==.
+
 [[[
 Die >> sumWithHandle: aDieHandle
 	| handle |
@@ -191,11 +252,17 @@ Die >> sumWithHandle: aDieHandle
 
 ${slide:title=Double Dispatch between Die and DieHandle }$
 
-+>file://figures/DieDoubleDispatchFull.pdf|width=100+
++>file://figures/DieDoubleDispatchFull.pdf|width=80+
+
+${slide:title=Stepping back}$
+
+- We applied two times a simple principle.
+-- Sending a message is making a choice/selecting the right method
+- So sending a message to the argument is a way to select again between a couple of methods.
 
 ${slide:title=Conclusion}$
 
-- Basis for advanced design such as the Visitor Design Pattern
 - Powerful
 - Modular (compiler with 70 nodes scales without problems)
 - Just sending an extra message to an argument and using late binding once again
+- Basis for advanced design such as the Visitor Design Pattern
