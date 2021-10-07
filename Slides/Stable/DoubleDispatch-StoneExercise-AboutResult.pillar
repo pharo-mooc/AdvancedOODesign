@@ -1,0 +1,116 @@
+{
+    "title" : "About results",
+    "subtitle" : "The case of SPScissors"
+    "slidesid" : "",
+    "author" : ""
+}
+
+${slide:title=Goals}$
+
+- Think about results
+
+
+
+${slide:title=Remember}$
+
+[[[
+(Stone new vs: Paper new)
+>>> #paper
+]]]
+
+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissors.pdf|width=80+
+
+
+
+${slide:title=Returning numbers}$
+
+${slide:title=Stone Paper Scissors via Tests}$
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+	self assert: (Stone new vs: Paper new) equals: -1
+]]]
+
+[[[
+StonePaperScissorsTest >> testStoneAgainsStone
+	self assert: (Stone new vs: Stone new) equals: 0
+]]]
+
+[[[
+StonePaperScissorsTest >> testStoneIsWinning
+	self assert: (Stone new vs: Scissors new) equals: 1
+]]]
+
+
+${slide:title=Returning number analysis}$
+
+- We have to know the call to know how to interpret the number. 
+- Here paper is winning but it got different results!
+
+[[[
+Stone new vs: Paper new
+>>> -1
+
+Paper new vs: Stone new
+>>> 1
+]]]
+
+${slide:title=Returning symbols analysis}$
+
+[[[
+Stone new vs: Paper new
+>>> #paper
+
+Paper new vs: Stone new
+>>> #paper
+]]]
+
+- With symbols we know who won.
+- We will have to compare to do something
+
+[[[
+(aPlayer vs: anotherPlay) = #draw 	
+	ifTrue: [ ... ]
+]]]
+
+${slide:title=Alternate solution }$
+
+[[[
+Paper new vs: Paper new
+	onDraw: [ Game incrementDraw ]
+	onReceiverWin: [ ]
+	onReceiverLose: [ ]
+]]]
+
+
+[[[
+Paper >> playAgainstStone: aStone 
+	onDraw: aDrawerBlock 
+	onReceiverWin: aWinerBlock 
+	onReceiverLose: aLoserBlock
+
+	^ aWinerBlock value
+]]]
+
+It feels that there are too many parameters.
+
+${slide:title=Simply with objects}$
+
+[[[
+Paper new vs: Paper new withResultHandler: ResultDisplayer new
+]]]
+
+[[[
+Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
+	^ aResultHandler paperWon
+]]]
+
+It feels like the "Do not not ask tell"
+
+${slide:title=Conclusion}$
+
+Objects are 
+- Powerful
+- Modular
+- Just send a message :)
