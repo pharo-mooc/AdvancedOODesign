@@ -4,3 +4,16 @@
 - Stone Paper Scissors
 	- present better
 	- Table vs: dd
+
+
+Todo next
+
+- In antiif put, the shape slides?
+
+- Avoid is null 
+	improve slides.
+
+- Sokoban 
+	- simplify story remove the look and architecture.
+	
+	

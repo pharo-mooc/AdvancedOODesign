@@ -5,16 +5,16 @@
 	"slidesid" : "Core"
 }
 
-${slide:title=Objectives}$
+${slide:title=Goals}$
 
 - Looking at two concrete implementations of Point: Java and Pharo
 - Understanding the impact of strong API 
 
 ${slide:title=Points in Java}$
 
-Without getters and setters:
-- ==boolean equals(Object obj)== Determines whether or not two points are equal.
+Without getters and setters
 
+- ==boolean equals(Object obj)== Determines whether or not two points are equal.
 - ==void move(int x, int y)== Moves this point to the specified location in the (x,y) coordinate plane.
 - ==String toString()== Returns a string representation of this point and its location in the (x,y) coordinate space.
 - ==void translate(int dx, int dy)== Translates this point, at location (x,y), by dx along the x axis and dy along the y axis so that it now represents the point (x\+dx,y\+dy).
@@ -31,6 +31,7 @@ Getters and setters:
 - ==void setLocation(Point p)== Sets the location of the point to the specified location.
 - ==double getX()== Returns the X coordinate of this Point2D in double precision.
 - ==double getY()== Returns the Y coordinate of this Point2D in double precision.
+
 
 ${slide:title=Example}$
 
@@ -59,12 +60,13 @@ ${slide:title=Analysis}$
 - When an object exposes a shallow API, it favors logic duplication in clients!
 
 
-${slide:title=Turtle >> go: }$
+${slide:title=BTW Turtle >> go: in Pharo}$
 
 [[[
 public void go(int distance){
-    position = (new Point((Math.round(Math.cos(Math.toRadians(direction))) * distance + position.x()),
-           (Math.round(Math.sin(Math.toRadians(direction)) * distance + position.y ())))) ;
+    position = new Point(
+				(Math.round(Math.cos(Math.toRadians(direction))) * distance + position.x()),
+          		(Math.round(Math.sin(Math.toRadians(direction)) * distance + position.y ())) ;
     }
 }
 ]]]
@@ -73,11 +75,15 @@ In Pharo
 
 [[[
 Bot >> go: aDistance 
-	"Return the point that is at a distance aDistance in the direction pointed by the receiver"
+	"Return the point that is at a distance aDistance 
+	in the direction pointed by the receiver"
+	
 	position := position + (direction degreeCos @ direction degreeSin * aDistance) rounded
 ]]]
 
-
+- Read better
+- Add and multiply points
+- Stress the logic
 
 
 ${slide:title=Points in Pharo}$
@@ -86,14 +92,22 @@ ${slide:title=Points in Pharo}$
 Point selectors
 ]]]
 
--  ==r setR:degrees:==, ==normalized==, ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==onLineFrom:to:within:==, ==rotateBy:about:==, ==normal==, ==degrees==, ==rotateBy:centerAt:==, ==theta==, ==bearingToPoint:==, ==distanceTo:==
-- ==>=== ==>== ==<=== ==min:max:== ==min:== ==<== ==closeTo:== ==closeTo:precision:== ==hash== ==max:== ==\===
-- ==negated==, ==translateBy:==, ==adhereTo:==, ==scaleBy:==, ==scaleTo:==, ==scaleFrom:to:==
-- ==triangleArea:with:== ==to:intersects:to:== ==to:sideOf:== ==isInsideCircle:with:with:== ==sideOf:==
-- ==\\== \- ==\*== reciprocal / ==\+== min ==//== ==abs== ==max==
+- ==normalized==, ==normal==, ==transposed==, ==reflectedAbout:== 
+- ==distanceTo:==, ==squaredDistanceTo:== 
+- ==crossProduct:==, ==dotProduct:==
+- ==\\== \- ==\*==, ==reciprocal==,==/==, ==\+==, == min== ==//== ==abs== ==max==
+- ==>=== ==>== ==<=== ==min:max:== ==min:== ==<== ==closeTo:== ==closeTo:precision:== ==max:== ==\===
+- ==negated==, ==translateBy:==,  ==scaleBy:==, ==scaleTo:==, ==scaleFrom:to:==, ==adhereTo:==,
+- ==triangleArea:with:==, ==to:intersects:to:==, ==to:sideOf:==, ==isInsideCircle:with:with:==, ==sideOf:==
 - ==rectangle:==, ==extent:==, ==corner:==
-- ==roundUpTo:== ==ceiling== ==truncated== ==truncateTo:== ==roundTo:== ==floor== ==roundDownTo:== ==rounded==
-- ==quadrantOf:== ==leftRotated== ==fourNeighbors== ==grid:== ==eightNeighbors== ==nearestPointAlongLineFrom:to:== ==sortsBefore:== ==flipBy:centerAt:== ==crossProduct:== ==nearestPointOnLineFrom:to:== ==dotProduct:== ==squaredDistanceTo:== ==insideTriangle:with:with:== ==fourDirections== ==directionToLineFrom:to:== ==transposed== ==reflectedAbout:== ==sign== ==octantOf:== ==rightRotated==
+
+
+${slide:title=Points in Pharo}$
+
+- ==setR:degrees:==, ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==onLineFrom:to:within:==, ==rotateBy:about:==, ==degrees==, ==rotateBy:centerAt:==, ==theta==, ==bearingToPoint:==, 
+- ==roundUpTo:==, ==ceiling==, ==truncated==, ==truncateTo:==, ==roundTo:==, ==floor==, ==roundDownTo:==, ==rounded==,
+- ==quadrantOf:==, ==leftRotated==,  ==nearestPointAlongLineFrom:to:==, ==sortsBefore:==, ==flipBy:centerAt:==,  ==nearestPointOnLineFrom:to:==, ==dotProduct:==, ==squaredDistanceTo:==, ==insideTriangle:with:with:==, ==fourDirections==, ==directionToLineFrom:to:====sign==, ==octantOf:==, ==rightRotated==,
+- ==fourNeighbors==, ==grid:==, ==eightNeighbors==, ==fourDirections==
 
 ${slide:title=Simple example}$ 
 
@@ -104,6 +118,8 @@ Point >> abs
 	^ x abs @ y abs
 ]]]
 
+- Simple
+- Still a service offered 
 
 ${slide:title=Simple example}$ 
 
@@ -117,7 +133,8 @@ ${slide:title=Simple example}$
 ]]]
 
 
-${slide:title=Example}$ 
+${slide:title=Another simple example}$ 
+
 
 [[[
 Point >> crossProduct: aPoint
@@ -126,7 +143,10 @@ Point >> crossProduct: aPoint
 		^ (x * aPoint y) - (y * aPoint x)
 ]]]
 
-${slide:title=Example}$ 
+- Obvious but still useful
+- No need to duplicate it in clients
+
+${slide:title=Example: More challenging}$ 
 
 [[[
 Point >> degrees
@@ -148,6 +168,8 @@ Point >> degrees
 				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
 ]]]
 
+- Nobody wants to be forced to reimplement it. 
+
 ${slide:title=Polymorphic}$
 
 [[[
@@ -158,7 +180,7 @@ Point >> asPoint
 ]]]
 
 [[[	
-Object >> asPoint
+Number >> asPoint
 	"Answer a Point with the receiver as both coordinates; often used to 
 	supply the same value in two dimensions, as with symmetrical gridding 
 	or scaling."
@@ -175,8 +197,8 @@ Object >> asPoint
 
 ${slide:title=Point Arimethic}$
 
-- Points know how to \*, \+, divide, substract themselves
-- We can mix points, rectangles and number.
+- Points know how to ==\*==, ==\+==, ==\/==, ... themselves
+- We can mix points, rectangles, and numbers
 
 [[[
 drawString: aString at: aPoint font: aFontOrNil color: aColor
@@ -186,7 +208,7 @@ drawString: aString at: aPoint font: aFontOrNil color: aColor
 		font: aFontOrNil
 		color: aColor
 ]]]
-	
+
 ${slide:title=Analysis}$
 
 - In Pharo ==Point==s are more than a data structure
@@ -199,4 +221,6 @@ ${slide:title=Analysis}$
 ${slide:title=What you should know}$
 
 - Objects are not data structures
+- Objects are more that structure
+- Objects are about behavior, services they offer
 - An object should encapsulate logic and lets its client reuse such logic!
