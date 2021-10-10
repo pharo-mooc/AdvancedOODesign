@@ -1,24 +1,53 @@
 {
     "title":"Learning From Real Examples",
+    "subtitle":"A Sokoban implementation",
     "slidesid":"From the Design Corner"
 }
 
+${slide:title=Goal}$
+
+- Think about model
+- Think about messages and condition
 
 ${slide:title=Studying a Sokoban Implementation}$
 
+Sokoban (倉庫番, Sōko-ban) is a puzzle video game genre in which the player pushes crates or boxes around in a warehouse, trying to get them to storage locations.
+*https://en.wikipedia.org/wiki/Sokoban*
++.>file://figures/SokobanOld.png|width=100+
+
+${slide:title=Studying a Sokoban Implementation}$
+
+Developed by some students of I. Franko University (Lviv) that we want to thank!
+
 +.>file://figures/LearnFEx-Sokoban1.png|width=100+
- 
 
-${slide:title=Good decomposition}$
+${slide:title=Guess the model}$
 
-- Model 
-- Views
-- Controllers
+${columns}$
+
+${column:width=60}$
+
+- Wall
+- Floor
+- Box
+- Robot
+- Target
+- BoxOnTarget
+- Board
+
+And 
+- Template/Level
+- Moves
+
+${column:width=40}$
+
++.>file://figures/LearnFEx-Sokoban1.png|width=120+
+
+${endColumns}$
 
 ${slide:title=Model}$
 
-%+.>file://figures/LearnFEx-Model.png|width=50+
-
+Here is the model of the implementation: 
 - Block
 -- EmptyBlock
 -- Wall
@@ -31,90 +60,37 @@ ${slide:title=Model}$
 --- Push
 -- NoMove
 
-We will come back later...
+- First gut feeling analysis: The Block model looks to shallow
 
-${slide:title=Views}$
-
-+.>file://figures/LearnFEx-View.png|width=50+
-
-${slide:title=Controllers}$
-
-+.>file://figures/LearnFEx-Controllers.png|width=50+
-
-${slide:title=Let us guess about the model}$
-
-${columns}$
-
-${column:width=60}$
-
-- Wall
-- Floor
-- Box
-- Robot
-- Target
-- Board
-
-${column:width=40}$
-
-+.>file://figures/LearnFEx-Sokoban1.png|width=120+
-
-${endColumns}$
-
-
-${slide:title=Let us guess about the model}$
-
-${columns}$
-
-${column:width=60}$
-
-- Wall
-- Floor
-- Box
-- Robot
-- Target
-- Board
-Instead we got 
-- Block
--- EmptyBlock
--- Wall
-
-Let us study that...
-
-${column:width=40}$
-
-+.>file://figures/LearnFEx-Sokoban1.png|width=120+
-
-${endColumns}$
-
-
-${slide:title=Let us check the class API}$
+${slide:title=Let us check the API}$
 
 - isEmptyBlock
 - isWall
+
 Let us check the way this API is used
 
 ${slide:title=Too many ifs....}$
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	(aBlock isWall) ifTrue: [ self drawWall: aCanvas ].
-	(aBlock isEmptyBlock) ifTrue: [ 
-		(aBlock hasPlayer) ifTrue: [ 
-			(aBlock hasTarget) ifTrue: [ self drawTargetAndPlayer: aCanvas ].
-			(aBlock hasTarget) ifFalse: [ self drawPlayer: aCanvas ]].
-		(aBlock hasPlayer) ifFalse: [ 
-			(aBlock hasBox) ifTrue: [ 
-				(aBlock hasTarget) ifTrue: [ self drawTargetAndBox: aCanvas ].
-				(aBlock hasTarget) ifFalse: [ self drawBox: aCanvas ] ].
-			(aBlock hasBox) ifFalse: [ 
-					(aBlock hasTarget) ifTrue: [ self drawTarget: aCanvas ].
-					(aBlock hasTarget) ifFalse: [ self drawEmptyBlock: aCanvas ] ].
+	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
+	aBlock isEmptyBlock ifTrue: [ 
+		aBlock hasPlayer ifTrue: [ 
+			aBlock hasTarget ifTrue: [ self drawTargetAndPlayer: aCanvas ].
+			aBlock hasTarget ifFalse: [ self drawPlayer: aCanvas ]].
+		aBlock hasPlayer ifFalse: [ 
+			aBlock hasBox ifTrue: [ 
+				aBlock hasTarget ifTrue: [ self drawTargetAndBox: aCanvas ].
+				aBlock hasTarget ifFalse: [ self drawBox: aCanvas ] ].
+			aBlock hasBox ifFalse: [ 
+					aBlock hasTarget ifTrue: [ self drawTarget: aCanvas ].
+					aBlock hasTarget ifFalse: [ self drawEmptyBlock: aCanvas ] ].
 	]
 ]]]
 
-${slide:title=Why?}$
+${slide:title=Analysis}$
 
-Because the model only defines
+The model only defines
 - EmptyBlock and 
 - Wall
 
@@ -122,25 +98,26 @@ No Player, no target, no box.
 
 Too much logic is put in EmptyBlock
 
-${slide:title=A better model}$	
+Too much Ask not enough Tell (Do not Ask, Tell)
 
-%+.>file://figures/LearnFEx-Model2.png|width=100+
+${slide:title=A better model}$	
 
 - Block
 -- Box
 -- BoxOnTarget
 -- EmptyBlock
 -- Player
--- PlayerOnTarget
+-- PlayerOnTarget (no need if we can have overlapping cells)
 -- Wall
 
 
-${slide:title=A possible solution}$	
+${slide:title=A nicer solution}$	
+
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	(aBlock isWall) ifTrue: [ self drawWall: aCanvas ].
-	(aBlock isEmptyBlock) ifTrue: [ 
+	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
+	aBlock isEmptyBlock ifTrue: [ 
 	...
 ]]]
 
@@ -157,6 +134,8 @@ EmptyBlock >> drawOn: aCanvas view: aView
 	aView drawEmptyBlock: aCanvas
 ]]]
 
+- We tell a block to draw itself and it tells how to the canvas
+- Double dispatch to the rescue
 
 ${slide:title=Back to the model}$
 
@@ -171,20 +150,28 @@ Good to support Undo
 
 ${slide:title=Let us study the API}$
 
+
 [[[
 MoveResult >> isMove
 	^ false
 MoveResult >> isPush
 	^ false
 MoveResult >> isNoMove
+...
 ]]]
+
+Again testing kind methods
+
+Testing kind methods are the same as ==x class = MoveResult==
+
+${slide:title=Check how they are used}$
 
 [[[
 GameState >> moveBy: aDirection
 	| moveResult |
 	moveResult := maze moveBy: aDirection.
-	(moveResult isMove) ifTrue: [ moves := moves + 1 ].
-	(moveResult isPush) ifTrue: [ 
+	moveResult isMove ifTrue: [ moves := moves + 1 ].
+	moveResult isPush ifTrue: [ 
 		pushes := pushes + 1.
 		moves := moves + 1 ].
 	self addMoveResult: moveResult.
@@ -196,22 +183,24 @@ ${slide:title=Do not ask tell}$
 GameState >> moveBy: aDirection
 	| moveResult |
 	moveResult := maze moveBy: aDirection.
-	moveResult doWithGameState: self.	
+	moveResult updateGameState: self.	
 	self addMoveResult: moveResult.
 
-Move >> doWithGameState: aGameState
+Move >> updateGameState: aGameState
 	aGameState incrementMoves
 
-Push >> doWithGameState: aGameState
-	super doWithGameState: aGameState.
+Push >> updateGameState: aGameState
+	super updateGameState: aGameState.
 	aGameState increasePushes
 
-NoMove >> doWithGameState: aGameState 
+NoMove >> updateGameState: aGameState 
 	self 
 ]]]
 
 ${slide:title=Conclusion}$
 
+- Challenge kind testing methods
+- Check their use
 - Messages act as a dispatcher
 - Avoid conditional when possible
 

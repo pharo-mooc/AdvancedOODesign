@@ -10,12 +10,8 @@ Todo next
 
 - In antiif put, the shape slides?
 
-- Avoid is null 
-	improve slides.
-
 - Sokoban 
 	- simplify story remove the look and architecture.
 	
-	
-	
+TODO: 	
 - Should verify flatten in Basic polymorphism at work
