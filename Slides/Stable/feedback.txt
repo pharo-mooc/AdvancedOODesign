@@ -17,3 +17,5 @@ Todo next
 	- simplify story remove the look and architecture.
 	
 	
+	
+- Should verify flatten in Basic polymorphism at work

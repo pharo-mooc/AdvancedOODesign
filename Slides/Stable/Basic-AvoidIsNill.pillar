@@ -6,63 +6,32 @@
 
 ${slide:title=Goal}$
 
-- Anti if Campaign
-- Returning nil
+- Understanding the implication behind returning nil
 - Null Object 
 
-${slide:title=Anti If Campaign}$
+${slide:title=nil?}$
 
-[[[
-Main >> showHappiness: animal
-   animal isDog
-      ifTrue: [ animal shakeTail ].
-   animal isDuck
-      ifTrue: [ animal quack ].
-   animal isCat ifTrue: [ ... ].
-]]]
-
-
-${slide:title=Anti If Campaign}$
-
-[[[
-Main >> showHappiness: animal
-   animal isDog
-      ifTrue: [ animal shakeTail ].
-   animal isDuck
-      ifTrue: [ animal quack ].
-   animal isCat ifTrue: [ ... ].
-]]]
-
-Branching (with ==if==) based on the type of an object is bad:
-- adding a new type requires modifying all such code
-- methods will become very long and full of details
-
-Send messages instead
-
-%+.>file://figures/antifIfCampaign.png|width=60+
-
-${slide:title=Better Approach: Define Polymorphic Method}$
-
-[[[
-Dog >> showHappiness
-   self shakeTail
-Duck >> showHappiness
-   self quack
-Cat >> showHappiness
-   ...
-]]]
-
-
+- Unique instance of the class ==UndefinedObject==
+- True object
+- Default value of uninitialized instance variable
+- Still we should be careful when to use it
 
 ${slide:title=Do Not Return Nil}$
 
+Imagine an inferencer that looks for rules that can be applied to a fact. 
+
 [[[
 Inferencer >> rulesForFact: aFact
-   self noRule ifTrue: [ ^ nil ]
-   ^ self rulesAppliedTo: aFact
+	...
+	self noRule ifTrue: [ ^ nil ]
+	^ self rulesAppliedTo: aFact
 ]]]
 
-==ifTrue: [ ^ nil ]== forces every client to check for ==nil==:
+- Here we return ==nil== to indicate that there is no rules for a fact.
+
+${slide:title=Consequences!}$
+
+- Returning nil (e.g., ==ifTrue: [ ^ nil ]==) forces EVERY client to check for ==nil==:
 
 [[[
 (inferencer rulesForFact: 'a')
@@ -70,11 +39,16 @@ Inferencer >> rulesForFact: aFact
       rules do: [ :each | ... ]
 ]]]
 
-${slide:title=Return Polymorphic Objects}$
 
-When possible, replace ==if== by polymorphic objects:
+
+${slide:title=Solution: Return Polymorphic Objects}$
+
+When possible, return polymorphic objects:
 - when returning a collection, return an empty one
 - when returning a number, return 0
+
+
+${slide:title=Solution: Return Polymorphic Objects}$
 
 [[[
 Inferencer >> rulesForFact: aFact
@@ -88,6 +62,7 @@ Your clients can just iterate and manipulate the returned value
 (inferencer rulesForFact: 'a')
    do: [:each | ... ]
 ]]]
+
 
 ${slide:title=For Exceptional Cases, Use Exceptions}$
 
@@ -103,10 +78,11 @@ FileStream >> cantWriteError
    (CantWriteError file: file) signal
 ]]]
 
-${slide:title=Initialize Your Object State}$
+${slide:title=Solution: Initialize Your Object State}$
 
 Avoid ==nil== checks by initializing your variables
 - by default instance variables are initialized with ==nil==
+- The responsibility of an object is to correctly initialize its state
 
 [[[
 Archive >> initialize
@@ -114,7 +90,9 @@ Archive >> initialize
    members := OrderedCollection new
 ]]]
 
-${slide:title=Use Lazy Initialization if Necessary}$
+${slide:title=Solution: Use Lazy Initialization when Necessary}$
+
+
 
 You can defer initialization of a variable to its first use:
 
@@ -125,10 +103,17 @@ FreeTypeFont >> descent
                                self face unitsPerEm) negated ]
 ]]]
 
+- Lazy initialization trades time vs runtime cost (==ifNil:== check)
+- You should always use this accessor
+- Pay attention you should NOT access directly an instance variable used in a lazy setting 
+- Else you can get exposed to ==nil==
+
 ${slide:title=Sometimes you have to check...}$
 
 Sometimes you have to check before doing an action
-- if you can, turn the default case into an object
+- if you can, turn the default case into an object, a Null Object, a Default Selected object
+
+${slide:title=Example}$
 
 [[[
 ToolPalette >> nextAction
@@ -140,7 +125,18 @@ ToolPalette >> previousAction
       ifNotNil: [ :tool | tool detachHandles ]
 ]]]
 
-${slide:title=Use NullObject}$
+Here we are forced to check that there is a selected tool. 
+- Why not having always one selected?
+- Even one doing nothing?
+
+${slide:title=Solution: Use NullObject}$
+
+- A null object proposes a **polymorphic** API and embeds default actions/values
+- Let us create a ==NoTool== class whose behavior is to do nothing.
+
+[[[
+AbstractTool << #NoTool
+]]]
 
 [[[
 NoTool >> attachHandles
@@ -149,17 +145,33 @@ NoTool >> detachHandles
    ^ self
 ]]]
 
+${slide:title=Solution: Use NullObject}$
+
+Initialize the ==ToolPalette== with a ==NoTool== instance.
+
 [[[
 ToolPalette >> initialize
    self selectedTool: NoTool new
+]]]
+
+And we get no forced ==ifNil:== tests anymore
+
+[[[   
 ToolPalette >> nextAction
    self selectedTool attachHandles
+   
 ToolPalette >> previousAction
    self selectedTool detachHandles
 ]]]
 
-- A null object proposes a polymorphic API and embeds default actions/values
 - Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
+
+${slide:title=Solution: About NullObject}$
+
+Sometimes it is difficult to apply the ==NullObject==
+- Too large API
+- Need too many NullObject
+- Unclear default "no behavior"
 
 ${slide:title=Conclusion}$
 
@@ -167,5 +179,3 @@ ${slide:title=Conclusion}$
 - Avoid null checks, return polymorphic objects instead
 - Initialize your variables
 - If you can, create objects representing default behavior
-
-%+.>file://figures/antifIfCampaign.png|width=60+
