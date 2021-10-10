@@ -185,7 +185,7 @@ Die >> + aDicable
 
 ${slide:title=Adding Two Dice and Ready for More}$
 
-+>file://figures/DieDoubleDispatchPartialArgDie0.pdf|width=90+
++>file://figures/DieDoubleDispatchPartialArgDie0.pdf|width=80+
 
 ${slide:title=Handling DieHandle as Argument}$
 
@@ -205,7 +205,7 @@ DieHandle >> sumWithDie: aDie
 
 ${slide:title=Handling DieHandle as Argument}$
 
-+>file://figures/DieDoubleDispatchPartialArgDieHandle.pdf|width=90+
++>file://figures/DieDoubleDispatchPartialArgDieHandle.pdf|width=80+
 
 ${slide:title=Sending a Message is Making a Choice}$
 
