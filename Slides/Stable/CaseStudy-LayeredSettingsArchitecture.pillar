@@ -1,0 +1,195 @@
+{
+    "title":"From Facade/Singleton to Declaration and Modularity",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+${slide:title=Facade and Singleton are against modularity}$
+
+- A facade should rarely be used.
+- A facade is a global variable!
+- 
+
+${slide:title=The case of Preferences}$
+
++.>file://figures/SettingBrowser.png|width=60+
+
+
+
+${slide:title=Challenges}$
+
+- How to make sure that we can have a modular definition
+-- One application with only its preferences
+- How do we make sure that domain does not reference to preferences objects and still offers preferences ?
+
+
+${slide:title=Looking into the problem}$
+
+Back in time in Squeak 3.8
+- ==Preferences== 
+- Preferences class was references 617 times
+- Every single part was 
+
+${slide:title=UI, Tools,... all referenced Preferences}$
+
+
+[[[
+MenuMorph >> initialize
+	super initialize.
+	bounds := 0@0 corner: 40@10.
+	self setDefaultParameters.
+	self listDirection: #topToBottom.
+	self hResizing: #shrinkWrap.
+	self vResizing: #shrinkWrap.
+	defaultTarget := nil.
+	selectedItem := nil.
+	stayUp := false.
+	popUpOwner := nil.
+	Preferences roundedMenuCorners ifTrue: [self useRoundedCorners]
+]]]
+
+[[[
+BasicButton >> label: aString font: aFontOrNil
+
+	| oldLabel m aFont |
+	(oldLabel := self findA: StringMorph)
+		ifNotNil: [oldLabel delete].
+	aFont := aFontOrNil ifNil: [Preferences standardButtonFont].
+	m := StringMorph contents: aString font: aFont.
+	self extent: (m width + 6) @ (m height + 6).
+	m position: self center - (m extent // 2).
+	self addMorph: m.
+	m lock
+]]]
+
+${slide:title=Even core parts of the system}$
+
+[[[
+Class class >> templateForSubclassOf: priorClassName category: systemCategoryName 
+	"Answer an expression that can be edited and evaluated in order to define a new class, 
+	given that the class previously looked at was as given"
+
+	Preferences printAlternateSyntax 
+		ifTrue: [^ priorClassName asString, ' subclass (#NameOfSubclass)
+	instanceVariableNames ('''')
+	classVariableNames ('''')
+	poolDictionaries ('''')
+	category (''' , systemCategoryName asString , ''')']
+		ifFalse: [^ priorClassName asString, ' subclass: #NameOfSubclass
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	poolDictionaries: ''''
+	category: ''' , systemCategoryName asString , '''']
+]]]
+
+${slide:title=Even core parts of the system}$
+
+[[[
+InputSensor >> duplicateControlAndAltKeysChanged
+	"The Preference for duplicateControlAndAltKeys has changed."
+	(Preferences
+		valueOfFlag: #swapControlAndAltKeys
+		ifAbsent: [false]) ifTrue: [
+			self inform: 'Resetting swapControlAndAltKeys preference'.
+			(Preferences preferenceAt: #swapControlAndAltKeys) rawValue: false.
+		].
+	self installKeyDecodeTable.
+]]]
+
+${slide:title=Graphically}$
+
++.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=80+
+
+
+${slide:title=Analysis}$
+
+- Everybody depends on Preferences/Facade
+- The Preferences is not optional
+- Each time the Facade depends on a new item, all the dependent are impacted
+- A clear lost-lost
+- Monolithic
+
+
+${slide:title=A New Architecture}$
+
++.>file://figures/Settings-PreferenceModularFlow.pdf|width=80+
+
+
+${slide:title=A New Architecture}$
+
+- A class ""defines state / methods"" that implement its customization points
+
+- The class ""declares"" its settings (via description)
+
+- The settings browser collects the setting declaration and builds a UI for the user
+
+- The settings browser ""configure"" objects using settings description
+
+${slide:title=In Action: A class implements its customization points}$
+
+[[[
+JobProgressBarMorph >> isInterruptable 
+	^ self class isInterruptable
+
+JobProgressBarMorph class >> isInterruptable
+	^ IsInterruptable ifNil: [ IsInterruptable := true ]
+]]]
+
+
+${slide:title=In Action: Settings declaration using a Builder}$
+
+[[[
+JobProgressBarMorph class >> interruptionSetting: aBuilder 
+	<systemsettings>
+	(aBuilder setting: #isInterruptable) 
+		label: 'Make progress bar interuptable';
+		default: true;
+		description: 'When enabled, add a button to progress bars to 
+		interupt the action when clicked.';
+		parent: #progress; 
+		target: self;
+		order: 1
+]]]
+
+- Using a builder as parameter we avoiddirect references to the classes of Settings.
+- Can be optionally packaged in another package if needed. 
+
+
+${slide:title=In Action: Settings Browser}$
+
++.>file://figures/Settings-Job.png|width=80+
+
+- Use the settings to ""configure"" the objects.
+
+${slide:title=Looking at Flow of Control}$
+
++.>file://figures/Settings-PreferenceModularFlow.pdf|width=80+
+
+
+${slide:title=Analysis}$
+
+- Layered
+-- the domain does not depend on the setting framework
+-- Settings do not depend on Browser
+
+- Modular
+
+
+${slide:title=About parametrizable}$
+
+- An object should be designed to be parametrized
+- The logic flow should be internal
+- The object logic should not be tight to a preference object
+- The object parametrization can be set from an external object (like the Setting browser)
+
+
+${slide:title=Conclusion}$
+
+- Architecture should not promote global variable usage
+- Avoid Singleton/Facade, these are anti-patterns
+- Our theory is that Facade is only "useful" for Compiler :)
+
+
+
+
+
