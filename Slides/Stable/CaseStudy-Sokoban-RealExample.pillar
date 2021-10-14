@@ -13,7 +13,7 @@ ${slide:title=Studying a Sokoban Implementation}$
 
 Sokoban (倉庫番, Sōko-ban) is a puzzle video game genre in which the player pushes crates or boxes around in a warehouse, trying to get them to storage locations.
 *https://en.wikipedia.org/wiki/Sokoban*
-+.>file://figures/SokobanOld.png|width=100+
++.>file://figures/SokobanOld.png|width=60+
 
 ${slide:title=Studying a Sokoban Implementation}$
 

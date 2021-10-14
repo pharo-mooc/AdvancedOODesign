@@ -1,6 +1,6 @@
 {
     "title" : "About results",
-    "subtitle" : "The case of SPScissors"
+    "subtitle" : "The case of Stone Paper Scissors",
     "slidesid" : "",
     "author" : ""
 }
@@ -8,7 +8,7 @@
 ${slide:title=Goals}$
 
 - Think about results
-
+- What to do with them
 
 
 ${slide:title=Remember}$
@@ -20,7 +20,6 @@ ${slide:title=Remember}$
 
 
 +An overview of a possible solution using double dispatch.>file://figures/StonePaperScissors.pdf|width=80+
-
 
 
 ${slide:title=Returning numbers}$
