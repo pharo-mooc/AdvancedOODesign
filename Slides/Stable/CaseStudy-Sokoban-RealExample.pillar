@@ -1,7 +1,8 @@
 {
     "title":"Learning From Real Examples",
-    "subtitle":"A Sokoban implementation",
-    "slidesid":"From the Design Corner"
+    "subtitle":"Learning from a Sokoban implementation",
+    "slidesid":"",
+    "author":""
 }
 
 ${slide:title=Goal}$
@@ -11,43 +12,21 @@ ${slide:title=Goal}$
 
 ${slide:title=Studying a Sokoban Implementation}$
 
-Sokoban (倉庫番, Sōko-ban) is a puzzle video game genre in which the player pushes crates or boxes around in a warehouse, trying to get them to storage locations.
+Sokoban is a puzzle video game genre in which the player pushes crates or boxes around in a warehouse, trying to get them to storage locations.
 *https://en.wikipedia.org/wiki/Sokoban*
-+.>file://figures/SokobanOld.png|width=60+
+
++.>file://figures/SokobanOld.png|width=30+
 
 ${slide:title=Studying a Sokoban Implementation}$
 
-Developed by some students of I. Franko University (Lviv) that we want to thank!
+- Developed by some students of I. Franko University (Lviv)
+- Thank you so much!
 
-+.>file://figures/LearnFEx-Sokoban1.png|width=100+
++.>file://figures/LearnFEx-Sokoban1.png|width=65+
 
-${slide:title=Guess the model}$
 
-${columns}$
+${slide:title=Looking the implemented core model}$
 
-${column:width=60}$
-
-- Wall
-- Floor
-- Box
-- Robot
-- Target
-- BoxOnTarget
-- Board
-
-And 
-- Template/Level
-- Moves
-
-${column:width=40}$
-
-+.>file://figures/LearnFEx-Sokoban1.png|width=120+
-
-${endColumns}$
-
-${slide:title=Model}$
-
-Here is the model of the implementation: 
 - Block
 -- EmptyBlock
 -- Wall
@@ -60,7 +39,68 @@ Here is the model of the implementation:
 --- Push
 -- NoMove
 
-- First gut feeling analysis: The Block model looks to shallow
+
+
+
+
+${slide:title=What is your model for the game?}$
+
+${columns}$
+
+${column:width=60}$
+
+- Apply ""Speculate about Design"" object-oriented reengineering pattern
+
+- ""Intent:"" Progressively refine a design against source code by checking hypotheses about the design against the source code. 
+
+- Use your development expertise to conceive a hypothetical class diagram representing the design.
+
+${column:width=40}$
+
++.>file://figures/OORP.jpg|width=30+
+
+${endColumns}$
+
+
+
+${slide:title=Take some minutes to sketch a list of classes}$
+
++.>file://figures/LearnFEx-Sokoban1.png|width=65+
+
+
+
+${slide:title=Our version a possible implementation}$
+
+${columns}$
+
+${column:width=60}$
+
+- Wall
+- Floor
+- Box
+- Robot
+- Target
+- Board
+
+And 
+- Template/Level
+- Moves
+
+${column:width=40}$
+
++.>file://figures/LearnFEx-Sokoban1.png|width=120+
+
+${endColumns}$
+
+${slide:title=Gut feeling analysis}$
+
+- The Block implemented model looks to shallow
+- Remember the lectures of implementing "not, or..."
+- Classes are representing case
+- Classes are basis for dispatch
+- Not enough classes leads to tricky conditionals and monolithic systems
+
++.>file://figures/Design-FatVsDispatch.pdf|width=50+
 
 ${slide:title=Let us check the API}$
 
