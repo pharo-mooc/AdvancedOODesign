@@ -1,6 +1,6 @@
 {
-    "title":"Learning From Real Examples",
-    "subtitle":"Learning from a Sokoban implementation",
+    "title":"Learning from a Sokoban implementation",
+    "subtitle":"",
     "slidesid":"",
     "author":""
 }
@@ -43,7 +43,7 @@ ${slide:title=Looking the implemented core model}$
 
 
 
-${slide:title=What is your model for the game?}$
+${slide:title=Let us ""Speculate about Design""}$
 
 ${columns}$
 
@@ -57,7 +57,7 @@ ${column:width=60}$
 
 ${column:width=40}$
 
-+.>file://figures/OORP.jpg|width=30+
++.>file://figures/OORP.jpg|width=50+
 
 ${endColumns}$
 
@@ -65,15 +65,26 @@ ${endColumns}$
 
 ${slide:title=Take some minutes to sketch a list of classes}$
 
-+.>file://figures/LearnFEx-Sokoban1.png|width=65+
-
-
-
-${slide:title=Our version a possible implementation}$
 
 ${columns}$
 
+${column:width=30}$
+
+- ...
+- ...
+- ...
+
 ${column:width=60}$
+
++.>file://figures/LearnFEx-Sokoban1.png|width=65+
+
+${endColumns}$
+
+${slide:title=A possible implementation}$
+
+${columns}$
+
+${column:width=30}$
 
 - Wall
 - Floor
@@ -86,79 +97,115 @@ And
 - Template/Level
 - Moves
 
-${column:width=40}$
+${column:width=60}$
 
-+.>file://figures/LearnFEx-Sokoban1.png|width=120+
++.>file://figures/LearnFEx-Sokoban1.png|width=65+
 
 ${endColumns}$
 
+
+${slide:title=Let us go back}$
+
+- ==Block==
+-- ==EmptyBlock==
+-- ==Wall==
+- ==GameModel==
+- ==GameState==
+- ==Maze==
+- ==MazeTemplate==
+- ==MoveResult==
+-- ==Move==
+--- ==Push==
+-- ==NoMove==
+
+
 ${slide:title=Gut feeling analysis}$
 
-- The Block implemented model looks to shallow
-- Remember the lectures of implementing "not, or..."
-- Classes are representing case
-- Classes are basis for dispatch
+- The implemented Block model looks too shallow
+- Remember classes 
+-- are representing cases
+--  are the basis for dispatch
 - Not enough classes leads to tricky conditionals and monolithic systems
-
+- Remember the lectures ""Implementing not, or...""
 +.>file://figures/Design-FatVsDispatch.pdf|width=50+
 
-${slide:title=Let us check the API}$
+${slide:title=Let us check the class API}$
 
-- isEmptyBlock
-- isWall
+Classes define:
+- ==isEmptyBlock==
+- ==isWall==
+- ==hasPlayer==
+- ==hasTarget==
+- ==hasBox==
 
 Let us check the way this API is used
+
+%${slide:title=Too many ifs....}$
+
+%[[[
+%GameView >> drawBlock: aBlock on: aCanvas
+%	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
+%	aBlock isEmptyBlock ifTrue: [ 
+%		aBlock hasPlayer ifTrue: [ 
+%			aBlock hasTarget ifTrue: [ self drawTargetAndPlayer: aCanvas ].
+%			aBlock hasTarget ifFalse: [ self drawPlayer: aCanvas ]].
+%		aBlock hasPlayer ifFalse: [ 
+%			aBlock hasBox ifTrue: [ 
+%				aBlock hasTarget ifTrue: [ self drawTargetAndBox: aCanvas ].
+%				aBlock hasTarget ifFalse: [ self drawBox: aCanvas ] ].
+%			aBlock hasBox ifFalse: [ 
+%					aBlock hasTarget ifTrue: [ self drawTarget: aCanvas ].
+%					aBlock hasTarget ifFalse: [ self drawEmptyBlock: aCanvas ] ].
+%	]
+%]]]
 
 ${slide:title=Too many ifs....}$
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
-	aBlock isEmptyBlock ifTrue: [ 
-		aBlock hasPlayer ifTrue: [ 
-			aBlock hasTarget ifTrue: [ self drawTargetAndPlayer: aCanvas ].
-			aBlock hasTarget ifFalse: [ self drawPlayer: aCanvas ]].
-		aBlock hasPlayer ifFalse: [ 
-			aBlock hasBox ifTrue: [ 
-				aBlock hasTarget ifTrue: [ self drawTargetAndBox: aCanvas ].
-				aBlock hasTarget ifFalse: [ self drawBox: aCanvas ] ].
-			aBlock hasBox ifFalse: [ 
-					aBlock hasTarget ifTrue: [ self drawTarget: aCanvas ].
-					aBlock hasTarget ifFalse: [ self drawEmptyBlock: aCanvas ] ].
-	]
+	aBlock isWall 
+		ifTrue: [ self drawWall: aCanvas ]
+		ifFalse: [ aBlock isEmptyBlock 
+			ifTrue: [ aBlock hasPlayer 
+					ifTrue: [ aBlock hasTarget 
+							ifTrue: [ self drawTargetAndPlayer: aCanvas ]
+						 	ifFalse: [ self drawPlayer: aCanvas ]]
+					ifFalse: [ aBlock hasBox 
+						ifTrue: [ aBlock hasTarget 
+							ifTrue: [ self drawTargetAndBox: aCanvas ]
+							ifFalse: [ self drawBox: aCanvas ]]
+					ifFalse: [ 
+						aBlock hasTarget 
+							ifTrue: [ self drawTarget: aCanvas ]
+						ifFalse: [ self drawEmptyBlock: aCanvas ]]]
 ]]]
 
 ${slide:title=Analysis}$
 
-The model only defines
-- EmptyBlock and 
-- Wall
+The model only defines ==EmptyBlock== and ==Wall==
 
-No Player, no target, no box.
+- No Player, no target, no box.
+- Too much logic is put in ==EmptyBlock==
+- Too much Ask,  not enough Tell (""Do not Ask, Tell")
 
-Too much logic is put in EmptyBlock
+${slide:title=With a better model}$	
 
-Too much Ask not enough Tell (Do not Ask, Tell)
+- ==Block==
+-- ==Box==
+-- ==BoxOnTarget==
+-- ==EmptyBlock==
+-- ==Player==
+-- ==Wall==
 
-${slide:title=A better model}$	
-
-- Block
--- Box
--- BoxOnTarget
--- EmptyBlock
--- Player
--- PlayerOnTarget (no need if we can have overlapping cells)
--- Wall
-
+- We can send messages to the 'correct' object
 
 ${slide:title=A nicer solution}$	
-
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
 	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
 	aBlock isEmptyBlock ifTrue: [ 
-	...
+	aBlock hasPlayer ifTrue: [ ...
 ]]]
 
 Becomes
@@ -174,19 +221,45 @@ EmptyBlock >> drawOn: aCanvas view: aView
 	aView drawEmptyBlock: aCanvas
 ]]]
 
-- We tell a block to draw itself and it tells how to the canvas
-- Double dispatch to the rescue
+- We ""tell"" a block to draw itself and it ""tells"" how to the canvas
+- Sending messages is powerful
+
+
+
+${slide:title=Disguided kind testing method}$
+
+[[[
+Wall >> isWall
+	^ true
+EmptyBlock >> isWall
+	^ false
+]]]
+
+and 
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	aBlock isWall ifTrue: [ self drawWall: aCanvas ]
+]]]
+
+is nearly the same as
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	(aBlock isKindOf: Wall) ifTrue: [ self drawWall: aCanvas ].
+]]]
+
 
 ${slide:title=Back to the model}$
 
 What are:
-- MoveResult
--- Move
---- Push
--- NoMove
+- ==MoveResult==
+-- ==Move==
+--- ==Push==
+-- ==NoMove==
 
-Kind of Command objects
-Good to support Undo
+- Reification of player actions
+- Could be good to record and replay
 
 ${slide:title=Let us study the API}$
 
@@ -200,11 +273,10 @@ MoveResult >> isNoMove
 ...
 ]]]
 
-Again testing kind methods
+- Again testing kind methods
+- Testing kind methods are the same as ==x class = MoveResult==
 
-Testing kind methods are the same as ==x class = MoveResult==
-
-${slide:title=Check how they are used}$
+${slide:title=Checking testing method use}$
 
 [[[
 GameState >> moveBy: aDirection
@@ -217,7 +289,7 @@ GameState >> moveBy: aDirection
 	self addMoveResult: moveResult.
 ]]]
 
-${slide:title=Do not ask tell}$
+${slide:title=Do not ask, tell}$
 
 [[[
 GameState >> moveBy: aDirection
@@ -239,9 +311,12 @@ NoMove >> updateGameState: aGameState
 
 ${slide:title=Conclusion}$
 
+- Challenge Class
+- Little class hierarchies are good
+- Better many small classes than a big one
 - Challenge kind testing methods
 - Check their use
 - Messages act as a dispatcher
-- Avoid conditional when possible
+
 
 
