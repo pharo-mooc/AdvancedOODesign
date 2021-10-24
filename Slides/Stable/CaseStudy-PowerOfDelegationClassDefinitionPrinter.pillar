@@ -7,20 +7,19 @@
 
 ${slide:title=Goal}$
 
+- Think modular
 - Looking at the class definition printer
-- Support Old Squeak syntax, Pharo previous and Fluid new one
-- Should handle class, metaclass, trait...
-- Modularly
-- Dynamically changes
-- Can remove one any time without recompilation
+- Check design approach in Pharo 9
 
-${slide:title=The case of Class definition printer}$
 
-- How to support evolution of class definition
+
+${slide:title=Context: Class Definition }$
+
+- How to support the evolution of class definition
 - Supporting package, various formats, slots
 - Without parameter explositions
 
-${slide:title=Historically: a Class Definition}$
+${slide:title=Historically: a Class Definition in ST-80}$
 
 [[[
 ArrayedCollection variableSubclass: #Array
@@ -50,16 +49,16 @@ Object subclass: #Point
 	package: ''Kernel-BasicObjects'''
 ]]]
 
-${slide:title=Method Explosion}$
+${slide:title=Method Parameter Explosion}$
 
-- packages, tags, slots, 
-- new kind of subclasses: ephemerons,....
-- How to support new information without method combinatory explosion
+- Packages, tags, slots, 
+- New kind of subclasses: ephemerons,....
+- How to support new information without method parameter combinatory explosion
 
-${slide:title=Fluid class definition in Pharo 90}$
+${slide:title=Fluid Class Definition in Pharo 90}$
 
-- Using a fluid API
-- Only the necessary
+- Using a fluid API (cascade instead of mandatory parameters)
+- Only the necessary parameters
 - Composable
 - Extensible
 - Supporting complex slots (first class instance variables)
@@ -74,9 +73,7 @@ ArrayedCollection << #Array
 ]]]
 
 [[[
-Object << #Point
-	slots: { #x . #y };
-	tag: 'BasicObjects';
+Object class << Point class
 	package: 'Kernel'
 ]]]
 
@@ -87,7 +84,7 @@ Object << #Point
 ${slide:title=The Case of Complex Slots}$
 
 - Previous Pharo class definition did not support well slots
-
+- We want to support
 [[[
 SpAbstractWidgetPresenter << #SpDiffPresenter
 	slots: {
@@ -107,10 +104,13 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 
 ${slide:title=Challenges}$
 
-- How to support such definitions?
+- How to support such definitions (Old Squeak syntax, Pharo previous and Fluid new one)?
+- Should handle class, metaclass, trait...
 - How to control the complexity?
 -- Slots should not be displayed in Old Pharo
 - How to avoid to check everywhere?
+- Can remove one definition any time without recompilation
+
 
 ${slide:title=First Hacked version in Pharo 70/80}$
 
@@ -119,7 +119,6 @@ ClassDescription >> definition
 
 	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) 
 		ifTrue: [ ^ self definitionWithSlots ].
-
 	^ self definitionWithoutSlots
 ]]]
 
@@ -151,8 +150,14 @@ ClyClassCreationToolMorph >> classTemplate
 	^ template , self packageName , '''' 
 ]]]
 
+
+${slide:title=Thinking... about a solution}$
+
+- Think 5 min how you would solve it
+
 ${slide:title=Solution: Delegating to a ClassDefinition Printer}$
 
+- Create class definition printer
 - A kind of Strategy
 - A hierarchy of printers
 
@@ -166,7 +171,7 @@ ClassDefinitionPrinter ( forClass )
 
 ${slide:title=Solution: Delegating to a ClassDefinition Printer}$
 
-+>file://figures/ClassPrinter.pdf+
++>file://figures/ClassPrinter.pdf|width=80+
 
 
 ${slide:title=From Class}$
@@ -227,22 +232,23 @@ ${slide:title=Tool logic}$
 ClassCreationToolMorph >> classTemplate
 
 	^ ClassDefinitionPrinter new 
-		compactClassDefinitionTemplateInPackage: self packageName
+			compactClassDefinitionTemplateInPackage: self packageName
 ]]]
 
 ${slide:title=Analysis}$
 
-- Modular One class = one printer
+- Modular: One format = one printer
 - One printer supports multiple related features (expansion, template, class printing)
 - Support reuse within the hierarchy
-- Defaulting within printers ( To print complex slots using legacy, if necessary legacy printer
-redirects to fluid printer )
+- Defaulting within printers
+-- if necessary legacy printer redirects to fluid printer
+
 
 ${slide:title=How to support?}$
 
 How to support printing different objects on different printers
-- Traits, Classes, Metaclasses
-- Legacy, OldPharo and Fluid
+- Traits, Classes, and Metaclasses
+- Legacy, OldPharo, and Fluid
 
 
 ${slide:title=Double Dispatch}$
@@ -258,43 +264,35 @@ ClassDefinitionPrinter >> definitionString
 
 [[[
 Class >> definitionStringFor: aConfiguredPrinter
+	^ aConfiguredPrinter classDefinitionString
 
-	^ aConfiguredPrinter classDefinitionString 
-]]]
+Trait >> definitionStringFor: aConfiguredPrinter
+	^ aConfiguredPrinter traitDefinitionString
 
-[[[
-Class >> definitionStringFor: aConfiguredPrinter
-
-	^ aConfiguredPrinter classDefinitionString 
-]]]
-
-[[[
-Class >> definitionStringFor: aConfiguredPrinter
-
-	^ aConfiguredPrinter metaclassDefinitionString 
+TraitedMetaclass >> definitionStringFor: aConfiguredPrinter
+	^ aConfiguredPrinter traitedMetaclassDefinitionString 
 ]]]
 
 
 ${slide:title=Encapsulate printer selection}$
 
 - Limit reference to specific printers
-- Reference the superclass
+- Only reference the superclass
 
 [[[
 Object << #ClassDefinitionPrinter
-	slots: { #forClass };
-	sharedVariables: { #DisplayEmptySlots . #ShowFluidClassDefinition };
-	tag: 'ClassDefinitionPrinter';
-	package: 'Kernel'
+		slots: { #forClass };
+		sharedVariables: { #DisplayEmptySlots . #ShowFluidClassDefinition };
+		tag: 'ClassDefinitionPrinter';
+		package: 'Kernel'
 ]]]
 
 
 [[[
 ClassDefinitionPrinter >> new
-
 	^ self showFluidClassDefinition
-		ifTrue: [ self fluid ]
-		ifFalse: [ self oldPharo ]
+			ifTrue: [ self fluid ]
+			ifFalse: [ self oldPharo ]
 ]]]
 
 
