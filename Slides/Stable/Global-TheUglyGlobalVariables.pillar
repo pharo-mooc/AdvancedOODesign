@@ -1,32 +1,36 @@
 {
-    "title":"About Global Variables",
-    "author":"",
-    "slidesid":""
+	"title":"About Global Variables",
+	"subtitle":"",
+	"author":"",
+	"slidesid":""
 }
 
 
 ${slide:title=Outline}$
 
-- Singleton is not nice because globally shared
+- Singleton/Global is not nice because globally shared
 - Singleton may take different forms
+- Study some cases
+- Think modular
+- Messages need different instances to dispatch
 
 ${slide:title=Autopsy of an Error}$
 
 [[[
 MyApp >> menu
 ...
-    icon: Smalltalk icons iconNamed: #window
+    icon: (Smalltalk icons iconNamed: #window)
 ...
 ]]]
 
 
-${slide:title=Case: Global Variable}$
+${slide:title=Case 1: Global Variable}$
 
-- One global variable.
-- What if as an application I want to extend, slightly change icons for my application only!
-- What if I want to be able to have two icon sets and the same time to compare.
+- One global variable
+- What if as an application I want to extend, slightly change icons for my application only
+- What if I want to be able to have two icon sets and the same time to compare
 
-${slide:title=Case: Disguised Global Variable}$
+${slide:title=Case 2: A Disguised Global Variable}$
 
 Since in Pharo we can extend core libraries we could think 
 this is any better.
@@ -43,12 +47,25 @@ MyApp >> menu
 ...
 ]]]
 
-${slide:title=Case: Disguised Global Variable}$
+${slide:title=Case 2: A Disguised Global Variable}$
 
-- One global variable but disguished: only one place to edit but still fundamentally one big giant global.
-- There is only one icon table.
+[[[
+MyApp >> menu
+...
+    icon: #window asIcon
+...
+]]]
+
+- Does not duplicate ==Smalltalk icons iconNamed:==
+- This is already something!
+
+
+${slide:title=Case 2: A Disguised Global Variable}$
+
+- One global variable but disguished: only one place to edit but still fundamentally one giant global
+- There is only one icon table
 - MyApp cannot extend or slightly change icons for my application only!
-- What if I want to be able to have two icon sets and the same time to compare.
+- I cannot simply have two icon sets at the same time to compare them
 
 ${slide:title=A much better approach}$
 
@@ -70,13 +87,13 @@ MyAppSuperclass >> iconNamed: aSymbol
 
 ${slide:title=Why is this better?}$
 
-- Modular.
-- Each receiver may do something different.
-- Each user may be configured differently.
-- Still we can share the common behavior.
+- Modular
+- Each receiver may do something different
+- Each user may be configured differently
+- Still we can share the common behavior
 
 
-${slide:title=Case: asClass}$
+${slide:title=Case 3: asClass}$
 
 Accessing programmatically a class is usually done as:
 
@@ -84,7 +101,7 @@ Accessing programmatically a class is usually done as:
 Smalltalk globals at: #Point
 ]]]
 
-People started to want a shorter version
+People wanted a shorter version
 
 [[[
 #Point asClass
@@ -95,19 +112,20 @@ Symbol >> asClass
 	^ Smalltalk globals at: self
 ]]]
 
+- Shorter for scripting
 - But there is a difference!
-- A huge one
+- A huge one...
 
 
-${slide:title=Case: asClass Analysis}$
+${slide:title=Case 3: asClass Analysis}$
 
-- Another global entry point.
-- We can only have one namespace. 
-- We cannot inject a special namespace for test for example.
-- No way to dispatch.
+- Another global entry point
+- What if we want to remotely access a class in another system
+- We can only have one namespace
+- We cannot inject a special namespace for test for example
+- No way to dispatch
 
-
-${slide:title=Case: Smalltalk tools - The ugly}$
+${slide:title=Case 4: Smalltalk tools - The ugly}$
 
 [[[
 browseMethodFull
@@ -120,16 +138,16 @@ browseMethodFull
 ]]]
 
 
-${slide:title=Case: Smalltalk tools Analysis}$
+${slide:title=Case 4: Smalltalk tools Analysis}$
 
-- One global entry point.
-- Everybody refers to this single point! Yes this is call monolithic thinking.
+- One global entry point
+- Everybody refers to this single point! Yes this is called monolithic thinking
 - Only one toolset possible at the same time (could be ok).
 
-${slide:title=Case: Smalltalk tools Possible Solution}$
+${slide:title=Case 4: Smalltalk tools Possible Solution}$
 
-- Each object that should refer to tools should do it via a parameter / instance variable.
-- No direct reference to a global singleton.
+- Each object that should refer to tools should do it via a parameter / instance variable and messages
+- Avoid direct reference to a global singleton
 
 [[[
 Browser >> initialize
@@ -144,6 +162,7 @@ Browser >> openDebugger
 
 ${slide:title=Points to consider}$
 
+- With a global, whenit changes, all its users are updated
 - How to manage the fact that a tool may change?
 - Browser may register to ToolEnvironment to be notified and update its instance
 
@@ -152,6 +171,6 @@ ${slide:title=Conclusion}$
 
 - Avoid Singleton as a global 
 - Think modular
-- Give a chance to object to specialize messages
+- Give a chance to objects to specialize messages
 
 
