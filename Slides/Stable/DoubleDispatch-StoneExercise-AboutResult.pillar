@@ -109,6 +109,16 @@ Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
 - We can have different result handlers
 
 
+
+${slide:title=Stepping back}$
+
+- Symbols looks better than numbers for returning information
+- Creating result handlers can be heavy
+- Context and scenarios often give you information to see 
+-- where to invest
+-- what is worth to support reuse
+
+
 ${slide:title=Conclusion}$
 
 Objects are 

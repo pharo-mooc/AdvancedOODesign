@@ -1,0 +1,121 @@
+{
+    "title":"Legends and Cheatsheets",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+${slide:title=Class definitions}$
+
+[[[
+Rectangle subclass: #Box
+	instanceVariableNames: 'height'
+	classVariableNames: ''
+	package: 'MyPackage'
+]]]
+
+[[[
+Rectangle << #Box
+	slot: { #height}; 
+	package: 'MyPackage'
+]]]
+
+[[[
+class  Box {
+	protected int height;
+	...
+	}
+]]]	
+
+${slide:title=Constructors}$
+
+[[[
+Box >> initialize
+	super initialize.
+	height := 100
+]]]
+
+[[[
+public Box() {
+        super();
+        height = 100;
+    }
+]]]
+
+${slide:title=SetUp}$
+
+[[[
+SetTestCase >> setUp
+	super setUp.
+	empty := Set new.
+]]]
+
+[[[
+@Before
+public void setUp(){
+	empty = new Set();
+	}
+]]]	
+
+
+
+${slide:title=Test Methods}$
+
+[[[
+SetTestCase >> testAdd 
+  empty add: 5.   "Stimulus"
+  empty add: 5.
+  self assert: empty size equals: 1   "Check"
+]]]
+  
+[[[
+@Test
+public void testAdd(){ 
+  empty.add(5);  //Stimulus
+  empty.add(5);  
+  assertEquals(empty.size(), 1);   "Check"
+  }
+]]]
+
+${slide:title=Syntactic Elements}$
+
+| | Pharo| Java |
+| comment| "a comment"| \\\\ or /\* \*/
+| character| \$\c \$\# \$\@ |
+| string| 'lulu' 'l''idiot'| "lulu"|
+| symbol (unique string)| #mac #+ | 
+| literal array| #(12 23 36)| [ int ]
+| boolean| true, false | 
+| undefined | nil | null
+| point| 10@120|
+
+${slide:title=Syntactic Elements II }$
+
+|  | Pharo| Java |
+| temp declaration | \| temp \| | int temp ; |
+| return|  ^ true | return true |
+| assignment |  x := 12 | x = 12
+| separator |  x := 12 .  | x = 12 ;
+
+
+${slide:title=Essential Constructs}$
+
+- Messages
+[[[
+1 class
+1 + 2
+self send: aMail to: stef
+]]]
+
+[[[
+1.getClass()
+1 + 2 
+this.sendTo(aMail,stef)
+]]]
+
+- Lexical closure definition and execution
+[[[
+[ :x | x + 2 ] value: 5
+>>> 7 
+]]]
+
+
