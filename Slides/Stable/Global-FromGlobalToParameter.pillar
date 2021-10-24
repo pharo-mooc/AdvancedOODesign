@@ -1,20 +1,26 @@
 {
-	"title":"From Global to Parameter",
-	"author":""
+    "title" : "Global To Parameter",
+    "subtitle":"",
+    "slideid" : "",
+    "slidesid" : "",
+    "author" : ""
 }
 
 ${slide:title=Goal}$
 
 - Globals are not a fatality
+- Pros and cons
+
 
 ${slide:title=Roadmap}$
+
 - Analysis of Transcript usage
 - Cure
 - Analysis
-- Related to the ugly Singleton Design Pattern Plague
+- Related to Singleton Design Pattern Plague
 
 
-${slide:title=The case}$
+${slide:title=The case: Transcript}$
 
 [[[
 myMethod
@@ -22,31 +28,34 @@ myMethod
 	self doSomething.
 ]]]
 
+- ==Transcript== is a global variable pointing to a log stream
+
+${slide:title=Example in Microdown}$
 
 [[[
 MicAbstractBlock >> closeMe
 	Transcript << 'Closing ' << self class name; cr; endEntry
 ]]]
 
-This one was a helper left after development.
+- This one was a helper left after development.
+- What if I would like to have a personal log for Microdown?
+- What if we want to test that such logs are correct?
 
 
 ${slide:title=Analysis}$
 
 - You do not want to get extra dependencies in your code
-
-- You do not want to dirty your build log with spurious 
+- Your log can be mixed with other logs.
+- You do not want to dirty build log without control
 
 Far worse and more important
-
-- Your log can be mixed with other logs.
 - You cannot reliably write tests to be sure that the log is correctly happening
-
 
 
 ${slide:title=The solution: Use locality and encapsulation}$
 
-Add an instance variable to hold a stream
+- Think self-contained
+- Add an instance variable to hold a stream
 
 [[[
 MicAbstractBlock >>initialize
@@ -64,23 +73,31 @@ MicAbstractBlock >>closeMe
 
 ${slide:title=Get the butter and the money}$
 
-Make sure that you can plug another stream to your stream.
+- Make sure that you can plug another stream to your stream
 
 [[[
 MicAbstractBlock >> logStream: aStream 
 	logStream := aStream
 ]]]
 
-Now you can pass a Transcript and get the same as before but better.
+- Now you can pass a Transcript and get the same as before but better.
+- Bonus: You can write tests in isolation
 
-You can write tests in isolation
 
+${slide:title=About Globals}$
 
-${slide:title=Avoid Globals}$
+Pros:
+- You do not have to add an instance variable to you domain
+- You do not have to initialize such global on your specific case
+
+Cons: 
+- You have only one (e.g., if an entity belongs to one global model, you cannot have two models)
+- Testing requires care and is sometimes not possible because of side effect
+- You cannot initialize it for your context (there is only one)
+
+${slide:title=In general: Avoid Globals}$
 
 - Avoid Singleton
-- Avoid Global 
-- They make your code less modular, less testable
+- Avoid Globals 
+- They make your code less modular, less **testable**
 - Related to Singleton and Disguised Singleton Lecture
-
-

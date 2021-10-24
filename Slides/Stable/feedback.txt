@@ -1,17 +1,31 @@
+Feedback 
+========
 
-- Non symmetrical
+- double dispatch Non symmetrical
+	=> sokoban is not symmetrical
+
+
+
+
+Todo next
+========
+- In antiif put, the shape slides?
+	- 
+	
+	
+- Sokoban 
+	- simplify story remove the look and architecture.
+
+
+
+TODO: 
+- Should verify flatten in Basic polymorphism at work
+- Shared table discussion
+	- lookup
+	- analysis of Bloc design
+
+- Global to ...	
 
 - Stone Paper Scissors
 	- present better
 	- Table vs: dd
-
-
-Todo next
-
-- In antiif put, the shape slides?
-
-- Sokoban 
-	- simplify story remove the look and architecture.
-	
-TODO: 	
-- Should verify flatten in Basic polymorphism at work

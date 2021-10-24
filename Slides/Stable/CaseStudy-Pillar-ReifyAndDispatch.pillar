@@ -172,7 +172,7 @@ ${slide:title=Conclusion}$
 - Turning one object into objects of different but polymorphic classes
 - Moving behavior to be able to delegate 
 - Using registration to create modular design
-
+ 
 
 
 
