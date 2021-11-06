@@ -28,16 +28,26 @@ myMethod
 	self doSomething.
 ]]]
 
-- ==Transcript== is a global variable pointing to a log stream
+- Remember: ==Transcript== is a global variable pointing to a log stream instance
 
 ${slide:title=Example in Microdown}$
 
+If logging is part of your domain
+
 [[[
-MicAbstractBlock >> closeMe
-	Transcript << 'Closing ' << self class name; cr; endEntry
+MicAbstractBlock >> iterate
+	...
+	Transcript 
+		nextPutAll: 'Start '; 
+		nextPutAll: step asString; 
+		cr.
+	...
+	Transcript 
+		nextPutAll: 'Stop '; 
+		nextPutAll: step asString; 
+		cr.
 ]]]
 
-- This one was a helper left after development.
 - What if I would like to have a personal log for Microdown?
 - What if we want to test that such logs are correct?
 

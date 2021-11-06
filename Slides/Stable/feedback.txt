@@ -1,8 +1,10 @@
 Feedback 
 ========
 
-- double dispatch Non symmetrical
-	=> sokoban is not symmetrical
+In DD - put a slide on symmetrical 
+saying that we will see some more. 
+
+
 
 
 
@@ -25,6 +27,10 @@ TODO:
 	- analysis of Bloc design
 
 - Global to ...	
+
+
+
+
 
 - Stone Paper Scissors
 	- present better

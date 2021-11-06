@@ -1,0 +1,101 @@
+{
+    "title":"Blocks vs. Objects",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+${slide:title=Goal}$
+
+- Thinking about API
+- Rethink about Block
+
+
+${slide:title=Blocks are powerful}$
+
+Blocks support
+- Iterators
+- New iterator definition
+- DSL like APIs
+- 
+
+${slide:title=Iterators}$
+
+[[[
+bla
+]]]
+
+
+[[[
+bal
+]]]
+
+
+${slide:title=New iterator definition}$
+
+[[[
+bal
+]]]
+
+${slide:title=DSL like APIs}$
+
+[[[
+Roassal 30 example
+]]]
+
+
+${slide:title=Analysis}$
+
+Blocks are not a panacea:
+- They do not expose well the arguments they need
+- It makes scripting easy but extension difficult
+
+
+
+${slide:title=Blocks are black boxes}$
+
+- You can only send the message ==value== to a block.
+- It is hard and cumbersome to store and access state in a block
+- What if we want to store some data
+
+${slide:title=Arguments?}$
+
+- What if you want optional arguments?
+-- then you are doomed to which arguments and which order
+- If you use ==cull==, it means that you bent the rules
+
+${slide:title=Blocks are on the spot literal objects}$
+
+- What is the difference between a block and a simple object understanding ==value==?
+- No need to create a class
+- No need to define a method
+
+
+
+${slide:title=Needed Arguments!}$
+- Blocks do not expose well the arguments they need
+
+[[[
+Glamour shitty example
+]]]
+
+${slide:title=Block Limits}$
+
+- Saving blocks is a painful
+- Adding behavior is impossible
+-- having another message
+- Extension via superclass / hook of block behavior is impossible
+- Printing blocks is limited 
+
+${slide:title=Long Blocks are Missed Opportunity}$
+
+- Not easy to override and hookify
+- Remember sending a message is a plan for reuse
+- Long blocks are a plague
+
+${slide:title=Conclusion}$
+
+- When you use blocks, keep them as small as possible
+- Use them to script DSLs but NOT to define your domain model
+- Create classes and pass their instances around.
+
+
