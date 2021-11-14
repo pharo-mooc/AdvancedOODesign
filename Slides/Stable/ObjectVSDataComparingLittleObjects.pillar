@@ -7,46 +7,49 @@
 
 ${slide:title=Goals}$
 
-- Looking at two concrete implementations of Point: Java and Pharo
+- Looking at two concrete implementations of Point: in Java and Pharo
 - Understanding the impact of strong API 
 
 ${slide:title=Points in Java}$
 
 Without getters and setters
 
-- ==boolean equals(Object obj)== Determines whether or not two points are equal.
-- ==void move(int x, int y)== Moves this point to the specified location in the (x,y) coordinate plane.
-- ==String toString()== Returns a string representation of this point and its location in the (x,y) coordinate space.
-- ==void translate(int dx, int dy)== Translates this point, at location (x,y), by dx along the x axis and dy along the y axis so that it now represents the point (x\+dx,y\+dy).
+- ==boolean equals(Object obj)==: whether or not two points are equal.
+- ==void move(int x, int y)==: moves this point to the specified location in the (x,y) coordinate plane.
+- ==void translate(int dx, int dy)==: translates this point, at location (x,y), by dx along the x axis and dy along the y axis so that it now represents the point (x\+dx,y\+dy).
+- ==String toString()==:  returns a string representation of this point and its location in the (x,y) coordinate space.
 
 Inherited from Point2D
 - ==distance== and ==clone==
 
+
 ${slide:title=Points in Java}$
 
+
 Getters and setters:
-- ==Point	getLocation()== Returns the location of this point. (well this is to be polymorphic with Component - A location is just a point)
-- ==void setLocation(double x, double y)== Sets the location of this point to the specified double coordinates.
-- ==void setLocation(int x, int y)== Changes the point to have the specified location.
-- ==void setLocation(Point p)== Sets the location of the point to the specified location.
-- ==double getX()== Returns the X coordinate of this Point2D in double precision.
-- ==double getY()== Returns the Y coordinate of this Point2D in double precision.
+- ==Point	getLocation()==: returns the location of this point  (well this is to be polymorphic with Component. A location is just a point.)
+- ==void setLocation(double x, double y)==:  sets the location of this point to the specified double coordinates.
+- ==void setLocation(int x, int y)==:  changes the point to have the specified location.
+- ==void setLocation(Point p)==: sets the location of the point to the specified location.
+- ==double getX()==: returns the X coordinate of this Point2D in double precision.
+- ==double getY()==: returns the Y coordinate of this Point2D in double precision.
 
 
-${slide:title=Example}$
+${slide:title=An Example in Java}$
 
 How to make our robot walks from distance in its current direction (in degree).
 
 [[[
 public class Bot {
-  int direction = 0;
+  int tilt = 0;
   Point position = new Point(0,0);
 ]]]
 
 [[[
-  public void go(int distance){
-    position = (new Point((Math.round(Math.cos(Math.toRadians(direction))) * distance + position.x()),
-          (Math.round(Math.sin(Math.toRadians(direction)) * distance + position.y())))) ;
+public void go(int distance){
+  position = new Point(
+		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
+		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y()))) ;
     }
 }
 ]]]
@@ -54,19 +57,19 @@ public class Bot {
 ${slide:title=Analysis}$
 
 - A poor data structure, not an object
+- Points do not define behavior beside move and translate
 - Arithmetic of Points is defined outside of them!
 -- Points cannot sum themselves
 -- Points cannot shape themselves (rounded, normal, reciprocal,...)
 - When an object exposes a shallow API, it favors logic duplication in clients!
 
-
-${slide:title=BTW Turtle >> go: in Pharo}$
+${slide:title=Turtle >> go: in Pharo}$
 
 [[[
 public void go(int distance){
     position = new Point(
-				(Math.round(Math.cos(Math.toRadians(direction))) * distance + position.x()),
-          		(Math.round(Math.sin(Math.toRadians(direction)) * distance + position.y ())) ;
+		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
+		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y())) ;
     }
 }
 ]]]
@@ -74,24 +77,18 @@ public void go(int distance){
 In Pharo 
 
 [[[
-Bot >> go: aDistance 
-	"Return the point that is at a distance aDistance 
-	in the direction pointed by the receiver"
-	
-	position := position + (direction degreeCos @ direction degreeSin * aDistance) rounded
+Bot >> go: aDistance 	
+	position := position + ((tilt degreeCos @ tilt degreeSin) * aDistance) rounded
 ]]]
 
 - Read better
-- Add and multiply points
-- Stress the logic
+- Use point addition and multiplication
+- Highlight behavior logic
 
 
 ${slide:title=Points in Pharo}$
 
-[[[
-Point selectors
-]]]
-
+Rich API: 
 - ==normalized==, ==normal==, ==transposed==, ==reflectedAbout:== 
 - ==distanceTo:==, ==squaredDistanceTo:== 
 - ==crossProduct:==, ==dotProduct:==
@@ -102,7 +99,7 @@ Point selectors
 - ==rectangle:==, ==extent:==, ==corner:==
 
 
-${slide:title=Points in Pharo}$
+${slide:title=Points in Pharo (Continued)}$
 
 - ==setR:degrees:==, ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==onLineFrom:to:within:==, ==rotateBy:about:==, ==degrees==, ==rotateBy:centerAt:==, ==theta==, ==bearingToPoint:==, 
 - ==roundUpTo:==, ==ceiling==, ==truncated==, ==truncateTo:==, ==roundTo:==, ==floor==, ==roundDownTo:==, ==rounded==,
@@ -121,15 +118,13 @@ Point >> abs
 - Simple
 - Still a service offered 
 
-${slide:title=Simple example}$ 
+${slide:title=Simple example: comparing points}$ 
 
 [[[
 < aPoint 
 	"Answer whether the receiver is above and to the left of aPoint."
-	"((100@200) < (330@400)) >>> true"
-	"((100@200) < (330@100)) >>> false"
 	
-	^ x < aPoint x and: [y < aPoint y]
+	^ x < aPoint x and: [ y < aPoint y ]
 ]]]
 
 
@@ -140,7 +135,8 @@ ${slide:title=Another simple example}$
 Point >> crossProduct: aPoint
 	"Answer a number that is the cross product of the receiver and the 
 	argument, aPoint."
-		^ (x * aPoint y) - (y * aPoint x)
+	
+	^ (x * aPoint y) - (y * aPoint x)
 ]]]
 
 - Obvious but still useful
@@ -165,7 +161,7 @@ Point >> degrees
 				ifFalse: [ 180.0 + theta radiansToDegrees ] ]
 ]]]
 
-- Nobody wants to be forced to reimplement it. 
+Nobody wants to be forced to reimplement it. 
 
 ${slide:title=Polymorphic}$
 
@@ -188,13 +184,13 @@ Number >> asPoint
 - This way we can manage list of objects and easily convert them to point
 
 [[[
-{ 1 . 2 . 3 . 33@33 . 4} collect: [:a | a asPoint]
+{ 1 . 2 . 3 . 33@33 . 4} collect: [ :a | a asPoint ]
 >> {1@1 . 2@2 . 3@3 . 33@33 . 4@4} 
 ]]]
 
 ${slide:title=Point Arimethic}$
 
-- Points know how to ==\*==, ==\+==, ==\/==, ... themselves
+- Points know how to ==\*==, ==\+==, ==\/==, ... ""themselves""
 - We can mix points, rectangles, and numbers
 
 [[[
@@ -209,9 +205,10 @@ drawString: aString at: aPoint font: aFontOrNil color: aColor
 ${slide:title=Analysis}$
 
 - In Pharo ==Point==s are more than a data structure
-- They define potentially complex behavior
-- Functionality is pushed from clients to ==Point==
-- Point ""offers"" behavior: reuse!
+- They define potentially ""advanced"" behavior
+- Functionality is not in clients
+- Clients benefit and reuse behavior!
+
 
 
 ${slide:title=What you should know}$
