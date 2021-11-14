@@ -1,0 +1,115 @@
+{
+    "title" : "Avoid hardcoding classes",
+    "slidesid" : "",
+    "author" : ""
+}
+
+${slide:title=Goal}$
+
+- Think that a class is a kind of global
+- Think about parametrization
+
+${slide:title=A simple case }$
+
+[[[
+testAssignment
+	| source |
+	source := EFFormatter new 
+		installNewContext: self basicConfiguration; 
+		formatter: RBParser parseExpression: 'a:=1'.
+	self assert: source equals: 'a := 1'
+]]]
+
+What if we want to check that an alternate Formatter is satisfying the test?
+
+${slide:title=Solution}$
+
+- Do not hardcode class name
+- Define test parameters
+
+[[[
+EFTest >> testAssignment
+	| source |
+	configurationSelector := #basicConfiguration.
+	source := self formatExpression: 'a:=1'.
+	self assert: source equals: 'a := 1'
+]]]
+
+
+${slide:title=Avoid hardcoding classes}$
+
+[[[
+EFTest >> parseExpression: anExpression
+	^ self parserClass parseExpression: anExpression
+]]]
+
+[[[
+EFTest >> parserClass
+	^ RBParser
+]]]
+ 
+We can turn parserClass as a test parameter if needed
+
+
+${slide:title=Turn direct access to accessors}$
+
+[[[
+EFTest >> formatExpression: anExpression
+	| expr |
+	expr := self parseExpression: anExpression.
+	^ self formatter format: expr.
+]]]
+
+[[[
+EFTest >> formatterClass: aFormatterClass
+	formatterClass := aFormatterClass
+]]]
+
+[[[
+EFTest >> formatter
+	^ self formatterClass new
+		installNewContext: (self perform: configurationSelector)
+		yourself
+]]]
+
+${slide:title=Introducing tests parameters}$
+
+[[[
+EFTest class >> testParameters
+
+	^ ParametrizedTestMatrix new
+			addCase: { #formatterClass -> EFFormatter. #contextClass -> EFContext };
+			addCase: { #formatterClass -> AlternateFormatter. #contextClass -> EFContext };
+		yourself.
+]]]
+
+- All the tests will run for each configuration.
+
+${slide:title=Running All Combinations}$
+
+[[[
+testAdd
+	
+	| aCollection |
+	aCollection := collectionClass new.
+	aCollection add: item1.	
+	self assert: (aCollection includes: item1).
+	self assert: aCollection size equals: 1.
+]]]
+
+[[[
+testParameters
+
+	^ ParametrizedTestMatrix new
+		forSelector: #item1 addOptions: { 1. 'a'. $c };
+		forSelector: #item2 addOptions: { 2. 'b'. $d };
+		forSelector: #collectionClass addOptions: 	{ Set. Bag. OrderedCollection }
+]]]
+
+We run all the tests with all possible combinations for item1, item2 and collectionClass
+
+${slide:title=Conclusion}$
+
+- Factor out class references
+- Ease change by overriding 
+- Support test parametrization

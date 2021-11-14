@@ -17,8 +17,7 @@ TODO:
 	- present better
 	- Table vs: dd
 
-Polymorphism at work
-	-> Polymorphism and extension
+
 	
 Todo
 =====
@@ -26,6 +25,9 @@ Todo
 - Parametrized tests
 - Layered architecture
 - Reify and dispatch
+
+Polymorphism at work
+	-> Polymorphism and extension
 
 Should do another pass on
 	- CaseStudy-PowerOfDelegationClassDefinitionPrinter
@@ -38,7 +40,7 @@ Later
 =====
 
 - case study layout
-
+- remove sharing-two
 
 Now
 ====
