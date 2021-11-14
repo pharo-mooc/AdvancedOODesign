@@ -93,7 +93,6 @@ Archive >> initialize
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 
 
-
 You can defer initialization of a variable to its first use:
 
 [[[
@@ -103,10 +102,14 @@ FreeTypeFont >> descent
                                self face unitsPerEm) negated ]
 ]]]
 
+- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
+
+${slide:title=Solution: Use Lazy Initialization when Necessary}$
+
 - Lazy initialization trades time vs runtime cost (==ifNil:== check)
 - You should always use this accessor
 - Pay attention you should NOT access directly an instance variable used in a lazy setting 
-- Else you can get exposed to ==nil==
+- Else you can get exposed to ==nil== value
 
 ${slide:title=Sometimes you have to check...}$
 
@@ -129,10 +132,18 @@ Here we are forced to check that there is a selected tool.
 - Why not having always one selected?
 - Even one doing nothing?
 
+${slide:title=Example}$
+
++>figures/NullObject2.pdf+
+
+
 ${slide:title=Solution: Use NullObject}$
 
 - A null object proposes a **polymorphic** API and embeds default actions/values
 - Let us create a ==NoTool== class whose behavior is to do nothing.
+- Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
+
+${slide:title=Solution: NoTool}$
 
 [[[
 AbstractTool << #NoTool
@@ -164,7 +175,11 @@ ToolPalette >> previousAction
    self selectedTool detachHandles
 ]]]
 
-- Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
+${slide:title=Solution: With initialization and NoTool}$
+
++>figures/NullObject3.pdf+
+
+
 
 ${slide:title=Solution: About NullObject}$
 

@@ -1,24 +1,8 @@
-Feedback 
-========
-
-In DD - put a slide on symmetrical 
-saying that we will see some more. 
-
-
-
-
-
-
 Todo next
 ========
 - In antiif put, the shape slides?
 	- 
 	
-	
-- Sokoban 
-	- simplify story remove the look and architecture.
-
-
 
 TODO: 
 - Should verify flatten in Basic polymorphism at work
@@ -29,9 +13,32 @@ TODO:
 - Global to ...	
 
 
-
-
-
 - Stone Paper Scissors
 	- present better
 	- Table vs: dd
+
+Polymorphism at work
+	-> Polymorphism and extension
+	
+Todo
+=====
+	
+- Parametrized tests
+- Layered architecture
+- Reify and dispatch
+
+Should do another pass on
+	- CaseStudy-PowerOfDelegationClassDefinitionPrinter
+	- CaseStudy-Sokoban-RealExample
+	- Global-FromGlobalToParameter
+	- Global-TheUglyGlobalVariables
+	
+Later 
+=====
+
+- case study layout
+
+
+Now
+====
+- CaseStudy-TurningAProcIntoAnObject

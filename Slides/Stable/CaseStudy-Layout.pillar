@@ -1,6 +1,6 @@
 {
-    "title":"Layout",
-    "subtitle":"",
+    "title":"Case study: Layout",
+    "subtitle":"Turning a function into objects",
     "slidesid":"",
     "author":""
 }
@@ -11,7 +11,6 @@ ${slide:title=Goal}$
 - Think about messages and condition
 
 
-${slide:title=Studying a Sokoban Implementation}$
 
 ${slide:title=Looking the implemented core model}$
 
