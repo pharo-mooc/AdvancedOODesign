@@ -45,3 +45,18 @@ Later
 Now
 ====
 - CaseStudy-TurningAProcIntoAnObject
+
+- Blocks
+	- withIndexDo:
+	- doWithIndex: 
+	- True class
+	- Copy the roassal block as last example
+
+- Law of Demeter (mother of distribution)
+	Principle of less knowledge
+	Tell don't ask
+	Level of abstractions
+		propagating the same level
+	Ask pablo for SDL example
+
+

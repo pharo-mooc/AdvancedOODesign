@@ -1,0 +1,97 @@
+{
+    "title":"About Registrations",
+    "subtitle":"",
+    "author":""
+}
+
+${slide:title=Goal}$
+
+- Thinking about system dynamic
+- Impact of dynamic registration
+
+
+${slide:title=Classes can queried}$
+
+Remember...
+[[[
+Parser >> documentClasses
+   ^ DocumentItem allSubclasses
+      sorted: [ :class1 :class2 | class1 priority < class2 priority ]
+]]]
+[[[
+Parser >> parse: line
+    self documentClasses
+        detect: [ :subclass |
+            (subclass canParse: line)
+                ifTrue: [ ^ subclass newFromLine: line ] ]
+]]]
+
+${slide:title=Registration for 'Free'}$
+
+- Each time a new class is loaded it is taken into account
+- Now we do it all the time for nothing
+- We are querying the system for nothing
+
+${slide:title=Alternate 1: explicit static list}$
+
+[[[
+Parser >> documentClasses
+   ^ { Section . List . Paragraph }
+      sorted: [ :class1 :class2 | class1 priority < class2 priority ]
+]]]
+
+
+${slide:title=New iterator definition}$
+
+In fact we could precompute priority too
+
+[[[
+Parser >> documentClasses
+	^ { Section . Paragraph . List }
+]]]
+
+Pros: 
+- Do not have to query all the classes all the time
+
+Cons:
+- Sometimes we do not want to list explicitly class to avoid dependencies to other packages
+
+
+${slide:title=Proposing an explicit registration mechanism}$
+
+Class can explicit register to the parse
+
+[[[
+Section class >> initialize
+	Parser registerClass: self
+]]]
+
+[[[
+List class >> initialize
+	Parser registerClass: self
+]]]
+
+
+
+[[[
+Parser >> documentClasses
+	^ RegisteredClasses
+]]]
+
+${slide:title=Registration mechanism supports extension}$
+
+[[[
+Extra class >> initialize
+	Parser registerClass: self
+]]]
+
+- External classes can also register
+- Without introducing unwanted dependency
+- Without scanning all the classes of the system
+
+${slide:title=Conclusion}$
+
+- XXX subclasses is a cool pattern 
+- but it costs. 
+
+
