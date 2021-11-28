@@ -42,6 +42,8 @@ Later
 - case study layout
 - remove sharing-two
 
+- redo the not implementation
+
 Now
 ====
 - CaseStudy-TurningAProcIntoAnObject
@@ -58,5 +60,57 @@ Now
 	Level of abstractions
 		propagating the same level
 	Ask pablo for SDL example
+	
 
 
+
+With Pavel
+=========
+
+Global-FromGlobalToParameter 
+	add example using Transcript 
+	
+About Registration
+	- recall a bit the story about class side method are late bound
+	- mention that classes are static and that objects could be registered too.
+	
+Avoid hardcoding classes
+	- simplify the message
+	- focus on parameter tests
+	- Then another message is do not duplicate logic, factor it. 
+	
+AntiIf
+	- if you are forced to return nil indicate it in the selector
+	- null objects may be hard to introduce
+
+Basic-ConditionalToPolymorphism
+	- OOP
+	- CaseOf -> polymorphism
+	- CaseOf are good to avoid calls
+	
+Polymorphism at work
+	- Should revise
+
+Blocks vs. Objects
+	- Living block may lose its binding with its source
+	- Better withAll,....
+	- Calling the hook from the block
+
+ReifyAndDispatch
+	- add diagr
+	- the class document knew the parser
+	- the input document knows the parser
+	
+Class vs. InstanceHook
+	- 
+
+Idea 
+	Extend Object or not. Avoid. 
+	cull: reflective
+
+
+About Symbols and values
+	- 
+	
+New ideas Classes vs. Objects
+	

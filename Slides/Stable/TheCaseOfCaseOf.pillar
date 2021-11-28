@@ -1,0 +1,61 @@
+{
+    "title" : "The Case of Case of",
+    "slidesid" : "with Double Dispatch",
+    "author" : ""
+}
+
+
+${slide:title=Case of and polymorphism}$
+
+- You do not need case of if you case are of different classes.
+- You can use polymorphic calls.
+
+${slide:title=Case of within the same domain}$
+
+[[[
+methodListKey: aKeystroke from: aListMorph 
+	aKeystroke caseOf: {
+		[$b] -> [self browseMethodFull].
+		[$h] -> [self classHierarchy].
+		[$o] -> [self fileOutMessage].
+		[$c] -> [self copySelector].
+		[$n] -> [self browseSendersOfMessages].
+		[$m] -> [self browseMessages].
+		[$i] -> [self methodHierarchy].
+		[$v] -> [self browseVersions]}
+		 otherwise: []
+]]]
+
+- We cannot change a value
+- We cannot change the complete set 
+
+${slide:title=Case of within the same domain}$
+
+[[[
+	Dictionary new
+		at: $b put: [self browseMethodFull].
+[$h] -> [self classHierarchy].
+[$o] -> [self fileOutMessage].
+[$c] -> [self copySelector].
+[$n] -> [self browseSendersOfMessages].
+[$m] -> [self browseMessages].
+[$i] -> [self methodHierarchy].
+[$v] -> [self browseVersions] }
+]]]
+
+
+${slide:title=Case of are cool}$
+
+[[[
+readFieldAt: byteOffset
+	"Answer a string defining the accessor to an entity of the receiver 
+	type starting at the given byte offset. 
+	 Private. Used for field definition only."
+	self isPointerType ifTrue:
+		[| accessor |
+		accessor := self pointerSize caseOf: {
+						[nil]	->	[#pointerAt:].
+						[4]	->	[#shortPointerAt:].
+						[8]	->	[#longPointerAt:] }.
+						...
+]]]

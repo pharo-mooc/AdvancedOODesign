@@ -187,6 +187,42 @@ ${endColumns}$
 This way you can override ==methods:== in subclasses.
 
 
+${slide:title=Long Blocks are Missed Reuse Opportunity}$
+
+${columns}$
+
+${column:width=50}$
+
+[[[
+... painting: [ :view :file | 
+	| tags |
+	tags := XMLDOMParser parse: file.
+	view shape label text: [:each | each stringValue].
+	view nodes: tags.
+	view shape line color: (Color gray alpha: 0.5).
+	view edges connectFromAll:  [:aTag |
+	...	]]	
+]]]
+
+${column:width=50}$
+
+[[[
+paintOnView: view file: file
+	| tags |
+	tags := XMLDOMParser parse: file.
+	view shape label text: [:each | each stringValue].
+	view nodes: tags.
+	view shape line color: (Color gray alpha: 0.5).
+	view edges connectFromAll:  [:aTag |
+	...	]]	
+
+... painting: [ :view :file | self paintOnView: view file: file ]
+]]]
+
+
+${endColumns}$
+
+
 ${slide:title=Conclusion}$
 
 - When you use blocks, keep them as small as possible
