@@ -1,6 +1,6 @@
 {
     "title":"Thinking about Coupling",
-    "slidesid":"From the Design Corner",
+    "slidesid":"",
     "author":"",
     "subtitle":""
 }
@@ -12,13 +12,12 @@ ${slide:title=Goal}$
 - Law of Demeter 
 - Better seen as a Heuristic
 
-${slide:title=Coupling}$
+
+${slide:title=Coupling is costly}$
 
 - ""Reuse:"" I cannot reuse this component in another application
 - ""Substition:"" I cannot easily substitute this part for another one
 - ""Encapsulation:"" when a change far away happens, I get impacted
-
-
 
 ${slide:title=Core of the Problem}$
 
