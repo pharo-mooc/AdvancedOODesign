@@ -111,6 +111,10 @@ Idea
 
 About Symbols and values
 	- 
+	- 
 	
+Numbers and polymorphism
+
+
 New ideas Classes vs. Objects
 	

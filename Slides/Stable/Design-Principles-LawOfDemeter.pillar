@@ -38,6 +38,9 @@ You should avoid
 
 ${slide:title=Correct Messages}$
 
+
+Only talk to your immediate friends. 
+
 [[[
 someMethod: aParameter 
 	self foo.
@@ -49,16 +52,6 @@ someMethod: aParameter
 	thing := Thing new. 
 	thing foo
 ]]]
-
-${slide:title=Correct Messages}$
-
-Only talk to your immediate friends. 
-
-In other words:
-- You can play with yourself: ==this.method()==
-- You can play with your own toys (but you can't take them apart): ==field.method()==, ==field.getX()==
-- You can play with toys that were given to you: ==arg.method()==
-- And you can play with toys you've made yourself. ==A a = new A(); a.method()==
 
 ${slide:title=Don't skip your intermediates}$
 
@@ -75,6 +68,52 @@ ${slide:title=Transformation}$
 +.>file://figures/LODtransformation.pdf|width=70+
 
 
+${slide:title=Real example}$
+
+[[[
+OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent
+	"Resolution (dpi) changed. For now just check for a new size."
+	"We need to reset the render if the resolution changes.
+	If we don't do this the image seems blocked but as it does not refresh the window"
+
+	morphicWorld worldState worldRenderer window backendWindow renderer destroy.
+	morphicWorld worldState worldRenderer window backendWindow renderer validate.
+	morphicWorld worldState doFullRepaint.
+	morphicWorld worldState worldRenderer window backendWindow renderer updateAll.
+	morphicWorld worldState worldRenderer checkForNewScreenSize
+]]]
+
+
+${slide:title=Solution}$
+
+[[[
+OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent
+	morphicWorld worldState updateToNewResolution: anEvent
+]]]
+
+[[[
+WorldState >> updateToNewResolution: originalEvent
+	"We need to reset the render if the resolution changes.
+	If we don't do this the image seems blocked but as it does not refresh the window"
+
+	self doFullRepaint.
+	self worldRenderer updateToNewResolution.
+	self worldRenderer checkForNewScreenSize
+]]]
+
+
+[[[
+OSSDL2BackendWindow >> updateToNewResolution
+	"Force the regeneration of the renderer because we have a new resolution"
+	renderer destroy.
+	renderer validate.
+	renderer updateAll.
+]]]
+
+[[[
+NullWorldRenderer >> updateToNewResolution
+	self
+]]]
 
 ${slide:title=LOD is a heuristic}$
 
