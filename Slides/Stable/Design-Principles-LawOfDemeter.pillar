@@ -21,7 +21,24 @@ ${slide:title=Coupling is costly}$
 
 ${slide:title=Core of the Problem}$
 
-+.>file://figures/LODCoreProblem.png|width=100+
++.>file://figures/LODCoreProblem.pdf|width=100+
+
+
+${slide:title=Changes}$
+
+- Changes are natural
+- When you change, your dependent should update
+- The problem is waves of changes when dependent of dependent should change
+
++.>file://figures/LODCoreProblem.pdf|width=100+
+
+${slide:title=Waves}$
+
+- Waves are created by leak of references to far objects
+- Basically violation of encapsulation
+- How to limit wave creation?
+- Do not leak far references!
+
 
 ${slide:title=Law of Demeter}$
 
@@ -35,31 +52,28 @@ You should avoid
 - global variables
 - objects returned from message sends other than self
 
-${slide:title=Correct Messages}$
-
-
-Only talk to your immediate friends. 
+${slide:title=Only talk to your immediate friends}$
 
 [[[
 someMethod: aParameter 
 	self foo.
-	super someMethod: aParameter. 
+	super someMethod: aParameter.
 	self class foo.
 	self instVarOne foo.
 	instVarOne foo.
-	aParameter foo. 
-	thing := Thing new. 
+	aParameter foo.
+	thing := Thing new.
 	thing foo
 ]]]
 
 ${slide:title=Don't skip your intermediates}$
 
-+.>file://figures/LODSkip.png|width=80+
++.>file://figures/LODSkip.pdf|width=80+
 
 
 ${slide:title=Solution: Respect encapsulation}$
 
-+.>file://figures/LODSkipSol.png|width=80+
++.>file://figures/LODSkipSol.pdf|width=80+
 
 
 ${slide:title=Transformation}$
@@ -72,8 +86,7 @@ ${slide:title=Real example}$
 [[[
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent
 	"Resolution (dpi) changed. For now just check for a new size."
-	"We need to reset the render if the resolution changes.
-	If we don't do this the image seems blocked but as it does not refresh the window"
+	"We need to reset the render if the resolution changes."
 
 	morphicWorld worldState worldRenderer window backendWindow renderer destroy.
 	morphicWorld worldState worldRenderer window backendWindow renderer validate.
@@ -92,8 +105,7 @@ OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent
 
 [[[
 WorldState >> updateToNewResolution: originalEvent
-	"We need to reset the render if the resolution changes.
-	If we don't do this the image seems blocked but as it does not refresh the window"
+	"We need to reset the render if the resolution changes."
 
 	self doFullRepaint.
 	self worldRenderer updateToNewResolution.
@@ -114,29 +126,31 @@ NullWorldRenderer >> updateToNewResolution
 	self
 ]]]
 
-${slide:title=LOD is a heuristic}$
+${slide:title=LOD is a \*\*heuristic\*\*}$
 
-- Pay attention too strict application of the LOD can lead to over engineered design
+- Pay attention! A too strict application of the LOD can lead to over engineered design
 - Encapsulating collections may produce large interfaces so not applying the LoD may help
+- Understand when it is reasonable to leak
 
-${slide:title=LOD can produce bloat API}$
+${slide:title=LOD can produce bloated APIs}$
+
 [[[
-Object subclass: #A 
-	instVar: 'myCollection'
+Object subclass: #FMMethods 
+	instVar: 'senders'
 	...
 ]]]
 
 [[[
-A >> do: aBlock
-	myCollection do: aBlock
-A >> collect: aBlock
-	^ myCollection collect: aBlock
-A >> select: aBlock
-	^ myCollection select: aBlock
-A >> detect: aBlock
-	^ myCollection detect: aBlock
-A >> isEmpty
-	^ myCollection isEmpty
+FMMethods >> do: aBlock
+	senders do: aBlock
+FMMethods >> collect: aBlock
+	^ senders collect: aBlock
+FMMethods >> select: aBlock
+	^ senders select: aBlock
+FMMethods >> detect: aBlock
+	^ senders detect: aBlock
+FMMethods >> isEmpty
+	^ senders isEmpty
 ...
 ]]]
 

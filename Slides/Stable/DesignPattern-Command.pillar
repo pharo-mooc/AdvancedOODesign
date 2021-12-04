@@ -1,0 +1,33 @@
+!! Elements of Design - Decorators
+
+- Stephane Ducasse
+- stephane.ducasse@inria.fr
+- *>http://stephane.ducasse.free.fr/*
+
+!!! Decorators
+
+- Encapsulate state and behavior
+
+- Enforce API
+
+
+!!! The case of Stream
+
+
+!!! Limits 
+
+- All the decorators should have the same API and delegate
+
+- Should be thought as a whole
+
+- To add a new API, we can add a generic forwarder on the top of the hierarchy
+
+[[[
+	RootDecorator >> newAPI
+		^ decoratee newAPI
+
+]]]
+
+
+!!The case of Commander
+
