@@ -1,28 +1,37 @@
 {
-    "title":"Visitor",
-    "slidesid":"From the Design Corner"
+	"title":"Visitor",
+	"subtitle":"",
+	"author":"",
+	"slidesid":""
 }
 
 
-${slide:title=Outline}$
+${slide:title=Goal}$
 
 - Visitor
-- Visitor discussions
-- Visitor variations
+- Discussions
 
 
-${slide:title=Visitor intent}$
 
-Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. 
+${slide:title=Visitor's intent}$
 
-Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+- Represent an operation to be performed on the elements of an object structure in a class separate from the elements themselves. 
+
+- Visitor lets you define a new operation ""without changing the classes of the elements"" on which it operates.
 
 
-${slide:title=Visitor design}$
+${slide:title=Visitor's design}$
 
 +.>file://figures/Visitor-Design.png|width=50+
 
-${slide:title=Little arithmetic expressions}$
+
+${slide:title=Visitor + Composite}$
+
+A visitor requires a structure to perform different actions based on the kind of element
+
+Perfect plays with a composite
+
+${slide:title=Example: basic arithmetic expressions}$
 
 - Supports one kind of number, and has +, *, (, )
 - We want to evaluate expressions, and print them
@@ -69,7 +78,7 @@ Two solutions:
 - add methods for evaluating, printing, ... on ==Expression== and its subclasses
 - create a Visitor, add the visit methods on ==Expression== and its subclasses, and implement visitors for evaluation, printing, ...
 
-${slide:title=Expression first design}$
+${slide:title=First design: behavior in the domain}$
 
 +.>file://figures/Visitor-ExpressionTree.png|width=50+
 
@@ -82,7 +91,7 @@ ${slide:title=First design analysis}$
 - What if we need a table for mathematical expression only for the LaTeX exporter?
 Why should we mix the information about the treatment of items and items themselves?
 
-${slide:title=Expression Visitor}$
+${slide:title=First design: Expression Visitor}$
 
 +.>file://figures/Visitor-ExpressionsVisitor.png|width=90+
 
@@ -153,102 +162,35 @@ Printer >> visitPlus: anExpression
 ]]]
 
 
+${slide:title=Visitor: another look at it}$
+
+Pluggable distributed recursive treatment of a composite structure
+
+
+
 ${slide:title=Visitor study}$
 
-Check the double dispatch
+The double dispatch is the key point
 - The Visitor knows the elementary operations 
 - The items declare how they want to be visited
 
 +.>file://figures/Visitor-ExpressionsVisitor.png|width=60+
 
-${slide:title=Controlling the traversal}$
 
-A visitor embeds a structure traversal
-- Be default all the items should be reached
-- There are different places where the traversal can be implemented:
--- in the visitors
--- in the items themselves
+${slide:title=Stepping back: the basic trolling question}$
 
-Usually the visitor is under control but may be the domain logic is more important. 
-
-${slide:title=Visitor in control}$
-
-+.>file://figures/Visitor-VisitorControl.png|width=80+
+Some people may tell you that it is not OO because visitor externalize behavior.
+- Yes operations applied on objects are defined outside the objects.
+- Let us think:
+-- how much extra behavior and extra state mixed for nothing are you ready to get
+-- do you want to package multiple behavior separately (yes in Pharo we have method extension but state is not well managed)
+-- if you have a lot of orthogonal treatments, then better separate them
 
 
-${slide:title=Items in control}$
-
-+.>file://figures/Visitor-ItemControl.png|width=80+
-
-${slide:title=Subtle points}$
-
-Because a hook is associated with a template 
--- when subclassing a hook the user can 'know' more
-
-Now the visit method name can also encode context
-- visit methods can be used to let user extend functionality at fine granularity
-- the granularity of visit methods has an impact on the hooks they offer
-
-${slide:title=Misopportunities}$
-
-+.>file://figures/Visitor-donodeStupid.png|width=90+
-
-${slide:title=Using messages as cases (again) }$
-
-+.>file://figures/Visitor-DonodeClever.png|width=90+
-
-${slide:title=Using messages as cases (again) }$
-
-In this case using ==doTemporaryVariable:== tell the extender that such method is not for all the variables but only for temporaries.
-- No need to test
-- No need to get a state
-- just subclass ==doTemporaryVariable:==
-
-${slide:title=Visitor with reflection}$
-
-+.>file://figures/VisitorReflectiveImplementation.png|width=90+
 
 
-${slide:title=When to use a Visitor}$
 
-- Whenever you have a number of items on which you have to perform a number of actions
-- When you ‘decouple’ the actions from the items.
 
-Examples:
-- Parse tree (ProgramNode) uses a visitor for the compilation (emitting code on CodeStream)
-- Rendering documents (Document) in different formats
-
-${slide:title=If your domain is not stable}$
-
-You may end up having to change multiple visitors each time and it can be tedious. 
-
-${slide:title=Visitor is not OOP controversy}$
-
-Yes operations applied on objects are defined outside the objects.
-But
-- May be the operations require a complex state that has nothing to do with the structure (RTF/PDF stack)
-- Each Visitor encapsulates a complex operation
-
-${slide:title=Class extension}$
-
-Even if a language supports class extension (defining methods on a class from another package than the class package), using a visitor is better because
-- Each Visitor encapsulates a complex operation
-- Each Visitor has its own state
-
-${slide:title=Do not use overloading for visit method}$
-
-As a summary, overloading does not really work in Java and you will have to explicitly cast your visitor or use getClass everywhere.
-
-- Better define method visitNumber(), visitPlus(), visitTimes()
-- than visit()
-Trust an expert :)
-
-Check overloading lecture. 
-
-${slide:title=Conclusion}$
-
-- Visitor can be tricky to master
--- use accept/visit vocabulary to really help you
-- Visitor is nice for complex structure operations
+${slide:title=Example in Pillar}$
 
 

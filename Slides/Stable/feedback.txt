@@ -127,3 +127,26 @@ Visitor 2
 Commander2 as a case study
 
 Test to understand and record,
+
+
+
+
+${columns}$
+
+${column:width=60}$
+
++>file://figures/Point-xy-class-method.png|width=90+
+
+${column:width=40}$
+
+- press the button ==class== to define a class method
+- in lectures, we add ==class==
+
+${endColumns}$
+
+[[[
+Point class >> x: xInteger y: yInteger 
+  "Answer an instance of me with coordinates xInteger and yInteger."
+
+  ^ self basicNew setX: xInteger setY: yInteger
+]]]

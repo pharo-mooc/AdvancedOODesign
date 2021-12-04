@@ -11,23 +11,36 @@ ${slide:title=Goal}$
 - Patterns are not panacea 
 - Example
 
-${slide:title=From an architectural 'failure'}$
+${slide:title=Influenced by work on architecture}$
 
-+.>file://figures/timeless.png|width=40+
+${columns}$
 
-Christoffer Alexander, 'The Timeless Way of Building', Oxford University Press, 1979
+${column:width=60}$
+
++.>file://figures/timeless.png|width=30+
+
+
+${column:width=80}$
+
+C. Alexander, ''The Timeless Way of Building'', Oxford University Press, 1979
 - tried to let people capture and use patterns how to build houses and other
 - developed patterns and pattern languages
 - basically failed in architecture but the idea is successful for software engineering
 
 
+
+${endColumns}$
+
+
+
+
 ${slide:title=Design Patterns}$
 
-- Identification of similar problems at design level
-- Experts solved recurring problems in similar ways
-- Design patterns are recurrent solutions to design problems
+Design patterns are recurrent solutions to design problems
+- Identification of similar problems at ""design"" level
+- Experts solved ""recurring problems"" in similar ways
 - There are pros and cons
-- Design Patterns are literature: ""Read"" them 
+- Design Patterns are literature: ""Read"" them!
 
 ${slide:title=What are design patterns?}$
 
@@ -45,14 +58,14 @@ ${slide:title=Watchout!}$
 - Stay sceptical
 
 
-${slide:title=Most important point}$
+${slide:title=The most important point}$
 
-- Design Patterns are ""names""
+Design Patterns are ""names""
 - They create a design ""vocabulary""
 -- Hook and Template, Factory, Composite, Visitor, Observer, Decorator...
 - You can talk at lunch/blackboard about your design in an ""abstract but precise"" way
 
-${slide:title=What Design Patterns are not}$
+${slide:title=What design patterns are not}$
 
 - A design pattern is not ""one"" implementation
 - A design pattern is ""illustrated"" using one ""possible"" implementation 
@@ -74,7 +87,7 @@ ${slide:title=Example: Strategy}$
 ""Intent:"" 
 - Define a family of algorithms, 
 - encapsulate each in a separate class and 
-- define each class with the ""same"" interface so that they can be interchangeable.
+- define each class with the ""same"" interface so that they can be ""interchangeable"".
 
 ${slide:title=Essence of Strategy possible implementation}$
 
@@ -88,22 +101,36 @@ ${slide:title=Strategy application}$
 
 ${slide:title=Some pattern categories}$
 
-- Creational Patterns
---Instantiation and configuration of classes and objects
-- Structural Patterns
--- Usage of classes and objects in larger structures, separation of interfaces and implementation
-- Behavioral Patterns
--- Algorithms and division of responsibility
-- Concurrency
-- Distribution
-- Security
+""Creational Patterns""
+- Instantiation and configuration of classes and objects
+""Structural Patterns""
+- Usage of classes and objects in larger structures, separation of interfaces and implementation
+""Behavioral Patterns""
+- Algorithms and division of responsibility
 
 ${slide:title=Some Books}$
 
-+.>file://figures/Gof.png|width=40+
-+.>file://figures/DesignPatternCompanion.png|width=40+
-- [Seminal one]  Design Patterns (Gamma et al), also known as GoF book (Gang of Four)
-- [Excellent] Smalltalk Design Pattern Companion (Alpert et al)
+${columns}$
+
+${column:width=30}$
+
++.>file://figures/Gof.png|width=50+
+
++.>file://figures/DesignPatternCompanion.png|width=50+
+
+${column:width=70}$
+
+- [Seminal one]  ""Design Patterns"" (Gamma et al), also known as GoF book (Gang of Four)
+- [Excellent] ""Smalltalk Design Pattern Companion"" (Alpert et al)
+
+${endColumns}$
+
+
+
+
+
+
+
 
 ${slide:title=Some Books}$
 
@@ -145,7 +172,7 @@ ${slide:title=Some structural patterns}$
 
 ${slide:title=Alert !!!}$
 
-- Design Patterns may be a real plague!
+Design Patterns may be a ""plague""!
 - Do not apply them when you do not need them
 - Design Patterns make the software more complex
 -- More classes
@@ -154,13 +181,14 @@ ${slide:title=Alert !!!}$
 
 ${slide:title=Alert2 !!!}$
 
-- Do not confuse intent and implementation
-- Patterns are about intent and tradeoffs
+- Patterns are about ""intent"" and ""tradeoffs""
+- Do not confuse ""intent"" and ""implementation""
+
 
 ${slide:title=Conclusion}$
 
-- Reusable solutions to common problems based on experiences from real systems
-- Names of abstractions above class and object level a common vocabulary for developers
+""Reusable solutions to common problems based on experiences from real systems""
+- Names of abstractions creating a common vocabulary for developers
 - Can handle functional and non-functional aspects
 -- separating interfaces/implementation, loose coupling between parts, …
 - A basis for frameworks and toolkits basic elements to improve reuse
