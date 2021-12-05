@@ -27,34 +27,48 @@ ${slide:title=Items in control}$
 
 
 
-${slide:title=Subtle points}$
+${slide:title=VisitMethod encode context}$
 
-Visit method names can also ""encode"" context
-- visit methods can be used to let user extend functionality at fine granularity
+- ""visit*"" methods can be used to let user extend functionality at fine granularity
 - the granularity of visit methods has an impact on the hooks they offer
 
-${slide:title=visitTemporariesNode: vs. visitNode:}$
+${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
 
 [[[
-Visitor >> visitNode: aNode
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	aSequenceNode temporaries do: [:each | self visitNode: each ].
+	aSequenceNode statements do: [ :each | self visitNode: each ]
+]]]
+
+vs. 
+
+[[[
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	self visitTemporaryNodes: aSequenceNode temporaries.
+	aSequenceNode statements do: [ :each | self visitNode: each ]
+]]] 
+
+[[[
+RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection
+
+	^ aNodeCollection	do: [ :each | self visitNode: each ]
 ]]]
 
 
+%${slide:title=Misopportunities}$
 
-${slide:title=Misopportunities}$
+%+.>file://figures/Visitor-donodeStupid.png|width=80+
 
-+.>file://figures/Visitor-donodeStupid.png|width=80+
+%${slide:title=Using messages as cases (again) }$
+
+%+.>file://figures/Visitor-DonodeClever.png|width=90+
 
 ${slide:title=Using messages as cases (again) }$
 
-+.>file://figures/Visitor-DonodeClever.png|width=90+
-
-${slide:title=Using messages as cases (again) }$
-
-In this case using ==doTemporaryVariable:== tell the extender that such method is not for all the variables but only for temporaries.
+In this case using ==visitTemporaryNodes:==, it ensures the extender that such method is not for all the variables but only for temporaries.
 - No need to test
 - No need to get a state
-- just subclass ==doTemporaryVariable:==
+- Just override ==visitTemporaryNodes:==
 
 
 ${slide:title=Generic Visitors are difficult to build}$
