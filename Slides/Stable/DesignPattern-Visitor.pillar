@@ -164,11 +164,11 @@ Printer >> visitPlus: anExpression
 
 ${slide:title=Visitor: another look at it}$
 
-Pluggable distributed recursive treatment of a composite structure
+- Pluggable distributed recursive treatment of a composite structure
 
+add a diagram here
 
-
-${slide:title=Visitor study}$
+${slide:title=Stepping back: key logic}$
 
 The double dispatch is the key point
 - The Visitor knows the elementary operations 
