@@ -22,14 +22,13 @@ ${slide:title=Visitor's intent}$
 
 ${slide:title=Visitor's design}$
 
-+.>file://figures/Visitor-Design.png|width=50+
++.>file://figures/Visitor-Design.png|width=60+
 
 
 ${slide:title=Visitor + Composite}$
 
-A visitor requires a structure to perform different actions based on the kind of element
-
-Perfect plays with a composite
+- A visitor requires a structure to perform different actions based on the kind of element
+- Perfect match with a composite
 
 ${slide:title=Example: basic arithmetic expressions}$
 
@@ -85,19 +84,26 @@ ${slide:title=First design: behavior in the domain}$
 
 ${slide:title=First design analysis}$
 
-- What if we need a stack to print well the expressions?
--- Should we put it in the expressions even if this is related only to print?
+What if we need a stack to print well the expressions?
+- Should we put it in the expressions even if this is related only to print?
 
-- What if we need a table for mathematical expression only for the LaTeX exporter?
 Why should we mix the information about the treatment of items and items themselves?
+- What if we need a table for mathematical expression only for the LaTeX generation?
+- What if we need a table for mathematical expression only for the RDF generation?
 
-${slide:title=First design: Expression Visitor}$
+
+
+
+${slide:title=Second design: Expression Visitor}$
+
+A visitor separates a treatment from the data structure (Composite) it applies to.
+
++.>file://figures/Visitor-ExpressionsVisitor.png|width=45+
+
+${slide:title=Expression Visitor: Using double dispatch}$
 
 +.>file://figures/Visitor-ExpressionsVisitor.png|width=90+
 
-${slide:title=Expression Visitor analysis}$
-
-Each visitor knows what to do for a number, a plus and times operation
 
 ${slide:title=Evaluator Visitor}$
 
@@ -161,36 +167,53 @@ Printer >> visitPlus: anExpression
     anExpression right acceptVisitor: self.
 ]]]
 
+${slide:title=Expression Visitor analysis}$
+
+- Each visitor knows what to do for a number, a plus and times operation
+- Each visitor manages it own specific state
+- Each visitor is independent of other ones
+
 
 ${slide:title=Visitor: another look at it}$
 
 - Pluggable distributed recursive treatment of a composite structure
 
-add a diagram here
+[[[
+Printer >> visitPlus: anExpression
+    stream nextPutAll: '*'.
+    anExpression left acceptVisitor: self.
+    anExpression right acceptVisitor: self.
+]]]
+
 
 ${slide:title=Stepping back: key logic}$
 
 The double dispatch is the key point
-- The Visitor knows the elementary operations 
-- The items declare how they want to be visited
+- The Visitor knows the elementary operations (e.g., evaluating a plus, a minus, a value)
+- The items mentions to the Visitor how they want to be visited
 
 +.>file://figures/Visitor-ExpressionsVisitor.png|width=60+
 
 
-${slide:title=Stepping back: the basic trolling question}$
+${slide:title=Stepping back: a basic trolling question}$
 
-Some people may tell you that it is not OO because visitor externalize behavior.
+Some people may tell you that Visitor is not OO because Visitor externalizes behavior out of objects.
 - Yes operations applied on objects are defined outside the objects.
 - Let us think:
--- how much extra behavior and extra state mixed for nothing are you ready to get
--- do you want to package multiple behavior separately (yes in Pharo we have method extension but state is not well managed)
--- if you have a lot of orthogonal treatments, then better separate them
+-- How much extra behavior and extra state mixed for nothing are you ready to pay?
+-- Do you want to package multiple behaviors separately?
+- If you have a lot of orthogonal treatments, then better separate them
 
+${slide:title=When to use a Visitor}$
 
+- Whenever you have a number of items on which you have to perform a number of actions
 
-
-
-
-${slide:title=Example in Pillar}$
-
+Examples:
+- Parse tree (ProgramNode) uses a visitor for
+-- the compilation (emitting code on CodeStream), 
+-- pretty printing, syntax hilighting
+-- different analysis pass, 
+-- rotten green test analysis
+- Rendering documents (Document) in different formats
+-- nodes expansion, HTML, LaTeX, ...
 

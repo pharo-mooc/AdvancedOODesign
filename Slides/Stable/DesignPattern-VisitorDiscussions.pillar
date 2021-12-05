@@ -1,5 +1,5 @@
 {
-	"title":"Visitor Discussion",
+	"title":"Discussions about Visitor",
 	"subtitle":"",
 	"author":"",
 	"slidesid":""
@@ -8,7 +8,6 @@
 ${slide:title=Controlling the traversal}$
 
 A visitor embeds a structure traversal
-- Be default all the items should be reached
 - There are different places where the traversal can be implemented:
 -- in the visitors
 -- in the items themselves
@@ -25,22 +24,27 @@ ${slide:title=Items in control}$
 +.>file://figures/Visitor-ItemControl.png|width=80+
 
 
+${slide:title=Implementation: Visitor vs. class extension}$
 
+Even if a language supports class extension (defining methods on a class from another package than the class package), using a Visitor is better because:
+- Each Visitor encapsulates a complex operation
+- Each Visitor has its own state
 
-${slide:title=VisitMethod encode context}$
+${slide:title=VisitMethods encode a context}$
 
-- ""visit*"" methods can be used to let user extend functionality at fine granularity
 - the granularity of visit methods has an impact on the hooks they offer
+- ""visit*"" methods can be used to provide context
 
 ${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
 
+Compare
 [[[
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries do: [:each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ]
 ]]]
 
-vs. 
+vs.
 
 [[[
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
@@ -51,9 +55,14 @@ RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
 [[[
 RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection
 
-	^ aNodeCollection	do: [ :each | self visitNode: each ]
+	^ aNodeCollection	do: [ :each | self visitTempDefinitionNode: each ]
 ]]]
 
+[[[
+RBProgramNodeVisitor >> visitTempDefinitionNode: aNode
+
+	^ self visitNode: aNode
+]]]
 
 %${slide:title=Misopportunities}$
 
@@ -65,21 +74,21 @@ RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection
 
 ${slide:title=Using messages as cases (again) }$
 
-In this case using ==visitTemporaryNodes:==, it ensures the extender that such method is not for all the variables but only for temporaries.
+Using ==visitTempDefinitionNode:== ensures the extender that such a method is not for all the variables but only for temporaries.
 - No need to test
-- No need to get a state
-- Just override ==visitTemporaryNodes:==
+- No need to use a state updated by previous message sends
+- Just override ==visitTempDefinitionNode:== and only be invoked on temporary definition
 
 
-${slide:title=Generic Visitors are difficult to build}$
+${slide:title=Building generic Visitors can be difficult}$
 
-- Should we return always the results
+- Should we return always the results?
 - Should collect the values on collection?
 
-${slide:title=Should we promote collections as nodes?}$
+${slide:title=Should we promote collections as domain nodes?}$
 
-- Should we return always the results
-- Should collect the values on collection?
+- Open discussion....
+- tell me what you think?
 
 
 ${slide:title=Visitor with reflection}$
@@ -87,26 +96,12 @@ ${slide:title=Visitor with reflection}$
 +.>file://figures/VisitorReflectiveImplementation.png|width=90+
 
 
-${slide:title=When to use a Visitor}$
-
-- Whenever you have a number of items on which you have to perform a number of actions
-- When you ‘decouple’ the actions from the items.
-
-Examples:
-- Parse tree (ProgramNode) uses a visitor for the compilation (emitting code on CodeStream)
-- Rendering documents (Document) in different formats
-
-${slide:title=Visitor does not play well with new leaves}$
+${slide:title=Visitor does not play well with node addition}$
 
 - If your domain is growing or changing (new subclasses),
-- You may end up having to change the visitors each time you introduce a new leave in the composite
-and it can be tedious.
+- You may end up having to change the visitors each time you introduce a new node in the composite and it can be tedious.
 
-${slide:title=Class extension}$
 
-Even if a language supports class extension (defining methods on a class from another package than the class package), using a visitor is better because
-- Each Visitor encapsulates a complex operation
-- Each Visitor has its own state
 
 ${slide:title=[Type] Do not use overloading for visit method}$
 
