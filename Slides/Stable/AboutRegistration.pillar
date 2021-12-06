@@ -28,11 +28,14 @@ Parser >> parse: line
 
 ${slide:title=Registration for 'Free'}$
 
+Pros: 
 - Each time a new class is loaded it is taken into account
-- Now we do it all the time for nothing
+
+Cons: 
+- We do it ""all the time for nothing""
 - We are querying the system for nothing
 
-${slide:title=Alternate 1: explicit static list}$
+${slide:title=Solution 1: Explicit static list}$
 
 [[[
 Parser >> documentClasses
@@ -41,7 +44,7 @@ Parser >> documentClasses
 ]]]
 
 
-${slide:title=New iterator definition}$
+${slide:title=Statically sorting the list}$
 
 In fact we could precompute priority too
 
@@ -54,12 +57,12 @@ Pros:
 - Do not have to query all the classes all the time
 
 Cons:
-- Sometimes we do not want to list explicitly class to avoid dependencies to other packages
+- Watch out because we may not want to list explicitly class to avoid dependencies to other packages
 
 
-${slide:title=Proposing an explicit registration mechanism}$
+${slide:title=Solution 2: Explicit registration mechanism}$
 
-Class can explicit register to the parse
+E.g., classes can explicit register to the parser
 
 [[[
 Section class >> initialize
@@ -71,14 +74,12 @@ List class >> initialize
 	Parser registerClass: self
 ]]]
 
-
-
 [[[
 Parser >> documentClasses
 	^ RegisteredClasses
 ]]]
 
-${slide:title=Registration mechanism supports extension}$
+${slide:title=A registration mechanism supports extension}$
 
 [[[
 Extra class >> initialize
@@ -92,6 +93,6 @@ Extra class >> initialize
 ${slide:title=Conclusion}$
 
 - XXX subclasses is a cool pattern 
-- but it costs. 
-
+- But it has a cost! 
+- Design is about tradeoffs
 
