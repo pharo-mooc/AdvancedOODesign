@@ -17,7 +17,8 @@ TODO:
 	- present better
 	- Table vs: dd
 
-
+- I would like to have a hot session of xtream coding 
+a visitor as guille is doing it from a test.
 	
 Todo
 =====
@@ -129,6 +130,17 @@ Commander2 as a case study
 Test to understand and record,
 
 
+Registration with a cache
+	+ how do invalidate the cache
+	+ worldmenu
+	+ weak registration
+
+Visitor
+	- pre-order (post in)
+	- extensibility! how can I add new operations if I don't own the classes
+	- What about adding variables! 😄
+
+	Extend this to graphs
 
 
 ${columns}$
