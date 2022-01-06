@@ -1,3 +1,158 @@
 https://h5p.org/tutorial-greeting-card
 
 https://h5p.org/documentation/
+
+This repo contains some trial with the wonderful editor of h5p (welcome back in the middle age)
+
+- -3 contains a version with manual title and preformatted. 
+- these bundles looks like shit.
+- some code are from 2014
+- do not touch do not break 
+- a bundle is a zip file 
+	- contents is in file content/conten.json
+	- images are in content/images
+	
+This is the skeleton
+
+
+{
+  "presentation": {
+    "slides": [
+      {}, 
+      {}, 
+      {}
+    ], 
+    "keywordListEnabled": true, 
+    "globalBackgroundSelector": {}, 
+    "keywordListAlwaysShow": false, 
+    "keywordListAutoHide": false, 
+    "keywordListOpacity": 90
+  }, 
+  "override": {
+    "activeSurface": false, 
+    "hideSummarySlide": false, 
+    "summarySlideSolutionButton": true, 
+    "summarySlideRetryButton": true, 
+    "enablePrintButton": false, 
+    "social": {
+      "showFacebookShare": false, 
+      "facebookShare": {
+        "url": "@currentpageurl", 
+        "quote": "I scored @score out of @maxScore on a task at @currentpageurl."
+      }, 
+      "showTwitterShare": false, 
+      "twitterShare": {
+        "statement": "I scored @score out of @maxScore on a task at @currentpageurl.", 
+        "url": "@currentpageurl", 
+        "hashtags": "h5p, course"
+      }, 
+      "showGoogleShare": false, 
+      "googleShareUrl": "@currentpageurl"
+    }
+  }, 
+  "l10n": {
+    "slide": "Slide", 
+    "score": "Score", 
+    "yourScore": "Your Score", 
+    "maxScore": "Max Score", 
+    "total": "Total", 
+    "totalScore": "Total Score", 
+    "showSolutions": "Show solutions", 
+    "retry": "Retry", 
+    "exportAnswers": "Export text", 
+    "hideKeywords": "Hide sidebar navigation menu", 
+    "showKeywords": "Show sidebar navigation menu", 
+    "fullscreen": "Fullscreen", 
+    "exitFullscreen": "Exit fullscreen", 
+    "prevSlide": "Previous slide", 
+    "nextSlide": "Next slide", 
+    "currentSlide": "Current slide", 
+    "lastSlide": "Last slide", 
+    "solutionModeTitle": "Exit solution mode", 
+    "solutionModeText": "Solution Mode", 
+    "summaryMultipleTaskText": "Multiple tasks", 
+    "scoreMessage": "You achieved:", 
+    "shareFacebook": "Share on Facebook", 
+    "shareTwitter": "Share on Twitter", 
+    "shareGoogle": "Share on Google+", 
+    "summary": "Summary", 
+    "solutionsButtonTitle": "Show comments", 
+    "printTitle": "Print", 
+    "printIngress": "How would you like to print this presentation?", 
+    "printAllSlides": "Print all slides", 
+    "printCurrentSlide": "Print current slide", 
+    "noTitle": "No title", 
+    "accessibilitySlideNavigationExplanation": "Use left and right arrow to change slide in that direction whenever canvas is selected.", 
+    "accessibilityCanvasLabel": "Presentation canvas. Use left and right arrow to move between slides.", 
+    "containsNotCompleted": "@slideName contains not completed interaction", 
+    "containsCompleted": "@slideName contains completed interaction", 
+    "slideCount": "Slide @index of @total", 
+    "containsOnlyCorrect": "@slideName only has correct answers", 
+    "containsIncorrectAnswers": "@slideName has incorrect answers", 
+    "shareResult": "Share Result", 
+    "accessibilityTotalScore": "You got @score of @maxScore points in total", 
+    "accessibilityEnteredFullscreen": "Entered fullscreen", 
+    "accessibilityExitedFullscreen": "Exited fullscreen", 
+    "confirmDialogHeader": "Submit your answers", 
+    "confirmDialogText": "This will submit your results, do you want to continue?", 
+    "confirmDialogConfirmText": "Submit and see results"
+  }
+} 
+
+
+Here is one slide (we will have to pick on setting for the titile and the bulleted list)
+
+ {
+        "elements": [
+          {
+            "x": 30.000680827887, 
+            "y": 30.000336213563, 
+            "width": 40, 
+            "height": 40, 
+            "action": {
+              "library": "H5P.AdvancedText 1.1", 
+              "params": {
+                "text": "
+
+	
+Cool
+
+	
+Nice
+
+	
+Super
+
+	
+Hyper language
+
+
+"
+              }, 
+              "subContentId": "a41dda9d-d25f-47e1-80a7-6dd88158508e", 
+              "metadata": {
+                "contentType": "Text", 
+                "license": "U", 
+                "title": "Untitled Text"
+              }
+            }, 
+            "alwaysDisplayComments": false, 
+            "backgroundOpacity": 0, 
+            "displayAsButton": false, 
+            "buttonSize": "big", 
+            "goToSlideType": "specified", 
+            "invisible": false, 
+            "solution": ""
+          }
+        ], 
+        "slideBackgroundSelector": {}, 
+        "keywords": [
+          {
+            "main": "What is Pharo"
+          }
+        ]
+      }
+
+
+
+
