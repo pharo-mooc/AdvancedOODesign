@@ -1,0 +1,84 @@
+{
+    "title":"About Validation",
+    "subtitle":"",
+    "author":""
+}
+
+${slide:title=Goal}$
+
+- How can we navigate an instance tree?
+- With optional states that can be skipped
+
+
+${slide:title=The case}$
+
+- We want to validate UI forms
+- Nested components may want to validate or not their contents
+
+Screenshot here
+
+${slide:title=A tree of instances}$
+
+Screenshot here
+
+
+${slide:title=Validate First Design}$
+
+- Any presenter can validate its contents.
+- Per dafault does not nothing.
+
+[[[
+SpPresenter >> validate
+	^ self 
+]]]
+
+[[[
+SpOptionPresenter >> validate
+
+	| report |
+	report := SpValidationReport new. 
+	self layout children do: [ :presenter | presenter validate ]
+]]]
+
+${slide:title=Analysis}$
+
+- We need to have a report to know if the validation failed or not.
+- Should validate return a report?
+- If validate returns a report then we have to return an ok report for anybody 
+- We do not want to force a report for all the tree instances...
+
+
+${slide:title=Second Design: let the object decide }$
+
+Pass around a basket and let any sub instance decide if it want to participate
+
+[[[
+SpPresenter >> validateInto: aReport
+	^ self
+]]]
+
+[[[
+SpOptionPresenter >> validate
+	"Return a "
+	| report |
+	report := SpValidationReport new. 
+	self layout children do: [ :presenter | presenter validateInto: report ].
+	^ report
+]]]
+
+
+${slide:title=Bringing Local and Global}$
+
+- Each validating subcomponents can bring its information to the report.
+
+[[[
+SpTextInputFieldWithValidation >> validateInto: aValidationReport
+	self validate.
+	aValidationReport addAll: validationErrors
+]]]
+
+
+${slide:title=Conclusion}$
+
+- Let the object decide if it wants to join a process but passing a container
+
