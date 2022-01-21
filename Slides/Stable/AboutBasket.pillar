@@ -1,16 +1,16 @@
 {
     "title":"About Validation",
-    "subtitle":"",
+    "subtitle":"A pretext to talk about optional actions",
     "author":""
 }
 
 ${slide:title=Goal}$
 
 - How can we navigate an instance tree?
-- With optional states that can be skipped
+- With optional states that can be skipped?
 
 
-${slide:title=The case}$
+${slide:title=The case: Validation}$
 
 - We want to validate UI forms
 - Nested components may want to validate or not their contents
