@@ -2,6 +2,7 @@ https://h5p.org/tutorial-greeting-card
 
 https://h5p.org/documentation/
 
+
 This repo contains some trial with the wonderful editor of h5p (welcome back in the middle age)
 
 - -3 contains a version with manual title and preformatted. 
@@ -11,6 +12,15 @@ This repo contains some trial with the wonderful editor of h5p (welcome back in 
 - a bundle is a zip file 
 	- contents is in file content/conten.json
 	- images are in content/images
+	
+	
+Pay attention the generated json is broken
+Paste it to 
+	https://jsonformatter.curiousconcept.com/#
+	and remove space between numbeer digits!!!
+	
+License
+"CC BY-NC-ND"
 	
 This is the skeleton
 
