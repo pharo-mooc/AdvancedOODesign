@@ -12,4 +12,4 @@ i.e.,
 	cd pharo-Template-withVariableNames2
 	zip -r -D -X pharo-Template-withVariableNames2.h5p *
 	
-It generates a loadable pharo-Template-withVariableNames2.h5p file.
+It generates a loadable into Lumi pharo-Template-withVariableNames2.h5p file.
