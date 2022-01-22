@@ -2,7 +2,6 @@ Todo next
 ========
 - In antiif put, the shape slides?
 	- 
-	
 
 TODO: 
 - Should verify flatten in Basic polymorphism at work
@@ -12,6 +11,10 @@ TODO:
 
 - Global to ...	
 
+- Revisit Double dispatch
+	-> discussion
+		dices return collection with self (berk)
+		conversion asDiceHandle 
 
 - Stone Paper Scissors
 	- present better
