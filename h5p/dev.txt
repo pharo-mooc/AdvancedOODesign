@@ -22,6 +22,30 @@ Paste it to
 License
 "CC BY-NC-ND"
 	
+	
+	
+'/Users/ducasse/Workspace/FirstCircle/MyBooks/Bk-Writing/AdvancedOODesign/h5p/ValidatedJSON/content4.json' asFileReference contents asMustacheTemplate 
+	value: ({ 'TITLEVARIABLE' -> 'ZORKONGLE' }) asDictionary.
+	
+Works when variables are expressed using {{{TITLEVARIABLE}}}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 This is the skeleton
 
 
