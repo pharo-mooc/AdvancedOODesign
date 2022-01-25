@@ -53,9 +53,36 @@ WidgetTwoPresenter >> action...
 
 - Not good it hardcodes the instance tree structure
 
+${slide:title=Passing explicit model}$
+
+[[[
+MainPresenter >> model
+	^ aModel
+]]]
+
+[[[
+MainPresenter >> initializePresenters
+	super initializePresenters.
+	widgetOne := self instantiate: WidgetOnePresenter on: aModel.
+
+]]]
 
 
-${slide:title=Possible solution}$
+[[[
+WidgetOnePresenter >> initializePresenters
+	super initializePresenters.
+	widgetTwo := self instantiate: WidgetTwoPresenter on: aModel.
+]]]
+
+
+[[[
+WidgetTwoPresenter >> initializePresenters
+	super initializePresenters.
+	...
+]]]
+
+
+${slide:title=Another Possible Solution}$
 
 [[[
 SpPresenter >> definedModelOrNil
