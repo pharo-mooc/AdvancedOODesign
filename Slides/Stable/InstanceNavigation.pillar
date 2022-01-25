@@ -53,7 +53,7 @@ WidgetTwoPresenter >> action...
 
 - Not good it hardcodes the instance tree structure
 
-${slide:title=Passing explicit model}$
+${slide:title=Passing explicitly a model around}$
 
 [[[
 MainPresenter >> model
