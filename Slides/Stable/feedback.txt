@@ -18,6 +18,7 @@ TODO:
 
 - Stone Paper Scissors
 	- present better
+	- no need for arguments we should say it
 	- Table vs: dd
 
 - I would like to have a hot session of xtream coding 

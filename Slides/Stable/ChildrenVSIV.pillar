@@ -70,9 +70,17 @@ MicHeaderBlock >>headerElements
 
 ${slide:title=Nothing really new}$
 
-This is a bit like 
-- in DOM
-- in Seaside this is the inverse but the API can hide it to clients.
+- The domain tree is composed of domain objects (e.g. microdown elements) and 
+- extra information are attributes of the elements. 
+- Like in XTML DOM
+
+${slide:title=Messages hide implementation}$
+
+- In Microdown, the children instance variable holds the domain tree
+- Accessors provide specific access in case
+
+- in Seaside this is the inverse: elements are kept in instance variables and returns by ==children== methods
+- The API hides it to clients.
 
 
 ${slide:title=The case: Seaside way}$
@@ -99,6 +107,11 @@ IAddress >> initialize
 IAddress >> children
     ^ Array with: editor
 ]]]
+
+{slide:title=Comparing}$
+
+- Explicit use of attributes is good because when the order of children is important changing the list as no impact on specific element access.
+- E.g. if access
 
 ${slide:title=Conclusion}$
 

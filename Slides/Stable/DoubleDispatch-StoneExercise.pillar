@@ -14,6 +14,9 @@ ${slide:title=Goals}$
 >>> #paper
 ]]]
 
+${slide:title=Goals}$
+
++Stone Paper Scissors.>file://figures/StonePaperScissorsGame.pdf|width=80+
 
 ${slide:title=Stone Paper Scissors: one Test}$
 
@@ -181,28 +184,35 @@ Stone >> playAgainstPaper: aPaper
 	^ #paper
 ]]]
 
-${slide:title=Overview}$
+${slide:title=Solution Overview}$
 
-+An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorisLizardSpock.jpg|width=80+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsAndKey.pdf|width=80+
 
 ${slide:title=Remark}$
 
-In this example we do not need to pass the argument during the double dispatch
+- In this toy example we do not need to pass the argument during the double dispatch
+- But in general this is important as in Visitor
 
 [[[
 Scissors >> playAgainstPaper: aPaper
 	^ #scissors
 ]]]
 
+can just be
+
 [[[
 Scissors >> playAgainstPaper
 	^ #scissors
 ]]]
 
+${slide:title=Remark}$
+
++.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+
 
 ${slide:title=Extending it...}$
 
-+>file://figures/StonePaperScissorsLizzardSpock.pdf|width=80+
++>file://figures/StonePaperScissorsLizzardSpockGame.pdf|width=80+
 
 ${slide:title=Conclusion}$
 
