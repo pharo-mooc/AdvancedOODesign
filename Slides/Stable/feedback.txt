@@ -28,8 +28,12 @@ Todo
 =====
 	
 - Parametrized tests
-- Layered architecture
+- Layered architecture settings
 - Reify and dispatch
+
+- Encapsulate actions
+	streamContents:
+	readStreamDo:
 
 Polymorphism at work
 	-> Polymorphism and extension
