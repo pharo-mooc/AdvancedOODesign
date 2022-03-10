@@ -1,3 +1,30 @@
+I can get all the slides pages as JPEG.
+
+pdftoppm -jpeg Tests-01-101.pdf Tests-01
+
+
+I can get the size of png because the png reader knows them.
+
+ImageReadWriter fromStream: 'foo.png' asFileReference binaryReadStream
+
+fromStream: aBinaryReadStream
+	"Answer a Form of the image stored on aBinaryReadStream.
+	This will (normally) autodetect the format and delegate to the correct concrete subclass.
+	Closes aBinaryReadStream when done."
+	
+	"ImageReadWriter formFromStream: 'test.png' asFileReference binaryReadStream"
+	"ImageReadWriter formFromStream: 'test.jpg' asFileReference binaryReadStream"
+
+	| positionableReadStream reader readerClass form |
+	positionableReadStream := ZnPositionableReadStream on: aBinaryReadStream.
+	readerClass := self readerClassFromStream: positionableReadStream.
+	reader := readerClass new on: positionableReadStream.
+	form := reader nextImage.
+	aBinaryReadStream close.
+	^ reader
+
+
+
 https://h5p.org/tutorial-greeting-card
 
 https://h5p.org/documentation/

@@ -1,6 +1,6 @@
 
 
-cp ValidatedJSON/content4.json pharo-Template-withVariableNames2/content/content.json
-cd pharo-Template-withVariableNames2
+#cp ValidatedJSON/content4.json pharo-Template-withVariableNames2/content/content.json
+cd Target
 zip -r -D -X ../Generated.h5p *
 cd ../
