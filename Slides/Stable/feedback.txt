@@ -40,8 +40,7 @@ a visitor as guille is doing it from a test.
 	
 Todo
 =====
-	
-- Parametrized tests
+
 - Layered architecture settings
 - Reify and dispatch
 
