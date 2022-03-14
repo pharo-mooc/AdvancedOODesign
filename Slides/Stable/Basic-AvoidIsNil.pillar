@@ -1,7 +1,8 @@
 {
   "title":"Avoid Null Checks",
   "subtitle":"",
-  "author" : ""
+  "author" : "S. Ducasse",
+  "slidesid":" "
 }
 
 ${slide:title=Goal}$
@@ -12,7 +13,7 @@ ${slide:title=Goal}$
 ${slide:title=nil?}$
 
 - Unique instance of the class ==UndefinedObject==
-- True object
+- Real object, as anybody else
 - Default value of uninitialized instance variable
 - Still we should be careful when to use it
 
@@ -27,11 +28,11 @@ Inferencer >> rulesForFact: aFact
 	^ self rulesAppliedTo: aFact
 ]]]
 
-- Here we return ==nil== to indicate that there is no rules for a fact.
+- Here ==rulesForFact:== returns ==nil== to indicate that there is no rules for a fact.
 
 ${slide:title=Consequences!}$
 
-- Returning nil (e.g., ==ifTrue: [ ^ nil ]==) forces EVERY client to check for ==nil==:
+Returning ==nil== (e.g., ==ifTrue: [ ^ nil ]==) forces EVERY client to check for ==nil==:
 
 [[[
 (inferencer rulesForFact: 'a')
@@ -59,8 +60,7 @@ Inferencer >> rulesForFact: aFact
 Your clients can just iterate and manipulate the returned value
 
 [[[
-(inferencer rulesForFact: 'a')
-   do: [:each | ... ]
+(inferencer rulesForFact: 'a') do: [ :each | ... ]
 ]]]
 
 
@@ -102,7 +102,7 @@ FreeTypeFont >> descent
                                self face unitsPerEm) negated ]
 ]]]
 
-- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
+This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
 
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 
@@ -114,7 +114,7 @@ ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 ${slide:title=Sometimes you have to check...}$
 
 Sometimes you have to check before doing an action
-- if you can, turn the default case into an object, a Null Object, a Default Selected object
+- when possible, you can turn the default case into an object, a Null Object.
 
 ${slide:title=Example}$
 
@@ -139,14 +139,16 @@ ${slide:title=Example}$
 
 ${slide:title=Solution: Use NullObject}$
 
-- A null object proposes a **polymorphic** API and embeds default actions/values
-- Let us create a ==NoTool== class whose behavior is to do nothing.
+- A null object proposes a ""polymorphic"" API and embeds default actions/values.
 - Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
+
+Let us create a ==NoTool== class whose behavior is to do nothing.
+
 
 ${slide:title=Solution: NoTool}$
 
 [[[
-AbstractTool << #NoTool
+AbstractTool < #NoTool
 ]]]
 
 [[[
@@ -181,11 +183,11 @@ ${slide:title=Solution: With initialization and NoTool}$
 
 
 
-${slide:title=Solution: About NullObject}$
+${slide:title=About NullObject}$
 
 Sometimes it is difficult to apply the ==NullObject==
 - Too large API
-- Need too many NullObject
+- Or would need too many NullObjects
 - Unclear default "no behavior"
 
 ${slide:title=Conclusion}$

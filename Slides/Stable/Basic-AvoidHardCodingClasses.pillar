@@ -1,5 +1,6 @@
 {
     "title" : "Avoid hardcoding classes",
+    "subtitle":"",
     "slidesid" : " ",
     "author" : "S. Ducasse"
 }
@@ -28,7 +29,7 @@ ${slide:title=Solution}$
 - Do not hardcode class name
 - Define test parameters
 
-${slide:title=Step one}$
+${slide:title=Step 1}$
 
 [[[
 EFTest >> testAssignment
@@ -50,7 +51,7 @@ EFTest >> formatterClass
 	^ EFFormatter
 ]]]
 
-${slide:title=Step two: state and setter}$
+${slide:title=Step 2: state and setter}$
 
 [[[
 EFTest >> formatterClass: aFormatterClass
@@ -107,5 +108,5 @@ EFTest >> testAssignment
 ${slide:title=Conclusion}$
 
 - Factor out class references
-- Ease change by overriding 
+- Ease extension by overriding (Remember self-sends are plans for reuse)
 - Support test parametrization
