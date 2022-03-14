@@ -27,13 +27,13 @@ ${slide:title=Studying an example}$
 - You can do it.
 
 
-${slide:title=An Empty Package}$
+${slide:title=An empty package}$
 
 + >file://figures/XTDD1.png|width=95+
 
 
 
-${slide:title=An Empty Test Case Class}$
+${slide:title=An empty test case class}$
 
 + >file://figures/XTDD2.png|width=100+
 
@@ -61,7 +61,7 @@ ${slide:title=Define a class (II)}$
 + >file://figures/XTDD5.png|width=90+
 
 
-${slide:title=Test Defined but Not Executed}$
+${slide:title=Test defined but not executed}$
 
 + >file://figures/XTDD6.png|width=90+
 
@@ -150,8 +150,8 @@ ${slide:title=Why XTDD is powerful}$
 
 - Avoid guessing context when coding
 - Much much better context 
--- inspect that **specific** instance state
--- talk to that **specific** object
+-- inspect that ""specific"" instance state
+-- talk to that ""specific"" object
 - Inspectable / interactable context
 - Tests are not a side effect artefact but the driving force
 
