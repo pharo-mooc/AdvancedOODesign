@@ -1,7 +1,7 @@
 {
     "title" : "Avoid hardcoding classes",
-    "slidesid" : "",
-    "author" : ""
+    "slidesid" : " ",
+    "author" : "S. Ducasse"
 }
 
 ${slide:title=Goal}$
