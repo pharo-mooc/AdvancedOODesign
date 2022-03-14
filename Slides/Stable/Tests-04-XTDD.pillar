@@ -1,8 +1,8 @@
 {
-	"title":"Xtreme Test Driven",
-	"slidesid":"",
-	"subtitle":"Getting productivity boost",
-	"author":""
+	"title":"Xtreme Test Driven Development",
+	"slidesid":" ",
+	"subtitle":"Getting a productivity boost",
+	"author":"S. Ducasse"
 }
 
 
@@ -13,11 +13,9 @@ ${slide:title=Outline}$
 - Smart tools
 - Absolutely gorgeous development flow
 
-+ >file://figures/LogoPharo.png|width=30+
-
 ${slide:title=Principle}$
 
-- Do ""not break"" the flow
+Do ""not break"" the flow
 - Write a test
 - When it breaks, define the method ""on the fly in the debugger""
 - Resume and continue until test is green
@@ -105,19 +103,18 @@ ${slide:title=Continue the execution...}$
 
 + >file://figures/XTDD14.png|width=80+
 
-${slide:title=Stepping back}$
+${slide:title=Supporting the programmer flow}$
 
 - The system created a new method
 - Removed the stack element with Error
-- Replace it with a call to the new method
+- Replaced it with a call to the new method
 - Relaunched execution
-- We edited it and recompiled
+- We edited it and recompiled the method
 - Continued execution
 
-${slide:title=Stepping back (II)}$
+${slide:title=New method}$
 
-- The system created a new method
-
+The system created a new method
 - Removed the stack element with Error
 - Replace it with a ""call"" to the new method
 
@@ -133,12 +130,11 @@ ${slide:title=Same story....}$
 
 + >file://figures/XTDD15.png|width=90+
 
-${slide:title=Smart tools precompile methods}$
+${slide:title=Debugger also precompiles methods}$
 
 + >file://figures/XTDD16.png|width=70+
 
-- A method with the same name than an attribute...
-- Probably an accessor
+- A method with the same name than an attribute is probably an accessor
 
 ${slide:title=Test is green}$
 
@@ -150,14 +146,14 @@ ${slide:title=One Cycle}$
 - Ready to commit
 - New test
 
-${slide:title=Stepping back}$
+${slide:title=Why XTDD is powerful}$
 
-- Avoid guessing when coding
+- Avoid guessing context when coding
 - Much much better context 
--- inspect that specific instance state
--- talk to that specific object
+-- inspect that **specific** instance state
+-- talk to that **specific** object
 - Inspectable / interactable context
-- Tests are not a side effect artefacts but the driving force
+- Tests are not a side effect artefact but the driving force
 
 ${slide:title=Protip from expert Pharo developers}$
 
@@ -165,4 +161,3 @@ ${slide:title=Protip from expert Pharo developers}$
 - Cristalize your scenario with a test
 - Xtreme TDD
 - Loop
-
