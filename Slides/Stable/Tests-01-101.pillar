@@ -1,7 +1,7 @@
 {
 	"title":"Test 101",
 	"subtitle":"The minimum you should know",
-	"slidesid":"A1",
+	"slidesid":" ",
 	"author":"S.Ducasse"
 }
 
@@ -105,7 +105,7 @@ Executed systematically before and after each test run
 - ==setUp== allows us to specify and reuse the context
 - ==tearDown== to clean after
 
-+>file://figures/SetUpTearDown.png|width=80+
++>file://figures/SetUpTearDown.png|width=60+
 
 ${slide:title=Defining a setUp method}$
 
@@ -139,8 +139,7 @@ ${slide:title=About Writing Tests}$
 - Even better write them before the code
 -- Act as your first client, better interface
 - Active documentation always in sync
-- It has a cost, 
--- writing them, maintain them
+- It has a cost: writing them, maintain them
 - But pay off is Huge
 
 ${slide:title=But I can’t cover everything!}$
@@ -149,7 +148,7 @@ ${slide:title=But I can’t cover everything!}$
 -- When someone discovers a defect in code, first write a test that demonstrates the defect.
 -- Then debug until the test succeeds.
 
-''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.'' Martin Fowler
+'''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.''' Martin Fowler
 
 ${slide:title=Testing Style: TDD}$
 
@@ -159,7 +158,7 @@ ${slide:title=Testing Style: TDD}$
 - Write tests as you develop (even before you implement)
 - Write tests for every new piece of functionality
 
-''Developers should spend 25-50\% of their time developing tests.''
+'''Developers should spend 25-50\% of their time developing tests.'''
 
 
 ${slide:title=Good Tests}$

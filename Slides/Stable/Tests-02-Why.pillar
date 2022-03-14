@@ -1,7 +1,8 @@
 {
     "title":"Tests",
     "subtitle":"Why Testing is Important",
-    "author":""
+    "author":"S. Ducasse",
+    "slidesid": " "
 }
 
 ${slide:title=Goal}$
@@ -10,23 +11,22 @@ ${slide:title=Goal}$
 - What are their advantages?
 - What are the techniques to write good tests?
 
-${slide:title=Pros}$
+${slide:title=Why testing?}$
 
 - Tests are your life insurance
 - Increase trust that a change did not break something
-- Making sure to reduce the fear of changes
-- Understanding code
+- Reduce the fear of changes
+- Supporting code understanding
 
-
-${slide:title=Tests Positive Properties}$
+${slide:title=Test positive properties}$
 
 - Find bugs when they appear
 - improve customer trust
-- Reproduce complex scenari
-- Guarantee old bugs is caught if reappear
-- Isolate the problem
+- Reproduce complex scenarii
+- Guarantee old bugs are caught if reappear
+- Isolate a problem
 
-${slide:title=Some Characteristics of a Good Test Suite}$
+${slide:title=Some characteristics of a good test suite}$
 
 - Check extreme cases (e.g., null, 0 and empty)
 - Check complex cases (e.g., exceptions, network pbs)
@@ -36,7 +36,8 @@ ${slide:title=Some Characteristics of a Good Test Suite}$
 - Check units independently
 
 
-${slide:title=Understanding Code ;/ }$
+
+${slide:title=Understanding code ;/ }$
 
 [[[
 convert
@@ -51,8 +52,7 @@ convert
    ^ s
 ]]]
 
-
-${slide:title=Understanding Code: API and Result}$
+${slide:title=Understanding code: API and result}$
 
 [[[
 testConvert
@@ -61,27 +61,19 @@ testConvert
    self assert: Color black convert equals: '#000000'
 ]]]
 
-${slide:title=Understanding Code}$
+${slide:title=fromString: and convert interplay}$
 
 [[[
-testConvert2
+testFromStringIsCoherentWithConvert
    | table aColorString |
    table := #('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F').
 
    table do: [ :each |
       aColorString := '#', each, each, '0000'.
       self assert: ((Color fromString: aColorString) convert sameAs: aColorString)].
-
-testConvert3
-     | table aColorString |
-     table := #('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F').
-
-     table do: [ :each |
-        aColorString := '#', each, each, '0000'.
-        self assert: ((Color fromString: aColorString) convert sameAs: aColorString)].
 ]]]
 
-${slide:title=Understanding Code}$
+${slide:title=Understanding code}$
 
 You do not have to know how numbers are implemented to understand that this ==bitShift:== is working.
 
@@ -92,7 +84,7 @@ testBitShift
 ]]]
 
 [[[
-testShiftOneLeftThenRight
+testShiftOneLeftThenRightGetsOne
    "Shift 1 bit left then right and test for 1"
    
    1 to: 100 do: [:i | 
@@ -101,16 +93,16 @@ testShiftOneLeftThenRight
         equals: 1].
 ]]]
 
-${slide:title=Test Positive Properties}$
+${slide:title=Test positive properties}$
 
 - Give simple and reproducible examples
 - Illustrate the API
 - Give up-to-date documentation
 - Check conformity of new code
 - Offer a first client to new code
-- Force a modular design
+- Force a 'customizable' design
 
-${slide:title=Test Positive Properties}$
+${slide:title=Tests reduce change fear}$
 
 - Accelerate bug detection
 - Accelerate new code checking
@@ -125,17 +117,14 @@ ${slide:title=Characteristics of a Good Test Suite}$
 - Simple
 - Unit
 
-
-${slide:title= Characteristics of a Good Test Suite}$
+${slide:title=Characteristics of a Good Test Suite (2)}$
 
 - Change less frequently than the rest
 - Good code coverage
 - Deterministic
 
-${slide:title=Collateral Advantages}$
+${slide:title=Conclusion}$
 
-- Improve feeling of customers who care
-- Allow for automatic bug fixing
-- Improve type inference
-- Provide examples to variable values
-
+- Tests are important
+- In particular in dynamically-typed language
+- Help deliver complex projects
