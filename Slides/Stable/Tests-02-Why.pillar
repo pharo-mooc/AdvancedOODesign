@@ -16,7 +16,29 @@ ${slide:title=Why testing?}$
 - Tests are your life insurance
 - Increase trust that a change did not break something
 - Reduce the fear of changes
-- Supporting code understanding
+- Support code understanding
+- Tests do not avoid breaking your system
+- But they show what you broke!
+
+${slide:title=Remember...}$
+
+A test that is not automated does NOT exist
+
+${slide:title=Automated tests are your life insurance}$
+
+- Our brain is too small to remember everything
+- Our brain focuses on our last action
+- You write a test once and you execute it million times
+- Programming is modeling the world and the world is changing
+
+
+
+${slide:title=Automated tests ensure software can evolve}$
+
+- Tests make you ""bold"" in regards of changes
+- Tests lower the fear of breaking
+-- You can try and run the tests to get an idea
+-- You can explore alternatives
 
 ${slide:title=Test positive properties}$
 
@@ -34,8 +56,6 @@ ${slide:title=Some characteristics of a good test suite}$
 - Good coverage
 - Check abstractions
 - Check units independently
-
-
 
 ${slide:title=Understanding code ;/ }$
 
@@ -109,16 +129,11 @@ ${slide:title=Tests reduce change fear}$
 - Ease refactorings
 - Prevent regressions
 
-${slide:title=Characteristics of a Good Test Suite}$
+${slide:title=Characteristics of a good test suite}$
 
 - Deterministic
-- Automatic
 - Self-explained
-- Simple
-- Unit
-
-${slide:title=Characteristics of a Good Test Suite (2)}$
-
+- Simple/Unit
 - Change less frequently than the rest
 - Good code coverage
 - Deterministic

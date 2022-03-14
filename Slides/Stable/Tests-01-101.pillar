@@ -23,12 +23,17 @@ ${slide:title=Test main points}$
 - Tests reduce the fear of change
 - Per se tests do not prevent bugs to happen but they reduce **unnoticed** bugs or side effects
 
+${slide:title=About automation}$
+
+A test that is not **automated** does NOT exist!
+
+- Repetition
+- No human intervention
 
 ${slide:title=Unit tests}$
 
 - Unit tests ensure that you get the specified behavior of a class
 - Normally ''unit'' tests test a single class
-
 
 ${slide:title=Anatomy of a test}$
 
@@ -130,7 +135,7 @@ SetTestCase >> testOccurrences
 
 
 
-${slide:title=About Writing Tests}$
+${slide:title=About writing tests}$
 
 - Remember: Tests represent your trust in the system
 - Build them incrementally
@@ -161,7 +166,7 @@ ${slide:title=Testing Style: TDD}$
 '''Developers should spend 25-50\% of their time developing tests.'''
 
 
-${slide:title=Good Tests}$
+${slide:title=Good tests}$
 
 - Repeatable
 - No human intervention
