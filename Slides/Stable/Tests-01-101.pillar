@@ -6,35 +6,46 @@
 
 ${slide:title=Goal of the lecture|label=less}$
 
-- How can you trust that the changes did not destroy something?
+- How can you trust that a change did not destroy something?
 - What is my confidence in the system?
-- How do I write tests?
 - What is unit testing?
+- How do I write tests?
 
 
-${slide:title=Unit Tests}$
 
-- Unit tests ensure that you get the specified behavior of the public interface of a class
-- Normally Unit tests test a single class
+${slide:title=Test main points}$
 
-
-${slide:title=A Test}$
-
-A test
-- Create a context 
-- Send a stimulus 
-- Check the results
+- When there is a change
+-- Tests verify that what worked before still works
+-- Tests are your life insurance: you get aware of a side effect and regression
+- Tests are enablers of future evolution
+- Tests reduce the fear of change
+- Per se tests do not prevent bugs to happen but they reduce **unnoticed** bugs or side effects
 
 
-${slide:title=A Test}$
+${slide:title=Unit tests}$
 
-A test
-- Create a context: Create an empty set
-- Send a stimulus: Add twice the same element
-- Check the results: Check that the set contains only one element
+- Unit tests ensure that you get the specified behavior of a class
+- Normally ''unit'' tests test a single class
 
 
-${slide:title=Set TestCase}$
+${slide:title=Anatomy of a test}$
+
+A test:
+- Creates a context 
+- Performs a stimulus (an action on the context)
+- Checks the results (with assertions)
+
+
+${slide:title=Example: Testing set addition}$
+
+A test:
+- Creates a context: Create an empty set
+- Performs a stimulus: Add twice the same element
+- Checks the results: Check that the set contains only one element
+
+
+${slide:title=Set testcase}$
 
 [[[
 TestCase subclass: # SetTest
@@ -47,9 +58,73 @@ SetTest >> testAdd
   empty := Set new.                      "Context"
   empty add: 5.                             "Stimulus"
   empty add: 5. 
-  self assert: empty size = 1.        "Check"
+  self assert: empty size equals: 1.        "Check"
 
 SetTest run: #testAdd
+]]]
+
+
+${slide:title=Success, failures, and errors}$
+
+- Success: a test passes
+- A failure is a failed assertion, i.e., an anticipated problem that you test failed
+- An error is a condition you didn’t check for, i.e., a runtime error.
+
+
+${slide:title=A failure}$
+
+If we get ==empty size== returning 2 instead of 1.
+
+[[[
+SetTest >> testAdd 
+  | empty |
+  empty := Set new.
+  empty add: 5.
+  empty add: 5.
+  self assert: empty size equals: 1.
+]]]
+
+${slide:title=An error}$
+
+Sending the message ==add:== raise an exception.
+
+[[[
+SetTest >> testAdd 
+  | empty |
+  empty := Set new.
+  empty add: 5.
+  empty add: 5.
+  self assert: empty size equals: 1.
+]]]
+
+
+${slide: setUp and tearDown messages}$
+
+Executed systematically before and after each test run
+- ==setUp== allows us to specify and reuse the context
+- ==tearDown== to clean after
+
++>file://figures/SetUpTearDown.png|width=80+
+
+${slide:title=Defining a setUp method}$
+
+Just create a context, here an empty set.
+[[[
+SetTestCase >> setUp
+  empty := Set new
+]]]
+
+ ==setUp== is executed for you before any test execution
+
+[[[
+SetTestCase >> testOccurrences
+  self
+    assert: (empty occurrencesOf: 0)
+    equals: 0.
+  empty add: 5; add: 5.
+  self
+    assert: (empty occurrencesOf: 5)
+    equals: 1
 ]]]
 
 
@@ -67,6 +142,13 @@ ${slide:title=About Writing Tests}$
 -- writing them, maintain them
 - But pay off is Huge
 
+${slide:title=But I can’t cover everything!}$
+
+- Sure! Nobody can but:
+-- When someone discovers a defect in code, first write a test that demonstrates the defect.
+-- Then debug until the test succeeds.
+
+''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.'' Martin Fowler
 
 ${slide:title=Testing Style: TDD}$
 
@@ -77,14 +159,6 @@ ${slide:title=Testing Style: TDD}$
 - Write tests for every new piece of functionality
 
 ''Developers should spend 25-50\% of their time developing tests.''
-
-${slide:title=But I can’t cover everything!}$
-
-- Sure! Nobody can but
-- When someone discovers a defect in code, first write a test that demonstrates the defect.
-- Then debug until the test succeeds.
-
-''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.'' Martin Fowler
 
 
 ${slide:title=Good Tests}$

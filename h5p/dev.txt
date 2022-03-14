@@ -2,6 +2,7 @@ I can get all the slides pages as JPEG.
 
 pdftoppm -jpeg Tests-01-101.pdf Tests-01
 
+pdftoppm -jpeg AboutBasket.pdf -scale-to 1000  Basket
 
 I can get the size of png because the png reader knows them.
 
