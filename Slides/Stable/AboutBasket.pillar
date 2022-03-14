@@ -1,7 +1,7 @@
 {
     "title":"About Validation",
-    "subtitle":"A pretext to talk about optional actions",
-    "author":""
+    "subtitle":"A pretext to talk about delegation of actions",
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
@@ -22,7 +22,7 @@ ${slide:title=A tree of instances}$
 Screenshot here
 
 
-${slide:title=Validate First Design}$
+${slide:title=Validate first design}$
 
 - Any presenter can validate its contents.
 - Per dafault does not nothing.
@@ -43,14 +43,13 @@ SpOptionPresenter >> validate
 ${slide:title=Analysis}$
 
 - We need to have a report to know if the validation failed or not.
-- Should validate return a report?
-- If validate returns a report then we have to return an ok report for anybody 
-- We do not want to force a report for all the tree instances...
+- Should ==validate== return a report?
+- If ==validate== returns a report then we have to return an ok report for anybody.
+- We do not want to force a report for all the tree instances.
 
+${slide:title=Second design: let the object decide}$
 
-${slide:title=Second Design: let the object decide }$
-
-Pass around a basket and let any sub instance decide if it want to participate
+Pass around a basket and let any sub instance decides if it wants to participate
 
 [[[
 SpPresenter >> validateInto: aReport
@@ -59,7 +58,7 @@ SpPresenter >> validateInto: aReport
 
 [[[
 SpOptionPresenter >> validate
-	"Return a "
+
 	| report |
 	report := SpValidationReport new. 
 	self layout children do: [ :presenter | presenter validateInto: report ].
@@ -67,9 +66,7 @@ SpOptionPresenter >> validate
 ]]]
 
 
-${slide:title=Bringing Local and Global}$
-
-- Each validating subcomponents can bring its information to the report.
+${slide:title=Local and global together}$
 
 [[[
 SpTextInputFieldWithValidation >> validateInto: aValidationReport
@@ -77,8 +74,12 @@ SpTextInputFieldWithValidation >> validateInto: aValidationReport
 	aValidationReport addAll: validationErrors
 ]]]
 
+Each validating subcomponent 
+- can bring its information to the report
+- gets the responsibility to fill up the report
+
 
 ${slide:title=Conclusion}$
 
-- Let the object decide if it wants to join a process but passing a container
+- Let the object decides if it wants to join a process but passing a container
 
