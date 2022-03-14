@@ -1,3 +1,17 @@
+Log
+====
+	test-02 would deserve two examples on tests on limit
+
+
+
+
+
+
+
+
+
+
+
 Todo next
 ========
 - In antiif put, the shape slides?
