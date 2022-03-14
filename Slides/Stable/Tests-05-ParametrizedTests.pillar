@@ -1,0 +1,156 @@
+{
+	"title":"Parametrized tests",
+	"slidesid":" ",
+	"subtitle":"Getting more tests",
+	"author":"S. Ducasse"
+}
+
+${slide:title=Goal}$
+
+- How to reuse test logic with specific value set?
+- How can we run tests with all possible combinations?
+
+${slide:title=Problem}$
+
+[[[
+MyDullTest >> testSum
+	
+	self assert: (2/3) + (1/3) equals: 1
+]]]
+
+- How to generalize it?
+- How can we reuse test logic with specific values 
+
+
+
+${slide:title=Using a collection}$
+
+[[[
+MyDullTest >> testSum
+	
+	{ {2 . 1 . 3} . ( 2/3 . 1/3 .1} }
+		do: [:each |
+			self 
+				assert: each first + each second 
+				equals: each third ]
+]]]
+
+
+
+${slide:title=Using a parametrize test}$
+
+[[[
+ParametrizedTestCase < #MyDullTest
+	slots: { number1 . #number2 . #result}
+]]]
+
+[[[
+MyDullTest >> testSum
+	self assert: number1 + number2 equals: result
+]]]
+
+${slide:title=Declaring case}$
+
+[[[
+MyTest class >> testParameters
+
+	^ ParametrizedTestMatrix new
+		addCase: { #number1 -> 2. #number2 -> 1.0. #result -> 3 };
+		addCase: { #number1 -> (2/3). #number2 -> (1/3). #result -> 1 };
+		yourself
+]]]
+
+- We can execute tests with specific configuration
+
+${slide:title=Problem}$
+
+We have a test and we would like to apply to other collections.
+
+[[[
+MyTest >> testAdd
+	
+	| aCollection |
+	aCollection := Bag new.
+	aCollection add: 'a'.	
+	self assert: (aCollection includes: 'a').
+	self assert: aCollection size equals: 1.
+]]]
+
+${slide:title=Easy}$	
+
+- Introduce a setter for the class and use it.
+
+[[[
+MyTest >> testAdd
+	
+	| aCollection |
+	aCollection := collection class new.
+	aCollection add: 'a'.	
+	self assert: (aCollection includes: 'a').
+	self assert: aCollection size equals: 1.
+]]]
+
+
+${slide:title=Inherit from ParametrizedTestCase}$	
+
+[[[
+ParametrizedTestCase << #MyTest
+	slots: {#collection};
+	package: 'MyTests'
+]]]
+
+
+${slide:title=Declare test parameters}$
+[[[
+MyTest class >> testParameters
+
+	^ ParametrizedTestMatrix new
+		forSelector: #collectionClass 
+		addOptions: { Set. Bag. OrderedCollection }
+]]]
+
+We run all the tests with Set, Bag, OrderedCollection.
+
+
+${slide:title=We want more}$
+
+We would like to have different items to add and to check with all the collection.
+
+${slide:title=Easy}$	
+
+Introduce a setter for the items and use it.
+
+[[[
+ParametrizedTestCase << #MyTest
+	slots: {#collection . #items};
+	package: 'MyTests'
+]]]
+
+[[[
+MyTest >> testAdd
+	
+	| aCollection |
+	aCollection := collection class new.
+	aCollection add: items.	
+	self assert: (aCollection includes: items).
+	self assert: aCollection size equals: 1.
+]]]
+
+
+${slide:title=Declare test parameters}$	
+
+We run all the tests with all possible combinations for item1 and collectionClass
+
+[[[
+MyTest class >> testParameters
+
+	^ ParametrizedTestMatrix new
+		forSelector: #item1 addOptions: { 1. 'a'. $c };
+		forSelector: #collectionClass addOptions: { Set. Bag. OrderedCollection }
+]]]
+
+
+${slide:title=Conclusion}$
+
+- Parametrized tests are handy
+- You can get more tests out of your testcase

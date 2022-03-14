@@ -12,11 +12,12 @@ ${slide:title=Goal}$
 ${slide:title=A simple case }$
 
 [[[
-testAssignment
-	| source |
-	source := EFFormatter new 
-		installNewContext: self basicConfiguration; 
-		formatter: RBParser parseExpression: 'a:=1'.
+EFTest >> testAssignment
+
+	| source expr |
+	expr := RBParser parseExpression: 'a:=1'.
+	source := (EFFormatter new installNewContext:
+	           (self perform: configurationSelector) yourself) format: expr.
 	self assert: source equals: 'a := 1'
 ]]]
 
@@ -27,86 +28,81 @@ ${slide:title=Solution}$
 - Do not hardcode class name
 - Define test parameters
 
+${slide:title=Step one}$
+
 [[[
 EFTest >> testAssignment
-	| source |
-	configurationSelector := #basicConfiguration.
-	source := self formatExpression: 'a:=1'.
+
+	| source expr |
+	expr := self parserClass parseExpression: 'a:=1'.
+	source := (self formatterClass new installNewContext:
+	           (self perform: configurationSelector) yourself) format: expr.
 	self assert: source equals: 'a := 1'
-]]]
-
-
-${slide:title=Avoid hardcoding classes}$
-
-[[[
-EFTest >> parseExpression: anExpression
-	^ self parserClass parseExpression: anExpression
 ]]]
 
 [[[
 EFTest >> parserClass
 	^ RBParser
 ]]]
- 
-We can turn parserClass as a test parameter if needed
-
-
-${slide:title=Turn direct access to accessors}$
 
 [[[
-EFTest >> formatExpression: anExpression
-	| expr |
-	expr := self parseExpression: anExpression.
-	^ self formatter format: expr.
+EFTest >> formatterClass
+	^ EFFormatter
 ]]]
+
+${slide:title=Step two: state and setter}$
 
 [[[
 EFTest >> formatterClass: aFormatterClass
 	formatterClass := aFormatterClass
 ]]]
 
-[[[
-EFTest >> formatter
-	^ self formatterClass new
-		installNewContext: (self perform: configurationSelector)
-		yourself
-]]]
 
-${slide:title=Introducing tests parameters}$
+${slide:title=Step 3: introducing test parameters}$
 
 [[[
 EFTest class >> testParameters
 
 	^ ParametrizedTestMatrix new
-			addCase: { #formatterClass -> EFFormatter. #contextClass -> EFContext };
-			addCase: { #formatterClass -> AlternateFormatter. #contextClass -> EFContext };
+		addCase: { #formatterClass -> EFFormatter. #contextClass -> EFContext };
+		addCase: { #formatterClass -> AlternateFormatter. #contextClass -> EFContext };
 		yourself.
 ]]]
 
-- All the tests will run for each configuration.
+- All the tests will run for each configuration. 
+- Now we can turn ==parserClass== as a test parameter if needed!
 
-${slide:title=Running All Combinations}$
 
-[[[
-testAdd
-	
-	| aCollection |
-	aCollection := collectionClass new.
-	aCollection add: item1.	
-	self assert: (aCollection includes: item1).
-	self assert: aCollection size equals: 1.
-]]]
+${slide:title=Having a nice logic}$
 
 [[[
-testParameters
+EFTest >> testAssignment
 
-	^ ParametrizedTestMatrix new
-		forSelector: #item1 addOptions: { 1. 'a'. $c };
-		forSelector: #item2 addOptions: { 2. 'b'. $d };
-		forSelector: #collectionClass addOptions: 	{ Set. Bag. OrderedCollection }
+	| source expr |
+	expr := self parserClass parseExpression: 'a:=1'.
+	source := (self formatterClass new installNewContext:
+	           (self perform: configurationSelector) yourself) format: expr.
+	self assert: source equals: 'a := 1'
 ]]]
 
-We run all the tests with all possible combinations for item1, item2 and collectionClass
+into 
+[[[
+testAssignment
+	| source expr |
+	expr := self parseExpression: 'a:=1'.
+	source := self formatter format: expr.
+	self assert: source equals: 'a := 1'
+]]]
+
+${slide:title=And finally}$
+
+[[[
+EFTest >> testAssignment
+	self 
+		assert: (self formatExpression: 'a:=1') 
+		equals: 'a := 1'
+]]]
+
 
 ${slide:title=Conclusion}$
 
