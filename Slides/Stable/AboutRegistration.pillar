@@ -1,30 +1,42 @@
 {
     "title":"About Registration",
-    "subtitle":"When allSubclasses is too much",
+    "subtitle":"When dynamic class registration is too much",
     "author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
-- Thinking about system dynamic
+- Thinking about system dynamics
+- Alternatives to class methods as registration mechanism
 - Impact of dynamic registration
 
 
-${slide:title=Classes can queried}$
+${slide:title=Using class methods as registration}$
 
-Remember...
+- Class is a real object
+- We can send a message to a class 
+- Each class can answer specifically
+
 [[[
-Parser >> documentClasses
+Object allSubclasses collect: [ :each | each foo ]
+]]]
+
+${slide:title=Remember the Pharo Mooc}$
+
+[[[
+PillarParser >> documentClasses
    ^ DocumentItem allSubclasses
       sorted: [ :class1 :class2 | class1 priority < class2 priority ]
 ]]]
 [[[
-Parser >> parse: line
+PillarParser >> parse: line
     self documentClasses
         detect: [ :subclass |
             (subclass canParse: line)
                 ifTrue: [ ^ subclass newFromLine: line ] ]
 ]]]
+
+
 
 ${slide:title=Registration for 'Free'}$
 
@@ -34,12 +46,13 @@ Pros:
 Cons: 
 - We do it ""all the time for nothing""
 - We are querying the system for nothing!
+- It is expensive
 
 
 ${slide:title=Solution 1: Explicit static list}$
 
 [[[
-Parser >> documentClasses
+PillarParser >> documentClasses
    ^ { Section . List . Paragraph }
       sorted: [ :class1 :class2 | class1 priority < class2 priority ]
 ]]]
@@ -50,7 +63,7 @@ ${slide:title=Statically sorting the list}$
 In fact we could precompute priority too
 
 [[[
-Parser >> documentClasses
+PillarParser >> documentClasses
 	^ { Section . Paragraph . List }
 ]]]
 
@@ -67,33 +80,41 @@ E.g., classes can explicit register to the parser
 
 [[[
 Section class >> initialize
-	Parser registerClass: self
+	PillarParser registerClass: self
 ]]]
 
 [[[
 List class >> initialize
-	Parser registerClass: self
+	PillarParser registerClass: self
 ]]]
 
 [[[
-Parser >> documentClasses
+PillarParser >> documentClasses
 	^ RegisteredClasses
 ]]]
+
+
 
 ${slide:title=A registration mechanism supports extension}$
 
 [[[
 Extra class >> initialize
-	Parser registerClass: self
+	PillarParser registerClass: self
 ]]]
 
 - External classes can also register
 - Without introducing unwanted dependency
 - Without scanning all the classes of the system
 
+${slide:title=Unregistration}$
+
+With explicit registration, the unregistration can be also a concern.
+- The registration holder (here ==PillarParser==) should offer way to cancel a registration
+- Registered classes have the responsibility to unregister themselves.
+
 ${slide:title=Conclusion}$
 
-- XXX subclasses is a cool pattern 
+- ==XXX subclasses== is a cool pattern 
 - But it has a cost! 
 - Design is about tradeoffs
 
