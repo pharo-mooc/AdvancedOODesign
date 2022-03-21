@@ -15,14 +15,15 @@ ${slide:title=The case: Validation}$
 - We want to validate UI forms
 - Nested components may want to validate or not their contents
 
-Screenshot here
++.>file://figures/ValidationExample.png|width=60+
+
 
 ${slide:title=A tree of instances}$
 
-Screenshot here
++.>file://figures/DistributionOfReponsibility.jpg|width=60+
 
 
-${slide:title=Validate first design}$
+${slide:title=A first design}$
 
 - Any presenter can validate its contents.
 - Per dafault does not nothing.
@@ -40,6 +41,12 @@ SpOptionPresenter >> validate
 	self layout children do: [ :presenter | presenter validate ]
 ]]]
 
+
+${slide:title=Flow's first design}$
+
++.>file://figures/DistributionOfReponsibility2.jpg|width=60+
+
+
 ${slide:title=Analysis}$
 
 - We need to have a report to know if the validation failed or not.
@@ -47,10 +54,18 @@ ${slide:title=Analysis}$
 - If ==validate== returns a report then we have to return an ok report for anybody.
 - We do not want to force a report for all the tree instances.
 
-${slide:title=Second design: let the object decide}$
+${slide:title=Flow's first design}$
+
++.>file://figures/DistributionOfReponsibility2b.jpg|width=60+
+
+
+${slide:title=Second design: provide an accumulator}$
 
 Pass around a basket and let any sub instance decides if it wants to participate
 
++.>file://figures/DistributionOfReponsibility3.jpg|width=60+
+
+${slide:title=Second design: code}$
 [[[
 SpPresenter >> validateInto: aReport
 	^ self
@@ -74,9 +89,10 @@ SpTextInputFieldWithValidation >> validateInto: aValidationReport
 	aValidationReport addAll: validationErrors
 ]]]
 
-Each validating subcomponent 
-- can bring its information to the report
+Each validating subcomponent
 - gets the responsibility to fill up the report
+- can bring its information to the report
+
 
 
 ${slide:title=Conclusion}$

@@ -1,6 +1,6 @@
 {
-    "title":"About hooks: customization degrees",
-    "subtitle":"",
+    "title":"Customization degree of hooks",
+    "subtitle":"Class vs. nstance hooks",
     "author":"Stéphane Ducasse"
 }
 
@@ -11,7 +11,7 @@ ${slide:title=Goal}$
 - Do we or not customize instance creation
 - Customisation of instance creation
 
-${slide:title=Introducing a hook}$
+${slide:title=Example: Introducing a hook}$
 
 [[[
 CHInterpreter >> visit...
@@ -35,7 +35,6 @@ CHInterpreter >> visit...
 
 [[[
 CHInterpreter >> classScopeClass
-
 	^ CHClassScope
 ]]]
 
@@ -44,17 +43,33 @@ ${slide:title=A subclass can push a different class}$
 
 [[[
 CHInterpreter2 >> classScopeClass
-
 	^ MyClassScope
 ]]]
 
-Ok it works!
+- Ok it works!
 
-${slide:title=Analysis }$
+${slide:title=Black box parametrization}$
+
+[[[
+Object < CHInterpreter
+	slots: {#classScopeClass};
+]]]
+
+With an instance variable and a setter we can also get black box pametrization
+
+[[[
+CHInterpreter new
+	classScopeClass: myClassScope;
+	yourself
+]]]
+
+
+
+${slide:title=Analysis}$
 
 - What if we have a more complex instantiation?
 - And we want to encapsulate it and let the extender changes it.
-- ==self classScopeClass new xxx== is not at the good granularity
+- ==self classScopeClass new xxx== is not at a good granularity
 
 [[[
 CHInterpreter >> visit...
@@ -67,7 +82,6 @@ CHInterpreter >> visit...
 
 ${slide:title=Instance creation }$
 
-
 [[[
 CHInterpreter >> visit...
 
@@ -79,33 +93,32 @@ CHInterpreter >> visit...
 [[[
 CHInterpreter >> newClassScope
 
-	scope := self newClassScope xxx
+	^ self newClassScope xxx
 
 ]]]
 
 ${slide:title=Imagine}$
 
-- Imagine that you can only pass a class, you cannot customize and access extra protocols
-- If you can only pass a class you will have to do circumvoluted tricks (wrapping)
-
+If you can only pass a class
+- you cannot customize and access extra protocols
+- you will have to do circumvoluted tricks (wrapping)
 
 ${slide:title=Passing object as context}$
 
 [[[
 CHInterpreter >> visit...
 
-	scope := self classScopeClass newFor: self
+	scope := self newClassScopeNewFor: self
 	...
 	scope
 ]]]
 
-- When we pass ==self==, we give the class the possibility to customise instantiation 
-- For example, 
+- When we pass ==self==, we give the class the possibility to customise instantiation.
 
 
 ${slide:title=Conclusion}$
 
-- ==newClassScope== captures the creation context of the instance 
-- and not only just the class.
+- Class hooks are ok 
+- But think about others hooks
 
 
