@@ -1,14 +1,14 @@
 {
     "title" : "Global To Parameter",
-    "subtitle":"",
-    "slideid" : "",
+    "subtitle":"Basic but important",
     "slidesid" : "",
-    "author" : ""
+    "author" : "S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
 - Globals are not a fatality
+- Some can be turned as parameters (instance variables...)
 - Pros and cons
 
 
@@ -18,7 +18,6 @@ ${slide:title=Roadmap}$
 - Cure
 - Analysis
 - Related to Singleton Design Pattern Plague
-
 
 ${slide:title=The case: Transcript}$
 
@@ -55,7 +54,7 @@ MicAbstractBlock >> iterate
 ${slide:title=Analysis}$
 
 - You do not want to get extra dependencies in your code
-- Your log can be mixed with other logs.
+- Your log can be mixed with other logs
 - You do not want to dirty build log without control
 
 Far worse and more important
@@ -93,7 +92,6 @@ MicAbstractBlock >> logStream: aStream
 - Now you can pass a Transcript and get the same as before but better.
 - Bonus: You can write tests in isolation
 
-
 ${slide:title=About Globals}$
 
 Pros:
@@ -104,6 +102,13 @@ Cons:
 - You have only one (e.g., if an entity belongs to one global model, you cannot have two models)
 - Testing requires care and is sometimes not possible because of side effect
 - You cannot initialize it for your context (there is only one)
+
+${slide:title=About parametrization}$
+
+Sometimes you cannot add an instance variable to your objects
+- Too many of them
+- Fixed size inherited from old design
+At least factor the global usage to ease future changes
 
 ${slide:title=In general: Avoid Globals}$
 
