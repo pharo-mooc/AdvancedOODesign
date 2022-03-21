@@ -86,19 +86,19 @@ ${slide:title=Elements of a pattern}$
 ${slide:title=Example: Strategy}$
 
 ""Intent:"" 
-- Define a family of algorithms, 
-- encapsulate each in a separate class and 
-- define each class with the ""same"" interface so that they can be ""interchangeable"".
+- Define a family of algorithms
+- Encapsulate each in a separate class and 
+- Define each class with the ''same'' interface so that they can be ''interchangeable''
 
 ${slide:title=Essence of Strategy possible implementation}$
 
-+.>file://figures/DP-Strategy.pdf|width=80+
++.>file://figures/DP-Strategy.pdf|width=90+
 
-- Variation: Do we pass the user to the strategy?
+- Variation: Passing or not the user to the strategy?
 
 ${slide:title=Strategy application}$
 
-+.>file://figures/DP-StrategyExample.pdf|width=80+
++.>file://figures/DP-StrategyExample.pdf|width=90+
 
 ${slide:title=Some pattern categories}$
 
@@ -108,34 +108,6 @@ ${slide:title=Some pattern categories}$
 - Usage of classes and objects in larger structures, separation of interfaces and implementation
 ""Behavioral Patterns""
 - Algorithms and division of responsibility
-
-${slide:title=Some Books}$
-
-${columns}$
-
-${column:width=30}$
-
-+.>file://figures/Gof.png|width=50+
-
-+.>file://figures/DesignPatternCompanion.png|width=50+
-
-${column:width=70}$
-
-- [Seminal one]  ""Design Patterns"" (Gamma et al), also known as GoF book (Gang of Four)
-- [Excellent] ""Smalltalk Design Pattern Companion"" (Alpert et al)
-
-${endColumns}$
-
-
-
-
-
-
-
-
-${slide:title=Some Books}$
-
-+.>file://figures/DP-books.png|width=100+
 
 
 ${slide:title=Some creational patterns}$
@@ -171,7 +143,7 @@ ${slide:title=Some structural patterns}$
 - ""Visitor"" (first class operation on composite)
 
 
-${slide:title=Alert !!!}$
+${slide:title=Alert!}$
 
 Design Patterns may be a ""plague""!
 - Do not apply them when you do not need them
@@ -180,16 +152,37 @@ Design Patterns may be a ""plague""!
 -- More indirections, more messages
 -- Try to understand when NOT applying them!
 
-${slide:title=Alert2 !!!}$
+${slide:title=Alert!!}$
 
 - Patterns are about ""intent"" and ""tradeoffs""
 - Do not confuse ""intent"" and ""implementation""
+
+${slide:title=Some books}$
+
+${columns}$
+
+${column:width=30}$
+
++.>file://figures/Gof.png|width=50+
+
++.>file://figures/DesignPatternCompanion.png|width=50+
+
+${column:width=70}$
+
+- [Seminal one]  ""Design Patterns"" (Gamma et al), also known as GoF book (Gang of Four)
+- [Excellent] ""Smalltalk Design Pattern Companion"" (Alpert et al)
+
+${endColumns}$
+
+
+${slide:title=What readers said}$
+
++.>file://figures/DP-books.png|width=100+
 
 
 ${slide:title=Conclusion}$
 
 ""Reusable solutions to common problems based on experiences from real systems""
 - Names of abstractions creating a common vocabulary for developers
-- Can handle functional and non-functional aspects
--- separating interfaces/implementation, loose coupling between parts, …
+- Often support modularity (separation of interface/implementation)
 - A basis for frameworks and toolkits basic elements to improve reuse
