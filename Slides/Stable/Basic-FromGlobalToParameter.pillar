@@ -114,5 +114,5 @@ ${slide:title=In general: Avoid Globals}$
 
 - Avoid Singleton
 - Avoid Globals 
-- They make your code less modular, less **testable**
+- They make your code less modular, less ""testable""
 - Related to Singleton and Disguised Singleton Lecture

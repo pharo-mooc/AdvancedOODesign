@@ -1,0 +1,76 @@
+- Move behavior close to data
+- Registration....
+- 
+
+
+About the null eating. 
+
+Normal navigation syntax can be used in most cases without regarding NULLs, as the underlying messages, when sent to NULL, is discarded without any ill effects.
+[[[
+NSString *name = article.author[0].name;
+]]]
+
+
+
+
+
+
+${title=Liste of points}$
+
+
+- Sharable
+- Flyweigth
+
+- Sokoban Direction
+
+- Tell Don't ask
+
+- Move Behavior close to Data?
+
+
+- Settings design with Builder and layered architecture
+- killing a facade Preferences
+
+- Commands using commander20
+- Comparing design class side is not good.
+
+- Streams (decorator)
+- Decorators explained with commanders
+	- third chapter of commander
+	- subclassing decorator (no no)
+	
+- What about an example of domain modeling?
+
+- Registration as class methods.
+
+- NullObject 
+	- SpNullPresenter
+	
+- Hook Double dispatch- Example of template of MD
+- Double dispatch with classDefinitionPrinter
+
+- Visitor - Microdown?
+- Visitor
+	Athens roassal RSAthensRenderer is a visitor 
+
+- Seaside Builder
+	
+- Builder MD, settings
+-- composite builders
+-- passing an argument is the door of specialised builder
+	nested builder
+
+- Reflection at work?
+
+- Announcements?
+
+- File stream
+
+- Platform strategy with method factory
+-- superclass factory of its subclasses.
+	
+	
+	
+
+- Class are static 
+Objects support duck typing

@@ -1,7 +1,8 @@
 {
     "title":"An Introduction to Design Patterns",
-    "author":"",
-    "slidesid":"From the Design Corner"
+    "author":"S. Ducasse",
+    "subtitle": " ", 
+    "slidesid":" "
 }
 
 ${slide:title=Goal}$
@@ -15,42 +16,41 @@ ${slide:title=Influenced by work on architecture}$
 
 ${columns}$
 
-${column:width=60}$
+${column:width=30}$
 
-+.>file://figures/timeless.png|width=30+
++.>file://figures/timeless.png|width=80+
 
 
-${column:width=80}$
+${column:width=70}$
 
 C. Alexander, ''The Timeless Way of Building'', Oxford University Press, 1979
-- tried to let people capture and use patterns how to build houses and other
+- tried to let people use patterns to build houses and other
 - developed patterns and pattern languages
-- basically failed in architecture but the idea is successful for software engineering
+- failed in architecture but the idea is successful for object-oriented design
 
 
 
 ${endColumns}$
 
 
-
-
 ${slide:title=Design Patterns}$
 
-Design patterns are recurrent solutions to design problems
-- Identification of similar problems at ""design"" level
-- Experts solved ""recurring problems"" in similar ways
+Design patterns are ''recurrent'' solutions to design ''problems''
+- Identification of similar problems at ''design'' level
+- Experts solved ''recurring problems'' in similar ways
 - There are pros and cons
-- Design Patterns are literature: ""Read"" them!
+- Design Patterns are literature: ''Read'' them!
 
 ${slide:title=What are design patterns?}$
 
 - Elegant solutions that a novice would not think of
 - Generic
-- Independent on specific system type, language
+- Independent on specific type system or language
 - Well-proven
 --Successfully tested in several systems
 - Simple
 - Can be combined for more complex solutions
+
 
 ${slide:title=Watchout!}$
 
@@ -63,13 +63,13 @@ ${slide:title=The most important point}$
 Design Patterns are ""names""
 - They create a design ""vocabulary""
 -- Hook and Template, Factory, Composite, Visitor, Observer, Decorator...
-- You can talk at lunch/blackboard about your design in an ""abstract but precise"" way
+- You can talk at lunch/blackboard about your design in an ''abstract but precise'' way
 
 ${slide:title=What design patterns are not}$
 
-- A design pattern is not ""one"" implementation
-- A design pattern is ""illustrated"" using one ""possible"" implementation 
-- But may be alternate implementations are better
+- A design pattern is not ''one'' implementation
+- A design pattern is ''illustrated'' using one ''possible'' implementation 
+- But alternate implementations may be better
 
 ${slide:title=Elements of a pattern}$
 
@@ -77,9 +77,10 @@ ${slide:title=Elements of a pattern}$
 - ""Pattern intent"": Describe the goal
 - ""Problem description"": When to apply it, in what context to use it
 - ""Solution description"" (generic !):
--- The elements that make up the design, 
+-- The elements that make up the design
 -- Their relationships, responsibilities, and collaborations
 - ""Consequences"": Results and trade-offs of applying the pattern
+
 
 
 ${slide:title=Example: Strategy}$

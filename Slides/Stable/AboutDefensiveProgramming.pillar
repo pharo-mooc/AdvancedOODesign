@@ -1,0 +1,180 @@
+{
+    "title":"About defensive programming",
+    "subtitle":""
+}
+
+${slide:title=Defensive Example}$
+
+[[[
+BlLayoutCommonConstraints >> padding: aBlPadding
+	"Change element's margin to a BlMargin. aBlPadding must not be nil."
+	self
+		assert: [ aBlPadding isNotNil ]
+		description: [ 'Padding must not be nil' ].
+	
+	padding := aBlPadding
+]]]
+
+
+${slide:title=Drawbacks of the approach}$
+
+- Runtime cost
+- Assertions are optional so we should not consider that they are executed.
+
+
+${slide:title=Defensive Example 2}$
+
+[[[
+BlLayoutCommonConstraints >> padding: aBlPadding
+	"Change element's margin to a BlMargin. aBlPadding must not be nil."
+	
+	
+	aBlPadding isNil
+		ifTrue: [ 'Padding must not be nil' ].
+	
+	padding := aBlPadding
+]]]
+
+- What is the goal here? that padding does not break
+- But I can still write ==x padding: aJunkObject==
+- So the test is not good and worth
+
+${slide:title=Better setter}$
+
+[[[
+BlLayoutCommonConstraints >> padding: aBlPadding
+	"Change element's margin to a BlMargin. aBlPadding must not be nil."
+	
+	padding := aBlPadding
+]]]
+
+
+${slide:title=Defensive Example 2}$
+
+[[[
+BlEvent >> source
+	"Return an event target that plays a role of a source of this event"
+
+	self
+		assert: [ self hasSource ]
+		description: [ 'Can not access a source if there is no one' ].
+		
+	^ source
+]]]
+
+
+${slide:title=Defensive Example Alternative 2}$
+
+[[[
+BlEvent >> source
+	"Return an event target that plays a role of a source of this event"
+	
+	^ source
+]]]
+
+- We will return ==nil== or a source.
+
+
+
+${slide:title=Defensive Example Alternative 2}$
+
+[[[
+BlEvent >> source
+	"Return an event target that plays a role of a source of this event"
+
+	self hasSource 
+		ifFalse: [ self error: 'Can not access a source if there is no one' ].
+	
+	^ source
+]]]
+
+- We could catch the error if needed.
+
+
+${slide:title=Assertion.... }$
+
+[[[
+text
+	self
+		assert: [ text isNotNil ]
+		description: [ 'Text must never be nil' ].
+
+	^ text
+]]]
+
+- Better make sure that it is not possible to get a nil text.
+- Initialize well your object
+
+[[[
+text
+	^ text
+]]]
+
+
+${slide:title=About assertion transparence}$
+
+A program should behave the same with assertion or not
+[[[
+paint: aPaint
+	self
+		assert: [ paint isNil ]
+		description: [ 'I am immutable and can not be modified' ].
+
+	paint := aPaint
+]]]
+
+- Here the fact that an assertion is evaluated or not can change the fact that paint get its value changed twice.
+- This is a bad use of assertion.
+- Bug can be introduced when the assertion is not executed.
+
+${slide:title=About assertion transparence}$
+
+[[[
+stepBy: anInteger
+
+	self 
+		assert: [ anInteger isZero not ] 
+		description: [ 'Step lenght must be non-zero value' ].
+	stepLength := anInteger.
+]]]
+- Here the fact that an assertion is evaluated or not can change the fact that paint get its value changed twice.
+- This defeats the purpose of assertions. 
+- Because assertions are optional.
+
+
+[[[
+stepBy: anInteger
+
+	 anInteger isZero 
+	 	ifTrue: [ self error: 'Step lenght must be non-zero value' ].
+	stepLength := anInteger.
+]]]
+
+${slide:title=A final example}$
+
+
+[[[
+text
+	"Return the text I am assigned to"
+
+	self
+		assert: [ text isNotNil ]
+		description: [ 'Text must never be nil' ].
+
+	^ text
+]]]
+
+- If the text must not be nil this is not when accessible that action should be done. 
+- Initialization and setters should be used for ensuring it. 
+- Hijacking accessor this way is not really good.
+
+${slide:title=Conclusion}$
+
+- Architecture should not promote global variable usage
+- Avoid Singleton/Facade, these are anti-patterns
+- Our theory is that Facade is only "useful" for Compiler :)
+
+
+
+
+
