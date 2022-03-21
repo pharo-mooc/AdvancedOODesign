@@ -1,22 +1,24 @@
 {
   "title" : "Message Sends are Plans for Reuse",
-  "slidesid" : "W6S04"
+  "slidesid" : "W6S04",
+  "subtitle" : " ",
+  "author" : " S. Ducasse and L. Fabresse"
 }
 
-${slide:title=About This Lecture}$
+${slide:title=About this lecture}$
 
 Another design lecture:
 - Next step of the ==not== implementation lecture
 - Relevant to any object-oriented language
 - May change your view on design
 
-${slide:title=What You Will Learn}$
+${slide:title=What you will learn}$
 
 - Message sends are hooks for subclasses
 - ''"I like big methods because I can see all the code"'' leads to bad design
 - Why writing small methods is a sign of good design
 
-${slide:title=Sending A Message Leads to a Choice}$
+${slide:title=Sending a message leads to a choice}$
 
 - a message send leads to a choice
 - a class hierarchy defines the choices
@@ -25,7 +27,7 @@ ${slide:title=Sending A Message Leads to a Choice}$
 
 +>file://figures/Design-FatVsDispatch.png|width=95+
 
-${slide:title=An Example}$
+${slide:title=An example}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -59,7 +61,7 @@ OurSpecificNode >> setWindowWithRatioForDisplay
   previousNodeSize := defaultNodeSize.
 ]]]
 
-${slide:title=Avoid Duplication}$
+${slide:title=Avoid duplication}$
 
 - in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
 - duplication is not a good practice:
@@ -83,7 +85,7 @@ ${column:width=50}$
 
 ${endColumns}$
 
-${slide:title=We can Refactor this}$
+${slide:title=We can refactor this}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -95,7 +97,7 @@ Node >> setWindowWithRatioForDisplay
   previousNodeSize := defaultNodeSize.
 ]]]
 
-${slide:title=Better Design}$
+${slide:title=Better design}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -111,7 +113,7 @@ Node >> ratio
 ]]]
 
 
-${slide:title=Subclasses Reuse Superclass Logic}$
+${slide:title=Subclasses reuse superclass logic}$
 
 [[[
 Node >> ratio
@@ -125,7 +127,7 @@ OurSpecificNode >> ratio
    ^ super ratio + 10
 ]]]
 
-${slide:title=Another Step}$
+${slide:title=Another step}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -139,7 +141,7 @@ Node >> setWindowWithRatioForDisplay
 
 We can also extract the ==UINode== instantiation.
 
-${slide:title=Another Step}$
+${slide:title=Another step}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -155,7 +157,7 @@ Node >> uiNode
       with: bandWidth * 55 / defaultWindowSize
 ]]]
 
-${slide:title=Do Not Hardcode Class Use}$
+${slide:title=Do not hardcode class use}$
 
 [[[
 Node >> uiNode
@@ -163,7 +165,7 @@ Node >> uiNode
       with: bandWidth * 55 / defaultWindowSize
 ]]]
 
-${slide:title=Define Methods Returning Classes}$
+${slide:title=Define methods returning classes}$
 
 [[[
 Node >> uiNode
@@ -176,7 +178,7 @@ Node >> uiNodeClass
    ^ UINode
 ]]]
 
-${slide:title=Many Small Messages}$
+${slide:title=Many small messages}$
 
 - Some developers complain about all these small methods
 - They try to understand code line by line
@@ -184,7 +186,7 @@ ${slide:title=Many Small Messages}$
 
 Small messages are a sign of good design
 
-${slide:title=Avoid Magic Numbers}$
+${slide:title=Avoid magic numbers}$
 
 [[[
 Node >> uiNode
@@ -196,7 +198,7 @@ Node >> uiNode
 -- do not hardcode magic numbers (55)
 
 
-${slide:title=Use a Message Send}$
+${slide:title=Use a message send}$
 
 [[[
 Node >> uiNode
@@ -212,7 +214,7 @@ Node >> averageRatio
 
 How to let the class users change the value?
 
-${slide:title=Use an Instance Variable}$
+${slide:title=Use an instance variable}$
 
 [[[
 Node >> averageRatio

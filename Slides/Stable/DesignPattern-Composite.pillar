@@ -1,5 +1,7 @@
 {
     "title":"Composite",
+    "subtitle": " ",
+    "author" : "S. Ducasse",
     "slidesid":"From the Design Corner"
 }
 
@@ -9,10 +11,9 @@ ${slide:title=Outline}$
 - Composite
 - Composite discussions
 
+${slide:title=Composite: Intent}$
 
-${slide:title=Composite intent}$
-
-- Compose objects into tree structures to represent part-whole hierarchies.  
+- Compose objects into tree structures to represent part-whole hierarchies
 
 - Composite lets clients treat individual objects and compositions of objects uniformly
 
@@ -47,37 +48,33 @@ An element can be
 - a text
 - a group of elements
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=40+
++.>file://figures/DP-CompositeParticipants.pdf|width=60+
 
 
 ${slide:title=Composite participants: Client}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-""Client""
-- manipulates objects in the composition through the ""Component"" interface
+""Client"" manipulates objects in the composition through the ""Component"" interface
 
 
 ${slide:title=Composite participants: Component}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-
 ""Component"" (Graphic)
 - declares the interface for objects in the composition
 - may implement default behavior for common interfaces
-- declares an interface for accessing and managing its child components
+- may declare an interface for accessing and managing its child components
 
 
 ${slide:title=Composite participants: Leaf}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-
 ""Leaf"" (Circle, Segment, Text, ...)
-- represents leaf objects in the composition.  A leaf has no children
+- represents leaf objects in the composition. A leaf has no children
 - defines behavior for primitive objects in the composition
-
 
 ${slide:title=Composite participants: Composite}$
 
@@ -86,18 +83,18 @@ ${slide:title=Composite participants: Composite}$
 ""Composite"" (Group)
 - defines behaviour for components having children
 - stores child components
-- implements child-related operations in the Component interface
+- implements child-related operations (add/remove...)
 
 ${slide:title=Collaborations}$
 
-- Clients use the Component class interface to interact with objects in the composite structure. 
-- Leaves handle requests directly. 
+- Clients use the Component class interface to interact with objects in the composite structure
+- Leaves handle requests directly
 - Composites forward requests to its child components
 
 ${slide:title=Composite consequences}$
 
-- Defines class hierarchies consisting of primitive and composite objects.
-- Makes the client simple.  Composite and leaves objects are treated uniformly.
+- Defines class hierarchies consisting of primitive and composite objects
+- Makes the client simple.  Composite and leaves objects are treated uniformly
 - Eases the creation of new kinds of components
 - Can make your design general
 
@@ -108,14 +105,14 @@ ${slide:title=Alternate extreme implementation}$
 
 +.>file://figures/DP-compositeEssenceAlternate.pdf|width=70+
 
-${slide:title=Queries as composite}$
+${slide:title=Example: Queries as composite}$
 
 Be able to specify different queries over a repository
 
 [[[
 q1 := PropertyQuery property: #HNL with: #< value: 4.
 q2 := PropertyQuery property: #NOM with: #> value: 10.
-q3 := MatchName match: '*figure*'
+q3 := Matching match: '*figure*'
 ]]]
 
 Compose these queries and treat composite queries as one query
