@@ -105,25 +105,25 @@ ${slide:title=Alternate extreme implementation}$
 
 +.>file://figures/DP-compositeEssenceAlternate.pdf|width=70+
 
-${slide:title=Example: Queries as composite}$
+%${slide:title=Example: Queries as composite}$
+%
+%Be able to specify different queries over a repository
 
-Be able to specify different queries over a repository
+%[[[
+%q1 := PropertyQuery property: #HNL with: #< value: 4.
+%q2 := PropertyQuery property: #NOM with: #> value: 10.
+%q3 := Matching match: '*figure*'
+%]]]
 
-[[[
-q1 := PropertyQuery property: #HNL with: #< value: 4.
-q2 := PropertyQuery property: #NOM with: #> value: 10.
-q3 := Matching match: '*figure*'
-]]]
+%Compose these queries and treat composite queries as one query
 
-Compose these queries and treat composite queries as one query
+%[[[
+%AndComposeQuery on: {q1 . q2 . q3}
+%]]]
 
-[[[
-AndComposeQuery on: {q1 . q2 . q3}
-]]]
+%${slide:title=Queries as composite possible design}$
 
-${slide:title=Queries as composite possible design}$
-
-+.>file://figures/DP-Composite.pdf|width=80+
+%+.>file://figures/DP-Composite.pdf|width=80+
 
 ${slide:title=In a dynamically-typed language}$
 
