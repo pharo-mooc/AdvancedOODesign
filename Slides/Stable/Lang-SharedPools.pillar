@@ -1,0 +1,144 @@
+{
+	"title":"SharedPools",
+	"subtitle":"",
+	"author":"S. Ducasse"
+}
+
+${slide:title=Goal}$
+
+- Using shared variables, we can share values over multiple subclasses within the ""same"" hierarchy.
+- How can we share across ""different"" hierarchies
+
+${slide:title=Sharing within a hierarchy}$
+
+- A shared variable can be accessed from the instance and class side of a class
+- But also from its subclasses
+- Usually a shared variable is initialized from the class side. 
+
+${slide:title=Shared Variable example}$
+
+Here there will be a picture with a hierarchy
+
+${slide:title=Shared Variable example}$
+
+Need an example with instance and class side and subclass usage.
+
+[[[
+Smalltalk allClasses select: [:each | each classVariablesString isEmpty not]
+]]]
+
+${slide:title=Need for sharing across different hierarchies}$
+
+- Sometimes we need to share values (generally constant) over ""multiple"" hierarchies
+- We don't want to repeat the shared variables and their initialization.
+
+${slide:title=SharedPools to the rescue}$
+
+A SharedPool is a kind of group of shared variables.
+- It contains the definition and 
+- the initialization of shared variables
+
+
+${slide:title=SharedPools definition}$
+
+[[[
+SharedPool << #ChronologyConstants
+	slots: {};
+	sharedVariables: { #NanosInSecond . #MonthNames . #SecondsInHour . #SecondsInDay . #DayNames . #DaysInMonth . #HoursInDay . #NanosInMillisecond . #SecondsInMinute . #SqueakEpoch . #MinutesInHour . #MicrosecondsInDay };
+	tag: 'Chronology';
+	package: 'Kernel'
+]]]
+
+${slide:title=SharedPools initialization}$
+
+[[[
+ChronologyConstants class >> initialize
+	"ChronologyConstants initialize"
+	SqueakEpoch := 2415386. 		"Julian day number of 1 Jan 1901" 
+	SecondsInDay := 86400.
+	MicrosecondsInDay := SecondsInDay * 1e6.
+	SecondsInHour := 3600.
+	SecondsInMinute := 60.
+	MinutesInHour := 60.
+	HoursInDay := 24.
+	NanosInSecond := 10 raisedTo: 9.
+	NanosInMillisecond := 10 raisedTo: 6.
+	DayNames := #(Sunday Monday Tuesday Wednesday Thursday Friday Saturday).
+		
+	MonthNames := #(January February March April May June July
+			August September October November December).
+	DaysInMonth := #(31 28 31 30 31 30 31 31 30 31 30 31).
+]]]
+
+
+${slide:title=SharedPool users}$
+
+[[[
+Magnitude << #DateAndTime
+	slots: { #seconds . #offset . #julianDayNumber . #nanos };
+	sharedVariables: { #ClockProvider . #LocalTimeZoneCache };
+	sharedPools: { ChronologyConstants };
+	package: 'Kernel'
+]]]
+
+
+${slide:title=SharedPool's sharedVariable access}$
+
+- A shared variable defined in a shared pools is accessed as if it would be defined in the class itself. 
+- Here ==SecondsInDay== is just accessed directly both from the instance or class side.
+
+[[[
+DateAndTime >> secondsSinceMidnightLocalTime
+	^ self localSeconds \\ SecondsInDay
+]]]
+
+[[[
+Duration class >> days: aNumber
+
+	^ self seconds: aNumber * SecondsInDay nanoSeconds: 0
+]]]
+
+${slide:title=SharedPool users (2)}$
+
+[[[
+Timespan << #Week
+	slots: {};
+	sharedVariables: { #StartDay };
+	sharedPools: { ChronologyConstants };
+	package: 'Kernel-Chronology-Extras'
+]]]
+
+[[[
+Week class >> indexOfDay: aSymbol
+
+	^ DayNames indexOf: aSymbol 
+]]]
+
+${slide:title=Mixing shared var and sharedPools}$
+
+[[[
+Timespan << #Week
+	sharedVariables: { #StartDay };
+	sharedPools: { ChronologyConstants };
+	package: 'Kernel-Chronology-Extras'
+]]]
+
+[[[
+Week class >> startDay
+
+	^ StartDay ifNil: [ StartDay := DayNames first ]
+]]]
+
+${slide:title=Warning! Only for constants}$
+
+- Do not store non constant objects in shared pools
+- Else you are creating global variables and you are breaking testability in isolation
+
+${slide:title=Conclusion}$
+
+Shared pools are 
+- super handy to manage constants for bindings to C-libraries
+- to share constants over multiple classes
+
+
+
