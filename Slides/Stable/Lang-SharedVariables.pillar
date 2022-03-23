@@ -1,26 +1,33 @@
 {
 	"title":"Shared Variables",
-	"subtitle":"",
-	"author":"S. Ducasse"
+	"subtitle":"a language construct",
+	"author":"S. Ducasse",
+	"slidesid":""
 }
 
 ${slide:title=Goal}$
 
-- Revisit Shared Variables (ClassVariables)
+- Revisit Shared Variables (e.g., ClassVariables in Smalltalk jargon)
 - Think about scope of sharing
 
 ${slide:title=Instance variables are local to one object}$
 
+
 - An instance variable value is only accessible to the object
 - If you modify an instance variable, you only modify that variable
-
+No news!
 
 ${slide:title=Shared variables are shared by all the instances of a hierarchy}$
 
-- In traditional Smalltalk systems shared variables are called ClassVariables.
 - All the instances of a class and its subclasses share the SAME shared variable
 - If you modify a shared variables it impacts all the instances
 - A shared variable is usually initialized at class load time (class initialize method)
+- In Smalltalks, shared variables are called ClassVariables.
+
+${slide:title=Color's ComponentMask is a shared variable}$
+
++>file://figures/SharedVariableColor.pdf|width=75+
+
 
 ${slide:title=Color example}$
 
@@ -35,7 +42,7 @@ Object << #Color
 ]]]
 
 
-${slide:title=Shared variables are accessed by both instance and class methods}$
+${slide:title=Shared variables are accessible from both instance and class methods}$
 
 [[[
 Color >> setRed: r green: g blue: b 
@@ -50,7 +57,7 @@ Color >> setRed: r green: g blue: b
 	cachedBitPattern := nil
 ]]]
 
-${slide:title=Shared variables are accessed by both instance and class methods}$
+${slide:title=Shared variables are accessible from both instance and class methods}$
 
 [[[
 Color class >> initialize
@@ -67,16 +74,13 @@ Color class >> initialize
 ]]]
 
 
-${slide:title=Color}$
-
-+>file://figures/SharedVariableColor.pdf+
 
 
-${slide:title=Shared Variable example 2}$
+${slide:title=Shared variable's example: String}$
 
-+>file://figures/SharedVariableString.pdf+
++>file://figures/SharedVariableString.pdf|width=90+
 
-${slide:title=Shared Variable example 2}$
+${slide:title=Shared Variables of String}$
 
 [[[
 ArrayedCollection << #String
@@ -87,7 +91,7 @@ ArrayedCollection << #String
 ]]]
 
 
-${slide:title=Shared Variable accessed in subclass method}$
+${slide:title=Shared variable CaseSensitiveOrder accessed in subclass method}$
 
 [[[
 ByteSymbol >> beginsWith: prefix
@@ -105,7 +109,7 @@ ByteSymbol >> beginsWith: prefix
 			matchTable: CaseSensitiveOrder) = 1
 ]]]
 
-${slide:title=Shared Variable accessed in subclass class method}$
+${slide:title=Shared variable accessed in subclass class method}$
 
 [[[
 Symbol class >> selectorsContaining: aString
@@ -123,19 +127,19 @@ Symbol class >> selectorsContaining: aString
 ]]]
 
 
-${slide:title=Study...}$
+${slide:title=Investigating...}$
 
 [[[
 Smalltalk globals allClasses 
 	select: [:each | each classVariablesString isEmpty not
-				and: [  each hasSubclasses ]]
+				and: [ each hasSubclasses ]]
 ]]]
 
 
 
 ${slide:title=Implications}$
 
-- There is a difference between Shared variables and instance variable of the metaclass.
+- There is a difference between Shared variables and instance variable of the metaclass
 - There is a difference between: 
 
 [[[
@@ -155,20 +159,16 @@ BorderStyle class
 
 ${slide:title=Implications: One for all }$
 
-
-
 [[[
 Object << #BorderStyle
 	sharedVariables: { #Default };
 	package: 'Morphic-Core'
 ]]]
 
-There is only one instance of borderstyle for all the subclasses: ==SimpleBorderStyle== ==BottomBorderStyle== ==ComplexBorderStyle== CompositeBorderStyle DashedBorderStyle FillBorderStyle InsetBorderStyle MarginBorderStyle RaisedBorderStyle RoundedBorderStyle SimpleBorder TabPanelBorderStyle BottomBorder ComplexBorder CompositeBorder DashedBorder FillStyleBorder InsetBorder MarginBorder RaisedBorder RoundedBorder Pharo3TabPanelBorderStyle TabPanelBorder Pharo3TabPanelBorder)
+There is only one instance of ==BorderStyle== for all the subclasses: ==SimpleBorderStyle== ==BottomBorderStyle== ==ComplexBorderStyle== ...
 
 
 ${slide:title=Implications: One for each }$
-
-
 
 [[[
 BorderStyle class
@@ -176,9 +176,9 @@ BorderStyle class
 	package: 'Morphic-Core'
 ]]]
 
-There is  one instance for EACH of all the subclasses (potentially the same depending on the creation logic)
+There is  one instance for ''EACH'' of all the subclasses (potentially the same depending on the creation logic)
 
 ${slide:title=Conclusion}$
 
-- Pay attention modifying SharedVariable potentially impacts many objects.
-- 
+- Pay attention modifying shared variables potentially impacts many objects.
+- Can be used to support different sharing optimization (see other lectures)
