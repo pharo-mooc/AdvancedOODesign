@@ -1,18 +1,28 @@
 {
-	"title":"Points as (real) Objects",
-	"subtitle":"Comparing APIs",
-	"author" : "",
+	"title":"Objects vs. Data",
+	"subtitle":"an API perspective studying Point",
+	"author" : "S. Ducasse",
 	"slidesid" : "Core"
 }
 
 ${slide:title=Goals}$
 
+- Difference between an object and a data structure
+- APIs and encapsulation play an important role
 - Looking at two concrete implementations of Point: in Java and Pharo
 - Understanding the impact of strong API 
 
-${slide:title=Points in Java}$
 
-Without getters and setters
+${slide:title=Java Points - Getters and Setters}$
+
+- ==Point	getLocation()==: returns the location of this point  (to be polymorphic with Component. A location is just a point.)
+- ==void setLocation(double x, double y)==:  sets the location of this point to the specified double coordinates.
+- ==void setLocation(int x, int y)==:  changes the point to have the specified location.
+- ==void setLocation(Point p)==: sets the location of the point to the specified location.
+- ==double getX()==: returns the X coordinate of this Point2D in double precision.
+- ==double getY()==: returns the Y coordinate of this Point2D in double precision.
+
+${slide:title=Java Points - the 'rest'}$
 
 - ==boolean equals(Object obj)==: whether or not two points are equal.
 - ==void move(int x, int y)==: moves this point to the specified location in the (x,y) coordinate plane.
@@ -20,24 +30,18 @@ Without getters and setters
 - ==String toString()==:  returns a string representation of this point and its location in the (x,y) coordinate space.
 
 Inherited from Point2D
-- ==distance== and ==clone==
+- ==distance()== and ==clone()==
 
+${slide:title=Analysis}$
 
-${slide:title=Points in Java}$
-
-
-Getters and setters:
-- ==Point	getLocation()==: returns the location of this point  (well this is to be polymorphic with Component. A location is just a point.)
-- ==void setLocation(double x, double y)==:  sets the location of this point to the specified double coordinates.
-- ==void setLocation(int x, int y)==:  changes the point to have the specified location.
-- ==void setLocation(Point p)==: sets the location of the point to the specified location.
-- ==double getX()==: returns the X coordinate of this Point2D in double precision.
-- ==double getY()==: returns the Y coordinate of this Point2D in double precision.
+- A poor data structure, not an object
+- Super limited interface
+- Points do not define behavior beside move and translate!
 
 
 ${slide:title=An Example in Java}$
 
-How to make our robot walks from distance in its current direction (in degree).
+How to make a robot walks from distance in its current direction (in degree).
 
 [[[
 public class Bot {
@@ -54,16 +58,14 @@ public void go(int distance){
 }
 ]]]
 
-${slide:title=Analysis}$
-
-- A poor data structure, not an object
-- Points do not define behavior beside move and translate
-- Arithmetic of Points is defined outside of them!
+${slide:title=Analysis (2)}$
+- Arithmetic of Points is defined ""outside"" of them!
 -- Points cannot sum themselves
 -- Points cannot shape themselves (rounded, normal, reciprocal,...)
 - When an object exposes a shallow API, it favors logic duplication in clients!
 
-${slide:title=Turtle >> go: in Pharo}$
+
+${slide:title=Bot >> go: in Pharo}$
 
 [[[
 public void go(int distance){
@@ -82,7 +84,8 @@ Bot >> go: aDistance
 ]]]
 
 - Read better
-- Use point addition and multiplication
+- Use ""point""'s addition, multiplication, and rounding
+- Use "Number"'s sin and cos
 - Highlight behavior logic
 
 
@@ -100,36 +103,13 @@ Rich API:
 
 
 ${slide:title=Points in Pharo (Continued)}$
-
-- ==setR:degrees:==, ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==onLineFrom:to:within:==, ==rotateBy:about:==, ==degrees==, ==rotateBy:centerAt:==, ==theta==, ==bearingToPoint:==, 
+- ==degrees==, ==theta==,
+- ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==rotateBy:about:==, ==rotateBy:centerAt:==, ==bearingToPoint:==, 
 - ==roundUpTo:==, ==ceiling==, ==truncated==, ==truncateTo:==, ==roundTo:==, ==floor==, ==roundDownTo:==, ==rounded==,
-- ==quadrantOf:==, ==leftRotated==,  ==nearestPointAlongLineFrom:to:==, ==sortsBefore:==, ==flipBy:centerAt:==,  ==nearestPointOnLineFrom:to:==, ==dotProduct:==, ==squaredDistanceTo:==, ==insideTriangle:with:with:==, ==fourDirections==, ==directionToLineFrom:to:====sign==, ==octantOf:==, ==rightRotated==,
+- ==quadrantOf:==, ==leftRotated==,  ==nearestPointAlongLineFrom:to:==, ==flipBy:centerAt:==,  ==nearestPointOnLineFrom:to:==, ==dotProduct:==, ==squaredDistanceTo:==, ==insideTriangle:with:with:==, ==directionToLineFrom:to:==, ==sign==, ==octantOf:==, ==rightRotated==,
 - ==fourNeighbors==, ==grid:==, ==eightNeighbors==, ==fourDirections==
 
 ${slide:title=Simple example}$ 
-
-[[[
-Point >> abs
-	"Answer a Point whose x and y are the absolute values of the receiver's x and y."
-
-	^ x abs @ y abs
-]]]
-
-- Simple
-- Still a service offered 
-
-${slide:title=Simple example: comparing points}$ 
-
-[[[
-< aPoint 
-	"Answer whether the receiver is above and to the left of aPoint."
-	
-	^ x < aPoint x and: [ y < aPoint y ]
-]]]
-
-
-${slide:title=Another simple example}$ 
-
 
 [[[
 Point >> crossProduct: aPoint
@@ -141,6 +121,16 @@ Point >> crossProduct: aPoint
 
 - Obvious but still useful
 - No need to duplicate it in clients
+
+${slide:title=Simple example: comparing points}$ 
+
+[[[
+< aPoint 
+	"Answer whether the receiver is above and to the left of aPoint."
+	
+	^ x < aPoint x and: [ y < aPoint y ]
+]]]
+
 
 ${slide:title=Example: More challenging}$ 
 
@@ -163,7 +153,8 @@ Point >> degrees
 
 Nobody wants to be forced to reimplement it. 
 
-${slide:title=Polymorphic}$
+
+${slide:title=Polymorphic with related concepts}$
 
 [[[
 Point >> asPoint
@@ -181,17 +172,18 @@ Number >> asPoint
 	^ self @ self
 ]]]
 
-- This way we can manage list of objects and easily convert them to point
+This way we can manage list of objects and easily convert them to point
 
 [[[
 { 1 . 2 . 3 . 33@33 . 4} collect: [ :a | a asPoint ]
 >> {1@1 . 2@2 . 3@3 . 33@33 . 4@4} 
 ]]]
 
+
 ${slide:title=Point Arimethic}$
 
 - Points know how to ==\*==, ==\+==, ==\/==, ... ""themselves""
-- We can mix points, rectangles, and numbers
+- We can compose points, rectangles, and numbers
 
 [[[
 drawString: aString at: aPoint font: aFontOrNil color: aColor
@@ -202,18 +194,19 @@ drawString: aString at: aPoint font: aFontOrNil color: aColor
 		color: aColor
 ]]]
 
+
+
 ${slide:title=Analysis}$
 
 - In Pharo ==Point==s are more than a data structure
-- They define potentially ""advanced"" behavior
+- They define ""advanced"" behavior
 - Functionality is not in clients
 - Clients benefit and reuse behavior!
-
 
 
 ${slide:title=What you should know}$
 
 - Objects are not data structures
 - Objects are more that structure
-- Objects are about behavior, services they offer
-- An object should encapsulate logic and lets its client reuse such logic!
+- Objects are about behavior and services they offer
+- An object should encapsulate logic and lets its client ""reuse"" such a logic!
