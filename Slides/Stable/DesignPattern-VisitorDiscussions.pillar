@@ -1,9 +1,13 @@
 {
 	"title":"Discussions about Visitor",
 	"subtitle":"",
-	"author":"",
+	"author":"S. Ducasse",
 	"slidesid":""
 }
+
+
+
+${slide:title=Expression problem}$
 
 ${slide:title=Controlling the traversal}$
 
