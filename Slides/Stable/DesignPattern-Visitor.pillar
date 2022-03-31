@@ -223,14 +223,6 @@ Printer >> visitPlus: anExpression
 ]]]
 
 
-${slide:title=Stepping back: a basic trolling question}$
-
-Some people may tell you that Visitor is not OO because Visitor externalizes behavior out of objects.
-- Yes operations applied on objects are defined outside the objects.
-- Let us think:
--- How much extra behavior and extra state ""mixed for nothing"" are you ready to pay?
--- Do you ""want to package multiple"" behaviors ""separately""?
-- If you have a lot of orthogonal treatments, then better separate them
 
 ${slide:title=When to use a Visitor}$
 

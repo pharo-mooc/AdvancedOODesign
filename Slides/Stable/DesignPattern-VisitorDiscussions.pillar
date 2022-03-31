@@ -1,13 +1,17 @@
 {
-	"title":"Discussions about Visitor",
+	"title":"Some Visitor advanced points",
 	"subtitle":"",
 	"author":"S. Ducasse",
 	"slidesid":""
 }
 
 
+${slide:title=Goals}$
 
-${slide:title=Expression problem}$
+Let us chew a bit more Visitor
+- What about navigation control
+- About better hooks
+- Not shortcutting double dispatch
 
 ${slide:title=Controlling the traversal}$
 
@@ -20,23 +24,35 @@ Usually the visitor is under control but may be the domain logic is more importa
 
 ${slide:title=Visitor in control}$
 
-+.>file://figures/Visitor-VisitorControl.png|width=80+
++.>file://figures/Visitor-ExpressionsVisitorInControl.pdf|width=80+
 
 
 ${slide:title=Items in control}$
 
-+.>file://figures/Visitor-ItemControl.png|width=80+
++.>file://figures/Visitor-ExpressionsVisitorNotInControl.pdf|width=80+
 
 
-${slide:title=Implementation: Visitor vs. class extension}$
+${slide:title=Visitor vs. class extension}$
 
 Even if a language supports class extension (defining methods on a class from another package than the class package), using a Visitor is better because:
 - Each Visitor encapsulates a complex operation
 - Each Visitor has its own state
 
+
+${slide:title=A basic trolling point}$
+
+Some people may tell you that Visitor is not OO because Visitor externalizes behavior out of objects.
+- Yes operations applied on objects are defined outside the objects.
+- Let us think:
+-- How much extra behavior and extra state ""mixed for nothing"" are you ready to pay?
+-- Do you ""want to package multiple"" behaviors ""separately""?
+- If you have a lot of orthogonal treatments, then better separate them
+
+
+
 ${slide:title=VisitMethods encode a context}$
 
-- the granularity of visit methods has an impact on the hooks they offer
+- The granularity of visit methods has an impact on the hooks they offer
 - ""visit*"" methods can be used to provide context
 
 ${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
@@ -54,65 +70,83 @@ vs.
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
 	self visitTemporaryNodes: aSequenceNode temporaries.
 	aSequenceNode statements do: [ :each | self visitNode: each ]
-]]] 
 
-[[[
 RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection
-
 	^ aNodeCollection	do: [ :each | self visitTempDefinitionNode: each ]
+
+RBProgramNodeVisitor >> visitTempDefinitionNode: aNode
+	^ aNode acceptVisitor: self
 ]]]
+
+
+${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
+
+Compare
+[[[
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	aSequenceNode temporaries do: [:each | self visitNode: each ].
+	aSequenceNode statements do: [ :each | self visitNode: each ]
+]]]
+
+vs.
 
 [[[
-RBProgramNodeVisitor >> visitTempDefinitionNode: aNode
-
-	^ self visitNode: aNode
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	self visitTemporaryNodes: aSequenceNode temporaries.
+	aSequenceNode statements do: [ :each | self visitNode: each ]
 ]]]
 
-%${slide:title=Misopportunities}$
+- ==visitTemporaryNodes:== encodes the fact that it is only invoked on temporaries
+- No need to guess by looking at parent or other information
 
-%+.>file://figures/Visitor-donodeStupid.png|width=80+
 
-%${slide:title=Using messages as cases (again) }$
+${slide:title=About short cutting double dispatch}$
 
-%+.>file://figures/Visitor-DonodeClever.png|width=90+
+Imagine that we have the following:
+[[[
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	self visitTemporaryNodes: aSequenceNode temporaries.
+	aSequenceNode statements do: [ :each | self visitNode: each ]
+	
+RBProgramNodeVisitor >> visitVariable: aNode
+	^ aNode
+]]]
 
-${slide:title=Using messages as cases (again) }$
+vs. 
 
-Using ==visitTempDefinitionNode:== ensures the extender that such a method is not for all the variables but only for temporaries.
-- No need to test
-- No need to use a state updated by previous message sends
-- Just override ==visitTempDefinitionNode:== and only be invoked on temporary definition
+[[[
+RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
+	self visitTemporaryNodes: aSequenceNode temporaries.
+	aSequenceNode statements do: [ :each | self visitVariable: each ]
+]]]
+
+In the second version, the use of ==visitVariable: aNode==
+- we are short cutting the double dispatch
+- we are cutting the possibility of letting any object participates by telling the visitor how to handle it
+
 
 
 ${slide:title=Building generic Visitors can be difficult}$
 
-- Should we return always the results?
+- Should we return always a result?
 - Should collect the values on collection?
+- Often the solution is to have an abstract visitor and to redefine most of the logic per family of tasks
 
 ${slide:title=Should we promote collections as domain nodes?}$
 
-- Open discussion....
-- tell me what you think?
+- When we iterate on a collection (e.g. of nodes), the collection is not part of the composite domain
+- Should we turn such a collection into a domain element?
+- It depends of the domain
+- and if the it Is the benefit
 
 
-${slide:title=Visitor with reflection}$
-
-+.>file://figures/VisitorReflectiveImplementation.png|width=90+
-
-
-${slide:title=Visitor does not play well with node addition}$
-
-- If your domain is growing or changing (new subclasses),
-- You may end up having to change the visitors each time you introduce a new node in the composite and it can be tedious.
-
-
-
-${slide:title=[Type] Do not use overloading for visit method}$
+${slide:title=[Type] Do not overload ==visit== methods}$
 
 As a summary, overloading does not really work in Java and you will have to explicitly cast your visitor or use getClass everywhere.
 
 - Better define method visitNumber(), visitPlus(), visitTimes()
 - than visit()
+- Static type may prevent subclass redefinitions to be invoked
 Trust an expert :)
 
 ${slide:title=Conclusion}$
