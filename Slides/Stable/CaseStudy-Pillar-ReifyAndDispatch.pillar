@@ -1,14 +1,14 @@
 {
     "title":"Reifying and delegating behavior",
-    "subtitle":"",
+    "subtitle":"a case study",
     "slidesid": "",
     "author":"S. Ducasse"
 }
 
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
-- Creating an object and delegating creates dispatch spaces
+- Creating a new object and delegating to it creates dispatch spaces
 - From one kind of files to multiple kinds
 
 ${slide:title=Case study: Pillar managing .pillar file}$
@@ -48,6 +48,7 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 
 ${slide:title=Problems}$
 
+- ==PRDocument parser== looks like a disguised global variable
 - Only one syntax
 - Checks for the file extension were hardcoded
 - Difficult to know if a file was part of a project (books)
@@ -55,8 +56,8 @@ ${slide:title=Problems}$
 
 ${slide:title=Solution: Introduced InputDocument}$
 
-- First step: instead of manipulating files
-- Manipulate InputDocument objects
+First step:
+- instead of manipulating files, manipulate InputDocument objects
 - InputDocument wrap files and more information
 
 ${slide:title=Introduced the notion of InputDocument}$
@@ -99,7 +100,7 @@ ${slide:title=Support for .mic/.md files}$
 - Different syntax!
 - Different parser!
 
-${slide:title=Refining InputDocument into a Simple Hierarchy}$
+${slide:title=Refining InputDocument into a simple hierarchy}$
 
 - Different classes
 - Move behavior to such classes
@@ -131,6 +132,9 @@ PRMicrodownInputDocument >> parsedDocument
 	^ (self parserClass parse: file) asPillar
 ]]]
 
+${slide:title= InputFile is responsible for its parser}$
+
+need a diagram
 
 ${slide:title=Registration mechanism to support modularity}$
 
@@ -144,6 +148,8 @@ PRInputDocument class >> inputClassForFile: aFile
 		detect: [ :each | each doesHandleExtension: aFile extension ]
 		ifNone: [ PRNoInputDocument  ]
 ]]]
+
+- Registration could be better (check corresponding lecture)
 
 [[[		
 PRPillarInputDocument >> doesHandleExtension: anExtension
