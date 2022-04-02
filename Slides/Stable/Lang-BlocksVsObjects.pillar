@@ -1,10 +1,10 @@
 {
     "title":"Blocks vs. Objects",
-    "subtitle":"",
+    "subtitle":"Rethinking common abstractions",
     "author":"Stéphane Ducasse"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Thinking about API
 - Rethinking block usage
@@ -15,6 +15,7 @@ ${slide:title=Goal}$
 ${slide:title=Blocks are powerful}$
 
 Blocks support
+- Central to Pharo syntax
 - Iterators
 - New iterator definition
 - DSL like APIs
@@ -62,8 +63,7 @@ Blocks support definition of ""new"" iterators
 
 [[[
 SequenceableCollection >> pairsDo: aBlock
-	"Evaluate aBlock with my elements taken two at a time.  If there's an odd number of items, ignore the last one.  
-	Allows use of a flattened array for things that naturally group into pairs.  See also pairsCollect:"
+	"Evaluate aBlock with my elements taken two at a time.  If there's an odd number of items, ignore the last one. Allow use of a flattened array for things that naturally group into pairs.  See also pairsCollect:"
 
 	1 
 		to: self size // 2 
@@ -92,8 +92,9 @@ GLMCompositePresentation new tabulator with: [ :t |
 				] ].
 ]]]
 
-${slide:title=Blocks are on the spot poor literal objects}$
+${slide:title=Stepping back}$
 
+Blocks are on the spot poor literal objects
 - What is the difference between a block and a simple object understanding ==value==?
 - With a block, no need to create a class, no need to define a method
 But...
@@ -102,7 +103,7 @@ ${slide:title=Analysis}$
 
 Blocks are nice but not a panacea:
 - Storing and changing state is cumbersome
-- One single message!
+- One single message: ==value==!
 - They do not expose well the arguments they need
 - It makes scripting easy but extension difficult
 - Having richer API is impossible
@@ -115,12 +116,13 @@ ${slide:title=Blocks are black boxes}$
 - You can only send the messages ==value*== to a block.
 - It is hard and cumbersome to store and access state in a block as in an object
 -- imagine passing a block around and want to accumulate information
+-- you can't
 
 ${slide:title=Arguments?}$
 
 - What if you want optional arguments?
 -- then you are doomed to chose which arguments and which order
-- If you use ==cull:==, it means that you bent the rules
+- ==cull:== is reflective by nature
 
 
 ${slide:title=Argument order requires to know the block definition!}$
@@ -134,20 +136,20 @@ aCol inject: default into: [:a :b | ... ]
 What is ==a== and ==b==?
 
 
-${slide:title=Block Limits}$
+${slide:title=Block limits}$
 
 - Saving blocks is a painful
 - Adding behavior (i.e., offering another message) is impossible
 - Extension via superclass / hook of block behavior is impossible
 
 
-${slide:title=Long Blocks are Missed Reuse Opportunity}$
+${slide:title=Long blocks are missed reuse opportunity}$
 
 - Impossible to turn into a template and modify 
--- Remember sending a message is a plan for reuse
+-- Remember that ''sending a message is a plan for reuse''
 - Long blocks are a plague
 
-${slide:title=Long Blocks are Missed Reuse Opportunity}$
+${slide:title=Long blocks are missed reuse opportunity}$
 
 ${columns}$
 
@@ -184,10 +186,10 @@ method: v
 
 ${endColumns}$
 
-This way you can override ==methods:== in subclasses.
+This way you can override ==method:== in subclasses.
 
 
-${slide:title=Long Blocks are Missed Reuse Opportunity}$
+${slide:title=Long blocks are missed reuse opportunity}$
 
 ${columns}$
 
@@ -222,6 +224,14 @@ paintOnView: view file: file
 
 ${endColumns}$
 
+
+${slide:title=Is not a little object more powerful than a block?}$
+
+With an object you can 
+- Design an API
+- Accumulate state
+- Specify optional / obligatory inputs
+- Support extension by construction
 
 ${slide:title=Conclusion}$
 
