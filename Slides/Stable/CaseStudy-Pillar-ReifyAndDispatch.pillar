@@ -1,6 +1,6 @@
 {
     "title":"Reifying and delegating behavior",
-    "subtitle":"a case study",
+    "subtitle":"A case study",
     "slidesid": "",
     "author":"S. Ducasse"
 }
@@ -8,19 +8,26 @@
 
 ${slide:title=Goals}$
 
-- Creating a new object and delegating to it creates dispatch spaces
-- From one kind of files to multiple kinds
+- Study a concrete case
+- Study introduction of a new object
+- Show that delegation creates dispatch spaces
+- Modular in addition
 
-${slide:title=Case study: Pillar managing .pillar file}$
+
+${slide:title=Case study: introducing .md file in Pillar}$
+
+- Pillar used .pillar file containing Pillar text, 
+- Now there is .md file containing Microdown text
+
+${slide:title=Pillar's .pillar file management}$
 
 - How to get a parsed document?
 
-Long time ago
 - We ask the parser!
-- parser turns pillar file into document tree
-- There was ONLY one parser associated to a document
-- The idea was to avoid to hardcode everywhere PRParser
-- Worked for trying different version of PetitParser parsers.
+- The parser turns pillar file into a document tree
+- There is ONLY one parser associated to a document
+- The idea is to avoid to hardcode everywhere PRParser
+- Worked for trying different versions of PetitParser parser
 
 [[[
 PRDocument parser parseFile: aFileReference
@@ -50,17 +57,17 @@ ${slide:title=Problems}$
 
 - ==PRDocument parser== looks like a disguised global variable
 - Only one syntax
-- Checks for the file extension were hardcoded
-- Difficult to know if a file was part of a project (books)
-- Access to project configuration (user option) was cumbersome
+- Checks for the file extension are hardcoded
+- Difficult to know if a file is part of a project (books)
+- Access to project configuration (user option) is cumbersome
 
-${slide:title=Solution: Introduced InputDocument}$
+${slide:title=Solution: Introduce InputDocument}$
 
 First step:
-- instead of manipulating files, manipulate InputDocument objects
-- InputDocument wrap files and more information
+- Instead of manipulating files, manipulate InputDocument objects
+- InputDocument wrap files and more information (file extension, parser...)
 
-${slide:title=Introduced the notion of InputDocument}$
+${slide:title=Step 1: Introduce InputDocument}$
 
 [[[
 PRBuilAllStrategy >> filesToBuildOn: aProject
@@ -82,16 +89,16 @@ PRInputDocument >> parser
 	self error: 'No parser for document extension: ', file extension
 ]]]
 
-${slide:title=PRInputDocument}$
+${slide:title=First step }$
 
-- First step
 - We do not distribute responsibility
 
 [[[
 ... select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
 ]]]
 
-- Not modular
+- Not modular!
+
 
 
 ${slide:title=Support for .mic/.md files}$
@@ -105,17 +112,14 @@ ${slide:title=Refining InputDocument into a simple hierarchy}$
 - Different classes
 - Move behavior to such classes
 
++.>file://figures/PillarInputFile.pdf|width=80+
+
 [[[
 PRInputDocument << #PRPillarInputDocument
 	package: 'Pillar-ExporterCore'
 ]]]
 
-[[[
-PRInputDocument << #PRMicrodownInputDocument
-	package: 'Pillar-Microdown'
-]]]
-
-${slide:title= InputFile is responsible for its parser}$
+${slide:title=InputFile is now responsible for its parser}$
 
 [[[
 PRAbstractOutputDocument >> parseInputFile: anInputFile	
@@ -124,32 +128,21 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 
 [[[
 PRPillarInputDocument >> parsedDocument
-	^ self parserClass parse: file
+	^ self parserClass parse: file contents
+	
+PRPillarInputDocument >> parserClass
+	^ PRDocument parser 
 ]]]
 
 [[[
 PRMicrodownInputDocument >> parsedDocument
-	^ (self parserClass parse: file) asPillar
-]]]
-
-${slide:title= InputFile is responsible for its parser}$
-
-need a diagram
-
-${slide:title=Registration mechanism to support modularity}$
-
-- We need to create objects of the right kind
-- Use a registration mechanism, so that input documents can declare their existence
-
-[[[
-PRInputDocument class >> inputClassForFile: aFile
+	^ (self parserClass parse: file contents) asPillar
 	
-	^ self subclasses
-		detect: [ :each | each doesHandleExtension: aFile extension ]
-		ifNone: [ PRNoInputDocument  ]
+PRMicrodownInputDocument >> parserClass
+	^ Microdown parser
 ]]]
 
-- Registration could be better (check corresponding lecture)
+${slide:title=Delegating extension checks}$
 
 [[[		
 PRPillarInputDocument >> doesHandleExtension: anExtension
@@ -161,7 +154,25 @@ PRMicrodownInputDocument >> doesHandleExtension: anExtension
 	^ anExtension = 'mic'
 ]]]
 
+${slide:title=Registration mechanism to support modularity}$
+
+- We need to create objects of the right kind
+- We use a registration mechanism, so that input documents can declare their existence
+
+[[[
+PRInputDocument class >> inputClassForFile: aFile
+	
+	^ self subclasses
+			detect: [ :each | each doesHandleExtension: aFile extension ]
+			ifNone: [ PRNoInputDocument  ]
+]]]
+
+- Registration could be better (check corresponding lecture)
+
+
 ${slide:title=Creating the right kind of InputDocument objects}$
+
+Now we are ready to create the adequate InputDocument objects
 
 [[[
 PRBuilAllStrategy >> filesToBuildOn: aProject
@@ -177,7 +188,7 @@ ${slide:title=Conclusion}$
 
 - Turning implicit into an object
 - Turning one object into objects of different but polymorphic classes
-- Moving behavior to be able to delegate 
+- Defining polymorphic behavior to be able to delegate 
 - Using registration to create modular design
  
 
