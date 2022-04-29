@@ -7,11 +7,6 @@ Normal navigation syntax can be used in most cases without regarding NULLs, as t
 NSString *name = article.author[0].name;
 ]]]
 
-
-
-
-
-
 ${title=Liste of points}$
 
 
@@ -21,9 +16,6 @@ ${title=Liste of points}$
 - Sokoban Direction
 
 - Tell Don't ask
-
-- Move Behavior close to Data?
-
 
 - Settings design with Builder and layered architecture
 - killing a facade Preferences
@@ -65,9 +57,6 @@ ${title=Liste of points}$
 
 - Platform strategy with method factory
 -- superclass factory of its subclasses.
-	
-	
-	
 
 - Class are static 
 Objects support duck typing

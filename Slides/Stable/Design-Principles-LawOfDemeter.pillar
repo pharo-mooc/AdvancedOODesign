@@ -1,7 +1,7 @@
 {
     "title":"Thinking about Coupling",
     "slidesid":"",
-    "author":"",
+    "author":"S. Ducasse",
     "subtitle":""
 }
 
@@ -9,15 +9,17 @@
 ${slide:title=Goal}$
 
 - Think about Coupling
-- Law of Demeter 
+- Law of Demeter
+- Move Behavior close to Data 
 - Better seen as a Heuristic
 
 
-${slide:title=Coupling is costly}$
+${slide:title=Symptoms of costly coupling}$
 
 - ""Reuse:"" I cannot reuse this component in another application
 - ""Substition:"" I cannot easily substitute this part for another one
 - ""Encapsulation:"" when a change far away happens, I get impacted
+- ""Untestable:"" I cannot test this part
 
 ${slide:title=Core of the Problem}$
 
@@ -27,17 +29,19 @@ ${slide:title=Core of the Problem}$
 ${slide:title=Changes}$
 
 - Changes are natural
-- When you change, your dependent should update
-- The problem is waves of changes when dependent of dependent should change
+- When you change, your dependents should update
+- The problem is ""waves of changes when dependents of dependents should change""
 
 +.>file://figures/LODCoreProblem.pdf|width=100+
 
 ${slide:title=Waves}$
 
-- Waves are created by leak of references to far objects
+- Waves are created by leaks of references to far objects
 - Basically violation of encapsulation
+
+
 - How to limit wave creation?
-- Do not leak far references!
+- Do not leak far references! 
 
 
 ${slide:title=Law of Demeter}$
@@ -51,6 +55,8 @@ You should only send messages to:
 You should avoid
 - global variables
 - objects returned from message sends other than self
+
+
 
 ${slide:title=Only talk to your immediate friends}$
 
@@ -76,7 +82,13 @@ ${slide:title=Solution: Respect encapsulation}$
 +.>file://figures/LODSkipSol.pdf|width=80+
 
 
-${slide:title=Transformation}$
+${slide:title=Move behavior close to data}$
+
+An object-oriented reengineering pattern (check the book)
+- if data and behavior are not close
+- then logic is distributed/duplicated in clients!
+
+${slide:title=Move behavior close to data: Transformation}$
 
 +.>file://figures/LODtransformation.pdf|width=70+
 
