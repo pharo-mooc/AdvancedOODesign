@@ -172,4 +172,5 @@ ${slide:title=Conclusion}$
 - Think about impact of changes
 - Avoid chaining messages
 - Law of Demeter is a heuristic
+- Move behavior close to data
 

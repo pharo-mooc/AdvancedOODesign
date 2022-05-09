@@ -1,7 +1,8 @@
 {
     "title":"About Advanced Object-Oriented Design",
-    "subtitle":"2022",
-    "author":"S. Ducasse"
+    "subtitle":" ",
+    "author":"S. Ducasse",
+    "slidesid":"2022"
 }
 
 
@@ -9,8 +10,7 @@ ${slide:title=Objectives}$
 
 - Revisit basic elements such as encapsulation
 - Think about essential aspect of OOP
-- 
-
+- Learn key Design Patterns
 
 ${slide:title=Outline}$
 
