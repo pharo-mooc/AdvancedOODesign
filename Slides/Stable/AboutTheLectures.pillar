@@ -1,0 +1,51 @@
+{
+    "title":"About Advanced Object-Oriented Design",
+    "subtitle":"2022",
+    "author":"S. Ducasse"
+}
+
+
+${slide:title=Objectives}$
+
+- Revisit basic elements such as encapsulation
+- Think about essential aspect of OOP
+- 
+
+
+${slide:title=Outline}$
+
+- Test and test-driven
+- Basic elements
+- Essential aspects of OOP
+- Case studies in Pharo (*http://www.pharo.org*)
+- Some design patterns
+
+
+${slide:title=About Vocabulary: The case of Polymorphism}$
+
+- To avoid some misunderstanding
+- The word "Polymorphism" is overloaded
+- Literally, it is strange: having multiple forms :)
+- It could mean subtyping: when a class is a subclass of another one.
+
+${slide:title=Our stance}$
+
+"'If it walks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.'"
+
+We use ""polymorphic"", ""polymorphism"" in the sense of
+- exposing the same API, 
+- substituable,
+- an object can be replaced by another one because both present the same API (set of messages),
+- polymorphic objects do not have to be subtypes
+
+${slide:title=Polymorphism}$
+
+- Looking at object API
+- To produce reusable and extensible programs
+- Not much as class structural relation (subtyping)
+
+${slide:title=A unique lecture}$
+
+- More than 10 years of experience
+- Concrete cases
+- Knowledge actionable in many languages
