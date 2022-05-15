@@ -1,7 +1,7 @@
 {
   "title":"Inheritance and Lookup",
-  "subtitle":"2: Lookup",
-  "slidesid" : "W4S02"
+  "subtitle":" 101 Lookup",
+  "slidesid" : "2022"
 }
 
 ${slide:title=Goal}$
@@ -28,7 +28,7 @@ ${column:width=38}$
 
 ${column:width=62}$
 
-+>file://figures/InheritanceDiagram-sendingMessage.png|width=100+
++>file://figures/InheritanceDiagram-sendingMessage.png|width=70+
 
 ${endColumns}$
 
@@ -44,7 +44,7 @@ The lookup starts in the ""class"" of the ""receiver"" then:
 
 ${column:width=62}$
 
-+>file://figures/InheritanceDiagram-lookupTwoStages.png|width=100+
++>file://figures/InheritanceDiagram-lookupTwoStages.png|width=70+
 
 ${endColumns}$
 
@@ -58,7 +58,7 @@ Sending the message ==color== to ==aColoredRectangle==
 
 ${column:width=53}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=95+
++>file://figures/InheritanceDiagram-lookup-superclass.png|width=60+
 
 ${endColumns}$
 
@@ -72,32 +72,48 @@ Sending the message ==area== to ==aColoredRectangle==
 
 ${column:width=53}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=95+
++>file://figures/InheritanceDiagram-lookup-superclass.png|width=60+
 
 ${endColumns}$
 
 
 ${slide:title=self Always Represents the Receiver}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=71+
+${columns}$
 
+${column:width=60}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+${column:width=40}$
 [[[
-A new foo
-> ...
-B new foo
-> ...
+	A new foo
+	> ...
+	B new foo
+	> ...
 ]]]
+
+${endColumns}$
+
 
 ${slide:title=self Always Represents the Receiver}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=71+
 
+${columns}$
+
+${column:width=60}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+${column:width=40}$
 [[[
-A new foo
-> 10
-B new foo
-> 50
+	A new foo
+	> 10
+	B new foo
+	> 50
 ]]]
+
+${endColumns}$
 
 ${slide:title=What is self/this?}$
 
@@ -110,33 +126,50 @@ Take 5 min and write the definition of ==self== (==this== in Java).
 
 ${slide:title=self Always Represents the Receiver}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=71+
+${columns}$
+
+${column:width=60}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+${column:width=40}$
+
 
 [[[
-A new bar
-> ...
-B new bar
-> ...
+	A new bar
+	> ...
+	B new bar
+	> ...
 ]]]
 
-${slide:title=self Always Represents the Receiver}$
-
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=71+
-
-[[[
-A new bar
-> 10
-B new bar
-> 50
-]]]
+${endColumns}$
 
 ${slide:title=self Always Represents the Receiver}$
 
 ${columns}$
 
-${column:width=35}$
+${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=110+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+${column:width=40}$
+
+[[[
+	A new bar
+	> 10
+	B new bar
+	> 50
+]]]
+
+${endColumns}$
+
+${slide:title=self Always Represents the Receiver}$
+
+${columns}$
+
+${column:width=40}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
 
 [[[
     B new bar

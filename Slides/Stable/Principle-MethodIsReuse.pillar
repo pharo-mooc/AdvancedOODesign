@@ -6,7 +6,14 @@
 }
 
 
-${slide:title=Junk}$
+${slide:title=Executing a method is reusing its code}$
+
+- Defining method enriches the API of an object
+- Calling a method is the first level of reuse
+
+
+
+${slide:title=Study}$
 
 [[[
 inpectionPillarTree
