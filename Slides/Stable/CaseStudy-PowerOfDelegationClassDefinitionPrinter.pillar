@@ -19,53 +19,9 @@ ${slide:title=Context: Class Definition }$
 
 - How to support the evolution of class definition
 - Supporting package, various formats, slots
-- Without parameter explositions
+- Without parameter explosions
 
-${slide:title=Historically: a Class Definition in ST-80}$
-
-[[[
-ArrayedCollection variableSubclass: #Array
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	poolDictionaries: ''''
-	category: ''Collections-Sequenceable-Base'''
-]]]
-
-
-${slide:title=Pharo up to Pharo 90}$
-
-- Avoid spurious fields, but still...
-- Supports package
-
-[[[
-ArrayedCollection variableSubclass: #Array
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''Collections-Sequenceable-Base''
-]]]
-
-[[[
-Object subclass: #Point
-	instanceVariableNames: ''x y''
-	classVariableNames: ''''
-	package: ''Kernel-BasicObjects'''
-]]]
-
-${slide:title=Method Parameter Explosion}$
-
-- Packages, tags, slots, 
-- New kind of subclasses: ephemerons,....
-- How to support new information without method parameter combinatory explosion
-
-${slide:title=Fluid Class Definition in Pharo 90}$
-
-- Using a fluid API (cascade instead of mandatory parameters)
-- Only the necessary parameters
-- Composable
-- Extensible
-- Supporting complex slots (first class instance variables)
-
-${slide:title=Fluid class definition in Pharo 90}$
+${slide:title=Fluid class definition in Pharo}$
 
 [[[
 ArrayedCollection << #Array
@@ -82,27 +38,6 @@ Object class << Point class
 - Modular
 - Compact
 - Extensible
-
-${slide:title=The Case of Complex Slots}$
-
-- Previous Pharo class definition did not support well slots
-- We want to support
-[[[
-SpAbstractWidgetPresenter << #SpDiffPresenter
-	slots: {
-			#showOptions => SpObservableSlot .
-			#showOnlyDestination => SpObservableSlot .
-			#showOnlySource => SpObservableSlot .
-			#contextClass => SpObservableSlot .
-			#leftLabel => SpObservableSlot .
-			#leftText => SpObservableSlot .
-			#rightLabel => SpObservableSlot .
-			#rightText => SpObservableSlot };
-		tag: 'Widgets';
-		package: 'Spec2-Core'
-]]]
-
-
 
 ${slide:title=Challenges}$
 

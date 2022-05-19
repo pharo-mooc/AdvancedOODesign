@@ -1,0 +1,85 @@
+{
+	"title":"Builder Variations",
+	"subtitle":"",
+	"author":"S. Ducasse",
+	"slidesid":""
+}
+
+
+${slide:title=Goal}$
+
+- Studying examples
+- Understanding Visitor
+- Example
+- Pros and Cons 
+
+
+
+
+
+buildMicroDownUsing: aBuilder withComment: aString
+	
+	super buildMicroDownUsing: aBuilder withComment: aString.
+
+	"Example code"
+	self addDocumentSectionExampleCode: aBuilder.
+	"Factory method"
+	self addDocumentSectionFactoryMethod: aBuilder.
+	"Sections"
+	self documentSections keysAndValuesDo: [ :label :methods |
+		self addDocumentSection: aBuilder label: label methods: methods ].
+	"Hook for extra sections"
+	self addDocumentExtraSections: aBuilder.
+	"Hierarchy"
+	self addDocumentSectionHierarchy: aBuilder.
+	"Transmissions"
+	self addDocumentSectionTransmissions: aBuilder.	
+	
+	
+	
+	
+addDocumentSectionFactoryMethod: aBuilder
+		| selector |
+
+		selector := self documentFactoryMethodSelector. 
+		selector ifNil: [ ^ self ].
+	 
+		aBuilder newLine.
+		aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
+		aBuilder newLine.
+		aBuilder text: 'You can use '. 
+		aBuilder monospace: self name. 
+		aBuilder text: ' in your presenters by sending '.
+		aBuilder monospace: 'SpPresenter>>#', selector.
+		aBuilder text: '.'
+		
+		
+		addDocumentSection: aBuilder label: label methods: methods
+	
+			methods ifEmpty: [ ^ self ].
+	
+			aBuilder newLine.
+			aBuilder header: [ :builder | builder text: label ] withLevel: 2.
+			aBuilder unorderedListDuring: [  
+				(methods sorted: #selector ascending) do: [ :each |
+					aBuilder item: [
+						aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+
+
+
+builder bold: [ builder text: 'Bold' ])
+
+aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
+
+quid de l'argument 
+
+
+
+testCell
+
+	self
+		assert: (builder
+		cell: [ 
+			builder text: 'this is '.
+			builder bold: [ builder text: 'bold' ] ]) contents
+		equals: '| this is **bold** '

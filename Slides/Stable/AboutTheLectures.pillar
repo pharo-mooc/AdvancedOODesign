@@ -16,7 +16,9 @@ ${slide:title=Outline}$
 
 - Test and test-driven
 - Basic elements
+- Principles
 - Essential aspects of OOP
+- Double dispatch
 - Case studies in Pharo (*http://www.pharo.org*)
 - Some design patterns
 

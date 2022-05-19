@@ -14,7 +14,7 @@ ${slide:title=Goal}$
 ${slide:title=Example: Introducing a hook}$
 
 [[[
-CHInterpreter >> visit...
+CHInterpreter >> visit...: arg
 
 	scope := CHClassScope new xxx
 	...
@@ -25,7 +25,7 @@ CHInterpreter >> visit...
 ${slide:title=Extract a class}$
 
 [[[
-CHInterpreter >> visit...
+CHInterpreter >> visit...: arg
 
 	scope := self classScopeClass new xxx
 	...
@@ -83,7 +83,7 @@ CHInterpreter >> visit...
 ${slide:title=Instance creation }$
 
 [[[
-CHInterpreter >> visit...
+CHInterpreter >> visit...: arg
 
 	scope := self newClassScope.
 	...
@@ -106,9 +106,9 @@ If you can only pass a class
 ${slide:title=Passing object as context}$
 
 [[[
-CHInterpreter >> visit...
+CHInterpreter >> visit...: arg
 
-	scope := self newClassScopeNewFor: self
+	scope := self newClassScopeNewFor: arg
 	...
 	scope
 ]]]

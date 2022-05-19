@@ -65,3 +65,64 @@ inpectionPillarTree
         yourself
 ]]]
 
+${slide:title=Annoying logic repetition}$
+
+[[[
+...
+stream := WriteStream on: (String new: 1000).
+#(1 2 3) printOn: stream.
+^ stream contents
+]]]
+
+
+${slide:title=streamContents: to the rescue}$
+
+[[[
+String streamContents: [:s | #(1 2 3) printOn: stream ]	
+]]]
+
+- Encapsulate creation
+- Encapsulation end
+
+${slide:title=Encapsulate actions}$
+	
+[[[
+SequenceableCollection class >> streamContents: blockWithArg	
+	^ self new: 100 streamContents: blockWithArg
+
+SequenceableCollection class >> new: newSize streamContents: blockWithArg
+	
+	| stream |
+	stream := WriteStream on: (self streamSpecies new: newSize).
+	blockWithArg value: stream.
+	"If the write position of stream is at the end of the internal buffer of stream (originalContents),
+	we can return it directly instead of making a copy as contents would do"
+	^ stream position = stream originalContents size
+		ifTrue: [ stream originalContents ]
+		ifFalse: [ stream contents ]
+]]]
+
+
+${slide:title=Another example of action encapsulation}$
+
+[[[
+'toto asFileReference readStreamDo: [:s |s next...]
+]]]
+
+[[[
+AbstractFileReference>> readStreamDo: aBlock
+	| stream |
+	stream := self readStream.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
+]]]
+
+- Initialize
+- and gracefully end
+
+${slide:title=Stepping back}$
+
+- Encapsulate logic in powerful API
+- Avoid spreading knowledge in clients
+- Avoid duplication of logic in clients
+
