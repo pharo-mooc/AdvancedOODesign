@@ -5,7 +5,6 @@
     "slidesid":"2022"
 }
 
-
 ${slide:title=Objectives}$
 
 - Revisit basic elements such as encapsulation
@@ -15,17 +14,24 @@ ${slide:title=Objectives}$
 ${slide:title=Outline}$
 
 - Test and test-driven
-- Basic elements
-- Principles
 - Essential aspects of OOP
+- Universal Principles
 - Double dispatch
-- Case studies in Pharo (*http://www.pharo.org*)
+- Case studies in Pharo 
 - Some design patterns
 
+${slide:title=About Pharo}$
+
+All the code samples and examples are taken from Pharo. 
+
+Why?
+- Pharo is pure and powerful object-oriented language (read more at *http://www.pharo.org*)
+- With only objects, messages, and lambdas, Pharo helps us to focus on important ideas
+- Complement the Pharo mooc (*http://mooc.pharo.org*)
 
 ${slide:title=About Vocabulary: The case of Polymorphism}$
 
-- To avoid some misunderstanding
+- To avoid some misunderstandings
 - The word "Polymorphism" is overloaded
 - Literally, it is strange: having multiple forms :)
 - It could mean subtyping: when a class is a subclass of another one.

@@ -11,33 +11,15 @@ ${slide:title=Goal}$
 
 - Think modular
 - Looking at the class definition printer
-- Check design approach in Pharo 9
+- Check design approach in Pharo
 
 
-
-${slide:title=Context: Class Definition }$
+${slide:title=Context: Class Definition}$
 
 - How to support the evolution of class definition
 - Supporting package, various formats, slots
 - Without parameter explosions
 
-${slide:title=Fluid class definition in Pharo}$
-
-[[[
-ArrayedCollection << #Array
-	layout: VariableLayout;
-	tag: ''Base'';
-	package: ''Collections-Sequenceable'''
-]]]
-
-[[[
-Object class << Point class
-	package: 'Kernel'
-]]]
-
-- Modular
-- Compact
-- Extensible
 
 ${slide:title=Challenges}$
 
@@ -53,7 +35,6 @@ ${slide:title=First Hacked version in Pharo 70/80}$
 
 [[[
 ClassDescription >> definition
-
 	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) 
 		ifTrue: [ ^ self definitionWithSlots ].
 	^ self definitionWithoutSlots
@@ -61,7 +42,6 @@ ClassDescription >> definition
 
 [[[
 Metaclass >> definition
-
 	(self slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ]) 
 		ifTrue: [ ^ self definitionWithSlots ].
 	^ self definitionWithoutSlots
@@ -96,7 +76,7 @@ ${slide:title=Solution: Delegating to a ClassDefinition Printer}$
 
 - Create class definition printer
 - A kind of Strategy
-- A hierarchy of printers
+- A hierarchy of printers + a factory
 
 [[[
 ClassDefinitionPrinter ( forClass )
@@ -128,7 +108,7 @@ ClassDescription >> definitionPrinter
 ]]]
 
 
-${slide:title=Fluid printing a class}$
+${slide:title=Fluid printer printing a class}$
 
 [[[
 FluidClassDefinitionPrinter >> classDefinitionString
@@ -148,7 +128,7 @@ FluidClassDefinitionPrinter >> classDefinitionString
 		self packageOn: s ]
 ]]]
 
-${slide:title=Fluid printing a metaclass}$
+${slide:title=Fluid printer printing a metaclass}$
 
 [[[
 FluidClassDefinitionPrinter >> metaclassDefinitionString 

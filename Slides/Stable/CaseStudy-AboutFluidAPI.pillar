@@ -3,7 +3,6 @@
 	"subtitle":"The case of the class definition",
 	"author":"S. Ducasse",
 	"slidesid":"2022"
-	
 }
 
 
@@ -11,15 +10,13 @@ ${slide:title=Goal}$
 
 - Think modular
 - Looking at the class definition printer
-- Check design approach in Pharo 9
-
-
+- Fluid API
 
 ${slide:title=Context: Class Definition }$
 
 - How to support the evolution of class definition
 - Supporting package, various formats, slots
-- Without parameter explosions
+- Without parameter explosion
 
 ${slide:title=Historically: a Class Definition in ST-80}$
 
@@ -34,7 +31,7 @@ ArrayedCollection variableSubclass: #Array
 
 ${slide:title=Pharo up to Pharo 90}$
 
-- Avoid spurious fields, but still...
+- Avoid poolDictionaries: when not used, but still...
 - Supports package
 
 [[[
@@ -53,12 +50,10 @@ Object subclass: #Point
 
 ${slide:title=Method Parameter Explosion}$
 
+Modern class definition should support: 
 - Packages, tags, slots, 
 - New kind of subclasses: ephemerons,....
-- How to support new information without method parameter combinatory explosion
-
-
-
+- Challenge: How to support new information without method parameter combinatory explosion?
 
 
 ${slide:title=Using Fluid API}$
@@ -69,39 +64,43 @@ ${slide:title=Using Fluid API}$
 - Extensible
 - Supporting complex slots (first class instance variables)
 
+${slide:title=(Example of Fluid API)}$
+
+A message
 [[[
-
-]]]
-
-
-${slide:title=Example of Fluid API}$
-
-[[[
-	foo: aString bar: anotherString babar: aThirdString
+	x foo: aString bar: anotherString babar: aThirdString
 ]]]
 
 becomes
 
 [[[
-	foo: aString;
-	bar: anotherString;
-	babar: aThirdString
+	x
+		foo: aString;
+		bar: anotherString;
+		babar: aThirdString
 ]]]
 
 or 
 
 [[[
-	babar: aThirdString;
-	foo: aString
+	x
+		babar: aThirdString;
+		foo: aString
 ]]]
+
+or 
+[[[
+	x foo: aString
+]]]
+
 
 ${slide:title=Fluid class definition in Pharo}$
 
 [[[
 ArrayedCollection << #Array
 	layout: VariableLayout;
-	tag: ''Base'';
-	package: ''Collections-Sequenceable'''
+	tag: 'Base';
+	package: 'Collections-Sequenceable'
 ]]]
 
 [[[
@@ -113,7 +112,7 @@ Object class << Point class
 - Compact
 - Extensible
 
-${slide:title=The Case of Complex Slots}$
+${slide:title=Supporting Complex Slots}$
 
 - Previous Pharo class definition did not support well slots
 
@@ -133,19 +132,45 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 ]]]
 
 
+${slide:title=Supporting Traits}$
+
+[[[
+Trait << #TTranscript
+	package: 'Transcript-Core-Traits'
+]]]
+
+
+
+${slide:title=Two specific roles}$
+
+There is a need:
+- to create a kind of accumulator (an holder of arguments)
+- to perform an action once the arguments are passed around
+
+[[[
+SpAbstractWidgetPresenter << #SpDiffPresenter
+	... 
+	...
+	package: 'Spec2-Core'
+]]]
+
+- ==< <== creates a class builder
+- ==package:== tells the builder to install the configured class
+
 
 ${slide:title=Analysis of Fluid API}$
 
-Pros:
-- handles combinatorial explosion
-- handles optional argument
+""Pros:""
+- Handles combinatorial explosion
+- Handles optional argument
 
-Cons: 
-- The order can be important
-- Some messages (package:) have to be the last one.
+""Cons:""
+- The message order can be important
+- There is a need for a closing message (==package:==)
 
 
 ${slide:title=Conclusion}$
 
-- Fluid API is nice for large parameters for configuration
+- Fluid API is nice when we face many optional/exclusive parameters
+- Still always think about the builder and closing message. 
 
