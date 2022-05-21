@@ -8,15 +8,25 @@
 
 ${slide:title=Goal}$
 
-- Studying examples
-- Understanding Visitor
-- Example
-- Pros and Cons 
+- Discuss about builder API
+- Identify variations
+
+
+${slide:title=Microdown}$
 
 
 
+${slide:title=Microdown Class Comment}$
+
++>figures/SpAbstractTextPresenter.png+
 
 
+${slide:title=Microdown Builder}$
+
+
+- Hook `buildMicroDownUsing: aBuilder withComment: aString`
+
+[[[
 buildMicroDownUsing: aBuilder withComment: aString
 	
 	super buildMicroDownUsing: aBuilder withComment: aString.
@@ -34,47 +44,58 @@ buildMicroDownUsing: aBuilder withComment: aString
 	self addDocumentSectionHierarchy: aBuilder.
 	"Transmissions"
 	self addDocumentSectionTransmissions: aBuilder.	
+]]]	
 	
-	
-	
-	
-addDocumentSectionFactoryMethod: aBuilder
-		| selector |
 
-		selector := self documentFactoryMethodSelector. 
-		selector ifNil: [ ^ self ].
-	 
-		aBuilder newLine.
-		aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
-		aBuilder newLine.
-		aBuilder text: 'You can use '. 
-		aBuilder monospace: self name. 
-		aBuilder text: ' in your presenters by sending '.
-		aBuilder monospace: 'SpPresenter>>#', selector.
-		aBuilder text: '.'
-		
-		
-		addDocumentSection: aBuilder label: label methods: methods
-	
-			methods ifEmpty: [ ^ self ].
-	
-			aBuilder newLine.
-			aBuilder header: [ :builder | builder text: label ] withLevel: 2.
-			aBuilder unorderedListDuring: [  
-				(methods sorted: #selector ascending) do: [ :each |
-					aBuilder item: [
-						aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+${slide:title=Microdown Builder 2}$
 
 
+[[[	
+addDocumentSection: aBuilder label: label methods: methods
+	
+	methods ifEmpty: [ ^ self ].
+	aBuilder newLine.
+	aBuilder header: [ :builder | builder text: label ] withLevel: 2.
+	aBuilder unorderedListDuring: [  
+		(methods sorted: #selector ascending) do: [ :each |
+			aBuilder item: [
+				aBuilder monospace: (each methodClass name, '>>#', each selector) ] ] ]
+]]]
 
+
+${slide:title=About Leaves}$
+
+For leaves, i.e., untrustured text or elements
+- Just pass the argument
+- given an order
+
+[[[
+builder text: 'Bold'
+]]]
+
+[[[
+aBuilder newLine
+]]]
+
+
+
+${slide:title=About Composite}$
+
+- For nested elements, we should provide a way to let the user defines the inner part
+- We use blocks for this. 
+
+[[[
 builder bold: [ builder text: 'Bold' ])
-
-aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
-
-quid de l'argument 
+]]]
 
 
+[[[
+aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
+]]]
 
+${slide:title=About Composite}$
+
+[[[
 testCell
 
 	self
@@ -83,3 +104,35 @@ testCell
 			builder text: 'this is '.
 			builder bold: [ builder text: 'bold' ] ]) contents
 		equals: '| this is **bold** '
+]]]
+
+
+${slide:title=Alternative design}$
+
+[[[
+aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
+]]]
+
+[[[
+aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
+]]]
+
+
+${slide:title=No argument design}$
+
+[[[
+aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
+]]]
+
+- Only the builder for all the messages
+- More compact
+
+
+${slide:title=Argument Design}$
+
+[[[
+aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
+]]]
+
+- Each API can have its owns  the builder 
+- More compact
