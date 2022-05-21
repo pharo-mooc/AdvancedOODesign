@@ -2,7 +2,7 @@
 	"title":"Builder Variations",
 	"subtitle":"",
 	"author":"S. Ducasse",
-	"slidesid":""
+	"slidesid":"2022"
 }
 
 
@@ -14,17 +14,32 @@ ${slide:title=Goal}$
 
 ${slide:title=Microdown}$
 
+[[[
 
+# Hello Pharo
 
-${slide:title=Microdown Class Comment}$
+Microdown is a cool markdown.
+It is used to generate
+- slides
+- books
+- class comments
+]]]
+
+${slide:title=Microdown class comment}$
 
 +>figures/SpAbstractTextPresenter.png+
 
+${slide:title=Microdown builder}$
 
-${slide:title=Microdown Builder}$
+Microdown offers a builder
+- To avoid user manipulating strings
+- To encapsulate the building logic
+- In addition every single class can customize  `buildMicroDownUsing: aBuilder withComment: aString`
 
 
-- Hook `buildMicroDownUsing: aBuilder withComment: aString`
+${slide:title=Microdown builder}$
+
+On ==SpAbstractWidget==
 
 [[[
 buildMicroDownUsing: aBuilder withComment: aString
@@ -47,8 +62,7 @@ buildMicroDownUsing: aBuilder withComment: aString
 ]]]	
 	
 
-${slide:title=Microdown Builder 2}$
-
+${slide:title=Microdown builder 2}$
 
 [[[	
 addDocumentSection: aBuilder label: label methods: methods
@@ -63,11 +77,11 @@ addDocumentSection: aBuilder label: label methods: methods
 ]]]
 
 
-${slide:title=About Leaves}$
+${slide:title=About leave element}$
 
 For leaves, i.e., untrustured text or elements
 - Just pass the argument
-- given an order
+- Give simple order
 
 [[[
 builder text: 'Bold'
@@ -78,22 +92,28 @@ aBuilder newLine
 ]]]
 
 
-
-${slide:title=About Composite}$
+${slide:title=About composite elements}$
 
 - For nested elements, we should provide a way to let the user defines the inner part
 - We use blocks for this. 
 
 [[[
-builder bold: [ builder text: 'Bold' ])
+builder bold: [ builder text: 'This is a text in bold' ]
 ]]]
-
 
 [[[
-aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
+builder bold: [ builder italic: [ builder text: 'This is a text in bold and italic' ]]
 ]]]
 
-${slide:title=About Composite}$
+[[[
+builder 
+	header: [ 
+		builder bold: [ builder text: 'Very']. 
+		builder text: 'Important' ] 
+	withLevel: 2.
+]]]
+
+${slide:title=About composite: Cell example}$
 
 [[[
 testCell
@@ -128,6 +148,19 @@ aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
 - More compact
 
 
+${slide:title=No argument implementation}$
+
+[[[
+header: aBloc withLevel: anInteger
+	self rawHeader: aBloc withLevel: anInteger.
+	self newLine
+
+rawHeader: aBloc withLevel: anInteger
+	self raw: (HeaderMarkup repeat: anInteger).
+   self raw: String space.
+   aBloc value
+]]]
+
 ${slide:title=Argument Design}$
 
 [[[
@@ -135,4 +168,22 @@ aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
 ]]]
 
 - Each API can have its owns  the builder 
-- More compact
+- We can have an hierarchy of builder each one representing finer context
+- More verbose
+
+
+${slide:title=Argument implementation}$
+
+[[[
+rawHeader: aBloc withLevel: anInteger
+	self raw: (HeaderMarkup repeat: anInteger).
+	self raw: String space.
+	aBloc value: SpecialMicrodownBuilder new
+]]]
+
+${slide:title=Analysis}$
+
+- With an explicit argument builder, we can also subclass the builder and modify partially the builder behavior
+- We could have specialisation builder that produces table of contents
+- It feels like visitor hooks
+
