@@ -1,33 +1,39 @@
 {
     "title":"About Advanced Object-Oriented Design",
     "subtitle":" ",
-    "author":"S. Ducasse",
+    "author":"S. Ducasse, L. Fabresse, G. Polito and P. Tesone",
     "slidesid":"2022"
 }
 
 ${slide:title=Objectives}$
 
-- Revisit basic elements such as encapsulation
-- Think about essential aspect of OOP
+- Revisit basic elements such as encapsulation, delegation
+- Think about essential aspects of OOP
 - Learn key Design Patterns
 
 ${slide:title=Outline}$
 
 - Test and test-driven
 - Essential aspects of OOP
-- Universal Principles
+- Basic and Universal Principles
 - Double dispatch
 - Case studies in Pharo 
 - Some design patterns
+- Some coding idioms
 
 ${slide:title=About Pharo}$
 
-All the code samples and examples are taken from Pharo. 
+All the code samples and examples are taken using and from Pharo (*http://www.pharo.org*)
 
-Why?
++>file://figures/Pharo.jpg+
+
+
+${slide:title= Why Pharo?}$
 - Pharo is pure and powerful object-oriented language (read more at *http://www.pharo.org*)
-- With only objects, messages, and lambdas, Pharo helps us to focus on important ideas
-- Complement the Pharo mooc (*http://mooc.pharo.org*)
+- With only objects, messages, and lambdas, Pharo helps us to focus on important ideas!
+- Complement the excellent Pharo mooc (*http://mooc.pharo.org*)
+
+
 
 ${slide:title=About Vocabulary: The case of Polymorphism}$
 
@@ -40,9 +46,9 @@ ${slide:title=Our stance}$
 
 "'If it walks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.'"
 
-We use ""polymorphic"", ""polymorphism"" in the sense of
+We use the terms ""polymorphic"" or ""polymorphism"" in the sense of:
 - exposing the same API, 
-- substituable,
+- being substituable,
 - an object can be replaced by another one because both present the same API (set of messages),
 - polymorphic objects do not have to be subtypes
 
@@ -54,6 +60,6 @@ ${slide:title=Polymorphism}$
 
 ${slide:title=A unique lecture}$
 
-- More than 10 years of experience
+- More than 60 years of experience in OO design and practices
 - Concrete cases
 - Knowledge actionable in many languages

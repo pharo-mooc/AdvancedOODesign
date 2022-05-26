@@ -7,8 +7,8 @@
 
 ${slide:title=Goal of the lecture|label=less}$
 
-- How can you trust that a change did not destroy something?
-- What is my confidence in the system?
+- How can you ""trust"" that a change did not destroy something?
+- What is ""my confidence"" in the system?
 - What is unit testing?
 - How do I write tests?
 
@@ -18,15 +18,15 @@ ${slide:title=Test main points}$
 
 - When there is a change
 -- Tests verify that what worked before still works
--- Tests are your life insurance: you get aware of a side effect and regression
+-- Tests are your ""life insurance"": you get aware of a side effect and ""regression""
 - Tests are enablers of future evolution
-- Tests reduce the fear of change
-- Per se tests do not prevent bugs to happen but they reduce **unnoticed** bugs or side effects
+- Tests reduce the ""fear of change""
+- Per se tests do not prevent bugs to happen but they reduce ""unnoticed"" bugs or side effects
 
 ${slide:title=About automation}$
 
-A test that is not **automated** does NOT exist!
-
+A test that is not ""automated does NOT EXIST!""
+- Seriously!
 - Repetition
 - No human intervention
 
@@ -34,13 +34,14 @@ ${slide:title=Unit tests}$
 
 - Unit tests ensure that you get the specified behavior of a class
 - Normally ''unit'' tests test a single class
+- A test one scenario: one point!
 
 ${slide:title=Anatomy of a test}$
 
 A test:
-- Creates a context 
-- Performs a stimulus (an action on the context)
-- Checks the results (with assertions)
+- Creates a ""context"" 
+- Performs a ""stimulus"": an action on the context
+- ""Checks"" the result with ""assertions""
 
 
 ${slide:title=Example: Testing set addition}$
@@ -54,7 +55,7 @@ A test:
 ${slide:title=Set testcase}$
 
 [[[
-TestCase subclass: # SetTest
+TestCase subclass: #SetTest
     ...
 ]]]
 
@@ -92,23 +93,29 @@ SetTest >> testAdd
 
 ${slide:title=An error}$
 
-Sending the message ==add:== raise an exception.
+Sending the message ==foobar:== raises an exception.
 
 [[[
 SetTest >> testAdd 
   | empty |
   empty := Set new.
-  empty add: 5.
-  empty add: 5.
+  empty foobar: 5.
   self assert: empty size equals: 1.
 ]]]
 
+${slide:How to reuse setting test context?}$
+
+If a context is repeated among tests:
+- duplication is never a good idea
+- hampers future evolution
+
+The framework offers the ==setUp== method to create a context before any test execution.
 
 ${slide: setUp and tearDown messages}$
 
-Executed systematically before and after each test run
+Executed ""systematically"" before and after each test run
 - ==setUp== allows us to specify and reuse the context
-- ==tearDown== to clean after
+- ==tearDown== to clean after test execution
 
 +>file://figures/SetUpTearDown.png|width=60+
 
@@ -142,10 +149,11 @@ ${slide:title=About writing tests}$
 -- Do not need to focus on everything
 -- When a new bug shows up, write a test
 - Even better write them before the code
--- Act as your first client, better interface
+-- Act as your first client, produce better interface
 - Active documentation always in sync
-- It has a cost: writing them, maintain them
+- It has a cost: writing them, maintain them, so make them worth
 - But pay off is Huge
+
 
 ${slide:title=But I can’t cover everything!}$
 
@@ -155,16 +163,17 @@ ${slide:title=But I can’t cover everything!}$
 
 '''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.''' Martin Fowler
 
-${slide:title=Testing Style: TDD}$
+${slide:title=Testing style: TDD}$
 
 "The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run."
 
 - Write unit tests that thoroughly test a single class
-- Write tests as you develop (even before you implement)
+- Write tests as you develop (even before you implement your class!)
 - Write tests for every new piece of functionality
 
 '''Developers should spend 25-50\% of their time developing tests.'''
 
+(see next lecture)
 
 ${slide:title=Good tests}$
 
@@ -177,5 +186,5 @@ ${slide:title=Good tests}$
 ${slide:title=Conclusion}$
 
 - Invest in tests
-- Use Xtreme TDD: write a test, execute, debug and code in the debugger
+- Use Xtreme TDD: write a test, execute, debug and code in the debugger (see following lecture)
 - Tests are your best investment
