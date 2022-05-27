@@ -1,26 +1,24 @@
 {
 	"title":"Parametrized Tests",
-	"slidesid":" ",
 	"subtitle":"Getting more tests out of test cases",
 	"author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
-- How to reuse test logic with specific value sets?
-- How can we run tests with all possible combinations?
+- How to ""reuse"" test logic with specific value sets?
+- How can we run tests with ""all"" possible combinations?
+- Use a naive example to stress the essence
 
-${slide:title=Problem}$
+${slide:title=Problem one}$
 
 [[[
 MyDullTest >> testSum
-	
 	self assert: (2/3) + (1/3) equals: 1
 ]]]
 
 - How to generalize it?
 - How can we reuse test logic with specific values?
-
 
 
 ${slide:title=Using a collection}$
@@ -35,11 +33,11 @@ MyDullTest >> testSum
 				equals: each third ]
 ]]]
 
-- What if I want to have another test using some or all these values?
+- What if I want to have ""another"" test ""reusing"" some or all these values?
 - Not nice to have to duplicate the loop.
 
 
-${slide:title=Using a parametrize test}$
+${slide:title=Use a parametrized test}$
 
 Inherit from ==ParametrizedTestCase== and add instance variables and setters.
 [[[
@@ -47,7 +45,7 @@ ParametrizedTestCase < #MyDullTest
 	slots: { #number1 . #number2 . #result}
 ]]]
 
-Using instance variables:
+Use instance variables:
 [[[
 MyDullTest >> testSum
 	self assert: number1 + number2 equals: result
@@ -55,7 +53,7 @@ MyDullTest >> testSum
 
 
 
-${slide:title=Declaring cases}$
+${slide:title=Declare cases}$
 
 [[[
 MyTest class >> testParameters
@@ -79,9 +77,10 @@ We can execute tests
 	- with a specific configuration
 	- add a new configuration
 
-${slide:title=Problem}$
 
-We have a test and we would like to apply to other collections.
+${slide:title=Problem two}$
+
+Imagine we have a test and we would like to apply to other collections.
 
 [[[
 MyTest >> testAdd
@@ -131,7 +130,7 @@ We run all the tests with ==Set==, ==Bag==, ==OrderedCollection==.
 
 ${slide:title=We want more}$
 
-We would like to have different items to add and to check with all the collection.
+We would like to have ""different items"" to add and to check with all the collections.
 
 ${slide:title=Easy}$	
 
