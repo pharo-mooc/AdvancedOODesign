@@ -1,6 +1,6 @@
 {
     "title":"Tests",
-    "subtitle":"Why Testing is Important",
+    "subtitle":"Why testing is Important?",
     "author":"S. Ducasse",
     "slidesid": " "
 }
@@ -14,22 +14,22 @@ ${slide:title=Goal}$
 ${slide:title=Why testing?}$
 
 - Tests are your life insurance
-- Increase trust that a change did not break something
-- Reduce the fear of changes
+- Increase ""trust"" that a change did ""not break"" something
+- Reduce the ""fear"" of changes
 - Support code understanding
 - Tests do not avoid breaking your system
-- But they show what you broke!
+- But ""they show what you broke!""
 
 ${slide:title=Remember...}$
 
-A test that is not automated does NOT exist
+A test that is not automated does ""NOT EXIST!""
 
 ${slide:title=Automated tests are your life insurance}$
 
-- Our brain is too small to remember everything
+- Our brain is too small to ""remember everything""
 - Our brain focuses on our last action
-- You write a test once and you execute it million times
-- Programming is modeling the world and the world is changing
+- You write a test ""once"" and you execute it ""million times""
+- Programming is modeling the world and the world is ""changing""
 
 
 
@@ -37,40 +37,29 @@ ${slide:title=Automated tests ensure software can evolve}$
 
 - Tests make you ""bold"" in regards of changes
 - Tests lower the fear of breaking
--- You can try and run the tests to get an idea
--- You can explore alternatives
+-- You can ""try"" and run the tests to get an idea
+-- You can ""explore"" alternatives
+-- You can understand that ""misunderstood"" something
 
-${slide:title=Test positive properties}$
+${slide:title=Test positive properties (1)}$
 
-- Find bugs when they appear
+- ""Find bugs"" when they appear
 - improve customer trust
-- Reproduce complex scenarii
+- Reproduce ""complex"" scenarii
 - Guarantee old bugs are caught if reappear
-- Isolate a problem
+- ""Isolate"" a problem
 
 ${slide:title=Some characteristics of a good test suite}$
 
-- Check extreme cases (e.g., null, 0 and empty)
+- Check ""extreme"" cases (e.g., null, 0 and empty)
 - Check complex cases (e.g., exceptions, network pbs)
 - 1 test for each bug (at least)
-- Good coverage
+- Good ""coverage""
 - Check abstractions
 - Check units independently
 
-${slide:title=Understanding code ;/ }$
 
-[[[
-convert
-   | s |
-   s := '#000000' copy.
-   s at: 2 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).
-   s at: 3 put: (Character digitValue: ((rgb bitShift: -2 - RedShift) bitAnd: 15)).
-   s at: 4 put: (Character digitValue: ((rgb bitShift: -6 - GreenShift) bitAnd: 15)).
-   s at: 5 put: (Character digitValue: ((rgb bitShift: -2 - GreenShift) bitAnd: 15)).
-   s at: 6 put: (Character digitValue: ((rgb bitShift: -6 - BlueShift) bitAnd: 15)).
-   s at: 7 put: (Character digitValue: ((rgb bitShift: -2 - BlueShift) bitAnd: 15)).
-   ^ s
-]]]
+
 
 ${slide:title=Understanding code: API and result}$
 
@@ -103,6 +92,10 @@ testBitShift
    self assert: (2r1011 bitShift: -2) equals: 2r10.
 ]]]
 
+${slide:title=Understanding code}$
+
+You do not have to know how numbers are implemented to understand that this ==bitShift:== is working.
+
 [[[
 testShiftOneLeftThenRightGetsOne
    "Shift 1 bit left then right and test for 1"
@@ -113,33 +106,76 @@ testShiftOneLeftThenRightGetsOne
         equals: 1].
 ]]]
 
-${slide:title=Test positive properties}$
+${slide:title=Understanding code ;/ }$
 
-- Give simple and reproducible examples
+- Not always the case but this is ok too.
+- Low-level tests are worth but you should know when
+
+[[[
+convert
+   | s |
+   s := '#000000' copy.
+   s at: 2 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).
+   s at: 3 put: (Character digitValue: ((rgb bitShift: -2 - RedShift) bitAnd: 15)).
+   s at: 4 put: (Character digitValue: ((rgb bitShift: -6 - GreenShift) bitAnd: 15)).
+   s at: 5 put: (Character digitValue: ((rgb bitShift: -2 - GreenShift) bitAnd: 15)).
+   s at: 6 put: (Character digitValue: ((rgb bitShift: -6 - BlueShift) bitAnd: 15)).
+   s at: 7 put: (Character digitValue: ((rgb bitShift: -2 - BlueShift) bitAnd: 15)).
+   ^ s
+]]]
+
+${slide:title=""Limit"" dependency to elements not under test}$
+
+Imagine that we want to test a transformation of a piece of code
+- If we depend on the compiler to get the test input
+- It may break when the transformation is wrong, but also each time the compiler changes something!
+
+Better have a setup that is independent from the compiler
+- Manually build the test input and store it in a test set up
+
+Think about API even in the test setup
+
+
+${slide:title=Positive and negative tests }$
+
+Positive
+- if I do no the normal stuff, 
+- It passes!
+- Example: You can log with correct credentials
+
+Negative
+- If I do not behave correctly,
+- It breaks!
+- Example: You must not be able to load with incorrect credentials
+- Example: It should raise an exception if given 0
+
+${slide:title=Test positive properties (2) }$
+
+- Give simple and ""reproducibl""e examples
+- ""Executable"" snippets
 - Illustrate the API
 - Give up-to-date documentation
 - Check conformity of new code
-- Offer a first client to new code
-- Force a 'customizable' design
-
-${slide:title=Tests reduce change fear}$
-
-- Accelerate bug detection
-- Accelerate new code checking
-- Ease refactorings
-- Prevent regressions
+- Offer a ""first client"" to new code
+- Force a ""'customizable'"" design
 
 ${slide:title=Characteristics of a good test suite}$
 
 - Deterministic
 - Self-explained
-- Simple/Unit
-- Change less frequently than the rest
+- Simple/Unit/Short: with few assertions (not 10th not hundred)
+- Change less frequently than the rest: 
+-- ""Test the API"" not the implementation
+-- ""Limit"" dependency to other elements 
 - Good code coverage
-- Deterministic
+
+
+
+
+
 
 ${slide:title=Conclusion}$
 
 - Tests are important
-- In particular in dynamically-typed language
+- In particular in dynamically-typed languages
 - Help deliver complex projects

@@ -1,6 +1,5 @@
 {
 	"title":"Xtreme Test Driven Development",
-	"slidesid":" ",
 	"subtitle":"Getting a productivity boost",
 	"author":"S. Ducasse"
 }
@@ -8,17 +7,17 @@
 
 ${slide:title=Outline}$
 
-- TDD on steroids
-- Live programming
+- TDD on ""steroids"""
+- Live programming at ""its best""
 - Smart tools
-- Absolutely gorgeous development flow
+- Absolutely ""gorgeous"" development flow
 
 ${slide:title=Principle}$
 
 Do ""not break"" the flow
 - Write a test
 - When it breaks, define the method ""on the fly in the debugger""
-- Resume and continue until test is green
+- ""Resume and continue"" until test is green
 
 ${slide:title=Studying an example}$
 
@@ -26,11 +25,9 @@ ${slide:title=Studying an example}$
 - Focus on essence of the process!
 - You can do it.
 
-
 ${slide:title=An empty package}$
 
 + >file://figures/XTDD1.png|width=95+
-
 
 
 ${slide:title=An empty test case class}$
@@ -103,14 +100,16 @@ ${slide:title=Continue the execution...}$
 
 + >file://figures/XTDD14.png|width=80+
 
+
+
 ${slide:title=Supporting the programmer flow}$
 
-- The system created a new method
-- Removed the stack element with Error
-- Replaced it with a call to the new method
-- Relaunched execution
+- The system ""created"" a new method for us
+- ""Removed"" the stack element with Error
+- ""Replaced"" it with a call to the new method
+- ""Relaunched"" execution
 - We edited it and recompiled the method
-- Continued execution
+- ""Continued"" execution
 
 ${slide:title=New method}$
 
@@ -148,16 +147,16 @@ ${slide:title=One Cycle}$
 
 ${slide:title=Why XTDD is powerful}$
 
-- Avoid guessing context when coding
+- Avoid ""guessing"" context when coding
 - Much much better context 
 -- inspect that ""specific"" instance state
 -- talk to that ""specific"" object
 - Inspectable / interactable context
-- Tests are not a side effect artefact but the driving force
+- Tests are not a side effect artefact but the ""driving"" force
 
 ${slide:title=Protip from expert Pharo developers}$
 
-- Get as fast as possible one object
-- Cristalize your scenario with a test
+- Grab ""as fast as"" possible one object
+- ""Cristalize"" your scenario with a test
 - Xtreme TDD
 - Loop
