@@ -68,11 +68,11 @@ Die class >> new
 
 ${slide:title=Sending a message: Lookup \+ execute on receiver}$
 
-+>file://figures/InheritanceDiagram-sendingMessage.png|width=64+
++>file://figures/InheritanceDiagram-sendingMessage.png|width=40+
 
 ${slide:title=Remember: Method lookup}$
 
-+>file://figures/LookupEssenceWithGeneric.png|width=70+
++>file://figures/LookupEssenceWithGeneric.png|width=55+
 
 
 ${slide:title=Solution}$
@@ -93,7 +93,7 @@ Die class >> new
 
 ${slide:title=Solution}$
 
-+>file://figures/Workstation-Dice-MetaclassesWithInheritanceWithLookup.png|width=130+
++>file://figures/Workstation-Dice-MetaclassesWithInheritanceWithLookup.png|width=80+
 
 ${slide:title=Summary}$
 
@@ -101,7 +101,7 @@ ${slide:title=Summary}$
 - Now you should really understand ==super== :)
 - ==super== is the receiver of the message and the method lookup starts in the superclass of the class  containing the expression
 
-${slide:title=Challenge}$
+${slide:title=Challenge yourself}$
 
 Imagine we have:
 
