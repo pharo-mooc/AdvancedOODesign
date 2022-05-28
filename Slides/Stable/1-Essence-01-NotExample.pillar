@@ -73,9 +73,10 @@ ${slide:title=Hint 3: With at least two classes}$
 
 ${slide:title=Hint 3: With at least two classes}$
 
-+Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=450+
-
 - ==Boolean== is not needed per se but it improves reuse
++Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=50+
+
+
 
 
 
@@ -187,11 +188,11 @@ True >> | aBoolean
 
 ${slide:title=Or Implementation in two methods}$
 
-+Boolean hierarchy and instances.>file://figures/BooleanHiearchyAndInstancesWithOrMethods.png|width=70+
++Boolean hierarchy and instances.>file://figures/BooleanHiearchyAndInstancesWithOrMethods.png|width=90+
 
 
 ${slide:title=Summary}$
 - The solution to implement booleans' operations:
 -- does NOT use conditionals (if)
+- ""Do not ask, tell""
 -- lets the receiver decide
-- Do not ask, tell
