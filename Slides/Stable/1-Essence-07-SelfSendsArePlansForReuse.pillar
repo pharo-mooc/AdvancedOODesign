@@ -1,34 +1,33 @@
 {
   "title" : "Message Sends are Plans for Reuse",
-  "slidesid" : "W6S04",
   "subtitle" : " ",
   "author" : " S. Ducasse and L. Fabresse"
 }
 
 ${slide:title=About this lecture}$
 
-Another design lecture:
 - Next step of the ==not== implementation lecture
 - Relevant to any object-oriented language
-- May change your view on design
+- Another essential aspect of OOP
 
 ${slide:title=What you will learn}$
 
 - Message sends are hooks for subclasses
 - ''"I like big methods because I can see all the code"'' leads to bad design
-- Why writing small methods is a sign of good design
+- Why writing small methods is a sign of good design?
 
-${slide:title=Sending a message leads to a choice}$
+${slide:title=Remember: Sending a message makes a choice}$
 
 - a message send leads to a choice
 - a class hierarchy defines the choices
 - ==self== always represents the receiver
 - method lookup starts in the class of the receiver
 
-+>file://figures/Design-FatVsDispatch.png|width=95+
++>file://figures/Design-FatVsDispatch.png|width=75+
 
 ${slide:title=An example}$
 
+Imagine
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
@@ -68,20 +67,19 @@ ${slide:title=Avoid duplication}$
 -- duplication copies bugs
 -- changing one copy requires changing others
 
-${slide:title=Solution}$
+${slide:title=A much better solution}$
 
 ${columns}$
 
 ${column:width=50}$
 
-- send messages
-- define small methods
-
+- Define small methods
+- Send messages
 Subclasses can override such methods
 
 ${column:width=50}$
 
-+>file://figures/SelfIsDynamic.png|width=85+
++>file://figures/SelfIsDynamic.png|width=70+
 
 ${endColumns}$
 
@@ -97,7 +95,7 @@ Node >> setWindowWithRatioForDisplay
   previousNodeSize := defaultNodeSize.
 ]]]
 
-${slide:title=Better design}$
+${slide:title=Into ...}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -180,11 +178,14 @@ Node >> uiNodeClass
 
 ${slide:title=Many small messages}$
 
-- Some developers complain about all these small methods
+Small messages are a sign of good design, because:
+- each little method is a potential hook for customization
+- gives name to expressions
+
+Some developers complain about all these small methods
 - They try to understand code line by line
 - This does not scale
 
-Small messages are a sign of good design
 
 ${slide:title=Avoid magic numbers}$
 
@@ -194,8 +195,8 @@ Node >> uiNode
       with: bandWidth * 55 / defaultWindowSize.
 ]]]
 
-- subclasses may want to change values
--- do not hardcode magic numbers (55)
+Subclasses may want to change values
+- do not hardcode magic numbers (55)
 
 
 ${slide:title=Use a message send}$
@@ -209,12 +210,14 @@ Node >> averageRatio
    ^ 55
 ]]]
 
-- this gives a name to a value
-- subclasses can override the value
+- This gives a name to a value
+- Subclasses can override the value
 
-How to let the class users change the value?
 
-${slide:title=Use an instance variable}$
+
+${slide:title=How to let the class users change the value?}$
+
+Use an instance variable if needed
 
 [[[
 Node >> averageRatio
@@ -225,22 +228,20 @@ Node >> averageRatio: aNumber
    averageRatio := aNumber
 ]]]
 
-- subclasses can override the value
-- class users can set the value
+- Subclasses can override the value
+- Class users can set the value
 
-${slide:title=Gruyere-Oriented Programming}$
+${slide:title=Gruyere-oriented programming}$
 
 +.>file://figures/gruyereWithSlogan|width=95+
 
 ${slide:title=Conclusion}$
 
 - Code can be reused and refined in subclasses
-- Sending a message in a class defines a hook:
--- i.e., a place where subclasses can inject variations
+- Sending a message in a class defines a ""hook"":
+-- i.e., a place where subclasses can ""inject variations""
+
 - Prefer small methods because:
 -- this gives names to expressions
 -- this gives freedom to subclasses
 
-% Local Variables:
-% compile-command: "cd ../.. && ./compile.sh --to=Beamer Slides/Week6/C019-W6S04-SelfSendsArePlanForReuse.pillar"
-% End:
