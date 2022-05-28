@@ -1,25 +1,29 @@
 {
-  "title":"Essence of Dispatch",
-  "subtitle":"Taking Pharo Booleans as Example",
-  "slidesid" : "2022"
+	"title":"Essence of Dispatch",
+	"subtitle":"Taking Pharo Booleans as Example",
+	"author":"S. Ducasse and L. Fabresse",
+	"slidesid" : "2022"
 }
 
 ${slide:title=Objectives}$
 
-- Understanding of message passing (late binding)
--- the heart of OOP
--- more an OOP lecture than a Pharo one
+- Understanding of message passing (late binding) for ""real"" this time
+- The ""heart of OOP""
 - Insight at how beautiful Pharo's implementation is
 
 ${slide:title=Context: Booleans}$
 
 In Pharo, Booleans have a superb implementation!
 
+You get the classical message
 - ==&==, ==|==, ==not== (eager)
 - ==or:==, ==and:== (lazy)
+And some less traditional
 - ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
+-- Yes conditionals are message sent to boolean objects
 
-${slide:title=Three Exercises}$
+
+${slide:title=Three exercises}$
 
 # Implement ==not== (Not)
 # Implement ==|== (Or)
@@ -30,7 +34,8 @@ ${slide:title=Exercise 1: Implement Not}$
 Propose an implementation of Not in a world where:
 - You have: ==true==, ==false==
 - You only have objects and messages
-- How would you implement the message ==not==?
+
+How would you implement the message ==not==?
 
 [[[
    false not
@@ -44,23 +49,12 @@ ${slide:title=Hint 1: No conditionals}$
 
 The solution does not use conditionals (i.e., no ==if==)
 
-${slide:title=Hint 2: With Three Classes}$
-
-- The solution uses three classes:
--- ==Boolean== (abstract), ==True== and ==False==
-- ==true== is the singleton instance of ==True==
-- ==false== is the singleton instance of ==False==
-
-${slide:title=Hint 2: Three Classes}$
-
-+Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=70+
-
-${slide:title=Hint 3: How do We Express Choice in OOP?}$
+${slide:title=Hint 2: How do we express choice in OOP?}$
 
 In OOP, choice is expressed 
-- By defining classes with compatible methods
-- By sending a message to an instance of such class
-
+- By defining classes with ""compatible"" methods
+- By ""sending"" a message to an instance of such class
+- Let the receiver decide
 
 Example 
 [[[
@@ -70,7 +64,22 @@ Example
 - ==x== can be a file, a window, a tool,... 
 - The method is ""selected"" based on ==x=='s class
 
-${slide:title=Implementation of Not in Two Methods}$
+${slide:title=Hint 3: With at least two classes}$
+
+- The Pharo implementation uses three classes:
+-- ==Boolean== (abstract), ==True== and ==False==
+- ==true== is the singleton instance of ==True==
+- ==false== is the singleton instance of ==False==
+
+${slide:title=Hint 3: With at least two classes}$
+
++Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=450+
+
+- ==Boolean== is not needed per se but it improves reuse
+
+
+
+${slide:title=Implementation of Not in two methods}$
 
 [[[
 False >> not
@@ -84,25 +93,25 @@ True >> not
    ^ false
 ]]]
 
-${slide:title=Implementation Hierarchy}$
+${slide:title=Implementation hierarchy}$
 
-+Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethods.png|width=110+
-
-
-${slide:title=Message Lookup is Choosing the Right Method}$
-
-+Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=105+
++Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethods.png|width=80+
 
 
-${slide:title=Boolean Implementation}$
+${slide:title=Message lookup is choosing the right method}$
+
++Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
+
+
+${slide:title=Boolean implementation}$
 
 - ==Boolean== is abstract
-- Subclasses are ==True== and ==False== and implement
+-  ==True== and ==False== implement
 -- logical operations ==&==, ==not==
 -- control structures ==and:==, ==or:==, ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
 
 [[[
-Boolean>>not
+Boolean >> not
    "Abstract method. Negation: Answer true if the receiver is false, answer false if the receiver is true."
    self subclassResponsibility
 ]]]
@@ -131,7 +140,7 @@ Boolean >> | aBoolean
 ]]]
 
 
-${slide:title=Implementation of Or in Class False}$
+${slide:title=Implementation of Or in class False}$
 
 [[[
 false | true -> true
@@ -145,7 +154,7 @@ False >> | aBoolean
    ^ aBoolean
 ]]]
 
-${slide:title=Implementation of Or in Class True}$
+${slide:title=Implementation of Or in class True}$
 
 [[[
 true | true -> true
@@ -159,7 +168,7 @@ True >> | aBoolean
    ^ true
 ]]]
 
-${slide:title=Real Implementation of Or in Class True}$
+${slide:title=Real implementation of Or in class True}$
 
 The object ==true== is the receiver of the message!
 [[[
@@ -176,9 +185,9 @@ True >> | aBoolean
    ^ self
 ]]]
 
-${slide:title=Or Implementation in Two Methods}$
+${slide:title=Or Implementation in two methods}$
 
-+Boolean hierarchy and instances.>file://figures/BooleanHiearchyAndInstancesWithOrMethods.png|width=110+
++Boolean hierarchy and instances.>file://figures/BooleanHiearchyAndInstancesWithOrMethods.png|width=70+
 
 
 ${slide:title=Summary}$
@@ -186,7 +195,3 @@ ${slide:title=Summary}$
 -- does NOT use conditionals (if)
 -- lets the receiver decide
 - Do not ask, tell
-
-% Local Variables:
-% compile-command: "cd ../.. && ./compile.sh --to=Beamer Slides/Week3/C019SD-W3S01-Design-EssenceOfDispatchNot.pillar"
-% End:
