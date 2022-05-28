@@ -1,19 +1,19 @@
 {
 	"title":"Essence of Dispatch",
-	"slidesid" : "W3S02"
+	"author": "S. Ducasse and L. Fabresse"
 }
 
 
 
-${slide:title=Remember: Implementing not in Two Methods}$
+${slide:title=Remember: Implementing not in two methods}$
 
-+Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=95+
++Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
 
-${slide:title=Stepping Back}$
+${slide:title=Stepping back}$
 - Let the receiver decide
 - Do not ask, tell
 
-${slide:title=Ok So What?}$
+${slide:title=Ok so what?}$
 
 - You will probably never implement ==Booleans== in the future
 - So is it really that totally useless?
@@ -21,22 +21,30 @@ ${slide:title=Ok So What?}$
 
 
 
-${slide:title=Message Sends Act as Case Statements}$
+${slide:title=Message sends act as case statements}$
 
-- Message sends act as case statements
+- Message sends are supporting a choice 
+- They act as "case statements"
 - But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent
 
-${slide:title=Sending a Message is Making a Choice}$
+${slide:title=Sending a message is making a choice}$
 
 - Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
 - Sending a message is a ""choice"" operator
 
-${slide:title=Classes Play Case Roles}$
+
+${slide:title=How do we express choices?}$
+
+- Ok we have a choice operation... then
+- Could we have the same solution with a single ==Boolean== class?
+
+
+${slide:title=Classes play case roles}$
 
 - To activate the choice operator we must have choices: classes
-- A class represents a case
+- We can see that a class represents a case
 
-${slide:title=A Class Hierarchy is a Skeleton for Dynamic Dispatch}$
+${slide:title=Class hierarchy supports for dynamic dispatch}$
 
 Compare the solution with one class vs. a hierarchy
 - More modular
@@ -44,17 +52,17 @@ Compare the solution with one class vs. a hierarchy
 - You only focus on one class at a time
 
 
-+One single class vs. a nice hierarchy.>file://figures/Design-FatVsDispatch.png|width=80+
++>file://figures/Design-FatVsDispatch.png|width=75+
 
 
-${slide:title=Advantages of Class Hierarchy}$
+${slide:title=Message dispatch supports modularity}$
 
-+One single class vs. a nice hierarchy.>file://figures/Design-FatVsDispatchWithPackages.png|width=90+
++>file://figures/Design-FatVsDispatchWithPackages.png|width=85+
 
 More modular: We can package different classes in different packages
 
 
-${slide:title=Let the Receiver Decide}$
+${slide:title=Let the receiver decide}$
 
 - Sending a message lets the receiver decide
 - Client does not have to decide
@@ -70,5 +78,5 @@ ${slide:title=Avoid Conditionals}$
 ${slide:title=Summary: Cornerstone of OOP}$
 - Let the receiver decide
 - Message sends act as potential dynamic conditionals
-- Class hierarchy: a skeleton for dynamic dispatch
+- Class hierarchy: a support for dynamic dispatch
 - Avoid conditionals
