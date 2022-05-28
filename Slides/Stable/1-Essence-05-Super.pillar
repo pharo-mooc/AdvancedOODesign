@@ -1,7 +1,7 @@
 {
   "title":"Inheritance and Lookup",
-  "subtitle":"3: super",
-  "slidesid" : "W4S03"
+  "subtitle":"About super",
+  "author":"S Ducasse and L. Fabresse"
 }
 
 ${slide:title=Goal}$
@@ -10,7 +10,15 @@ ${slide:title=Goal}$
 - Method lookup
 - ==super== semantics and the differences with ==self==
 
-${slide:title=What is super?}$
+${slide:title=Define what super is!}$
+
+${columns}$
+
+${column:width=50}$
+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
+
+${column:width=50}$
 
 Take 5 min and write the definition of ==super==
 
@@ -18,13 +26,15 @@ Take 5 min and write the definition of ==super==
 -- what does ==super== represent?
 -- how is a method looked up when a message is sent to ==super==?
 
-${slide:title=Challenge Yourself With super!}$
+${endColumns}$
+
+${slide:title=Challenge yourself with super!}$
 
 ${columns}$
 
 ${column:width=80}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=100+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
 
 ${column:width=30}$
 
@@ -39,13 +49,13 @@ ${column:width=30}$
 
 ${endColumns}$
 
-${slide:title=Challenge Yourself With super!}$
+${slide:title=Challenge yourself with super!}$
 
 ${columns}$
 
 ${column:width=80}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=100+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
 
 ${column:width=30}$
 
@@ -60,7 +70,7 @@ ${column:width=30}$
 
 ${endColumns}$
 
-${slide:title=super Changes Where the Lookup Starts}$
+${slide:title=super changes where the lookup starts}$
 
 ${columns}$
 
@@ -83,41 +93,52 @@ Evaluation of ==aC bar==
 
 ${endColumns}$
 
-${slide:title=super Changes Where the Lookup Starts}$
+${slide:title=super changes where the lookup starts}$
 
--==super== refers to the receiver of the message (just like ==self==)
--The method lookup starts in the superclass of ""the class containing the ==super== expression""
+- ==super== refers to the ""receiver"" of the message (just like ==self==)
+- The method lookup starts ........ (Take 1 min to fill the dots)
 
-${slide:title=self is Dynamic}$
+
+${slide:title=super in two sentences}$
+
+- ==super== refers to the receiver of the message (just like ==self==)
+- The method lookup starts in the superclass of ""the class containing the ==super== expression""
+
+${slide:title=self is dynamic}$
 
 ${columns}$
 
 ${column:width=45}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
 
 ${column:width=55}$
 
-We don't know which ==foo== method ==bar== refers to
+- At compilation time, we ""don't"" know 
+- to which object ==self== points to
+- to which ==foo== method ==bar== refers to
+
+Imagine that we load a new subclass ==C== of ==B== and do ==C new bar==, ==self== will be pointing to such instance
+
 
 ${endColumns}$
 
-${slide:title=super is Static}$
+${slide:title=super is static}$
 
 ${columns}$
 
 ${column:width=50}$
 
-+>file://figures/superIsStatic.png|width=90+
++>file://figures/superIsStatic.png|width=65+
 
 ${column:width=50}$
 
-- at compilation-time, we know that ==B>>foo== refers to ==A>>foo==
+- At ""compilation-time"", we know that ==B>>foo== refers to ==A>>foo==
 - we should look above the class containing the ""method"" using ==super==
 
 ${endColumns}$
 
-${slide:title=Even Some Books Got it Wrong}$
+${slide:title=Even somebooks got it wrong}$
 
 - ""Wrong"" definition: ''==super== looks for the method in the superclass of the ""receiver""'s class''
 - With this definition, this example would loop forever:
@@ -126,14 +147,10 @@ ${slide:title=Even Some Books Got it Wrong}$
 
 In reality it ""does not"" loop, the definition is wrong
 
-${slide:title=What You Should Know}$
+${slide:title=What you should know}$
 
 - ==self== always represents the receiver
 - ==super== always represents the receiver
 - ==super== changes the lookup:
 -- a super send starts the lookup in the class above it
 - self sends act as a hook: code of subclasses may be invoked
-
-% Local Variables:
-% compile-command: "cd ../.. && ./compile.sh --to='Beamer' Slides/Week4/C019-W4S03-InheritanceAndLookup-3-Super.pillar"
-% End:

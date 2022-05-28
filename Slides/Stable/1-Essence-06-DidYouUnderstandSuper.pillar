@@ -1,16 +1,16 @@
 {
   "title" : "Did You Really Understand Super?",
-  "slidesid" : "W6S01"
+  "author":"S. Ducasse and L. Fabresse"
 }
 
-${slide:title=What You Will Learn}$
+${slide:title=What you will learn}$
 
 Revisit
 - ==super==
 - Message lookup
 - Class methods
 
-${slide:title=A Little Puzzle}$
+${slide:title=A little puzzle}$
 
 [[[
 Die class >> new
@@ -52,7 +52,7 @@ Die class >> new
 - No ==super== is not the superclass
 - No ==inst== is not an instance of the superclass
 
-${slide:title=Hint 2: super is the Message Receiver}$
+${slide:title=Hint 2: super is the message receiver}$
 
 [[[
 Die class >> new
@@ -66,11 +66,11 @@ Die class >> new
 - The message is ==Die new==
 - So the receiver is the class ==Die==
 
-${slide:title=Sending a Message: Lookup \+ Apply on Receiver}$
+${slide:title=Sending a message: Lookup \+ execute on receiver}$
 
 +>file://figures/InheritanceDiagram-sendingMessage.png|width=64+
 
-${slide:title=Remember: Method Lookup}$
+${slide:title=Remember: Method lookup}$
 
 +>file://figures/LookupEssenceWithGeneric.png|width=70+
 
