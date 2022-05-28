@@ -38,7 +38,7 @@ ${slide:title=Analysis}$
 - Points do not define behavior beside ==move== and ==translate==!
 
 
-${slide:title=An Example in Java}$
+${slide:title=An example in Java}$
 
 How to make a robot walks from distance in its current direction (in degree).
 
@@ -177,7 +177,7 @@ This way we can manage list of objects and easily convert them to point
 ]]]
 
 
-${slide:title=Point Arimethic}$
+${slide:title=Point arimethic}$
 
 - Points know how to ==\*==, ==\+==, ==\/==, ... ""themselves""
 - We can compose points, rectangles, and numbers
