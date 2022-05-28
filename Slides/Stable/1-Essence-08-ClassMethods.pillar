@@ -1,17 +1,20 @@
 {
-  "title":"Class Methods At Work",
-  "slidesid" : "W4S06"
+	"title":"Class Methods At Work",
+	"author":"S. Ducasse and L. Fabresse"
 }
 
-${slide:title=What You Will Learn}$
 
-- Class methods are normal methods
+${slide:title=What you will learn}$
+
+- In Pharo class methods are normal methods
+-- methods are looked up dynamically
 - Most class methods create new instances
 -- but they can be used for other things
 
-${slide:title=Parsing Lines}$
 
-Imagine we want to parse
+${slide:title=Parsing lines}$
+
+Imagine we want to parse the following and create the corresponding objects
 [[[
 !Section Title
 - list item
@@ -21,34 +24,35 @@ Any text here
 ]]]
 
 
-${slide:title=A Possible Design}$
+${slide:title=A possible design}$
 
 +>file://figures/items.png|width=80+
 
-- Document item ""classes"" know
--- if they can parse a line (==canParse:==)
--- how to create instances (==newFromLine:==)
+Document item ""classes"" know
+- if they can parse a line (==canParse:==)
+- how to create instances (==newFromLine:==)
 
-${slide:title=Parsing Lines}$
 
-+>file://figures/items.png|width=60+
+${slide:title=Parsing lines}$
+
++>file://figures/items.png|width=50+
 
 [[[
 Parser >> documentClasses
-   ^ DocumentItem allSubclasses
-      sorted: [ :class1 :class2 | class1 priority < class2 priority ]
+	^ DocumentItem allSubclasses
+			sorted: [ :class1 :class2 | class1 priority < class2 priority ]
 
 Parser >> parse: line
-   self documentClasses
-      detect: [ :subclass |
-         (subclass canParse: line)
-            ifTrue: [ ^ subclass newFromLine: line ] ]
+	self documentClasses
+		detect: [ :subclass |
+			(subclass canParse: line)
+				ifTrue: [ ^ subclass newFromLine: line ] ]
 ]]]
 
 
-${slide:title=The Command-Line Handler}$
+${slide:title=The command-line handler}$
 
-- the Pharo command-line interface (CLI) uses the same approach
+- The Pharo command-line interface (CLI) uses the same approach
 - each subclass of ==CommandLineHandler== knows how to deal with one command
 - the correct subclass is selected by sending messages to the class
 
@@ -58,7 +62,7 @@ $ pharo Pharo.image eval "10 factorial"
 ]]]
 
 
-${slide:title=The Command-Line Handler}$
+${slide:title=The command-line handler}$
 
 [[[
 CommandLineHandler class >> isResponsibleFor: arguments
@@ -85,9 +89,6 @@ ${slide:title=Conclusion}$
 - Method lookup is exactly the same as for all objects:
 -- go to the class of the receiver
 -- follow inheritance chain
-- More during the lecture ''Understanding Metaclasses''
 - Pharo makes it easy to iterate over subclasses
-
-% Local Variables:
-% compile-command: "cd ../.. && ./compile.sh --to=Beamer Slides/Week4/C019-W4S06-ClassMethodsAtWork.pillar"
-% End:
+-- but this is costly
+-- check Registration Lectures
