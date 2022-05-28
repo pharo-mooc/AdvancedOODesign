@@ -1,8 +1,7 @@
 {
 	"title":"Objects vs. Data",
 	"subtitle":"an API perspective studying Point",
-	"author" : "S. Ducasse",
-	"slidesid" : "Core"
+	"author" : "S. Ducasse"
 }
 
 ${slide:title=Goals}$
@@ -13,7 +12,7 @@ ${slide:title=Goals}$
 - Understanding the impact of strong API 
 
 
-${slide:title=Java Points - Getters and Setters}$
+${slide:title=Java Points - Getters and setters}$
 
 - ==Point	getLocation()==: returns the location of this point  (to be polymorphic with Component. A location is just a point.)
 - ==void setLocation(double x, double y)==:  sets the location of this point to the specified double coordinates.
@@ -35,8 +34,8 @@ Inherited from Point2D
 ${slide:title=Analysis}$
 
 - A poor data structure, not an object
-- Super limited interface
-- Points do not define behavior beside move and translate!
+- Super ""limited"" interface
+- Points do not define behavior beside ==move== and ==translate==!
 
 
 ${slide:title=An Example in Java}$
@@ -62,11 +61,12 @@ ${slide:title=Analysis (2)}$
 - Arithmetic of Points is defined ""outside"" of them!
 -- Points cannot sum themselves
 -- Points cannot shape themselves (rounded, normal, reciprocal,...)
-- When an object exposes a shallow API, it favors logic duplication in clients!
+- When an object exposes a shallow API, it favors ""logic duplication"" in clients!
 
 
 ${slide:title=Bot >> go: in Pharo}$
 
+In Java 
 [[[
 public void go(int distance){
     position = new Point(
@@ -83,15 +83,13 @@ Bot >> go: aDistance
 	position := position + ((tilt degreeCos @ tilt degreeSin) * aDistance) rounded
 ]]]
 
-- Read better
-- Use ""point""'s addition, multiplication, and rounding
+- Use ""Point""'s addition, multiplication, and rounding
 - Use "Number"'s sin and cos
-- Highlight behavior logic
 
 
 ${slide:title=Points in Pharo}$
 
-Rich API: 
+Rich API (selected part): 
 - ==normalized==, ==normal==, ==transposed==, ==reflectedAbout:== 
 - ==distanceTo:==, ==squaredDistanceTo:== 
 - ==crossProduct:==, ==dotProduct:==
@@ -100,7 +98,6 @@ Rich API:
 - ==negated==, ==translateBy:==,  ==scaleBy:==, ==scaleTo:==, ==scaleFrom:to:==, ==adhereTo:==,
 - ==triangleArea:with:==, ==to:intersects:to:==, ==to:sideOf:==, ==isInsideCircle:with:with:==, ==sideOf:==
 - ==rectangle:==, ==extent:==, ==corner:==
-
 
 ${slide:title=Points in Pharo (Continued)}$
 - ==degrees==, ==theta==,
@@ -201,7 +198,7 @@ ${slide:title=Analysis}$
 - In Pharo ==Point==s are more than a data structure
 - They define ""advanced"" behavior
 - Functionality is not in clients
-- Clients benefit and reuse behavior!
+- Clients ""benefit and reuse"" behavior!
 
 
 ${slide:title=What you should know}$
@@ -209,4 +206,4 @@ ${slide:title=What you should know}$
 - Objects are not data structures
 - Objects are more that structure
 - Objects are about behavior and services they offer
-- An object should encapsulate logic and lets its client ""reuse"" such a logic!
+- An object should encapsulate logic and lets its client ""reuse"" such a  logic!
