@@ -1,59 +1,63 @@
 {
   "title":"Inheritance Basics",
-  "slidesid" : "W4S01"
+  "author":"S. Ducasse and L. Fabresse"
 }
 
 ${slide:title=Goal}$
 
 - What is inheritance?
 - When to use it?
+- BTW, Pharo has the same inheritance than Java
 
-Pharo treats inheritance the same way as Java
 
-${slide:title=The Basics}$
+
+${slide:title=The basics}$
 
 ${columns}$
 
 ${column:width=60}$
 
 - Often we want small adaptations
-- we want to extend existing behavior and state
-- solution: ""class inheritance""
+- We want to extend existing behavior and state
+- Solution: ""class inheritance""
 - a class extends the definition of its superclass
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=100+
++>file://figures/InheritanceDiagram.png|width=90+
 
 ${endColumns}$
 
-${slide:title=The Basics}$
+${slide:title=Basic subclass behavior}$
 
 ${columns}$
 
 ${column:width=60}$
 
 a subclass
-- can add state and behavior:
+- can ""add"" state and behavior:
 -- ==color==, ==borderColor==, ...
-- can use superclass behavior and state
-- can specialize and redefine superclass behavior
+- can ""use"" superclass behavior and state
+- can ""specialize"" and ""redefine"" superclass behavior
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=100+
++>file://figures/InheritanceDiagram.png|width=90+
 
 ${endColumns}$
 
-${slide:title=Root of Inheritance Hierarchy}$
+${slide:title=Root of inheritance hierarchy}$
 
 ${columns}$
 
 ${column:width=70}$
 
-- ==Object== is the root of most classes
-- ==ProtoObject== (==Object=='s superclass) is for special purposes...
--- ...but we will ignore it as it is not important
+- ==Object== is the root of most classes 
+-- defines the common behavior of any object
+- ==ProtoObject== (==Object=='s superclass) has a special purpose:
+-- e.g. raising as much as errors as possible
+-- so that the system can catch such errors and do something with them
+-- useful for building advanced techniques such as proxy objects 
 
 ${column:width=30}$
 
@@ -61,22 +65,23 @@ ${column:width=30}$
 
 ${endColumns}$
 
-${slide:title=The Basics}$
+${slide:title=Two aspects of inheritance}$
 
-inheritance is
-- static for state (i.e., during class creation)
-- dynamic for behavior (i.e., during execution)
+Inheritance is
+- ""static"" for state (i.e., during class creation)
+- ""dynamic"" for behavior (i.e., during execution)
 
-${slide:title=Inheritance of Instance Variables}$
+${slide:title=Inheritance of instance variables}$
 
 ${columns}$
 
 ${column:width=65}$
 
-- happens during class definition
-- computed from
+- Happens during class definition
+- Computed from
 -- the class own instance variables
 -- the ones of its superclasses
+- ==ColoredRectangle== has a ==width==, ==height==,  ==color==, and ==borderColor==
 
 ${column:width=35}$
 
@@ -84,38 +89,38 @@ ${column:width=35}$
 
 ${endColumns}$
 
-${slide:title=Inheritance of Behavior}$
+${slide:title=Inheritance of behavior}$
 
 ${columns}$
 
 ${column:width=50}$
 
-- happens at runtime
-- the method is searched
+- Happens at runtime
+- the method is looked up
 -- starting from the receiver's class
--- then going to the superclass
+-- then going up the superclass chain
 
 ${column:width=50}$
 
-+>file://figures/InheritanceDiagram-lookup-withBlank.png|width=100+
++>file://figures/InheritanceDiagram-lookup-withBlank.png|width=80+
 
 ${endColumns}$
 
 
-${slide:title=Inheritance of Behavior}$
+${slide:title=Inheritance of behavior}$
 
 ${columns}$
 
 ${column:width=50}$
 
-- happens at runtime
-- the method is searched
+- Happens at runtime
+- The method is looked up
 -- starting from the receiver's class
 -- then going to the superclass
 
 ${column:width=50}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=100+
++>file://figures/InheritanceDiagram-lookup-superclass.png|width=75+
 
 ${endColumns}$
 
@@ -127,6 +132,3 @@ ${slide:title=What You Should Know}$
 - Inheritance of state is static
 - Inheritance of behavior is dynamic
 
-% Local Variables:
-% compile-command: "cd ../.. && ./compile.sh --to='Beamer' Slides/Week4/C019-W4S01-InheritanceAndLookup-1-Inheritance.pillar"
-% End:
