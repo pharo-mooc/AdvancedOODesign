@@ -1,23 +1,22 @@
 {
     "title" : "Global To Parameter",
     "subtitle":"Basic but important",
-    "slidesid" : "",
     "author" : "S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
 - Globals are not a fatality
-- Some can be turned as parameters (instance variables...)
-- Pros and cons
+- Some can be turned as parameters of computation (such as instance variables)
+- There are pros and cons
 
 
 ${slide:title=Roadmap}$
 
-- Analysis of Transcript usage
+- Example: Analysis of Transcript usage
 - Cure
 - Analysis
-- Related to Singleton Design Pattern Plague
+- Related to Singleton Design Pattern plague
 
 ${slide:title=The case: Transcript}$
 
@@ -30,8 +29,6 @@ myMethod
 - Remember: ==Transcript== is a global variable pointing to a log stream instance
 
 ${slide:title=Example in Microdown}$
-
-If logging is part of your domain
 
 [[[
 MicAbstractBlock >> iterate
@@ -47,17 +44,18 @@ MicAbstractBlock >> iterate
 		cr.
 ]]]
 
-- What if I would like to have a personal log for Microdown?
+- What if I would like to have a specific log for Microdown?
 - What if we want to test that such logs are correct?
 
 
 ${slide:title=Analysis}$
 
-- You do not want to get extra dependencies in your code
-- Your log can be mixed with other logs
-- You do not want to dirty build log without control
+Some facts:
+- You do not want to get extra dependencies (such as Transcript) in your code
+- With Transcript, your log can be mixed with other logs
+- You do not want to dirty build log without a bit of control
 
-Far worse and more important
+Far worse and more important:
 - You cannot reliably write tests to be sure that the log is correctly happening
 
 
@@ -82,7 +80,7 @@ MicAbstractBlock >>closeMe
 
 ${slide:title=Get the butter and the money}$
 
-- Make sure that you can plug another stream to your stream
+- Make sure that you can plug another stream as a logstream
 
 [[[
 MicAbstractBlock >> logStream: aStream 
@@ -99,9 +97,9 @@ Pros:
 - You do not have to initialize such global on your specific case
 
 Cons: 
-- You have only one (e.g., if an entity belongs to one global model, you cannot have two models)
-- Testing requires care and is sometimes not possible because of side effect
-- You cannot initialize it for your context (there is only one)
+- You have ""only one"" (e.g., if an entity belongs to one global model, you cannot have two entites living in different models)
+- Testing requires care and is sometimes ""not possible"" or cumbersome because of ""side effects""
+- You cannot ""initialize"", ""specialize"" it for your context (there is only one)
 
 ${slide:title=About parametrization}$
 
@@ -115,4 +113,4 @@ ${slide:title=In general: Avoid Globals}$
 - Avoid Singleton
 - Avoid Globals 
 - They make your code less modular, less ""testable""
-- Related to Singleton and Disguised Singleton Lecture
+- Check Lectures on Singleton and Disguised Singleton
