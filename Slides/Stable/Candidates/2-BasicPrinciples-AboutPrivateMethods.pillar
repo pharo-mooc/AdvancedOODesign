@@ -1,6 +1,5 @@
 {
 	"title":"About private methods",
-	"slidesid":"",
 	"author":"S. Ducasse"
 }
 
@@ -57,7 +56,7 @@ Because private methods in Java are statically bound
 ${slide:title=Private in Ruby}$
 
 - Ruby is one of the few dynamic languages that offers access qualifiers: methods can be qualified as public, protected and private.
-- a private method may be made public in subclasses. Private methods can only be invoked by sending a message to an implicit receiver (i.e., no use of self). 
+- A private method may be made public in subclasses. Private methods can only be invoked by sending a message to an implicit receiver (i.e., no use of self). 
 - However a call to a private method is not statically bound to the method defined in the class but can be overridden in subclasses.
 
 ${slide:title=Private in Ruby}$
@@ -128,8 +127,7 @@ class Base {
 
 class Derived: public Base {
  private:
- void cleanup() override {
-	// do other stuff
+ void cleanup() override {// do other stuff
 	Base::cleanup(); // nope, can't do it }
  public:
  Derived (int idata): base(idata) {}
