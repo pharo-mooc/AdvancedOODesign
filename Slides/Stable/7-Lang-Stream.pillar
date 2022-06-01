@@ -93,7 +93,21 @@ MessageTally >> displayStringOn: aStream
 - No creation of intermediary streams
 
 
+${slide:title=About asString}$
+
+==asString== has the similar issues than ==printString==
+
+[[[
+Object >> asString
+	"Answer a string that represents the receiver."
+
+	^ self printString
+]]]
+
+
 ${slide:title=Conclusion}$
 
-- Let the object decide if it wants to join a process but passing a container
+- Check protocols
+- Read code around
+- Streams are powerful containers
 
