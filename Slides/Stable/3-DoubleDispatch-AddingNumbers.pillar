@@ -1,6 +1,6 @@
 {
     "title" : "About Double Dispatch",
-    "slidesid" : "Adding numbers as a Kata",
+    "subtitle" : "Adding numbers as a Kata",
     "author" : "S. Ducasse"
 }
 
@@ -9,6 +9,7 @@ ${slide:title=Outline}$
 - Some ""fun"" exercises
 - Thinking about them
 - Discovering double dispatch
+- ""Chewing"" double dispatch
 - Stepping back
 
 ${slide:title=Exercise 1}$
@@ -23,15 +24,14 @@ i.asFloat() returns a float
 ${slide:title=Adding Integer and Float}$
 
 [[[
-	1 + 2
-	> 3
-	1.1 + 2
-	> 3.1
-	2 + 1.3
-	> 
-	3.3
-	1.1 + 2.2 
-	> 3.3
+>>> 1 + 2
+3
+>>> 1.1 + 2
+3.1
+>>> 2 + 1.3
+3.3
+>>> 1.1 + 2.2 
+3.3
 ]]]
 
 Implement ==\+== 
@@ -70,6 +70,11 @@ ${slide:title=Even more hints}$
 - Remember the Boolean implementation
 
 - Sending a message to an object is a choice operator
+
+${slide:title=Let us get started}$
+
+Imagine that we add one method ==sumWithInteger: anInteger==
+
 
 
 ${slide:title=Let us get started}$
@@ -209,10 +214,10 @@ ${slide:title=Ok now relax}$
 - Follow with your fingers if necessary :)
 
 [[[
-	1 + 2
-	1.1 + 2
-	2 + 1.3
-	1.1 + 2.2 
+1 + 2
+1.1 + 2
+2 + 1.3
+1.1 + 2.2 
 ]]]
 
 ${slide:title=Key point}$
@@ -231,19 +236,19 @@ ${slide:title=Exercise2: How to add Fraction?}$
 [[[
 f := Fraction num: 1 denum: 2.
 
-f num 
-> 1
-f denum 
-> 2 
-f asFloat
-> 0.5
+>>> f num 
+1
+>>> f denum 
+2 
+>>> f asFloat
+0.5
 ]]]
 
 [[[
-	1/2 + 3
-	3 + 3.3
-	1.3 + 2/5
-	1/3 + 4/3
+1/2 + 3
+3 + 3.3
+1.3 + 2/5
+1/3 + 4/3
 ]]]
 
 ${slide:title=Introducing Fraction }$
@@ -331,19 +336,19 @@ ${slide:title=Ok now relax}$
 - Follow with your fingers if necessary :)
 
 [[[
-	1/2 + 3
-	3 + 3.3
-	1.3 + 2/5
-	1/3 + 4/3
+1/2 + 3
+3 + 3.3
+1.3 + 2/5
+1/3 + 4/3
 ]]]
 
 ${slide:title=Stepping back}$
 
-- We can add Fraction without changing any previous method 
+- We can add ==Fraction== without changing any previous method 
 - Another example of "Sending a message is making a choice"
 - We send two messages
 -- + to select Integer, Float, Fraction
--- then the message sumWith... to reselect the correct definition in Integer, Float, Fraction
+-- then the message sumWith... to reselect the correct definition in ==Integer==, ==Float==, ==Fraction==
 
 Different kinds of messages 
 - Primary operations
@@ -357,7 +362,7 @@ ${slide:title=Double Dispatch}$
 ${slide:title=When not using Double Dispatch}$
 
 - No class to dispatch on
-- We need an different instance of dispatch to 
+- We need an different instance of dispatch to!
 
 ${slide:title=What about overloading}$
 
