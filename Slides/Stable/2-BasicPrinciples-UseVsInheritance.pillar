@@ -1,8 +1,13 @@
 {
-    "title":"Use vs. Inheritance",
-    "slidesid":"From the Design Corner"
+	"title":"Use vs. Inheritance",
+	"subtitle":"Basic but worth",
+	"author":"S. Ducasse"
 }
 
+${slide:title=Goals}$
+
+- Compare Use and Inheritance
+- Some criteria/hints
 
 ${slide:title=Outline}$
 
@@ -12,33 +17,34 @@ ${slide:title=Outline}$
 - Comparing solutions
  
 
-${slide:title=Exercise Setting Up}$
+${slide:title=Exercise setup}$
 
-Imagine ==TextEditor== and  several algorithms
-- ==formatWithTex (t)==
-- ==formatFastColoring (t)==
-- ==formatSlowButPreciseColoring (t)== 
+Imagine the class ==TextEditor== and the definition of several algorithms:
+- ==formatWithTeX(t)== to color TeX
+- ==formatFastColoring(t)== to color text fast
+- ==formatSlowButPreciseColoring(t)== to color ...
+- ==formatRTF(t)==
+- ...
 
-How can we create an editor that will format differently texts?
+How can we create an editor that will format differently different texts?
 
 ${slide:title=Next step}$
-- Propose one solution
-- Propose different solutions
+- Propose a solution with inheriting classes
+- Propose a solution with one class and conditionals
 - Define some criteria
 - Compare the approaches using such criteria
 
-
-${slide:title=Inheritance}$
+${slide:title=With inheritance}$
 
 [[[
-TextEditor subclass: #SlowFormatingTextEditor
+TextEditor < #SlowFormatingTextEditor
 
 SlowFormatingTextEditor >> format
 	 self formatSlowButPreciseColoring: text 
 ]]]
 
 [[[
-TextEditor subclass: #FastFormatingTextEditor
+TextEditor < #FastFormatingTextEditor
 
 FastFormatingTextEditor >> format
 	 self formatFastColoring: text 
@@ -46,14 +52,14 @@ FastFormatingTextEditor >> format
 
 
 [[[
-TextEditor subclass: #NullFormatingTextEditor
+TextEditor < #NullFormatingTextEditor
 
 NullFormatingTextEditor >> format
 	^ self "do nothing" 
 ]]]
 
 
-${slide:title=Inheritance}$
+${slide:title=With inheritance}$
 
 +.>file://figures/textEditorHierarchy.pdf|width=100+
 
@@ -72,7 +78,7 @@ TextEditor >> format
 ]]]
 
 
-${slide:title=Alternate with Registry and Meta Programmation}$
+${slide:title=With registry and meta programming}$
 
 [[[
 Object subclass: #TextEditor 
@@ -99,9 +105,9 @@ ${slide:title=Criteria}$
 
 ${slide:title=Criteria}$
 
-- ""Adding a new formatting algo"" - what is the cost to define a new formatting algorithm
-- ""Dynamically use a formatter"" - can I switch dynamically to a new formatting algorithm
-- ""Packaging"" - can I deploy a new formatting algorithm separately from others
+- ""Adding a new formatting algo"" - what is the cost to define a new formatting algorithm?
+- ""Dynamically use a formatter"" - can I switch dynamically to a new formatting algorithm?
+- ""Packaging"" - can I deploy a new formatting algorithm separately from others?
 
 
 ${slide:title=Inheritance?}$
@@ -113,19 +119,18 @@ ${slide:title=Inheritance?}$
 
 ""Not the best solution since:""
 - you have to create objects of the right class
-- it is difficult to change the policy at run-time.
+- it is difficult to ""change"" the policy dynamically.
 -- we do not want to have and reopen the texteditor
 
 ${slide:title=Inheritance?}$
 
-You can get an explosion of classes bloated with the use of a functionality and the functionalities.
--- we do not want a hierarchy for each text editor features to be ""multiplied"" with previous ones
--- FastColoring
-- API of TextEditor can get large: no clear identification of responsibility
+You can get an explosion of classes 
+- we do not want a hierarchy for each text editor features to be ""multiplied"" with previous ones (imagine completion, grammatical verification, compilation,....)
+- API of TextEditor can get large: no clear identification of responsibilities
 
 +.>file://figures/textEditorHierarchyBloated.pdf|width=60+
 
-${slide:title=Conditionals}$
+${slide:title=Conditionals?}$
 
 ""Dynamic use:"" we can use a different formatter dynamically.
 
@@ -165,22 +170,20 @@ ${slide:title=Strategy Design Pattern}$
 
 ${slide:title=There is nothing like a free lunch}$
 
-- The formatter should access the state (i.e. the text, positions... contained in the text editor)
-- Information should flow between the textEditor and the formatter
+- The formatter should access the state of the text (i.e. the text, positions... contained in the text editor)
+- Information should ""flow"" between the textEditor and the formatter
 - API of textEditor should be opened to support it
 
 
 ${slide:title=Conclusion}$
 
 Inheritance
-- is about incremental static definition
+- is about ""incremental static"" definition
 - It can lead of static design
-- It can help 
--- build dynamic solutions
--- structure abstractions
+- It help defining ""abstractions""
 
 Delegation 
-- can bring runtime flexibility
+- can bring runtime ""flexibility"" and modularity
 
 
 
