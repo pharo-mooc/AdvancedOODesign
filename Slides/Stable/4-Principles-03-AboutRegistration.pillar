@@ -1,6 +1,6 @@
 {
     "title":"About Registration",
-    "subtitle":"When dynamic class registration is too much",
+    "subtitle":"When class method-based registration is too much",
     "author":"S. Ducasse"
 }
 
@@ -21,7 +21,11 @@ ${slide:title=Using class methods as registration}$
 Object allSubclasses collect: [ :each | each foo ]
 ]]]
 
-${slide:title=Remember the Pharo Mooc}$
+Each class will be able 
+- to define its own ==foo== method and 
+- to reuse the one of its superclass
+
+${slide:title=Remember the previous lectures}$
 
 [[[
 PillarParser >> documentClasses
@@ -71,6 +75,7 @@ Pros:
 - Do not have to query all the classes all the time
 
 Cons:
+- You have to keep it up to date
 - Watch out because we may not want to list explicitly class to avoid dependencies to other packages
 
 
@@ -93,7 +98,8 @@ PillarParser >> documentClasses
 	^ RegisteredClasses
 ]]]
 
-
+- No need to maintain the list manually
+- Dynamic but do not force to query the system all the time
 
 ${slide:title=A registration mechanism supports extension}$
 
@@ -109,12 +115,14 @@ Extra class >> initialize
 ${slide:title=Unregistration}$
 
 With explicit registration, the unregistration can be also a concern.
-- The registration holder (here ==PillarParser==) should offer way to cancel a registration
+- The registration holder (here ==PillarParser==) should offer way to retract a registration
 - Registered classes have the responsibility to unregister themselves.
 
 ${slide:title=Conclusion}$
 
 - ==XXX subclasses== is a cool pattern 
 - But it has a cost! 
+- Better use an explicit registration
+-- it is dynamic but does not query for nothing
 - Design is about tradeoffs
 

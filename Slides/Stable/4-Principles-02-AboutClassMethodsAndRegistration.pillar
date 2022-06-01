@@ -6,13 +6,13 @@
 
 ${slide:title=What you will learn}$
 
-- In Pharo class methods are normal methods
+- In Pharo class methods are normal virtual methods
 -- methods are looked up dynamically
 - Most class methods create new instances
 -- but they can be used for other things
 
 
-${slide:title=Parsing lines}$
+${slide:title=Example: Creating the right document elements from lines}$
 
 Imagine we want to parse the following and create the corresponding objects
 [[[
@@ -81,7 +81,13 @@ CommandLineHandler class >> handlersFor: arguments
          handlerClass isResponsibleFor: arguments ]
 ]]]
 
+${slide:title=Pay attention}$
 
+- This is ""costly"" to check all subclasses all the times
+- Do you need such a dynamic behavior?
+- Are you loading that many different classes?
+-- In pillar this is not really needed
+-- For the command line, each application may define its own commandes
 
 ${slide:title=Conclusion}$
 
@@ -90,5 +96,5 @@ ${slide:title=Conclusion}$
 -- go to the class of the receiver
 -- follow inheritance chain
 - Pharo makes it easy to iterate over subclasses
--- but this is costly
--- check Registration Lectures
+-- but this is ""costly""
+-- check next Lectures on registration
