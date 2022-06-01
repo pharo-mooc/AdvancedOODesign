@@ -1,16 +1,14 @@
 {
-	"title":"Methods are the elementary unit of reuse",
-	"subtitle":"",
-	"author":"Stéphane Ducasse",
-	"slidesid":"2022"
+	"title":"Methods: the elementary unit of reuse",
+	"author":"S. Ducasse"
 }
 
 
 ${slide:title=Executing a method is reusing its code}$
 
+Obvious but it is alwatys good to hear it again
 - Defining method enriches the API of an object
 - Calling a method is the first level of reuse
-
 
 
 ${slide:title=Study}$
@@ -34,6 +32,8 @@ inpectionPillarTree
              ] ];
         yourself
 ]]]
+
+Why the client of a document is forced to define this behavior?
 
 ${slide:title=Reuse is your friend!}$
 
@@ -71,7 +71,7 @@ ${slide:title=Annoying logic repetition}$
 ...
 stream := WriteStream on: (String new: 1000).
 #(1 2 3) printOn: stream.
-^ stream contents
+stream contents
 ]]]
 
 
@@ -82,7 +82,9 @@ String streamContents: [:s | #(1 2 3) printOn: stream ]
 ]]]
 
 - Encapsulate creation
-- Encapsulation end
+- Optimized
+- Hide details
+- Encapsulate termination
 
 ${slide:title=Encapsulate actions}$
 	
@@ -106,7 +108,7 @@ SequenceableCollection class >> new: newSize streamContents: blockWithArg
 ${slide:title=Another example of action encapsulation}$
 
 [[[
-'toto asFileReference readStreamDo: [:s |s next...]
+'tintin' asFileReference readStreamDo: [:s | s next... ]
 ]]]
 
 [[[
@@ -118,7 +120,7 @@ AbstractFileReference>> readStreamDo: aBlock
 ]]]
 
 - Initialize
-- and gracefully end
+- and gracefully terminates
 
 ${slide:title=Stepping back}$
 
