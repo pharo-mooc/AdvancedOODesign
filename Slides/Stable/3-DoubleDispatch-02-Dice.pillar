@@ -1,6 +1,6 @@
 {
     "title" : "a Die + a DieHandle: ",
-    "subtitle":"A Case of Double Dispatch",
+    "subtitle":"Practicing more",
     "author" : "S. Ducasse"
 }
 
@@ -26,7 +26,7 @@ handle roll
 
 ${slide:title=Remember DieHandle}$
 
-We add dieHandle together as in role playing games
+We add dieHandles together as in role playing games
 
 [[[
 DieHandleTest >> testSumming

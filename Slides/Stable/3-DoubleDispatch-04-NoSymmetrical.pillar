@@ -13,18 +13,18 @@ ${slide:title=Goals}$
 ${slide:title=Remember}$
 
 [[[
-(Stone new vs: Paper new)
->>> #paper
+>>> (Stone new vs: Paper new)
+#paper
 ]]]
 
 [[[
-1 + 3.3
->>> 4.3
+>>> 1 + 3.3
+4.3
 ]]]
 
 [[[
-3.3 + 1
->>> 4.3
+>>> 3.3 + 1
+4.3
 ]]]
 
 

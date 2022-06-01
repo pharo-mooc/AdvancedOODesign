@@ -10,8 +10,8 @@ ${slide:title=Goals}$
 - No conditionals!
 
 [[[
-(Stone new vs: Paper new)
->>> #paper
+>>> (Stone new vs: Paper new)
+#paper
 ]]]
 
 ${slide:title=Goals}$
@@ -102,15 +102,15 @@ ${slide:title= Paper playAgainstStone: }$
 
 Works for 
 [[[
-Stone new vs: Paper new
->>> #paper
+>>> Stone new vs: Paper new
+#paper
 ]]]
 
 But not for 
 
 [[[
-Stone new vs: Scissor new
->>> #stone
+>>> Stone new vs: Scissor new
+#stone
 ]]]
 
 - How to fix this?
