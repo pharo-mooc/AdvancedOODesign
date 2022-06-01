@@ -6,7 +6,8 @@
 
 ${slide:title=Outline}$
 
-- Singleton/Global is not nice because globally shared
+- Singleton/Global is not nice because ""globally"" shared
+- Difficult to test 
 - Singleton may take different forms
 - Study some cases
 - Think modular
@@ -34,16 +35,17 @@ Since in Pharo we can extend core libraries we could think
 this is any better.
 
 [[[
-Symbol >> asIcon
-	 ^ Smalltalk icons iconNamed: self
-]]]
-
-[[[
 MyApp >> menu
 ...
     icon: #window asIcon
 ...
 ]]]
+
+[[[
+Symbol >> asIcon
+	 ^ Smalltalk icons iconNamed: self
+]]]
+
 
 ${slide:title=Case 2: A Disguised Global Variable}$
 
@@ -56,7 +58,7 @@ MyApp >> menu
 
 - Does not duplicate ==Smalltalk icons iconNamed:==
 - This is already something!
-
+- But still a global
 
 ${slide:title=Case 2: A Disguised Global Variable}$
 
@@ -86,8 +88,8 @@ MyAppSuperclass >> iconNamed: aSymbol
 ${slide:title=Why is this better?}$
 
 - Modular
-- Each receiver may do something different
-- Each user may be configured differently
+- ""Each"" receiver may do something ""different""
+- Each user may be ""configured differently""
 - Still we can share the common behavior
 
 
@@ -121,7 +123,17 @@ ${slide:title=Case 3: asClass Analysis}$
 - What if we want to remotely access a class in another system
 - We can only have one namespace
 - We cannot inject a special namespace for test for example
-- No way to dispatch
+- No way to dispatch to a different object
+
+${slide:title=Case 3: Possible solution}$
+
+Delegate to the class to get its environment
+
+[[[
+self class environment at: #Point
+]]]
+
+This supports different environments
 
 ${slide:title=Case 4: Smalltalk tools - The ugly}$
 
@@ -138,8 +150,19 @@ browseMethodFull
 
 ${slide:title=Case 4: Smalltalk tools Analysis}$
 
+[[[
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	self currentClassOrMetaClass ifNotNil: [ 
+		Smalltalk tools browser 
+			openOnClass: self currentClassOrMetaClass
+			selector: self currentMessageName ]
+]]]
+
 - One global entry point
-- Everybody refers to this single point! Yes this is called monolithic thinking
+- Everybody refers to this single point! 
+- Yes this is called monolithic thinking
 - Only one toolset possible at the same time (could be ok).
 
 ${slide:title=Case 4: Smalltalk tools Possible Solution}$
@@ -160,9 +183,9 @@ Browser >> openDebugger
 
 ${slide:title=Points to consider}$
 
-- With a global, whenit changes, all its users are updated
+- With a global, when it changes, all its users are updated
 - How to manage the fact that a tool may change?
-- Browser may register to ToolEnvironment to be notified and update its instance
+- Browsers may register to ToolEnvironment to be notified and update its instance
 
 
 ${slide:title=Conclusion}$
@@ -170,5 +193,3 @@ ${slide:title=Conclusion}$
 - Avoid Singleton as a global 
 - Think modular
 - Give a chance to objects to specialize messages
-
-
