@@ -7,7 +7,7 @@
 ${slide:title=Goal}$
 
 - Globals are not a fatality
-- Some can be turned as parameters of computation (such as instance variables)
+- Some can be turned as computation parameters (such as instance variables)
 - There are pros and cons
 
 
@@ -16,9 +16,11 @@ ${slide:title=Roadmap}$
 - Example: Analysis of Transcript usage
 - Cure
 - Analysis
-- Related to Singleton Design Pattern plague
+- Related to the plague of Singleton Design Pattern 
 
 ${slide:title=The case: Transcript}$
+
+- Remember: ==Transcript== is a global variable pointing to a log stream instance
 
 [[[
 myMethod
@@ -26,9 +28,9 @@ myMethod
 	self doSomething.
 ]]]
 
-- Remember: ==Transcript== is a global variable pointing to a log stream instance
 
-${slide:title=Example in Microdown}$
+
+${slide:title=Old example in Microdown}$
 
 [[[
 MicAbstractBlock >> iterate
@@ -51,9 +53,9 @@ MicAbstractBlock >> iterate
 ${slide:title=Analysis}$
 
 Some facts:
-- You do not want to get extra dependencies (such as Transcript) in your code
-- With Transcript, your log can be mixed with other logs
-- You do not want to dirty build log without a bit of control
+- You may not want the extra dependencies (such as Transcript) in your code
+- With Transcript, ""your"" log can be mixed with ""other"" logs
+- You do not want to ""dirty"" build log without a bit of control
 
 Far worse and more important:
 - You cannot reliably write tests to be sure that the log is correctly happening
@@ -61,7 +63,8 @@ Far worse and more important:
 
 ${slide:title=The solution: Use locality and encapsulation}$
 
-- Think self-contained
+- Think about object self-containment
+- What is the object encapsulate a log stream
 - Add an instance variable to hold a stream
 
 [[[
@@ -70,7 +73,7 @@ MicAbstractBlock >>initialize
 	logStream := WriteStream on: (String new: 1000)
 ]]]
 
-Write to THAT stream
+- Use and write to THAT stream
 
 [[[
 MicAbstractBlock >>closeMe
@@ -88,24 +91,25 @@ MicAbstractBlock >> logStream: aStream
 ]]]
 
 - Now you can pass a Transcript and get the same as before but better.
-- Bonus: You can write tests in isolation
+- Bonus: You can write ""tests in isolation""
 
 ${slide:title=About Globals}$
 
 Pros:
-- You do not have to add an instance variable to you domain
-- You do not have to initialize such global on your specific case
+- You do not have to add an instance variable to your domain
+- You do not have to initialize such global on your specific case 
 
 Cons: 
 - You have ""only one"" (e.g., if an entity belongs to one global model, you cannot have two entites living in different models)
 - Testing requires care and is sometimes ""not possible"" or cumbersome because of ""side effects""
-- You cannot ""initialize"", ""specialize"" it for your context (there is only one)
+- You cannot ""initialize"", ""specialize"" the global for your context (there is only one)
 
 ${slide:title=About parametrization}$
 
 Sometimes you cannot add an instance variable to your objects
 - Too many of them
 - Fixed size inherited from old design
+- About space consumption, check Sharing Lectures and Flyweigth
 At least factor the global usage to ease future changes
 
 ${slide:title=In general: Avoid Globals}$
