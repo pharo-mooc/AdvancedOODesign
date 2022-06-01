@@ -1,11 +1,12 @@
 {
     "title" : "About Double Dispatch",
-    "slidesid" : "",
-    "author" : ""
+    "slidesid" : "Adding numbers as a Kata",
+    "author" : "S. Ducasse"
 }
 
 ${slide:title=Outline}$
-- Some fun exercises
+
+- Some ""fun"" exercises
 - Thinking about them
 - Discovering double dispatch
 - Stepping back
@@ -40,7 +41,8 @@ But with
 - No static type support
 
 ${slide:title=A first hint}$
-- Two classes Integer and Float
+
+- Two classes ==Integer== and ==Float==
 
 ${slide:title=Let us see}$
 

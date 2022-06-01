@@ -31,8 +31,9 @@ How can we create an editor that will format differently different texts?
 ${slide:title=Next step}$
 - Propose a solution with inheriting classes
 - Propose a solution with one class and conditionals
-- Define some criteria
-- Compare the approaches using such criteria
+- Define some criteria & compare
+- Propose a solution with delegation
+- Compare
 
 ${slide:title=With inheritance}$
 
@@ -139,6 +140,10 @@ But
 - adding a version requires to edit and ""recompile"" the conditionals
 ""Packaging: ""
 - we cannot package a new algorithm separately
+
+${slide:title=With delegation}$
+
+Propose a solution using delegation to another object (a formatter)
 
 
 ${slide:title=Delegating to a formatter}$

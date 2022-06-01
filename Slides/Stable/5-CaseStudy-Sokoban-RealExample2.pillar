@@ -221,10 +221,26 @@ EmptyBlock >> drawOn: aCanvas view: aView
 	aView drawEmptyBlock: aCanvas
 ]]]
 
+
+
+${slide:title=Double dispatch}$	
+
+Each block tells the view how to draw it. 
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	aBlock drawOn: aCanvas view: self
+
+Wall >> drawOn: aCanvas view: aView
+	aView drawWall: aCanvas
+
+EmptyBlock >> drawOn: aCanvas view: aView
+	aView drawEmptyBlock: aCanvas
+]]]
+
 - We ""tell"" a block to draw itself and it ""tells"" how to the canvas
 - Sending messages is powerful
-
-
+- Modular
 
 ${slide:title=Disguided kind testing method}$
 

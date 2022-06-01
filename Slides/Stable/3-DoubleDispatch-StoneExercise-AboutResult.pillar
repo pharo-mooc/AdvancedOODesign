@@ -1,8 +1,7 @@
 {
     "title" : "About results",
     "subtitle" : "The case of Stone Paper Scissors",
-    "slidesid" : "",
-    "author" : ""
+    "author" : "S. Ducasse"
 }
 
 ${slide:title=Goals}$
