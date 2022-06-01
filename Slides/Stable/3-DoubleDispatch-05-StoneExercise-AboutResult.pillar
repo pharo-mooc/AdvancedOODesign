@@ -13,8 +13,8 @@ ${slide:title=Goals}$
 ${slide:title=Remember}$
 
 [[[
-(Stone new vs: Paper new)
->>> #paper
+>>> (Stone new vs: Paper new)
+#paper
 ]]]
 
 
@@ -22,8 +22,6 @@ ${slide:title=Remember}$
 
 
 ${slide:title=Returning numbers}$
-
-${slide:title=Stone Paper Scissors via Tests}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
@@ -47,21 +45,21 @@ ${slide:title=Returning number analysis}$
 - Here paper is winning but it got different results!
 
 [[[
-Stone new vs: Paper new
->>> -1
+>>> Stone new vs: Paper new
+-1
 
-Paper new vs: Stone new
->>> 1
+>>> Paper new vs: Stone new
+1
 ]]]
 
 ${slide:title=Returning symbols analysis}$
 
 [[[
-Stone new vs: Paper new
->>> #paper
+>>> Stone new vs: Paper new
+#paper
 
-Paper new vs: Stone new
->>> #paper
+>>> Paper new vs: Stone new
+#paper
 ]]]
 
 - With symbols we know who won.

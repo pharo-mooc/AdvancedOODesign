@@ -1,8 +1,27 @@
 {
     "title":"About defensive programming",
-    "subtitle":""
+   "author":"S. Ducasse"
 }
 
+${slide:title=Goal}$
+
+- Thinking about spurious checks
+- Dynamically-typed languages do not need explicit type checks
+- Favor test
+
+${slide:title=Preamble}$
+
+[[[
+Object >> assert: aBlock description: aStringOrBlock
+	"Throw an assertion error if aBlock does not evaluates to true."
+	<debuggerCompleteToSender>
+	aBlock value 
+		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
+]]]
+	
+- ==assert:description:== is checking and in addition raises and error. 
+- It changes the program execution
+	
 ${slide:title=Defensive Example}$
 
 [[[
@@ -19,7 +38,8 @@ BlLayoutCommonConstraints >> padding: aBlPadding
 ${slide:title=Drawbacks of the approach}$
 
 - Runtime cost
-- Assertions are optional so we should not consider that they are executed.
+- Assertions can be optional so we should not consider that they are executed.
+- Assertions can be a good help to track problems and stabilize
 
 
 ${slide:title=Defensive Example 2}$
@@ -28,14 +48,13 @@ ${slide:title=Defensive Example 2}$
 BlLayoutCommonConstraints >> padding: aBlPadding
 	"Change element's margin to a BlMargin. aBlPadding must not be nil."
 	
-	
 	aBlPadding isNil
 		ifTrue: [ 'Padding must not be nil' ].
 	
 	padding := aBlPadding
 ]]]
 
-- What is the goal here? that padding does not break
+- What is the goal here? That padding does not break
 - But I can still write ==x padding: aJunkObject==
 - So the test is not good and worth
 
@@ -49,7 +68,7 @@ BlLayoutCommonConstraints >> padding: aBlPadding
 ]]]
 
 
-${slide:title=Defensive Example 2}$
+${slide:title=Defensive Example 3}$
 
 [[[
 BlEvent >> source
@@ -62,19 +81,8 @@ BlEvent >> source
 	^ source
 ]]]
 
-
-${slide:title=Defensive Example Alternative 2}$
-
-[[[
-BlEvent >> source
-	"Return an event target that plays a role of a source of this event"
-	
-	^ source
-]]]
-
-- We will return ==nil== or a source.
-
-
+- Assertions are conceptually optional 
+- Tell look like leftover from debugging
 
 ${slide:title=Defensive Example Alternative 2}$
 
@@ -89,90 +97,31 @@ BlEvent >> source
 ]]]
 
 - We could catch the error if needed.
+- At least the reader knows that there is a check for real
+- Now would be better to have a well initialized ==source==
 
 
-${slide:title=Assertion.... }$
-
-[[[
-text
-	self
-		assert: [ text isNotNil ]
-		description: [ 'Text must never be nil' ].
-
-	^ text
-]]]
-
-- Better make sure that it is not possible to get a nil text.
-- Initialize well your object
+${slide:title=About explicit type checks}$
 
 [[[
-text
-	^ text
+BlLayoutCommonConstraints >> padding: aBlPadding
+	"Change element's margin to a BlMargin. aBlPadding must not be nil."
+
+	(aBlPadding isKindOf: BlPadding)
+		ifTrue: [ self error ].
+
+	padding := aBlPadding
 ]]]
 
+- It is slow
+- It prevents to pass polymorphic objects 
 
-${slide:title=About assertion transparence}$
-
-A program should behave the same with assertion or not
-[[[
-paint: aPaint
-	self
-		assert: [ paint isNil ]
-		description: [ 'I am immutable and can not be modified' ].
-
-	paint := aPaint
-]]]
-
-- Here the fact that an assertion is evaluated or not can change the fact that paint get its value changed twice.
-- This is a bad use of assertion.
-- Bug can be introduced when the assertion is not executed.
-
-${slide:title=About assertion transparence}$
-
-[[[
-stepBy: anInteger
-
-	self 
-		assert: [ anInteger isZero not ] 
-		description: [ 'Step lenght must be non-zero value' ].
-	stepLength := anInteger.
-]]]
-- Here the fact that an assertion is evaluated or not can change the fact that paint get its value changed twice.
-- This defeats the purpose of assertions. 
-- Because assertions are optional.
-
-
-[[[
-stepBy: anInteger
-
-	 anInteger isZero 
-	 	ifTrue: [ self error: 'Step lenght must be non-zero value' ].
-	stepLength := anInteger.
-]]]
-
-${slide:title=A final example}$
-
-
-[[[
-text
-	"Return the text I am assigned to"
-
-	self
-		assert: [ text isNotNil ]
-		description: [ 'Text must never be nil' ].
-
-	^ text
-]]]
-
-- If the text must not be nil this is not when accessible that action should be done. 
-- Initialization and setters should be used for ensuring it. 
-- Hijacking accessor this way is not really good.
 
 ${slide:title=Conclusion}$
 
-- Architecture should not promote global variable usage
-- Avoid Singleton/Facade, these are anti-patterns
-- Our theory is that Facade is only "useful" for Compiler :)
+- Avoid optional checks that are only for debugging purpose
+- Avoid explicit type-checks
+- Favor tests
 
 
 

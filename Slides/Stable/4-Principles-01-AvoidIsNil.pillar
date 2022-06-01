@@ -1,8 +1,6 @@
 {
   "title":"Avoid Null Checks",
-  "subtitle":"",
-  "author" : "S. Ducasse",
-  "slidesid":" "
+  "author" : "S. Ducasse"
 }
 
 ${slide:title=Goal}$
@@ -13,11 +11,11 @@ ${slide:title=Goal}$
 ${slide:title=nil?}$
 
 - Unique instance of the class ==UndefinedObject==
-- Real object, as anybody else
-- Default value of uninitialized instance variable
+- In Pharo, a real object, as anybody else
+- Default value of uninitialized instance variables
 - Still we should be careful when to use it
 
-${slide:title=Do Not Return Nil}$
+${slide:title=Example}$
 
 Imagine an inferencer that looks for rules that can be applied to a fact. 
 
@@ -32,7 +30,8 @@ Inferencer >> rulesForFact: aFact
 
 ${slide:title=Consequences!}$
 
-Returning ==nil== (e.g., ==ifTrue: [ ^ nil ]==) forces EVERY client to check for ==nil==:
+- Returning ==nil== (e.g., ==ifTrue: [ ^ nil ]==) forces ""EVERY"" client to check for ==nil==:
+
 
 [[[
 (inferencer rulesForFact: 'a')
@@ -40,6 +39,7 @@ Returning ==nil== (e.g., ==ifTrue: [ ^ nil ]==) forces EVERY client to check for
       rules do: [ :each | ... ]
 ]]]
 
+- Code ends up full of nil checks
 
 
 ${slide:title=Solution: Return Polymorphic Objects}$
@@ -67,7 +67,7 @@ Your clients can just iterate and manipulate the returned value
 ${slide:title=For Exceptional Cases, Use Exceptions}$
 
 For exceptional cases, replace ==nil== by exceptions:
-- avoid error codes because they require ==if== in clients
+- ""avoid"" error codes because they require ==if== in clients
 - exceptions may be handled by the client, or the client's client, or ...
 
 [[[
@@ -81,8 +81,8 @@ FileStream >> cantWriteError
 ${slide:title=Solution: Initialize Your Object State}$
 
 Avoid ==nil== checks by initializing your variables
-- by default instance variables are initialized with ==nil==
-- The responsibility of an object is to correctly initialize its state
+- By default instance variables are initialized with ==nil==
+- The responsibility of an object is to ""correctly initialize"" its state
 
 [[[
 Archive >> initialize
@@ -91,7 +91,6 @@ Archive >> initialize
 ]]]
 
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
-
 
 You can defer initialization of a variable to its first use:
 
@@ -102,7 +101,7 @@ FreeTypeFont >> descent
                                self face unitsPerEm) negated ]
 ]]]
 
-This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
+- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
 
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 
