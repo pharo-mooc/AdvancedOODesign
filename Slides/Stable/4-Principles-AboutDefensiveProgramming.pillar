@@ -21,7 +21,8 @@ Object >> assert: aBlock description: aStringOrBlock
 	
 - ==assert:description:== is checking and in addition raises and error. 
 - It changes the program execution
-	
+
+
 ${slide:title=Defensive Example}$
 
 [[[

@@ -3,6 +3,9 @@ Todo next
 
 - Add hierarchy to entries and fields.
 
+- Case Study: Microdown parser
+
+
 - Should verify flatten in Basic polymorphism at work
 - Shared table discussion
 	- lookup

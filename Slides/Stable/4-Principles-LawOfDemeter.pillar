@@ -10,7 +10,7 @@ ${slide:title=Goal}$
 
 - Think about Coupling
 - Law of Demeter
-- Move Behavior close to Data 
+- Move Behavior close to Data Reengineering Pattern
 - Better seen as a Heuristic
 
 
@@ -28,8 +28,8 @@ ${slide:title=Core of the Problem}$
 
 ${slide:title=Changes}$
 
-- Changes are natural
-- When you change, your dependents should update
+- Changes are natural:
+-- When you change, your dependents should update
 - The problem is ""waves of changes when dependents of dependents should change""
 
 +.>file://figures/LODCoreProblem.pdf|width=100+
@@ -37,23 +37,23 @@ ${slide:title=Changes}$
 ${slide:title=Waves}$
 
 - Waves are created by leaks of references to far objects
-- Basically violation of encapsulation
+- Basically ""violation of encapsulation""
 
 
-- How to limit wave creation?
-- Do not leak far references! 
+- How to ""limit"" wave creation?
+- Do not leak ""far"" references! 
 
 
 ${slide:title=Law of Demeter}$
 
-You should only send messages to: 
+You should ""only"" send messages to: 
 - an argument passed to you
 - instance variables
 - an object you create
 - self, super your class
 
-You should avoid
-- global variables
+You should ""avoid""
+- ""global"" variables
 - objects returned from message sends other than self
 
 
@@ -84,7 +84,7 @@ ${slide:title=Solution: Respect encapsulation}$
 
 ${slide:title=Move behavior close to data}$
 
-An object-oriented reengineering pattern (check the book)
+An object-oriented reengineering pattern (check the book Object-Oriented Reengineering Patterns)
 - if data and behavior are not close
 - then logic is distributed/duplicated in clients!
 
@@ -140,9 +140,9 @@ NullWorldRenderer >> updateToNewResolution
 
 ${slide:title=LOD is a \*\*heuristic\*\*}$
 
-- Pay attention! A too strict application of the LOD can lead to over engineered design
+- Pay attention! A too strict application of the LOD can lead to ""bloated class API""
 - Encapsulating collections may produce large interfaces so not applying the LoD may help
-- Understand when it is reasonable to leak
+- Understand when it is ""reasonable to leak""
 
 ${slide:title=LOD can produce bloated APIs}$
 
@@ -169,8 +169,8 @@ FMMethods >> isEmpty
 
 ${slide:title=Conclusion}$
 
-- Think about impact of changes
-- Avoid chaining messages
-- Law of Demeter is a heuristic
-- Move behavior close to data
+- Think ""about impact"" of changes
+- Avoid ""chaining"" messages
+- Law of Demeter is a ""heuristic""
+- ""Move behavior close to data"" reengineering pattern
 
