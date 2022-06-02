@@ -1,13 +1,8 @@
-Log
-====
-	test-02 would deserve two examples on tests on limit
-	About vocabulary needs one exemple of API about polymorphism
-
-
-
-
 Todo next
 ========
+
+- Add hierarchy to entries and fields.
+
 - Should verify flatten in Basic polymorphism at work
 - Shared table discussion
 	- lookup
@@ -19,7 +14,6 @@ Todo next
 		conversion asDiceHandle 
 
 - Stone Paper Scissors
-	- present better
 	- no need for arguments we should say it
 	- Table vs: dd
 

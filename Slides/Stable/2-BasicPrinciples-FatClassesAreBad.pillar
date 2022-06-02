@@ -1,6 +1,6 @@
 {
-    "title":"An Object vs. a Class Hierarchy",
-	"subtype":"a.k.a. Fat classes are bad",
+    "title":"Fat classes are bad",
+   "subtitle":"a.k.a. An Object vs. a Class Hierarchy",
     "author":"S. Ducasse"
 }
 
@@ -13,29 +13,23 @@ ${slide:title=Goal}$
 ${slide:title=Example: BibTeX}$
 
 [[[
-@book{Blac09a,
-  author = {A. P. Black and S. Ducasse and O. Nierstrasz and ...},
-  title = {Pharo by Example},
-  publisher = {Square Bracket Associates},
-  year = {2009},
-  url = {http://books.pharo.org}
-}
-
 @inproceedings{Scha03a,
   author = {N. Schaerli and S. Ducasse and O. Nierstrasz and A. P. Black},
   title = {Traits: Composable Units of Behavior},
   booktitle = {ECOOP},
-  pages = {248--274},
   publisher = {Springer Verlag},
-  year = {2003}
-}
+  year = {2003}}
 
 @article{Teso20b,
   author = {P. Tesone and S. Ducasse and G. Polito and L. Fabresse ...},
   title = {A new modular implementation for Stateful Traits},
-  journal = {Science of Computer Programming},
-  ...
+  journal = {Science of Computer Programming}, ...}
 
+ @book{Duca22a,
+    author = {S. Ducasse and G. Rakic and  ...},
+    title = {Pharo by Example},
+    publisher = {Keepers of the lighthouse},
+    url = {http://books.pharo.org}}
 ]]]
 
 ${slide:title=Example: BibTeX}$
@@ -77,19 +71,18 @@ CZScoped << #CZField
 	package: 'Citezen-Model'
 ]]]
 
-${slide:title=Consequence}$
-
 [[[
 CZField >> isDoi
-
 	^ key = #doi
 ]]]
 
+
+${slide:title=Consequence}$
+
+
 [[[
 CZField >> visitField: aField
-
 	self outputStream nextPutAll: '<span class="', aField key,'">'.
-	(#(#pdf #url #doi) includes: aField key) ifTrue: [ Transcript show: aField; cr ]. 
 	aField isPDF
 			ifTrue: [outputStream nextPutAll: '<a href="'].
 	aField isURL
@@ -110,10 +103,10 @@ CZField >> visitField: aField
 ${slide:title=When using a Fat class}$
 
 Not having a class hierarchy: 
-- Not possible to dispatch logic because there is only one class 
-- Simple extensions require many changes to the conditional code
-- Difficult subclassing without duplicating/adapting the methods containing the conditional code
-- Adding a new behavior always results in changes to the same set of methods and always results in adding a new case to the conditional code.
+- Not ""possible to dispatch"" logic because there is only one class 
+- Simple extensions require ""many changes"" to the conditional code
+- Difficult subclassing ""without duplicating/adapting"" the methods containing the conditional code
+- Adding a new behavior always ""results in changes"" to the same set of methods and always results in adding a new case to the conditional code.
 - Remember the Implementing Not Lectures
 
 ${slide:title=Transform self type transformation}$
@@ -125,7 +118,7 @@ ${slide:title=The case of the Memento DP}$
 
 Sometimes you need to be able to edit a temporary version of an object
 - Memento allows one to save and reload the state of an object without revealing implementation details
-- To have a generic Memento we can use a kind of dictionary to hold field values of the copied object
+- To have a generic Memento we can use a kind of dictionary to hold field values of the copied object. 
 
 ${slide:title=Conclusion}$
 
