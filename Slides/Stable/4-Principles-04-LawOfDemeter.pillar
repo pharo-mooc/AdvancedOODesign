@@ -6,12 +6,12 @@
 }
 
 
-${slide:title=Goal}$
+${slide:title=Goal and outline}$
 
 - Think about Coupling
-- Law of Demeter
-- Move Behavior close to Data Reengineering Pattern
-- Better seen as a Heuristic
+- Present Law of Demeter
+- ''Move Behavior close to Data'' Reengineering Pattern
+- Tradeoffs
 
 
 ${slide:title=Symptoms of costly coupling}$
