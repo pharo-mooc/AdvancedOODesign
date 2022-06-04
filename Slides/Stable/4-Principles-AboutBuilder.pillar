@@ -85,7 +85,6 @@ Class >> buildMicroDownUsing: aBuilder withComment: aString
 ]]]
 
 
-
 ${slide:title=Hook for widgets}$
 
 [[[
@@ -119,7 +118,7 @@ BaselineOf>> addDocumentSection: aBuilder label: label methods: methods
 
 ${slide:title=About builder API}$
 
-- All microdown elements and their parametrization
+All microdown elements and their parametrization
 - ==text:==, ==bold:==, ==anchor:==, ==codeblock:==, 
 - ==comment:==
 - ==item==...
@@ -141,29 +140,20 @@ aBuilder newLine
 
 
 ${slide:title=Codeblock is also a leave element}$
+
 [[[
-codeblock: aString firstLineAssociations: aCol
-	self raw: CodeblockMarkup.
-	aCol do: [ :each | self 
-						raw: each key;
-						raw: '=';
-						raw: each value value asString
-						"so that we can put format such as bold in the value"]
-			separatedBy: [ self raw: '&' ].
-	self newLine.
-	self raw: aString.
-	self newLine.
-	self raw: CodeblockMarkup.
-	self newLine.
+	aBuilder codeblock: 
+'this is the contents
+of a code block.
+It will be displayed with ``` around.'
 ]]]
 
 
 
+${slide:title=About generation of composite/nested elements}$
 
-${slide:title=About generation of composite elements}$
-
-- For nested elements, we should provide a way to let the user defines the ""inner"" part
-- Use blocks as a way to support wrapping elements
+- Should provide a way to let the user defines the ""inner"" part
+- Use blocks as a way to support element wrapping
 
 [[[
 builder bold: [ builder text: 'This is a text in bold' ]
@@ -217,7 +207,7 @@ aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
 ]]]
 
 
-${slide:title=No argument design}$
+${slide:title=No parameter design}$
 
 [[[
 aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
@@ -227,7 +217,7 @@ aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
 - More compact
 
 
-${slide:title=No argument implementation}$
+${slide:title=No parameter implementation}$
 
 [[[
 header: aBloc withLevel: anInteger
@@ -240,7 +230,7 @@ rawHeader: aBloc withLevel: anInteger
    aBloc value
 ]]]
 
-${slide:title=Argument Design}$
+${slide:title=With block parameter design}$
 
 [[[
 aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
@@ -251,7 +241,7 @@ aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
 - More verbose
 
 
-${slide:title=Argument implementation}$
+${slide:title=With block parameter implementation}$
 
 [[[
 rawHeader: aBloc withLevel: anInteger
@@ -260,7 +250,7 @@ rawHeader: aBloc withLevel: anInteger
 	aBloc value: SpecialMicrodownBuilder new
 ]]]
 
-Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== to use a specific builder passed as argument of the ==value:==
+Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== or equivalent hook to use a specific builder passed as argument of the ==value:==
 
 ${slide:title=Analysis}$
 
