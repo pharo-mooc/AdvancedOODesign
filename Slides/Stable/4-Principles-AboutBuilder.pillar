@@ -45,12 +45,16 @@ ${slide:title=Specialized Microdown class comment}$
 
 ${slide:title=How to generate microdown?}$
 
-Avoid string concatenation
-- hide users to possible syntax changes
-- tool builders do not have to learn syntax
+""To avoid:"" string concatenation
+- Expose users to possible syntax changes
+- Tool builders do not have to learn syntactic quirks
 
-Better provide a scripting APIs
-- Abstract away details
+Better provide a ""scripting API""
+- ""Abstract away"" details
+- Support ""future changes""
+
+""Hooks/Extensibility""
+- Every single class can ""customize"" `buildMicroDownUsing: aBuilder withComment: aString` hook
 
 
 ${slide:title=Microdown class comment hook}$
@@ -66,54 +70,42 @@ renderComment: aString of: aClassOrPackage
 	^ self render: builder contents
 ]]]
 
-Default class comments
+${slide:title=Default class comments}$
+
 [[[
 Class >> buildMicroDownUsing: aBuilder withComment: aString
 	
-		aBuilder 
-			header: [ aBuilder text: 'Class: '.
-						aBuilder text: self name ] withLevel: 1;
+	aBuilder 
+		header: [ 
+				aBuilder text: 'Class: '.
+				aBuilder text: self name ] 
+		withLevel: 1;
 			horizontalLine;
 			text: aString
 ]]]
 
-${slide:title=Microdown builder}$
-
-Microdown offers a builder
-- To avoid user manipulating strings
-- To encapsulate the building logic
-- In addition every single class can customize  `buildMicroDownUsing: aBuilder withComment: aString`
 
 
-${slide:title=Microdown builder}$
-
-On ==SpAbstractWidget==
+${slide:title=Hook for widgets}$
 
 [[[
-buildMicroDownUsing: aBuilder withComment: aString
+SpAbstractWidget >> buildMicroDownUsing: aBuilder withComment: aString
 	
 	super buildMicroDownUsing: aBuilder withComment: aString.
-
-	"Example code"
 	self addDocumentSectionExampleCode: aBuilder.
-	"Factory method"
 	self addDocumentSectionFactoryMethod: aBuilder.
-	"Sections"
 	self documentSections keysAndValuesDo: [ :label :methods |
 		self addDocumentSection: aBuilder label: label methods: methods ].
-	"Hook for extra sections"
 	self addDocumentExtraSections: aBuilder.
-	"Hierarchy"
 	self addDocumentSectionHierarchy: aBuilder.
-	"Transmissions"
 	self addDocumentSectionTransmissions: aBuilder.	
 ]]]	
 	
 
-${slide:title=Microdown builder 2}$
+${slide:title=Hook for widgets (2)}$
 
 [[[	
-addDocumentSection: aBuilder label: label methods: methods
+BaselineOf>> addDocumentSection: aBuilder label: label methods: methods
 	
 	methods ifEmpty: [ ^ self ].
 	aBuilder newLine.
@@ -125,9 +117,17 @@ addDocumentSection: aBuilder label: label methods: methods
 ]]]
 
 
-${slide:title=About leave element}$
+${slide:title=About builder API}$
 
-For leaves, i.e., untrustured text or elements
+- All microdown elements and their parametrization
+- ==text:==, ==bold:==, ==anchor:==, ==codeblock:==, 
+- ==comment:==
+- ==item==...
+
+
+${slide:title=About generation of leave elements}$
+
+For leaves, i.e., unstructured text or elements
 - Just pass the argument
 - Give simple order
 
@@ -140,10 +140,30 @@ aBuilder newLine
 ]]]
 
 
-${slide:title=About composite elements}$
+${slide:title=Codeblock is also a leave element}$
+[[[
+codeblock: aString firstLineAssociations: aCol
+	self raw: CodeblockMarkup.
+	aCol do: [ :each | self 
+						raw: each key;
+						raw: '=';
+						raw: each value value asString
+						"so that we can put format such as bold in the value"]
+			separatedBy: [ self raw: '&' ].
+	self newLine.
+	self raw: aString.
+	self newLine.
+	self raw: CodeblockMarkup.
+	self newLine.
+]]]
 
-- For nested elements, we should provide a way to let the user defines the inner part
-- We use blocks for this. 
+
+
+
+${slide:title=About generation of composite elements}$
+
+- For nested elements, we should provide a way to let the user defines the ""inner"" part
+- Use blocks as a way to support wrapping elements
 
 [[[
 builder bold: [ builder text: 'This is a text in bold' ]
@@ -161,21 +181,32 @@ builder
 	withLevel: 2.
 ]]]
 
-${slide:title=About composite: Cell example}$
+${slide:title=Composite example: Cell}$
 
 [[[
 testCell
 
 	self
 		assert: (builder
-		cell: [ 
-			builder text: 'this is '.
-			builder bold: [ builder text: 'bold' ] ]) contents
+			cell: [ 
+				builder text: 'this is '.
+				builder bold: [ builder text: 'bold' ] ]) contents
 		equals: '| this is **bold** '
 ]]]
 
+${slide:title=Composite generation implementation}$
 
-${slide:title=Alternative design}$
+[[[
+MicrodownTextualBuilder >> bold: aBlock
+	self raw: BoldMarkup.
+	aBlock value.
+	self raw: BoldMarkup.
+]]]
+
+- The builder executes the block ==aBlock value==
+- Here the implications is that there is only one builder (the message receiver eg, ==builder bold: [ builder text: 'Very']==
+
+${slide:title=Comparing alternate designs}$
 
 [[[
 aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
@@ -229,9 +260,15 @@ rawHeader: aBloc withLevel: anInteger
 	aBloc value: SpecialMicrodownBuilder new
 ]]]
 
+Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== to use a specific builder passed as argument of the ==value:==
+
 ${slide:title=Analysis}$
 
+""Pros:""
 - With an explicit argument builder, we can also subclass the builder and modify partially the builder behavior
-- We could have specialisation builder that produces table of contents
+-- We could have specialisation builder that produces table of contents
 - It feels like visitor hooks
+
+""Cons:""
+- You have to define an extra parameter to all the wrapping APIs
 
