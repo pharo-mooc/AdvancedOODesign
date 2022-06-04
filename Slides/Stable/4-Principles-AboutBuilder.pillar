@@ -1,21 +1,22 @@
 {
 	"title":"Builder Variations",
-	"subtitle":"",
-	"author":"S. Ducasse",
-	"slidesid":"2022"
+	"author":"S. Ducasse"
 }
 
 
 ${slide:title=Goal}$
 
 - Discuss about builder API
-- Identify variations
+- Identify and understand variations
 
 
 ${slide:title=Microdown}$
 
-[[[
+A better markdown :)
+- compact (subset of markdown)
+- more extensible (superset of markdown)
 
+[[[
 # Hello Pharo
 
 Microdown is a cool markdown.
@@ -25,9 +26,56 @@ It is used to generate
 - class comments
 ]]]
 
-${slide:title=Microdown class comment}$
+Used for:
+- class comments
+- slides, books, and documentation
 
-+>figures/SpAbstractTextPresenter.png+
+${slide:title=Default Microdown class comment}$
+
++>figures/CommentPoint.png+
+
+${slide:title=Specialized Microdown class comment}$
+
++>figures/CommentSpAbstractTextPresenter2.png+
+
+${slide:title=Specialized Microdown class comment}$
+
++>figures/CommentBaseline.png+
+
+
+${slide:title=How to generate microdown?}$
+
+Avoid string concatenation
+- hide users to possible syntax changes
+- tool builders do not have to learn syntax
+
+Better provide a scripting APIs
+- Abstract away details
+
+
+${slide:title=Microdown class comment hook}$
+
+[[[
+renderComment: aString of: aClassOrPackage 
+	"Return aString as part of the templated class comment, when rendering is on.
+	Else aString."
+
+	| builder |
+	builder := Microdown builder.
+	aClassOrPackage buildMicroDownUsing: builder withComment: aString.
+	^ self render: builder contents
+]]]
+
+Default class comments
+[[[
+Class >> buildMicroDownUsing: aBuilder withComment: aString
+	
+		aBuilder 
+			header: [ aBuilder text: 'Class: '.
+						aBuilder text: self name ] withLevel: 1;
+			horizontalLine;
+			text: aString
+]]]
 
 ${slide:title=Microdown builder}$
 

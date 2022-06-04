@@ -1,6 +1,6 @@
 {
     "title":"Customization degree of hooks",
-    "subtitle":"Class vs. nstance hooks",
+    "subtitle":"Class vs. instance hooks",
     "author":"Stéphane Ducasse"
 }
 
@@ -51,7 +51,7 @@ CHInterpreter2 >> classScopeClass
 ${slide:title=Black box parametrization}$
 
 [[[
-Object < CHInterpreter
+Object << CHInterpreter
 	slots: {#classScopeClass};
 ]]]
 
@@ -113,12 +113,20 @@ CHInterpreter >> visit...: arg
 	scope
 ]]]
 
-- When we pass ==self==, we give the class the possibility to customise instantiation.
+[[[
+CHInterpreter >> newClassScope: arg
+
+	^ self newClassScope doSomethingWith: arg
+
+]]]
+
+- When we pass ==arg==, we give the class the possibility to customise instantiation.
+- Subclasses can customize/extend ==doSomethingWith:==
 
 
 ${slide:title=Conclusion}$
 
-- Class hooks are ok 
-- But think about others hooks
+- Class hooks are nice 
+- But think also about others hooks
 
 
