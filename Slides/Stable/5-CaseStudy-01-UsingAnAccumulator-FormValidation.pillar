@@ -1,13 +1,13 @@
 {
-    "title":"Delegation of actions",
-    "subtitle":"Validation as an exemple",
+    "title":"Delegation of actions and accumulator",
+    "subtitle":"Form validation as an example",
     "author":"S. Ducasse"
 }
 
 ${slide:title=Scenario}$
 
 - How can we navigate a tree of instances (widgets)?
-- With children that can be skipped?
+- Where children can decide to be skipped?
 
 
 ${slide:title=The case: Validation}$
@@ -50,10 +50,10 @@ ${slide:title=Flow's first design}$
 
 ${slide:title=Analysis}$
 
-- We need to have a report to know if the validation failed or not.
+- We need to have a report to know if the validation failed or not
 - Should ==validate== return a report?
-- If ==validate== returns a report then we have to return an ok report for anybody.
-- We do not want to force a report for all the tree instances.
+- If ==validate== returns a report then we have to return an ok report for anybody
+- Force a report for any instances?
 
 ${slide:title=Flow's first design}$
 
@@ -77,7 +77,7 @@ SpOptionPresenter >> validate
 
 	| report |
 	report := SpValidationReport new. 
-	self layout children do: [ :presenter | presenter validateInto: report ].
+	self children do: [ :presenter | presenter validateInto: report ].
 	^ report
 ]]]
 
