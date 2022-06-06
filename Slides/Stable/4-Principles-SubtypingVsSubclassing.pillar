@@ -1,62 +1,66 @@
 {
-    "title":"Subclassing vs. Subtyping",
-    "slidesid":"From the Design Corner"
+	"title":"Subclassing vs. Subtyping",
+	"author":"S. Ducasse"
 }
 
 
 ${slide:title=Goal}$
 
-- What is the relation between the API of class and its subclasses?
-- What is subtyping? 
-- What is subclassing?
+- What is the relation between the ""API"" of class and its ""subclasses""?
+- What is the relation between the ""API"" of class and its ""clients""?
+- What is ""subtyping"" \& ""subclassing""?
 - Which one should we favor for good OO design?
 
 ${slide:title=Subtyping/subclassing and type systems}$
 
-- You can use subtyping and subclassing in dynamically typed languages!
-- You can use subtyping and subclassing in statically typed languages!
+- You ""can"" use subtyping and subclassing in ""dynamically-typed"" languages!
+- You ""can"" use subtyping and subclassing in ""statically-typed"" languages!
 
-The compiler type checker 
-- does not check such point 
-- just checks that we can put squares into square shapes
+The compiler type checker :
+- does not check such a point 
+- just checks that we can put ""squares"" into ""square"" shapes
+
 
 ${slide:title=What do you think about?}$
 
 - ==Dictionary== subclass of ==Set==
--- a ==Dictionary== is a set of bindings (associations Key->Value)
-
-- ==Dictionary== is a subclass of ==HashedCollection==
+- ==Dictionary== subclass of ==HashedCollection==
 
 
-${slide:title=What do you think about?}$
+${slide:title=Subclassing}$
 
-""Subclasssing"": ==Dictionary== subclass of ==Set==
--- a ==Dictionary== is a set of bindings (associations Key->Value)
--- It reuses (abuse) the implementation of ==Set== and add extra messages (==at:put:==) to the default ==Set== API
+==Dictionary== subclass of ==Set==
+- a ==Dictionary== is a set of bindings (associations Key->Value)
+- Reuses (""abuse"") the implementation of ==Set==
+- Adds / removes extra messages (==at:put:==) to the default ==Set== API
 
-""Subtyping"": ==Dictionary== is a subclass of ==HashedCollection==
--- It specializes ==HashedCollection== (a collection of objects with a hash)
--- It adds messages related to ==Dictionary== (at:IfPresent:, )
+
+${slide:title=Subtyping}$
+
+==Dictionary== is a subclass of ==HashedCollection==
+- Specializes ==HashedCollection== (a collection of objects with a hash)
+- Adds messages related to ==Dictionary== (==at:IfPresent:==, ...)
 
 ${slide:title=Let us study a simple example}$
 
 How to implement a Stack?
 
 [[[
-s push: 12.
-s push: 24.
-s top
-s pop
-> 24
-s isEmpty
-> false
+>>> s push: 12.
+>>> s push: 24.
+>>> s top
+>>> s pop
+24
+>>> s isEmpty
+false
 ]]]
-Using ==OrderedCollection== (an ordered list of items)
+
+- Using ==OrderedCollection== (an ordered list of items) ?
 
 ${slide:title=Stack as subclass of OrderedCollection}$
 
 [[[
-OrderedCollection subclass: Stack
+OrderedCollection << Stack
 ]]]
 
 [[[
@@ -75,9 +79,15 @@ We get Stack>>size, Stack>>includes:, Stack>>do:, Stack>>collect: for free.
 
 ${slide:title=Wait!}$
 
-- What do we do with the rest of the OrderedCollection API?
-- a Stack is not an OrderedCollection!
-- In a client program we cannot substitute an OrderedCollection by a Stack
+- What do we do with the ""rest"" of the OrderedCollection API?
+- a Stack ""is not"" an OrderedCollection!
+- In a client program we cannot replace an OrderedCollection by a Stack
+
+${slide:title=Wait!}$
+
+[[[
+OrderedCollection new addLast: anObject
+]]]
 
 [[[
 Stack new addLast: anObject
@@ -96,7 +106,7 @@ Stack >> removeFirst
 	self error
 ]]]
 
-But how can we then implement ==pop==?
+${slide:title=And get a convoluted pop?}$
 
 Remember:
 [[[
@@ -115,25 +125,27 @@ Stack >> pop
 
 ${slide:title=Stepping back}$
 
-- There is not a simple relationship between Stack and OrderedCollection APIs.
-- Stack interface is not an extension or subset of OrderedCollection interface.
-- Compare with RestrictedStack a subclass of Stack RestrictedStack interface is an extension of Stack interface
+- There is not a ""simple relationship"" between ==Stack== and ==OrderedCollection== APIs.
+- ==Stack== interface is not an ""extension"" nor a ""subset"" of ==OrderedCollection== interface.
+- Compare with ==RestrictedStack== a subclass of ==Stack==
+--  ==RestrictedStack== interface is an ''extension'' of ==Stack== interface
 
 
 ${slide:title=Compare the two uses}$
 
-+.>file://figures/SubtypingSubclassing.pdf|width=60+
++.>file://figures/SubtypingSubclassing.pdf|width=100+
 
 ${slide:title=Compare the two replacements}$
 
-+.>file://figures/SubtypingSubclassing2.pdf|width=60+
++.>file://figures/SubtypingSubclassing2.pdf|width=100+
+
 
 
 ${slide:title=Back to Stack}$
 
 [[[
-Object subclass: Stack
-	instVarNames: 'elements'
+Object << Stack
+	slots: {#elements}
 ]]]
 
 [[[
@@ -145,43 +157,70 @@ Stack >> push: anElement
 Stack >> pop
 	^ element ifNotEmpty: [ element removeFirst ]
 ]]]
-  
 
-${slide:title=Subclassing Inheritance}$
+
+
+
+${slide:title=Subclassing inheritance}$
 
 - Inheritance for code reuse
-- Subclass reuses code from superclass, but has a different specification. 
-- It cannot be used everywhere its superclass is used. Usually overrides a lot of code.
+- Subclass reuses code from superclass, but as a ""different"" specification
+- It cannot be used everywhere its superclass is used. Usually overrides a lot of code
 
-Bad for
-- understanding 
-- future evolution
+""Cons:""
+- ""Lowers"" understanding
+- ""Hampers"" future evolution
+- ""Forces"" strange code
 
 ${slide:title=Subtyping Inheritance}$
 
-- Reuse of specifications
-- A subclass refines superclass specifications
-- A program that works with Numbers will work with Fractions.
-- A program that works with Collections will work with Arrays.
+- ""Reuse"" of specifications (generic code)
+- A subclass ""refines"" superclass specifications
+- A program that works with Numbers should 'work' with Fractions
+- A program that works with Collections should 'work' with Arrays
+- (We are not talking about behavioral subtyping)
 
-${slide:title= Inheritance and Polymorphism}$
+${slide:title=Subclasses must not cancel methods}$
 
-- Polymorphism works best with conforming/substituable interfaces
-- Subtyping Inheritance creates families of classes with similar interfaces
-- An abstract class describes an interface fulfilled by its subclasses
-- Inheritance helps software reuse by making polymorphism easier
+[[[
+Stack >> removeFirst
+	self error
+]]]
 
-${slide:title= Subtyping Support}$
+This is a sign for bad design decision
+- Cheap 
+- But you will pay later
 
-- We only extend or subclass constructs in programming languages
-- Still you can express a subtype or subclass relationships between a class and its subclass.
-- Subclassing/Subtyping has nothing to do with the fact that the language supports static typing or not
+
+${slide:title=Superclass/subclass}$
+
+Usually the more generic definition should be in superclass 
+- ==RestrictedStack== subclass of ==Stack== is a bad idea
+
+Better 
+- ==Stack== subclass of ==AbstractStack==
+- ==RestrictedStack== subclass of ==AbstractStack==
+
+${slide:title= Inheritance and polymorphism}$
+
+- Polymorphism works best with ""conforming/substituable"" interfaces
+- Subtyping inheritance creates families of classes with ""similar interfaces""
+-- An abstract class describes an interface fulfilled by its subclasses
+- Inheritance helps software reuse by creating ""polymorphic objects""
+- Other classes implementing the same interface can also ""be substituable""
+
+${slide:title= Subtyping support}$
+
+- We only have one ==extend== or ==subclass:== construct in PL
+- Still you can express a ""subtype"" or ""subclass"" relationship between a class and its subclass.
+- Subclassing/subtyping is not related to static typing
+
 
 ${slide:title=Conclusion}$
 
-- Subtyping is about  program specification reuse
-- Subtyping is about to create family of classes sharing common API
-- Avoid subclassing
+- Subtyping is about  program specification ""reuse""
+- Subtyping is about to create ""family of classes sharing common API""
+- ""Avoid"" subclassing: it is a bad idea
 
 
 
