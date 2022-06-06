@@ -1,32 +1,33 @@
 {
-    "title":"About Validation",
-    "subtitle":"A pretext to talk about delegation of actions",
+    "title":"Delegation of actions",
+    "subtitle":"Validation as an exemple",
     "author":"S. Ducasse"
 }
 
-${slide:title=Goal}$
+${slide:title=Scenario}$
 
-- How can we navigate an instance tree?
-- With optional states that can be skipped?
+- How can we navigate a tree of instances (widgets)?
+- With children that can be skipped?
 
 
 ${slide:title=The case: Validation}$
 
 - We want to validate UI forms
-- Nested components may want to validate or not their contents
+- Nested components may want to validate ""or not"" their contents
+-- at input field or just at the OK level
 
 +.>file://figures/ValidationExample.png|width=60+
 
 
 ${slide:title=A tree of instances}$
 
-+.>file://figures/DistributionOfReponsibility.jpg|width=60+
++.>file://figures/DistributionOfReponsibility.pdf|width=80+
 
 
 ${slide:title=A first design}$
 
-- Any presenter can validate its contents.
-- Per dafault does not nothing.
+- Any presenter can validate its contents
+- Per default does not nothing
 
 [[[
 SpPresenter >> validate
@@ -38,13 +39,13 @@ SpOptionPresenter >> validate
 
 	| report |
 	report := SpValidationReport new. 
-	self layout children do: [ :presenter | presenter validate ]
+	self children do: [ :presenter | presenter validate ]
 ]]]
 
 
 ${slide:title=Flow's first design}$
 
-+.>file://figures/DistributionOfReponsibility2.jpg|width=60+
++.>file://figures/DistributionOfReponsibility2.pdf|width=60+
 
 
 ${slide:title=Analysis}$
@@ -56,14 +57,14 @@ ${slide:title=Analysis}$
 
 ${slide:title=Flow's first design}$
 
-+.>file://figures/DistributionOfReponsibility2b.jpg|width=60+
++.>file://figures/DistributionOfReponsibility2b.pdf|width=60+
 
 
 ${slide:title=Second design: provide an accumulator}$
 
 Pass around a basket and let any sub instance decides if it wants to participate
 
-+.>file://figures/DistributionOfReponsibility3.jpg|width=60+
++.>file://figures/DistributionOfReponsibility3.pdf|width=60+
 
 ${slide:title=Second design: code}$
 [[[
