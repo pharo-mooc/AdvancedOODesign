@@ -1,71 +1,76 @@
 {
-	"title":"Sharing with Instance Specific Possibilities",
-	"subtitle":"",
-	"author":"S. Ducasse",
-	"slidesid":"From the Design Corner"
+	"title":"Sharing with instance specific possibilities",
+	"author":"S. Ducasse"
 }
 
-
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Thinking about sharing
-- How can we share by default a ressource?
-- How can we share by default a ressource and still get instance-based use possible?
+- How can we share by default a resource?
+- How can we share by default a resource and still get ""instance-based"" usage?
 
 
-${slide:title=Tracks of solution}$
+${slide:title=Instance vs. class sharing}$
 
-- Instance variables (most of the time) hold instance specific values
-- Shared variables (old named class variables) hold values that are shared among all instances
-
-
-${slide:title=But this shared or nothing?}$
-
-- How can we share by default a ressource and still get instance-based use possible?
+""Instance specific."" 
+- An instance variable (most of the time) holds ""instance specific values""
+""Shared between all instances of a class."" 
+- A shared variable  (static or class variables) holds a value that is ""shared among all instances"" of the class
 
 
-${slide:title=What do you propose?}$
+${slide:title=Is it shared or instance specific?}$
 
-...
+- How can we ""share by default"" a resource and ""still"" get ""instance-based"" use possible?
 
-${slide:title=Case Study: Scanner}$
+- Imagine a solution...
+
+${slide:title=Case Study: Scanner (not from Pharo)}$
 
 [[[
-Scanner new
-	scanTokens: 'identifier keyword: 25 embedded.period key:word: . '
->
+>>> Scanner new scanTokens: 'identifier keyword: 25 embedded.period key:word: . '
+	
 	#(#identifier #keyword: 25 'string' 'embedded.period' #key:word: #'.')
 ]]]
 
-${slide:title=The Scanner class}$
+${slide:title=The Scanner class enigma}$
 
 [[[
 Object << #Scanner
-	slots: {#source . #mark . #prevEnd . #hereChar . #token . #tokenType . #saveComments .
-	#currentComment . #buffer . #typeTable};
+	slots: {#mark . #prevEnd . #hereChar . #token . #tokenType . #typeTable};
 	sharedVariables: { #TypeTable }
 	package: 'Scanning'
 ]]]
 
-- What? TypeTable and typeTable are defined. A bug!
+- What? ==TypeTable== and ==typeTable== are defined at the instance and class sharing level. A bug?
 - No this is a nice design
+- Do you see it?
 
-${slide:title=Scanner class enigma}$
-
-Why having an instance variable and a shared variables pointing the same object (the scanner table)?
 
 ${slide:title=Further investigation}$
 
-- ==TypeTable== is initialized ""once"" to hold the table of kind of elements 
-- ==typeTable== is used by every instance method
-- All methods only access the instance variable and never the shared one
+- ==TypeTable== the shared variablea
+-- is initialized ""once"" to hold the table of kind of elements 
+- ==typeTable== the instance variable
+-- is used by every instance method
+-- is initialized by pointing to ==TypeTable==
+-- All methods ""only"" access the instance variable and never the shared one
 
-Does it ring a bell?
+Do you see the idea?
 
-${slide:title=Sharing by default / instance based possible}$
+${slide:title=Explanation}$
+
+- By default all instances share the same typeTable
+- All methods can access it via ==typeTable==
 
 +.>file://figures/Sharing.pdf|width=60+
 
+
+${slide:title=Specific state for specific instances}$
+
+- Copying the state of ==typeTable== and customizing it supports instance specific behavior.
+- All methods can still access it via ==typeTable==
+
++.>file://figures/Sharing2.pdf|width=80+
 
 ${slide:title=Shared variable points to the share table}$
 
@@ -113,7 +118,8 @@ MyScanner >> initScanner
 
 ${slide:title=Conclusion}$
 
-You can provide shared by default but let specific instance customize if they need it.
+- Can get  sharing by default 
+- but get instance specific if need it
 
 
 
