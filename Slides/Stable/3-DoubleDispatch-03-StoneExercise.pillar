@@ -1,5 +1,5 @@
 {
-    "title" : "A Kata: Stone Paper Scissors",
+    "title" : "A starter: Stone Paper Scissors",
     "slidesid" : "with Double Dispatch",
     "author":"S. Ducasse"
 }
@@ -37,21 +37,6 @@ StonePaperScissorsTest >> testPaperIsWinning
 	self assert: (Paper new vs: Stone new) equals: #paper
 ]]]
 
-${slide:title=More Tests}$
-
-[[[
-StonePaperScissorsTest >> testStoneAgainsStone
-	self assert: (Stone new vs: Stone new) equals: #draw
-]]]
-
-[[[
-StonePaperScissorsTest >> testStoneIsWinning
-	self assert: (Stone new vs: Scissors new) equals: #stone
-]]]
-
-
-
-
 
 ${slide:title=Let us start}$
 
@@ -69,36 +54,35 @@ Stone >> vs: anotherTool
 ${slide:title=Hints}$
 
 - The solution does not contain an explicit condition
-- Remember sending a message is making a choice
-- Sending a message is selecting the right method
--- when we send the message ==vs:== the method of the receiver is executed
-- What if we introduce another method?
+- Remember sending a message is making a choice: selecting the right method
+- When we execute the method ==vs:== we know the receiver
+- What if we introduce another method to make another choice?
 
 ${slide:title= Paper playAgainstStone: }$
 
 [[[
 Stone >> vs: anotherTool
-	^ anotherTool playAgainstStone: self
+	^ anotherTool playAgainstStone
 ]]]
 
 [[[
-Paper >> playAgainstStone: aStone
+Paper >> playAgainstStone
 	^ ...
 ]]]
 
-${slide:title= Paper playAgainstStone: }$
+${slide:title= Paper playAgainstStone }$
 
 [[[
 Stone >> vs: anotherTool
-	^ anotherTool playAgainstStone: self
+	^ anotherTool playAgainstStone
 ]]]
 
 [[[
-Paper >> playAgainstStone: aStone
+Paper >> playAgainstStone
 >> ^ #paper
 ]]]
 
-${slide:title= Paper playAgainstStone: }$
+${slide:title= Paper playAgainstStone}$
 
 Works for 
 [[[
@@ -117,15 +101,15 @@ But not for
 - Easy!
 
 
-${slide:title=Other playAgainstStone: }$
+${slide:title=Other playAgainstStone }$
 
 [[[
-Scissors >> playAgainstStone: aStone
+Scissors >> playAgainstStone
 	^ #stone
 ]]]
 
 [[[
-Stone >> playAgainstStone: aStone
+Stone >> playAgainstStone
 	^ #draw
 ]]]
 
@@ -133,8 +117,8 @@ Stone >> playAgainstStone: aStone
 ${slide:title=Stepping back}$
 
 - We know that a method is executed on a class (here ==Stone==)
-- We SEND another message to the argument to select another method (here ==playAgainstStone:==)
-- We sent two messages to be able to select a method based on its receiver AND argument
+- We SEND another message to the argument to select another method (here ==playAgainstStone==)
+- Two messages to be able to select a method based on its receiver AND argument
 
 
 
@@ -145,69 +129,69 @@ ${slide:title=Scissors now }$
 
 [[[
 Scissors >> vs: anotherTool
-	^ anotherTool playAgainstScissors: self
+	^ anotherTool playAgainstScissors
 ]]]
 
 [[[
-Scissors >> playAgainstScissors: aScissors
+Scissors >> playAgainstScissors
 	^ #draw
 ]]]
 
 [[[
-Paper >> playAgainstScissors: aScissors
+Paper >> playAgainstScissors
 	^ #scissors
 ]]]
 
 [[[
-Stone >> playAgainstScissors: aScissors
+Stone >> playAgainstScissors
 	^ #stone
 ]]]
 
 ${slide:title=Paper now }$
 [[[
 Paper >> vs: anotherTool
-	^ anotherTool playAgainstPaper: self
+	^ anotherTool playAgainstPaper
 ]]]
-
-[[[
-Scissors >> playAgainstPaper: aPaper
-	^ #scissors
-]]]
-
-[[[
-Paper >> playAgainstPaper: aPaper
-	^ #draw
-]]]
-
-[[[
-Stone >> playAgainstPaper: aPaper
-	^ #paper
-]]]
-
-${slide:title=Solution Overview}$
-
-+An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsAndKey.pdf|width=80+
-
-${slide:title=Remark}$
-
-- In this toy example we do not need to pass the argument during the double dispatch
-- But in general this is important as in Visitor
-
-[[[
-Scissors >> playAgainstPaper: aPaper
-	^ #scissors
-]]]
-
-can just be
 
 [[[
 Scissors >> playAgainstPaper
 	^ #scissors
 ]]]
 
+[[[
+Paper >> playAgainstPaper
+	^ #draw
+]]]
+
+[[[
+Stone >> playAgainstPaper
+	^ #paper
+]]]
+
+${slide:title=Solution Overview}$
+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+
 ${slide:title=Remark}$
 
-+.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+- In this toy example we do not need to pass the argument during the double dispatch
+- But in general this is important as we want to do something with the first receiver (as in Visitor DP)
+
+[[[
+Scissors >> playAgainstPaper
+	^ #scissors
+]]]
+
+will just be
+
+[[[
+Scissors >> playAgainstPaper: aScissors
+	^ #scissors
+]]]
+
+${slide:title=Remark}$
+
++.>file://figures/StonePaperScissorsAndKey.pdf|width=80+
 
 
 ${slide:title=Extending it...}$

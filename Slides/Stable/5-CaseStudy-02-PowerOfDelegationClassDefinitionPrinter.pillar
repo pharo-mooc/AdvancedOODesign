@@ -1,5 +1,5 @@
 {
-	"title":"Delegating Behavior at Work",
+	"title":"Behavior delegation at work",
 	"subtitle":"The case of the class printer",
 	"author":"S. Ducasse",
 	"slidesid":"2022"
@@ -16,22 +16,22 @@ ${slide:title=Goal}$
 
 ${slide:title=Context: Class Definition}$
 
-- How to support the evolution of class definition
-- Supporting package, various formats, slots
-- Without parameter explosions
+- How to support various formats
+- in a modular way
 
 
 ${slide:title=Challenges}$
 
-- How to support such definitions (Old Squeak syntax, Pharo previous and Fluid new one)?
-- Should handle class, metaclass, trait...
+How to support:
+-- Old Squeak syntax, Pharo previous and Fluid new one
+-- orthogonally to  class, metaclass, trait...
 - How to control the complexity?
 -- Slots should not be displayed in Old Pharo
-- How to avoid to check everywhere?
-- Can remove one definition any time without recompilation
+- How to avoid checks everywhere?
+- And removal one definition any time without recompilation
 
 
-${slide:title=First Hacked version in Pharo 70/80}$
+${slide:title=First hacked version in Pharo 70/80}$
 
 [[[
 ClassDescription >> definition
@@ -47,7 +47,9 @@ Metaclass >> definition
 	^ self definitionWithoutSlots
 ]]]
 
-${slide:title=Hacked in Tools Too}$
+Smell like duplication
+
+${slide:title=Hacked in tools too}$
 
 [[[
 ClyClassCreationToolMorph >> classTemplate
@@ -70,13 +72,13 @@ ClyClassCreationToolMorph >> classTemplate
 
 ${slide:title=Thinking... about a solution}$
 
-- Think 5 min how you would solve it
+Think 5 min how you would solve it
 
-${slide:title=Solution: Delegating to a ClassDefinition Printer}$
+${slide:title=Solution: Delegating to a class definition printer}$
 
-- Create class definition printer
+- Create class definition printers
 - A kind of Strategy
-- A hierarchy of printers + a factory
+- A hierarchy of printers + a factory + some double dispatch
 
 [[[
 ClassDefinitionPrinter ( forClass )
@@ -86,12 +88,12 @@ ClassDefinitionPrinter ( forClass )
 ]]]
 
 
-${slide:title=Solution: Delegating to a ClassDefinition Printer}$
+${slide:title=Solution: Delegating to a class definition printer}$
 
 +>file://figures/ClassPrinter.pdf|width=80+
 
 
-${slide:title=From Class}$
+${slide:title=The class asks a printer}$
 
 [[[
 ClassDescription >> definitionString
@@ -108,7 +110,14 @@ ClassDescription >> definitionPrinter
 ]]]
 
 
-${slide:title=Fluid printer printing a class}$
+${slide:title=A printer}$
+
+Knows how to print
+- class (==classDefinitionString==)
+- metaclass (==metaclassDefinitionString==)
+- trait
+
+${slide:title=Fluid printer: a class}$
 
 [[[
 FluidClassDefinitionPrinter >> classDefinitionString
@@ -128,17 +137,61 @@ FluidClassDefinitionPrinter >> classDefinitionString
 		self packageOn: s ]
 ]]]
 
-${slide:title=Fluid printer printing a metaclass}$
+${slide:title=Fluid printer: a metaclass}$
 
 [[[
 FluidClassDefinitionPrinter >> metaclassDefinitionString 
 
 	^ String streamContents: [ :strm |
 		forClass superclass 
-			ifNotNil: [ strm nextPutAll: forClass name ]
+			ifNotNil: [ forClass = ProtoObject class
+							ifFalse: [ 
+								strm 
+									nextPutAll: forClass superclass name;
+									nextPutAll: ' << ';
+									nextPutAll: forClass name ]
+							ifTrue: [ strm 
+									nextPutAll: 'Class class << ';
+									nextPutAll: forClass name ] ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
+]]]
+
+${slide:title=Old Pharo printer: class}$
+
+[[[
+OldPharoClassDefinitionPrinter >> classDefinitionString
+	^ forClass needsSlotClassDefinition 
+		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+		ifFalse: [ self basicClassDefinitionString ]
+]]]
+
+[[[
+basicClassDefinitionString
+
+	| stream |
+	stream := (String new: 800) writeStream.
+	forClass superclass
+		ifNotNil: [ stream nextPutAll: forClass superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	stream
+		nextPutAll: forClass kindOfSubclass;
+		store: forClass name.
+	self traitCompositionOn: stream.
+	self instanceVariablesOn: stream.
+	self classVariablesOn: stream.
+	self poolOn: stream.
+	self packageOn: stream.
+	forClass superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream nextPutAll: forClass name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+	^ stream contents
 ]]]
 
 
@@ -161,7 +214,7 @@ ${slide:title=Analysis}$
 -- if necessary legacy printer redirects to fluid printer
 
 
-${slide:title=How to support?}$
+${slide:title=More}$
 
 How to support printing different objects on different printers
 - Traits, Classes, and Metaclasses
