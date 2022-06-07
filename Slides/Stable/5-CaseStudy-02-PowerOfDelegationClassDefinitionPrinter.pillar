@@ -78,7 +78,7 @@ ${slide:title=Solution: Delegating to a class definition printer}$
 
 - Create class definition printers
 - A kind of Strategy
-- A hierarchy of printers + a factory + some double dispatch
+- A hierarchy of printers \+ a factory \+ some double dispatch
 
 [[[
 ClassDefinitionPrinter ( forClass )
