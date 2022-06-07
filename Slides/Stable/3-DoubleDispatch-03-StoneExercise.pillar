@@ -1,6 +1,6 @@
 {
-    "title" : "A starter: Stone Paper Scissors",
-    "slidesid" : "with Double Dispatch",
+    "title" : "A double dispatch starter",
+    "slidesid" : "Stone Paper Scissors",
     "author":"S. Ducasse"
 }
 
@@ -119,9 +119,6 @@ ${slide:title=Stepping back}$
 - We know that a method is executed on a class (here ==Stone==)
 - We SEND another message to the argument to select another method (here ==playAgainstStone==)
 - Two messages to be able to select a method based on its receiver AND argument
-
-
-
 
 
 

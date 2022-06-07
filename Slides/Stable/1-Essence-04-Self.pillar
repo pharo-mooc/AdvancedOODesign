@@ -14,8 +14,8 @@ ${slide:title=Goal}$
 
 ${slide:title=Remeber inheritance}$
 
-- Inheritance of state is static
-- Inheritance of behavior is dynamic
+- Inheritance of ""state"" is ""static"" (done at compile time)
+- Inheritance of ""behavior"" is ""dynamic""
 - In this lecture we focus on the behavior part
 
 ${slide:title=Message sending}$
@@ -102,9 +102,6 @@ ${endColumns}$
 
 
 
-
-
-
 ${slide:title=Let us explore a bit}$
 
 ${columns}$
@@ -124,7 +121,7 @@ ${column:width=40}$
 ${endColumns}$
 
 
-${slide:title=Let us explore a bit}$
+${slide:title=self always represents the receiver}$
 
 
 ${columns}$
@@ -150,7 +147,29 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+${column:width=40}$
+
+[[[
+	A new bar
+	> ...
+	B new bar
+	> ...
+]]]
+
+${endColumns}$
+
+
+
+
+${slide:title=self always represents the receiver}$
+
+${columns}$
+
+${column:width=60}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
 
 ${column:width=40}$
 
@@ -172,8 +191,8 @@ ${column:width=40}$
 +>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
 
 [[[
-    B new bar
-    > 50
+	B new bar
+	> 50
 ]]]
 
 ${column:width=65}$
@@ -243,10 +262,10 @@ ${slide:title=What you should know}$
 
 
 - ==self== always represents the receiver
-- Sending a message is a two-step process:
--# Look up the method matching the message
--# Execute this method on the receiver
+- Sending a message is a ""two-step"" process:
+-# ""Look up"" the method matching the message
+-# Execute this method ""on the receiver""
 - Method lookup maps a message to a method
-- Method lookup starts in the class of the receiver
+- Method lookup starts in the ""class of the receiver""
 -- ...and goes up in the hierarchy
 
