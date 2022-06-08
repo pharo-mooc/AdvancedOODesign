@@ -144,10 +144,11 @@ Trait << #TTranscript
 
 
 
-${slide:title=Builder API role}$
+${slide:title=Builder API roles}$
 
 - a ""starting/creator"" message: to create a kind of accumulator (an holder of arguments)
 -- this one can be omitted when the builder is already created by the framework
+- some configuration/setter objects
 - a ""closing"" message: to perform an action ""once"" the arguments are passed around
 
 
@@ -192,6 +193,10 @@ ${slide:title=Analysis of Fluid API}$
 
 ${slide:title=Conclusion}$
 
+- Three kinds of objects
+-- container creator
+-- setters
+-- closer
 - Fluid API is nice when we face many optional/exclusive parameters
 - Still always think about the builder and closing message. 
 

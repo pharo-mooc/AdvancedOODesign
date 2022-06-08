@@ -1,14 +1,13 @@
 {
-    "title":"From Facade/Singleton to Declaration and Modularity",
-    "subtitle":"",
-    "author":"Stéphane Ducasse"
+    "title":"From Facade/Singleton to declaration and modularity",
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Facade and Singleton are against modularity}$
 
-- A facade should rarely be used.
-- A facade is a global variable!
-- 
+- A Facade should rarely be used.
+- A Facade is often a disguided global variable!
+- Singleton is most of the time not understood and correctly used (see Lectures on Singleton)
 
 ${slide:title=The case of Preferences}$
 
@@ -18,17 +17,18 @@ ${slide:title=The case of Preferences}$
 
 ${slide:title=Challenges}$
 
-- How to make sure that we can have a modular definition
--- One application with only its preferences
-- How do we make sure that domain does not reference to preferences objects and still offers preferences ?
+- How to make sure that we can have a ""modular"" definition
+-- One application with only ""its"" preferences
+- How do we make sure that ""domain"" does ""not"" refer to preferences objects and still can offer preferences to the user?
 
 
 ${slide:title=Looking into the problem}$
 
 Back in time in Squeak 3.8
-- ==Preferences== 
-- Preferences class was references 617 times
-- Every single part was 
+- ==Preferences== (Always be wary about plural class name)
+- Preferences class was referenced 617 times
+- Preferences was a huge dependency attractor 
+-- referring to many other subsystems (reading 3D files, RTF, PNG, Compiler....) 
 
 ${slide:title=UI, Tools,... all referenced Preferences}$
 
@@ -47,6 +47,8 @@ MenuMorph >> initialize
 	popUpOwner := nil.
 	Preferences roundedMenuCorners ifTrue: [self useRoundedCorners]
 ]]]
+
+${slide:title=UI, Tools,... all referenced Preferences}$
 
 [[[
 BasicButton >> label: aString font: aFontOrNil
@@ -82,7 +84,7 @@ Class class >> templateForSubclassOf: priorClassName category: systemCategoryNam
 	category: ''' , systemCategoryName asString , '''']
 ]]]
 
-${slide:title=Even core parts of the system}$
+${slide:title=Even core parts of the system 2}$
 
 [[[
 InputSensor >> duplicateControlAndAltKeysChanged
@@ -98,32 +100,35 @@ InputSensor >> duplicateControlAndAltKeysChanged
 
 ${slide:title=Graphically}$
 
-+.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=80+
++.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=60+
 
 
 ${slide:title=Analysis}$
 
 - Everybody depends on Preferences/Facade
-- The Preferences is not optional
-- Each time the Facade depends on a new item, all the dependent are impacted
-- A clear lost-lost
-- Monolithic
+- The Preferences is ""not optional""
+- Each time the Facade depends on a new item, all the ""dependent are impacted""
+- A clear ""lost-lost""
+- ""Monolithic""
 
 
 ${slide:title=A New Architecture}$
 
-+.>file://figures/Settings-PreferenceModularFlow.pdf|width=80+
++.>file://figures/Settings-PreferenceModularFlow.pdf|width=60+
 
+
+${slide:title=Sound obvious but so true}$
+
+An object should be locally customizable 
+- Think encapsulation
+- My own logic should be made to be customized but with internal reference
 
 ${slide:title=A New Architecture}$
 
 - A class ""defines state / methods"" that implement its customization points
-
 - The class ""declares"" its settings (via description)
-
-- The settings browser collects the setting declaration and builds a UI for the user
-
-- The settings browser ""configure"" objects using settings description
+- The settings browser collects the ""setting declaration"" and builds a UI for the user
+- The settings browser ""configure"" objects ""using settings description""
 
 ${slide:title=In Action: A class implements its customization points}$
 
@@ -151,9 +156,8 @@ JobProgressBarMorph class >> interruptionSetting: aBuilder
 		order: 1
 ]]]
 
-- Using a builder as parameter we avoiddirect references to the classes of Settings.
-- Can be optionally packaged in another package if needed. 
-
+- Using a builder as parameter we avoid direct references to the classes of Settings
+- Can be optionally packaged in another package if needed
 
 ${slide:title=In Action: Settings Browser}$
 
@@ -168,18 +172,18 @@ ${slide:title=Looking at Flow of Control}$
 
 ${slide:title=Analysis}$
 
-- Layered
--- the domain does not depend on the setting framework
--- Settings do not depend on Browser
+""Layered""
+- the domain does not depend on the setting framework
+- Settings do not depend on Browser
 
-- Modular
+""Modular""
 
 
 ${slide:title=About parametrizable}$
 
-- An object should be designed to be parametrized
-- The logic flow should be internal
-- The object logic should not be tight to a preference object
+- An object should be ""designed to be parametrized""
+- The logic flow should be ""internal""
+- The object logic should ""not be tight to a preference object""
 - The object parametrization can be set from an external object (like the Setting browser)
 
 
@@ -188,8 +192,5 @@ ${slide:title=Conclusion}$
 - Architecture should not promote global variable usage
 - Avoid Singleton/Facade, these are anti-patterns
 - Our theory is that Facade is only "useful" for Compiler :)
-
-
-
-
+- Customization should first be internal
 

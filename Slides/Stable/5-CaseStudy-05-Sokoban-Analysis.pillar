@@ -185,8 +185,8 @@ ${slide:title=Analysis}$
 The model only defines ==EmptyBlock== and ==Wall==
 
 - No Player, no target, no box.
-- Too much logic is put in ==EmptyBlock==
-- Too much Ask,  not enough Tell (""Do not Ask, Tell")
+- ""Too much logic"" is put in ==EmptyBlock==
+- Too much Ask, ""not enough Tell"" (""Do not Ask, Tell"")
 
 ${slide:title=With a better model}$	
 
@@ -197,7 +197,8 @@ ${slide:title=With a better model}$
 -- ==Player==
 -- ==Wall==
 
-- We can send messages to the 'correct' object
+- We can send ""messages"" to the 'correct' object
+- We can tell and not ask!
 
 ${slide:title=A nicer solution}$	
 
@@ -327,12 +328,12 @@ NoMove >> updateGameState: aGameState
 
 ${slide:title=Conclusion}$
 
-- Challenge Class
-- Little class hierarchies are good
-- Better many small classes than a big one
-- Challenge kind testing methods
-- Check their use
-- Messages act as a dispatcher
+- ""Challenge"" classes
+- ""Little"" class hierarchies are ""good""
+- Better ""many small classes than a big one""
+- ""Challenge"" kind testing methods
+- ""Check"" their use
+- Messages act as ""dispatcher""
 
 
 

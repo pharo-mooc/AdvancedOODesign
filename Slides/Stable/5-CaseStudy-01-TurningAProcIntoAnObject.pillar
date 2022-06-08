@@ -1,7 +1,6 @@
 {
     "title":"Turning Procedure to Objects",
-    "subtitle":"",
-    "author":""
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Objects are powerful}$
@@ -18,9 +17,8 @@ ${slide:title=Functionality we want}$
 - Printing the hierarchy of class
 
 [[[
-Rectangle printHierarchy
->>> 
-ProtoObject #()
+>>> Rectangle printHierarchy
+'ProtoObject #()
 	Object #()
 
 		Rectangle #(#origin #corner)
@@ -72,20 +70,20 @@ Behavior >> printSubclassesOn: aStream level: level
 
 ${slide:title=Analyis}$
 
-- Procedural decomposition
-- Simple (two methods)
+- ""Procedural"" decomposition
+- ""Simple"" (two methods)
 - State is passed as arguments
 
-What if we need 
+""Does not"" work if we need 
 - To filter subclasses (==RBLintRule printHierarchy==)
 - To cut above a given superclass or if class is from a given package
 - Do not want to see instance variables
 
 ${slide:title=Limits }$
 
-- We will end up with too many arguments
-- We cannot design a fluid interface sending multiple messages to configure the output
-- We may not want or cannot add state to the domain object. 
+- End up with ""too many"" arguments
+- We cannot design a fluid API to ""configure"" the output
+- We may not want or ""cannot"" add state to the domain object 
 -- here we do not want to add state to ==Behavior== just for printing 
 
 ${slide:title=Turning it into an object}$
@@ -124,7 +122,6 @@ Object << #ClassHierarchyPrinter
 ]]]
 
 
-
 API
 - ==doNotShowState==, ==doNotShowSuperclasses==
 - ==limitedToClasses:== to offer specific scope
@@ -133,15 +130,17 @@ API
 
 ${slide:title=Stepping back}$
 
-- We created little objects that can be configured!
-- The object holds the specific state for its computation
+- Created ""little objects"" that can be configured!
+- The object holds the ""specific state"" for its computation
 - The API can extended if needed
 
-- The functionality can be removed from ==Behavior==
-- The functionality can be nicely tested and packaged outside of ==Kernel==
+- Functionality can be removed from ==Behavior==
+- Functionality can be ""nicely tested"" and packaged outside of ==Kernel==
 
 ${slide:title=Further thought}$
 
+- An object is a ""powerful"" entity
+
 - If the functionality needs to behave differently on different objects (Classes, Traits, Metaclasses...) we can use double dispatch between the objects that the printers as it is done in the ==ClassDefinitionPrinter==
 
-- An object is a powerful entity
+
