@@ -9,30 +9,27 @@
 
 ${slide:title=Goal}$
 
-- Think modular
+- Think ""modular""
 - Looking at the class definition printer
 - Check design approach in Pharo
 
+${slide:title=Context and challenges}$
 
-${slide:title=Context: Class Definition}$
-
-- How to support various formats
-- in a modular way
-
-
-${slide:title=Challenges}$
-
-How to support:
--- Old Squeak syntax, Pharo previous and Fluid new one
--- orthogonally to  class, metaclass, trait...
-- How to control the complexity?
+How to support ""various"" class definition formats in a ""modular"" way?
+- Formats:
+-- Old Squeak syntax, old Pharo, and Fluid syntax
+- ""Different"" objects:
+-- class, metaclass, trait...
+- How to ""control"" the complexity?
 -- Slots should not be displayed in Old Pharo
-- How to avoid checks everywhere?
+- How to avoid ""checks"" everywhere?
 - And removal one definition any time without recompilation
 
 
 ${slide:title=First hacked version in Pharo 70/80}$
 
+- Introduction of support for slots was hacked
+- Smell like duplication
 [[[
 ClassDescription >> definition
 	(self needsSlotClassDefinition or: [ Slot showSlotClassDefinition ]) 
@@ -47,7 +44,7 @@ Metaclass >> definition
 	^ self definitionWithoutSlots
 ]]]
 
-Smell like duplication
+
 
 ${slide:title=Hacked in tools too}$
 
@@ -90,22 +87,19 @@ ClassDefinitionPrinter ( forClass )
 
 ${slide:title=Solution: Delegating to a class definition printer}$
 
-+>file://figures/ClassPrinter.pdf|width=80+
++>file://figures/ClassPrinterFluid.pdf|width=100+
 
 
 ${slide:title=The class asks a printer}$
 
 [[[
 ClassDescription >> definitionString
-	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. 
-	A kind of double dispatch since we have multiple printers and multiple entities to be printed."
-
 	^ self definitionPrinter definitionString
 ]]]
+
+The printer factory creates and return a printer for the class.
 [[[	
 ClassDescription >> definitionPrinter
-	"Return a configurated printer associated with the current class definition format."
-
 	^ ClassDefinitionPrinter for: self
 ]]]
 
@@ -115,7 +109,7 @@ ${slide:title=A printer}$
 Knows how to print
 - class (==classDefinitionString==)
 - metaclass (==metaclassDefinitionString==)
-- trait
+- trait (==traitDefinitionString==)
 
 ${slide:title=Fluid printer: a class}$
 
@@ -127,8 +121,7 @@ FluidClassDefinitionPrinter >> classDefinitionString
 			  ifNotNil: [ s nextPutAll: forClass superclass name ]
 			  ifNil: [ s nextPutAll: 'nil' ].
 		self msgAndClassNameOn: s.
-		forClass classLayout isFixedLayout 
-				ifFalse: [ self layoutOn: s ].
+		...
 		...
 		forClass slots ifNotEmpty: [ self slotsOn: s ].
 		forClass classVariables ifNotEmpty: [ self sharedVariablesOn: s ].
@@ -144,59 +137,28 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString
 
 	^ String streamContents: [ :strm |
 		forClass superclass 
-			ifNotNil: [ forClass = ProtoObject class
-							ifFalse: [ 
-								strm 
-									nextPutAll: forClass superclass name;
-									nextPutAll: ' << ';
-									nextPutAll: forClass name ]
-							ifTrue: [ strm 
-									nextPutAll: 'Class class << ';
-									nextPutAll: forClass name ] ]
-			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
+			...
+				strm 
+					nextPutAll: forClass superclass name;
+					nextPutAll: ' << ';
+					nextPutAll: forClass name ]
+			...
 		self lastTraitsOn: strm.
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
 ]]]
 
-${slide:title=Old Pharo printer: class}$
+${slide:title=Old Pharo cannot display slots}$
 
 [[[
 OldPharoClassDefinitionPrinter >> classDefinitionString
 	^ forClass needsSlotClassDefinition 
-		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
-		ifFalse: [ self basicClassDefinitionString ]
-]]]
-
-[[[
-basicClassDefinitionString
-
-	| stream |
-	stream := (String new: 800) writeStream.
-	forClass superclass
-		ifNotNil: [ stream nextPutAll: forClass superclass name ]
-		ifNil: [ stream nextPutAll: 'ProtoObject' ].
-	stream
-		nextPutAll: forClass kindOfSubclass;
-		store: forClass name.
-	self traitCompositionOn: stream.
-	self instanceVariablesOn: stream.
-	self classVariablesOn: stream.
-	self poolOn: stream.
-	self packageOn: stream.
-	forClass superclass ifNil: [ 
-		stream
-			nextPutAll: '.';
-			cr.
-		stream nextPutAll: forClass name.
-		stream
-			space;
-			nextPutAll: 'superclass: nil' ].
-	^ stream contents
+			ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) classDefinitionString ]
+			ifFalse: [ self basicClassDefinitionString ]
 ]]]
 
 
 
-${slide:title=Tool logic}$
+${slide:title=Tool logic is now simpler}$
 
 [[[
 ClassCreationToolMorph >> classTemplate
@@ -207,54 +169,58 @@ ClassCreationToolMorph >> classTemplate
 
 ${slide:title=Analysis}$
 
-- Modular: One format = one printer
-- One printer supports multiple related features (expansion, template, class printing)
-- Support reuse within the hierarchy
-- Defaulting within printers
+- ""Modular"": One format = one printer
+- One printer supports ""multiple"" related features (expansion, template, class printing)
+- Support ""reuse"" within the hierarchy
+- ""Defaulting"" within printers
 -- if necessary legacy printer redirects to fluid printer
 
 
-${slide:title=More}$
+${slide:title=More challenges}$
 
-How to support printing different objects on different printers
+How to support printing ""different"" objects on ""different"" printers
 - Traits, Classes, and Metaclasses
 - Legacy, OldPharo, and Fluid
 
+${slide:title=Solution: Delegating to a class definition printer}$
+
++>file://figures/ClassPrinter.pdf|width=100+
 
 ${slide:title=Double Dispatch}$
 
 [[[
-ClassDefinitionPrinter >> definitionString
-	"The method is part of the double dispatch. It is an extra starting point. 
-	Each entity will select the right definition and call me back.
-	Normally this method is not used because the main point is the class...."
-	
+ClassDefinitionPrinter >> definitionString	
 	^ forClass definitionStringFor: self
 ]]]
 
 [[[
-Class >> definitionStringFor: aConfiguredPrinter
-	^ aConfiguredPrinter classDefinitionString
+Class >> definitionStringFor: aPrinter
+	^ aPrinter classDefinitionString
 
 Trait >> definitionStringFor: aConfiguredPrinter
-	^ aConfiguredPrinter traitDefinitionString
+	^ aPrinter traitDefinitionString
 
-TraitedMetaclass >> definitionStringFor: aConfiguredPrinter
-	^ aConfiguredPrinter traitedMetaclassDefinitionString 
+TraitedMetaclass >> definitionStringFor: aPrinter
+	^ aPrinter traitedMetaclassDefinitionString 
 ]]]
 
 
-${slide:title=Encapsulate printer selection}$
+${slide:title=More tension}$
 
-- Limit reference to specific printers
-- Only reference the superclass
+- Do not want to have direct reference to printers to be able to easily ""remove""  printers in the future
+
+""Solution:""
+- ""Limit"" reference to specific printers
+- Only reference the superclass that acts as a ""factory""
+
+${slide:title=Encapsulate printer selection}$
 
 [[[
 Object << #ClassDefinitionPrinter
-		slots: { #forClass };
-		sharedVariables: { #DisplayEmptySlots . #ShowFluidClassDefinition };
-		tag: 'ClassDefinitionPrinter';
-		package: 'Kernel'
+	slots: { #forClass };
+	sharedVariables: { #DisplayEmptySlots . #ShowFluidClassDefinition };
+	tag: 'ClassDefinitionPrinter';
+	package: 'Kernel'
 ]]]
 
 
@@ -266,7 +232,7 @@ ClassDefinitionPrinter >> new
 ]]]
 
 
-${slide:title=Possibility to refer to legacy definition}$
+${slide:title=Still the possibility to refer to legacy definition}$
 
 [[[
 ClassDescription >> oldDefinition
