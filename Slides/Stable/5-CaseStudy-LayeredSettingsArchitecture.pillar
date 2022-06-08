@@ -1,37 +1,42 @@
 {
-    "title":"From Facade/Singleton to declaration and modularity",
+    "title":"Application settings",
+    "subtitle":"From monolithic to modular",
     "author":"S. Ducasse"
 }
 
-${slide:title=Facade and Singleton are against modularity}$
+${slide:title=Goals}$
 
-- A Facade should rarely be used.
-- A Facade is often a disguided global variable!
-- Singleton is most of the time not understood and correctly used (see Lectures on Singleton)
+- Think about ""customizable"" elements
+- Think about modularity
+- Study one real case: Preference in Squeak and Pharo
+
+
 
 ${slide:title=The case of Preferences}$
 
-+.>file://figures/SettingBrowser.png|width=60+
-
-
++.>file://figures/SettingBrowser.png|width=70+
 
 ${slide:title=Challenges}$
 
-- How to make sure that we can have a ""modular"" definition
--- One application with only ""its"" preferences
-- How do we make sure that ""domain"" does ""not"" refer to preferences objects and still can offer preferences to the user?
+- How to make sure that we can have 
+-- One application with only ""its"" preferences and its dependencies
+-- A ""modular"" definition of preferences
+- How do we make sure that 
+-- ""domain"" objects do ""not"" refer to preference objects and 
+-- still can offer preferences to the user?
 
 
 ${slide:title=Looking into the problem}$
 
 Back in time in Squeak 3.8
-- ==Preferences== (Always be wary about plural class name)
-- Preferences class was referenced 617 times
-- Preferences was a huge dependency attractor 
+- ==Preferences== was a facade managing preferences
+- ==Preferences== class was referenced 617 times
+- ==Preferences== was a huge dependency attractor 
 -- referring to many other subsystems (reading 3D files, RTF, PNG, Compiler....) 
 
-${slide:title=UI, Tools,... all referenced Preferences}$
 
+
+${slide:title=UI, Tools,... all referenced Preferences}$
 
 [[[
 MenuMorph >> initialize
@@ -68,9 +73,7 @@ ${slide:title=Even core parts of the system}$
 
 [[[
 Class class >> templateForSubclassOf: priorClassName category: systemCategoryName 
-	"Answer an expression that can be edited and evaluated in order to define a new class, 
-	given that the class previously looked at was as given"
-
+	
 	Preferences printAlternateSyntax 
 		ifTrue: [^ priorClassName asString, ' subclass (#NameOfSubclass)
 	instanceVariableNames ('''')
@@ -88,7 +91,7 @@ ${slide:title=Even core parts of the system 2}$
 
 [[[
 InputSensor >> duplicateControlAndAltKeysChanged
-	"The Preference for duplicateControlAndAltKeys has changed."
+
 	(Preferences
 		valueOfFlag: #swapControlAndAltKeys
 		ifAbsent: [false]) ifTrue: [
@@ -98,44 +101,57 @@ InputSensor >> duplicateControlAndAltKeysChanged
 	self installKeyDecodeTable.
 ]]]
 
-${slide:title=Graphically}$
 
-+.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=60+
+
+${slide:title=Externalized control flow}$
+
++.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=70+
 
 
 ${slide:title=Analysis}$
 
-- Everybody depends on Preferences/Facade
+- ""Everybody"" depends on Preferences
 - The Preferences is ""not optional""
-- Each time the Facade depends on a new item, all the ""dependent are impacted""
+- Each time the Preferences class depends on a new item, all the ""dependent are impacted""
 - A clear ""lost-lost""
 - ""Monolithic""
 
+${slide:title=Facade and Singleton are against modularity}$
 
-${slide:title=A New Architecture}$
+- A Facade should ""rarely"" be used
+-- Propose a single entry point to a subsystem
+-- Compiler is probably the only working example
+- A Facade is often a disguided ""global variable""!
+- Singleton is most of the time not understood and correctly used (see Lectures on Singleton)
 
-+.>file://figures/Settings-PreferenceModularFlow.pdf|width=60+
 
-
-${slide:title=Sound obvious but so true}$
-
-An object should be locally customizable 
-- Think encapsulation
-- My own logic should be made to be customized but with internal reference
-
-${slide:title=A New Architecture}$
+${slide:title=A new architecture}$
 
 - A class ""defines state / methods"" that implement its customization points
 - The class ""declares"" its settings (via description)
 - The settings browser collects the ""setting declaration"" and builds a UI for the user
 - The settings browser ""configure"" objects ""using settings description""
 
+${slide:title=Internal control flow}$
+
++.>file://figures/Settings-PreferenceModularFlow.pdf|width=90+
+
+
+${slide:title=Sound obvious but so true}$
+
+An object should be ""locally"" customizable 
+- Think about encapsulation
+- As a customisable element, I should be designed to ""be customized"" without refering to external global objects
+
+
+
 ${slide:title=In Action: A class implements its customization points}$
 
 [[[
 JobProgressBarMorph >> isInterruptable 
 	^ self class isInterruptable
-
+]]]
+[[[
 JobProgressBarMorph class >> isInterruptable
 	^ IsInterruptable ifNil: [ IsInterruptable := true ]
 ]]]
@@ -165,9 +181,9 @@ ${slide:title=In Action: Settings Browser}$
 
 - Use the settings to ""configure"" the objects.
 
-${slide:title=Looking at Flow of Control}$
+${slide:title=Layered architecture}$
 
-+.>file://figures/Settings-PreferenceModularFlow.pdf|width=80+
++.>file://figures/SettingArchitecture.pdf|width=80+
 
 
 ${slide:title=Analysis}$
