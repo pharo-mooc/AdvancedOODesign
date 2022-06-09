@@ -1,47 +1,49 @@
 {
-    "title":"Reifying and delegating behavior",
-    "subtitle":"A case study",
-    "slidesid": "",
+    "title":"Reification and delegation",
+    "subtitle":"Microdown in Pillar case study",
     "author":"S. Ducasse"
 }
 
 
 ${slide:title=Goals}$
 
-- Study a concrete case
-- Study introduction of a new object
-- Show that delegation creates dispatch spaces
-- Modular in addition
+- Creating specific objects supports delegation
+- Delegation creates ""dispatch"" spaces (Strategy Design Pattern)
+- Study a concrete case: Pillar handing now Microdown format
+- Think about modularity
 
 
 ${slide:title=Case study: introducing .md file in Pillar}$
 
-- Pillar used .pillar file containing Pillar text, 
-- Now there is .md file containing Microdown text
+
+""Existing""
+- Pillar is a document compilation chain to produce books, slides, sites
+- Pillar used .pillar file containing Pillar text
+""New requirement"": Now Pillar should handle .md files containing Microdown text
+- How to support this new requirement?
 
 ${slide:title=Pillar's .pillar file management}$
 
-- How to get a parsed document?
-
+How to get a document parsed?
 - We ask the parser!
 - The parser turns pillar file into a document tree
-- There is ONLY one parser associated to a document
-- The idea is to avoid to hardcode everywhere PRParser
-- Worked for trying different versions of PetitParser parser
+- There is ""only one"" parser associated to a document
 
 [[[
 PRDocument parser parseFile: aFileReference
 ]]]
+
+- It avoids to hardcode ==PRParser== everywhere 
+- Worked to substittute different versions of PetitParser parser
 
 
 ${slide:title=Case study: Pillar supports .pillar }$
 
 [[[	
 PRAbstractOutputDocument >> buildOn: aPRProject 
-	
+
 	| parsedDocument transformedDocument writtenFile |
 	parsedDocument := self parseInputFile: file.
-	parsedDocument properties: (self metadataConfigurationForDocument: parsedDocument).
 	transformedDocument := self transformDocument: parsedDocument.
 	writtenFile := self writeDocument: transformedDocument.
 	self postWriteTransform: writtenFile.

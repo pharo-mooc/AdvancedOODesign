@@ -114,6 +114,30 @@ Stone >> playAgainstStone
 ]]]
 
 
+
+${slide:title=In total}$
+
+[[[
+Stone >> vs: anotherTool
+	^ anotherTool playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+>> ^ #paper
+]]]
+
+[[[
+Scissors >> playAgainstStone
+	^ #stone
+]]]
+
+[[[
+Stone >> playAgainstStone
+	^ #draw
+]]]
+
+
 ${slide:title=Stepping back}$
 
 - We know that a method is executed on a class (here ==Stone==)
