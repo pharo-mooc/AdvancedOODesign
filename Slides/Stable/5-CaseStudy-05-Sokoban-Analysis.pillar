@@ -1,8 +1,7 @@
 {
     "title":"Learning from a Sokoban implementation",
     "subtitle":"",
-    "slidesid":"",
-    "author":""
+    "author":"S.Ducasse"
 }
 
 ${slide:title=Goal}$
@@ -140,24 +139,6 @@ Classes define:
 
 Let us check the way this API is used
 
-%${slide:title=Too many ifs....}$
-
-%[[[
-%GameView >> drawBlock: aBlock on: aCanvas
-%	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
-%	aBlock isEmptyBlock ifTrue: [ 
-%		aBlock hasPlayer ifTrue: [ 
-%			aBlock hasTarget ifTrue: [ self drawTargetAndPlayer: aCanvas ].
-%			aBlock hasTarget ifFalse: [ self drawPlayer: aCanvas ]].
-%		aBlock hasPlayer ifFalse: [ 
-%			aBlock hasBox ifTrue: [ 
-%				aBlock hasTarget ifTrue: [ self drawTargetAndBox: aCanvas ].
-%				aBlock hasTarget ifFalse: [ self drawBox: aCanvas ] ].
-%			aBlock hasBox ifFalse: [ 
-%					aBlock hasTarget ifTrue: [ self drawTarget: aCanvas ].
-%					aBlock hasTarget ifFalse: [ self drawEmptyBlock: aCanvas ] ].
-%	]
-%]]]
 
 ${slide:title=Too many ifs....}$
 
@@ -200,7 +181,8 @@ ${slide:title=With a better model}$
 - We can send ""messages"" to the 'correct' object
 - We can tell and not ask!
 
-${slide:title=A nicer solution}$	
+
+${slide:title=A first nicer solution}$	
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
@@ -213,12 +195,42 @@ Becomes
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	aBlock drawOn: aCanvas view: self
+	aBlock drawOn: aCanvas
 
-Wall >> drawOn: aCanvas view: aView
+Wall >> drawOn: aCanvas 
+	"Cairo code"
+
+EmptyBlock >> drawOn: aCanvas
+	"Cairo code"
+]]]
+
+
+
+${slide:title=A solution supporting multiple canvases}$
+
+To be able to have the rendering supporting multiple back-ends (morphic, Cairo...)
+drawing should not be in the Block classes
+
+
+${slide:title=A solution supporting multiple canvases}$
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	aBlock isWall ifTrue: [ self drawWall: aCanvas ].
+	aBlock isEmptyBlock ifTrue: [ 
+	aBlock hasPlayer ifTrue: [ ...
+]]]
+
+Becomes
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	aBlock drawOn: aCanvas
+
+Wall >> drawOn: aCanvas 
 	aView drawWall: aCanvas
 
-EmptyBlock >> drawOn: aCanvas view: aView
+EmptyBlock >> drawOn: aCanvas
 	aView drawEmptyBlock: aCanvas
 ]]]
 
@@ -248,6 +260,7 @@ ${slide:title=Disguided kind testing method}$
 [[[
 Wall >> isWall
 	^ true
+	
 EmptyBlock >> isWall
 	^ false
 ]]]
@@ -284,8 +297,10 @@ ${slide:title=Let us study the API}$
 [[[
 MoveResult >> isMove
 	^ false
+	
 MoveResult >> isPush
 	^ false
+	
 MoveResult >> isNoMove
 ...
 ]]]
@@ -297,23 +312,23 @@ ${slide:title=Checking testing method use}$
 
 [[[
 GameState >> moveBy: aDirection
-	| moveResult |
-	moveResult := maze moveBy: aDirection.
-	moveResult isMove ifTrue: [ moves := moves + 1 ].
-	moveResult isPush ifTrue: [ 
+	| move |
+	move := maze moveBy: aDirection.
+	move isMove ifTrue: [ moves := moves + 1 ].
+	move isPush ifTrue: [ 
 		pushes := pushes + 1.
 		moves := moves + 1 ].
-	self addMoveResult: moveResult.
+	self addMove: move
 ]]]
 
 ${slide:title=Do not ask, tell}$
 
 [[[
 GameState >> moveBy: aDirection
-	| moveResult |
-	moveResult := maze moveBy: aDirection.
-	moveResult updateGameState: self.	
-	self addMoveResult: moveResult.
+	| move |
+	move := maze moveBy: aDirection.
+	move updateGameState: self.	
+	self addMove: move
 
 Move >> updateGameState: aGameState
 	aGameState incrementMoves
@@ -323,7 +338,7 @@ Push >> updateGameState: aGameState
 	aGameState increasePushes
 
 NoMove >> updateGameState: aGameState 
-	self 
+	self
 ]]]
 
 ${slide:title=Conclusion}$

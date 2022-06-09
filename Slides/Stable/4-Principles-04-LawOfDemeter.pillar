@@ -10,7 +10,7 @@ ${slide:title=Goal and outline}$
 
 - Think about Coupling
 - Present Law of Demeter
-- ''Move Behavior close to Data'' Reengineering Pattern
+- 'Move Behavior close to Data' from Object-Oriented Reengineering Pattern book
 - Tradeoffs
 
 
@@ -146,6 +146,8 @@ ${slide:title=LOD is a \*\*heuristic\*\*}$
 
 ${slide:title=LOD can produce bloated APIs}$
 
+You would have to create around 50 methods per instance variable holding a collection
+
 [[[
 Object subclass: #FMMethods 
 	instVar: 'senders'
@@ -165,6 +167,9 @@ FMMethods >> isEmpty
 	^ senders isEmpty
 ...
 ]]]
+
+
+
 
 
 ${slide:title=Conclusion}$
