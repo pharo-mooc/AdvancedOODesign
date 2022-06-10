@@ -58,9 +58,11 @@ public void go(int distance){
 ]]]
 
 ${slide:title=Analysis (2)}$
+- Have to recreate explicitly a point
 - Arithmetic of Points is defined ""outside"" of them!
 -- Points cannot sum themselves
--- Points cannot shape themselves (rounded, normal, reciprocal,...)
+-- Points cannot shape themselves (rounded, ...)
+
 - When an object exposes a shallow API, it favors ""logic duplication"" in clients!
 
 
@@ -151,30 +153,30 @@ Point >> degrees
 Nobody wants to be forced to reimplement it. 
 
 
-${slide:title=Polymorphic with related concepts}$
+%${slide:title=Polymorphic with related concepts}$
 
-[[[
-Point >> asPoint
-	"Answer the receiver itself."
+%[[[
+%Point >> asPoint
+%	"Answer the receiver itself."
+%
+%	^ self
+%]]]
 
-	^ self
-]]]
+%[[[	
+%Number >> asPoint
+%	"Answer a Point with the receiver as both coordinates; often used to 
+%	supply the same value in two dimensions, as with symmetrical gridding 
+%	or scaling."
+%
+%	^ self @ self
+%]]]
 
-[[[	
-Number >> asPoint
-	"Answer a Point with the receiver as both coordinates; often used to 
-	supply the same value in two dimensions, as with symmetrical gridding 
-	or scaling."
-
-	^ self @ self
-]]]
-
-This way we can manage list of objects and easily convert them to point
-
-[[[
-{ 1 . 2 . 3 . 33@33 . 4} collect: [ :a | a asPoint ]
->> {1@1 . 2@2 . 3@3 . 33@33 . 4@4} 
-]]]
+%This way we can manage list of objects and easily convert them to point
+%
+%[[[
+%{ 1 . 2 . 3 . 33@33 . 4} collect: [ :a | a asPoint ]
+%>> {1@1 . 2@2 . 3@3 . 33@33 . 4@4} 
+%]]]
 
 
 ${slide:title=Point arimethic}$
