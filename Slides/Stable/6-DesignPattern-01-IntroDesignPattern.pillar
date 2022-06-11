@@ -1,14 +1,12 @@
 {
-    "title":"An Introduction to Design Patterns",
-    "author":"S. Ducasse",
-    "subtitle": " ", 
-    "slidesid":" "
+    "title":"An introduction to design patterns",
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
 - What are design patterns?
-- Why?
+- Why they are good
 - Patterns are not panacea 
 - Example
 
@@ -39,7 +37,7 @@ Design patterns are ''recurrent'' solutions to design ''problems''
 - Identification of similar problems at ''design'' level
 - Experts solved ''recurring problems'' in similar ways
 - There are pros and cons
-- Design Patterns are literature: ''Read'' them!
+- Design Patterns are literature: ''Read them!''
 
 ${slide:title=What are design patterns?}$
 
@@ -73,7 +71,7 @@ ${slide:title=What design patterns are not}$
 
 ${slide:title=Elements of a pattern}$
 
-- ""Pattern name"": Increase of design vocabulary
+- ""Pattern name"": Increase design vocabulary
 - ""Pattern intent"": Describe the goal
 - ""Problem description"": When to apply it, in what context to use it
 - ""Solution description"" (generic !):
@@ -90,9 +88,11 @@ ${slide:title=Example: Strategy}$
 - Encapsulate each in a separate class and 
 - Define each class with the ''same'' interface so that they can be ''interchangeable''
 
-${slide:title=Essence of Strategy possible implementation}$
+${slide:title=Essence of Strategy}$
 
-+.>file://figures/DP-Strategy.pdf|width=90+
+A possible implementation
+
++.>file://figures/DP-Strategy.pdf|width=100+
 
 - Variation: Passing or not the user to the strategy?
 
@@ -112,7 +112,7 @@ ${slide:title=Some pattern categories}$
 
 ${slide:title=Some creational patterns}$
 
-- ""Abstract factory""(how to create objects)
+- ""Abstract factory"" (how to create objects)
 - ""Builder"" (provide a programmatic way to create objects)
 - Factory Method
 - Prototype
@@ -128,7 +128,7 @@ ${slide:title=Some structural patterns}$
 - ""Flyweight"" (how to avoid creating too many objects)
 - Proxy
 
-${slide:title=Some structural patterns}$
+${slide:title=Some behavioral patterns}$
 
 - Chain of responsibility
 - ""Command"" (reify operations)
@@ -141,7 +141,7 @@ ${slide:title=Some structural patterns}$
 - ""Strategy"" (delegate behavior)
 - ""Template Method"" (hook/template)
 - ""Visitor"" (first class operation on composite)
-
+- ""Null Object"" 
 
 ${slide:title=Alert!}$
 
