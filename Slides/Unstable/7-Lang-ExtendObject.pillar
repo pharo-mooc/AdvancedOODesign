@@ -1,8 +1,6 @@
 {
 	"title":"About extending objects",
-	"subtitle":" ",
-	"author":"S. Ducasse",
-	"slidesid":"2022"
+	"author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$

@@ -5,7 +5,7 @@
 
 ${slide:title=Goal}$
 
-- Think about intermediary object creation
+- Think about ""intermediary object creation""
 - How to avoid spurious objects
 - ==asString== and ==printString== inside ==printOn:==
 
@@ -14,15 +14,9 @@ ${slide:title=printString: setting the stage}$
 
 [[[
 Object >> printString
-		"Answer a String whose characters are a description of the receiver. 
-		If you want to print without a character limit, use fullPrintString."
-
-		^ self printStringLimitedTo: 50000
-		
+	^ self printStringLimitedTo: 50000
+	
 Object >> printStringLimitedTo: limit
-	"Answer a String whose characters are a description of the receiver.
-	If you want to print without a character limit, use fullPrintString."
-
 	^self printStringLimitedTo: limit using: [:s | self printOn: s]
 ]]]
 
