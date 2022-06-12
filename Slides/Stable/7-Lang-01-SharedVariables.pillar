@@ -1,28 +1,29 @@
 {
-	"title":"Shared Variables",
-	"subtitle":"a language construct",
-	"author":"S. Ducasse",
-	"slidesid":""
+	"title":"Shared variables",
+	"subtitle":"101 lectures on a language construct",
+	"author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
-- Revisit Shared Variables (e.g., ClassVariables in Smalltalk jargon)
+- Revisit ''shared'' variables (e.g., ClassVariables in Smalltalk jargon)
 - Think about scope of sharing
 
 ${slide:title=Instance variables are local to one object}$
 
 
-- An instance variable value is only accessible to the object
+- An instance variable value is ""only accessible and local"" to the object it belongs to
 - If you modify an instance variable, you only modify that variable
 No news!
 
 ${slide:title=Shared variables are shared by all the instances of a hierarchy}$
 
-- All the instances of a class and its subclasses share the SAME shared variable
-- If you modify a shared variables it impacts all the instances
+- ""All"" the instances of a class and its subclasses ""share the SAME"" shared variable
+- If you modify a shared variables, it impacts all the instances
 - A shared variable is usually initialized at class load time (class initialize method)
-- In Smalltalks, shared variables are called ClassVariables.
+- shared variables
+-- called ClassVariables in Smalltalk
+-- called SharedVariables in Pharo
 
 ${slide:title=Color's ComponentMask is a shared variable}$
 
@@ -46,7 +47,8 @@ ${slide:title=Shared variables are accessible from both instance and class metho
 
 [[[
 Color >> setRed: r green: g blue: b 
-	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  
+	"Initialize this color's r, g, and b components to the given 
+	values in the range [0.0..1.0].  
 	Encoded in a single variable as 3 integers in [0..1023]."
 	
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -180,5 +182,5 @@ There is  one instance for ''EACH'' of all the subclasses (potentially the same 
 
 ${slide:title=Conclusion}$
 
-- Pay attention modifying shared variables potentially impacts many objects.
-- Can be used to support different sharing optimization (see other lectures)
+- Pay attention modifying shared variables potentially impacts many objects
+- Can be used to support different sharing optimization (see other Lectures)
