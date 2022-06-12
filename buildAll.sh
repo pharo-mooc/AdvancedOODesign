@@ -1,6 +1,6 @@
 mkdir __results
 
-for OUTPUT in $(find Slides -name '*.pillar')
+for OUTPUT in $(find Slides/Stable -name '*.pillar')
 do
 	x=$OUTPUT
 	echo $x

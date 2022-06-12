@@ -1,12 +1,13 @@
 {
-    "title":"Basic about asString and printString",
+    "title":"Using well asString and printString",
+    "subtitle":"the stream interplay",
     "author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
 - Think about ""intermediary object creation""
-- How to avoid spurious objects
+- How to avoid creating spurious objects
 - ==asString== and ==printString== inside ==printOn:==
 
 
@@ -20,7 +21,62 @@ Object >> printStringLimitedTo: limit
 	^self printStringLimitedTo: limit using: [:s | self printOn: s]
 ]]]
 
-${slide:title=printString creates its own stream!}$
+${slide:title=printStringLimitedTo:using:}$
+
+==streamContents: [ :s | self printOn: s ]== creates a stream and gather object textual representation
+
+[[[
+Object >> printStringLimitedTo: limit
+   | limitedString |
+   limitedString := String
+                                        streamContents: [ :s | self printOn: s ]
+                                        limitedTo: limit.
+   limitedString size < limit ifTrue: [ ^ limitedString ].
+   ^ limitedString , '...etc...'
+]]]
+
+
+
+
+
+
+${slide:title=The case of displayStringOn:}$
+
+- When we get a stream, better use it directly
+[[[
+MessageTally >> displayStringOn: aStream
+	self displayIdentifierOn: aStream.
+	aStream 
+		nextPutAll: ' (';
+		nextPutAll: self tally printString;
+		nextPutAll: ')'
+]]]
+
+==self tally printString==
+- Creates a new stream
+- Get its contents to be able to put in the first stream
+
+${slide:title=Better}$
+
+[[[
+MessageTally >> displayStringOn: aStream
+	self displayIdentifierOn: aStream.
+	aStream 
+		nextPutAll: ' (';
+		print: self tally;
+		nextPutAll: ')'
+]]]
+
+[[[
+Stream >> print: anObject
+	"Have anObject print itself on the receiver."
+
+	anObject printOn: self
+]]]
+
+- No creation of intermediary streams
+
+${slide:title=Another case of misuse}$
 
 [[[
 printProtocol: protocol sourceCode: sourceCode
@@ -50,41 +106,8 @@ printProtocol: protocol sourceCode: sourceCode
 			nextPutAll: sourceCode ]	
 ]]]
 
-[[[
-Stream >> print: anObject
-	"Have anObject print itself on the receiver."
 
-	anObject printOn: self
-]]]
 
-${slide:title=The case of displayStringOn:}$
-
-- When we get a stream, better use it directly
-[[[
-MessageTally >> displayStringOn: aStream
-	self displayIdentifierOn: aStream.
-	aStream 
-		nextPutAll: ' (';
-		nextPutAll: self tally printString;
-		nextPutAll: ')'
-]]]
-
-==self tally printString==
-- Creates a new stream
-- Get its contents to be able to put in the first stream
-
-${slide:title=Better}$
-
-[[[
-MessageTally >> displayStringOn: aStream
-	self displayIdentifierOn: aStream.
-	aStream 
-		nextPutAll: ' (';
-		print: self tally;
-		nextPutAll: ')'
-]]]
-
-- No creation of intermediary streams
 
 
 ${slide:title=About asString}$
@@ -98,10 +121,13 @@ Object >> asString
 	^ self printString
 ]]]
 
+- ==asString== should be used when we convert an object to its string representation
+- now check before calling it inside a ==streamContents==
+
 
 ${slide:title=Conclusion}$
 
-- Check protocols
+- Check protocols (==printString==, ==printOn:==, ==asString==)
 - Read code around
 - Streams are powerful containers
 
