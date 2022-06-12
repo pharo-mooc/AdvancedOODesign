@@ -1,9 +1,15 @@
 {
   "title":"Hooks and Template",
-  "subtitle":"The heart of OOP",
+  "subtitle":"One of cornerstone of OOP",
   "author": "S. Ducasse"
 }
 
+
+${slide:title=Goal/Outline}$
+
+- Hook and Template
+- printString/printOn: case
+- copy case
 
 ${slide:title=Remember...}$
 
@@ -15,13 +21,21 @@ ${slide:title=Remember...}$
 ${slide:title=The template method}$
 
 - A template method specifies a skeleton with hooks
-- hooks are places to be customized by subclasses
-- hooks may or may not have a default behavior
+- Hooks are places to be customized by subclasses
+- Hooks may or may not have a default behavior
 
 +>file://figures/hookAndTemplate.png|width=85+
 
-${slide:title=printString: A template method}$
 
+${slide:title=Principle}$
+
++>file://figures/SelfIsDynamic.pdf|width=40+
+
+
+
+${slide:title=Studying the printString template method}$
+
+Example of ==printString==
 [[[
 >>> (Delay forSeconds: 10) printString
 'a Delay(10000 msecs)'
@@ -45,7 +59,7 @@ Object >> printStringLimitedTo: limit
    ^ limitedString , '...etc...'
 ]]]
 
-${slide:title=A default hook: printOn:}$
+${slide:title=printOn: A default hook}$
 
 [[[
 >>> Node new printString
@@ -67,7 +81,7 @@ Object >> printOn: aStream
       nextPutAll: title
 ]]]
 
-${slide:title=printOn: Refinement}$
+${slide:title=Hook refinement}$
 
 [[[
 >>> (Delay forSeconds: 1) printString
@@ -84,7 +98,7 @@ Delay >> printOn: aStream
       nextPutAll: ' msecs)'
 ]]]
 
-${slide:title=printOn: Redefinition}$
+${slide:title=Hook redefinition}$
 
 [[[
 >>> true not printString
@@ -97,7 +111,7 @@ False >> printOn: aStream
    aStream nextPutAll: 'false'
 ]]]
 
-${slide:title=printOn: Redefinition}$
+${slide:title=Hook redefinition}$
 
 [[[
 >>> 1 to: 100
@@ -131,7 +145,12 @@ ${slide:title=Object >> copy}$
 
 [[[
 Object >> copy
-  "Answer another instance just like the receiver. Subclasses typically override postCopy. Copy is a template method in the sense of Design Patterns. So do not override it. Override postCopy instead. Pay attention that normally you should call postCopy of your superclass too."
+  "Answer another instance just like the receiver.
+  Subclasses typically override postCopy.
+  Copy is a template method in the sense of Design Patterns.
+  So do not override it. Override postCopy instead. P
+  ay attention that normally you should call postCopy of your superclass too."
+  
     ^ self shallowCopy postCopy
 ]]]
 
@@ -146,7 +165,11 @@ ${slide:title=Default hook}$
 
 [[[
 Object >> postCopy
-  "I'm a hook method in the sense of Design Patterns TemplateHook/Methods. I'm called by copy. self is a shallow copy, subclasses should copy fields as necessary to complete the full copy"
+  "I'm a hook method in the sense of Design Patterns Template/Hook Method. 
+  I'm called by copy. 
+  self is a shallow copy, subclasses should copy fields as necessary to 
+  complete the full copy"
+  
   ^ self
 ]]]
 
@@ -166,7 +189,7 @@ Bag >> postCopy
 ]]]
 
 - ==contents== is a ==Dictionary==
-- ==postCopy== recursively invoke copy on dictionary
+- ==postCopy== recursively invoke ==copy== on the dictionary
 
 ${slide:title=Dictionary >> postCopy: Deeper copy}$
 
@@ -181,6 +204,7 @@ Dictionary >> postCopy
 ${slide:title=Conclusion}$
 
 - Hooks and Template is a very common design pattern
-- self-send a message defines a hook
-- Sending a message to another object opens space for dispatch
-- Sending a message increases potential reuse
+- Template method sets the context
+- Hooks specify variations
+- A self-send message defines a hook
+- Sending a message to another object opens space for dispatch (see Strategy Design lecture)
