@@ -1,8 +1,7 @@
 {
 	"title":"Visitor",
 	"subtitle":"Modular and extensible first class actions",
-	"author":"S. Ducasse",
-	"slidesid":""
+	"author":"S. Ducasse"
 }
 
 
@@ -10,16 +9,23 @@ ${slide:title=Goal}$
 
 - Studying examples
 - Understanding Visitor
-- Example
 - Pros and Cons 
 
 ${slide:title=Example: basic arithmetic expressions}$
+
+${columns}$
+
+${column:width=50}$
 
 Imagine a simple mathematical system
 - a Composite 
 - with number and operation expressions 
 
-+.>file://figures/Visitor-ExpressionHierarchy.pdf|width=40+
+${column:width=50}$
+
++.>file://figures/Visitor-ExpressionHierarchy.pdf|width=80+
+
+${endColumns}$
 
 ${slide:title=Some expressions}$
 
@@ -69,7 +75,7 @@ ${slide:title=First design analysis}$
 What if we need a stack to print well the expressions?
 - Should we define the stack ""in"" the expression classes even if this is related ""only"" to print?
 
-Why should we ""mix"" the information about the treatment of items and items themselves?
+Should we ""mix"" the information about the treatment of items and the items themselves?
 - What if we need a table for mathematical expressions ""specific"" to the LaTeX generation?
 - What if we need a table for mathematical expression ""specific"" to the RDF generation?
 
@@ -97,14 +103,15 @@ Putting all the behavior inside the domain objects
 ${slide:title=Alternate design: using a visitor}$
 
 A ""Visitor"":
-- decouples operation from the structure
-- represents an operation
+- ""decouples"" operation from the structure
+- ""represents"" an operation
 
-It:
-- supports modularity
+
+- Supports ""modularity""
 -- can package visitors in separate packages
-- supports extension
+- Supports ""extension""
 -- defines an extension protocol (set of messages to be defined)
+-- new visitors are easy to define
 
 
 
@@ -119,13 +126,27 @@ ${slide:title=Visitor's design}$
 +.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=80+
 
 
-${slide:title=Visitor + Composite}$
+
+${slide:title=Visitor \+ Composite}$
 
 A visitor requires a structure to perform different actions based on the kind of element
-- Perfect match with a composite
-- Uses double dispatch
+- ""Perfect"" match with a composite
+- ""Uses double dispatch""
 
 A visitor separates a treatment from the data structure (Composite) it applies to.
+
+${slide:title=Based on double dispatch}$
+
+
+Each composite element accepts a visitor and tell it how to visit it
+
+[[[
+X >> accept: aVisitor
+	aVisitor visitX: self
+]]]
+
+Key to avoid terrible conditional checks
+
 
 
 ${slide:title=Example: Evaluator Visitor}$
@@ -240,18 +261,18 @@ Examples:
 ${slide:title=When using a Visitor is challenging}$
 
 Changing node elements
-- If the elements of the composite change, you will have to change all your visitors
+- If the elements of the composite ""change"", you will have to change ""all"" your visitors
 - Problem known as the expression problems in statically-typed languages
 
 
 ${slide:title=Conclusion}$
 
-Pros:
+""Pros:""
 - Visitor is a good pattern
 - It provides modular and extensible design
 - Double dispatch makes it plug and play
 
-Cons: 
-- It is complex
+""Cons:""
+- Can look more complex
 - It is not adapted to changing structures
 
