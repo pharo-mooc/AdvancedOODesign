@@ -1,21 +1,22 @@
 {
     "title":"Blocks vs. Objects",
     "subtitle":"Rethinking common abstractions",
-    "author":"Stéphane Ducasse"
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Goals}$
 
+
 - Thinking about API
-- Rethinking block usage
+- ""Rethinking"" block usage
 - Blocks are powerful and handy
-- Small objects are better in the long run
+- Small objects are ""better"" in the long run
 
 
 ${slide:title=Blocks are powerful}$
 
-Blocks support
-- Central to Pharo syntax
+Blocks
+- Central to Pharo syntax and object model
 - Iterators
 - New iterator definition
 - DSL like APIs
@@ -24,21 +25,16 @@ Blocks support
 ${slide:title=Central to message based syntax}$
 
 - Remember blocks freeze execution and give power to decide when to execute
-- Block execution controlling behavior are key for Pharo compact syntax
+- Controlling behavior of block execution is ""key"" for Pharo ""compact"" syntax
 
 [[[
 False >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
-	"Answer the value of falseAlternativeBlock. Execution does not
-	actually reach here because the expression is compiled in-line."
 	^ falseAlternativeBlock value
 ]]]
 
 
 [[[
 True >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock 
-	"Answer with the value of trueAlternativeBlock. Execution does not 
-	actually reach here because the expression is compiled in-line."
-
 	^ trueAlternativeBlock value
 ]]]
 
@@ -94,7 +90,7 @@ GLMCompositePresentation new tabulator with: [ :t |
 
 ${slide:title=Stepping back}$
 
-Blocks are on the spot poor literal objects
+Blocks are ""on the spot poor literal"" objects
 - What is the difference between a block and a simple object understanding ==value==?
 - With a block, no need to create a class, no need to define a method
 But...
@@ -102,32 +98,32 @@ But...
 ${slide:title=Analysis}$
 
 Blocks are nice but not a panacea:
-- Storing and changing state is cumbersome
+- Storing and changing state is ""cumbersome""
 - One single message: ==value==!
-- They do not expose well the arguments they need
+- They do not ""expose well"" the arguments they need
 - It makes scripting easy but extension difficult
 - Having richer API is impossible
-
 
 Let us study the limits!
 
 ${slide:title=Blocks are black boxes}$
 
 - You can only send the messages ==value*== to a block.
-- It is hard and cumbersome to store and access state in a block as in an object
+- It is ""hard and cumbersome"" to store and access state in a block as in an object
 -- imagine passing a block around and want to accumulate information
--- you can't
+-- you can't!
 
 ${slide:title=Arguments?}$
 
 - What if you want optional arguments?
 -- then you are doomed to chose which arguments and which order
 - ==cull:== is reflective by nature
+-- Avoid to use it
 
 
 ${slide:title=Argument order requires to know the block definition!}$
 
-- Blocks do not expose well the arguments they need
+Blocks do not expose well the arguments they need
 
 [[[
 aCol inject: default into: [:a :b | ... ]
@@ -138,7 +134,7 @@ What is ==a== and ==b==?
 
 ${slide:title=Block limits}$
 
-- Saving blocks is a painful
+- Saving blocks is a ""painful""
 - Adding behavior (i.e., offering another message) is impossible
 - Extension via superclass / hook of block behavior is impossible
 
@@ -237,6 +233,7 @@ ${slide:title=Conclusion}$
 
 - When you use blocks, keep them as small as possible
 - Use them to script DSLs but NOT to define your domain model
-- Create classes and pass their instances around.
+- Create classes and pass their instances around
+- You will learn in the long run
 
 
