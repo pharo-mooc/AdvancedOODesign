@@ -5,7 +5,6 @@ __results
 **/*.out
 **/*.log
 **/*.synctex.gz
-*.pdf
 **/*.blg
 
 journal.pdf
