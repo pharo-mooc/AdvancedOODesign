@@ -110,7 +110,7 @@ Die >> + aDieOrADieHandle
 
 ${slide:title=Limits of this approach}$
 
-- It does not scale.
+- It does not scale
 - What if we have different objects that should interact with different operations e.g.,
 -- different kinds of text objects: list, figures, paragraph, section, title, text, reference...
 -- different operations: rendering text, HTML, LaTeX

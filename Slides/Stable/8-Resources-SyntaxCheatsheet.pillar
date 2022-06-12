@@ -1,7 +1,6 @@
 {
-    "title":"Legends and Cheatsheets",
-    "subtitle":"",
-    "author":"Stéphane Ducasse"
+    "title":"Legends and cheatsheets",
+    "author":"S. Ducasse"
 }
 
 ${slide:title=Class definitions}$
@@ -41,7 +40,7 @@ public Box() {
     }
 ]]]
 
-${slide:title=SetUp}$
+${slide:title=setUp}$
 
 [[[
 SetTestCase >> setUp
@@ -58,7 +57,7 @@ public void setUp(){
 
 
 
-${slide:title=Test Methods}$
+${slide:title=Test methods}$
 
 [[[
 SetTestCase >> testAdd 
@@ -76,7 +75,7 @@ public void testAdd(){
   }
 ]]]
 
-${slide:title=Syntactic Elements}$
+${slide:title=Syntactic elements}$
 
 | | Pharo| Java |
 | comment| "a comment"| \\\\ or /\* \*/
@@ -88,7 +87,7 @@ ${slide:title=Syntactic Elements}$
 | undefined | nil | null
 | point| 10@120|
 
-${slide:title=Syntactic Elements II }$
+${slide:title=Syntactic elements II }$
 
 |  | Pharo| Java |
 | temp declaration | \| temp \| | int temp ; |
@@ -97,7 +96,7 @@ ${slide:title=Syntactic Elements II }$
 | separator |  x := 12 .  | x = 12 ;
 
 
-${slide:title=Essential Constructs}$
+${slide:title=Essential constructs}$
 
 - Messages
 [[[

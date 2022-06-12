@@ -1,5 +1,5 @@
 {
-	"title":"Builder Variations",
+	"title":"Builder API variations",
 	"author":"S. Ducasse"
 }
 
@@ -16,6 +16,12 @@ A better markdown :)
 - compact (subset of markdown)
 - more extensible (superset of markdown)
 
+Used for:
+- class comments
+- slides, books, and documentation
+
+${slide:title=Example}$
+
 [[[
 # Hello Pharo
 
@@ -24,11 +30,17 @@ It is used to generate
 - slides
 - books
 - class comments
+
+
+<!slide|title=This is a cool title&tag=nh5p
+
+- a list of bullet
+- bullet 2
+- bullet 3
+!>
 ]]]
 
-Used for:
-- class comments
-- slides, books, and documentation
+
 
 ${slide:title=Default Microdown class comment}$
 
@@ -43,9 +55,9 @@ ${slide:title=Specialized Microdown class comment}$
 +>figures/CommentBaseline.png+
 
 
-${slide:title=How to generate microdown?}$
+${slide:title=How to programmatically generate Microdown?}$
 
-""To avoid:"" string concatenation
+""No"" string concatenation:
 - Expose users to possible syntax changes
 - Tool builders do not have to learn syntactic quirks
 
@@ -94,7 +106,7 @@ SpAbstractWidget >> buildMicroDownUsing: aBuilder withComment: aString
 	self addDocumentSectionExampleCode: aBuilder.
 	self addDocumentSectionFactoryMethod: aBuilder.
 	self documentSections keysAndValuesDo: [ :label :methods |
-		self addDocumentSection: aBuilder label: label methods: methods ].
+			self addDocumentSection: aBuilder label: label methods: methods ].
 	self addDocumentExtraSections: aBuilder.
 	self addDocumentSectionHierarchy: aBuilder.
 	self addDocumentSectionTransmissions: aBuilder.	
@@ -104,7 +116,7 @@ SpAbstractWidget >> buildMicroDownUsing: aBuilder withComment: aString
 ${slide:title=Hook for widgets (2)}$
 
 [[[	
-BaselineOf>> addDocumentSection: aBuilder label: label methods: methods
+BaselineOf >> addDocumentSection: aBuilder label: label methods: methods
 	
 	methods ifEmpty: [ ^ self ].
 	aBuilder newLine.
@@ -184,24 +196,15 @@ testCell
 		equals: '| this is **bold** '
 ]]]
 
-${slide:title=Composite generation implementation}$
-
-[[[
-MicrodownTextualBuilder >> bold: aBlock
-	self raw: BoldMarkup.
-	aBlock value.
-	self raw: BoldMarkup.
-]]]
-
-- The builder executes the block ==aBlock value==
-- Here the implications is that there is only one builder (the message receiver eg, ==builder bold: [ builder text: 'Very']==
 
 ${slide:title=Comparing alternate designs}$
 
+What is the difference between 
 [[[
 aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
 ]]]
 
+And
 [[[
 aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
 ]]]
@@ -213,22 +216,22 @@ ${slide:title=No parameter design}$
 aBuilder header: [ aBuilder text: 'Factory method' ] withLevel: 2.
 ]]]
 
-- Only the builder for all the messages
+- Only one builder for all the messages
 - More compact
 
 
-${slide:title=No parameter implementation}$
+${slide:title=No parameter  implementation}$
 
 [[[
-header: aBloc withLevel: anInteger
-	self rawHeader: aBloc withLevel: anInteger.
-	self newLine
-
-rawHeader: aBloc withLevel: anInteger
-	self raw: (HeaderMarkup repeat: anInteger).
-   self raw: String space.
-   aBloc value
+MicrodownTextualBuilder >> bold: aBlock
+	self raw: BoldMarkup.
+	aBlock value.
+	self raw: BoldMarkup.
 ]]]
+
+- The builder executes the block ==aBlock value==
+- Implications: there is only one builder (the message receiver/method argument)
+
 
 ${slide:title=With block parameter design}$
 
@@ -237,7 +240,7 @@ aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
 ]]]
 
 - Each API can have its owns  the builder 
-- We can have an hierarchy of builder each one representing finer context
+- We can have an hierarchy of builders each one representing finer context
 - More verbose
 
 
@@ -250,7 +253,8 @@ rawHeader: aBloc withLevel: anInteger
 	aBloc value: SpecialMicrodownBuilder new
 ]]]
 
-Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== or equivalent hook to use a specific builder passed as argument of the ==value:==
+Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== 
+- or an equivalent hook to suse a specific builder passed as argument of the ==value:==
 
 ${slide:title=Analysis}$
 
@@ -261,4 +265,10 @@ ${slide:title=Analysis}$
 
 ""Cons:""
 - You have to define an extra parameter to all the wrapping APIs
+
+
+${slide:title=Conclusion}$
+
+- Design is about tradeoffs
+- Extensibility can be designed
 
