@@ -1,0 +1,40 @@
+Auteur
+	Stéphane Ducasse - Inria
+	Luc Fabresse - IMT Nord Europe
+	Guillermo Polito - CNRS 
+	Pablo Tesone - Inria
+
+Duree
+	4 semaines
+
+Niveau M1/M2
+Resume Rapide
+	
+	Le cours présente des aspects avances de la conception objets
+	en etudiant des cas reels développés en Pharo.
+	Il est structuré en 7 grandes parties:
+		
+		- tests		
+		- points essentiels de la COO
+		- principle elementaires
+		- double dispatch
+		- principe avances
+		- etudes de cas reel
+		- design patterns
+		- idiomes du langage
+	Ce cours complemente celui sur le langage Pharo http://mooc.pharo.org
+	L'etudiant pourra souhaitait suivre la premiere semaine du mooc Pharo
+	pour les aspects syntaxiques du code présenté. 
+
+Acquis d’apprentissage
+	A la fin du cours vous ne developperez plus pareil.
+	Vous aurez ete exposes a des solutions de conception que les experts en OOP utilisent. 
+	Vous aurez acquis des elements essentiels de validations de votre code.
+	
+Nombre total d’activites
+	Le cours se decompose en 7 parties
+
+
+
+Reutilisation
+	Except where otherwise noted, this work is licensed under CC BY-NC-ND 3.0 France https://creativecommons.org/licenses/by- nc- nd/3.0/fr/
