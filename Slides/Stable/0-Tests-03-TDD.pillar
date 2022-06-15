@@ -58,7 +58,7 @@ ${slide:title=TDD: Make your test pass}$
 - Work until your test gets green!
 - [When you are lucky, use XTDD and enjoy coding in the debugger] See following lectures.
 
-${slide:title=TDD: Rerun ""all"" the tests}$
+${slide:title=TDD: Rerun *all* the tests}$
 
 - Yes we know, you are super smart BUT ""rerun all your tests""!
 - Fix the broken tests

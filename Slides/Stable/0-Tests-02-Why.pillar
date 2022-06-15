@@ -108,11 +108,8 @@ testShiftOneLeftThenRightGetsOne
 
 ${slide:title=Understanding code ;/ }$
 
-- Not always the case but this is ok too.
-- Low-level tests are worth but you should know when
-
 [[[
-convert
+Color >> convert
    | s |
    s := '#000000' copy.
    s at: 2 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).
@@ -124,7 +121,17 @@ convert
    ^ s
 ]]]
 
-${slide:title=""Limit"" dependency to elements not under test}$
+${slide:title=Understanding test ;) }$
+
+[[[
+ColorTest >> testAsHexString
+	| table aColorString |
+	self assert: Color white asHexString equals: 'FFFFFF'.
+	self assert: Color red asHexString equals: 'FF0000'.
+	self assert: Color black asHexString equals: '000000'.
+]]]
+
+${slide:title=Limit dependency to elements not under test}$
 
 Imagine that we want to test a transformation of a piece of code
 - If we depend on the compiler to get the test input

@@ -2,18 +2,25 @@
 	slide 14/20: it would be nice to say that empty is an instance variable (and show the definition of it)
 Done
 	slide 16/20: But I cant cover everything! "cant" should be "can't"
-Done (was done)
-
+Done (bad char)
 
 0-Tests-02-Why.pdf
-slide 13/19: what is the 'rgb'?
-slide 14/19: ""Limit"" - double double quotes?
+	slide 13/19: what is the 'rgb'?
+Done
+	slide 14/19: ""Limit"" - double double quotes?
+Done
+
 0-Tests-03-TDD.pdf
-slide 8/12: ""all"" - double double quotes?
+	slide 8/12: ""all"" - double double quotes?
+Done
+
+==
+	
 1-Essence-04-Self.pdf
-slides 9-13,15-16/18: what is the role of the instance aB? The question raises because at every slide we see only anonymous instances "A new" and "B new" in the code snippets.
+	slides 9-13,15-16/18: what is the role of the instance aB? The question raises because at every slide we see only anonymous instances "A new" and "B new" in the code snippets.
+
 1-Essence-05-Super.pdf
-slide 6/13: (opposite to the previous case) we talk about "aC bar" and we do not know what aC is.
+	slide 6/13: (opposite to the previous case) we talk about "aC bar" and we do not know what aC is.
 the second section violates file naming conventions
 
 
