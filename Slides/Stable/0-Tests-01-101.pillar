@@ -121,7 +121,9 @@ Executed ""systematically"" before and after each test run
 
 ${slide:title=Defining a setUp method}$
 
-Just create a context, here an empty set.
+- Turn ==empty== in an instance variable
+- Just create a context, here ==empty== is initialized to an empty set.
+
 [[[
 SetTestCase >> setUp
   empty := Set new
@@ -155,7 +157,7 @@ ${slide:title=About writing tests}$
 - But pay off is Huge
 
 
-${slide:title=But I can’t cover everything!}$
+${slide:title=But I can't cover everything!}$
 
 - Sure! Nobody can but:
 -- When someone discovers a defect in code, first write a test that demonstrates the defect.

@@ -1,3 +1,15 @@
+from the H5P launcher location
+../../vms/100-x64/Pharo.app/Contents/MacOS/Pharo ./H5P.image clap h5p /Users/ducasse/Workspace/FirstCircle/MyBooks/Bk-Writing/AdvancedOODesign/__results/ValidatedByStef/Essence-04-Self.pdf
+
+
+
+
+
+
+
+
+
+
 I can get all the slides pages as JPEG.
 
 pdftoppm -jpeg Tests-01-101.pdf Tests-01

@@ -1,0 +1,189 @@
+	0-Tests-01-101.pdf
+	slide 14/20: it would be nice to say that empty is an instance variable (and show the definition of it)
+Done
+	slide 16/20: But I cant cover everything! "cant" should be "can't"
+Done (was done)
+
+
+0-Tests-02-Why.pdf
+slide 13/19: what is the 'rgb'?
+slide 14/19: ""Limit"" - double double quotes?
+0-Tests-03-TDD.pdf
+slide 8/12: ""all"" - double double quotes?
+1-Essence-04-Self.pdf
+slides 9-13,15-16/18: what is the role of the instance aB? The question raises because at every slide we see only anonymous instances "A new" and "B new" in the code snippets.
+1-Essence-05-Super.pdf
+slide 6/13: (opposite to the previous case) we talk about "aC bar" and we do not know what aC is.
+the second section violates file naming conventions
+
+
+==
+
+2-BasicPrinciples-AboutPrivateMethods.pdf
+
+slide 6/11: problems with witespaces: return1 or return2 are obvious error & a whitespace before semicolon is excessive
+Should be
+class C
+def zork(arg); return arg.x; end
+def foo; self.x; end
+def foo2; x; end
+private def x; return 1; end
+end
+class D < C
+public
+def x; return 2; end
+end
+Question: what purpose has C.zork(arg)?
+
+slide 9/11 - colors of the code?
+
+2-BasicPrinciples-FatClassesAreBad.pdf
+slide 10/13 - Is it possible to make the figure larger?
+
+2-BasicPrinciples-LibrariesVsFrameworks.pdf
+slide 3/9 - the figure is missing
+slide 4/9 - the figure is missing
+slide 7/9 - the figure is missing - nice figures, I saw it in the repo
+
+2-BasicPrinciples-MethodIsReuse.pdf
+slide 3/10 - inpectionPillarTree or inspectionPillarTree? The last line with text is not visible
+slide 5/10 - inpectionPillarTree or inspectionPillarTree?
+slide 7/10 - the second snipped is too large
+
+Use vs. Inheritance - thanks! Very interesting. I want to read it again!
+
+
+
+======
+
+
+3-DoubleDispatch-01-StoneExercise.pdf
+
+slide 3/21 - the figure would be better ... like at the 19/21
+3-DoubleDispatch-03-Dice.pdf
+
+slide 15/25 - below Message 2 "sumFromDie: aDie" should be "sumWithDie: aDie"
+slide 17/25 - in Die class "sumFromDie: aDie" should be "sumWithDie: aDie"
+slide 18/25 - below Message 2 "sumFromDie: aDie" should be "sumWithDie: aDie"
+slide 22/25 - in Die class "sumFromDie: aDie" should be "sumWithDie: aDie"
+3-DoubleDispatch-04-NoSymmetrical.pdf
+
+slide 5/9 - "Too many ifs...." - So many as dots here? :) +1 I have already seen this code somewhere :)
+
+
+=======
+
+Largest and may be clearest.
+4-Principles-01-AvoidIsNil.pdf
+
+slide 15/22 "self selectedTool ifNotNil: [ :tool | tool attachHandles " right sqaure braket missing
+4-Principles-04-LawOfDemeter.pdf
+
+all slides: WXSYY in the footer
+slide 4/18: "do()" - parenthesis - is it right?
+4-Principles-08-Sharing.pdf
+
+slide 7/14: "TypeTable the shared variablea" - should be variable
+slide 10/14: The code formatting would be better
+
+4-Principles-08-Sharing.pdf
+
+slide 6/14 - missing semicolon before package: ?
+Object << #Scanner
+slots: {#mark . #prevEnd . #hereChar . #token . #tokenType . #typeTable};
+sharedVariables: { #TypeTable }
+package: 'Scanning'
+
+=================
+
+5-CaseStudy-01-TurningAProcIntoAnObject.pdf
+
+slide 2/13 - "Behavior»printHierarchy" double quotes, should be >>
+5-CaseStudy-02-AboutFluidAPI.pdf
+
+slides 5,6/17 - so many quotes
+5-CaseStudy-05-Sokoban-Analysis.pdf
+
+slide 4/25 - the official name of the university is "Ivan Franko National University of Lviv"
+slide 6/25 - double double qoutes
+
+
+=========================
+
+6-DesignPattern-01-IntroDesignPattern.pdf
+
+slide 15/22 - "Façade" I like France! but Facade
+6-DesignPattern-03-Composite.pdf
+
+slide 5/19 - "A tree is a * leave" - may be "leaf"?
+slide 14/19 - "Now the gain treating a leave as a container" should be "leave as containers" or "a leaf as a container"
+6-DesignPattern-04-Visitor.pdf
+
+slide 17/25 - "Visitor subclass: #Printer iv: 'stream level'" - is it correct?
+6-DesignPattern-05-VisitorDiscussions.pdf
+
+slide 4/15 - a discordance detween the visitPlus: method prototype and the metod definition - "visitPlus: anAddition" VS "visitPlus: aPlus"
+slide 5/15 - the same situation with visitPlus: & visitTimes:
+
+==================================
+7-Lang-01-Stream.pdf
+
+slides 7,8/11 - a part of code displays as a comment - gray, not black
+7-Lang-05-AboutBuilder.pdf
+
+slide 7/25 - the picture is too large?
+slide 14/25 - "About generation of leave elements" or "About generation of leaf elements"?
+slide 15/25 - "Codeblock is also a leave element" or "Codeblock is also a leaf element"? And there are strange quotes in the code snippet
+slide 22/25 - sorry, but "an equivalent hook to suse a specific builder" or "an equivalent hook to use a specific builder"?
+8-Resources-SyntaxCheatsheet.pdf
+
+slide 6/9 - Java has characters: 'c' '#' '@'; Java has booleans - why the table is empty?
+slide 8/9 - Java has lambdas. Is a lambda similar to a block?
+
+
+
+
+Normally we noly explicit when an argument CAN be nil... so removed many of these cases:
+
+BlOverlayListener >>
+positionFor: anElement
+    <return: #Point>
+    self
+        assert: [ anElement isNotNil ]
+        description: [ 'Reference element must not be nil' ].
+    ^ (self overlayElement globalPointToParent: anElement bounds inSpace position)
+
+
+
+
+There were some strange cases were the invariant is verified in an accessor:
+
+BlEventDispatcherChain >>
+dispatcher
+    <return: #BlEventDispatcher>
+    self
+        assert: [ dispatcher isNotNil ]
+        description: [ 'Dispatcher must not be nil' ].
+    ^ dispatcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
