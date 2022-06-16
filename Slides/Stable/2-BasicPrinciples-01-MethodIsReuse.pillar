@@ -17,7 +17,6 @@ ${slide:title=Study}$
 [[[
 inpectionPillarTree
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
-
     ^ SpTreePresenter new 
         roots: { self };
         children: [ :aNode | aNode children ];
@@ -34,6 +33,22 @@ inpectionPillarTree
         yourself
 ]]]
 
+${slide:title=Study}$
+
+[[[
+...
+            String
+                streamContents: [ :stream | 
+                    stream
+                        nextPutAll: each class name.
+                        each class = PRHeader ifTrue: 
+                            [ stream nextPutAll: '( level ';
+                            nextPutAll: each level asString;
+                            nextPutAll: ' )' ].
+...
+]]]
+
+
 Why the client of a document is forced to define this behavior?
 
 ${slide:title=Reuse is your friend!}$
@@ -49,7 +64,7 @@ displayStringOn: stream
 				nextPutAll: ' )' ]
 ]]]
 
-${slide:title=Reuse is your friend!}$
+${slide:title=and call the method}$
 
 Call (reuse) a method!
 [[[
@@ -66,7 +81,7 @@ inpectionPillarTree
         yourself
 ]]]
 
-${slide:title=Annoying logic repetition}$
+${slide:title=Another annoying logic repetition}$
 
 [[[
 ...
@@ -75,6 +90,12 @@ stream := WriteStream on: (String new: 1000).
 stream contents
 ]]]
 
+[[[
+...
+stream := WriteStream on: (String new: 1000).
+... printOn: stream.
+stream contents
+]]]
 
 ${slide:title=streamContents: to the rescue}$
 
@@ -87,8 +108,10 @@ String streamContents: [:s | #(1 2 3) printOn: stream ]
 - Hide details
 - Encapsulate termination
 
+
 ${slide:title=Encapsulate actions}$
-	
+
+
 [[[
 SequenceableCollection class >> streamContents: blockWithArg	
 	^ self new: 100 streamContents: blockWithArg

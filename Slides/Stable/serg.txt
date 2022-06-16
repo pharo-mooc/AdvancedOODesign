@@ -60,13 +60,10 @@ Removed
 
 
 2-BasicPrinciples-MethodIsReuse.pdf
-slide 3/10 - inpectionPillarTree or inspectionPillarTree? The last line with text is not visible
-slide 5/10 - inpectionPillarTree or inspectionPillarTree?
-slide 7/10 - the second snipped is too large
-
-Use vs. Inheritance - thanks! Very interesting. I want to read it again!
-
-
+	slide 3/10 - inpectionPillarTree or inspectionPillarTree? The last line with text is not visible
+	slide 5/10 - inpectionPillarTree or inspectionPillarTree?
+	slide 7/10 - the second snipped is too large
+Done 
 
 ======
 
