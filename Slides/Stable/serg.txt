@@ -24,34 +24,40 @@ Done
 	slide 6/13: (opposite to the previous case) we talk about "aC bar" and we do not know what aC is.
 the second section violates file naming conventions
 
+Done
 
 ==
 
 2-BasicPrinciples-AboutPrivateMethods.pdf
 
-slide 6/11: problems with witespaces: return1 or return2 are obvious error & a whitespace before semicolon is excessive
-Should be
-class C
-def zork(arg); return arg.x; end
-def foo; self.x; end
-def foo2; x; end
-private def x; return 1; end
-end
-class D < C
-public
-def x; return 2; end
-end
-Question: what purpose has C.zork(arg)?
+	slide 6/11: problems with witespaces: return1 or return2 are obvious error & a whitespace before semicolon is excessive
+	Should be
+	class C
+	def zork(arg); return arg.x; end
+	def foo; self.x; end
+	def foo2; x; end
+	private def x; return 1; end
+	end
+	class D < C
+	public
+	def x; return 2; end
+	end
+	Question: what purpose has C.zork(arg)?
 
-slide 9/11 - colors of the code?
+	Stef should check! I cannot find the file. 
+	
+
+	slide 9/11 - colors of the code?
 
 2-BasicPrinciples-FatClassesAreBad.pdf
 slide 10/13 - Is it possible to make the figure larger?
 
 2-BasicPrinciples-LibrariesVsFrameworks.pdf
-slide 3/9 - the figure is missing
-slide 4/9 - the figure is missing
-slide 7/9 - the figure is missing - nice figures, I saw it in the repo
+	slide 3/9 - the figure is missing
+	slide 4/9 - the figure is missing
+	slide 7/9 - the figure is missing - nice figures, I saw it in the repo
+Removed
+
 
 2-BasicPrinciples-MethodIsReuse.pdf
 slide 3/10 - inpectionPillarTree or inspectionPillarTree? The last line with text is not visible

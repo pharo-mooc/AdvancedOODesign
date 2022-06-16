@@ -1,14 +1,14 @@
 {
     "title":"Fat classes are bad",
-   "subtitle":"a.k.a. An Object vs. a Class Hierarchy",
+   "subtitle":"a.k.a. a large class vs. a class hierarchy",
     "author":"S. Ducasse"
 }
 
 ${slide:title=Goal}$
 
-- Remember the Implementing Not Lectures
+- Remember the ''Implementing Not'' Lectures
 - Transform Self Type Check Reengineering pattern
-- Discussion on Memento
+
 
 ${slide:title=Example: BibTeX}$
 
@@ -38,7 +38,7 @@ ${slide:title=Example: BibTeX}$
 - Different fields: key, year, institution, booktitle, title...
 
 
-${slide:title=A single class in Citezen}$
+${slide:title=A single class in Citezen :(}$
 
 [[[
 CZScoped << #CZEntry
@@ -111,7 +111,7 @@ Not having a class hierarchy:
 
 ${slide:title=Transform self type transformation}$
 
-+>file://figures/TransformSelfType.png|width=60+
++>file://figures/TransformSelfType.png|width=90+
 
 
 ${slide:title=The case of the Memento DP}$
