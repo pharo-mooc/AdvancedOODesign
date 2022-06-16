@@ -39,11 +39,11 @@ ${column:width=80}$
 ${column:width=30}$
 
 [[[
-    A new bar
+    aA bar
     > ...
-    B new bar
+    aB bar
     > ...
-    C new bar
+    aC bar
     > ...
 ]]]
 
@@ -60,11 +60,11 @@ ${column:width=80}$
 ${column:width=30}$
 
 [[[
-    A new bar
+    aA bar
     > 10
-    B new bar
+    aB bar
     > 20
-    C new bar
+    aC bar
     > 100
 ]]]
 
@@ -129,7 +129,7 @@ ${columns}$
 
 ${column:width=50}$
 
-+>file://figures/superIsStatic.png|width=65+
++>file://figures/superIsStatic.png|width=65aA+
 
 ${column:width=50}$
 
