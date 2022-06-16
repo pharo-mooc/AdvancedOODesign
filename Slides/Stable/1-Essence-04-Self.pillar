@@ -109,6 +109,29 @@ ${column:width=60}$
 
 +>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
 
+
+${column:width=40}$
+[[[
+	aA foo
+	> ...
+	aB foo
+	> ...
+]]]
+
+- ==aA== is an instance of ==A== (obtained executing ==A new==)
+- ==aB== is an instance of ==B== (obtained executing ==B new==)
+
+${endColumns}$
+
+${slide:title=Let us explore a bit}$
+
+${columns}$
+
+${column:width=60}$
+
++>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
+
+
 ${column:width=40}$
 [[[
 	aA foo
@@ -118,6 +141,7 @@ ${column:width=40}$
 ]]]
 
 ${endColumns}$
+
 
 
 ${slide:title=self always represents the receiver}$
@@ -228,7 +252,7 @@ ${column:width=40}$
 [[[
     aA bar
     > ...
-    aC bar
+    aB bar
     > ...
     aC bar
     > ...
@@ -247,7 +271,7 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-    aB bar
+    aA bar
     > 10
     aB bar
     > 10

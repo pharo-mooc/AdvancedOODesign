@@ -18,6 +18,7 @@ Done
 	
 1-Essence-04-Self.pdf
 	slides 9-13,15-16/18: what is the role of the instance aB? The question raises because at every slide we see only anonymous instances "A new" and "B new" in the code snippets.
+Done 
 
 1-Essence-05-Super.pdf
 	slide 6/13: (opposite to the previous case) we talk about "aC bar" and we do not know what aC is.
