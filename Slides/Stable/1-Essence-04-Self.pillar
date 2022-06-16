@@ -1,8 +1,7 @@
 {
   "title":"Inheritance and Lookup",
   "subtitle":" 101 on lookup",
-  "author":"S. Ducasse and L. Fabresse",
-  "slidesid" : "2022"
+  "author":"S. Ducasse and L. Fabresse"aA
 }
 
 ${slide:title=Goal}$
@@ -112,9 +111,9 @@ ${column:width=60}$
 
 ${column:width=40}$
 [[[
-	A new foo
+	aA foo
 	> ...
-	B new foo
+	aB foo
 	> ...
 ]]]
 
@@ -132,9 +131,9 @@ ${column:width=60}$
 
 ${column:width=40}$
 [[[
-	A new foo
+	aA foo
 	> 10
-	B new foo
+	aB foo
 	> 50
 ]]]
 
@@ -152,9 +151,9 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-	A new bar
+	aA bar
 	> ...
-	B new bar
+	aB bar
 	> ...
 ]]]
 
@@ -174,9 +173,9 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-	A new bar
+	aA bar
 	> 10
-	B new bar
+	aB bar
 	> 50
 ]]]
 
@@ -191,7 +190,7 @@ ${column:width=40}$
 +>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
 
 [[[
-	B new bar
+	aB bar
 	> 50
 ]]]
 
@@ -227,11 +226,11 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-    A new bar
+    aA bar
     > ...
-    B new bar
+    aC bar
     > ...
-    C new bar
+    aC bar
     > ...
 ]]]
 
@@ -248,11 +247,11 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-    A new bar
+    aB bar
     > 10
-    B new bar
+    aB bar
     > 10
-    C new bar
+    aC bar
     > 50
 ]]]
 
