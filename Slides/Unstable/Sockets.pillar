@@ -1,0 +1,56 @@
+Hi, I asked Guille to open this cannel so I can explain the first question i have. We have talked about it with Stef and Guille, so it is almost close. But it is important to put it here so we can discuss these design problems around.
+
+Situation
+=========
+
+- I am reengineering the Socket plugin to support additional Address Types, I am adding Unix addresses and IPv6.
+- Before it was assuming all addresses are IPv4
+- I have rewritten the primitives to handle all addresses as an object (before it was a 4 bytes byteArray)
+- The object passed to the VM has 3 fixed fields (type, host, port). 
+- Type is a smallInteger telling the type of address (0->Unspecified, 1->Unix Local, 2-> IPv4, 3->IpV6).
+- The host is a byteArray (for ipv4/ipv6) and a string for Unix local.
+- The port is a smallinteger, is 0 for Unix Local and 0 for UNSPECIFIED port in IP (as in the IP standard).
+- These objects are allocated in the image before calling the primitives, and the primitives fill up the fields.
+- When I create the object, before calling the primitive, I don't know the type of the address (for example when resolving a host name or asking the remote address of a socket), I can get different address types.
+
+Problem
+=======
+
+- In the image I will have a lot of code that depends on the type of address.
+- For example, printing the address, comparing it, detecting if zero, detecting if is Broadcast... etc.
+- I don't want to be asking by the type and having conditional code.
+Solution #1
+===========
+
+- Having different classes of socket address.
+- :slight_smile: I don't have duplicated code. One for IPv4, IPv6 and other for UnixLocal.
+- :frowning: In the moment of creation I cannot know which is the correct type.
+- :frowning: Delegating the creation to the VM requires to pass the possible classes. 
+- :frowning: I can receive one from the VM, and then changing the class of the object (Aggghghaghag)
+- :slight_smile: I have a single object
+
+Solution #2
+===========
+
+- Creating an strategy based on the type for each operation
+- :slight_smile: I don't have duplicated code
+- :slight_smile: I don't need the VM to handle different classes
+- :frowning: I create an object for each operation (maybe I can catch it... but I need to check if I have it)
+- :frowning: The implementation is not clear, as there is always a delegation to the strategy
+
+Solution #3
+===========
+
+- Splitting the object in two. One part for the image (SocketAddress) and one for the primitives (VMSocketAddress).
+- I have a subclass for each SocketAddress type
+- When calling the primitives I always use the VMSocketAddress
+- When I resolve an address, I wrap it in the corresponding SocketAddress subclass.
+- :slight_smile: I don't have duplicated code
+- :slight_smile: I don't need the VM to handle different classes
+- :slight_smile: The object is created once only.
+- :slight_smile: Clear implementation
+- :frowning: VMSocketAddress is kind of DTO
+- :frowning: I have 2 objects
+At the end I decided to go for solution #3
+But the important stuff here is to discuss the :slight_smile: and :frowning:
+(If you see something stupid in the chosen solution, it is the moment to help me)
