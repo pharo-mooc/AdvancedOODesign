@@ -1,0 +1,92 @@
+{
+	"title":"About inheritance vs. object-based configuration",
+	"author":"S. Ducasse"
+}
+
+${slide:title=Goal}$
+
+Class {
+ 	#name : #NewCommandLineRunner,
+ 	#superclass : #NewTestRunner,
+ 	#instVars : [
+
+ 		'reporter'
+ 	],
+ 	#category : #'TestRunner-Core-Extensions'
+ }
+
+ { #category : #'instance creation' }
+ NewCommandLineRunner class >> with: aReporterClass [
+
+ 	^ self new reporter: aReporterClass new
+ ]
+
+ { #category : #accessing }
+ NewCommandLineRunner >> defaultReporterClass [
+
+ 	^ StdReporter
+	
+
+${slide:title=Goal}$
+
+We can only define a new defaultReporterClass by subclassing NewCommandLineRunner
+
+${slide:title=Solution: variable and setter}$
+
+
+Class {
+ 	#name : #NewCommandLineRunner,
+ 	#superclass : #NewTestRunner,
+ 	#instVars : [
+		'defaultReporterClass',
+ 		'reporter'
+ 	],
+ 	#category : #'TestRunner-Core-Extensions'
+ }
+ 
+ { #category : #accessing }
+ NewCommandLineRunner >> defaultReporterClass: aClass [
+
+	defaultReporterClass := aClass
+	
+	
+${slide:title=Initialization}$
+	
+NewCommandLineRunner >> initialize
+
+	super initialize.
+	self defaultReporterClass: aClass
+	
+${slide:title=Instance Granularity}$
+
+Each instance of NewCommandLineRunner has its own defaultReporterClass
+
+
+${slide:title=Class Granularity}$
+
+
+Class {
+ 	#name : #NewCommandLineRunner,
+ 	#superclass : #NewTestRunner,
+ 	#instVars : [
+		'defaultReporterClass',
+ 		'reporter'
+ 	],
+	classVars: [ DefaultReporterClass ]
+ 	#category : #'TestRunner-Core-Extensions'
+ }
+
+
+NewCommandLineRunner class >> defaultReporterClass: aClass
+
+	DefaultReporterClass := aClass
+
+ All instances of all subclasses of NewCommandLineRunner will share the same default class
+ 
+ ${slide:title=class side Initialization}$
+	
+ NewCommandLineRunner class >> initialize
+
+ 	self defaultReporterClass: aClass
+ 
+ 

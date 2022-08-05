@@ -70,6 +70,26 @@ ${slide:title=First design: behavior define in the domain}$
 +.>file://figures/Visitor-ExpressionHierarchyWithBehavior.pdf|width=40+
 
 
+${slide:title=First design: behavior define in the domain}$
+
+[[[
+ENumber >> evaluate
+	^ value 
+]]]
+
+[[[
+EPlus >> evaluate
+   ^  left evaluate + right evaluate.
+]]]
+
+[[[
+ENumber >> print 
+	stream nextPutAll: value asString
+]]]
+
+[[[
+EPlus >> print]]]
+
 ${slide:title=First design analysis}$
 
 What if we need a stack to print well the expressions?
@@ -176,9 +196,9 @@ ${slide:title=Invoking the Visitor}$
 
 [[[
 Evaluator new evaluate: 
-	(Plus 
+	(EPlus 
 		left: (ENumber value: 1) 
-		right: (Times left: (ENumber value: 3) right: (ENumber value: 2)))
+		right: (ETimes left: (ENumber value: 3) right: (ENumber value: 2)))
 > 7 
 ]]]
 

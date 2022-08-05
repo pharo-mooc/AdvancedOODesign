@@ -16,9 +16,9 @@ ${slide:title=Exercise 1}$
 
 Given
 [[[
-primitive addi(i,j) returns i + j
-primitive addf(f1,f2) returns f1 + f2
-i.asFloat() returns a float
+primitive addi(i,j) returns the addition of two integers i + j
+primitive addf(f1,f2) returns the addition of two floats f1 + f2
+i.asFloat() converts an integer to a float
 ]]]
 
 ${slide:title=Adding Integer and Float}$
@@ -127,6 +127,18 @@ ${slide:title=How do we connect them?}$
 		"fill me up :)"
 ]]]
 
+Support: ==1 + 2==
+
+
+${slide:title=1 + 2}$
+
+[[[
+	Integer (1) >> + 2
+		^ 2 sumWithInteger: 1 
+
+	Integer (2) >> sumWithInteger: 1
+		^ addi(2, 1)
+]]]
 
 
 
@@ -168,6 +180,27 @@ ${slide:title=On Float too}$
 		^ addf(self, asFloat(anInteger))
 ]]]
 
+Support: ==2 + 1.2==
+
+
+${slide:title= 2 + 1.2}$
+
+[[[
+	Integer (2) >> + 1.2
+		^ 1.2 sumWithInteger: 2
+
+	Integer >> sumWithInteger: anInteger
+		^ addi(self, anInteger)
+
+	Float >> + aNumber
+
+
+	Float (1.2) >> sumWithInteger: 2
+		^ addf(1.2, asFloat(2))
+]]]
+
+
+
 ${slide:title=Supporting 1.2 \+ 2}$
 
 
@@ -206,6 +239,26 @@ ${slide:title=Supporting 1.2 \+ 2}$
 >	Float >> sumWithFloat: aFloat
 >		^ addf(self, aFloat)
 ]]]
+
+${slide:title= 1.2 \+ 2}$
+
+
+[[[
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+	Integer >> sumWithInteger: anInteger
+		^ addi(self , anInteger)
+	Integer (2) >> sumWithFloat: 1.2
+		^ addf(1.2, asFloat(2))
+
+	Float (1.2) >> + 2
+		^ 2 sumWithFloat: 1.2 
+	Float >> sumWithInteger: anInteger
+		^ addf(self, asFloat(anInteger))
+	Float >> sumWithFloat: aFloat
+		^ addf(self, aFloat)
+]]]
+
 
 
 ${slide:title=Ok now relax}$
