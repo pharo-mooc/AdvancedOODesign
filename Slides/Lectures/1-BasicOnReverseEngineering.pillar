@@ -1,0 +1,180 @@
+{
+    "title":"Basic on reverse engineering",
+    "author":"S. Ducasse and G. Polito"
+}
+
+
+${slide:title=Do not dive in the details}$
+
+- Do not care about details
+-- Do not try to understand everything (you can die)
+- Look for how groups of classes (mainly hierarchies) are interacting
+
+${slide:title=About package dependencies}$
+
+- If you have access to application "maps"
+- Check package dependencies
+
+${slide:title=e.g....}$
+
+[[[
+baseline: spec
+	<baseline>
+	spec
+		for: #common
+		do: [
+			spec
+				package: 'Fenster';
+				package: 'Fenster-Tests' with: [ spec requires: #(Fenster) ].
+			"Core"
+			spec 
+				package: #Bloc with: [
+					spec requires: #(#Fenster) ];
+				package: #'BlocHost-Mock' with: [
+					spec requires: #(#Bloc) ];
+				package: #'Bloc-Tests' with: [
+					spec requires: #(#Bloc 'BlocHost-Mock' ). ].
+]]]
+
+
+${slide:title=Important classes}$
+
+- Root of hierarchies
+- Most referenced classes
+- Root of small hierarchies
+- Tested classes
+
+${slide:title=Navigation 3 Pillars}$
+
+- References to classes
+- Senders of messages
+- Implementors of messages
+
+${slide:title=Class references}$
+
+Pay attention you can have factory
+- a class not referencing much (basically only by the factory)
+- whose instances are created by the factory
+
+${slide:title=Senders}$
+
+- Who is calling this method?
+- Pay attention quantity may not matters
+-- you can have several callers
+-- or a single but at the root of a class hierarchy 
+
+${slide:title=Implementors}$
+
+- Who is providing this method?
+- Are the implementors in the same hierarchy?
+- Spread on multiple hierarchies?
+-- do they are part of 'Interfaces'?
+
+
+${slide:title=Important messages}$
+
+- Redefined messages?
+- Called a lot?
+
+
+${slide:title=Hierarchy roots}$
+
+- Check roots of hierarchies
+- Check references
+
+${slide:title=Check references to subclasses}$
+
+- When you have little hierarchies and there are no references to subclasses
+- Check references to the superclass
+- It can act as a factory creating subclass instances
+
+${slide:title=Check tests}$
+
+- Getting fast an idea about the tested classes
+- Watch out sometimes people are lazy and test simple classes not complex ones
+
+${slide:title=Look for senders of instance creation}$
+
+- Class side methods
+- Instance creation can provide the collaborators of classes
+
+
+${slide:title=Testing messages}$
+
+- isMove, isPush...
+- They often point to absence of polymorphism
+- and weak design
+- Check their senders
+
+${slide:title=Let us check the class API}$
+
+Classes define:
+- ==isEmptyBlock==
+- ==isWall==
+- ==hasPlayer==
+- ==hasTarget==
+- ==hasBox==
+
+Let us check the way this API is used
+
+
+${slide:title=Too many ifs....}$
+
+[[[
+GameView >> drawBlock: aBlock on: aCanvas
+	aBlock isWall 
+		ifTrue: [ self drawWall: aCanvas ]
+		ifFalse: [ aBlock isEmptyBlock 
+			ifTrue: [ aBlock hasPlayer 
+					ifTrue: [ aBlock hasTarget 
+							ifTrue: [ self drawTargetAndPlayer: aCanvas ]
+						 	ifFalse: [ self drawPlayer: aCanvas ]]
+					ifFalse: [ aBlock hasBox 
+						ifTrue: [ aBlock hasTarget 
+							ifTrue: [ self drawTargetAndBox: aCanvas ]
+							ifFalse: [ self drawBox: aCanvas ]]
+					ifFalse: [ 
+						aBlock hasTarget 
+							ifTrue: [ self drawTarget: aCanvas ]
+						ifFalse: [ self drawEmptyBlock: aCanvas ]]]
+]]]
+
+
+
+${slide:title=Let us ""Speculate about Design""}$
+
+${columns}$
+
+${column:width=60}$
+
+- Apply ""Speculate about Design"" object-oriented reengineering pattern
+
+- ""Intent:"" Progressively refine a design against source code by checking hypotheses about the design against the source code. 
+
+- Use your development expertise to conceive a hypothetical class diagram representing the design.
+
+${column:width=40}$
+
++.>file://figures/OORP.jpg|width=50+
+
+${endColumns}$
+
+${slide:title=""Speculate about Design""}$
+
+- Think about the kind of objects that should be in the application
+- Look at the classes to see if/how they match your lists
+- Refine to understand why you do not find the ones you guess
+- Refine to understand the extra classes
+
+
+${slide:title=Put a breakpoint}$
+
+- If you have tests, or ways to execute,
+- Place a breakpoint and check in the debugger
+-- but pay attention you can be drown in details
+
+${slide:title=Conclusion}$
+
+- Reverse engineering is a cool skill
+- Practices as much as you can 
+- Expert developers know how to walk in the jungle
