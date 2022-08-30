@@ -1,9 +1,9 @@
 {
   "title":"Pharo Syntax in a Nutshell",
-  "slidesid":"W1S05"
+  "slidesid":"xxx"
 }
 
-${slide:title=Getting a Feel About Syntax}$
+${slide:title=Getting a feel about syntax}$
 
 Give you the general feel to get started:
 
@@ -17,7 +17,7 @@ No stress if you do not get it right now!
 
 We will repeat in future lectures
 
-${slide:title=The Complete Syntax on a Postcard}$
+${slide:title=The complete syntax on a postcard}$
 
 No need to understand everything! 
 But "everything" is on this screen :)
@@ -39,7 +39,7 @@ exampleWithNumber: x
   ^ x < y
 ]]]
 
-${slide:title=Hello World}$
+${slide:title=Hello world}$
 
 [[[
 'Hello World' asMorph openInWindow
@@ -49,7 +49,7 @@ ${slide:title=Hello World}$
 We send the message ==asMorph== to a string and obtain a graphical element that we open in a window by sending it the message ==openInWindow==
 
 
-${slide:title=Getting the Pharo Logo from the Web}$
+${slide:title=Getting the Pharo logo from the web}$
 
 [[[
 (ZnEasy getPng: 'http://pharo.org/web/files/pharo.png')
@@ -63,7 +63,7 @@ ${slide:title=Getting the Pharo Logo from the Web}$
 - =='http://pharo.org/web/files/pharo.png'== is a string
 - Messages ==asMorph== and ==openInWindow== are executed from left to right
 
-${slide:title=Syntactic Elements}$
+${slide:title=Syntactic elements}$
 
 | comment| "a comment"|
 | character| \$\c \$\# \$\@ |
@@ -78,7 +78,7 @@ ${slide:title=Syntactic Elements}$
 | |  (instance of UndefinedObject)|
 | point| 10@120|
 
-${slide:title=Essential Constructs}$
+${slide:title=Essential constructs}$
 
 - Temporary variable declaration: ==| var |==
 - Variable assignment: ==var \:= aValue==
@@ -90,14 +90,14 @@ ${slide:title=Essential Constructs}$
 > 7 
 ]]]
 
-${slide:title=Essence of Pharo Computation}$
+${slide:title=Essence of Pharo computation}$
 
 - Objects (created using messages)
 - Messages 
 - Blocks (anonymous methods)
 
 
-${slide:title=Three Kinds of Messages to Minimize Parentheses}$
+${slide:title=Three kinds of messages to minimize parentheses}$
 
 - Unary message
 -- Syntax: ==receiver selector==
@@ -111,7 +111,7 @@ ${slide:title=Three Kinds of Messages to Minimize Parentheses}$
 -- Syntax: ==receiver key1: arg1 key2: arg2==
 -- ==2 between: 10 and: 20==
 
-${slide:title=Message Precedence}$
+${slide:title=Message precedence}$
 
 (Msg) \> Unary \> Binary \> Keywords
 
@@ -124,7 +124,7 @@ But let us start with messages
 
 
 
-${slide:title=Sending an Unary Message}$
+${slide:title=Sending an unary message}$
 
 
 [[[
@@ -139,7 +139,7 @@ Example
 
 We send the message ==factorial== to the object ==10000==
 
-${slide:title=Sending a Binary Message}$
+${slide:title=Sending a binary message}$
 
 
 [[[
@@ -154,7 +154,7 @@ Example
 
 We send the message ==+== to the object ==1== with the object ==3== as argument
 
-${slide:title=Sending a Keyword Message}$
+${slide:title=Sending a keyword message}$
 
 [[[
 receiver keyword1: arg1 keyword2: arg2
@@ -166,7 +166,7 @@ receiver.keyword1keyword2(arg1, arg2)
 ]]]
 
 
-${slide:title=Example: Sending an HTTP Request}$
+${slide:title=Example: Sending an HTTP request}$
 
 [[[
 ZnClient new
@@ -182,14 +182,14 @@ ZnClient new
 - ==;== (called a cascade) sends all messages to the same receiver
 
 
-${slide:title=Messages are Everywhere!}$
+${slide:title=Messages are everywhere!}$
 
 - Conditionals
 - Loops
 - Iterators
 - Concurrency
 
-${slide:title=Conditionals are also Message Sends}$
+${slide:title=Conditionals are also message sends}$
 
 [[[
 factorial
@@ -204,7 +204,7 @@ factorial
 
 You can read their implementation, this is not magic!
 
-${slide:title=Loops are also Message Sends}$
+${slide:title=Loops are also message sends}$
 
 [[[
 1 to: 4 do: [ :i | Transcript << i ]
@@ -216,7 +216,7 @@ ${slide:title=Loops are also Message Sends}$
 - ==to:do:== is a message sent to an integer
 - Many other messages implement loops: ==timesRepeat:==, ==to:by:do:==, ==whileTrue:==, ==whileFalse:==, ...
 
-${slide:title=With Iterators}$
+${slide:title=With iterators}$
 
 We ask the collection to perform the iteration on itself
 
@@ -230,7 +230,7 @@ We ask the collection to perform the iteration on itself
 ]]]
 
 
-${slide:title=Blocks Look like Functions}$
+${slide:title=Blocks look like functions}$
 
 fct(x) = x*x+3
 [[[
@@ -256,7 +256,7 @@ ${slide:title=Blocks}$
 
 
 
-${slide:title=Block Usage}$
+${slide:title=Block usage}$
 
 [[[
 #(1 2 -4 -86) 
@@ -271,17 +271,17 @@ ${slide:title=Block Usage}$
 - ==each== will take the value of each element of the array
 
 
-${slide:title=Class Definition Template}$
+${slide:title=Class definition template}$
 
 +>file://figures/ClassTemplate.png|width=98+
 
 
-${slide:title=Class Definition within the IDE}$
+${slide:title=Class definition within the IDE}$
 
 +>file://figures/PointClass.png|width=98+
 
 
-${slide:title=Method Definition}$
+${slide:title=Method definition}$
 
 - Methods are public
 - Methods are virtual (''i.e.,'' looked up at runtime)
@@ -297,12 +297,12 @@ messageSelectorAndArgumentNames
 
 
 
-${slide:title=Method Definition Example}$
+${slide:title=Method definition example}$
 
 +>file://figures/FactorialInBrowser.png|width=98+
 
 
-${slide:title=Messages Summary}$
+${slide:title=Messages summary}$
 
 3 kinds of messages:
 - Unary: ==Node new==

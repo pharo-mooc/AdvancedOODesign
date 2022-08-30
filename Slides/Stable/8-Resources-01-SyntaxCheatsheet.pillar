@@ -5,6 +5,7 @@
 
 ${slide:title=Class definitions}$
 
+Pharo
 [[[
 Rectangle subclass: #Box
 	instanceVariableNames: 'height'
@@ -18,6 +19,7 @@ Rectangle << #Box
 	package: 'MyPackage'
 ]]]
 
+Java
 [[[
 class  Box {
 	protected int height;

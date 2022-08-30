@@ -1,9 +1,9 @@
 {
     "title":"Messages for Java Programmers",
-    "slidesid" : "W2S02"
+    "slidesid" : "xxx"
 }
 
-${slide:title=Only Objects and Messages}$
+${slide:title=Only objects and messages}$
 
 - code in Pharo ""only"" manipulates objects: mouse, booleans, arrays, numbers, compressed, strings, windows, scrollbars, canvas, files, trees, compiler, sound, url, socket, fonts, text, collections, stack, shortcut, streams, ...
 - messages and assignments are the only way to do something
@@ -58,7 +58,7 @@ In Pharo
 ]]]
 
 
-${slide:title=Three Kinds of Messages}$
+${slide:title=Three kinds of messages}$
 
 - Unary
 [[[
@@ -78,7 +78,7 @@ Transcript show: 'hello world'
 2 between: 0 and: 5
 ]]]
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 In Java
 [[[language=java
@@ -90,14 +90,14 @@ In Pharo
     anObject keyword1: arg1 keyword2: arg2
 ]]]
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 In Java
 [[[
     postman.send(mail,recipient);
 ]]]
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 [[[
     postman.send(mail,recipient);
@@ -105,7 +105,7 @@ ${slide:title=Keyword Messages for Java developers}$
 ]]]
 
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 [[[
     postman.send(mail,recipient);
@@ -113,7 +113,7 @@ ${slide:title=Keyword Messages for Java developers}$
     postman send mail recipient
 ]]]
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 [[[
     postman.send(mail,recipient);
@@ -122,7 +122,7 @@ ${slide:title=Keyword Messages for Java developers}$
     postman send mail to recipient
 ]]]
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 [[[
     postman.send(mail,recipient);
@@ -133,7 +133,7 @@ ${slide:title=Keyword Messages for Java developers}$
 ]]]
 
 
-${slide:title=Keyword Messages for Java developers}$
+${slide:title=Keyword messages for Java developers}$
 
 In Java
 [[[language=java
@@ -150,7 +150,7 @@ In Pharo
 -- is sent to ==postman==
 -- includes two arguments (==mail== and ==recipient==)
 
-${slide:title=Conditionals are Just Messages}$
+${slide:title=Conditionals are just messages}$
 
 - in Java, ==if==, ==else==, ==for==, ==while==, ==do==, ... are language keywords
 - in Pharo, conditional expressions are messages
@@ -162,7 +162,7 @@ fullName isEmpty
    ifFalse: [ fullName ]
 ]]]
 
-${slide:title=Loops are Just Messages}$
+${slide:title=Loops are just messages}$
 
 [[[
 4 timesRepeat: [ self doSomething ]
@@ -187,6 +187,3 @@ ${slide:title=Summary}$
 - Conditionals are messages
 - Loops too
 
-% Local Variables:
-% compile-command: "cd ../.. && ./compile1Slide.sh Slides/Week2/C019-W2S02-Messages-ForTheJavaProgrammers.pillar"
-% End:

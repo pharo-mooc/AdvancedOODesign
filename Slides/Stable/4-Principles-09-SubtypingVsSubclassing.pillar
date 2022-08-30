@@ -172,7 +172,7 @@ ${slide:title=Subclassing inheritance}$
 - ""Hampers"" future evolution
 - ""Forces"" strange code
 
-${slide:title=Subtyping Inheritance}$
+${slide:title=Subtyping inheritance}$
 
 - ""Reuse"" of specifications (generic code)
 - A subclass ""refines"" superclass specifications
@@ -209,7 +209,7 @@ ${slide:title= Inheritance and polymorphism}$
 - Inheritance helps software reuse by creating ""polymorphic objects""
 - Other classes implementing the same interface can also ""be substituable""
 
-${slide:title= Subtyping support}$
+${slide:title=Subtyping support}$
 
 - We only have one ==extend== or ==subclass:== construct in PL
 - Still you can express a ""subtype"" or ""subclass"" relationship between a class and its subclass.
