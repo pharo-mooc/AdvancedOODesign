@@ -1,5 +1,6 @@
 _result
 __results
+__results*
 **/*.aux 
 **/*.DS_Store
 **/*.out
