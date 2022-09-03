@@ -3,9 +3,9 @@
     "author":"S. Ducasse and G. Polito"
 }
 
-${slide:title=Key info}$
+${slide:title=Lectures Web Site}$
 
-This is the web site of the lecture! 
+
 *https://github.com/UnivLille-Meta/Miage22*
 
 
@@ -22,7 +22,7 @@ ${slide:title=Testimonies}$
 
 ${slide:title=Yes it can feel strange but}$
 
-- First exercise: Watch Karate Kid one original movie 
+- First exercise: Watch Karate Kid I (the original movie)
 
 +.>file://figures/WaxOnWaxOff.png|width=50+
 
@@ -30,10 +30,10 @@ ${slide:title=Yes it can feel strange but}$
 
 - and do what you are told to do
 
-${slide:title=Our goal}$
+${slide:title=Our main goal as OO experts}$
 
-- Make sure that you will never program the same after this lecture!
-- In any OOP languages!
+- Make sure that you will ""never program the same"" after this lecture!
+- In ""any"" OOP languages!
 
 
 ${slide:title=Multiple Goals}$
@@ -48,13 +48,12 @@ ${slide:title=Multiple Goals}$
 
 ${slide:title=Advanced Object-Oriented Design}$
 
-You will learn a lot.
-- Revisit and realign OOP concepts
-- Advanced topics
+- ""Revisit"" and realign OOP concepts
+- ""Advanced"" topics
 -- double dispatch
 -- design patterns
 -- advanced patterns
-- Real world case studies
+- ""Real world"" case studies
 -- Regis (a conference registration server)
 -- Pillar (book compilation chain)
 -- Iceberg (git tool)
@@ -74,17 +73,17 @@ ${slide:title=Reverse engineering}$
 
 There is 80\%  of chance that you will work on programs that you do not write
 - How to understand fast the architecture?
-- Navigate/browse
-- Understand design
+- Navigate/browse large code bases
+- Understand design 
+- Identify key points
 
 ${slide:title=Some 'fun' stories about real business}$
 
 - Half of the software of a large belgium major insurance company was written in a language that does not appear on google!!!
 - They got 700,000 Euros fine. Only that :)
 - A bank at Paris is running all its business is an orphan language mixing cobol and working on an obsolete OS that is simulated.
-- Others are mixture between databases and Pascal.
-- Key energy related business in France is still using Fortran 77.
-- With ""proprietary"" extensions.
+- Others are mixture between databases and Pascal where we had to wait a recent version to be able to save program in a file!
+- Key energy related business in France is still using Fortran 77 with ""proprietary"" extensions.
 
 
 ${slide:title=A pakistanese Javascript dev ...}$
@@ -94,36 +93,30 @@ ${slide:title=A pakistanese Javascript dev ...}$
 - Or do you want to sell your capacity to learn and focus on the added value?
 
 
-${slide:title=So...}$
+${slide:title=About attitude}$
 
-- Instead of complaining like a lemming that "there is no documentation"...
-- Learn how to learn fast
-- Learn how to jump over obstacles
-- Develop skills that are not mainstream
+- You may complain like a lemming that "there is no documentation"...
+- You may better
+-- Learn how to learn fast
+-- Learn how to jump over obstacles
+-- Develop skills that are not mainstream
 
-${slide:title=Learning and more}$
+${slide:title=About learning}$
 
 - How do you learn?
--- visual, oral
+-- visual, oral?
 -- repetition?
 -- mental map?
 -- iteration?
 - What are your strategies to learn fast?
 - What are your strategies to improve the quality of your learning?
-- "We will ask a report on that! With proofs."
-
-${slide:title=Are you Smart as Hermione or ...}$
-
-- How do you learn?
-- What are your strategies to learn fast?
-- What are your strategies to improve the quality of your learning?
-
+- We will ask a presentation  on that!
 
 
 ${slide:title=The case of Pharo}$
 
 - *http://mooc.pharo.org*
-- Discord channel
+- Discord channel *https://discord.gg/QewZMZa*
 - *http://books.pharo.org*
 - Mailling-lists
 
@@ -134,19 +127,28 @@ ${slide:title=Reporting}$
 - Good reporting lowers manager stress
 - Weekly report will be part of the grade!
 
-${slide:title=Helping}$
+${slide:title=About soft skills}$
 
-Soft skills are not well practice at university.
-Let us practice them.
-- How to help other
+Soft skills (communication, autonomy, networking, team work)
+- Soft skills are not well taught at university.
+- Let us practice them.
+-- How to help other people?
+-- How to ask for help so that someone that you do not know and that have not earn anything will still help you?
+
+Practice, learn, practice
+- reflect on your process 
+- practice again
 
 
 ${slide:title=Grading}$
 
 - Organize in groups of 3
 - Register and create your own folder at *https://github.com/UnivLille-Meta/Miage22*
+- You have the right to kick out someone not working from your group!
+-- read resources about the Mollasson
 
 ${slide:title=Grading}$
+
 - Two presentations (reverse engineering and design + actions )
 -- Week 4 and 12
 - Two examens: week 6 and week 9
@@ -187,17 +189,19 @@ ${slide:title=Resources}$
 - Discord *https://discord.gg/QewZMZa*
 - Books: *http://books.pharo.org*
 - Git Guille docs?
-- Github pour le cours 
-- ""https://www.cs.cornell.edu/courses/cs3110/2018fa/teams/hitchhikers.html""
  
 ${slide:title=List of books}$
 
-- Agile programming
-- Design patterns
-- Pharo by Example
-- Pharo with Style
+- Agile programming Explained
+- Design patterns 
+-- Smalltalk design pattern companion
+-- Gang of four book
+- Pharo by Example *http://books.pharo.org*
+- Pharo with Style *http://books.pharo.org*
 
 ${slide:title=Conclusion}$
 
-A lectures with multiple facets 
-- Soft skills are not well trained at University of practices
+- A lectures with multiple objectives
+- Remember you can learn a lot!
+
+
