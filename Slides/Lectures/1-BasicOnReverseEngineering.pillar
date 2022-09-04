@@ -1,14 +1,59 @@
 {
-    "title":"Basic on reverse engineering",
+    "title" : "Reverse engineering",
+    "subtitle" : "A key skill of pros developers", 
     "author":"S. Ducasse and G. Polito"
 }
 
 
+${slide:title=20 vs 80}$
+
+- You get 4 times more probability to work on an old, strange, undocumented, architecturally drifted system than write a new one
+- How to survive to 
+-- ""obsolete/irrelevant"" documentation,
+-- ""obscure architecture"", and
+-- ""lack"" of experts?
+- How to get insider information?
+
+
+
+${slide:title=Reverse engineering}$
+
+IEEE definition ''"the process of analyzing a subject system to identify the system's components and their interrelationships and to create representations of the system in another form or at a higher level of abstraction"''
+
+
+${slide:title=Different perspectives}$
+
+- As a user
+-- API? 
+- As an implementor
+-- what are the invariants / design choice / tradeoffs?
+- As an extender
+-- where to introduce a dispatch hook?
+
+${slide:title=Different perspectives}$
+
+- Static vs. dynamic
+-- Static can be fuzzy (devil is in the details)
+-- Dynamic can simply overhelm you with details
+- Coarse vs. fine grained
+-- architectural element vs. object interactions
+
 ${slide:title=Do not dive in the details}$
 
-- Do not care about details
--- Do not try to understand everything (you can die)
-- Look for how groups of classes (mainly hierarchies) are interacting
+- At first do not care about details
+-- Do not try to understand everything (you can get lost)
+- Look for 
+-- component interactions
+-- big players
+-- large responsibilities
+
+
+${slide:title=Coarse grained}$
+
+- Architecture?
+-- who interacts with what
+- Static code 
+-- dependencies
 
 ${slide:title=About package dependencies}$
 
@@ -36,6 +81,14 @@ baseline: spec
 					spec requires: #(#Bloc 'BlocHost-Mock' ). ].
 ]]]
 
+${slide:title=About package dependencies}$
+
+- Importing a package does not mean that it is used :)
+- Architecture is generally more interesting
+-- publish subscribers
+-- layers
+-- registration
+
 
 ${slide:title=Important classes}$
 
@@ -44,7 +97,7 @@ ${slide:title=Important classes}$
 - Root of small hierarchies
 - Tested classes
 
-${slide:title=Navigation 3 Pillars}$
+${slide:title=3 navigation (static) pillars}$
 
 - References to classes
 - Senders of messages
@@ -53,7 +106,7 @@ ${slide:title=Navigation 3 Pillars}$
 ${slide:title=Class references}$
 
 Pay attention you can have factory
-- a class not referencing much (basically only by the factory)
+- a class not referenced much (basically only by the factory)
 - whose instances are created by the factory
 
 ${slide:title=Senders}$
@@ -68,12 +121,13 @@ ${slide:title=Implementors}$
 - Who is providing this method?
 - Are the implementors in the same hierarchy?
 - Spread on multiple hierarchies?
--- do they are part of 'Interfaces'?
+-- do they are part of 'interfaces'?
 
 
 ${slide:title=Important messages}$
 
 - Redefined messages?
+-- Hook for ''extenders''?
 - Called a lot?
 
 
@@ -82,16 +136,15 @@ ${slide:title=Hierarchy roots}$
 - Check roots of hierarchies
 - Check references
 
-${slide:title=Check references to subclasses}$
-
-- When you have little hierarchies and there are no references to subclasses
-- Check references to the superclass
-- It can act as a factory creating subclass instances
 
 ${slide:title=Check tests}$
 
+- Good for understanding use and scenario
+-- black box testing are about use and external behavioral
+-- Pay attention tests can test internals (white box)
 - Getting fast an idea about the tested classes
 - Watch out sometimes people are lazy and test simple classes not complex ones
+
 
 ${slide:title=Look for senders of instance creation}$
 
@@ -99,11 +152,18 @@ ${slide:title=Look for senders of instance creation}$
 - Instance creation can provide the collaborators of classes
 
 
+
+${slide:title=Design Assessment}$
+
+- Conditionals
+- Long methods (high cyclomatic is always a smell)
+- Duplicated code
+- Testing messages
+
 ${slide:title=Testing messages}$
 
 - isMove, isPush...
-- They often point to absence of polymorphism
-- and weak design
+- They often point to absence of polymorphism and weak design
 - Check their senders
 
 ${slide:title=Let us check the class API}$
@@ -139,7 +199,13 @@ GameView >> drawBlock: aBlock on: aCanvas
 						ifFalse: [ self drawEmptyBlock: aCanvas ]]]
 ]]]
 
+${slide:title=Selected Reverse engineering patterns}$
 
+More fine-grained understanding
+
+- Speculate about Design
+- Refactor to understand 
+- Step through execution
 
 ${slide:title=Let us ""Speculate about Design""}$
 
@@ -167,11 +233,25 @@ ${slide:title=""Speculate about Design""}$
 - Refine to understand the extra classes
 
 
-${slide:title=Put a breakpoint}$
+${slide:title=""Refactor to Understand""}$
+
+- You have tests! Green Tests! Then ...
+- ''Iteratively rename and refactor the code to introduce meaningful names and to make sure the structure of the code reflects what the system is actually doing. Run regression tests after each change if they are available, else compile often to check whether your changes make sense.''
+
+
+
+${slide:title=Put a breakpoint and step}$
 
 - If you have tests, or ways to execute,
 - Place a breakpoint and check in the debugger
 -- but pay attention you can be drown in details
+
+${slide:title=Books}$
+
+- Object-Oriented Reengineering Patterns by Demeyer et al. (free) *https://scg.unibe.ch/download/oorp/OORP.pdf* 
+- Reactoring for Software Design Smells by Suryanarayana et al.
+- Refactorings: Improving the Design of Existing Code by Fowler et al.
+
 
 ${slide:title=Conclusion}$
 
