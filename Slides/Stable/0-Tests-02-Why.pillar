@@ -33,18 +33,18 @@ ${slide:title=Automated tests are your life insurance}$
 
 
 
-${slide:title=Automated tests ensure software can evolve}$
+${slide:title=Automated tests ensure the software can evolve}$
 
-- Tests make you ""bold"" in regards of changes
+- Tests make you ""bold"" in regards to changes
 - Tests lower the fear of breaking
 -- You can ""try"" and run the tests to get an idea
 -- You can ""explore"" alternatives
--- You can understand that ""misunderstood"" something
+-- You can understand that you ""misunderstood"" something
 
 ${slide:title=Test positive properties (1)}$
 
 - ""Find bugs"" when they appear
-- improve customer trust
+- Improve customer trust
 - Reproduce ""complex"" scenarii
 - Guarantee old bugs are caught if reappear
 - ""Isolate"" a problem
@@ -52,7 +52,7 @@ ${slide:title=Test positive properties (1)}$
 ${slide:title=Some characteristics of a good test suite}$
 
 - Check ""extreme"" cases (e.g., null, 0 and empty)
-- Check complex cases (e.g., exceptions, network pbs)
+- Check complex cases (e.g., exceptions, network issues)
 - 1 test for each bug (at least)
 - Good ""coverage""
 - Check abstractions
@@ -137,8 +137,8 @@ Imagine that we want to test a transformation of a piece of code
 - If we depend on the compiler to get the test input
 - It may break when the transformation is wrong, but also each time the compiler changes something!
 
-Better have a setup that is independent from the compiler
-- Manually build the test input and store it in a test set up
+Better have a setup that is independent of the compiler
+- Manually build the test input and store it in a test setup
 
 Think about API even in the test setup
 
@@ -146,9 +146,9 @@ Think about API even in the test setup
 ${slide:title=Positive and negative tests }$
 
 Positive
-- if I do no the normal stuff, 
+- If I do the normal stuff, 
 - It passes!
-- Example: You can log with correct credentials
+- Example: You can log in with the correct credentials
 
 Negative
 - If I do not behave correctly,
@@ -158,11 +158,11 @@ Negative
 
 ${slide:title=Test positive properties (2) }$
 
-- Give simple and ""reproducibl""e examples
+- Give simple and ""reproducible"" examples
 - ""Executable"" snippets
 - Illustrate the API
 - Give up-to-date documentation
-- Check conformity of new code
+- Check the conformity of new code
 - Offer a ""first client"" to new code
 - Force a ""'customizable'"" design
 

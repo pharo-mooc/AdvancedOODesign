@@ -40,7 +40,7 @@ ${slide:title=Anatomy of a test}$
 
 A test:
 - Creates a ""context"" 
-- Performs a ""stimulus"": an action on the context
+- Performs a ""stimulus"": an action in the context
 - ""Checks"" the result with ""assertions""
 
 
@@ -150,10 +150,10 @@ ${slide:title=About writing tests}$
 - Build them incrementally
 -- Do not need to focus on everything
 -- When a new bug shows up, write a test
-- Even better write them before the code
--- Act as your first client, produce better interface
-- Active documentation always in sync
-- It has a cost: writing them, maintain them, so make them worth
+- Even better, write them before the code
+-- Act as your first client, produce a better interface
+- Active documentation is always in sync
+- It has a cost: writing them, maintaining them, so make them worth
 - But pay off is Huge
 
 
