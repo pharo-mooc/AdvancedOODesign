@@ -19,7 +19,7 @@ ${slide:title=Testimonies}$
 
 - "I finally understood objects after five years of Java and working in a C++ company."
 
-- "I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design. - Anonymous"
+- "I have already learned so much! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object-oriented design. - Anonymous"
 
 ${slide:title=Yes it can feel strange but}$
 
@@ -72,7 +72,7 @@ ${slide:title=Tests...}$
 
 ${slide:title=Reverse engineering}$
 
-There is 80\%  of chance that you will work on programs that you do not write
+There is 80\%  of chance that you will work on programs that you did not write
 - How to understand fast the architecture?
 - Navigate/browse large code bases
 - Understand design 
@@ -80,11 +80,11 @@ There is 80\%  of chance that you will work on programs that you do not write
 
 ${slide:title=Some 'fun' stories about real business}$
 
-- Half of the software of a large belgium major insurance company was written in a language that does not appear on google!!!
+- Half of the software of a large Belgium major insurance company was written in a language that does not appear on google!!!
 - They got 700,000 Euros fine. Only that :)
-- A bank at Paris is running all its business is an orphan language mixing cobol and working on an obsolete OS that is simulated.
-- Others are mixture between databases and Pascal where we had to wait a recent version to be able to save program in a file!
-- Key energy related business in France is still using Fortran 77 with ""proprietary"" extensions.
+- A bank in Paris is running all its business on an orphan language mixing COBOL and working on an obsolete OS that is simulated.
+- Others are a mixture between databases and Pascal where we had to wait for a recent version to be able to save the program in a file!
+- Key energy-related business in France is still using Fortran 77 with ""proprietary"" extensions.
 
 
 ${slide:title=A pakistanese Javascript dev ...}$
@@ -111,7 +111,7 @@ ${slide:title=About learning}$
 -- iteration?
 - What are your strategies to learn fast?
 - What are your strategies to improve the quality of your learning?
-- We will ask a presentation  on that!
+- We will ask for a presentation on that!
 
 
 ${slide:title=The case of Pharo}$
@@ -119,7 +119,7 @@ ${slide:title=The case of Pharo}$
 - *http://mooc.pharo.org*
 - Discord channel *https://discord.gg/QewZMZa*
 - *http://books.pharo.org*
-- Mailling-lists
+- Mailing-lists
 
 
 ${slide:title=Reporting}$
@@ -130,11 +130,11 @@ ${slide:title=Reporting}$
 
 ${slide:title=About soft skills}$
 
-Soft skills (communication, autonomy, networking, team work)
+Soft skills (communication, autonomy, networking, teamwork)
 - Soft skills are not well taught at university.
 - Let us practice them.
 -- How to help other people?
--- How to ask for help so that someone that you do not know and that have not earn anything will still help you?
+-- How to ask for help so that someone that you do not know and that does not earn anything will still help you?
 
 Practice, learn, practice
 - reflect on your process 
@@ -152,7 +152,7 @@ ${slide:title=Grading}$
 
 - Two presentations (reverse engineering and design + actions )
 -- Week 4 and 12
-- Two examens: week 6 and week 9
+- Two exams: week 6 and week 9
 - Work done as exemplified by Pull Requests
 - Short weekly report showing
 -- what has been done
@@ -190,20 +190,23 @@ ${slide:title=Resources}$
 - Mooc *http://mooc.pharo.org*
 - Discord *https://discord.gg/QewZMZa*
 - Books: *http://books.pharo.org*
-- Git Guille docs?
+- Git: 
+-- *https://rmod-files.lille.inria.fr/DesignCoffeeClub/Slides/Support-1-BasicGit.pdf*
+-- *https://rmod-files.lille.inria.fr/DesignCoffeeClub/Slides/Support-2-AdvancedGit.pdf*
+-- *https://rmod-files.lille.inria.fr/DesignCoffeeClub/Slides/Support-2-PracticalGit.pdf*
  
 ${slide:title=List of books}$
 
 - Agile programming Explained
 - Design patterns 
 -- Smalltalk design pattern companion
--- Gang of four book
+-- Gang-of-four book (Gamma et al)
 - Pharo by Example *http://books.pharo.org*
 - Pharo with Style *http://books.pharo.org*
 
 ${slide:title=Conclusion}$
 
-- A lectures with multiple objectives
+- A lecture with multiple objectives
 - Remember you can learn a lot!
 
 
