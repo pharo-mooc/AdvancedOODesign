@@ -5,44 +5,34 @@
 }
 
 
-${slide:title=Goal}$
-
-- Constructors
-- 
-- 
-
-${slide:title=Simple Constructor}$
+${slide:title=Constructor II}$
 
 [[[
 public JButton() {
-    this(null, null);
+        this(null, null);
 }
 ]]]
 
 
-${slide:title=Constructor (I)}$
-
-- Constructors may invoke each other. 
-
 [[[
 public JButton(String text) {
-    this(text, null);
+        this(text, null);
 ]]]
 
 
 [[[
 public JButton(String text, Icon icon) {
-    setModel(new DefaultButtonModel());
-    init(text, icon);
-}
+        setModel(new DefaultButtonModel());
+        init(text, icon);
+    }
 ]]]
 
-
-- The keyword ==this== is used for that purpose. 
+- Constructors may invoke each other. 
+- The keyword this is used for that purpose. 
 Note that this ==this==, used in to invoke constructor, has nothing to do with the ==this== pseudo variable used in method.
 
-
 ${slide:title=Constructors are not inherited}$
+
 
 ${columns}$
 
@@ -148,19 +138,13 @@ public class Sub extends Super {
 >>> Sub
 ]]]
 
-
-${slide:title=About implicit constructor invocation}$
-
 - If a constructor does not explicitly invoke a superclass constructor, the Java compiler automatically inserts a call to the no-argument constructor of the superclass. 
-- If the super class does not have a no-argument constructor, you will get a compile-time error. 
-- Object does have such a constructor, so if Object is the only superclass, there is no problem.
-- The rules is: subclass constructor has to invoke super class constructor, either explicitly by programmer or implicitly by compiler. 
-- For either way, the invoked super constructor has to be defined.
+- If the super class does not have a no-argument constructor, you will get a compile-time error. Object does have such a constructor, so if Object is the only superclass, there is no problem.
+- The rules is: subclass constructor has to invoke super class constructor, either explicitly by programmer or implicitly by compiler. For either way, the invoked super constructor has to be defined.
 
 ${slide:title=Example of missing super constructor }$
 
-- Implicit super constructor is undefined for default constructor. 
-- You must define an explicit constructor.
+"Implicit super constructor is undefined for default constructor. Must define an explicit constructor"
 
 [[[
 class Super {
