@@ -7,7 +7,7 @@
 
 ${slide:title=Outline}$
 
-- TDD on ""steroids"""
+- TDD on ""steroids""
 - Live programming at ""its best""
 - Smart tools
 - Absolutely ""gorgeous"" development flow
@@ -17,12 +17,12 @@ ${slide:title=Principle}$
 Do ""not break"" the flow
 - Write a test
 - When it breaks, define the method ""on the fly in the debugger""
-- ""Resume and continue"" until test is green
+- ""Resume and continue"" until the test is green
 
 ${slide:title=Studying an example}$
 
 - A dead simple counter. Nothing simpler.
-- Focus on essence of the process!
+- Focus on the essence of the process!
 - You can do it.
 
 ${slide:title=An empty package}$
@@ -133,7 +133,7 @@ ${slide:title=Debugger also precompiles methods}$
 
 + >file://figures/XTDD16.png|width=70+
 
-- A method with the same name than an attribute is probably an accessor
+- A method with the same name as an attribute is probably an accessor
 
 ${slide:title=Test is green}$
 
@@ -152,7 +152,7 @@ ${slide:title=Why XTDD is powerful}$
 -- inspect that ""specific"" instance state
 -- talk to that ""specific"" object
 - Inspectable / interactable context
-- Tests are not a side effect artefact but the ""driving"" force
+- Tests are not a side effect artifact but the ""driving"" force
 
 ${slide:title=Protip from expert Pharo developers}$
 

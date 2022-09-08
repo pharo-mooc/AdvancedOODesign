@@ -35,12 +35,12 @@ ${slide:title=Analysis}$
 
 - A poor data structure, not an object
 - Super ""limited"" interface
-- Points do not define behavior beside ==move== and ==translate==!
+- Points do not define behavior beside ==move==, ==translate== and  ==distance==!
 
 
 ${slide:title=An example in Java}$
 
-How to make a robot walks from distance in its current direction (in degree).
+How to make a robot walk a distance from its current direction (in degrees).
 
 [[[
 public class Bot {
@@ -86,7 +86,7 @@ Bot >> go: aDistance
 ]]]
 
 - Use ""Point""'s addition, multiplication, and rounding
-- Use "Number"'s sin and cos
+- Use ""Number""'s sin and cos
 
 
 ${slide:title=Points in Pharo}$
@@ -118,7 +118,7 @@ Point >> crossProduct: aPoint
 	^ (x * aPoint y) - (y * aPoint x)
 ]]]
 
-- Obvious but still useful
+- Obvious, but still useful
 - No need to duplicate it in clients
 
 ${slide:title=Simple example: comparing points}$ 
@@ -206,6 +206,6 @@ ${slide:title=Analysis}$
 ${slide:title=What you should know}$
 
 - Objects are not data structures
-- Objects are more that structure
+- Objects are more than structure
 - Objects are about behavior and services they offer
-- An object should encapsulate logic and lets its client ""reuse"" such a  logic!
+- An object should encapsulate logic and lets its client ""reuse"" such logic!

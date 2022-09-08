@@ -138,7 +138,7 @@ ${column:width=50}$
 
 ${endColumns}$
 
-${slide:title=Even somebooks got it wrong}$
+${slide:title=Even some books got it wrong}$
 
 - ""Wrong"" definition: ''==super== looks for the method in the superclass of the ""receiver""'s class''
 - With this definition, this example would loop forever:

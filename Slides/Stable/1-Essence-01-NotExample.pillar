@@ -20,7 +20,7 @@ You get the classical message
 - ==or:==, ==and:== (lazy)
 And some less traditional
 - ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
--- Yes conditionals are message sent to boolean objects
+-- Yes, conditionals are messages sent to boolean objects
 
 
 ${slide:title=Three exercises}$
@@ -49,9 +49,9 @@ ${slide:title=Hint 1: No conditionals}$
 
 The solution does not use conditionals (i.e., no ==if==)
 
-${slide:title=Hint 2: How do we express choice in OOP?}$
+${slide:title=Hint 2: How do we express choices in OOP?}$
 
-In OOP, choice is expressed 
+In OOP, the choice is expressed 
 - By defining classes with ""compatible"" methods
 - By ""sending"" a message to an instance of such class
 - Let the receiver decide
@@ -192,7 +192,7 @@ ${slide:title=Or Implementation in two methods}$
 
 
 ${slide:title=Summary}$
-- The solution to implement booleans' operations:
+- The solution is to implement boolean operations:
 -- does NOT use conditionals (if)
 - ""Do not ask, tell""
 -- lets the receiver decide

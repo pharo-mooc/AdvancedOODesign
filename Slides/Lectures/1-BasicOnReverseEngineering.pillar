@@ -26,16 +26,16 @@ ${slide:title=Different perspectives}$
 - As a user
 -- API? 
 - As an implementor
--- what are the invariants / design choice / tradeoffs?
+-- what are the invariants/design choice/tradeoffs?
 - As an extender
--- where to introduce a dispatch hook?
+-- Where to introduce a dispatch hook?
 
 ${slide:title=Different perspectives}$
 
 - Static vs. dynamic
--- Static can be fuzzy (devil is in the details)
--- Dynamic can simply overhelm you with details
-- Coarse vs. fine grained
+-- Static can be fuzzy (the devil is in the details)
+-- Dynamic can simply overwhelm you with details
+- Coarse vs. fine-grained
 -- architectural element vs. object interactions
 
 ${slide:title=Do not dive in the details}$
@@ -105,14 +105,14 @@ ${slide:title=3 navigation (static) pillars}$
 
 ${slide:title=Class references}$
 
-Pay attention you can have factory
+Pay attention you can have factories
 - a class not referenced much (basically only by the factory)
 - whose instances are created by the factory
 
 ${slide:title=Senders}$
 
 - Who is calling this method?
-- Pay attention quantity may not matters
+- Pay attention, quantity may not matter
 -- you can have several callers
 -- or a single but at the root of a class hierarchy 
 
@@ -121,7 +121,7 @@ ${slide:title=Implementors}$
 - Who is providing this method?
 - Are the implementors in the same hierarchy?
 - Spread on multiple hierarchies?
--- do they are part of 'interfaces'?
+-- Are they part of 'interfaces'?
 
 
 ${slide:title=Important messages}$
@@ -133,17 +133,17 @@ ${slide:title=Important messages}$
 
 ${slide:title=Hierarchy roots}$
 
-- Check roots of hierarchies
+- Check the roots of hierarchies
 - Check references
 
 
 ${slide:title=Check tests}$
 
 - Good for understanding use and scenario
--- black box testing are about use and external behavioral
+-- black box testing is about use and external behavioral
 -- Pay attention tests can test internals (white box)
 - Getting fast an idea about the tested classes
-- Watch out sometimes people are lazy and test simple classes not complex ones
+- Watch out sometimes people are lazy and test simple classes, not complex ones
 
 
 ${slide:title=Look for senders of instance creation}$
@@ -163,7 +163,7 @@ ${slide:title=Design Assessment}$
 ${slide:title=Testing messages}$
 
 - isMove, isPush...
-- They often point to absence of polymorphism and weak design
+- They often point to the absence of polymorphism and weak design
 - Check their senders
 
 ${slide:title=Let us check the class API}$
@@ -244,17 +244,17 @@ ${slide:title=Put a breakpoint and step}$
 
 - If you have tests, or ways to execute,
 - Place a breakpoint and check in the debugger
--- but pay attention you can be drown in details
+-- but pay attention you can drown in details
 
 ${slide:title=Books}$
 
 - Object-Oriented Reengineering Patterns by Demeyer et al. (free) *https://scg.unibe.ch/download/oorp/OORP.pdf* 
-- Reactoring for Software Design Smells by Suryanarayana et al.
+- Refactoring for Software Design Smells by Suryanarayana et al.
 - Refactorings: Improving the Design of Existing Code by Fowler et al.
 
 
 ${slide:title=Conclusion}$
 
 - Reverse engineering is a cool skill
-- Practices as much as you can 
+- Practice as much as you can 
 - Expert developers know how to walk in the jungle

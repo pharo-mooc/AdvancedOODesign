@@ -67,7 +67,7 @@ ${slide:title=Let the receiver decide}$
 - Sending a message lets the receiver decide
 - Client does not have to decide
 - Client code is more declarative: give orders
-- Different receivers may be substitued dynamically
+- Different receivers may be substituted dynamically
 
 ${slide:title=Avoid Conditionals}$
 
@@ -78,5 +78,5 @@ ${slide:title=Avoid Conditionals}$
 ${slide:title=Summary: Cornerstone of OOP}$
 - Let the receiver decide
 - Message sends act as potential dynamic conditionals
-- Class hierarchy: a support for dynamic dispatch
+- Class hierarchy: support for dynamic dispatch
 - Avoid conditionals

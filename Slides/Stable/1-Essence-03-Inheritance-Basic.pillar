@@ -7,7 +7,7 @@ ${slide:title=Goal}$
 
 - What is inheritance?
 - When to use it?
-- BTW, Pharo has the same inheritance than Java
+- BTW, Pharo has the same inheritance as Java
 
 
 
@@ -20,7 +20,7 @@ ${column:width=60}$
 - Often we want small adaptations
 - We want to extend existing behavior and state
 - Solution: ""class inheritance""
-- a class extends the definition of its superclass
+- A class extends the definition of its superclass
 
 ${column:width=40}$
 
@@ -34,7 +34,7 @@ ${columns}$
 
 ${column:width=60}$
 
-a subclass
+A subclass
 - can ""add"" state and behavior:
 -- ==color==, ==borderColor==, ...
 - can ""use"" superclass behavior and state
@@ -53,7 +53,7 @@ ${columns}$
 ${column:width=70}$
 
 - ==Object== is the root of most classes 
--- defines the common behavior of any object
+-- defines the common behavior of all objects
 - ==ProtoObject== (==Object=='s superclass) has a special purpose:
 -- e.g. raising as much as errors as possible
 -- so that the system can catch such errors and do something with them
@@ -96,7 +96,7 @@ ${columns}$
 ${column:width=50}$
 
 - Happens at runtime
-- the method is looked up
+- The method is looked up
 -- starting from the receiver's class
 -- then going up the superclass chain
 
