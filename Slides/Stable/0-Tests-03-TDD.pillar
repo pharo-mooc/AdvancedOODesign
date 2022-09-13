@@ -22,7 +22,7 @@ ${slide:title=TDD is about the flow}$
 
 # Run ""all"" your tests: 
 ## they should be ""green""! Else fix it!
-# Turn a feature into a test
+# Write a test for a feature
 # Make sure it ""fails"" (yes - failed or error)
 # Write some code
 # Run ""the"" test - loop until it ""passes"" else goto 4
@@ -43,7 +43,7 @@ CounterTest >> testCount
 	| c |
 	c := Counter new. 
 	c count: 10.
-	self assert: c count equals: 12
+	self assert: c count equals: 10
 ]]]
 
 ${slide:title=TDD: Run your test!}$

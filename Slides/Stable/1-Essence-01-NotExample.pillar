@@ -1,7 +1,7 @@
 {
 	"title":"Essence of Dispatch",
 	"subtitle":"Taking Pharo Booleans as Example",
-	"author":"S. Ducasse and L. Fabresse",
+	"author":"S. Ducasse",
 	"slidesid" : "2022"
 }
 
@@ -9,25 +9,25 @@ ${slide:title=Objectives}$
 
 - Understanding of message passing (late binding) for ""real"" this time
 - The ""heart of OOP""
-- Insight at how beautiful Pharo's implementation is
+- Looking at a beautiful implementation in Pharo
 
 ${slide:title=Context: Booleans}$
 
 In Pharo, Booleans have a superb implementation!
 
-You get the classical message
+You get the classical messages
 - ==&==, ==|==, ==not== (eager)
 - ==or:==, ==and:== (lazy)
-And some less traditional
+And some less traditional ones
 - ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
 -- Yes, conditionals are messages sent to boolean objects
 
 
 ${slide:title=Three exercises}$
 
-# Implement ==not== (Not)
-# Implement ==|== (Or)
-# What is the goal of these exercises?
+- Exo 1: Implement ==not== (Not)
+- Exo 2: Implement ==|== (Or)
+- Exo 3: What is the goal of these exercises?
 
 ${slide:title=Exercise 1: Implement Not}$
 
@@ -66,17 +66,17 @@ Example
 
 ${slide:title=Hint 3: With at least two classes}$
 
-- The Pharo implementation uses three classes:
--- ==Boolean== (abstract), ==True== and ==False==
 - ==true== is the singleton instance of ==True==
 - ==false== is the singleton instance of ==False==
 
+The Pharo implementation uses three classes:
+- ==Boolean== (abstract), ==True==, and ==False==
+
 ${slide:title=Hint 3: With at least two classes}$
 
-- ==Boolean== is not needed per se but it improves reuse
+==Boolean== is not needed per se but it improves reuse
+
 +Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=50+
-
-
 
 
 
@@ -110,14 +110,10 @@ ${slide:title=Boolean implementation}$
 -  ==True== and ==False== implement
 -- logical operations ==&==, ==not==
 -- control structures ==and:==, ==or:==, ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
+-- reuse some logic from ==Boolean==
 
-[[[
-Boolean >> not
-   "Abstract method. Negation: Answer true if the receiver is false, answer false if the receiver is true."
-   self subclassResponsibility
-]]]
 
-${slide:title=Behavior of Or}$
+${slide:title=Exercise 2: Implement Or}$
 
 [[[
 true | true -> true
@@ -149,6 +145,15 @@ false | false -> false
 false | anything -> anything
 ]]]
 
+
+${slide:title=Implementation of Or in class False}$
+
+[[[
+false | true -> true
+false | false -> false
+false | anything -> anything
+]]]
+
 [[[
 False >> | aBoolean
    "Evaluating Or -- answer with the argument, aBoolean."
@@ -163,11 +168,22 @@ true | false -> true
 true | anything -> true
 ]]]
 
+
+${slide:title=Implementation of Or in class True}$
+
+[[[
+true | true -> true
+true | false -> true
+true | anything -> true
+]]]
+
 [[[
 True >> | aBoolean
    "Evaluating Or -- answer true since the receiver is true."
    ^ true
 ]]]
+
+
 
 ${slide:title=Real implementation of Or in class True}$
 

@@ -22,7 +22,7 @@ ${slide:title=Why testing?}$
 
 ${slide:title=Remember...}$
 
-A test that is not automated does ""NOT EXIST!""
+A unit test that is not automated does ""NOT EXIST!""
 
 ${slide:title=Automated tests are your life insurance}$
 

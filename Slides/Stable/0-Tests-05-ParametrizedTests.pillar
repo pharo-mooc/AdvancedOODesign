@@ -39,7 +39,7 @@ MyDullTest >> testSum
 
 ${slide:title=Use a parametrized test}$
 
-Inherit from ==ParametrizedTestCase== and add instance variables and setters.
+Inherit from ==ParametrizedTestCase==, add instance variables, and setters.
 [[[
 ParametrizedTestCase < #MyDullTest
 	slots: { #number1 . #number2 . #result}
@@ -74,8 +74,8 @@ MyDullTest >> testSum
 ]]]
 
 We can execute tests 
-	- with a specific configuration
-	- add a new configuration
+- with a specific configuration
+- add a new configuration
 
 
 ${slide:title=Problem two}$
@@ -125,7 +125,7 @@ MyTest class >> testParameters
 		addOptions: { Set . Bag . OrderedCollection }
 ]]]
 
-We run all the tests with ==Set==, ==Bag==, ==OrderedCollection==.
+We run all the tests with ==Set==, ==Bag==, and ==OrderedCollection==.
 
 
 ${slide:title=We want more}$
@@ -159,8 +159,8 @@ ${slide:title=Declare test parameters}$
 MyTest class >> testParameters
 
 	^ ParametrizedTestMatrix new
-			forSelector: #item addOptions: { 1. 'a'. $c };
-			forSelector: #collectionClass addOptions: { Set. Bag. OrderedCollection }
+			forSelector: #item addOptions: { 1 . 'a' . $c };
+			forSelector: #collectionClass addOptions: { Set . Bag . OrderedCollection }
 ]]]
 
 - ==collectionClass== and ==item== will take the values from the options

@@ -25,7 +25,7 @@ ${slide:title=Test main points}$
 
 ${slide:title=About automation}$
 
-A test that is not ""automated does NOT EXIST!""
+A unit test that is not ""automated does NOT EXIST!""
 - Seriously!
 - Repetition
 - No human intervention
@@ -61,11 +61,11 @@ TestCase subclass: #SetTest
 
 [[[
 SetTest >> testAdd 
-  | empty |
-  empty := Set new.                      "Context"
-  empty add: 5.                             "Stimulus"
-  empty add: 5. 
-  self assert: empty size equals: 1.        "Check"
+    | empty |
+    empty := Set new.                      "Context"
+    empty add: 5.                             "Stimulus"
+    empty add: 5. 
+    self assert: empty size equals: 1.        "Check"
 
 SetTest run: #testAdd
 ]]]
@@ -84,11 +84,11 @@ If we get ==empty size== returning 2 instead of 1.
 
 [[[
 SetTest >> testAdd 
-  | empty |
-  empty := Set new.
-  empty add: 5.
-  empty add: 5.
-  self assert: empty size equals: 1.
+    | empty |
+    empty := Set new.
+    empty add: 5.
+    empty add: 5.
+    self assert: empty size equals: 1.
 ]]]
 
 ${slide:title=An error}$
@@ -97,10 +97,10 @@ Sending the message ==foobar:== raises an exception.
 
 [[[
 SetTest >> testAdd 
-  | empty |
-  empty := Set new.
-  empty foobar: 5.
-  self assert: empty size equals: 1.
+    | empty |
+    empty := Set new.
+    empty foobar: 5.
+    self assert: empty size equals: 1.
 ]]]
 
 ${slide:How to reuse setting test context?}$
@@ -126,20 +126,20 @@ ${slide:title=Defining a setUp method}$
 
 [[[
 SetTestCase >> setUp
-  empty := Set new
+    empty := Set new
 ]]]
 
  ==setUp== is executed for you before any test execution
 
 [[[
 SetTestCase >> testOccurrences
-  self
-    assert: (empty occurrencesOf: 0)
-    equals: 0.
-  empty add: 5; add: 5.
-  self
-    assert: (empty occurrencesOf: 5)
-    equals: 1
+    self
+      assert: (empty occurrencesOf: 0)
+      equals: 0.
+    empty add: 5; add: 5.
+    self
+      assert: (empty occurrencesOf: 5)
+      equals: 1
 ]]]
 
 
@@ -159,11 +159,11 @@ ${slide:title=About writing tests}$
 
 ${slide:title=But I can't cover everything!}$
 
-- Sure! Nobody can but:
--- When someone discovers a defect in code, first write a test that demonstrates the defect.
--- Then debug until the test succeeds.
+Sure! Nobody can but:
+- When someone discovers a defect in code, first write a test that demonstrates the defect.
+- Then debug until the test succeeds.
 
-'''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.''' Martin Fowler
+''Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead.'' Martin Fowler
 
 ${slide:title=Testing style: TDD}$
 
@@ -173,7 +173,7 @@ ${slide:title=Testing style: TDD}$
 - Write tests as you develop (even before you implement your class!)
 - Write tests for every new piece of functionality
 
-'''Developers should spend 25-50\% of their time developing tests.'''
+''Developers should spend 25-50\% of their time developing tests.''
 
 (see next lecture)
 
@@ -181,7 +181,7 @@ ${slide:title=Good tests}$
 
 - Repeatable
 - No human intervention
-- "self-described"
+- ''self-described''
 - Change less often than the system
 - Tells a story
 

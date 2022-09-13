@@ -1,8 +1,7 @@
 {
 	"title":"Essence of Dispatch",
-	"author": "S. Ducasse and L. Fabresse"
+	"author": "S. Ducasse"
 }
-
 
 
 ${slide:title=Remember: Implementing not in two methods}$
@@ -16,9 +15,8 @@ ${slide:title=Stepping back}$
 ${slide:title=Ok so what?}$
 
 - You will probably never implement ==Booleans== in the future
-- So is it really that totally useless?
+- So is it really useful?
 - What is the lesson to learn?
-
 
 
 ${slide:title=Message sends act as case statements}$
@@ -36,13 +34,19 @@ ${slide:title=Sending a message is making a choice}$
 ${slide:title=How do we express choices?}$
 
 - Ok we have a choice operation... then
-- Could we have the same solution with a single ==Boolean== class?
+- ""How do we express choices""?
+- Could we have the same solution with a ""single"" ==Boolean== class?
 
 
 ${slide:title=Classes play case roles}$
 
-- To activate the choice operator we must have choices: classes
-- We can see that a class represents a case
+- To activate the choice operator we must have ""choices"": classes
+- A class represents a choice (a case)
+
+
+${slide:title=One class vs. a hierarchy}$
+
++>file://figures/Design-FatVsDispatch.png|width=75+
 
 ${slide:title=Class hierarchy supports for dynamic dispatch}$
 
@@ -57,10 +61,10 @@ Compare the solution with one class vs. a hierarchy
 
 ${slide:title=Message dispatch supports modularity}$
 
-+>file://figures/Design-FatVsDispatchWithPackages.png|width=85+
++>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=85+
 
-More modular: We can package different classes in different packages
-
+- More modular: We can package different classes in different packages
+- If we have a way to get instances of ==D== 
 
 ${slide:title=Let the receiver decide}$
 

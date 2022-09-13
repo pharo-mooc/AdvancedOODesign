@@ -1,7 +1,7 @@
 {
     "title":"About Advanced Object-Oriented Design",
     "subtitle":" ",
-    "author":"S. Ducasse, G. Polito and P. Tesone",
+    "author":"S. Ducasse, L. Fabresse, G. Polito and P. Tesone",
     "slidesid":"2022"
 }
 
@@ -11,11 +11,11 @@ ${slide:title=Objectives}$
 - Think about essential aspects of OOP
 - Learn key Design Patterns
 
-${slide:title=Topics over several paths}$
+${slide:title=Outline}$
 
 - Test and test-driven
 - Essential aspects of OOP
-- Basic and universal principles
+- Basic and Universal Principles
 - Double dispatch
 - Case studies in Pharo 
 - Some design patterns
@@ -35,7 +35,7 @@ ${slide:title= Why Pharo?}$
 
 
 
-${slide:title=About vocabulary: The case of polymorphism}$
+${slide:title=About Vocabulary: The case of Polymorphism}$
 
 - To avoid some misunderstandings
 - The word "Polymorphism" is overloaded
@@ -44,7 +44,7 @@ ${slide:title=About vocabulary: The case of polymorphism}$
 
 ${slide:title=Our stance}$
 
-''If it walks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.''
+"'If it walks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.'"
 
 We use the terms ""polymorphic"" or ""polymorphism"" in the sense of:
 - exposing the same API, 
@@ -57,8 +57,6 @@ ${slide:title=Polymorphism}$
 - Looking at object API
 - To produce reusable and extensible programs
 - Not much as class structural relation (subtyping)
-
-
 
 ${slide:title=A unique lecture}$
 
