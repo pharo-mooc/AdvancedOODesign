@@ -50,7 +50,6 @@ ${slide:title=One class vs. a hierarchy}$
 
 ${slide:title=Class hierarchy supports for dynamic dispatch}$
 
-Compare the solution with one class vs. a hierarchy
 - More modular
 - Hierarchy provides a way to specialize behavior
 - You only focus on one class at a time
@@ -61,10 +60,16 @@ Compare the solution with one class vs. a hierarchy
 
 ${slide:title=Message dispatch supports modularity}$
 
-+>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=85+
++>file://figures/Design-FatVsDispatchWithPackages.png|width=65+
 
-- More modular: We can package different classes in different packages
-- If we have a way to get instances of ==D== 
+More modular: We can package different classes in different packages
+
+
+${slide:title=Limit impact of changes}$
+
++>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
+
+If client has a way to get instances of ==D== (in addition to classes of first package), the client code does not have to change
 
 ${slide:title=Let the receiver decide}$
 
