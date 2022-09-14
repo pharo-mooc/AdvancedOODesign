@@ -1,17 +1,17 @@
 {
   "title":"Inheritance and Lookup",
   "subtitle":" 101 on lookup",
-  "author":"S. Ducasse and L. Fabresse"
+  "author":"S. Ducasse and G. Polito"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
-- Understanding
--- message sending
--- method lookup
--- semantics of ==self==
+ Understanding
+- message sending
+- method lookup
+- semantics of ==self==
 
-${slide:title=Remeber inheritance}$
+${slide:title=Remember inheritance}$
 
 - Inheritance of ""state"" is ""static"" (done at compile time)
 - Inheritance of ""behavior"" is ""dynamic""
@@ -78,6 +78,12 @@ ${column:width=53}$
 ${endColumns}$
 
 
+${slide:title=About lookup}$
+
+
+- Most of the time the lookup result is cached
+- In some languages, there are dispatch tables
+
 
 ${slide:title=What is self/this?}$
 
@@ -113,9 +119,9 @@ ${column:width=60}$
 ${column:width=40}$
 [[[
 	aA foo
-	> ...
+	>>> ...
 	aB foo
-	> ...
+	>>> ...
 ]]]
 
 - ==aA== is an instance of ==A== (obtained executing ==A new==)
@@ -135,9 +141,9 @@ ${column:width=60}$
 ${column:width=40}$
 [[[
 	aA foo
-	> ...
+	>>> ...
 	aB foo
-	> ...
+	>>> ...
 ]]]
 
 ${endColumns}$
@@ -156,9 +162,9 @@ ${column:width=60}$
 ${column:width=40}$
 [[[
 	aA foo
-	> 10
+	>>> 10
 	aB foo
-	> 50
+	>>> 50
 ]]]
 
 ${endColumns}$
@@ -176,9 +182,9 @@ ${column:width=40}$
 
 [[[
 	aA bar
-	> ...
+	>>> ...
 	aB bar
-	> ...
+	>>> ...
 ]]]
 
 ${endColumns}$
@@ -198,9 +204,9 @@ ${column:width=40}$
 
 [[[
 	aA bar
-	> 10
+	>>> 10
 	aB bar
-	> 50
+	>>> 50
 ]]]
 
 ${endColumns}$
@@ -215,7 +221,7 @@ ${column:width=40}$
 
 [[[
 	aB bar
-	> 50
+	>>> 50
 ]]]
 
 ${column:width=65}$
@@ -251,11 +257,11 @@ ${column:width=40}$
 
 [[[
     aA bar
-    > ...
+    >>> ...
     aB bar
-    > ...
+    >>> ...
     aC bar
-    > ...
+    >>> ...
 ]]]
 
 ${endColumns}$
@@ -272,11 +278,11 @@ ${column:width=40}$
 
 [[[
     aA bar
-    > 10
+    >>> 10
     aB bar
-    > 10
+    >>> 10
     aC bar
-    > 50
+    >>> 50
 ]]]
 
 ${endColumns}$

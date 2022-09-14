@@ -1,10 +1,9 @@
 {
-  "title":"Inheritance and Lookup",
-  "subtitle":"About super",
-  "author":"S Ducasse and L. Fabresse"
+  "title":"About super",
+  "author":"S Ducasse and G. Polito"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Sending a message
 - Method lookup
@@ -40,11 +39,11 @@ ${column:width=30}$
 
 [[[
     aA bar
-    > ...
+    >>> ...
     aB bar
-    > ...
+    >>> ...
     aC bar
-    > ...
+    >>> ...
 ]]]
 
 ${endColumns}$
@@ -61,11 +60,11 @@ ${column:width=30}$
 
 [[[
     aA bar
-    > 10
+    >>> 10
     aB bar
-    > 20
+    >>> 20
     aC bar
-    > 100
+    >>> 100
 ]]]
 
 ${endColumns}$
@@ -96,7 +95,7 @@ ${endColumns}$
 ${slide:title=super changes where the lookup starts}$
 
 - ==super== refers to the ""receiver"" of the message (just like ==self==)
-- The method lookup starts ........ (Take 1 min to fill the dots)
+- The method lookup starts .......................................... (Take 1 min to fill the dots)
 
 
 ${slide:title=super in two sentences}$

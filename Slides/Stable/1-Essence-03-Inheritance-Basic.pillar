@@ -1,6 +1,6 @@
 {
   "title":"Inheritance Basics",
-  "author":"S. Ducasse and L. Fabresse"
+  "author":"S. Ducasse and G. Polito"
 }
 
 ${slide:title=Goal}$
@@ -65,10 +65,30 @@ ${column:width=30}$
 
 ${endColumns}$
 
+
+
+${slide:title=ProtoObject }$
+
+${columns}$
+
+${column:width=70}$
+
+- ==ProtoObject== (==Object=='s superclass) has a special purpose:
+-- e.g. raising as much as errors as possible
+-- so that the system can catch such errors and do something with them
+-- useful for building advanced techniques such as proxy objects 
+
+${column:width=30}$
+
++>file://figures/InheritanceDiagram-from-Object.png|width=100+
+
+${endColumns}$
+
+
 ${slide:title=Two aspects of inheritance}$
 
 Inheritance is
-- ""static"" for state (i.e., during class creation)
+- ""static"" for state/instance variables (i.e., during class creation)
 - ""dynamic"" for behavior (i.e., during execution)
 
 ${slide:title=Inheritance of instance variables}$
@@ -86,23 +106,6 @@ ${column:width=65}$
 ${column:width=35}$
 
 +>file://figures/InheritanceDiagram.png|width=100+
-
-${endColumns}$
-
-${slide:title=Inheritance of behavior}$
-
-${columns}$
-
-${column:width=50}$
-
-- Happens at runtime
-- The method is looked up
--- starting from the receiver's class
--- then going up the superclass chain
-
-${column:width=50}$
-
-+>file://figures/InheritanceDiagram-lookup-withBlank.png|width=80+
 
 ${endColumns}$
 
@@ -124,7 +127,7 @@ ${column:width=50}$
 
 ${endColumns}$
 
-${slide:title=What You Should Know}$
+${slide:title=What you should know}$
 
 - Inheritance allows a class to refine state and behavior
 - A class has 1 and only 1 superclass
