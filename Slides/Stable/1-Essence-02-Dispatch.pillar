@@ -46,8 +46,13 @@ ${slide:title=How do we express choices?}$
 
 - Ok we have a choice operation... then
 - ""How do we express choices""?
-- Could we have the same solution with a ""single"" ==Boolean== class?
 
+
+${slide:title=How do we express choices?}$
+
+Could we have the same solution with a ""single"" ==Boolean== class?
+
++>file://figures/Design-FatVsDispatchBoolean.pdf|width=75+
 
 ${slide:title=Classes play case roles}$
 
