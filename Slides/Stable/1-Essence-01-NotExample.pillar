@@ -188,6 +188,7 @@ True >> | aBoolean
 ${slide:title=Real implementation of Or in class True}$
 
 The object ==true== is the receiver of the message!
+
 [[[
 True>> | aBoolean
    "Evaluating disjunction (Or) -- answer true since the receiver is true."
@@ -206,9 +207,16 @@ ${slide:title=Or Implementation in two methods}$
 
 +Boolean hierarchy and instances.>file://figures/BooleanHiearchyAndInstancesWithOrMethods.png|width=90+
 
+${slide:title=Step back}$
+
+ ""Do not ask, tell""
+- we delegate to the correct Boolean object
+- each subclass implements its own part
+
 
 ${slide:title=Summary}$
-- The solution is to implement boolean operations:
+
+The solution to implement boolean operations:
 -- does NOT use conditionals (if)
 - ""Do not ask, tell""
 -- lets the receiver decide
