@@ -9,21 +9,32 @@ ${slide:title=Remember: Implementing not in two methods}$
 +Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
 
 ${slide:title=Stepping back}$
+
 - Let the receiver decide
-- Do not ask, tell
+- ""Do not ask, tell""
 
 ${slide:title=Ok so what?}$
 
 - You will probably never implement ==Booleans== in the future
-- So is it really useful?
-- What is the lesson to learn?
+- So is it ""really"" useful?
+- What are the lessons to learn?
+- What are the properties of the solution?
 
 
 ${slide:title=Message sends act as case statements}$
 
-- Message sends are supporting a choice 
-- They act as "case statements"
+- Message sends are supporting ""a choice""
+- You could say: They act as "case statements"
 - But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent
+
+${slide:title=Select the right method}$
+
++>file://figures/Design-FatVsDispatchNoFat.pdf|width=75+
+
+
+${slide:title=But dynamically}$
+
++>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=75+
 
 ${slide:title=Sending a message is making a choice}$
 
