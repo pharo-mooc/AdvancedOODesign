@@ -62,21 +62,22 @@ ${slide:title=Classes play case roles}$
 
 ${slide:title=One class vs. a hierarchy}$
 
-+>file://figures/Design-FatVsDispatch.png|width=75+
++>file://figures/Design-FatVsDispatch.pdf|width=75+
 
 ${slide:title=Class hierarchy supports for dynamic dispatch}$
 
 - More modular
-- Hierarchy provides a way to specialize behavior
+- No need to recompile exiting methods
+- No need to introduce complex conditions
+- An hierarchy provides a way to specialize behavior
 - You only focus on one class at a time
 
-
-+>file://figures/Design-FatVsDispatch.png|width=75+
++>file://figures/Design-FatVsDispatch.pdf|width=40+
 
 
 ${slide:title=Message dispatch supports modularity}$
 
-+>file://figures/Design-FatVsDispatchWithPackages.png|width=65+
++>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
 More modular: We can package different classes in different packages
 
@@ -94,7 +95,7 @@ ${slide:title=Let the receiver decide}$
 - Client code is more declarative: give orders
 - Different receivers may be substituted dynamically
 
-${slide:title=Avoid Conditionals}$
+${slide:title=Avoid conditionals}$
 
 - Use objects and messages, when you can
 - The execution engine acts as a conditional switch: Use it!
