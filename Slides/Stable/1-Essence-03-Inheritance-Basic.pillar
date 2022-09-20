@@ -9,6 +9,13 @@ ${slide:title=Goal}$
 - When to use it?
 - BTW, Pharo has the same inheritance as Java
 
+${slide:title=Inheritance}$
+
+- It is a reuse mechanism
+-- We do not reimplement the code of the superclasses
+-- We extend it or customize it
+- It is based on the expression of a delta
+-- Only specify the differences to the superclasses
 
 
 ${slide:title=The basics}$
@@ -19,6 +26,7 @@ ${column:width=60}$
 
 - Often we want small adaptations
 - We want to extend existing behavior and state
+- We do not want to reimplement everything: We want to reuse
 - Solution: ""class inheritance""
 - A class extends the definition of its superclass
 
@@ -46,6 +54,12 @@ ${column:width=40}$
 
 ${endColumns}$
 
+
+
+
+
+
+
 ${slide:title=Root of inheritance hierarchy}$
 
 ${columns}$
@@ -54,33 +68,30 @@ ${column:width=70}$
 
 - ==Object== is the root of most classes 
 -- defines the common behavior of all objects
-- ==ProtoObject== (==Object=='s superclass) has a special purpose:
--- e.g. raising as much as errors as possible
--- so that the system can catch such errors and do something with them
--- useful for building advanced techniques such as proxy objects 
+-- raising an error, class access, ...
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-from-Object.png|width=100+
++>file://figures/InheritanceDiagram-from-ObjectNoProto.pdf|width=100+
 
 ${endColumns}$
 
 
 
-${slide:title=ProtoObject }$
+${slide:title=In Pharo: ProtoObject }$
 
 ${columns}$
 
 ${column:width=70}$
 
-- ==ProtoObject== (==Object=='s superclass) has a special purpose:
--- e.g. raising as much as errors as possible
--- so that the system can catch such errors and do something with them
--- useful for building advanced techniques such as proxy objects 
+ ==ProtoObject== (==Object=='s superclass) has a special purpose:
+- e.g. raising as much as errors as possible
+- so that the system can catch such errors and do something with them
+- useful for building advanced techniques such as proxy objects
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-from-Object.png|width=100+
++>file://figures/InheritanceDiagram-Proto.pdf|width=100+
 
 ${endColumns}$
 
@@ -97,10 +108,11 @@ ${columns}$
 
 ${column:width=65}$
 
-- Happens during class definition
+- Happens during ""class definition""
 - Computed from
 -- the class own instance variables
 -- the ones of its superclasses
+-- usually no duplicate in the chain
 - ==ColoredRectangle== has a ==width==, ==height==,  ==color==, and ==borderColor==
 
 ${column:width=35}$
@@ -116,7 +128,7 @@ ${columns}$
 
 ${column:width=50}$
 
-- Happens at runtime
+- Happens at ""run time""
 - The method is looked up
 -- starting from the receiver's class
 -- then going to the superclass
@@ -129,7 +141,7 @@ ${endColumns}$
 
 ${slide:title=What you should know}$
 
-- Inheritance allows a class to refine state and behavior
+- Inheritance allows a class to "refine" and "add" state and behavior
 - A class has 1 and only 1 superclass
 - A class eventually inherits from ==Object==
 - Inheritance of state is static
