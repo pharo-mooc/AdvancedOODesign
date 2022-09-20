@@ -1,15 +1,15 @@
 {
-  "title":"Inheritance and Lookup",
-  "subtitle":" 101 on lookup",
+  "title":"Inheritance and Lookup: Self",
+  "subtitle":"Understanding lookup once for all",
   "author":"S. Ducasse and G. Polito"
 }
 
 ${slide:title=Goals}$
 
  Understanding
-- message sending
-- method lookup
-- semantics of ==self==
+- Sending a message
+- Method lookup
+- Semantics of ==self==/==this==
 
 ${slide:title=Remember inheritance}$
 
@@ -25,11 +25,11 @@ ${column:width=38}$
 
 ""Sending"" a ""message"" is a two-step process:
 # ""look up"" the ""method"" matching the message
-# execute this method on the ""receiver""
+# ""execute"" this method on the ""receiver""
 
 ${column:width=62}$
 
-+>file://figures/InheritanceDiagram-sendingMessage.png|width=70+
++>file://figures/InheritanceDiagram-sendingMessage.png|width=75+
 
 ${endColumns}$
 
@@ -81,8 +81,9 @@ ${endColumns}$
 ${slide:title=About lookup}$
 
 
-- Most of the time the lookup result is cached
+- Most of the time, the result of a lookup is cached
 - In some languages, there are dispatch tables
+- The point is that conceptually there is a lookup at execution
 
 
 ${slide:title=What is self/this?}$
@@ -95,8 +96,7 @@ ${column:width=50}$
 
 ${column:width=50}$
 
-Take 5 min and write the definition of ==self== (==this== in Java).
-
+- Take 5 min and write the definition of ==self== (==this== in Java).
 - your definition should have two points:
 -- what does ==self== represent?
 -- how is a method looked up when a message is sent to ==self==?
@@ -117,12 +117,6 @@ ${column:width=60}$
 
 
 ${column:width=40}$
-[[[
-	aA foo
-	>>> ...
-	aB foo
-	>>> ...
-]]]
 
 - ==aA== is an instance of ==A== (obtained executing ==A new==)
 - ==aB== is an instance of ==B== (obtained executing ==B new==)
