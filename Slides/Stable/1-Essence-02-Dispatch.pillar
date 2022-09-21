@@ -20,19 +20,69 @@ ${slide:title=Ok so what?}$
 - What are the lessons to learn?
 - What are the properties of the solution?
 
+${slide:title=Imagine having more than two classes}$
 
-${slide:title=Message sends act as case statements}$
+${columns}$
 
-- Message sends are supporting ""a choice""
-- You could say: They act as "case statements"
-- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent
+${column:width=45}$
+[[[
+MicAbstractBlock
+		MicAbstractAnnotatedBlock
+			MicAnnotatedBlock
+		MicContinuousMarkedBlock
+			MicCommentBlock
+			MicQuoteBlock
+			MicTableBlock
+		MicIntermediateBlock
+		MicListBlock
+			MicOrderedListBlock
+			MicUnorderedListBlock
+		MicListItemBlock
+		MicParagraphBlock
+			MacParagraphBlock
+			MacRawParagraphBlock
+		MicRootBlock
+		MicSectionBlock
+		
+
+]]]
+
+${column:width=55}$
+
+[[[
+	MicSingleLineBlock
+		MicAnchorBlock
+		MicHeaderBlock
+		MicHorizontalLineBlock
+	MicStartStopMarkupBlock
+		MicEnvironmentBlock
+		...
+		MicMetaDataBlock
+		MicSameStartStopMarkupBlock
+			MicCodeBlock
+			MicMathBlock
+				MicMathBlockExtensionForTest
+				MicMultilineComment
+]]]
+
+Imagine just a method that would have to have one condition for each of such cases!
+
+${endColumns}$
+
+${slide:title=A message send is an open conditional}$
+
+- Sending a message selects the right method
+- It can be seen as a condition ""without explicit ifs""
+- The choice is dynamic 
+- It selects the method based on the receiver
+
 
 ${slide:title=Select the right method}$
 
 +>file://figures/Design-FatVsDispatchNoFat.pdf|width=75+
 
 
-${slide:title=But dynamically}$
+${slide:title=But dynamically: new objects can be chosen}$
 
 +>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=75+
 
@@ -87,6 +137,15 @@ ${slide:title=Limit impact of changes}$
 +>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
 If client has a way to get instances of ==D== (in addition to classes of first package), the client code does not have to change
+
+
+${slide:title=Message sends are better than case statements}$
+
+- Message sends are supporting ""a choice""
+- You could say: They act as "case statements"
+- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent
+
+
 
 ${slide:title=Let the receiver decide}$
 
