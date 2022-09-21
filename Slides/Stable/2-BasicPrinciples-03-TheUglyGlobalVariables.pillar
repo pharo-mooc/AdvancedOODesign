@@ -13,7 +13,7 @@ ${slide:title=Outline}$
 - Think modular
 - Messages need different instances to dispatch
 
-${slide:title=Autopsy of an Error}$
+${slide:title=Autopsy of an error}$
 
 [[[
 MyApp >> menu
@@ -23,13 +23,13 @@ MyApp >> menu
 ]]]
 
 
-${slide:title=Case 1: Global Variable}$
+${slide:title=Case 1: Global variable}$
 
 - One global variable
 - What if as an application I want to extend, slightly change icons for my application only
 - What if I want to be able to have two icon sets and the same time to compare
 
-${slide:title=Case 2: A Disguised Global Variable}$
+${slide:title=Case 2: A disguised global variable}$
 
 Since in Pharo we can extend core libraries we could think 
 this is any better.
@@ -47,7 +47,7 @@ Symbol >> asIcon
 ]]]
 
 
-${slide:title=Case 2: A Disguised Global Variable}$
+${slide:title=Case 2: A disguised lobal variable}$
 
 [[[
 MyApp >> menu
@@ -60,7 +60,7 @@ MyApp >> menu
 - This is already something!
 - But still a global
 
-${slide:title=Case 2: A Disguised Global Variable}$
+${slide:title=Case 2: A disguised global variable}$
 
 - One global variable but disguished: only one place to edit but still fundamentally one giant global
 - There is only one icon table
@@ -78,11 +78,10 @@ MyApp >> menu
 
 [[[
 MyAppSuperclass >> iconNamed: aSymbol
-	... 
-	look for my icons (and may be delegate to an icon manager instance)
-	potentially do a 
-	super iconNamed: #window
+
 	...
+	^ self iconProvider at: aSymbol
+	
 ]]]
 
 ${slide:title=Why is this better?}$
@@ -117,7 +116,7 @@ Symbol >> asClass
 - A huge one...
 
 
-${slide:title=Case 3: asClass Analysis}$
+${slide:title=Case 3: asClass analysis}$
 
 - Another global entry point
 - What if we want to remotely access a class in another system
@@ -165,19 +164,21 @@ browseMethodFull
 - Yes this is called monolithic thinking
 - Only one toolset possible at the same time (could be ok).
 
-${slide:title=Case 4: Smalltalk tools Possible Solution}$
+${slide:title=Case 4: Smalltalk tools possible solution}$
 
 - Each object that should refer to tools should do it via a parameter / instance variable and messages
 - Avoid direct reference to a global singleton
 
 [[[
-Browser >> initialize
+MyApp >> initialize
 	toolEnvironment := ToolEnvironment new 
 ]]]
 
 [[[
-Browser >> openDebugger
-	self toolEnvironment debugger
+MyApp >> browseMethodFull
+	self toolEnvironment browser 
+		openOnClass: self currentClassOrMetaClass
+		selector: self currentMessageName
 ]]]
 
 

@@ -93,6 +93,22 @@ MicAbstractBlock >> logStream: aStream
 - Now you can pass a Transcript and get the same as before but better.
 - Bonus: You can write ""tests in isolation""
 
+
+${slide:title=Do you see the pattern?}$
+
+[[[
+RubScrollTextMorph >> defaultScrollTarget
+	| textArea |
+	textArea := self textAreaClass new.
+	textArea backgroundColor: Color lightGray veryMuchLighter.
+	^ textArea
+]]]
+
+- Why ==Color lightGray veryMuchLighter== is hardcoded?
+- Why not using a ==defaultBackgroundColor==?
+- Think about instance variables as parameters of your methods
+
+
 ${slide:title=About Globals}$
 
 Pros:
