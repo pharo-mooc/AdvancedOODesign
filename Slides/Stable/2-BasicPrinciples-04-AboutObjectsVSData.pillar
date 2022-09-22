@@ -1,12 +1,13 @@
 {
 	"title":"Objects vs. Data",
-	"subtitle":"an API perspective studying Point",
+	"subtitle":"an API perspective studying the class Point",
 	"author" : "S. Ducasse"
 }
 
 ${slide:title=Goals}$
 
 - Difference between an object and a data structure
+- Difference between a poor and a good API
 - APIs and encapsulation play an important role
 - Looking at two concrete implementations of Point: in Java and Pharo
 - Understanding the impact of strong API 
@@ -33,9 +34,10 @@ Inherited from Point2D
 
 ${slide:title=Analysis}$
 
-- A poor data structure, not an object
+- A super poor data structure
+- A dry holder of integers
 - Super ""limited"" interface
-- Points do not define behavior beside ==move==, ==translate== and  ==distance==!
+- Java points do not define behavior beside ==move==, ==translate== and  ==distance==!
 
 
 ${slide:title=An example in Java}$
@@ -57,6 +59,7 @@ public void go(int distance){
 }
 ]]]
 
+
 ${slide:title=Analysis (2)}$
 - Have to recreate explicitly a point
 - Arithmetic of Points is defined ""outside"" of them!
@@ -64,6 +67,13 @@ ${slide:title=Analysis (2)}$
 -- Points cannot shape themselves (rounded, ...)
 
 - When an object exposes a shallow API, it favors ""logic duplication"" in clients!
+
+
+${slide:title=Consequences of poor APIs}$
+
++>file://figures/DatavsObjects.pdf|width=95+
+
+
 
 
 ${slide:title=Bot >> go: in Pharo}$
@@ -87,6 +97,9 @@ Bot >> go: aDistance
 
 - Use ""Point""'s addition, multiplication, and rounding
 - Use ""Number""'s sin and cos
+
+
+
 
 
 ${slide:title=Points in Pharo}$
