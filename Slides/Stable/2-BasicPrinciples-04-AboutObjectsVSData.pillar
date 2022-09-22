@@ -32,75 +32,12 @@ ${slide:title=Java Points - the 'rest'}$
 Inherited from Point2D
 - ==distance()== and ==clone()==
 
-${slide:title=Analysis}$
+${slide:title=Analysis: Java Point}$
 
 - A super poor data structure
 - A dry holder of integers
 - Super ""limited"" interface
 - Java points do not define behavior beside ==move==, ==translate== and  ==distance==!
-
-
-${slide:title=An example in Java}$
-
-How to make a robot walk a distance from its current direction (in degrees).
-
-[[[
-public class Bot {
-  int tilt = 0;
-  Point position = new Point(0,0);
-]]]
-
-[[[
-public void go(int distance){
-  position = new Point(
-		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
-		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y()))) ;
-    }
-}
-]]]
-
-
-${slide:title=Analysis (2)}$
-- Have to recreate explicitly a point
-- Arithmetic of Points is defined ""outside"" of them!
--- Points cannot sum themselves
--- Points cannot shape themselves (rounded, ...)
-
-- When an object exposes a shallow API, it favors ""logic duplication"" in clients!
-
-
-${slide:title=Consequences of poor APIs}$
-
-+>file://figures/DatavsObjects.pdf|width=95+
-
-
-
-
-${slide:title=Bot >> go: in Pharo}$
-
-In Java 
-[[[
-public void go(int distance){
-    position = new Point(
-		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
-		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y())) ;
-    }
-}
-]]]
-
-In Pharo 
-
-[[[
-Bot >> go: aDistance 	
-	position := position + ((tilt degreeCos @ tilt degreeSin) * aDistance) rounded
-]]]
-
-- Use ""Point""'s addition, multiplication, and rounding
-- Use ""Number""'s sin and cos
-
-
-
-
 
 ${slide:title=Points in Pharo}$
 
@@ -111,14 +48,14 @@ Rich API (selected part):
 - ==\\== \- ==\*==, ==reciprocal==,==/==, ==\+==, == min== ==//== ==abs== ==max==
 - ==>=== ==>== ==<=== ==min:max:== ==min:== ==<== ==closeTo:== ==closeTo:precision:== ==max:== ==\===
 - ==negated==, ==translateBy:==,  ==scaleBy:==, ==scaleTo:==, ==scaleFrom:to:==, ==adhereTo:==,
-- ==triangleArea:with:==, ==to:intersects:to:==, ==to:sideOf:==, ==isInsideCircle:with:with:==, ==sideOf:==
+- ==triangleArea:with:==, ==to:intersects:to:==, ==to:sideOf:==, ==isInsideCircle:with:with:==, ==sideOf:==,
 - ==rectangle:==, ==extent:==, ==corner:==
 
 ${slide:title=Points in Pharo (Continued)}$
 - ==degrees==, ==theta==,
 - ==onLineFrom:to:==, ==angleWith:==, ==angle==,  ==rotateBy:about:==, ==rotateBy:centerAt:==, ==bearingToPoint:==, 
 - ==roundUpTo:==, ==ceiling==, ==truncated==, ==truncateTo:==, ==roundTo:==, ==floor==, ==roundDownTo:==, ==rounded==,
-- ==quadrantOf:==, ==leftRotated==,  ==nearestPointAlongLineFrom:to:==, ==flipBy:centerAt:==,  ==nearestPointOnLineFrom:to:==, ==dotProduct:==, ==squaredDistanceTo:==, ==insideTriangle:with:with:==, ==directionToLineFrom:to:==, ==sign==, ==octantOf:==, ==rightRotated==,
+- ==quadrantOf:==, ==leftRotated==,  ==nearestPointAlongLineFrom:to:==, ==flipBy:centerAt:==,  ==nearestPointOnLineFrom:to:==, ==squaredDistanceTo:==, ==insideTriangle:with:with:==, ==directionToLineFrom:to:==, ==sign==, ==octantOf:==, ==rightRotated==,
 - ==fourNeighbors==, ==grid:==, ==eightNeighbors==, ==fourDirections==
 
 ${slide:title=Simple example}$ 
@@ -166,46 +103,64 @@ Point >> degrees
 Nobody wants to be forced to reimplement it. 
 
 
-%${slide:title=Polymorphic with related concepts}$
+${slide:title=An example in Java}$
 
-%[[[
-%Point >> asPoint
-%	"Answer the receiver itself."
-%
-%	^ self
-%]]]
-
-%[[[	
-%Number >> asPoint
-%	"Answer a Point with the receiver as both coordinates; often used to 
-%	supply the same value in two dimensions, as with symmetrical gridding 
-%	or scaling."
-%
-%	^ self @ self
-%]]]
-
-%This way we can manage list of objects and easily convert them to point
-%
-%[[[
-%{ 1 . 2 . 3 . 33@33 . 4} collect: [ :a | a asPoint ]
-%>> {1@1 . 2@2 . 3@3 . 33@33 . 4@4} 
-%]]]
-
-
-${slide:title=Point arimethic}$
-
-- Points know how to ==\*==, ==\+==, ==\/==, ... ""themselves""
-- We can compose points, rectangles, and numbers
+How to make a robot walk a distance from its current direction (in degrees).
 
 [[[
-drawString: aString at: aPoint font: aFontOrNil color: aColor
-	self
-		drawString: aString
-		in: (origin + aPoint extent: self clipRect extent)
-		font: aFontOrNil
-		color: aColor
+public class Bot {
+  int tilt = 0;
+  Point position = new Point(0,0);
 ]]]
 
+[[[
+public void go(int distance){
+  position = new Point(
+		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
+		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y()))) ;
+    }
+}
+]]]
+
+
+${slide:title=Analysis (2)}$
+- Have to recreate explicitly a point ==distance + position.x()==
+- Arithmetic of Points is defined ""outside"" of them!
+-- Points cannot sum themselves
+-- Points cannot shape themselves (rounded, ...)
+
+- When an object exposes a shallow API, it favors ""logic duplication"" in clients!
+
+
+${slide:title=Consequences of poor APIs}$
+
++>file://figures/DatavsObjects.pdf|width=95+
+
+
+
+${slide:title=Bot >> go: in Pharo}$
+
+In Java 
+[[[
+public void go(int distance){
+    position = new Point(
+		(Math.round(Math.cos(Math.toRadians(tilt))) * distance + position.x()),
+		(Math.round(Math.sin(Math.toRadians(tilt))) * distance + position.y())) ;
+    }
+}
+]]]
+
+In Pharo 
+
+[[[
+Bot >> go: aDistance 	
+	position := position + ((tilt degreeCos @ tilt degreeSin) * aDistance) rounded
+]]]
+
+- Use ""Point""'s addition, multiplication, and rounding
+- Use ""Number""'s sin and cos
+- Points know how to ==\*==, ==\+==, ==\/==, ... ""themselves""
+- We can compose points, rectangles, and numbers
 
 
 ${slide:title=Analysis}$
@@ -222,3 +177,4 @@ ${slide:title=What you should know}$
 - Objects are more than structure
 - Objects are about behavior and services they offer
 - An object should encapsulate logic and lets its client ""reuse"" such logic!
+

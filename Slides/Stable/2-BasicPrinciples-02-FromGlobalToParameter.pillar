@@ -16,11 +16,18 @@ ${slide:title=Roadmap}$
 - Example: Analysis of Transcript usage
 - Cure
 - Analysis
+- Other analysis
 - Related to the plague of Singleton Design Pattern 
 
 ${slide:title=The case: Transcript}$
 
-- Remember: ==Transcript== is a global variable pointing to a log stream instance
+Remember: ==Transcript== is a global variable pointing to a log stream instance
+
++>file://figures/Transcript.png|width=50+
+
+
+
+${slide:title=Handy in development}$
 
 [[[
 myMethod
@@ -29,8 +36,9 @@ myMethod
 ]]]
 
 
+${slide:title=The core of the problem}$
 
-${slide:title=Old example in Microdown}$
+When not in development 
 
 [[[
 MicAbstractBlock >> iterate
@@ -94,6 +102,14 @@ MicAbstractBlock >> logStream: aStream
 - Bonus: You can write ""tests in isolation""
 
 
+${slide:title=Comparing}$
+
++>file://figures/GlobalVSInstance.pdf|width=75+
+
+
+
+
+
 ${slide:title=Do you see the pattern?}$
 
 [[[
@@ -105,8 +121,39 @@ RubScrollTextMorph >> defaultScrollTarget
 ]]]
 
 - Why ==Color lightGray veryMuchLighter== is hardcoded?
-- Why not using a ==defaultBackgroundColor==?
-- Think about instance variables as parameters of your methods
+
+
+${slide:title=A solution}$
+
+- Make it configurable!
+
+[[[
+RubScrollTextMorph >> defaultScrollTarget
+	| textArea |
+	textArea := self textAreaClass new.
+	textArea backgroundColor: defaultBackgroundColor.
+	^ textArea
+]]]
+
+[[[
+RubScrollTextMorph >> initialize
+	defaultBackgroundColor := Color lightGray veryMuchLighter
+]]]
+
+${slide:title=Supporting personalisation}$
+
+[[[
+RubScrollTextMorph >> setBackgroundColor: aColor
+	defaultBackgroundColor := aColor
+]]]
+
+Now each instance can have its specific value!
+
+
+${slide:title=Instance variables}$
+
+ Instance variables are parameter of your computation
+
 
 
 ${slide:title=About Globals}$
