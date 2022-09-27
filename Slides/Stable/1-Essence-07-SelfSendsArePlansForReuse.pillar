@@ -1,14 +1,14 @@
 {
   "title" : "Message Sends are Plans for Reuse",
   "subtitle" : " ",
-  "author" : " S. Ducasse and L. Fabresse"
+  "author" : " S. Ducasse and G. Polito"
 }
 
 ${slide:title=About this lecture}$
 
 - Next step of the ==not== implementation lecture
 - Relevant to any object-oriented language
-- Another essential aspect of OOP
+- Another essential aspect of object-oriented design
 
 ${slide:title=What you will learn}$
 
@@ -25,6 +25,8 @@ ${slide:title=Remember: Sending a message makes a choice}$
 
 +>file://figures/Design-FatVsDispatch.png|width=75+
 
+
+
 ${slide:title=An example}$
 
 Imagine
@@ -40,7 +42,7 @@ Node >> setWindowWithRatioForDisplay
 
 We want to change the ==defaultNodeSize== formula in a subclass
 
-${slide:title=Duplication}$
+${slide:title=Duplication as a bad solution}$
 
 Duplicate the code in a subclass
 
@@ -62,10 +64,10 @@ OurSpecificNode >> setWindowWithRatioForDisplay
 
 ${slide:title=Avoid duplication}$
 
-- in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
 - duplication is not a good practice:
 -- duplication copies bugs
 -- changing one copy requires changing others
+- Note that in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
 
 ${slide:title=A much better solution}$
 
@@ -152,7 +154,7 @@ Node >> setWindowWithRatioForDisplay
 [[[
 Node >> uiNode
    ^ UINode new
-      with: bandWidth * 55 / defaultWindowSize
+          with: bandWidth * 55 / defaultWindowSize
 ]]]
 
 ${slide:title=Do not hardcode class use}$
@@ -160,7 +162,7 @@ ${slide:title=Do not hardcode class use}$
 [[[
 Node >> uiNode
    ^ UINode new
-      with: bandWidth * 55 / defaultWindowSize
+          with: bandWidth * 55 / defaultWindowSize
 ]]]
 
 ${slide:title=Define methods returning classes}$
@@ -168,7 +170,7 @@ ${slide:title=Define methods returning classes}$
 [[[
 Node >> uiNode
    ^ self uiNodeClass new
-      with: bandWidth * 55 / defaultWindowSize.
+        with: bandWidth * 55 / defaultWindowSize.
 ]]]
 
 [[[
@@ -179,20 +181,24 @@ Node >> uiNodeClass
 ${slide:title=Many small messages}$
 
 Small messages are a sign of good design, because:
-- each little method is a potential hook for customization
+- each little method is a potential ""hook"" for customization
 - gives name to expressions
 
 Some developers complain about all these small methods
-- They try to understand code line by line
-- This does not scale
+- But small methods are good
+- Give meaningful name to methods
+- Do not need to read all method definitions
 
+${slide:title=Gruyere-oriented programming}$
+
++.>file://figures/gruyereWithSlogan|width=95+
 
 ${slide:title=Avoid magic numbers}$
 
 [[[
 Node >> uiNode
    ^ self uiNodeClass new
-      with: bandWidth * 55 / defaultWindowSize.
+        with: bandWidth * 55 / defaultWindowSize.
 ]]]
 
 Subclasses may want to change values
@@ -204,7 +210,7 @@ ${slide:title=Use a message send}$
 [[[
 Node >> uiNode
    ^ self uiNodeClass new
-      with: bandWidth * self averageRatio / defaultWindowSize.
+        with: bandWidth * self averageRatio / defaultWindowSize.
 
 Node >> averageRatio
    ^ 55
@@ -229,11 +235,9 @@ Node >> averageRatio: aNumber
 ]]]
 
 - Subclasses can override the value
-- Class users can set the value
+- Class ""users"" can set the value
 
-${slide:title=Gruyere-oriented programming}$
 
-+.>file://figures/gruyereWithSlogan|width=95+
 
 ${slide:title=Conclusion}$
 

@@ -49,7 +49,7 @@ CZScoped << #CZEntry
 ]]]
 
 
-${slide:title=Consequences}$
+${slide:title=isSomething methods}$
 
 [[[
 isArticle
@@ -61,7 +61,7 @@ isBook
 	^ self type = #book
 ]]]
 
-And their senders...
+- It is always worth to have a look at users of these ==isSomething== methods.
 
 ${slide:title=Another example: CZField}$
 
@@ -103,26 +103,38 @@ CZField >> visitField: aField
 ${slide:title=When using a Fat class}$
 
 Not having a class hierarchy: 
-- Not ""possible to dispatch"" logic because there is only one class 
+- Not ""possible to dispatch"" logic because there is ""only one"" class 
 - Simple extensions require ""many changes"" to the conditional code
 - Difficult subclassing ""without duplicating/adapting"" the methods containing the conditional code
 - Adding a new behavior always ""results in changes"" to the same set of methods and always results in adding a new case to the conditional code.
 - Remember the Implementing Not Lectures
+
+
+${slide:title=Two kinds of type checking conditionals}$
+
+- Self type checks 
+-- check some internal values to invoke self methods
+-- not that bad
+
+- Client type checks
+-- violate ""do not ask, tell""
+-- defeat late binding and inverse the flow of control
+-- not necessary in a large class
 
 ${slide:title=Transform self type transformation}$
 
 +>file://figures/TransformSelfType.png|width=90+
 
 
-${slide:title=The case of the Memento DP}$
+%${slide:title=The case of the Memento Design Pattern}$
 
-Sometimes you need to be able to edit a temporary version of an object
-- Memento allows one to save and reload the state of an object without revealing implementation details
-- To have a generic Memento we can use a kind of dictionary to hold field values of the copied object. 
+%Sometimes you need to be able to edit a temporary version of an object
+%- Memento allows one to save and reload the state of an object without revealing implementation details
+%- To have a generic Memento we can use a kind of dictionary to hold field values of the copied object. 
 
 ${slide:title=Conclusion}$
 
 - Favor dispatch
 - Create classes to encapsulate knowledge
-- Tell do not ask
+- ""Do not ask, tell""
 
