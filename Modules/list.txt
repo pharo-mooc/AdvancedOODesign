@@ -97,3 +97,9 @@ figures
 list.txt
 serg.txt
 syllabus.txt
+
+
+
+Pour les katas see Booklet-TDDKatas/notes
+
+
