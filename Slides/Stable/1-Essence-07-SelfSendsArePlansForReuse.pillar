@@ -6,22 +6,31 @@
 
 ${slide:title=About this lecture}$
 
-- Next step of the ==not== implementation lecture
+- Related to sending a message is making a choice lecture
 - Relevant to any object-oriented language
 - Another essential aspect of object-oriented design
 
 ${slide:title=What you will learn}$
 
 - Message sends are hooks for subclasses
-- ''"I like big methods because I can see all the code"'' leads to bad design
+- Message sends are places where subclasses code can be invoked
+
+${slide:title=Let us start to reflect }$
+
+Anecdotes
+- ''I like big methods because I can see all the code''
+- ''I do not like small methods'' 
+
+Questions
+- Why large methods leads to ''under-optimal'' design?
 - Why writing small methods is a sign of good design?
 
-${slide:title=Remember: Sending a message makes a choice}$
+${slide:title=Remember...}$
 
-- a message send leads to a choice
+- a message send makes a choice
 - a class hierarchy defines the choices
-- ==self== always represents the receiver
-- method lookup starts in the class of the receiver
+- ==self== ""always represents the receiver""
+- method lookup starts in the ""class of the receiver"" (except for super)
 
 +>file://figures/Design-FatVsDispatch.png|width=75+
 
@@ -40,7 +49,9 @@ Node >> setWindowWithRatioForDisplay
    previousNodeSize := defaultNodeSize.
 ]]]
 
-We want to change the ==defaultNodeSize== formula in a subclass
+What if we want to change the ==defaultNodeSize== formula in a subclass
+
+
 
 ${slide:title=Duplication as a bad solution}$
 
@@ -64,7 +75,7 @@ OurSpecificNode >> setWindowWithRatioForDisplay
 
 ${slide:title=Avoid duplication}$
 
-- duplication is not a good practice:
+- Duplication is not a good practice:
 -- duplication copies bugs
 -- changing one copy requires changing others
 - Note that in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
@@ -77,7 +88,7 @@ ${column:width=50}$
 
 - Define small methods
 - Send messages
-Subclasses can override such methods
+- Subclasses can override such methods
 
 ${column:width=50}$
 
@@ -107,7 +118,9 @@ Node >> setWindowWithRatioForDisplay
       (UINode new
          with: bandWidth * 55 / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
+]]]
 
+[[[
 Node >> ratio
    ^ mainCoordinate / maximizeViewRatio
 ]]]
@@ -139,9 +152,13 @@ Node >> setWindowWithRatioForDisplay
    previousNodeSize := defaultNodeSize.
 ]]]
 
-We can also extract the ==UINode== instantiation.
+What if we want have a different ==UINode==.
+
+
 
 ${slide:title=Another step}$
+
+We can also extract the ==UINode== instantiation.
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -192,52 +209,6 @@ Some developers complain about all these small methods
 ${slide:title=Gruyere-oriented programming}$
 
 +.>file://figures/gruyereWithSlogan|width=95+
-
-${slide:title=Avoid magic numbers}$
-
-[[[
-Node >> uiNode
-   ^ self uiNodeClass new
-        with: bandWidth * 55 / defaultWindowSize.
-]]]
-
-Subclasses may want to change values
-- do not hardcode magic numbers (55)
-
-
-${slide:title=Use a message send}$
-
-[[[
-Node >> uiNode
-   ^ self uiNodeClass new
-        with: bandWidth * self averageRatio / defaultWindowSize.
-
-Node >> averageRatio
-   ^ 55
-]]]
-
-- This gives a name to a value
-- Subclasses can override the value
-
-
-
-${slide:title=How to let the class users change the value?}$
-
-Use an instance variable if needed
-
-[[[
-Node >> averageRatio
-   ^ averageRatio ifNil: [ self defaultAverageRatio ]
-Node >> defaultAverageRatio
-   ^ 55
-Node >> averageRatio: aNumber
-   averageRatio := aNumber
-]]]
-
-- Subclasses can override the value
-- Class ""users"" can set the value
-
-
 
 ${slide:title=Conclusion}$
 
