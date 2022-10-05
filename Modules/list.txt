@@ -7,29 +7,30 @@
 - 1-Essence-02-Dispatch.pillar
 - 2-BasicPrinciples-01-MethodIsReuse.pillar
 - 7-Lang-01-Stream.pillar
-
+- 6-DesignPattern-01-IntroDesignPattern.pillar
 
 
 ## Module 2
-
 - 0-Tests-03-TDD.pillar
 - 0-Tests-04-XTDD.pillar
 - 1-Essence-03-Inheritance-Basic.pillar
 - 1-Essence-04-Self.pillar
 - 1-Essence-05-Super.pillar
 - 2-BasicPrinciples-04-AboutObjectsVSData.pillar
-- 2-BasicPrinciples-02-FromGlobalToParameter.pillar
+- 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
+- 1-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
+- 6-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
+
 
 ## Module 3
-- 1-Essence-06-DidYouUnderstandSuper.pillar
-- 1-Essence-07-SelfSendsArePlansForReuse.pillar
+- 6-DesignPattern-03-Composite.pillar
+
 - 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
 - 2-BasicPrinciples-05-FatClassesAreBad.pillar
 - 2-BasicPrinciples-06-UseVsInheritance.pillar
 - 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
 - 7-Lang-02-SharedVariables.pillar
 - 7-Lang-03-SharedPools.pillar
-
 
 ## Module 4
 - 0-Tests-05-ParametrizedTests.pillar
@@ -38,10 +39,11 @@
 - 3-DoubleDispatch-03-Dice.pillar
 - 4-Principles-01-AvoidIsNil.pillar
 - 5-CaseStudy-02-AboutFluidAPI.pillar
-
+- 6-DesignPattern-04-Visitor.pillar
 
 ## Module 5
--  3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
+- 6-DesignPattern-05-VisitorDiscussions.pillar
+- 3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 - 3-DoubleDispatch-04-NoSymmetrical.pillar
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
 - 4-Principles-03-AboutRegistration.pillar
@@ -61,45 +63,46 @@
 
 #Module 7
 
-- 6-DesignPattern-01-IntroDesignPattern.pillar
-- 6-DesignPattern-02-HookAndTemplate.pillar
-- 6-DesignPattern-03-Composite.pillar
-- 6-DesignPattern-04-Visitor.pillar
-- 6-DesignPattern-05-VisitorDiscussions.pillar
+
+
 - 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 - 7-Lang-05-AboutBuilder.pillar
 
 #Module 8
+- 1-Essence-06-DidYouUnderstandSuper.pillar (split self ....)
 
 
 
+## Todo
 
+Lectures
+	- Decorators vs. Chain of Responsibility 
+	- Transform conditionals
+	- Liaison tardive / Liaison static
+		Type check (dynamic vs. static types)
+		Java 
+	- Command? 
+		Decorator
+	- Factory ??
+	- Microdown key design points
+		
+	- Parcours?
+	- Quizzes
+	- Nombres de videos + nombres de slides
+	
+- Badges
 
-
-
-
-
-8-Resources-01-SyntaxCheatsheet.pillar
-8-Resources-02-PharoSyntaxInANutshell.pillar
-8-Resources-03-Messages-ForTheJavaProgrammers.pillar
-8-Resources-04-Messages.pillar
-8-Resources-05-Messages-Precedence.pillar
-8-Resources-06-Messages-Sequence.pillar
-8-Resources-07-ClassAndMethodDefinition.pillar
-8-Resources-08-Blocks.pillar
-8-Resources-09-BooleansAndCondition.pillar
-8-Resources-10-Loops.pillar
-8-Resources-11-Basic-ArraySetOrderedCollection.pillar
-Candidates
-_result
-figures
-list.txt
-serg.txt
-syllabus.txt
-
+Katas
+	- main exercise
+	- satellites
+	- Ketches of "katas" + hints
 
 
 Pour les katas see Booklet-TDDKatas/notes
+
+git@github.com:SquareBracketAssociates/Booklet-TDDKatas.git
+
+
 
 
