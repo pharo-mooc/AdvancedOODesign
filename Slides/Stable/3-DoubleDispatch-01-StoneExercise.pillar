@@ -1,7 +1,7 @@
 {
     "title" : "A double dispatch starter",
     "slidesid" : "Stone Paper Scissors",
-    "author":"S. Ducasse"
+    "author":"S. Ducasse, G. Polito, P. Tesone, and L. Fabresse"
 }
 
 ${slide:title=Goals}$
@@ -29,12 +29,12 @@ ${slide:title=The inverse too}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new vs: Paper new) equals: #paper
+		self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Paper new vs: Stone new) equals: #paper
+		self assert: (Paper new vs: Stone new) equals: #paper
 ]]]
 
 
@@ -42,14 +42,19 @@ ${slide:title=Let us start}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new vs: Paper new) equals: #paper
+		self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
 Stone >> vs: anotherTool
-	^ ...
+		^ ...
 ]]]
 
+${slide:title=Hint 1: 3 classes}$
+
+- ==Stone==
+- ==Paper==
+- ==Scissors==
 
 ${slide:title=Hints}$
 
@@ -62,24 +67,24 @@ ${slide:title= Paper playAgainstStone: }$
 
 [[[
 Stone >> vs: anotherTool
-	^ anotherTool playAgainstStone
+		^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
-	^ ...
+		^ ...
 ]]]
 
 ${slide:title= Paper playAgainstStone }$
 
 [[[
 Stone >> vs: anotherTool
-	^ anotherTool playAgainstStone
+		^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
->> ^ #paper
+>> 		^ #paper
 ]]]
 
 ${slide:title= Paper playAgainstStone}$
@@ -105,36 +110,36 @@ ${slide:title=Other playAgainstStone }$
 
 [[[
 Scissors >> playAgainstStone
-	^ #stone
+		^ #stone
 ]]]
 
 [[[
 Stone >> playAgainstStone
-	^ #draw
+		^ #draw
 ]]]
 
 
 
-${slide:title=In total}$
+${slide:title=Complete code for Stone as receiver}$
 
 [[[
 Stone >> vs: anotherTool
-	^ anotherTool playAgainstStone
+		^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
->> ^ #paper
+>> 		^ #paper
 ]]]
 
 [[[
 Scissors >> playAgainstStone
-	^ #stone
+		^ #stone
 ]]]
 
 [[[
 Stone >> playAgainstStone
-	^ #draw
+		^ #draw
 ]]]
 
 
@@ -146,47 +151,47 @@ ${slide:title=Stepping back}$
 
 
 
-${slide:title=Scissors now }$
+${slide:title=Full Scissors code}$
 
 [[[
 Scissors >> vs: anotherTool
-	^ anotherTool playAgainstScissors
+		^ anotherTool playAgainstScissors
 ]]]
 
 [[[
 Scissors >> playAgainstScissors
-	^ #draw
+		^ #draw
 ]]]
 
 [[[
 Paper >> playAgainstScissors
-	^ #scissors
+		^ #scissors
 ]]]
 
 [[[
 Stone >> playAgainstScissors
-	^ #stone
+		^ #stone
 ]]]
 
-${slide:title=Paper now }$
+${slide:title=Full Paper code}$
 [[[
 Paper >> vs: anotherTool
-	^ anotherTool playAgainstPaper
+		^ anotherTool playAgainstPaper
 ]]]
 
 [[[
 Scissors >> playAgainstPaper
-	^ #scissors
+		^ #scissors
 ]]]
 
 [[[
 Paper >> playAgainstPaper
-	^ #draw
+		^ #draw
 ]]]
 
 [[[
 Stone >> playAgainstPaper
-	^ #paper
+		^ #paper
 ]]]
 
 ${slide:title=Solution Overview}$
@@ -200,17 +205,17 @@ ${slide:title=Remark}$
 
 [[[
 Scissors >> playAgainstPaper
-	^ #scissors
+		^ #scissors
 ]]]
 
 will just be
 
 [[[
 Scissors >> playAgainstPaper: aScissors
-	^ #scissors
+		^ #scissors
 ]]]
 
-${slide:title=Remark}$
+${slide:title=With an argument}$
 
 +.>file://figures/StonePaperScissorsAndKey.pdf|width=80+
 
@@ -218,6 +223,11 @@ ${slide:title=Remark}$
 ${slide:title=Extending it...}$
 
 +>file://figures/StonePaperScissorsLizzardSpockGame.pdf|width=60+
+
+
+${slide:title=Extensible}$
+
+- You can extend Stone, Paper, Scissors with Spock and Lizzard without changing any line of existing code.
 
 ${slide:title=Conclusion}$
 
