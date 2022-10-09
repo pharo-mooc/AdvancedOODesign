@@ -8,7 +8,7 @@ ${slide:title=Goals}$
 
 - In the quest of dispatch
 - No conditionals!
-
+- implementing: 
 [[[
 >>> (Stone new vs: Paper new)
 #paper
@@ -50,20 +50,37 @@ Stone >> vs: anotherTool
 		^ ...
 ]]]
 
+${slide:title=Hint 0}$
+
+- The solution does not contain an explicit condition (No if, no checks)
+- Remember sending a message is making a choice: it selects the right method
+
 ${slide:title=Hint 1: 3 classes}$
 
 - ==Stone==
 - ==Paper==
 - ==Scissors==
 
-${slide:title=Hints}$
 
-- The solution does not contain an explicit condition
-- Remember sending a message is making a choice: selecting the right method
-- When we execute the method ==vs:== we know the receiver
-- What if we introduce another method to make another choice?
+${slide:title=More hints}$
 
-${slide:title= Paper playAgainstStone: }$
+- When we execute the method ==vs:== we know the receiver of the message
+- So we have already half of the solution
+- What if we introduce another method ==playAgainstStone== to make another choice?
+
+${slide:title=Defining Paper >> playAgainstStone}$
+
+[[[
+Stone >> vs: anotherTool
+		^ ... playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+		^ ...
+]]]
+
+${slide:title=Defining Paper >> playAgainstStone}$
 
 [[[
 Stone >> vs: anotherTool
@@ -75,7 +92,7 @@ Paper >> playAgainstStone
 		^ ...
 ]]]
 
-${slide:title= Paper playAgainstStone }$
+${slide:title=Paper playAgainstStone defined}$
 
 [[[
 Stone >> vs: anotherTool
@@ -87,7 +104,7 @@ Paper >> playAgainstStone
 >> 		^ #paper
 ]]]
 
-${slide:title= Paper playAgainstStone}$
+${slide:title=Stone new vs: Scissor new}$
 
 Works for 
 [[[
@@ -106,7 +123,21 @@ But not for
 - Easy!
 
 
-${slide:title=Other playAgainstStone }$
+${slide:title=Supporting aScissor as argument}$
+
+[[[
+Stone >> vs: aScissor
+		^ aScissor playAgainstStone
+]]]
+
+- So we should implement ==playAgainstStone== on ==Scissor==
+
+[[[
+Scissors >> playAgainstStone
+		^ ...
+]]]
+
+${slide:title=Other playAgainstStone definitions}$
 
 [[[
 Scissors >> playAgainstStone
@@ -129,7 +160,7 @@ Stone >> vs: anotherTool
 
 [[[
 Paper >> playAgainstStone
->> 		^ #paper
+		^ #paper
 ]]]
 
 [[[
@@ -146,7 +177,7 @@ Stone >> playAgainstStone
 ${slide:title=Stepping back}$
 
 - We know that a method is executed on a class (here ==Stone==)
-- We SEND another message to the argument to select another method (here ==playAgainstStone==)
+- We ""send another message to the argument"" to select another method (here ==playAgainstStone==)
 - Two messages to be able to select a method based on its receiver AND argument
 
 
@@ -194,9 +225,17 @@ Stone >> playAgainstPaper
 		^ #paper
 ]]]
 
-${slide:title=Solution Overview}$
+${slide:title=Solution overview}$
 
 +An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+
+
+${slide:title=Double dispatch}$
+
+- Two messages: ==vs:== and one of ==playAgainstPaper==, ==playAgainstStone== or, ==playAgainstScissors==
+- First the system selects the correct ==vs:==
+- Second it selects the second method
+
 
 ${slide:title=Remark}$
 
@@ -227,7 +266,7 @@ ${slide:title=Extending it...}$
 
 ${slide:title=Extensible}$
 
-- You can extend Stone, Paper, Scissors with Spock and Lizzard without changing any line of existing code.
+- You can extend Stone, Paper, Scissors with Spock and Lizzard ""without changing any line"" of existing code.
 
 ${slide:title=Conclusion}$
 
