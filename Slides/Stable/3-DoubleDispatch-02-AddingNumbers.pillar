@@ -1,7 +1,7 @@
 {
-    "title" : "About Double Dispatch",
+    "title" : "Double Dispatch",
     "subtitle" : "Adding numbers as a Kata",
-    "author" : "S. Ducasse"
+    "author" : "S. Ducasse, G. Polito, P. Tesone, and L. Fabresse"
 }
 
 ${slide:title=Outline}$
@@ -12,12 +12,14 @@ ${slide:title=Outline}$
 - ""Chewing"" double dispatch
 - Stepping back
 
-${slide:title=Exercise 1}$
+${slide:title=Adding Integer and Float primitives}$
 
-Given
+Given the following primitives
 [[[
 primitive addi(i,j) returns the addition of two integers i + j
+
 primitive addf(f1,f2) returns the addition of two floats f1 + f2
+
 i.asFloat() converts an integer to a float
 ]]]
 
@@ -36,13 +38,22 @@ ${slide:title=Adding Integer and Float}$
 
 Implement ==\+== 
 
-But with
-- Not a single explicit conditional
-- No static type support
+But with not a single explicit conditional (no ==if==)
 
 ${slide:title=A first hint}$
 
+Sending a message is making a choice and classes support choice expressions
+
+
+${slide:title=So}$
+
 - Two classes ==Integer== and ==Float==
+
+${slide:title=And}$
+
+- Two classes ==Integer== and ==Float==
+- Two methods ==\+==: one in each class
+
 
 ${slide:title=Let us see}$
 
@@ -65,28 +76,24 @@ ${slide:title=Another key hint}$
 
 When you execute a method you know that the receiver is from the class of the method!
 
-${slide:title=Even more hints}$
-
-- Remember the Boolean implementation
-
-- Sending a message to an object is a choice operator
-
-${slide:title=Let us get started}$
-
-Imagine that we add one method ==sumWithInteger: anInteger==
-
 
 
 ${slide:title=Let us get started}$
 
 Imagine that we add one method ==sumWithInteger: anInteger==
+
+
+
+${slide:title=Adding sumWithInteger: anInteger}$
+
 
 [[[
 	Integer >> + aNumber
 
+		"fill me up :)"
 
 	Integer >> sumWithInteger: anInteger
-
+		...
 
 
 
@@ -94,14 +101,24 @@ Imagine that we add one method ==sumWithInteger: anInteger==
 	Float >> + aNumber
 
 
-	"fill me up :)"
+		"fill me up :)"
 ]]]
 
 ${slide:title=Look like an easy definition}$
 
 [[[
+	Integer >> sumWithInteger: anInteger
+		^ addi(self, anInteger)
+]]]
+
+Here we strongly assume that ==anInteger== is of class ==Integer==
+
+${slide:title=How do we connect them?}$
+
+[[[
 	Integer >> + aNumber
-		
+		^ ...
+
 	Integer >> sumWithInteger: anInteger
 		^ addi(self, anInteger)
 
@@ -111,8 +128,9 @@ ${slide:title=Look like an easy definition}$
 		"fill me up :)"
 ]]]
 
+An hint: it should work for ==1 + 2==
 
-${slide:title=How do we connect them?}$
+${slide:title=Now we can add 1+2}$
 
 [[[
 	Integer >> + aNumber
@@ -127,10 +145,10 @@ ${slide:title=How do we connect them?}$
 		"fill me up :)"
 ]]]
 
-Support: ==1 + 2==
 
 
-${slide:title=1 + 2}$
+
+${slide:title=With folded constants: 1 + 2}$
 
 [[[
 	Integer (1) >> + 2
@@ -142,7 +160,7 @@ ${slide:title=1 + 2}$
 
 
 
-${slide:title=On Float too}$
+${slide:title=What about 2 + 1.2?}$
 
 [[[
 	Integer >> + aNumber
@@ -155,14 +173,34 @@ ${slide:title=On Float too}$
 
 	Float >> + aNumber
 
+	Oops....?
+	
+]]]
 
+Looks like we need ==sumWithInteger: anInteger== on ==Float==
+
+
+${slide:title=What about 2 + 1.2?}$
+
+[[[
 	Float >> sumWithInteger: anInteger
 		"fill me up :)"
 ]]]
 
 
+${slide:title=Looks easy}$
 
-${slide:title=On Float too}$
+[[[
+	Float >> sumWithInteger: anInteger
+		^ addf(self, asFloat(anInteger))
+]]]
+
+Here we assume that the argument is instance of ==Integer==
+
+
+
+
+${slide:title=Now we support 2 + 1.2}$
 
 [[[
 	Integer >> + aNumber
@@ -174,20 +212,18 @@ ${slide:title=On Float too}$
 
 
 	Float >> + aNumber
-
+	
 
 	Float >> sumWithInteger: anInteger
 		^ addf(self, asFloat(anInteger))
 ]]]
 
-Support: ==2 + 1.2==
 
-
-${slide:title= 2 + 1.2}$
+${slide:title=With folded constants:  2 + 1.2}$
 
 [[[
-	Integer (2) >> + 1.2
-		^ 1.2 sumWithInteger: 2
+>	Integer (2) >> + 1.2
+>		^ 1.2 sumWithInteger: 2
 
 	Integer >> sumWithInteger: anInteger
 		^ addi(self, anInteger)
@@ -195,13 +231,33 @@ ${slide:title= 2 + 1.2}$
 	Float >> + aNumber
 
 
-	Float (1.2) >> sumWithInteger: 2
-		^ addf(1.2, asFloat(2))
+>	Float (1.2) >> sumWithInteger: 2
+>		^ addf(1.2, asFloat(2))
 ]]]
 
 
 
-${slide:title=Supporting 1.2 \+ 2}$
+${slide:title=What about 1.2 \+ 2.1?}$
+
+
+[[[
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+	Integer >> sumWithInteger: anInteger
+		^ addi(self , anInteger)
+		
+
+
+	Float >> + aNumber
+		^ ...
+
+	Float >> sumWithInteger: anInteger
+		^ addf(self, asFloat(anInteger))
+]]]
+
+We should define ==\+== on ==Float==
+
+${slide:title=Now we are supporting 1.2 \+ 2.1?}$
 
 
 [[[
@@ -219,7 +275,8 @@ ${slide:title=Supporting 1.2 \+ 2}$
 		^ addf(self, asFloat(anInteger))
 ]]]
 
-${slide:title=Supporting 1.2 \+ 2}$
+
+${slide:title=Supporting 1.2\+ 2}$
 
 
 [[[
@@ -240,7 +297,7 @@ ${slide:title=Supporting 1.2 \+ 2}$
 >		^ addf(self, aFloat)
 ]]]
 
-${slide:title= 1.2 \+ 2}$
+${slide:title=With folded constants: 1.2 \+ 2}$
 
 
 [[[
@@ -248,11 +305,11 @@ ${slide:title= 1.2 \+ 2}$
 		^ aNumber sumWithInteger: self
 	Integer >> sumWithInteger: anInteger
 		^ addi(self , anInteger)
-	Integer (2) >> sumWithFloat: 1.2
-		^ addf(1.2, asFloat(2))
+>	Integer (2) >> sumWithFloat: 1.2
+>		^ addf(1.2, asFloat(2))
 
-	Float (1.2) >> + 2
-		^ 2 sumWithFloat: 1.2 
+>	Float (1.2) >> + 2
+>		^ 2 sumWithFloat: 1.2 
 	Float >> sumWithInteger: anInteger
 		^ addf(self, asFloat(anInteger))
 	Float >> sumWithFloat: aFloat
@@ -280,11 +337,11 @@ Integer >> + aNumber
 	^ aNumber sumWithInteger: self 
 ]]]
 
-Two choices/messages:
-- one for \+
-- one for sumWithInteger:
+""Two"" choices/messages:
+- one for \+: select one ==Integer== or ==Float== implementation
+- one for ==sumWithInteger:==, ==sumWithFloat:==: select one ==Integer== or ==Float== implementation
 
-${slide:title=Exercise2: How to add Fraction?}$
+${slide:title=Exercise 2: How to add Fraction?}$
 
 [[[
 f := Fraction num: 1 denum: 2.
@@ -298,18 +355,28 @@ f := Fraction num: 1 denum: 2.
 ]]]
 
 [[[
-1/2 + 3
+(1/2) + 3
 3 + 3.3
-1.3 + 2/5
-1/3 + 4/3
+1.3 + (2/5)
+(1/3) + (4/3)
 ]]]
 
 ${slide:title=Introducing Fraction }$
 
 [[[
 	Fraction >> + aNumber
+		^ ...
+]]]
+
+It follows the same pattern.
+
+
+${slide:title=Introducing Fraction }$
+
+[[[
+	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
-	...
+		...
 ]]]
 
 ${slide:title=Introducing Fraction}$
@@ -321,7 +388,7 @@ ${slide:title=Introducing Fraction}$
 		...
 ]]]
 
-${slide:title=Introducing Fraction}$
+${slide:title=Supports (1/2) + (4/3)}$
 
 [[[
 	Fraction >> + aNumber
@@ -332,7 +399,7 @@ ${slide:title=Introducing Fraction}$
 	...
 ]]]
 
-${slide:title=Taking care of Integer and Float}$
+${slide:title=Taking care of Integers and Floats}$
 
 [[[
 	Fraction >> + aNumber
@@ -350,7 +417,7 @@ ${slide:title=Taking care of Integer and Float}$
 
 
 
-${slide:title=Introducing Fraction }$
+${slide:title=Now supporting: (1/2) + 1 and (1/2) + 2.1}$
 
 [[[
 	Fraction >> + aNumber
@@ -389,19 +456,28 @@ ${slide:title=Ok now relax}$
 - Follow with your fingers if necessary :)
 
 [[[
-1/2 + 3
+(1/2) + 3
 3 + 3.3
-1.3 + 2/5
-1/3 + 4/3
+1.3 + (2/5)
+(1/3) + (4/3)
 ]]]
+
+${slide:title=Key point}$
+
+[[[
+X >> + aNumber
+	^ aNumber sumWithX: self 
+]]]
+
+""Two"" choices/messages:
+- one for \+: select one ==Integer==, ==Float==, or ==Fraction== implementation
+- one for ==sumWithInteger:==, ....: select one ==Integer==, ==Float==, or ==Fraction== implementation
+
 
 ${slide:title=Stepping back}$
 
 - We can add ==Fraction== without changing any previous method 
 - Another example of "Sending a message is making a choice"
-- We send two messages
--- + to select Integer, Float, Fraction
--- then the message sumWith... to reselect the correct definition in ==Integer==, ==Float==, ==Fraction==
 
 Different kinds of messages 
 - Primary operations
@@ -419,8 +495,8 @@ ${slide:title=When not using Double Dispatch}$
 
 ${slide:title=What about overloading}$
 
-- Double dispatch is also useful in statically typed languages
-- Avoid overloading for double dispatch - some type systems do not work well (see other lectures on Overloading problem)
+- Double dispatch is ""also"" useful in statically-typed languages
+- Overloading for double dispatch will not work in presence of inheritance: Will not select the expected method
 
 
 ${slide:title=Conclusion}$

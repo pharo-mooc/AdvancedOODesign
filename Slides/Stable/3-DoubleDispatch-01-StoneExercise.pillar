@@ -266,7 +266,8 @@ ${slide:title=Extending it...}$
 
 ${slide:title=Extensible}$
 
-- You can extend Stone, Paper, Scissors with Spock and Lizzard ""without changing any line"" of existing code.
+- You can extend Stone, Paper, Scissors with Spock and Lizard ""without changing any line"" of existing code.
+- Implement it!
 
 ${slide:title=Conclusion}$
 
