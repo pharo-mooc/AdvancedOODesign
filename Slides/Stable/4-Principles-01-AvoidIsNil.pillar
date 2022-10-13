@@ -6,7 +6,9 @@
 ${slide:title=Goal}$
 
 - Understanding the implication behind returning nil
+- Looking at provider side
 - Object initialization avoids nil propagation
+- Looking at client side
 - Null Object 
 
 ${slide:title=nil?}$
@@ -15,6 +17,10 @@ ${slide:title=nil?}$
 - In Pharo, a real object, as anybody else
 - Default value of uninitialized instance variables
 - Still we should be careful when to use it
+
+${slide:title=Looking at provider side}$
+
+- What is the impact of code generating nil?
 
 
 ${slide:title=Example}$
@@ -25,9 +31,9 @@ Imagine an inferencer that looks for rules that correspond to a fact.
 | inf | 
 inf := Inferencer new.
 inf 
-	addRule: #sunny -> #sunglasses;
+	addRule: #sunny -> #'sunglasses';
 	addRule: #sunny -> #'solar cream';
-	addRule: #rainy -> #umbrella.
+	addRule: #rainy -> #'umbrella'.
 
 inf rulesForFact: #sunny 
 > #(Fact (sunglasses) Fact(umbrella))
@@ -47,6 +53,8 @@ Inferencer >> rulesForFact: aFact
 ]]]
 
 - Here ==rulesForFact:== returns ==nil== to indicate that there is no rules for a fact.
+- What are the consequences?
+
 
 ${slide:title=Consequences!}$
 
@@ -84,19 +92,7 @@ Your clients can just iterate and manipulate the returned value
 ]]]
 
 
-${slide:title=For exceptional cases, use exceptions}$
 
-For exceptional cases, replace ==nil== by exceptions:
-- ""avoid"" error codes because they require ==if== in clients
-- exceptions may be handled by the client, or the client's client, or ...
-
-[[[
-FileStream >> nextPutAll: aByteArray
-   canWrite ifFalse: [ self cantWriteError ].
-   ...
-FileStream >> cantWriteError
-   (CantWriteError file: file) signal
-]]]
 
 ${slide:title=About nil}$
 
@@ -196,6 +192,21 @@ Sometimes it is difficult to apply the ==NullObject==
 - Too large API
 - Or would need too many NullObjects
 - Unclear default "no behavior"
+
+${slide:title=For exceptional cases, use exceptions}$
+
+For exceptional cases, replace ==nil== by exceptions:
+- ""avoid"" error codes because they require ==if== in clients
+- exceptions may be handled by the client, or the client's client, or ...
+
+[[[
+FileStream >> nextPutAll: aByteArray
+   canWrite ifFalse: [ self cantWriteError ].
+   ...
+FileStream >> cantWriteError
+   (CantWriteError file: file) signal
+]]]
+
 
 ${slide:title=Conclusion}$
 
