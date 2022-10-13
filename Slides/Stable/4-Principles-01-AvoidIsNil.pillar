@@ -1,6 +1,6 @@
 {
   "title":"Avoid Null Checks",
-  "author" : "S. Ducasse"
+  "author" : "S. Ducasse, G. Polito, P. Tesone and L. Fabresse"
 }
 
 ${slide:title=Goal}$
@@ -16,9 +16,29 @@ ${slide:title=nil?}$
 - Default value of uninitialized instance variables
 - Still we should be careful when to use it
 
+
 ${slide:title=Example}$
 
-Imagine an inferencer that looks for rules that can be applied to a fact. 
+Imagine an inferencer that looks for rules that correspond to a fact. 
+
+[[[
+| inf | 
+inf := Inferencer new.
+inf 
+	addRule: #sunny -> #sunglasses;
+	addRule: #sunny -> #'solar cream';
+	addRule: #rainy -> #umbrella.
+
+inf rulesForFact: #sunny 
+> #(Fact (sunglasses) Fact(umbrella))
+
+inf rulesForFact: #cloudy
+> nil
+]]]
+
+
+${slide:title=Example code}$
+
 
 [[[
 Inferencer >> rulesForFact: aFact
@@ -96,25 +116,7 @@ Archive >> initialize
 	members := OrderedCollection new
 ]]]
 
-${slide:title=Use Lazy Initialization when Necessary}$
 
-You can defer initialization of a variable to its first use:
-
-[[[
-FreeTypeFont >> descent
-   ^ cachedDescent ifNil: [
-        cachedDescent := (self face descender * self pixelSize //
-                               self face unitsPerEm) negated ]
-]]]
-
-- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
-
-${slide:title=Solution: Use Lazy Initialization when Necessary}$
-
-- Lazy initialization trades time vs runtime cost (==ifNil:== check)
-- You should always use this accessor
-- Pay attention you should NOT access directly an instance variable used in a lazy setting 
-- Else you can get exposed to ==nil== value
 
 ${slide:title=Sometimes you have to check...}$
 
