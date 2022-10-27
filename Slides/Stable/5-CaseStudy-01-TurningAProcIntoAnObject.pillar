@@ -1,12 +1,12 @@
 {
-    "title":"Turning Procedure to Objects",
+    "title":"Turning Procedures to Objects",
     "author":"S. Ducasse"
 }
 
-${slide:title=Objects are powerful}$
+${slide:title=Goals}$
 
-- Super basic to say it but 
-- ""Objects are powerful""
+Super basic to say it but 
+- ""Objects are really powerful""
 
 - An example: ==Behavior>>printHierarchy== vs. ==ClassHierarchyPrinter==
 -- ==printHierarchy== is a method
@@ -128,19 +128,52 @@ API
 - ==excludedClasses:== to remove unwanted subclasses
 - ==cr==, ==tab==, ==nextPutAll:== to let decorations
 
+
+${slide:title=DatePrinter vs. Date printOn:}$
+
+[[[
+10 Janvier 2023
+10 Jan 23
+10 / 01 / 2023
+10-01-2023
+01 / 10 / 2023
+]]]
+- should printOn: handles all this?
+Printing a date can be the responsibility of an object
+
+${slide:title=ZTimestampFormat}$
+
+The class ==ZTimestampFormat== is a nice example
+
+- I am ZTimestampFormat, an implementation of a textual representation for a timestamp, date or time that can be used for formatting or parsing.
+
+- You instanciate me by specifying the textual format by example, based on a #reference timetamp.
+
+
+[[[
+(ZTimestampFormat fromString: 'SAT, FEB 03 2001 (16:05:06)')
+	format: ZTimestamp now.
+]]]
+
+[[[
+(ZTimestampFormat fromString: '02/03/01 (16:05:06)')
+	parse: '10/10/10 (12:01:01)'.
+]]]
+
+
 ${slide:title=Stepping back}$
 
 - Created ""little objects"" that can be configured!
 - The object holds the ""specific state"" for its computation
 - The API can extended if needed
 
-- Functionality can be removed from ==Behavior==
-- Functionality can be ""nicely tested"" and packaged outside of ==Kernel==
+- Functionality can be removed from the original places
+- Functionality can be ""nicely tested"" and packaged in autonomous manner
 
 ${slide:title=Further thought}$
 
+- Turning a method into an object is the key point of Command Design pattern
 - An object is a ""powerful"" entity
 
-- If the functionality needs to behave differently on different objects (Classes, Traits, Metaclasses...) we can use double dispatch between the objects that the printers as it is done in the ==ClassDefinitionPrinter==
 
 

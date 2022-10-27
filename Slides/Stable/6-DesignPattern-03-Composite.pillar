@@ -19,11 +19,14 @@ ${slide:title=Composite design essence}$
 
 +.>file://figures/DP-CompositeEssence.pdf|width=80+
 
+${slide:title=Composite design essence}$
+
+
 ${slide:title=Composite motivation}$
 
 A tree is a 
 - leave 
-- a node with trees as children
+- a node with trees as children 
 
 ${slide:title=Examples}$
 

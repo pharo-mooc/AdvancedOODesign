@@ -88,7 +88,9 @@ ENumber >> print
 ]]]
 
 [[[
-EPlus >> print]]]
+EPlus >> print
+...
+]]]
 
 ${slide:title=First design analysis}$
 
@@ -225,7 +227,7 @@ Printer >> visitPlus: anExpression
     anExpression right acceptVisitor: self.
 ]]]
 [[[
-Printer >> visitPlus: anExpression
+Printer >> visitTimes: anExpression
     stream nextPutAll: '*'.
     anExpression left acceptVisitor: self.
     anExpression right acceptVisitor: self.

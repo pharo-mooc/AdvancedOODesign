@@ -114,12 +114,17 @@ Archive >> initialize
 
 
 
+
+-
+
 ${slide:title=Sometimes you have to check...}$
 
 - Sometimes you have to check some conditions before doing an action
 - When possible, you can turn the default case into an object, a Null Object.
 
 ${slide:title=Example}$
+
+From the perspective of the client
 
 [[[
 ToolPalette >> nextAction
