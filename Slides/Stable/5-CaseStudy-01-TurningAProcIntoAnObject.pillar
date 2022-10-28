@@ -139,23 +139,32 @@ ${slide:title=DatePrinter vs. Date printOn:}$
 10-01-2023
 01 / 10 / 2023
 ]]]
-- should printOn: handles all this?
-Printing a date can be the responsibility of an object
+- Should ==printOn:== handles all this?
+- ==mmddyyyy==, ==ddmmyyyy== support limited scenario
+- Printing a date can be the responsibility of a specific object
 
 ${slide:title=ZTimestampFormat}$
 
-The class ==ZTimestampFormat== is a nice example
+The class ==ZTimestampFormat== is a nice example of reifying the complex
 
 - I am ZTimestampFormat, an implementation of a textual representation for a timestamp, date or time that can be used for formatting or parsing.
 
-- You instanciate me by specifying the textual format by example, based on a #reference timetamp.
 
+
+${slide:title=ZTimestampFormat}$
+
+Provides a template to shape the output
 
 [[[
 (ZTimestampFormat fromString: 'SAT, FEB 03 2001 (16:05:06)')
 	format: ZTimestamp now.
 > 'FRI, OCT 28 2022 (06:43:11)'
 ]]]
+
+
+${slide:title=ZTimestampFormat}$
+
+Another behavior: parsing date according to a template
 
 [[[
 (ZTimestampFormat fromString: '02/03/2001 (16:05:06)')
