@@ -3,21 +3,22 @@
     "author":"S. Ducasse"
 }
 
-${slide:title=Goals}$
+${slide:title=Goals/Objective}$
 
 Super basic to say it but 
 - ""Objects are really powerful""
-
+- Basic for behavior reification
 - An example: ==Behavior>>printHierarchy== vs. ==ClassHierarchyPrinter==
 -- ==printHierarchy== is a method
 -- ==ClassHierarchyPrinter== is a little class
 
-${slide:title=Functionality we want}$
 
-- Printing the hierarchy of class
+${slide:title=Printing the hierarchy of class}$
 
 [[[
->>> Rectangle printHierarchy
+Rectangle printHierarchy
+]]]
+[[[
 'ProtoObject #()
 	Object #()
 
@@ -106,9 +107,9 @@ ClassHierarchyPrinter new
 	doNotShowState;
 	doNotShowSuperclasses;
 	excludedClasses: (RBNode withAllSubclasses 
-						select: [ :each | each name beginsWith: RBPattern ]);
+						select: [ :each | each name beginsWith: 'RBPattern' ]);
 	limitedToClasses: (RBNode withAllSubclasses 
-							select: [:each | each name beginsWith: RB]).
+							select: [:each | each name beginsWith: 'RB']).
 ]]]
 
 ${slide:title=Looking at ClassHierarchyPrinter}$
@@ -153,11 +154,13 @@ The class ==ZTimestampFormat== is a nice example
 [[[
 (ZTimestampFormat fromString: 'SAT, FEB 03 2001 (16:05:06)')
 	format: ZTimestamp now.
+> 'FRI, OCT 28 2022 (06:43:11)'
 ]]]
 
 [[[
-(ZTimestampFormat fromString: '02/03/01 (16:05:06)')
-	parse: '10/10/10 (12:01:01)'.
+(ZTimestampFormat fromString: '02/03/2001 (16:05:06)')
+	parse: '10/05/2022 (12:01:01)'.
+> 2022-10-05T12:01:01Z
 ]]]
 
 
