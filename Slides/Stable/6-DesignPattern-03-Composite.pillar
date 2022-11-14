@@ -7,13 +7,86 @@
 
 ${slide:title=Outline}$
 
-- Composite Design Pattern
+- Composite design pattern presentation
 - Composite discussions
+
+
+
+
+${slide:title=File entry examples}$
+
+[[[
+Pharo.image
+]]]
+
+[[[
+F1
+	Pharo.image
+	Pharo.changes
+]]]
+
+[[[
+F1
+	src
+	doc
+	images
+		Pharo.image
+		Pharo.changes
+]]]
+
+${slide:title=File entries}$
+
+An entry is a 
+- file 
+- or a folder with entries as children
+
+
+${slide:title=Same with Trees}$
+
+A tree is a 
+- leave 
+- or a node with trees as children
+
+
+${slide:title=Documents}$
+
+A document is composed of 
+- title
+- table of contents
+- chapters
+
+A chaper is composed of 
+- sections
+- paragraph
+- figures
+- lists
+
+${slide:title=A diagram}$
+
+- A diagram is composed of elements
+- An element is
+-- a circle
+-- a segment
+-- a text
+-- a group of elements
+
+${slide:title=Now the question!}$
+
+- How do we draw diagram elements?
+- How do we draw a diagram?
+
+
+${slide:title=Composite motivation}$
+
+
++.>file://figures/DP-CompositeParticipants.pdf|width=70+
+
+
 
 ${slide:title=Composite: Intent}$
 
 - Compose objects into tree structures to represent ""part-whole"" hierarchies
-- Composite lets clients treat individual objects and compositions of objects ""uniformly""
+- Composite lets clients treat ""individual"" objects and ""compositions"" of objects ""uniformly""
 
 ${slide:title=Composite design essence}$
 
@@ -21,35 +94,14 @@ ${slide:title=Composite design essence}$
 
 ${slide:title=Composite design essence}$
 
+What is key: 
+- Leaves offers the same API than the composite
+- Each leave will do something different but with the ""same"" API
+- Composite will offer the same API and some functionality to manage children
 
-${slide:title=Composite motivation}$
+This brings substituability between the parts and the composite!
 
-A tree is a 
-- leave 
-- a node with trees as children 
 
-${slide:title=Examples}$
-
-A book is composed of 
-- title
-- table of contents
-- chapters
-A chaper is composed of 
-- sections
-- paragraph
-- lists
-
-${slide:title=Composite motivation}$
-
-- A diagram is composed of elements
-
-- An element can be 
--- a circle
--- a segment
--- a text
--- a group of elements
-
-+.>file://figures/DP-CompositeParticipants.pdf|width=60+
 
 
 ${slide:title=Composite participants: Client}$
@@ -100,6 +152,16 @@ ${slide:title=Composite consequences}$
 - Makes the client simple. Composite and leaves objects are treated uniformly
 - Eases the creation of new kinds of components
 - Can make your design general
+
+
+${slide:title=In dynamically-typed languages}$
+
+- Polymorphism is expressed as compatible API not compiled-time type check.
+- A composite and leaves do not have to inherit from a common ancestor
+- Having a common ancestor eases understanding the composite, but it not mandatory
+
++.>file://figures/DP-compositeEssenceAlternate2.pdf|width=70+
+
 
 ${slide:title=Alternate extreme implementation}$
 
