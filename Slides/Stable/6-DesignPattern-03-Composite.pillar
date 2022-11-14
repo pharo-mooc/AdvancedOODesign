@@ -7,6 +7,7 @@
 
 ${slide:title=Outline}$
 
+- Motivating examples
 - Composite design pattern presentation
 - Composite discussions
 
@@ -55,11 +56,13 @@ A document is composed of
 - table of contents
 - chapters
 
-A chaper is composed of 
-- sections
-- paragraph
+A chaper is composed of  sections
+
+A section is composed of 
+- paragraphs
 - figures
 - lists
+- sections
 
 ${slide:title=A diagram}$
 
@@ -68,16 +71,18 @@ ${slide:title=A diagram}$
 -- a circle
 -- a segment
 -- a text
--- a group of elements
+-- a diagram (a groupe of elements)
 
 ${slide:title=Now the question!}$
 
 - How do we draw diagram elements?
 - How do we draw a diagram?
 
+We do not want to have to check if we are talking to an element or a diagram composed of elements!
 
 ${slide:title=Composite motivation}$
 
+Elements and diagrams should offer the same API!
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
@@ -95,12 +100,12 @@ ${slide:title=Composite design essence}$
 ${slide:title=Composite design essence}$
 
 What is key: 
-- Leaves offers the same API than the composite
-- Each leave will do something different but with the ""same"" API
+- Leaves offers the ""same"" API than the composite
+- Each leave will do something ""different"" but with the ""same"" API (polymorphism)
 - Composite will offer the same API and some functionality to manage children
 
 This brings substituability between the parts and the composite!
-
+- Clients do not have to care
 
 
 
@@ -108,7 +113,7 @@ ${slide:title=Composite participants: Client}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-""Client"" manipulates objects in the composition through the ""Component"" interface
+""Client"" manipulates objects in the composition through the ""Component"" interface (here Graphic)
 
 
 ${slide:title=Composite participants: Component}$
