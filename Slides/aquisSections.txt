@@ -1,0 +1,30 @@
+Tests: Les tests sont essentiels pour permettre d’identifier les probrlemes de non regressions en cas de changements. 
+De plus avec Test Driven Design ils permettent une conception plus claire et efficace. Ils permettent aussi 
+a la programmation agile de donner tout son potentiel dans une boucle vertueuse (test, developpement, refactorings)
+Acquis: Test, XTDD, TDD
+
+Essence: Cette partie presente les aspects essentiels de la POO : a savoir que l'envoi de messages selectionne la bonne methode
+Cette section revient sur les concepts importants de self/this et super. Elle presente aussi que les envoie de messages a self sont de la planification pour la reutilisation par les souclasses. Elle montre que definir de petites methodes est un point essentiel pour la reutilisation future du code car le code des souclasses peuvent etre conceptuellemment injecte dans celui des superclasses.
+Acquis: points essentiels!, Hook and Template Design Pattern, modularité
+
+Basic Principles: cette partie revient des concepts elementaires de la programmation objet tels que la notion meme d'objets, la comparaison 
+de l'heritage et la delegation, la simple reutilisation de méthodes.
+Acquis: object vs data, inheritage vs delegation, grosses classes sont mauvaises, Stragegie design pattern
+
+Double dispatch: Alors qu'envoyer un message est faire un choix comme vu dans la section Essence, nous abordons ici sa generalisation
+c'est dire comment en utilisant deux messages on peut choisir une methode basée sur le receveur et son argument. 
+Ce point est central car il montre comment on peut eviter l'utilisation de condition statiques et monolithiques pour dfefinir des systemes modulaire. Il est aussi a la base du Design Pattern Visitor.
+Acquis: Double Dispatch
+
+Principles: Cette section aborde des principes plus généraux comme l'utilisation de tests sur nul, la loi de demeter qui limite de couplage, et
+la comparaison entre subclassing and subtyping. 
+Acquis: Law of Demeter, couplage, modularite, subclassing, subtyping, ...
+
+Case study: Cette section présente des cas réels d'utilisation des principes presentes avant dans le cours. 
+Elle presente aussi des points avancés comme une analyse des APIs de classes qui montrent immédiatement des problèmes de conception, ou une architecture en forme de couche et de descriptions.
+Acquis: Points avancés.
+
+Design Patterns: Cette aprtie presente quelques Design Patterns comme le Hook and Template Method, le Composite et le Visitor qui sont centraux
+a des nimbreux traitements. 
+
+Langage: Cette partie montre quelques idiomes de programmation sur l'utilisation des flots, les variables partagees, la comparaison  entre fermetures lexicales et objets et des discussions autour de l'API de Builder Design pattern a base de fermeture. lexicales.
