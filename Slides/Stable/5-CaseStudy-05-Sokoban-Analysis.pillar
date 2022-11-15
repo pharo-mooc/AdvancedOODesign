@@ -7,7 +7,7 @@
 ${slide:title=Goal}$
 
 - Think about model
-- Think about messages and condition
+- Think about messages and conditions
 
 ${slide:title=Studying a Sokoban Implementation}$
 
@@ -75,35 +75,35 @@ ${column:width=30}$
 
 ${column:width=60}$
 
-+.>file://figures/LearnFEx-Sokoban1.png|width=65+
++.>file://figures/LearnFEx-Sokoban1.png|width=85+
 
 ${endColumns}$
 
-${slide:title=A possible implementation}$
+${slide:title=A possible model}$
 
 ${columns}$
 
 ${column:width=30}$
 
-- Wall
-- Floor
-- Box
-- Robot
-- Target
-- Board
+- ==Wall==
+- ==Floor==
+- ==Box==
+- ==Robot==
+- ==Target==
+- ==Board==
 
 And 
-- Template/Level
-- Moves
+- ==Template/Level==
+- ==Moves==
 
 ${column:width=60}$
 
-+.>file://figures/LearnFEx-Sokoban1.png|width=65+
++.>file://figures/LearnFEx-Sokoban1.png|width=85+
 
 ${endColumns}$
 
 
-${slide:title=Let us go back}$
+${slide:title=Let us go back to our case}$
 
 - ==Block==
 -- ==EmptyBlock==
@@ -120,11 +120,11 @@ ${slide:title=Let us go back}$
 
 ${slide:title=Gut feeling analysis}$
 
-- The implemented Block model looks too shallow
+- The implemented Block model looks too 'shallow'
 - Remember classes 
 -- are representing cases
 --  are the basis for dispatch
-- Not enough classes leads to tricky conditionals and monolithic systems
+- Not enough classes leads to ""tricky conditionals"" and ""monolithic"" systems
 - Remember the lectures ""Implementing not, or...""
 +.>file://figures/Design-FatVsDispatch.pdf|width=50+
 
@@ -165,13 +165,13 @@ ${slide:title=Analysis}$
 
 The model only defines ==EmptyBlock== and ==Wall==
 
-- No Player, no target, no box.
+- No ==Player==, no ==Target==, no ==Box==.
 - ""Too much logic"" is put in ==EmptyBlock==
-- Too much Ask, ""not enough Tell"" (""Do not Ask, Tell"")
+- Too many question, ""not enough Tell"" (""Do not Ask, Tell"")
 
 ${slide:title=With a better model}$	
 
-- ==Block==
+- ==Tile==
 -- ==Box==
 -- ==BoxOnTarget==
 -- ==EmptyBlock==
@@ -195,9 +195,9 @@ Becomes
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	aBlock drawOn: aCanvas
+	aBlock drawOn: aCanvas 
 
-Wall >> drawOn: aCanvas 
+Wall >> drawOn: aCanvas
 	"Cairo code"
 
 EmptyBlock >> drawOn: aCanvas
@@ -225,12 +225,12 @@ Becomes
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
-	aBlock drawOn: aCanvas
+	aBlock drawOn: aCanvas for: aView
 
-Wall >> drawOn: aCanvas 
+Wall >> drawOn: aCanvas for: aView
 	aView drawWall: aCanvas
 
-EmptyBlock >> drawOn: aCanvas
+EmptyBlock >> drawOn: aCanvas for: aView
 	aView drawEmptyBlock: aCanvas
 ]]]
 
@@ -251,9 +251,22 @@ EmptyBlock >> drawOn: aCanvas view: aView
 	aView drawEmptyBlock: aCanvas
 ]]]
 
-- We ""tell"" a block to draw itself and it ""tells"" how to the canvas
+- It is double dispatch with more objects
 - Sending messages is powerful
 - Modular
+
+${slide:title=Intermezzo: Testing methods}$
+
+[[[
+Wall >> isWall
+	^ true
+	
+EmptyBlock >> isWall
+	^ false
+]]]
+
+- What do you think about it?
+
 
 ${slide:title=Disguided kind testing method}$
 
@@ -289,10 +302,9 @@ What are:
 -- ==NoMove==
 
 - Reification of player actions
-- Could be good to record and replay
+- Good to record and replay
 
 ${slide:title=Let us study the API}$
-
 
 [[[
 MoveResult >> isMove
@@ -321,6 +333,19 @@ GameState >> moveBy: aDirection
 	self addMove: move
 ]]]
 
+${slide:title=What is the problem?}$
+
+[[[
+	...
+	move isMove ifTrue: [ moves := moves + 1 ].
+	move isPush ifTrue: [ 
+		pushes := pushes + 1.
+		moves := moves + 1 ].
+	...
+]]]
+
+- How can we do it better?
+
 ${slide:title=Do not ask, tell}$
 
 [[[
@@ -329,14 +354,20 @@ GameState >> moveBy: aDirection
 	move := maze moveBy: aDirection.
 	move updateGameState: self.	
 	self addMove: move
+]]]
 
+[[[
 Move >> updateGameState: aGameState
 	aGameState incrementMoves
+]]]
 
+[[[
 Push >> updateGameState: aGameState
 	super updateGameState: aGameState.
 	aGameState increasePushes
+]]]
 
+[[[
 NoMove >> updateGameState: aGameState 
 	self
 ]]]

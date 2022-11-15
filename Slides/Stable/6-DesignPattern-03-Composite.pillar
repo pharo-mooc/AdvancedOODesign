@@ -71,7 +71,7 @@ ${slide:title=A diagram}$
 -- a circle
 -- a segment
 -- a text
--- a diagram (a groupe of elements)
+-- a group (i.e, diagram)
 
 ${slide:title=Now the question!}$
 
@@ -104,7 +104,8 @@ What is key:
 - Each leave will do something ""different"" but with the ""same"" API (polymorphism)
 - Composite will offer the same API and some functionality to manage children
 
-This brings substituability between the parts and the composite!
+
+This brings ""substituability"" between the parts and the composite!
 - Clients do not have to care
 
 
@@ -122,47 +123,39 @@ ${slide:title=Composite participants: Component}$
 
 ""Component"" (here Graphic)
 - declares the interface for objects in the composition
-- may implement default behavior for common interfaces
-- may declare an interface for accessing and managing its child components
+- ""may"" implement default behavior for common interfaces
+- ""may"" declare an interface for accessing and managing its child components
 
 
 ${slide:title=Composite participants: Leaf}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-""Leaf"" (Circle, Segment, Text, ...)
+""Leaf"" (here Circle, Segment, Text, ...)
 - represents leaf objects in the composition. 
 - has usually no children
-- defines behavior for primitive objects in the composition
+- defines behavior for primitive objects in the composition using a ""polymorphic"" API
+
 
 ${slide:title=Composite participants: Composite}$
 
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
-""Composite"" (Group)
-- defines behaviour for components having children
+""Composite"" (here Group)
+- defines behavior for components with children via a ""polymorphic"" API (here ==draw==)
 - stores child components
 - implements child-related operations (add/remove...)
 
-${slide:title=Collaborations}$
-
-- Clients use the Component class interface to interact with objects in the composite structure
-- Leaves handle requests directly
-- Composites 'forward' requests to its child components
--- they can implement different semantics
-
 ${slide:title=Composite consequences}$
 
-- Defines class hierarchies consisting of primitive and composite objects
-- Makes the client simple. Composite and leaves objects are treated uniformly
-- Eases the creation of new kinds of components
-- Can make your design general
-
+- Defines class hierarchies consisting of primitive and composite objects exposing a common polymorphic API
+- Clients do not have to explicitely check: Composite and leaves objects are treated uniformly
+- Adding new leaves is simple
 
 ${slide:title=In dynamically-typed languages}$
 
-- Polymorphism is expressed as compatible API not compiled-time type check.
-- A composite and leaves do not have to inherit from a common ancestor
+Polymorphism is expressed as classes exposing compatible API not compiled-time type check
+- A composite and leaves do ""not"" have to inherit from a common ancestor
 - Having a common ancestor eases understanding the composite, but it not mandatory
 
 +.>file://figures/DP-compositeEssenceAlternate2.pdf|width=70+
@@ -170,56 +163,44 @@ ${slide:title=In dynamically-typed languages}$
 
 ${slide:title=Alternate extreme implementation}$
 
-- Remember a Design Pattern is a name + intent
-- It can have multiple implementations
+- A Design Pattern is a name + intent
+- Its implementation can have multiple forms
 
 +.>file://figures/DP-compositeEssenceAlternate.pdf|width=70+
 
 - Now the gain treating a leave as a container with a single element is unclear
 
-%${slide:title=Example: Queries as composite}$
-%
-%Be able to specify different queries over a repository
+${slide:title=Frequently Asked Questions}$
 
-%[[[
-%q1 := PropertyQuery property: #HNL with: #< value: 4.
-%q2 := PropertyQuery property: #NOM with: #> value: 10.
-%q3 := Matching match: '*figure*'
-%]]]
+Can Composite contain any type of child?
+- Yes
+- Now the domain may impose some constraints
+- And the implementation can enforce at the composite level
 
-%Compose these queries and treat composite queries as one query
+Can the Composite' s number of children limited? 
+- Again it can be possible to control
 
-%[[[
-%AndComposeQuery on: {q1 . q2 . q3}
-%]]]
+Can we have different Composites within the same system?
+- Yes and each Composite can have a different constraints, behavior, ..., delagating behavior
 
-%${slide:title=Queries as composite possible design}$
 
-%+.>file://figures/DP-Composite.pdf|width=80+
+${slide:title=About Composite behavior}$
 
-${slide:title=In a dynamically-typed language}$
+Forward/Delegation
+- ""Simple forward"". Send the message to all the children and merge the results without performing any other behavior
+- ""Selective forward"". Conditionally forward to some children
+- ""Extended forward"". Extra behavior
+- ""Override"". Instead of delegating
 
-- add:, remove: do not need to be declared into Component but only on Composite
--- Avoid to have to define dummy behavior for children in superclass (Component)
 
-${slide:title=Open questions}$
+${slide:title=Composite and other design patterns}$
 
-- Can Composite contain any type of child? (domain issues)
-- Is the Composite’s number of children limited? 
-- Forward/Delegation
--- ''Simple forward''. Send the message to all the children and merge the results without performing any other behavior
--- ''Selective forward''. Conditionally forward to some children
--- ''Extended forward''. Extra behavior
--- ''Override''. Instead of delegating
+""Composite and Visitors:"" Visitors walk on structured recursive objects e.g. composites
 
-${slide:title=Working well with }$
-
-""Composite and Visitors:"" Visitors walk on structured recursive objects: composites
-
-""Composite and Factories"" Factories can create composite elements
+""Composite and Factories:"" Factories can create composite elements
 
 ${slide:title=Conclusion}$
 
 - Composite is a natural way of composing structural relationships
-- Composite provide uniform API
+- Composite provides uniform API to clients
 - Basis for complex treatment expressed as Visitor
