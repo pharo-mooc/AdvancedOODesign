@@ -1,5 +1,6 @@
 {
-	"title":"Polymorphic objects support software evolution",
+	"title":"Polymorphic objects",
+	"subtitle": "support for software evolution",
 	"slidesid":"Core",
 	"author":"S. Ducasse"
 }
@@ -17,7 +18,7 @@ ${slide:title=Coding against an API}$
 
 ''if it looks like a duck and quacks like a duck, it is a duck''
 
-- Your objects does not have to be from the same hierarchy to be able to work with others
+- Your objects do not have to be from the same hierarchy to be able to work with others
 - They have to understand the messages that are needed for a good interaction for their role
 - Related to the Adapter Design Pattern
 
@@ -142,7 +143,8 @@ ${slide:title=Interfaces and nominal types}$
 
 - You will not be able to substitute instances of a class using one interface by instances of another class using another interface with the same contents
 
-${slide:title=Conclusion}
+
+${slide:title=Conclusion}$
 
 Polymorphism and Interfaces support evolution
 
