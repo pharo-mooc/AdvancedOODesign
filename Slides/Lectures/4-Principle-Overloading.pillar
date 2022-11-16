@@ -31,7 +31,7 @@ public class OverloadingSimple {
 }
 ]]]
 
-Seems nice at first but it does not work well in general (see below)
+Seems nice at first to avoid thinking about names.
 
 ${slide:title=Exercise}$
 
@@ -63,7 +63,7 @@ class B extends A {
    public void f(B b) { print("B.f(B)"); }
 }
 
-A a = new B();
+A a = new B(); //dynamic type of a is B
 B b = new B();
 a.f(a);      a.f(b);
 b.f(a);      b.f(b);
@@ -74,43 +74,26 @@ b.f(a);      b.f(b);
 
 ${slide:title=Explanation}$
 
-Overloading + sub-typing: 
+Overloading + sub-typing:
 
-- The compiler searches a ''compatible signature'' in the static class of the receiver and argument (use potentially subtyping) and stores it.
+- The compiler searches a ""compatible signature"" in the static class of the receiver and argument (use potentially subtyping) and stores it.
 - During execution, the lookup algorithm searches for a method with this exact signature, ""regardless of the dynamic types"" of arguments.
 
 ${slide:title=Why a.f(b) returns B.f(A)?}$
 
-At compile time
+""At compile time""
 - Look in the static type of the receiver  (here class ==A==) and check existing method
 - Use static type of the arguments since ==B== is a subtype of ==A==, ==f(A)== matches
 - So we will look for =='fA'==
 
-During execution
+""During execution""
 
 [[[
 a.f(b) looks for fA in class B
 >> B.f(A)
 ]]]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-${slide:title=Looking at a Real Case: a Visitor}$
+${slide:title=Looking at a real case: a Visitor}$
 
 [[[language=java
 public class A {
@@ -130,13 +113,11 @@ new A().accept(visitor); // "Visitor.visit(A)"
 
 All is well in this perfect world...
 
-${slide:title=Uh! My Visitor is not Executed!}$
+${slide:title=Uh! My Visitor is not executed!}$
 
 [[[language=java
 public class SubA extends A {
-   public void accept(Visitor visitor) {
-      visitor.visit(this);
-   }
+   ...
 }
 public class SubVisitor extends Visitor {
    public void visit(SubA subA) {
@@ -148,9 +129,9 @@ Visitor visitor = new SubVisitor();
 new SubA().accept(visitor);  // "Visitor.visit(A)"
 ]]]
 
-When method ==SubA.accept()== is compiled, the message ==visitor.visit(this)== is bound to ==visit(A)==, the only compatible signature in ==Visitor==. During execution, ==visit(SubA)== is ignored.
+When method ==SubA.accept()== is compiled, the message ==visitor.visit(this)== is bound to ==visit(A)==, the only compatible signature in ==Visitor==. During execution, ==visit(SubA)== is ignored because we look for ==visitA==.
 
-${slide:title=Possible Ugly 'Solutions'}$
+${slide:title=Possible ugly 'solutions'}$
 
 One way to fix that could be to add a ==visit(SubA)== method in ==Visitor== (if you can change it):
 
@@ -169,7 +150,7 @@ This works but has 2 problems (see next slides):
 - the methods ==accept()== in ==A== and ==SubA== are identical
 - you can't use the ==visit()== methods directly
 
-${slide:title=In Particular}$
+${slide:title=In particular}$
 
 The methods ==accept()== in ==A== and ==SubA== are identical:
 
@@ -188,7 +169,7 @@ public class SubA extends A {
 
 You could think that ==SubA.accept()== is useless because its content is the same as ==A.accept()==. But it's not useless as, inside it, the message ==visitor.visit(this)== binds to the signature ==visit(SubA)== which is what we want.
 
-${slide:title=In Particular}$
+${slide:title=In particular}$
 
 You can't use the ==visit()== methods directly:
 
@@ -228,6 +209,8 @@ public class Visitor {
 ]]]
 
 
+
+
 ${slide:title=Overloaded method calls}$
 
 The static type of argument is always used
@@ -235,15 +218,12 @@ The static type of argument is always used
 - force you to cast
 - force you to use ==getClass==
 
-Avoid overloading (See the Lecture on Overloading)
-
-
-
-
+The static type of arguments is always used to resolve overloaded method calls.
+- It means that your subclass definitions are ""ignored""
 
 ${slide:title=Summary}$
 
-# overloading is nice 2 min, but it does not scale
-# just pay attention, don't mix it with sub-typing...
+# overloading is nice
+# just pay attention you don't mix it with sub-typing...
 # but OO programming is all about sub-typing...
 # don't use overloading

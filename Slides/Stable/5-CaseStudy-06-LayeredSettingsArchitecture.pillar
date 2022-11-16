@@ -1,6 +1,6 @@
 {
     "title":"Application settings",
-    "subtitle":"From monolithic to modular",
+    "subtitle":"From a monolithic to a modular architecture",
     "author":"S. Ducasse"
 }
 
@@ -19,7 +19,7 @@ ${slide:title=The case of Preferences}$
 ${slide:title=Challenges}$
 
 - How to make sure that we can have 
--- One application with only ""its"" preferences and its dependencies
+-- One application with ""only its"" preferences and its dependencies
 -- A ""modular"" definition of preferences
 - How do we make sure that 
 -- ""domain"" objects do ""not"" refer to preference objects and 
@@ -29,7 +29,7 @@ ${slide:title=Challenges}$
 ${slide:title=Looking into the problem}$
 
 Back in time in Squeak 3.8
-- ==Preferences== was a facade managing preferences
+- ==Preferences== was a Facade (bad Design Pattern) managing preferences
 - ==Preferences== class was referenced 617 times
 - ==Preferences== was a huge dependency attractor 
 -- referring to many other subsystems (reading 3D files, RTF, PNG, Compiler....) 
@@ -50,7 +50,7 @@ MenuMorph >> initialize
 	selectedItem := nil.
 	stayUp := false.
 	popUpOwner := nil.
-	Preferences roundedMenuCorners ifTrue: [self useRoundedCorners]
+	Preferences roundedMenuCorners ifTrue: [ self useRoundedCorners ]
 ]]]
 
 ${slide:title=UI, Tools,... all referenced Preferences}$
@@ -60,8 +60,8 @@ BasicButton >> label: aString font: aFontOrNil
 
 	| oldLabel m aFont |
 	(oldLabel := self findA: StringMorph)
-		ifNotNil: [oldLabel delete].
-	aFont := aFontOrNil ifNil: [Preferences standardButtonFont].
+		ifNotNil: [ oldLabel delete ].
+	aFont := aFontOrNil ifNil: [ Preferences standardButtonFont ].
 	m := StringMorph contents: aString font: aFont.
 	self extent: (m width + 6) @ (m height + 6).
 	m position: self center - (m extent // 2).
@@ -103,17 +103,18 @@ InputSensor >> duplicateControlAndAltKeysChanged
 
 
 
-${slide:title=Externalized control flow}$
+${slide:title=Externalized and centralized flow of components}$
 
-+.>file://figures/Settings-PreferenceMonolithicFlow.pdf|width=70+
+The octopus AntiPattern :(
++.>file://figures/Settings-PreferenceMonolithicFlow2.pdf|width=85+
 
 
 ${slide:title=Analysis}$
 
-- ""Everybody"" depends on Preferences
-- The Preferences is ""not optional""
-- Each time the Preferences class depends on a new item, all the ""dependent are impacted""
-- A clear ""lost-lost""
+- ""Everybody"" depends on ==Preferences==
+-  ==Preferences== is ""not optional""
+- Each time the ==Preferences== class depends on a new item, all its ""dependents are impacted""
+-  A clear ""lost-lost""
 - ""Monolithic""
 
 ${slide:title=Facade and Singleton are against modularity}$
@@ -127,35 +128,45 @@ ${slide:title=Facade and Singleton are against modularity}$
 
 ${slide:title=A new architecture}$
 
-- A class ""defines state / methods"" that implement its customization points
-- The class ""declares"" its settings (via description)
+- A class ""defines state / methods"" that implement ""its"" customization points
+- The class ""declares"" its settings via description
 - The settings browser collects the ""setting declaration"" and builds a UI for the user
 - The settings browser ""configure"" objects ""using settings description""
 
-${slide:title=Internal control flow}$
+${slide:title=Supporting Internal control flow}$
+
+- Limiting external dependencies
+- Renforcing locality
 
 +.>file://figures/Settings-PreferenceModularFlow.pdf|width=90+
 
 
 ${slide:title=Sound obvious but so true}$
 
-An object should be ""locally"" customizable 
+- An object should ""be designed to be customizable"" without referring to external global objects 
 - Think about encapsulation
-- As a customisable element, I should be designed to ""be customized"" without refering to external global objects
-
+- The state of customization should be internal to the object
 
 
 ${slide:title=In Action: A class implements its customization points}$
 
 [[[
-JobProgressBarMorph >> isInterruptable 
-	^ self class isInterruptable
+JobProgressBarMorph >> isInterruptible 
+	^ self class isInterruptible
 ]]]
 [[[
-JobProgressBarMorph class >> isInterruptable
-	^ IsInterruptable ifNil: [ IsInterruptable := true ]
+JobProgressBarMorph class >> isInterrupiable
+	^ IsInterruptible ifNil: [ IsInterruptible := true ]
 ]]]
 
+[[[
+JobProgressBarMorph >> addInterruptionButton
+		self isInterruptible ifFalse: [ ^ self ].
+		self addMorphBack: (self iconNamed: #stop) asMorph
+]]]
+
+- ==IsInterruptible== is a state local to ==JobProgressBarMorph==
+- ==JobProgressBarMorph== uses its own internal state to configure itself
 
 ${slide:title=In Action: Settings declaration using a Builder}$
 
@@ -172,7 +183,7 @@ JobProgressBarMorph class >> interruptionSetting: aBuilder
 		order: 1
 ]]]
 
-- Using a builder as parameter we avoid direct references to the classes of Settings
+- Using a builder as parameter we avoid direct references to Settings classes
 - Can be optionally packaged in another package if needed
 
 ${slide:title=In Action: Settings Browser}$
@@ -181,7 +192,7 @@ ${slide:title=In Action: Settings Browser}$
 
 - Use the settings to ""configure"" the objects.
 
-${slide:title=Layered architecture}$
+${slide:title=A layered and modular architecture}$
 
 +.>file://figures/SettingArchitecture.pdf|width=80+
 
@@ -193,19 +204,20 @@ ${slide:title=Analysis}$
 - Settings do not depend on Browser
 
 ""Modular""
+- The domain can be loaded alone
+- Not dependencies to unnecessary stuff
 
+${slide:title=About customization}$
 
-${slide:title=About parametrizable}$
-
-- An object should be ""designed to be parametrized""
+- An object should be ""designed to be customisable""
 - The logic flow should be ""internal""
 - The object logic should ""not be tight to a preference object""
-- The object parametrization can be set from an external object (like the Setting browser)
+- The object cusotmisation can be set from an external object (like the Setting browser)
 
 
 ${slide:title=Conclusion}$
 
-- Architecture should not promote global variable usage
+- A good architecture should not promote global variable usage
 - Avoid Singleton/Facade, these are anti-patterns
 - Our theory is that Facade is only "useful" for Compiler :)
 - Customization should first be internal

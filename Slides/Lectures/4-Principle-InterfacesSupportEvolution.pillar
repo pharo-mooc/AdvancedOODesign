@@ -11,14 +11,12 @@ ${slide:title=Goals}$
 
 
 
-
 ${slide:title=Interfaces}$
 
-- A good element of Java :)
 - Group of method signatures
--- and since Java 80 default methods...
+-- may contain default methods...
 - Used by the type checker !
-- Support the manipulation of instances of classes not in subtype relation (i.e. not in the same hierachy)
+- Support the evolution manipulation of instances of classes not in subtype relation (i.e. not in the same hierachy)
 
 [[[
 interface {
@@ -28,14 +26,6 @@ interface {
 
 
 ${slide:title=Example}$
-
-All methods are implicitly public and all fields are public static final
-[[[
-interface Polygon {
-	public static final String color = "blue";
-	public  double getArea();
-}
-]]]
 
 [[[
 interface Polygon {
