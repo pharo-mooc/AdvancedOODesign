@@ -9,9 +9,8 @@ ${slide:title=Outline}$
 - Lookup (remember)
 - Static type vs Dynamic type
 - Type checker
-- Overloading and types
 - Method lookup
-- Why do we need interface in statically typed languages?
+
 
 
 ${slide:title=Message Sending}$
@@ -56,19 +55,26 @@ Questions:
 
 ${slide:title=The type of a variable}$
 
+${columns}$
+
+${column:width=50}$
+
 Let us a simple program model:
 - a variable is a box with a label: its type.
 - a variable contains a reference to objects.
 
 A variable type indicates the kind of object the variable can refer to
 
-[[[
-A a
-]]]
+==A a==: we can put reference to objects of the class ==A== (and subclasses)
 
-In the variable ==a== we can put reference to object of the class A (and more see after)
+${column:width=45}$
 
-${slide:title=Type chcker}$
++>file://figures/Types.pdf|width=75+
+
+${endColumns}$
+
+
+${slide:title=Type checker}$
 
 During compilation 
 - A type checker is a tool that tries to make sure that correct objects are put in variables
