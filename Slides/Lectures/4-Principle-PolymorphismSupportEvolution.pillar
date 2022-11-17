@@ -7,18 +7,17 @@
 
 ${slide:title=Goals}$
 
-- Polymorphic objects are key for evolution?
+- Polymorphic objects are key for evolution
 - What 's up in statically typed languages?
 - Why do we need interfaces?
 
 
 
-
 ${slide:title=Coding against an API}$
 
-''if it looks like a duck and quacks like a duck, it is a duck''
+'if it looks like a duck and quacks like a duck, it is a duck'
 
-- Your objects do not have to be from the same hierarchy to be able to work with others
+- In dynamicallty-typed languages, your objects do not have to be from the same hierarchy to be able to work with others
 - They have to understand the messages that are needed for a good interaction for their role
 - Related to the Adapter Design Pattern
 
@@ -65,6 +64,11 @@ Rhombus (draw)
 
 Rhombus should implement the method ==draw== to be able to play nicely with ==Canvas==
 
+[[[
+Canvas >> display
+	shapes do: [ :s | s draw ]
+]]]
+
 
 ${slide:title=Step back}$
 
@@ -77,25 +81,25 @@ ${slide:title=What about statically-typed?}$
 Static types can get in your way
 
 [[[
-Shape s = new ();
+Shape s = new Shape();
 ]]]
 
-==s== can ""only"" contain instances of ==Shapes== and its subclasses
+- ==s== can ""only"" contain instances of ==Shapes== and its subclasses
+
+- So if we cannot define ==Rhombus== as subclass of ==Shape==, it will not work because there is no type relationship between ==Rhombus== and ==Shape==
 
 [[[
 class Rhombus extend Object {...draw() {...} ...}
 Shape s = new Rhombus()
->>>> BREAK!!!
+>>>> Does not compile
 ]]]
-
-Because there is no type relationship between ==Rhombus== and ==Shape==
 
 
 ${slide:title=Interface concept}$
 
 - Group of method signatures
--- may contain default methods...
-- Used by the type checker !
+-- may contain default methods and more depending on their flavor
+- Used by the type checker to check subtype relationships
 - Support the evolution manipulation of instances of classes not in subtype relation (i.e. not in the same hierachy)
 
 ${slide:title=Example}$
@@ -106,23 +110,32 @@ interface IShape {
 }
 ]]]
 
+[[[
+class Shape extend Object implements IShape { ... }
+]]]
+
+[[[
+class Canvas {
+	... display (){
+			ArrayList<IShape> shapes = new ArrayList<IShape>() ...}
+	...}
+]]]
+
 ${slide:title=class Rhombus Implements IShape}$
 
 [[[
 class Rhombus extend Object implements IShape {
-	... 
-	draw() { ... }
-}
+	... draw() { ... } ...}
 ]]]
 
-So we can use ==Rhombus== in ==Canvas== because it implements the interface
+So we can use ==Rhombus== in ==Canvas== because it implements the IShape interface
+expected by ==Canvas==
 
 ${slide:title=Classes - Interfaces}$
 
 - A class must implement the methods mentioned in the interface
 - A class can implement many interfaces
-- A class inherits from a single superclass
-- An interface can be implemented from multiple interfaces
+- An interface can be composed out of multiple interfaces
 
 ${slide:title=Interfaces: step back}$
 
@@ -139,19 +152,14 @@ When you use an interface as a type:
 
 ${slide:title=Interfaces and nominal types}$
 
+- Nominal types means that only the name if the type is considered (not its methods)
 - Pay attention two interfaces with different names but the same contents are NOT compatible
-
 - You will not be able to substitute instances of a class using one interface by instances of another class using another interface with the same contents
 
 
 ${slide:title=Conclusion}$
 
-Polymorphism and Interfaces support evolution
-
-- You can reuse a program expecting a given interface by passing a new class implementing the given interface
-- This is key! 
-- This cannot be done if you use a class. 
-- With a class you can only pass a subclass.
-
+Polymorphism and interfaces support evolution
+- Focusing on APIs is better for evolution than typing relationship 
 
 
