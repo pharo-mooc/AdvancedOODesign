@@ -1,0 +1,112 @@
+{
+    "title" : "The two interfaces",
+    "subtitle" : "about programming deltas",
+    "author" : "Stéphane Ducasse"
+}
+
+${slide:title=Outline}$
+
+- Reminders
+- Some questions
+- Two different clients!
+
+
+
+
+${slide:title=Back to the roots: Inheritance}$
+
+${columns}$
+
+${column:width=60}$
+
+- Often we want small adaptations to existing classes
+- Do not want to reimplement everything: We want to reuse existing behavior
+- Solution: ""class inheritance""
+- A class ""extends"" the definition of its superclass
+-- add state
+-- ""extend"" / ""specialize"" behavior
+
+${column:width=40}$
+
++>file://figures/InheritanceDiagram.pdf|width=90+
+
+${endColumns}$
+
+
+
+${slide:title=Inheritance: expressing delta}$
+
+Inheritance is a reuse mechanism
+- Do not reimplement the code of the superclasses in subclass
+- ""Extend"" or ""Specialize"" superclass behavior
+A subclass expresses a ""delta""
+- Only specify the differences to the superclasses
+
+
+
+${slide:title=What are the consequences of}$
+
+[[[
+A 
+	{ private x ;
+	void foo(){ ... x ...}
+	}
+]]]
+
+${slide:title=Consequences}$
+
+- Cannot access x from clients - ok sounds good
+- Cannot access x from subclasses - no ok!
+How can I express a good delta?
+- Cannot even copy and paste the body of ==foo(){ ...}== in subclasses to extend it manually!
+
+${slide:title=Clients?}$
+
+What are the clients of a class?
+- Its users (e.g., Person is client of Address)
+- But also its ""subclasses""!
+
+${slide:title=What do you think about this?}$
+
+Fields should be private 
+
+${slide:title=You cannot predict the future}$
+
+- You are not the Kwisatz Haderach!
+- You cannot predict how your classes MUST be extended in 5 years from now!
+- Think about your extenders!
+- No final no private, use protected!
+
+${slide:title=The correct idiom is...}$
+
+- Fields should be private AND class should provide ""protected"" accessors
+Or
+- Fields should be ""protected""
+Favor protected
+- Support encapsulation AND extension
+
+${slide:title=Benefits}$
+
+
+${columns}$
+
+${column:width=60}$
+
+- Your clients cannot access your state
+- And your subclasses are empowered
+-- A subclass can ""extend/refine the behavior of the superclass""
+
+${column:width=40}$
+
++.>file://figures/DualInterfaces2.pdf|width=80+
+
+${endColumns}$
+
+${slide:title=OOP is about encapsulation AND extension}$
+
+A class has always two clients:
+- Its ""users""
+- Its ""extenders""
+
+
+
