@@ -240,8 +240,17 @@ push: anElement
 What is the good superclass?
 - ==Stack== Probably.
 - It would be better if the client program behavior but not mandatory or possible.
-- A subclass does not have to make sure that client program works (this is behavioral subtyping)
+- A subclass does not have to make sure that client program works (this is behavioral subtyping )
 
+${slide:title=About Liskov Substitution Principle (LSP)}$
+
+'' 'if for each object o1 of type S there is another object o2 of type T such that for all programs P defined in terms of T, the behavior of P is unchanged when o1 is substituted for o2, then S is a subtype of T.''' Barbara Liskov, "Data Abstraction and Hierarchy," SIGPLAN Notices, 23,5 (May 1988)
+
+- LSP is about behavioral typing (about the same behavior)
+- Most of the time when you define subclass to change behavior
+
+- By definition a subclass often exhibits a slightly different behavior than its superclass
+- Therefore LSP looks useless in such context.
 
 ${slide:title= Inheritance and polymorphism}$
 
