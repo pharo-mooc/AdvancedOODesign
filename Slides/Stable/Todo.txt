@@ -1,0 +1,15 @@
+Take into account feedback from Serg.
+
+- Do a pass on Subtyping
+	Liskov
+	
+- LOD
+- AntiPatterns
+	- Facade
+	- singleton
+- Commander
+- Decorator
+- Adapter
+- Chain of Responsiblity
+
+- Double API of classes

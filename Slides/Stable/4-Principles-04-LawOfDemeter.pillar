@@ -1,5 +1,5 @@
 {
-    "title":"Thinking about Coupling",
+    "title":"About coupling and encapsulation",
     "slidesid":"",
     "author":"S. Ducasse",
     "subtitle":""
@@ -8,7 +8,7 @@
 
 ${slide:title=Goal and outline}$
 
-- Think about Coupling
+- Think about coupling
 - Present Law of Demeter
 - 'Move Behavior close to Data' from Object-Oriented Reengineering Pattern book
 - Tradeoffs
@@ -21,26 +21,28 @@ ${slide:title=Symptoms of costly coupling}$
 - ""Encapsulation:"" when a change far away happens, I get impacted
 - ""Untestable:"" I cannot test this part
 
-${slide:title=Core of the Problem}$
+
+${slide:title=Core of the problem illustrated}$
 
 +.>file://figures/LODCoreProblem.pdf|width=100+
 
+- Related to Feature Envy code smell
 
-${slide:title=Changes}$
 
-- Changes are natural:
--- When you change, your dependents should update
-- The problem is ""waves of changes when dependents of dependents should change""
+${slide:title=Changes are natural}$
+
+- When you change, your dependents should change
+- The problem is: ""waves of changes when dependents of dependents change""
 
 +.>file://figures/LODCoreProblem.pdf|width=100+
 
-${slide:title=Waves}$
+${slide:title=Waves are evil}$
 
-- Waves are created by leaks of references to far objects
-- Basically ""violation of encapsulation""
+- Waves are created by leaks of references of ""far/indirect"" objects
+- Waves are due to ""violation of encapsulation""
 
 
-- How to ""limit"" wave creation?
+How to ""limit"" wave creation?
 - Do not leak ""far"" references! 
 
 
@@ -82,18 +84,32 @@ ${slide:title=Solution: Respect encapsulation}$
 +.>file://figures/LODSkipSol.pdf|width=80+
 
 
-${slide:title=Move behavior close to data}$
 
-An object-oriented reengineering pattern (check the book Object-Oriented Reengineering Patterns)
-- if data and behavior are not close
-- then logic is distributed/duplicated in clients!
+${slide:title=Let us ""Move behavior close to data""}$
+
+${columns}$
+
+${column:width=60}$
+
+- Apply ""Move behavior close to data"" object-oriented reengineering pattern
+
+- ""Intent:"" Strengthen encapsulation by moving behavior from indirect clients to the class containing the data it operates on.
+-- if data and behavior are not close (Feature Envy code smell)
+-- then logic is distributed/duplicated in clients!
+
+${column:width=40}$
+
++.>file://figures/OORP.jpg|width=50+
+
+${endColumns}$
+
 
 ${slide:title=Move behavior close to data: Transformation}$
 
 +.>file://figures/LODtransformation.pdf|width=70+
 
 
-${slide:title=Real example}$
+${slide:title=Real (fixed) example}$
 
 [[[
 OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent
@@ -131,12 +147,25 @@ OSSDL2BackendWindow >> updateToNewResolution
 	renderer destroy.
 	renderer validate.
 	renderer updateAll.
-]]]
 
-[[[
 NullWorldRenderer >> updateToNewResolution
 	self
 ]]]
+
+${slide:title=Analysis}$
+
+Going from mere navigation to better logic
+
+[[[
+WorldState >> updateToNewResolution: originalEvent
+	"We need to reset the render if the resolution changes."
+
+	self doFullRepaint.
+	self worldRenderer updateToNewResolution.
+	self worldRenderer checkForNewScreenSize
+]]]
+
+
 
 ${slide:title=LOD is a \*\*heuristic\*\*}$
 
@@ -146,7 +175,7 @@ ${slide:title=LOD is a \*\*heuristic\*\*}$
 
 ${slide:title=LOD can produce bloated APIs}$
 
-You would have to create around 50 methods per instance variable holding a collection
+Do we create around 50 methods per instance variable holding a collection
 
 [[[
 Object subclass: #FMMethods 
