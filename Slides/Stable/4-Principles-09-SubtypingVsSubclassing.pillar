@@ -6,7 +6,6 @@
 
 ${slide:title=Goals}$
 
-
 - Discuss relation between the ""API"" of a class and its ""subclasses""?
 - Discuss relation between the ""API"" of a class and its ""clients""?
 - Compare ""subtyping"" \& ""subclassing""?
@@ -16,8 +15,6 @@ ${slide:title=Goals}$
 
 ${slide:title=Example 1}$
 
-
-
 [[[
 class Poem extends LinkedList
 {  
@@ -25,25 +22,42 @@ class Poem extends LinkedList
 }
 ]]]
 
-- Yes we can write this code. 
+What do you think about it?
+- Yes we can write this code
 - What do you think of? Does it make sense?
+A poem API 
+- is ==addWord(word)==, ==isAlexandrin()==, ==isHaiku()==, ...
+- should not contain ==addBeforeLink(aLinkOrObject, otherLink)== (that is part of ==LinkedList==)
+
 
 ${slide:title=Another example}$
 
 [[[
 class Stack extends LinkedList  
-{  
+{
 	...
 }
 ]]]
 
+What do you think about it?
 - Yes we can write this code. 
 - What do you think of? Does it make sense?
+A ==Stack== API 
+- is ==pop()==,==push(el)==, ==top()==, ==isEmpty()== 
+- should not contain ==LinkedList== methods.
+
+${slide:title=Subclassing}$
+
+The two previous examples are examples of subclassing, e.g., a subclass does not have an API in relation 
+with its superclass.
+
+It reuses the superclass code.
 
 ${slide:title=Subtyping/subclassing and type systems}$
 
-- You ""can"" use subtyping and subclassing in ""dynamically-typed"" languages!
-- You ""can"" use subtyping and subclassing in ""statically-typed"" languages!
+Did you notice previous code snippets were in java tiny syntax... because:
+- You ""can"" use subtyping and subclassing in ""dynamically-typed"" languages
+- You ""can"" use subtyping and subclassing in ""statically-typed"" languages
 
 The compiler's type checker does not check such a point 
 - It just checks that we can put ""squares"" into ""squares""
@@ -51,7 +65,7 @@ The compiler's type checker does not check such a point
 
 ${slide:title=Let us study a simple example}$
 
-How to implement a Stack?
+Basic ==Stack==:
 
 [[[
 >>> s push: 12.
@@ -63,7 +77,7 @@ How to implement a Stack?
 false
 ]]]
 
-- Using ==OrderedCollection== (an ordered list of items) ?
+
 
 ${slide:title=Stack as subclass of OrderedCollection}$
 
@@ -82,12 +96,13 @@ Stack >> top
 	^ self first
 ]]]
 
-We get Stack>>size, Stack>>includes:, Stack>>do:, Stack>>collect: for free. 
+We get ==size==, ==includes:==, ==do:==, ==collect:== for free. 
 
 
 ${slide:title=Wait!}$
 
 - What do we do with the ""rest"" of the ==OrderedCollection== API?
+- Our stack also understands: ==add:beforeIndex:==, ==addAllFirstUnlessAlreadyPresent:==, ==join:==...
 - a Stack ""is not"" an ==OrderedCollection==!
 - In a client program we cannot replace an ==OrderedCollection== by a ==Stack==
 
@@ -95,14 +110,11 @@ ${slide:title=Wait!}$
 
 Some messages that make sense on the class ==OrderedCollection== do not make sense on the class ==Stack==
 [[[
-OrderedCollection new addLast: anObject
+OrderedCollection new add: newObject beforeIndex: index 
 ]]]
 
 [[[
-Stack new last
-]]]
-[[[
-Stack new addLast: anObject
+OrderedCollection new add: newObject ; removeFirst
 ]]]
 
 ${slide:title=We could cancel some operations}$
@@ -200,7 +212,7 @@ ${slide:title=Subtyping inheritance}$
 - A subclass ""refines"" superclass specifications
 - A program that works with Numbers should 'work' with Fractions
 - A program that works with Collections should 'work' with Arrays
-- (We are not talking about behavioral subtyping a la Liskov substutition principle)
+
 
 ${slide:title=Subclasses must not cancel methods}$
 
@@ -226,18 +238,10 @@ push: anElement
 ]]]
 
 What is the good superclass?
-- Probably.
+- ==Stack== Probably.
+- It would be better if the client program behavior but not mandatory or possible.
+- A subclass does not have to make sure that client program works (this is behavioral subtyping)
 
-
-
-${slide:title=Superclass/subclass}$
-
-Usually the more generic definition should be in superclass 
-- ==RestrictedStack== subclass of ==Stack== is not optimal idea
-
-Better 
-- ==Stack== subclass of ==AbstractStack==
-- ==RestrictedStack== subclass of ==AbstractStack==
 
 ${slide:title= Inheritance and polymorphism}$
 

@@ -1,7 +1,7 @@
 Take into account feedback from Serg.
 
-- Do a pass on Subtyping
-	Liskov
+
+-	Liskov
 
 - AntiPatterns
 	- Facade
