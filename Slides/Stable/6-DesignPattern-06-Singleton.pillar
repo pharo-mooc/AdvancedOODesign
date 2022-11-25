@@ -31,7 +31,7 @@ ${slide:title=Example}$
 db := DBConnect uniqueInstance.
 db2 := DBConnect uniqueInstance.
 
-db2 == db2
+db2 == db
 > true
 ]]]
 
@@ -55,22 +55,22 @@ ${slide:title=Kinds of Singleton}$
 
 - ""Persistent Singleton"": only one instance exists and its identity does not change 
 
-- ""Transient Singleton"": only one instance exists at any time, but that instance changes  
+- ""Transient Singleton"": only one instance exists at any time, but that instance ""changes""  
 
-- ""Single Active Instance Singleton"": a single instance is active at any point in time, but other dormant instances may also exist. 
+- ""Single Active Instance Singleton"": a single instance is active at any point in time, but other ""dormant instances may"" also exist. 
 
-${slide:title=About name}$
+${slide:title=Shoudl we override new?}$
 
 [[[
 DBConnect class >> new
 	^ self uniqueInstance
 ]]]
 
-- The intent (uniqueness) is not clear anymore! 
-- ==new== is normally used to return newly created instances
+The intent (uniqueness) is not clear anymore! 
+- ==new== is normally used to return ""newly"" created instances
 - ==new== potentially means to 
 - get a new object and initialize that object
-- uniqueInstance don't
+- ==uniqueInstance== doesn't convey the same 
 
 ${slide:title=Method name variation}$
 
@@ -86,10 +86,10 @@ Author class >> new
 ]]]
 
 ""default""
-- Some meaningful default instance, but there is no reason to bar the user from creating more instances
+- Some meaningful default instance, but there is no reason to bar the user from ""creating more instances""
 
 ""current""
-- Keep the same instance system-wide, but we also want to change it under some circumstances
+- Keep the same instance system-wide, but we also want to ""change it"" under some circumstances
 
 ${slide:title=Discussion}$
 
@@ -100,9 +100,16 @@ ${slide:title=Discussion}$
 
 ${slide:title=Shared variable vs class instance variable}$
 
-In Pharo we have 
+In Pharo we have:
 - ""SharedVariable"": shared between all the class of a hierarchy
-- ""class instance variable"":specific to a single class
+- ""class instance variable"": specific to a single class
+
+
++.>file://figures/PerClassPerHierarchy.pdf|width=80+
+
+
+${slide:title=One per hierarchy or one per class}$
+
 
 Holding a singleton with 
 - ""Shared variable"": One singleton for a complete hierarchy
@@ -114,17 +121,15 @@ Holding a singleton with
 
 ${slide:title=Singleton misunderstanding}$
 
-- Singleton is about time: one instance available at the same time is possible
+- Singleton is ""about time"": one instance available at the same time is possible
 
-- Singleton is not about access: don't use a singleton because it is easier to access one instance!
+- Singleton is ""not"" about access: don't use a singleton because it is easier to access one instance!
 
 ${slide:title=Singleton misunderstanding}$
 
 If you can add one instance variable to your object and suddenly you do not need a singleton then it was not a singleton but an ugly disguised global variable!
 
 Sometimes you cannot add an instance variable.
-
-
 
 ${slide:title=How to test singletons}$
 
