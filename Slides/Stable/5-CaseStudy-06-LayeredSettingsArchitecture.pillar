@@ -109,6 +109,10 @@ The octopus AntiPattern :(
 +.>file://figures/Settings-PreferenceMonolithicFlow2.pdf|width=85+
 
 
+${slide:title=Referencing an attractor: monolithic system}$
+
++.>file://figures/Settings-PreferenceMonolithicFlow3.pdf|width=85+
+
 ${slide:title=Analysis}$
 
 - ""Everybody"" depends on ==Preferences==
