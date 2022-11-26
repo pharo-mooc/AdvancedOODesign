@@ -1,0 +1,89 @@
+{
+	"title":"About class methods",
+	"author":"S. Ducasse"
+}
+
+
+${slide:title=Studying a simple example}$
+
+
+${slide:title=Building a board}$
+
+[[[
+Board >> buildMapWidth: x height: y
+	map := Array2D 
+				rows: y 
+				columns: x 
+				tabulate: [ :row :column |
+					sself groundClass new basicPosition: column @ row ]
+]]]
+
+${slide:title=Placing the back pointer }$
+
+[[[
+Board >> buildMapWidth: x height: y
+	map := Array2D 
+				rows: y 
+				columns: x 
+				tabulate: [ :row :column |
+						| tile |
+						tile := self groundClass new basicPosition: column @ row.
+						tile setBoard: self ]
+]]]
+
+
+
+${slide:title=?}$
+
+[[[
+rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock
+	"Answer a new Matrix of the given dimensions where
+	 result at: i at: j is aTwoArgumentBlock value: i value: j"
+	|a i|
+	a := Array new: rowNumber*columnNumber.
+	i := 0.
+	1 to: rowNumber do: [:row |
+		1 to: columnNumber do: [:column |
+			a at: (i := i + 1) put: (aTwoArgumentBlock value: row value: column)]].
+	^ self rows: rowNumber columns: columnNumber contents: a
+]]]
+
+
+
+${slide:title=New behavior}$
+
+
+[[[
+Array2D >> rowsColumnsDo: aTwoArgumentBlock
+	"Set the value at row,colum as the value of aTwoArgumentBlock with row and column as inputs."
+
+	| i |
+	i := 0.
+	1 to: numberOfRows do: [:row |
+		1 to: numberOfColumns do: [:column |
+			contents at: (i := i + 1) put: (aTwoArgumentBlock value: row value: column)]].
+]]]
+
+${slide:title=Revisiting class }$
+
+[[[
+Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock
+	"Answer a new array2d of the given dimensions where
+	 result at: i at: j is aTwoArgumentBlock value: i value: j"
+
+	| newArray |
+	newArray := self rows: rowNumber columns: columnNumber.
+	newArray rowsColumnsDo: aTwoArgumentBlock.
+	^ newArray
+]]]
+
+
+${slide:title=Now this is possible}$
+
+[[[
+Board >> buildMapWidth: x height: y
+
+	map := Array2D rows: y columns: x.
+	map rowsColumnsDo: [ :row :column |
+		self initializeElement: self groundClass new atLine: row column: column ]
+]]]
