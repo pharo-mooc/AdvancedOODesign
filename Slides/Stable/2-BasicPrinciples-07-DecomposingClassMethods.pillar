@@ -15,28 +15,27 @@ Board >> buildMapWidth: x height: y
 				rows: y 
 				columns: x 
 				tabulate: [ :row :column |
-					sself groundClass new basicPosition: column @ row ]
+					self initializeElement: self groundClass new atLine: row column: column ]
 ]]]
 
 ${slide:title=Placing the back pointer }$
 
 [[[
-Board >> buildMapWidth: x height: y
-	map := Array2D 
-				rows: y 
-				columns: x 
-				tabulate: [ :row :column |
-						| tile |
-						tile := self groundClass new basicPosition: column @ row.
-						tile setBoard: self ]
+Board >> initializeElement: anElement atLine: lineNumber column: columnNumber
+
+	anElement setBoard: self.
+	anElement basicPosition: columnNumber @ lineNumber.
+	self atRow: lineNumber atColumn: columnNumber put: anElement.
+	anElement postCreationAction.
 ]]]
 
+ ==self atRow: lineNumber atColumn: columnNumber put: anElement.== cannot work because the board map
+ is not finished to be created.
 
-
-${slide:title=?}$
+${slide:title=Class creation}$
 
 [[[
-rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock
+Array2D class >> rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock
 	"Answer a new Matrix of the given dimensions where
 	 result at: i at: j is aTwoArgumentBlock value: i value: j"
 	|a i|
@@ -48,10 +47,9 @@ rows: rowNumber columns: columnNumber tabulate: aTwoArgumentBlock
 	^ self rows: rowNumber columns: columnNumber contents: a
 ]]]
 
+- It feels like too much is done on the class side.
 
-
-${slide:title=New behavior}$
-
+${slide:title=New instance behavior}$
 
 [[[
 Array2D >> rowsColumnsDo: aTwoArgumentBlock
