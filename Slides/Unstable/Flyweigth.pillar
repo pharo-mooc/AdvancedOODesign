@@ -3,3 +3,48 @@
     "subtitle":"",
     "author":"Stéphane Ducasse"
 }
+
+
+${slide:title=Goals}$
+
+- Flyweight
+- Symbols
+- The case of color
+
+${slide:title=Example: Symbol}$
+
+- Ensuring uniqueness
+- 
+
+
+
+
+
+${slide:title=Case Study: Color}$
+
+situation
+
+UI Theme
+
+
+
+${slide:title=Creating spurious objects}$
+
+
+
+
+
+
+
+${slide:title=When the domain should get into play}$
+
+- Palette 
+
+
+
+${slide:title=The case of implicit colors}$
+
+==Color red darker darker== vs self selectedBackgroundColor
+
+
+

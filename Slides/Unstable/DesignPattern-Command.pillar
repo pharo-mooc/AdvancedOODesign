@@ -1,33 +1,70 @@
-!! Elements of Design - Decorators
+{
+    "title":"Command Design Pattern",
+    "author":"S. Ducasse"
+}
 
-- Stephane Ducasse
-- stephane.ducasse@inria.fr
-- *>http://stephane.ducasse.free.fr/*
+${slide:title=Goals}$
 
-!!! Decorators
-
-- Encapsulate state and behavior
-
-- Enforce API
-
-
-!!! The case of Stream
+- Reification of actions
+- Command
+- Illustration with commander
 
 
-!!! Limits 
+${slide:title=Commands}$
 
-- All the decorators should have the same API and delegate
 
-- Should be thought as a whole
+${slide:title=Commander}$
 
-- To add a new API, we can add a generic forwarder on the top of the hierarchy
++>file://figures/withMenus.png|width=85+
+
 
 [[[
-	RootDecorator >> newAPI
-		^ decoratee newAPI
+(EgAddContactCommand new context: aPresenter) execute
+]]]
 
+${slide:title=Add contact}$
+
++>file://figures/FirstDecorator.pdf|width=85+
+
+
+${slide:title=Add Contact}$
+
+[[[
+EgContactBookCommand << #EgAddContactCommand
+	package: 'EgContactBook'
+]]]
+
+[[[
+CmAddContactCommand >> initialize
+	super initialize.
+	self
+		basicName: 'New contact';
+		basicDescription: 'Creates a new contact and add it to the contact
+book.'
+
+${slide:title=Add Contact: Behavior}$
+
+[[[
+CmAddContactCommand >> execute
+	| contact |
+	contact := self contactBookPresenter newContact.
+	self hasSelectedContact
+		ifTrue: [ self contactBook
+					addContact: contact
+					after: self selectedContact ]
+		ifFalse: [ self contactBook addContact: contact ].
+	self contactBookPresenter updateView
 ]]]
 
 
-!!The case of Commander
+
+${slide:title=Commander Core}$
+
++>file://figures/DecoratorWithSpec2.pdf|width=85+
+
+${slide:title=Commander Core Extended}$
+
++>file://figures/DecoratorWithSpec2.pdf|width=85+
+
+
 

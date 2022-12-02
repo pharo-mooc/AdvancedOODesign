@@ -1,8 +1,6 @@
 Take into account feedback from Serg.
 
 
--	Liskov
-
 - AntiPatterns
 	- Facade
 	- singleton
@@ -10,3 +8,7 @@ Take into account feedback from Serg.
 - Decorator
 - Adapter
 - Chain of Responsiblity
+- Flyweight vs Palette
+
+- About name
+	roles versus id
