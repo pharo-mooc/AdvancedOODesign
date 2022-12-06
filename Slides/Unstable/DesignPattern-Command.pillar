@@ -10,12 +10,132 @@ ${slide:title=Goals}$
 - Illustration with commander
 
 
+${slide:title=Imagine a scriptable robot}$
+
+[[[
+testExecute
+	| rb b |
+	rb := RbsRobot new.
+	rb startLocation: 4@1.
+	rb execute: 
+'dir #east
+mov 2
+mov 3
+dir #north
+mov 3'.
+	self assert: rb position equals: 9@4
+]]]
+
+
+${slide:title=Execute}$
+
+
+[[[
+RbsRobot >> execute: aString
+
+	orders := aString splitOn: Character cr.
+	orders := orders collect: [ :each | each splitOn: Character space ].
+	orders do: [ :each |
+		each first = 'mov'
+			ifTrue: [ self move: (Object readFrom: each second) ]
+			ifFalse: [ each first = 'dir'
+							ifTrue: [ self direction: (Object readFrom: each second) ] ]
+		 ]
+]]]
+
+
+${slide:title=Analysis}$
+
+- Each time we want to add a new order we will have to change ==execute:==
+- If we want to perform an analysis of the script to optimize the path
+- If we want to replay the exact low-level orders (not the end-user ones)
+
+
 ${slide:title=Commands}$
+
+- Commands are reification of order/action
+- They encapsulates action 
+-- menu item
+-- log action
+- They can encapsulate an execution context
+- They are often the basis for Undo
+
+
+${slide:title=Command core}$
+
++>file://figures/DPCommand.pdf|width=85+
+
+
+
+${slide:title=Robot command}$
+
+[[[
+RbsCommand << #RbsDirectionCommand
+	slots: { #direction };
+	tag: 'Commands';
+	package: 'Robots'
+]]]
+
+[[[
+RbsDirectionCommand << handleArguments: aCollection
+	direction := aCollection first asSymbol
+
+RbsDirectionCommand << executeOn: aRobot
+	aRobot direction: direction
+]]]
+
+${slide:title=Robot command}$
+
+[[[
+RbsCommand << #RbsMoveCommand
+	slots: { #distance };
+	tag: 'Commands';
+	package: 'Robots'
+]]]
+
+[[[
+RbsMoveCommand << handleArguments: aCollection
+	direction := Object readFrom: aCollection first
+	
+RbsMoveCommand << executeOn: aRobot
+	aRobot move: distance
+]]]
+
+
+${slide:title=Changing the execute logic}$
+
+
+[[[
+RbsRobot >> executeCommandBased: aString
+
+	orders := aString splitOn: Character cr.
+	orders := orders collect: [ :each | each splitOn: Character space ].
+	orders do: [ :each |
+			(self commandClassFor: each first) new
+				handleArguments: each allButFirst;
+				executeOn: self ]
+]]]
+
+${slide:title=Changing the execute logic}$
+
+
++>file://figures/RbsCommand.pdf|width=35+
+
+${slide:title=Analysis}$
+
+- Each command is responsible for handling its own 
+
+
+${slide:title=Command cons}$
+
+- Not all operations should be turned into objects (Commands)
+- Produce large hierarchies of simple classes
+
 
 
 ${slide:title=Commander}$
 
-+>file://figures/withMenus.png|width=85+
++>file://figures/withMenus.png|width=65+
 
 
 [[[
@@ -24,7 +144,7 @@ ${slide:title=Commander}$
 
 ${slide:title=Add contact}$
 
-+>file://figures/FirstDecorator.pdf|width=85+
++>file://figures/FirstDecorator.pdf|width=60+
 
 
 ${slide:title=Add Contact}$
@@ -41,6 +161,7 @@ CmAddContactCommand >> initialize
 		basicName: 'New contact';
 		basicDescription: 'Creates a new contact and add it to the contact
 book.'
+]]]
 
 ${slide:title=Add Contact: Behavior}$
 

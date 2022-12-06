@@ -1,14 +1,14 @@
 Take into account feedback from Serg.
 
-
 - AntiPatterns
 	- Facade
-	- singleton
-- Commander
+- Command
 - Decorator
 - Adapter
 - Chain of Responsiblity
-- Flyweight vs Palette
+- About Factory
+- Builder?
 
+- Flyweight vs Palette
 - About name
 	roles versus id

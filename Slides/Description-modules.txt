@@ -1,0 +1,79 @@
+Arborescence des modules envoyé précédement 
+
+**Arborescence des modules**
+#### Module 1
+
+- 0-AboutTheLectures.pillar
+- 0-Tests-01-101.pillar
+- 0-Tests-02-Why.pillar
+- 1-Essence-01-NotExample.pillar
+- 1-Essence-02-Dispatch.pillar
+- 2-BasicPrinciples-01-MethodIsReuse.pillar
+- 7-Lang-01-Stream.pillar
+
+
+#### Module 2
+- 0-Tests-03-TDD.pillar
+- 0-Tests-04-XTDD.pillar
+- 1-Essence-03-Inheritance-Basic.pillar
+- 1-Essence-04-Self.pillar
+- 1-Essence-05-Super.pillar
+- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
+- 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
+
+#### Module 3
+- 1-Essence-06-DidYouUnderstandSuper.pillar (should split self ....)
+- 1-Essence-07-SelfSendsArePlansForReuse.pillar
+- 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
+- 2-BasicPrinciples-05-FatClassesAreBad.pillar
+- 2-BasicPrinciples-06-UseVsInheritance.pillar
+- 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
+- 7-Lang-02-SharedVariables.pillar
+- 7-Lang-03-SharedPools.pillar
+
+#### Module 4
+- 0-Tests-05-ParametrizedTests.pillar
+- 3-DoubleDispatch-01-StoneExercise.pillar
+- 3-DoubleDispatch-02-AddingNumbers.pillar
+- 3-DoubleDispatch-03-Dice.pillar
+- 4-Principles-01-AvoidIsNil.pillar
+- 5-CaseStudy-02-AboutFluidAPI.pillar
+
+#### Module 5
+-  3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
+- 3-DoubleDispatch-04-NoSymmetrical.pillar
+- 4-Principles-02-AboutClassMethodsAndRegistration.pillar
+- 4-Principles-03-AboutRegistration.pillar
+- 4-Principles-04-LawOfDemeter.pillar
+- 4-Principles-05-AboutDefensiveProgramming.pillar
+- 5-CaseStudy-05-Sokoban-Analysis.pillar
+
+#### Module 6
+
+- 4-Principles-09-SubtypingVsSubclassing.pillar
+- 4-Principles-06-selfVSClassDispatch.pillar
+- 4-Principles-07-ClassHookVsInstanceHook.pillar
+- 4-Principles-08-Sharing.pillar
+- 5-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
+- 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
+- 7-Lang-04-BlocksVsObjects.pillar
+
+#### Module 7
+
+- 6-DesignPattern-01-IntroDesignPattern.pillar
+- 6-DesignPattern-02-HookAndTemplate.pillar
+- 6-DesignPattern-03-Composite.pillar
+- 6-DesignPattern-04-Visitor.pillar
+- 6-DesignPattern-05-VisitorDiscussions.pillar
+- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
+- 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
+- 7-Lang-05-AboutBuilder.pillar
+
+#### Module 8
+- Decorators vs. Chain of Responsibility 
+- Transform conditionals
+- 3 Liaison tardive / Liaison  
+- 2 autres 
+
+-
+

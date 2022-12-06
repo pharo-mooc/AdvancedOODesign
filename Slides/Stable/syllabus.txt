@@ -4,9 +4,6 @@ Auteur
 	Guillermo Polito - CNRS 
 	Pablo Tesone - Inria
 
-Duree
-	4 semaines
-
 Niveau M1/M2
 Resume Rapide
 	
