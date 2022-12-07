@@ -5,7 +5,7 @@
 
 ${slide:title=Goals}$
 
-- Little illustration
+- Little motivation
 - Power of reification of actions
 - Command Design Pattern
 - Glimpse at Commander
@@ -28,7 +28,7 @@ mov 3'.
 ]]]
 
 
-${slide:title=Execute first gebneration}$
+${slide:title=Execute first generation}$
 
 
 [[[
@@ -44,12 +44,32 @@ RbsRobot >> execute: aString
 		 ]
 ]]]
 
+${slide:title=Execute more action}$
+
+[[[
+RbsRobot >> execute: aString
+
+	orders := aString splitOn: Character cr.
+	orders := orders collect: [ :each | each splitOn: Character space ].
+	orders do: [ :each |
+		each first = 'mov'
+			ifTrue: [ self move: (Object readFrom: each second) ]
+			ifFalse: [ each first = 'dir'
+							ifTrue: [ self direction: (Object readFrom: each second) ]
+							ifFalse: [ each first = 'drop' ]]
+							...
+							each first = 'pick'
+							...
+							each first = 'return'
+		 ]
+]]]
 
 ${slide:title=Analysis}$
 
 - Each time we want to add a new order we will have to change ==execute:==
-- Not simple to perform an analysis of the script to optimize paths
-- How to replay the exact low-level orders (not the end-user ones)
+- Not simple to perform an analysis of a script to optimize paths
+- How to replay the exact low-level execution
+- Imgine writing an Undo for each command
 
 
 ${slide:title=Commands}$
@@ -68,7 +88,7 @@ ${slide:title=Command core}$
 
 
 
-${slide:title=Robot command}$
+${slide:title=Robot command: direction}$
 
 [[[
 RbsCommand << #RbsDirectionCommand
@@ -85,7 +105,7 @@ RbsDirectionCommand << executeOn: aRobot
 	aRobot direction: direction
 ]]]
 
-${slide:title=Robot command}$
+${slide:title=Robot command: move}$
 
 [[[
 RbsCommand << #RbsMoveCommand
