@@ -28,7 +28,7 @@ mov 3'.
 ]]]
 
 
-${slide:title=Execute first generation}$
+${slide:title=Execute (first version)}$
 
 
 [[[
@@ -40,11 +40,10 @@ RbsRobot >> execute: aString
 		each first = 'mov'
 			ifTrue: [ self move: (Object readFrom: each second) ]
 			ifFalse: [ each first = 'dir'
-							ifTrue: [ self direction: (Object readFrom: each second) ] ]
-		 ]
+							ifTrue: [ self direction: (Object readFrom: each second) ] ] ]
 ]]]
 
-${slide:title=Execute more action}$
+${slide:title=Execute (more actions)}$
 
 [[[
 RbsRobot >> execute: aString
@@ -60,26 +59,28 @@ RbsRobot >> execute: aString
 							...
 							each first = 'pick'
 							...
-							each first = 'return'
-		 ]
+							each first = 'return' ]
 ]]]
+
+
 
 ${slide:title=Analysis}$
 
 - Each time we want to add a new order we will have to change ==execute:==
-- Not simple to perform an analysis of a script to optimize paths
-- How to replay the exact low-level execution
+- Imagine that executing a ==mov== order cost a lot and that it is better to have one long over small ones
+-- ==mov 10 mov 10== -> ==mov 20==
+-- Not simple to perform a simple path optimization
+- How to replay the exact low-level executions
 - Imgine writing an Undo for each command
 
 
 ${slide:title=Commands}$
 
-- Commands are reification of order/action
-- They encapsulates action 
+- A command is a reification of order/action
+- A command encapsulates an action and optionally its context
 -- menu item
 -- log action
-- They can encapsulate an execution context
-- They are often the basis for Undo
+- Commands are often the basis for Undo
 
 
 ${slide:title=Command core}$
@@ -140,37 +141,37 @@ RbsRobot >> executeCommandBased: aString
 ${slide:title=Analysis of extensibility in place}$
 
 
-+>file://figures/RbsCommand.pdf|width=65+
++>file://figures/RbsCommand.pdf|width=55+
 
 - Each command is responsible for handling its own data
 - Each command encapsulates its state, applicability and action
 - We can now manipulate actions
--- imagine 
+-- imagine implementing a replay or a back to home
 
 
 ${slide:title=Command cons}$
 
-- Not all operations should be turned into objects (Commands)
+- Not all operations should be turned into Command objects
 - Produce large hierarchies of simple classes
 
 
 
 ${slide:title=Commander}$
 
-+>file://figures/withMenus.png|width=35+
++>file://figures/withMenus.png|width=25+
 
-In Pharo Commander is a little framework for commands.
-- Can produce toolbar or menus
-- UI Is optional
+In Pharo Commander is a little framework for commands
+- Can produce a toolbar or menus
+- UI is optional
 
 [[[
 (EgAddContactCommand new context: aPresenter) execute
 ]]]
 
 
-${slide:title=Add contact}$
+${slide:title=Core commander}$
 
-+>file://figures/FirstDecorator.pdf|width=60+
++>file://figures/FirstDecorator.pdf|width=70+
 
 
 ${slide:title=Add Contact}$
@@ -205,13 +206,47 @@ CmAddContactCommand >> execute
 
 
 
-${slide:title=Commander Core}$
+${slide:title=Commander and its decorators}$
 
-+>file://figures/DecoratorWithSpec2.pdf|width=85+
++>file://figures/DecoratorWithSpec2.pdf|width=75+
 
-${slide:title=Commander Core Extended}$
 
-+>file://figures/DecoratorWithSpec2.pdf|width=85+
+${slide:title=Commander and its decorators}$
+[[[
+CmCommand >> asSpecCommand
+	"Subclasses might override this method to define default icon and shortcut."
+	^ self decorateWith: SpCommand
+]]]
 
+[[[
+StCommand >> asSpecCommand
+
+	| command |
+	command := super asSpecCommand 
+		iconProvider: self application;
+		iconName: self class defaultIconName;
+		yourself.
+	self class defaultShortcut 
+		ifNotNil: [ :keyCombination | command shortcutKey: keyCombination ].
+	^ command
+]]]
+
+
+${slide:title=One Command}$
+
+[[[
+StCommand << StPlaygroundDoItCommand 
+	package: 'NewTools-Playground'
+]]]
+
+[[[
+StCommand >> execute 
+	context doEvaluateAllAndGo
+]]]
+
+${slide:title=Conclusion}$
+
+- Commands are first class actions
+- Adapted for manipulation of actions (Undo, replay)
 
 
