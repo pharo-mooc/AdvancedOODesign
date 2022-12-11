@@ -1,0 +1,143 @@
+{
+    "title":"Builder Design Pattern",
+    "author":"S. Ducasse"
+}
+
+${slide:title=Goals}$
+
+- Little motivation
+- Builder: Power of encapsulating object construction
+- Builder uses
+
+${slide:title=Creating objects}$
+
+- Can be cumbersome or complex involving invariants
+- Created objects can evolved over time
+- Created objects can be changed under the feet of users
+- Finding correct creation API can be daunting
+
+${slide:title=Builder}$
+
+A builder: an object representing and controling the creation of other objects
+- Encapsulates object creation logic
+- Garantees that the objects are well created
+- Decouple object creation from the effective created objects
+
+
+${slide:title=Setting Example}$
+
+[[[
+BeautifulComments class >> beautifulCommentsSettingsOn: aBuilder
+
+	<systemsettings>
+	(aBuilder setting: #rendering)
+		parent: #microdownAndcomments;
+		label: 'Enable richtext comments';
+		default: true;
+		target: self;
+		description: self renderingDocForSetting.
+	(aBuilder setting: #captureErrors)
+		parent: #microdownAndcomments;
+		label: 'Enable rendering error capture';
+		default: true;
+		target: self;
+		description: self captureErrorsDocForSetting
+]]]
+
+${slide:title=Setting Builder API}$
+
+- Also support nesting and groups
+[[[
+SettingNodeBuilder selectors sorted 
+#(#category: 
+#default: #description: #dialog: 
+#domainValues: #getSelector: 
+#ghostHelp: #icon: #iconName: #label: #name: 
+#noOrdering #order: #parent: #precondition: #range: #script: 
+#selector: #shortcutName: #target: 
+#targetSelector: #type:
+)
+]]]
+
+${slide:title=Setting analysis}$
+
+- Avoid hardcoding references to Setting in the domain
+- Act as a DSL
+- Garantee that the objects are well created
+- Encapsulate creation logic
+- Decouple object creation from the effective created objects
+
+
+${slide:title=Microdown builder in action}$
+
++>file://figures/ClassComments.png|width=85+
+
+
+${slide:title=Microdown builder API example}$
+
+[[[
+MicMicrodownTextualBuilder selectors sorted 
+#(#anchor: #anchorReference: #bold: ...
+#codeblock:firstLineAssociations: #codeblock:firstLineAssociations:withCaption: ...
+#comment: ...
+#environment:body:arguments: ...
+#figureURLString:withCaption:withParameters: ...
+#header:withLevel: #horizontalLine #internalLink: ...
+#italic: #item: ...
+#mathInline: #mathblock: ...  
+#metaDataFrom: ...
+#orderedItem: #orderedItem:startingAt: #orderedListDuring: #paragraph: ...
+#raw: #strike: ...)
+]]]
+
+${slide:title=Microdown builder}$
+
+[[[
+testCodeBlock
+
+	| mictext |
+	mictext := builder
+		codeblock: 
+'Here is an example of 
+code block'
+		firstLineAssociations: { ('language2' -> 'Pharo') };
+		contents.
+	self assert: mictext equals: '```language2=Pharo
+Here is an example of 
+code block
+```
+'
+]]]
+
+${slide:title=Microdown builder Analysis}$
+
+- Provides an high level API to script Microdown text
+- Avoid string manipulation!
+- Let Microdown evolves without impacting users!
+
+
+${slide:title=Seaside builder}$
+
+[[[
+ScrapBook >> renderContentOn: html
+	html heading: 'Hello world'.
+	html paragraph: 'Welcome to my Seaside web site.  In the
+future you will find all sorts of applications here
+such as:'.
+	html orderedList: [
+		html listItem: 'Calendars'.
+		html listItem: 'Todo lists'.
+		html listItem: 'Shopping carts'.
+		html listItem: 'And lots more...' ]
+]]]
+
++>file://figures/hello-world-list.png|width=45+
+
+
+${slide:title=Conclusion}$
+
+A builder: an object representing and controling the creation of other objects
+- Encapsulates object creation logic
+- Garantees that the objects are well created
+- Decouple object creation from the effective created objects
+- Support evolution
