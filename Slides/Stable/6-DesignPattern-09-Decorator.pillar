@@ -11,7 +11,9 @@ ${slide:title=Goals}$
 
 ${slide:title=Decorator}$
 
+Attach additional responsibilities to an ovject **dynamically**. Decorators provide a flexible alternative to subclassing for extending functionality.
 
+@@ add a picture
 
 ${slide:title=Example of Stream}$
 
@@ -110,8 +112,12 @@ ${slide:title=Analysis}$
 
 %+>file://figures/ClassComments.png|width=85+
 
+${slide:title=About dynamically}$
 
+Attach additional responsibilities to an ovject **dynamically**. 
 
+- The decorator is based on delegation: The decoration delegates the messages it does not specialize to the decoratee.
+- To attach dynamic means that we should control the creation chain.
 
 ${slide:title=Do not use reflection}$
 
