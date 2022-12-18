@@ -1,0 +1,89 @@
+{
+    "title":"Decorator Design Pattern",
+    "author":"S. Ducasse"
+}
+
+${slide:title=Goals}$
+
+- Decorator
+- Think about API
+
+
+${slide:title=Example of Stream}$
+
+ZnStreams are decorators of Streams.
+
+[[[
+ZnNewLineWriterStream
+	on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
+]]]
+
+[[[
+WriteStream << #ZnNewLineWriterStream
+	slots: { #stream . #cr . #lf . #previous . #lineEnding};
+	package: 'Zinc-Character-Encoding-Core'
+]]]
+
+[[[
+ZnNewLineWriterStream class >> on: aStream
+
+	^ self basicNew
+		initialize;
+		stream: aStream;
+		yourself
+]]]
+
+[[[
+ZnNewLineWriterStream >> close
+	stream close
+]]]
+
+[[[
+ZnNewLineWriterStream >> flush
+	^ stream flush
+]]]
+
+
+${slide:title=Example of Stream}$
+
+[[[
+ZnNewLineWriterStream >> nextPut: aCharacter
+	"Write aCharacter to the receivers stream.
+	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
+
+	(previous == cr and: [ aCharacter == lf ]) ifFalse: [
+		(aCharacter == cr or: [ aCharacter == lf ]) ifTrue: 
+			[ self newLine ]
+		ifFalse:
+			[ stream nextPut: aCharacter ] ].
+	previous := aCharacter.
+]]]
+
+	
+%${slide:title=Microdown builder in action}$
+
+%+>file://figures/ClassComments.png|width=85+
+
+${slide:title=Another Example}$
+
+[[[
+AbstractFileReference >> readStreamEncoded: anEncoding
+
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
+]]]
+
+- `ZnCharacterReadStream` is decorating another stream with an encoding.
+
+
+${slide:title=Do not use reflection}$
+
+- Do not use reflection to catch error when decorators have different APIs.
+-- This is a bad idea (tm)
+-- Makes the design brittle
+
+${slide:title=Conclusion}$
+
+- Pay attention all the decorators should implement the same API
+- Decorator is modular but within a common API
