@@ -119,6 +119,12 @@ Attach additional responsibilities to an ovject **dynamically**.
 - The decorator is based on delegation: The decoration delegates the messages it does not specialize to the decoratee.
 - To attach dynamic means that we should control the creation chain.
 
+
+${slide:title=Commander and its decorators}$
+
++>file://figures/DecoratorWithSpec2.pdf|width=75+
+
+
 ${slide:title=Do not use reflection}$
 
 - Do not use reflection to handle when decorators have different APIs.
