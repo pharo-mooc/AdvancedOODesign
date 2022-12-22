@@ -6,9 +6,9 @@
 ${slide:title=Goal}$
 
 - What are design patterns?
-- Why they are good
-- Patterns are not panacea 
-- Example
+- Why they are good?
+- But patterns are not panacea 
+- Examples
 
 ${slide:title=Influenced by work on architecture}$
 
@@ -22,7 +22,7 @@ ${column:width=30}$
 ${column:width=70}$
 
 C. Alexander, ''The Timeless Way of Building'', Oxford University Press, 1979
-- tried to let people use patterns to build houses and other
+- tried to let people use patterns to build houses and cities
 - developed patterns and pattern languages
 - failed in architecture but the idea is successful for object-oriented design
 
@@ -33,7 +33,7 @@ ${endColumns}$
 
 ${slide:title=Design Patterns}$
 
-Design patterns are ''recurrent'' solutions to design ''problems''
+Design patterns are ''recurrent solutions to design problems''
 - Identification of similar problems at ''design'' level
 - Experts solved ''recurring problems'' in similar ways
 - There are pros and cons
@@ -56,18 +56,21 @@ ${slide:title=Watchout!}$
 - Stay sceptical
 
 
-${slide:title=The most important point}$
+${slide:title=The important points}$
 
 Design Patterns are ""names""
 - They create a design ""vocabulary""
 -- Hook and Template, Factory, Composite, Visitor, Observer, Decorator...
 - You can talk at lunch/blackboard about your design in an ''abstract but precise'' way
+- Design patterns are literature: 
+-- the books are good
+-- read them, reread them, and read them again!
 
 ${slide:title=What design patterns are not}$
 
-- A design pattern is not ''one'' implementation
+- A design pattern is not just one implementation
 - A design pattern is ''illustrated'' using one ''possible'' implementation 
-- But alternate implementations may be better
+- But alternate implementations exist
 
 ${slide:title=Elements of a pattern}$
 
@@ -145,9 +148,9 @@ ${slide:title=Some behavioral patterns}$
 
 ${slide:title=Alert!}$
 
-Design Patterns may be a ""plague""!
+Design Patterns are not a panacea!
 - Do not apply them when you do not need them
-- Design Patterns make the software more complex
+- Design Patterns make software more complex
 -- More classes
 -- More indirections, more messages
 -- Try to understand when NOT applying them!
