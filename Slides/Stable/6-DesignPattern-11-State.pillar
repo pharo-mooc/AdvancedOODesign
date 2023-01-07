@@ -1,0 +1,97 @@
+{
+    "title":"About state Design Pattern",
+    "subtitle":"",
+    "author":"Stéphane Ducasse"
+}
+
+
+${slide:title=Goals}$
+
+- State
+
+${slide:title=Analysing a case}$
+
+- Imagine a paused, playing, stopped control.
+- Three states: three subclasses
+
+${slide:title=Paused State}$
+
+[[[
+PausedState >> isPaused
+	^ true
+
+PausedState >> play
+	^ PlayingState new
+
+PausedState >> stop
+	^ StoppedState new
+]]]
+
+${slide:title=Stopped State}$
+
+[[[
+StoppedState >> isStopped
+	^ true
+
+PausedState >> play
+	^ PlayingState new
+]]]
+
+${slide:title=State superclass}$
+
+Kind of NullObject too
+
+[[[
+PlayerState >> isStopped
+	^ false
+	
+PlayerState >> isPaused
+	^ false
+
+PlayerState >> isPlaying
+	^ false
+]]]
+
+${slide:title=State superclass}$
+
+Kind of NullObject too
+
+[[[
+PlayerState >> stop
+	^ self
+	
+PlayerState >> resume
+	^ self
+	
+PlayerState >> pause
+	^ self
+]]]
+
+
+
+${slide:title=State creation}$
+
+- If the state does not have specific information, no need to recreate it all the time
+- Three states, three objects!
+- Here we (re)recreate a new state each time, while we could reuse an existing state object
+
+[[[
+PausedState >> play
+	^ PlayingState new
+]]]
+
+vs.
+
+[[[
+PausedState >> play
+	^ playingState
+]]]
+
+${slide:title=Conclusion}$
+
+- Flyweigth is useful to ensure uniqueness and limit memory footprint
+- It does not avoid spurious object creation requests
+- Better fix the cause than the consequences
+
+
+
