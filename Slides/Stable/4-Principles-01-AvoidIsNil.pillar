@@ -190,6 +190,18 @@ ${slide:title=Solution: With initialization and NoTool}$
 
 +>figures/NullObject3.pdf+
 
+${slide:title=NullObject Pros}$
+
+- Simplifies client code: real collaborators and null objects offer the same API
+- Encapsulates do nothing behavior 
+- Makes do nothing behavior reusable
+
+${slide:title=NullObject drawback}$
+
+- Encapsulate null values: may be difficult to mix with real objects
+- A NullObject is not mutable into a real object
+- All clients should agree on the same do-nothing behavior
+
 
 ${slide:title=Difficulty with NullObject}$
 
@@ -197,6 +209,14 @@ Sometimes it is difficult to apply the ==NullObject==
 - Too large API
 - Or would need too many NullObjects
 - Unclear default "no behavior"
+
+
+${slide:title=null object vs. NullObject}$
+
+Sometimes it is possible to get a specific instance with default null values
+- ==NullTimeZone== is instance of ==TimeZone== but represents a null object
+
+
 
 ${slide:title=For exceptional cases, use exceptions}$
 
