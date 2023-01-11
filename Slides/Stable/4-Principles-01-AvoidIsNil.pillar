@@ -203,7 +203,7 @@ ${slide:title=NullObject drawback}$
 - All clients should agree on the same do-nothing behavior
 
 
-${slide:title=Difficulty with NullObject}$
+${slide:title=Difficulty applying NullObject}$
 
 Sometimes it is difficult to apply the ==NullObject==
 - Too large API
