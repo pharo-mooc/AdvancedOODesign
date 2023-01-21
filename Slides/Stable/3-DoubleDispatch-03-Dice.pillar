@@ -1,6 +1,6 @@
 {
     "title" : "a Die + a DieHandle: ",
-    "subtitle":"Practicing more",
+    "subtitle":"Practicing dispatch more",
     "author" : "S. Ducasse"
 }
 
@@ -24,7 +24,7 @@ handle roll
 ]]]
 
 
-${slide:title=Remember DieHandle}$
+${slide:title=Remember summing DieHandles}$
 
 We add dieHandles together as in role playing games
 
@@ -36,7 +36,7 @@ DieHandleTest >> testSumming
 ]]]
 
 
-${slide:title=New Requirement One}$
+${slide:title=New requirement: N. 1}$
 
 We want to add two dices together and get a DieHandle
 
@@ -44,8 +44,18 @@ We want to add two dices together and get a DieHandle
 (Die withFaces: 6) + (Die withFaces: 6)
 ]]]
 
+${slide:title=NewRequirement1 asTest }$
 
-${slide:title=New Requirements Two}$
+[[[
+DieTest >> testAddTwoDice
+
+	| hd |
+	hd := (Die withFaces: 6) + (Die withFaces: 6).
+	self assert: hd dice size equals: 2.
+]]]
+
+
+${slide:title=New requirement: N. 2}$
 
 Now  we want to be able to add a dice to an dice handle and the inverse
 
@@ -60,16 +70,8 @@ Now  we want to be able to add a dice to an dice handle and the inverse
 ]]]
 
 
-${slide:title=aNewRequirement asTest }$
 
-[[[
-DieTest >> testAddTwoDice
-
-	| hd |
-	hd := (Die withFaces: 6) + (Die withFaces: 6).
-	self assert: hd dice size equals: 2.
-]]]
-
+${slide:title=NewRequirement2 asTest }$
 
 [[[
 DieTest >> testAddingADieAndHandle
@@ -80,6 +82,16 @@ DieTest >> testAddingADieAndHandle
 			addDie: 6;
 			yourself).
 	self assert: hd dice size equals: 2
+]]]
+
+
+${slide:title=Possible solution with conditions}$
+
+[[[
+Die >> + aDieOrADieHandle
+	| selfAsDieHandle |
+	selfAsDieHandle := DieHandle new addDie: self.
+	^ selfAsDieHandle + aDieOrADieHandle
 ]]]
 
 
@@ -101,17 +113,12 @@ DieHandle >> + aDieOrADieHandle
 					handle  ]
 ]]]
 
-[[[
-Die >> + aDieOrADieHandle
-	| selfAsDieHandle |
-	selfAsDieHandle := DieHandle new addDie: self.
-	^ selfAsDieHandle + aDieOrADieHandle
-]]]
+
 
 ${slide:title=Limits of this approach}$
 
-- It does not scale
-- What if we have different objects that should interact with different operations e.g.,
+- It does not scale! 
+- If we have different objects that should interact with different operations e.g.,
 -- different kinds of text objects: list, figures, paragraph, section, title, text, reference...
 -- different operations: rendering text, HTML, LaTeX
 
@@ -123,7 +130,7 @@ ${slide:title=Hints}$
 
 ${slide:title=Sketch of the solution}$
 
-- When we add two elements (die or dieHandle) together. 
+- When we add two elements (die or dieHandle) together
 - We tell ""the argument"" that we want to add the receiver
 - We are explicit about the receiver state since we know it
 -- when the receiver is a die we say to the argument that we want to "add a die"
@@ -132,6 +139,8 @@ ${slide:title=Sketch of the solution}$
 Let us do it now!
 
 ${slide:title=First adding two dice}$
+
+We know how to do it. 
 
 [[[	
 Die >> + aDie
