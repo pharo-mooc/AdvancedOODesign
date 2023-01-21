@@ -220,19 +220,37 @@ ${slide:title=Sending a Message is Making a Choice}$
 
 ${slide:title=Sending a Message is Making a Choice}$
 
-- We get two messages/choices
--- one message for ==\+== 
---  one message for ==sumWithDie:==
+We get two messages/choices
+- one message for ==\+== 
+-  one message for ==sumWithDie:==
 
 
 ${slide:title=DieHandle as a receiver}$
 
-We apply the same principle
+[[[
+2 D20 + (Die withFaces: 6)
+]]]
+
+
+[[[
+2 D20 + 2D3
+]]]
+
+
+${slide:title=DieHandle as a receiver}$
+
+We apply the same principle: We send a message to the argument telling to add itself with an handle
 
 [[[
 DieHandle >> + aDicable
 	^ aDicable sumWithHandle: self
 ]]]
+
+Then we have to support
+- summing two die handles
+- summing one die handle and a die
+
+${slide:title=Summing an handle with another one}$
 
 [[[
 DieHandle >> sumWithHandle: aDieHandle
@@ -246,7 +264,7 @@ DieHandle >> sumWithHandle: aDieHandle
 
 ${slide:title=Now the argument can be a die }$
 
-Since the argument can be a die, we define ==sumeWithHandle also on ==Die==.
+Since the argument can be a die, we define ==sumWithHandle:== also on ==Die==
 
 [[[
 Die >> sumWithHandle: aDieHandle
@@ -263,7 +281,7 @@ ${slide:title=Double Dispatch between Die and DieHandle }$
 
 ${slide:title=Stepping back}$
 
-- We applied two times a simple principle.
+- We applied two times a simple principle
 -- Sending a message is making a choice/selecting the right method
 - So sending a message to the argument is a way to select again between a couple of methods.
 
