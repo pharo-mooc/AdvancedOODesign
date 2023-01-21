@@ -5,20 +5,34 @@
 }
 
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Studying examples
 - Understanding Visitor
-- Pros and Cons 
+- Pros and cons 
 
 ${slide:title=Example: basic arithmetic expressions}$
+
+
+Imagine a simple mathematical system
+
+[[[
+Plus
+	left: (ENumber value: 1)
+	right: (Times left: (ENumber value: 3) right: (ENumber value: 2))
+]]]
+
+Remarks:
+- In Pharo we can just extend ==Number== so no need of ==ENumber== ==value:== but this is a detail
+- Here we reify everything
+
+${slide:title=Basic arithmetic expressions as Composite}$
 
 ${columns}$
 
 ${column:width=50}$
 
-Imagine a simple mathematical system
-- a Composite 
+- An expression: a Composite 
 - with number and operation expressions 
 
 ${column:width=50}$
@@ -26,6 +40,14 @@ ${column:width=50}$
 +.>file://figures/Visitor-ExpressionHierarchy.pdf|width=80+
 
 ${endColumns}$
+
+
+
+
+
+
+
+
 
 ${slide:title=Some expressions}$
 
@@ -46,10 +68,10 @@ Plus
 	right: (Times left: (ENumber value: 3) right: (ENumber value: 2))
 ]]]
 
-In Pharo we can just extend ==Number== so no need of ==ENumber== ==value:== but this is a detail
 
 
-${slide:title=Operations on the structure}$
+
+${slide:title=Operations on the expressions}$
 
 We want to evaluate expressions, and print them
 
@@ -65,12 +87,12 @@ Printing
 ]]]
 
 
-${slide:title=First design: behavior define in the domain}$
+${slide:title=First design: behavior defined in the domain}$
 
 +.>file://figures/Visitor-ExpressionHierarchyWithBehavior.pdf|width=40+
 
 
-${slide:title=First design: behavior define in the domain}$
+${slide:title=First design: behavior defined in the domain}$
 
 [[[
 ENumber >> evaluate
@@ -97,10 +119,12 @@ ${slide:title=First design analysis}$
 What if we need a stack to print well the expressions?
 - Should we define the stack ""in"" the expression classes even if this is related ""only"" to print?
 
+
+${slide:title=First design analysis}$
+
 Should we ""mix"" the information about the treatment of items and the items themselves?
 - What if we need a table for mathematical expressions ""specific"" to the LaTeX generation?
 - What if we need a table for mathematical expression ""specific"" to the RDF generation?
-
 
 
 ${slide:title=Let us see on a real system: Pillar}$
@@ -112,6 +136,7 @@ We have
 - export to Beamer
 - export to ASCIIdoc, Markdown, Microdown
 - transform trees for expansion
+- code checkers
 
 ${slide:title=First design conclusion}$
 
@@ -119,7 +144,7 @@ Putting all the behavior inside the domain objects
 
 - ""Blows up"" the class API / state / methods
 - ""Mixes"" concerns
-- Is ""not modular"": we cannot have one operation only 
+- Is ""not modular"": we cannot have ""one"" operation only 
 - ""Prevents extension"": To add a new behavior I should change the domain
 
 ${slide:title=Alternate design: using a visitor}$
@@ -132,7 +157,7 @@ A ""Visitor"":
 - Supports ""modularity""
 -- can package visitors in separate packages
 - Supports ""extension""
--- defines an extension protocol (set of messages to be defined)
+-- a visitor defines an set of messages to be defined (e.g., ==visitX==)
 -- new visitors are easy to define
 
 
@@ -257,7 +282,7 @@ ${slide:title=Stepping back: double dispatch is the key point}$
 ${slide:title=Visitor: another look at it}$
 
 Visitor design provides a ""pluggable distributed recursive treatment"" of a composite structure
-
+- ==acceptVisitor:== is recursively propagated on sub elements.
 [[[
 Printer >> visitPlus: anExpression
     stream nextPutAll: '*'.
@@ -296,5 +321,5 @@ ${slide:title=Conclusion}$
 
 ""Cons:""
 - Can look more complex
-- It is not adapted to changing structures
+- It is not well adapted to changing structures
 
