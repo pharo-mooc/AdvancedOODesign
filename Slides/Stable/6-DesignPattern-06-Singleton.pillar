@@ -16,12 +16,14 @@ ${slide:title=Singleton intent}$
 
 - ""From the book"":  Ensure that a class has only one instance, and provide a global point of access to it
 
-- ""Better"": Ensure that a class has only one instance available at the same time
+- ""Better"": Ensure that a class has only one instance available ""at the same time""
 
 ${slide:title=Problem/Solution}$
 
-- ""Problem:"" We need a class with a unique instance.
-- ""Solution:""  Store the first time an instance is created and return it each time a new instance is requested. 
+- ""Problem:"" We need 
+-- a way to keep some persistent objects around
+-- or a class with a unique instance
+- ""Solution:""  Store the first time an instance is created and return it each time a new instance is requested
 
 Most of the time think twice because you probably do not need it!
 
@@ -40,7 +42,7 @@ Yes we get only one instance of the database connection
 ${slide:title=Possible implementation}$
 
 [[[
-Object < #BDConnect
+Object << #BDConnect
 	sharedVariables: { UniqueInstance }
 ]]]
 
@@ -51,15 +53,15 @@ BDConnect class >> uniqueInstance
 	^ UniqueInstance
 ]]]
 
-${slide:title=Kinds of Singleton}$
+${slide:title=Different kinds of singleton}$
 
-- ""Persistent Singleton"": only one instance exists and its identity does not change 
+- ""Persistent singleton"": only one instance exists and its identity does not change 
 
-- ""Transient Singleton"": only one instance exists at any time, but that instance ""changes""  
+- ""Transient singleton"": only one instance exists at any time, but that instance ""changes""  
 
-- ""Single Active Instance Singleton"": a single instance is active at any point in time, but other ""dormant instances may"" also exist. 
+- ""Single active instance singleton"": a single instance is active at any point in time, but other ""dormant instances may"" also exist. 
 
-${slide:title=Shoudl we override new?}$
+${slide:title=Should we override new?}$
 
 [[[
 DBConnect class >> new
@@ -68,11 +70,10 @@ DBConnect class >> new
 
 The intent (uniqueness) is not clear anymore! 
 - ==new== is normally used to return ""newly"" created instances
-- ==new== potentially means to 
-- get a new object and initialize that object
+- ==new== means to get a new object and initialize that object
 - ==uniqueInstance== doesn't convey the same 
 
-${slide:title=Method name variation}$
+${slide:title=Method name variation (I)}$
 
 ""uniqueInstance""
 - Pure singleton ensuring a single global instance
@@ -81,9 +82,12 @@ ${slide:title=Method name variation}$
 [[[
 Author class >> uniqueInstance
 	^ uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
+	
 Author class >> new
 	self error: 'Author is a singleton -- send uniqueInstance instead'
 ]]]
+
+${slide:title=Method name variation (II)}$
 
 ""default""
 - Some meaningful default instance, but there is no reason to bar the user from ""creating more instances""
@@ -105,7 +109,7 @@ In Pharo we have:
 - ""class instance variable"": specific to a single class
 
 
-+.>file://figures/PerClassPerHierarchy.pdf|width=80+
++.>file://figures/PerClassPerHierarchy.pdf|width=50+
 
 
 ${slide:title=One per hierarchy or one per class}$
@@ -118,6 +122,8 @@ Holding a singleton with
 -- One singleton per class
 -- Each subclass has its own singleton
 
++.>file://figures/PerClassPerHierarchy.pdf|width=50+
+
 
 ${slide:title=Singleton misunderstanding}$
 
@@ -125,21 +131,22 @@ ${slide:title=Singleton misunderstanding}$
 
 - Singleton is ""not"" about access: don't use a singleton because it is easier to access one instance!
 
-${slide:title=Singleton misunderstanding}$
+${slide:title=Singleton acid test}$
 
-If you can add one instance variable to your object and suddenly you do not need a singleton then it was not a singleton but an ugly disguised global variable!
+- If you can add one instance variable to your object and suddenly you do not need a singleton then it was not a singleton but an ugly disguised global variable!
 
-Sometimes you cannot add an instance variable.
+- Sometimes you cannot add an instance variable so the Singleton is ok
 
-${slide:title=How to test singletons}$
+${slide:title=Testing singletons}$
 
 - Singletons are global variables so this makes them more difficult to test
-- Should be careful about not breaking the current singleton
+- When running tests, you want to avoid to change the current singleton
+- Be careful about not breaking the current singleton
+- ==RPackageOrganizer== is a singleton: should not be destroyed when tests are run
 
 ${slide:title=Example: RPackageOrganizer}$
 
-- ==RPackageOrganizer== is a singleton: should not be destroyed when tests are run
-- It uses ==withOrganizer: aNewOrganizer do: aBlock== for testing behavior
+- ==RPackageOrganizer== uses ==withOrganizer: aNewOrganizer do: aBlock== for testing behavior
 
 [[[
 withOrganizer: aNewOrganizer do: aBlock
@@ -159,8 +166,9 @@ withOrganizer: aNewOrganizer do: aBlock
 
 ${slide:title=Conclusion}$
 
-- Having only one instance at a time
+- Having only one instance ""at a time""
 - Avoid Singleton as a global 
-- Avoid Singleton because it acts as a global 
+- In general avoid Singleton because it ""acts as a global""
+- Difficult to test
 
 
