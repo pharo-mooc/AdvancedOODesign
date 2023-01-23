@@ -1,5 +1,6 @@
 {
     "title":"Builder Design Pattern",
+	"subtitle":"Encapsulating object creation",
     "author":"S. Ducasse"
 }
 
@@ -8,6 +9,9 @@ ${slide:title=Goals}$
 - Little motivation
 - Builder: Power of encapsulating object construction
 - Builder uses
+-- Settings
+-- Microdown 
+-- Seaside
 
 ${slide:title=Creating objects}$
 
@@ -16,15 +20,21 @@ ${slide:title=Creating objects}$
 - Created objects can be changed under the feet of users
 - Finding correct creation API can be daunting
 
+${slide:title=Builder's intent}$
+
+""From the book:"" Separate the construction of a complex objet from its internal representation so that the same 
+construction process can create different representations
+
+
 ${slide:title=Builder}$
 
 A builder: an object representing and controling the creation of other objects
 - Encapsulates object creation logic
 - Garantees that the objects are well created
 - Decouple object creation from the effective created objects
+-- Support multiple back-ends
 
-
-${slide:title=Setting Example}$
+${slide:title=Setting example}$
 
 [[[
 BeautifulComments class >> beautifulCommentsSettingsOn: aBuilder
@@ -46,25 +56,24 @@ BeautifulComments class >> beautifulCommentsSettingsOn: aBuilder
 
 ${slide:title=Setting Builder API}$
 
-- Also support nesting and groups
 [[[
 SettingNodeBuilder selectors sorted 
-#(#category: 
+
+#category: 
 #default: #description: #dialog: 
 #domainValues: #getSelector: 
 #ghostHelp: #icon: #iconName: #label: #name: 
 #noOrdering #order: #parent: #precondition: #range: #script: 
 #selector: #shortcutName: #target: 
 #targetSelector: #type:
-)
 ]]]
 
-${slide:title=Setting analysis}$
+${slide:title=Setting builder analysis}$
 
-- Avoid hardcoding references to Setting in the domain
+- ""Avoid"" hardcoding references to Setting objects in the domain
 - Act as a DSL
 - Garantee that the objects are well created
-- Encapsulate creation logic
+- ""Encapsulate creation logic""
 - Decouple object creation from the effective created objects
 
 
@@ -77,7 +86,8 @@ ${slide:title=Microdown builder API example}$
 
 [[[
 MicMicrodownTextualBuilder selectors sorted 
-#(#anchor: #anchorReference: #bold: ...
+
+#anchor: #anchorReference: #bold: ...
 #codeblock:firstLineAssociations: #codeblock:firstLineAssociations:withCaption: ...
 #comment: ...
 #environment:body:arguments: ...
@@ -87,7 +97,7 @@ MicMicrodownTextualBuilder selectors sorted
 #mathInline: #mathblock: ...  
 #metaDataFrom: ...
 #orderedItem: #orderedItem:startingAt: #orderedListDuring: #paragraph: ...
-#raw: #strike: ...)
+#raw: #strike: ...
 ]]]
 
 ${slide:title=Microdown builder}$
@@ -109,7 +119,7 @@ code block
 '
 ]]]
 
-${slide:title=Microdown builder Analysis}$
+${slide:title=Microdown builder analysis}$
 
 - Provides an high level API to script Microdown text
 - Avoid string manipulation!
