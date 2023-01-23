@@ -144,6 +144,13 @@ such as:'.
 +>file://figures/hello-world-list.png|width=45+
 
 
+${slide:title=When to apply it}$
+
+- The domain is structured and have some regularity in the object creation
+- When one want one single entry point (e.g., refactoring)
+- To stabilise an API, while the implementation is evolving
+
+
 ${slide:title=Conclusion}$
 
 A builder: an object representing and controling the creation of other objects
