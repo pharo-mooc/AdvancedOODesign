@@ -1,5 +1,6 @@
 {
     "title":"Command Design Pattern",
+    "subtitle" : "---  Actions as objects",
     "author":"S. Ducasse"
 }
 
@@ -8,7 +9,7 @@ ${slide:title=Goals}$
 - Little motivation
 - Power of reification of actions
 - Command Design Pattern
-- Glimpse at Commander
+- Glimpse at Commander: a command framework
 
 
 ${slide:title=Imagine a scriptable robot}$
@@ -66,17 +67,21 @@ RbsRobot >> execute: aString
 
 ${slide:title=Analysis}$
 
-- Each time we want to add a new order we will have to change ==execute:==
-- Imagine that executing a ==mov== order cost a lot and that it is better to have one long over small ones
--- ==mov 10 mov 10== -> ==mov 20==
+- Each time we add a new order we ""have to modify"" ==execute:==
+- Imagine that executing a ==mov== order cost a lot 
+-- better to have one over many ones
+-- ==mov 10 mov 10 mov 10== -> ==mov 30==
 -- Not simple to perform a simple path optimization
 - How to replay the exact low-level executions
-- Imgine writing an Undo for each command
+
+${slide:title=Command Design Pattern}$
+
+""Intent from the book:"" Encapsulate a request or operation as an object, thereby letting you parametrize clients with different operations, queue or log request, and support undoable operations
 
 
-${slide:title=Commands}$
+${slide:title=A command}$
 
-- A command is a reification of order/action
+- A command is a reification of an order/action
 - A command encapsulates an action and optionally its context
 -- menu item
 -- log action
@@ -89,7 +94,7 @@ ${slide:title=Command core}$
 
 
 
-${slide:title=Robot command: direction}$
+${slide:title=Robot direction command }$
 
 [[[
 RbsCommand << #RbsDirectionCommand
@@ -106,7 +111,7 @@ RbsDirectionCommand << executeOn: aRobot
 	aRobot direction: direction
 ]]]
 
-${slide:title=Robot command: move}$
+${slide:title=Robot move command}$
 
 [[[
 RbsCommand << #RbsMoveCommand
@@ -124,7 +129,7 @@ RbsMoveCommand << executeOn: aRobot
 ]]]
 
 
-${slide:title=Changing the execute logic}$
+${slide:title=Modular execution logic}$
 
 
 [[[
@@ -143,10 +148,10 @@ ${slide:title=Analysis of extensibility in place}$
 
 +>file://figures/RbsCommand.pdf|width=55+
 
-- Each command is responsible for handling its own data
+- Each command is ""responsible"" for handling its ""own data""
 - Each command encapsulates its state, applicability and action
-- We can now manipulate actions
--- imagine implementing a replay or a back to home
+- We can now manipulate actions (log, sorts,....)
+
 
 
 ${slide:title=Command cons}$
@@ -156,11 +161,11 @@ ${slide:title=Command cons}$
 
 
 
-${slide:title=Commander}$
+${slide:title=Commander: a Command framework}$
 
 +>file://figures/withMenus.png|width=25+
 
-In Pharo Commander is a little framework for commands
+Commander is a little framework for commands using decorators
 - Can produce a toolbar or menus
 - UI is optional
 
