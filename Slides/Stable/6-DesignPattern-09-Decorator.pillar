@@ -13,7 +13,6 @@ ${slide:title=Decorator}$
 
 Attach additional responsibilities to an ovject **dynamically**. Decorators provide a flexible alternative to subclassing for extending functionality.
 
-@@ add a picture
 
 ${slide:title=Example of Stream}$
 
@@ -34,7 +33,7 @@ AbstractFileReference >> readStreamEncoded: anEncoding
 		encoding: anEncoding
 ]]]
 
-- `ZnCharacterReadStream` is decorating another stream with an encoding.
+- ==ZnCharacterReadStream== is decorating another stream with an encoding.
 
 ${slide:title=Implementation}$
 
@@ -106,15 +105,17 @@ ZnNewLineWriterStream >> nextPut: aCharacter
 ${slide:title=Analysis}$
 
 - All decorators should have the same API
-- `close` `flush` `nextPut:` `contents` `next` `atEnd` `on:` 
+- ==close== ==flush== ==nextPut:== ==contents== ==next== ==atEnd== ==on:==
 	
 %${slide:title=Microdown builder in action}$
 
 %+>file://figures/ClassComments.png|width=85+
 
+
+
 ${slide:title=About dynamically}$
 
-Attach additional responsibilities to an ovject **dynamically**. 
+Attach additional responsibilities to an ovject ""dynamically"". 
 
 - The decorator is based on delegation: The decoration delegates the messages it does not specialize to the decoratee.
 - To attach dynamic means that we should control the creation chain.
