@@ -12,9 +12,45 @@ ${slide:title=Goals}$
 
 ${slide:title=Decorator}$
 
-"""From the book:""
+""From the book:""
 - Attach additional responsibilities to an object ""dynamically"". 
 - Decorators provide a flexible alternative to subclassing for extending functionality.
+
+
+${slide:title=Decorator core}$
+
++>file://figures/DP-Decorator.pdf|width=80+
+
+
+${slide:title=Often mixed with inheritance}$
+
++>file://figures/DP-DecoratorMore.pdf|width=75+
+
+
+${slide:title=Decorator}$
+
+- A decorator wraps an instance of the component
+-- It is placed between the client and the component
+-- It propagates or not messages to the component
+- Easier to understand when the ==Decorator== is a subclass of ==Component== but not necessary (think duck typing)
+
+
+${slide:title=Decorator nesting}$
+
+- A decorator wraps an instance or decorated instance of the component
+
++>file://figures/DP-Decorator.pdf|width=75+
+
+${slide:title=Transparent to the client}$
+
+- A client manipulates a component or a decorated component
+- A client talks to the decorator which talks to the decoratee (a component or a another decorator)
+
+- Strong implication: component and decorator MUST expose the same API
+
+
+
+
 
 
 ${slide:title=Example of Stream}$
@@ -26,14 +62,17 @@ ZnNewLineWriterStream
 	on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
 ]]]
 
+
+- ==ZnNewLineWriterStream== decorates ==ZnCharacterWriteStream==
+
 ${slide:title=Another use}$
 
 [[[
 AbstractFileReference >> readStreamEncoded: anEncoding
 
 	^ ZnCharacterReadStream
-		on: self binaryReadStream
-		encoding: anEncoding
+			on: self binaryReadStream
+			encoding: anEncoding
 ]]]
 
 - ==ZnCharacterReadStream== is decorating another stream with an encoding.
@@ -48,37 +87,32 @@ WriteStream << #ZnNewLineWriterStream
 
 [[[
 ZnNewLineWriterStream class >> on: aStream
-
 	^ self basicNew
-		initialize;
-		stream: aStream;
-		yourself
+			initialize;
+			stream: aStream;
+			yourself
 ]]]
 
 [[[
 ZnNewLineWriterStream >> close
-	stream close
+		stream close
 ]]]
 
 [[[
 ZnNewLineWriterStream >> flush
-	^ stream flush
+		^ stream flush
 ]]]
 
 
-${slide:title=Example of Stream}$
+${slide:title=Example of Stream (I)}$
 
 
 [[[
-testNextPut
-	"Ensure that the line ends are written correctly"
+testNextPutEnsureLineEndsAreWrittenCorrectly
 
 	| expectedString stream crStream |
-
 	expectedString := 'a', OSPlatform current lineEnding, 'b'.
-	{ String cr.
-		String lf.
-		String crlf. } do: [ :lineEnd |
+	{ String cr . String lf . String crlf } do: [ :lineEnd |
 			stream := String new writeStream.
 			crStream := ZnNewLineWriterStream on: stream.
 			crStream
@@ -89,7 +123,7 @@ testNextPut
 ]]]
 
 
-${slide:title=Example of Stream}$
+${slide:title=Example of Stream (II)}$
 
 [[[
 ZnNewLineWriterStream >> nextPut: aCharacter
@@ -97,10 +131,9 @@ ZnNewLineWriterStream >> nextPut: aCharacter
 	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
 
 	(previous == cr and: [ aCharacter == lf ]) ifFalse: [
-		(aCharacter == cr or: [ aCharacter == lf ]) ifTrue: 
-			[ self newLine ]
-		ifFalse:
-			[ stream nextPut: aCharacter ] ].
+			(aCharacter == cr or: [ aCharacter == lf ]) 
+				ifTrue: [ self newLine ]
+				ifFalse: [ stream nextPut: aCharacter ] ].
 	previous := aCharacter.
 ]]]
 
@@ -108,8 +141,9 @@ ZnNewLineWriterStream >> nextPut: aCharacter
 ${slide:title=Analysis}$
 
 - All decorators should have the same API
-- ==close== ==flush== ==nextPut:== ==contents== ==next== ==atEnd== ==on:==
-	
+- ==close==, ==flush==, ==nextPut:==, ==contents==, ==next==, ==atEnd==, ==on:==
+- Stream decorator individual behavior can be reused and composed 
+
 %${slide:title=Microdown builder in action}$
 
 %+>file://figures/ClassComments.png|width=85+
@@ -118,10 +152,12 @@ ${slide:title=Analysis}$
 
 ${slide:title=About dynamically}$
 
-Attach additional responsibilities to an ovject ""dynamically"". 
+Attach additional responsibilities to an object ""dynamically"". 
 
-- The decorator is based on delegation: The decoration delegates the messages it does not specialize to the decoratee.
-- To attach dynamic means that we should control the creation chain.
+- The decorator is based on delegation: The decoration delegates messages to its decoratee (Component or decorated component) it does not specialize to the decoratee
+- To attach dynamic means that we should control the creation chain (the client reference)
+
+
 
 
 ${slide:title=Commander and its decorators}$
@@ -129,11 +165,18 @@ ${slide:title=Commander and its decorators}$
 +>file://figures/DecoratorWithSpec2.pdf|width=75+
 
 
+${slide:title=When not use decorator}$
+
+- When properties have different APIs
+- 
+
+
 ${slide:title=Do not use reflection}$
 
 - Do not use reflection to handle when decorators have different APIs.
--- This is a bad idea (tm)
+-- This is a Bad Idea (tm)
 -- Makes the design brittle
+-- Makes error difficult to catch
 
 ${slide:title=Conclusion}$
 
