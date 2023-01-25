@@ -1,5 +1,6 @@
 {
     "title":"Decorator Design Pattern",
+	"subtitle":"An composable alternative to subclassing",
     "author":"S. Ducasse"
 }
 
@@ -11,7 +12,9 @@ ${slide:title=Goals}$
 
 ${slide:title=Decorator}$
 
-Attach additional responsibilities to an ovject **dynamically**. Decorators provide a flexible alternative to subclassing for extending functionality.
+"""From the book:""
+- Attach additional responsibilities to an object ""dynamically"". 
+- Decorators provide a flexible alternative to subclassing for extending functionality.
 
 
 ${slide:title=Example of Stream}$
