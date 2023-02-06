@@ -1,97 +1,104 @@
-## Module 1: Dispatch
+- 0-AboutTheLectures.pillar (a refaire)
 
-- 0-AboutTheLectures.pillar
+## Module 0: Test
 - 0-Tests-01-101.pillar
 - 0-Tests-02-Why.pillar
-- 1-Essence-01-NotExample.pillar
-- 1-Essence-02-Dispatch.pillar
-- 2-BasicPrinciples-01-MethodIsReuse.pillar
-- 7-Lang-01-Stream.pillar
-- 6-DesignPattern-01-IntroDesignPattern.pillar
-
-
-## Module 2: Hooks
 - 0-Tests-03-TDD.pillar
 - 0-Tests-04-XTDD.pillar
+- 0-Tests-05-ParametrizedTests.pillar
+
+## Module 1: Understanding messages
+
+- 1-Essence-01-NotExample.pillar
+- 1-Essence-02-Dispatch.pillar
 - 1-Essence-03-Inheritance-Basic.pillar
 - 1-Essence-04-Self.pillar
 - 1-Essence-05-Super.pillar
-- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
-- 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
+- 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
+
+
+## Module 2: Hooks
+- 6-DesignPattern-01-IntroDesignPattern.pillar
 - 1-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
 - 6-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
+- 7-Lang-01-Stream.pillar
+- 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
 
 
-## Module 3
+## Module 3: Elementary design pattern
 - 6-DesignPattern-03-Composite.pillar
-- 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
-- 2-BasicPrinciples-05-FatClassesAreBad.pillar
 - 2-BasicPrinciples-06-UseVsInheritance.pillar
-- 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
-6-DesignPattern-07-Command.pillar
-
-
-## Module 4: About Double dispatch
-- 0-Tests-05-ParametrizedTests.pillar
-- 3-DoubleDispatch-01-StoneExercise.pillar
-- 3-DoubleDispatch-02-AddingNumbers.pillar
-- 3-DoubleDispatch-03-Dice.pillar
+- 6-DesignPattern-11-State.pillar
 - 4-Principles-01-AvoidIsNil.pillar
+- 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
+- 6-DesignPattern-07-Command.pillar
+- 7-Lang-04-BlocksVsObjects.pillar
 - 5-CaseStudy-02-AboutFluidAPI.pillar
-- 6-DesignPattern-04-Visitor.pillar
 
-## Module 5
+
+## Module 4: About double dispatch
+
+- 3-DoubleDispatch-01-StoneExercise.pillar
+- 3-DoubleDispatch-03-Dice.pillar
+- 6-DesignPattern-04-Visitor.pillar
 - 6-DesignPattern-05-VisitorDiscussions.pillar
 - 3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 - 3-DoubleDispatch-04-NoSymmetrical.pillar
+
+## Module 5: About Inversion of control
+
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
 - 4-Principles-03-AboutRegistration.pillar
+- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - 4-Principles-04-LawOfDemeter.pillar
-- 4-Principles-05-AboutDefensiveProgramming.pillar
 - 5-CaseStudy-05-Sokoban-Analysis.pillar
 
-## Module 6: Type
+## Module: Objects: state + behavior
+- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
+- 2-BasicPrinciples-01-MethodIsReuse.pillar
+- 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
+- 2-BasicPrinciples-05-FatClassesAreBad.pillar
+- 6-DesignPattern-06-Singleton.pillar
 
-- 4-Principles-09-SubtypingVsSubclassing.pillar
+## Module 6: Type
 - 4-Principles-12-DualInterfaces
+- 4-Principles-09-SubtypingVsSubclassing.pillar
 - 4-Principles-11-PolymorphismSupportEvolution.pillar
+- 4-Principles-05-AboutDefensiveProgramming.pillar
 - 4-Principles-10-DynamicStaticType.pillar
-- 4-Principles-06-selfVSClassDispatch.pillar
+
+## Module 6: Creation
+- 4-Principles-01-LazyInitialization
 - 4-Principles-07-ClassHookVsInstanceHook.pillar
 - 5-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
 - 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
+- 6-DesignPattern-08-Builder.pillar
+- 7-Lang-05-AboutBuilder.pillar
+- 4-Principles-06-selfVSClassDispatch.pillar
+- 1-Essence-06-DidYouUnderstandSuper.pillar
 
 
 #Module 7: Sharing
+- 1-Essence-08-AboutMagicNumbers
 - 4-Principles-08-Sharing.pillar
 - 7-Lang-02-SharedVariables.pillar
 - 7-Lang-03-SharedPools.pillar
-- 6-DesignPattern-12-TypeObject
-- 6-DesignPattern-10-Flyweigth
-- 4-Principles-05-AboutDefensiveProgramming
+- 6-DesignPattern-12-TypeObject.pillar
+- 6-DesignPattern-10-Flyweigth.pillar
 
-#Module 8:
-- 7-Lang-04-BlocksVsObjects.pillar
-- 1-Essence-06-DidYouUnderstandSuper.pillar (split self ....)
-- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
-- 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
-- 6-DesignPattern-08-Builder.pillar
-- 6-DesignPattern-07-Command.pillar
-- 6-DesignPattern-11-State
-- 7-Lang-05-AboutBuilder.pillar
+
+
+
+
 
 
 
 
 ## Todo
 
-	https://tex.stackexchange.com/questions/14336/latex-beamer-presentation-package-169-aspect-ratio
 	
 Lectures
-	- revisit TypeObject
-	- Transform conditionals
-
-		
+	- revisit TypeObject - 
 	- Parcours?
 	- Quizzes
 	- Nombres de videos + nombres de slides
