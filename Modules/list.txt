@@ -1,11 +1,6 @@
 - 0-AboutTheLectures.pillar (a refaire)
 
-## Module 0: Test
-- 0-Tests-01-101.pillar
-- 0-Tests-02-Why.pillar
-- 0-Tests-03-TDD.pillar
-- 0-Tests-04-XTDD.pillar
-- 0-Tests-05-ParametrizedTests.pillar
+
 
 ## Module 1: Understanding messages
 
@@ -16,8 +11,14 @@
 - 1-Essence-05-Super.pillar
 - 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
+## Module 2: Tests
+- 0-Tests-01-101.pillar
+- 0-Tests-02-Why.pillar
+- 0-Tests-03-TDD.pillar
+- 0-Tests-04-XTDD.pillar
+- 0-Tests-05-ParametrizedTests.pillar
 
-## Module 2: Hooks
+## Module 3: Hooks
 - 6-DesignPattern-01-IntroDesignPattern.pillar
 - 1-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
 - 6-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
@@ -25,7 +26,7 @@
 - 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
 
 
-## Module 3: Elementary design pattern
+## Module 4: Elementary design pattern
 - 6-DesignPattern-03-Composite.pillar
 - 2-BasicPrinciples-06-UseVsInheritance.pillar
 - 6-DesignPattern-11-State.pillar
@@ -35,9 +36,7 @@
 - 7-Lang-04-BlocksVsObjects.pillar
 - 5-CaseStudy-02-AboutFluidAPI.pillar
 
-
-## Module 4: About double dispatch
-
+## Module 5: About double dispatch
 - 3-DoubleDispatch-01-StoneExercise.pillar
 - 3-DoubleDispatch-03-Dice.pillar
 - 6-DesignPattern-04-Visitor.pillar
@@ -45,27 +44,6 @@
 - 3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 - 3-DoubleDispatch-04-NoSymmetrical.pillar
 
-## Module 5: About Inversion of control
-
-- 4-Principles-02-AboutClassMethodsAndRegistration.pillar
-- 4-Principles-03-AboutRegistration.pillar
-- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
-- 4-Principles-04-LawOfDemeter.pillar
-- 5-CaseStudy-05-Sokoban-Analysis.pillar
-
-## Module: Objects: state + behavior
-- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
-- 2-BasicPrinciples-01-MethodIsReuse.pillar
-- 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
-- 2-BasicPrinciples-05-FatClassesAreBad.pillar
-- 6-DesignPattern-06-Singleton.pillar
-
-## Module 6: Type
-- 4-Principles-12-DualInterfaces
-- 4-Principles-09-SubtypingVsSubclassing.pillar
-- 4-Principles-11-PolymorphismSupportEvolution.pillar
-- 4-Principles-05-AboutDefensiveProgramming.pillar
-- 4-Principles-10-DynamicStaticType.pillar
 
 ## Module 6: Creation
 - 4-Principles-01-LazyInitialization
@@ -77,14 +55,39 @@
 - 4-Principles-06-selfVSClassDispatch.pillar
 - 1-Essence-06-DidYouUnderstandSuper.pillar
 
+## Module 7: Objects: state + behavior
+- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
+- 2-BasicPrinciples-01-MethodIsReuse.pillar
+- 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
+- 2-BasicPrinciples-05-FatClassesAreBad.pillar
+- 6-DesignPattern-06-Singleton.pillar
 
-#Module 7: Sharing
+#Module 8: Sharing
 - 1-Essence-08-AboutMagicNumbers
 - 4-Principles-08-Sharing.pillar
 - 7-Lang-02-SharedVariables.pillar
 - 7-Lang-03-SharedPools.pillar
 - 6-DesignPattern-12-TypeObject.pillar
 - 6-DesignPattern-10-Flyweigth.pillar
+
+## Module 9: About Inversion of control
+- 4-Principles-02-AboutClassMethodsAndRegistration.pillar
+- 4-Principles-03-AboutRegistration.pillar
+- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
+- 4-Principles-04-LawOfDemeter.pillar
+- 5-CaseStudy-05-Sokoban-Analysis.pillar
+
+## Module 10: Type
+- 4-Principles-12-DualInterfaces
+- 4-Principles-09-SubtypingVsSubclassing.pillar
+- 4-Principles-11-PolymorphismSupportEvolution.pillar
+- 4-Principles-05-AboutDefensiveProgramming.pillar
+- 4-Principles-10-DynamicStaticType.pillar
+
+
+
+
+
 
 
 
