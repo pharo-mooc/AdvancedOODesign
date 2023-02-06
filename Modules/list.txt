@@ -54,8 +54,8 @@
 
 - 4-Principles-09-SubtypingVsSubclassing.pillar
 - 4-Principles-12-DualInterfaces
-4-Principles-11-PolymorphismSupportEvolution.pillar
-4-Principles-10-DynamicStaticType.pillar
+- 4-Principles-11-PolymorphismSupportEvolution.pillar
+- 4-Principles-10-DynamicStaticType.pillar
 - 4-Principles-06-selfVSClassDispatch.pillar
 - 4-Principles-07-ClassHookVsInstanceHook.pillar
 - 5-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
@@ -85,6 +85,8 @@
 
 ## Todo
 
+	https://tex.stackexchange.com/questions/14336/latex-beamer-presentation-package-169-aspect-ratio
+	
 Lectures
 	- revisit TypeObject
 	- Transform conditionals
