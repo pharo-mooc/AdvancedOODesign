@@ -1,15 +1,31 @@
 {
-    "title":"About Advanced Object-Oriented Design",
-    "subtitle":" ",
-    "author":"S. Ducasse, G. Polito and P. Tesone",
-    "slidesid":"2022"
+    "title" : "Advanced Object-Oriented Design",
+    "subtitle": "",
+    "author":"S. Ducasse, L. Fabresse, G. Polito, P. Tesone",
+    "slidesid":"2023"
 }
+
+
+${slide:title=Why this mooc?}$
+
+- From the  success of the Pharo mooc (*http://mooc.pharo.org*)
+
+''I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design. - Anonymous''
+
+
+${slide:title=Taking the Pharo mooc to the next level}$
+
+- Focus on object-oriented design
+- Unique value
+- From object designer experts
 
 ${slide:title=Objectives}$
 
 - Revisit basic elements such as encapsulation, delegation
 - Think about essential aspects of OOP
 - Learn key Design Patterns
+- Analyse case studies
+- Things about Pharo code idioms
 
 ${slide:title=Topics over several paths}$
 
@@ -20,6 +36,22 @@ ${slide:title=Topics over several paths}$
 - Case studies in Pharo 
 - Some design patterns
 - Some coding idioms
+
+${slide:title=10 modules}$
+
+
+- Understanding messages
+- Tests and test driven 
+- Hooks
+- Elementary design patterns
+- Object Creation
+- Double Dispatch
+- Object creation
+- Objects: state and behavior
+- Registration
+- Sharing
+- Types
+
 
 ${slide:title=About Pharo}$
 
@@ -60,7 +92,7 @@ ${slide:title=Polymorphism}$
 
 
 
-${slide:title=A unique lecture}$
+${slide:title=A unique mooc}$
 
 - More than 60 years of experience in OO design and practices
 - Concrete cases

@@ -24,7 +24,7 @@
 - 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
 
 
-## Module 4: Elementary design pattern [Files Renamed]
+## Module 4: Elementary design patterns [Files Renamed]
 - 6-DesignPattern-03-Composite.pillar
 - 2-BasicPrinciples-06-UseVsInheritance.pillar
 - 6-DesignPattern-11-State.pillar
@@ -69,7 +69,7 @@
 - 6-DesignPattern-12-TypeObject.pillar
 - 6-DesignPattern-10-Flyweigth.pillar
 
-## Module 9: About Inversion of control [Files Renamed]
+## Module 9: About Inversion of control / Registration [Files Renamed]
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
 - 4-Principles-03-AboutRegistration.pillar
 - 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
