@@ -34,7 +34,7 @@
 - 7-Lang-04-BlocksVsObjects.pillar
 - 5-CaseStudy-02-AboutFluidAPI.pillar
 
-## Module 5: About double dispatch
+## Module 5: About double dispatch [Files Renamed]
 - 3-DoubleDispatch-01-StoneExercise.pillar
 - 3-DoubleDispatch-03-Dice.pillar
 - 6-DesignPattern-04-Visitor.pillar
