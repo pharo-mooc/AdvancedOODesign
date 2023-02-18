@@ -1,0 +1,196 @@
+{
+	"title":"About Global Variables",
+	"author":"S. Ducasse"
+}
+
+
+${slide:title=Outline}$
+
+- Singleton/Global is not nice because ""globally"" shared
+- Difficult to test 
+- Singleton may take different forms
+- Study some cases
+- Think modular
+- Messages need different instances to dispatch
+
+${slide:title=Autopsy of an error}$
+
+[[[
+MyApp >> menu
+...
+    icon: (Smalltalk icons iconNamed: #window)
+...
+]]]
+
+
+${slide:title=Case 1: Global variable}$
+
+- One global variable
+- What if as an application I want to extend, slightly change icons for my application only
+- What if I want to be able to have two icon sets and the same time to compare
+
+${slide:title=Case 2: A disguised global variable}$
+
+Since in Pharo we can extend core libraries we could think 
+this is any better.
+
+[[[
+MyApp >> menu
+...
+    icon: #window asIcon
+...
+]]]
+
+[[[
+Symbol >> asIcon
+	 ^ Smalltalk icons iconNamed: self
+]]]
+
+
+${slide:title=Case 2: A disguised lobal variable}$
+
+[[[
+MyApp >> menu
+...
+    icon: #window asIcon
+...
+]]]
+
+- Does not duplicate ==Smalltalk icons iconNamed:==
+- This is already something!
+- But still a global
+
+${slide:title=Case 2: A disguised global variable}$
+
+- One global variable but disguished: only one place to edit but still fundamentally one giant global
+- There is only one icon table
+- MyApp cannot extend or slightly change icons for my application only!
+- I cannot simply have two icon sets at the same time to compare them
+
+${slide:title=A much better approach}$
+
+[[[
+MyApp >> menu
+...
+    icon: (self iconNamed: #window)
+...
+]]]
+
+[[[
+MyAppSuperclass >> iconNamed: aSymbol
+
+	...
+	^ self iconProvider at: aSymbol
+	
+]]]
+
+${slide:title=Why is this better?}$
+
+- Modular
+- ""Each"" receiver may do something ""different""
+- Each user may be ""configured differently""
+- Still we can share the common behavior
+
+
+${slide:title=Case 3: asClass}$
+
+Accessing programmatically a class is usually done as:
+
+[[[
+Smalltalk globals at: #Point
+]]]
+
+People wanted a shorter version
+
+[[[
+#Point asClass
+]]]
+
+[[[
+Symbol >> asClass
+	^ Smalltalk globals at: self
+]]]
+
+- Shorter for scripting
+- But there is a difference!
+- A huge one...
+
+
+${slide:title=Case 3: asClass analysis}$
+
+- Another global entry point
+- What if we want to remotely access a class in another system
+- We can only have one namespace
+- We cannot inject a special namespace for test for example
+- No way to dispatch to a different object
+
+${slide:title=Case 3: Possible solution}$
+
+Delegate to the class to get its environment
+
+[[[
+self class environment at: #Point
+]]]
+
+This supports different environments
+
+${slide:title=Case 4: Smalltalk tools - The ugly}$
+
+[[[
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	self currentClassOrMetaClass ifNotNil: [ 
+		Smalltalk tools browser 
+			openOnClass: self currentClassOrMetaClass
+			selector: self currentMessageName ]
+]]]
+
+
+${slide:title=Case 4: Smalltalk tools Analysis}$
+
+[[[
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	self currentClassOrMetaClass ifNotNil: [ 
+		Smalltalk tools browser 
+			openOnClass: self currentClassOrMetaClass
+			selector: self currentMessageName ]
+]]]
+
+- One global entry point
+- Everybody refers to this single point! 
+- Yes this is called monolithic thinking
+- Only one toolset possible at the same time (could be ok).
+
+${slide:title=Case 4: Smalltalk tools possible solution}$
+
+- Each object that should refer to tools should do it via a parameter / instance variable and messages
+- Avoid direct reference to a global singleton
+
+[[[
+MyApp >> initialize
+	toolEnvironment := ToolEnvironment new 
+]]]
+
+[[[
+MyApp >> browseMethodFull
+	self toolEnvironment browser 
+		openOnClass: self currentClassOrMetaClass
+		selector: self currentMessageName
+]]]
+
+
+${slide:title=Points to consider}$
+
+- With a global, when it changes, all its users are updated
+- How to manage the fact that a tool may change?
+- Browsers may register to ToolEnvironment to be notified and update its instance
+
+
+${slide:title=Conclusion}$
+
+- Avoid Singleton as a global 
+- Think modular
+- Give a chance to objects to specialize messages
