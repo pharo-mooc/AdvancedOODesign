@@ -1,0 +1,276 @@
+{
+    "title" : "A double dispatch starter",
+    "slidesid" : "Stone Paper Scissors",
+    "author":"S. Ducasse, G. Polito, P. Tesone, and L. Fabresse"
+}
+
+${slide:title=Goals}$
+
+- In the quest of dispatch
+- No conditionals!
+- implementing: 
+[[[
+>>> (Stone new vs: Paper new)
+#paper
+]]]
+
+${slide:title=Goals}$
+
++Stone Paper Scissors.>file://figures/StonePaperScissorsGame.pdf|width=50+
+
+${slide:title=Stone Paper Scissors: one Test}$
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+	self assert: (Stone new vs: Paper new) equals: #paper
+]]]
+
+${slide:title=The inverse too}$
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+		self assert: (Stone new vs: Paper new) equals: #paper
+]]]
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+		self assert: (Paper new vs: Stone new) equals: #paper
+]]]
+
+
+${slide:title=Let us start}$
+
+[[[
+StonePaperScissorsTest >> testPaperIsWinning
+		self assert: (Stone new vs: Paper new) equals: #paper
+]]]
+
+[[[
+Stone >> vs: anotherTool
+		^ ...
+]]]
+
+${slide:title=Hint 0}$
+
+- The solution does not contain an explicit condition (No if, no checks)
+- Remember sending a message is making a choice: it selects the right method
+
+${slide:title=Hint 1: 3 classes}$
+
+- ==Stone==
+- ==Paper==
+- ==Scissors==
+
+
+${slide:title=More hints}$
+
+- When we execute the method ==vs:== we know the receiver of the message
+- So we have already half of the solution
+- What if we introduce another method ==playAgainstStone== to make another choice?
+
+${slide:title=Defining Paper >> playAgainstStone}$
+
+[[[
+Stone >> vs: anotherTool
+		^ ... playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+		^ ...
+]]]
+
+${slide:title=Defining Paper >> playAgainstStone}$
+
+[[[
+Stone >> vs: anotherTool
+		^ anotherTool playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+		^ ...
+]]]
+
+${slide:title=Paper playAgainstStone defined}$
+
+[[[
+Stone >> vs: anotherTool
+		^ anotherTool playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+>> 		^ #paper
+]]]
+
+${slide:title=Stone new vs: Scissor new}$
+
+Works for 
+[[[
+>>> Stone new vs: Paper new
+#paper
+]]]
+
+But not for 
+
+[[[
+>>> Stone new vs: Scissor new
+#stone
+]]]
+
+- How to fix this?
+- Easy!
+
+
+${slide:title=Supporting aScissor as argument}$
+
+[[[
+Stone >> vs: aScissor
+		^ aScissor playAgainstStone
+]]]
+
+- So we should implement ==playAgainstStone== on ==Scissor==
+
+[[[
+Scissors >> playAgainstStone
+		^ ...
+]]]
+
+${slide:title=Other playAgainstStone definitions}$
+
+[[[
+Scissors >> playAgainstStone
+		^ #stone
+]]]
+
+[[[
+Stone >> playAgainstStone
+		^ #draw
+]]]
+
+
+
+${slide:title=Complete code for Stone as receiver}$
+
+[[[
+Stone >> vs: anotherTool
+		^ anotherTool playAgainstStone
+]]]
+
+[[[
+Paper >> playAgainstStone
+		^ #paper
+]]]
+
+[[[
+Scissors >> playAgainstStone
+		^ #stone
+]]]
+
+[[[
+Stone >> playAgainstStone
+		^ #draw
+]]]
+
+
+${slide:title=Stepping back}$
+
+- We know that a method is executed on a class (here ==Stone==)
+- We ""send another message to the argument"" to select another method (here ==playAgainstStone==)
+- Two messages to be able to select a method based on its receiver AND argument
+
+
+
+${slide:title=Full Scissors code}$
+
+[[[
+Scissors >> vs: anotherTool
+		^ anotherTool playAgainstScissors
+]]]
+
+[[[
+Scissors >> playAgainstScissors
+		^ #draw
+]]]
+
+[[[
+Paper >> playAgainstScissors
+		^ #scissors
+]]]
+
+[[[
+Stone >> playAgainstScissors
+		^ #stone
+]]]
+
+${slide:title=Full Paper code}$
+[[[
+Paper >> vs: anotherTool
+		^ anotherTool playAgainstPaper
+]]]
+
+[[[
+Scissors >> playAgainstPaper
+		^ #scissors
+]]]
+
+[[[
+Paper >> playAgainstPaper
+		^ #draw
+]]]
+
+[[[
+Stone >> playAgainstPaper
+		^ #paper
+]]]
+
+${slide:title=Solution overview}$
+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+
+
+${slide:title=Double dispatch}$
+
+- Two messages: ==vs:== and one of ==playAgainstPaper==, ==playAgainstStone== or, ==playAgainstScissors==
+- First the system selects the correct ==vs:==
+- Second it selects the second method
+
+
+${slide:title=Remark}$
+
+- In this toy example we do not need to pass the argument during the double dispatch
+- But in general this is important as we want to do something with the first receiver (as in Visitor DP)
+
+[[[
+Scissors >> playAgainstPaper
+		^ #scissors
+]]]
+
+will just be
+
+[[[
+Scissors >> playAgainstPaper: aScissors
+		^ #scissors
+]]]
+
+${slide:title=With an argument}$
+
++.>file://figures/StonePaperScissorsAndKey.pdf|width=80+
+
+
+${slide:title=Extending it...}$
+
++>file://figures/StonePaperScissorsLizzardSpockGame.pdf|width=60+
+
+
+${slide:title=Extensible}$
+
+- You can extend Stone, Paper, Scissors with Spock and Lizard ""without changing any line"" of existing code.
+- Implement it!
+
+${slide:title=Conclusion}$
+
+- Powerful
+- Modular
+- Just sending an extra message to an argument and using late binding
