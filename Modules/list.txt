@@ -43,7 +43,7 @@
 - 3-DoubleDispatch-04-NoSymmetrical.pillar
 
 
-## Module 6: Creation
+## Module 6: Creation [Files Renamed]
 - 4-Principles-01-LazyInitialization
 - 4-Principles-07-ClassHookVsInstanceHook.pillar
 - 5-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
