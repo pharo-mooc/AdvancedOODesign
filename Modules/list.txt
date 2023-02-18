@@ -53,14 +53,15 @@
 - 4-Principles-06-selfVSClassDispatch.pillar
 - 1-Essence-06-DidYouUnderstandSuper.pillar
 
-## Module 7: Objects: state + behavior
+## Module 7: Objects: state + behavior [Files Renamed]
 - 2-BasicPrinciples-04-AboutObjectsVSData.pillar
 - 2-BasicPrinciples-01-MethodIsReuse.pillar
 - 2-BasicPrinciples-03-TheUglyGlobalVariables.pillar
 - 2-BasicPrinciples-05-FatClassesAreBad.pillar
 - 6-DesignPattern-06-Singleton.pillar
+- 6-DesignPattern-09-Decorator.pillar
 
-#Module 8: Sharing
+#Module 8: Sharing [Files Renamed]
 - 1-Essence-08-AboutMagicNumbers
 - 4-Principles-08-Sharing.pillar
 - 7-Lang-02-SharedVariables.pillar
@@ -68,15 +69,15 @@
 - 6-DesignPattern-12-TypeObject.pillar
 - 6-DesignPattern-10-Flyweigth.pillar
 
-## Module 9: About Inversion of control
+## Module 9: About Inversion of control [Files Renamed]
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
 - 4-Principles-03-AboutRegistration.pillar
 - 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - 4-Principles-04-LawOfDemeter.pillar
 - 5-CaseStudy-05-Sokoban-Analysis.pillar
 
-## Module 10: Type
-- 4-Principles-12-DualInterfaces
+## Module 10: Type [Files Renamed]
+- 4-Principles-12-DualInterfaces.pillar
 - 4-Principles-09-SubtypingVsSubclassing.pillar
 - 4-Principles-11-PolymorphismSupportEvolution.pillar
 - 4-Principles-05-AboutDefensiveProgramming.pillar
