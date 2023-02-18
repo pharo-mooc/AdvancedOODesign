@@ -1,7 +1,5 @@
 - 0-AboutTheLectures.pillar (a refaire)
 
-
-
 ## Module 1: Understanding messages
 
 - 1-Essence-01-NotExample.pillar
