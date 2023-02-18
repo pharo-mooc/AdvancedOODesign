@@ -24,7 +24,7 @@
 - 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
 
 
-## Module 4: Elementary design pattern
+## Module 4: Elementary design pattern [Files Renamed]
 - 6-DesignPattern-03-Composite.pillar
 - 2-BasicPrinciples-06-UseVsInheritance.pillar
 - 6-DesignPattern-11-State.pillar
