@@ -25,14 +25,14 @@
 
 
 ## Module 4: Elementary design patterns [Files Renamed]
-- 6-DesignPattern-03-Composite.pillar
-- 2-BasicPrinciples-06-UseVsInheritance.pillar
-- 6-DesignPattern-11-State.pillar
-- 4-Principles-01-AvoidIsNil.pillar
+- 1-DesignPattern-03-Composite.pillar
+- 2-DesignPattern-11-State.pillar
+- 3-DesignPattern-07-Command.pillar
+- 4-BasicPrinciples-06-UseVsInheritance.pillar
 - 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
-- 6-DesignPattern-07-Command.pillar
-- 7-Lang-04-BlocksVsObjects.pillar
-- 5-CaseStudy-02-AboutFluidAPI.pillar
+- 6-Lang-04-BlocksVsObjects.pillar
+- 7-Principles-01-AvoidIsNil.pillar
+- 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 5: About double dispatch [Files Renamed]
 - 3-DoubleDispatch-01-StoneExercise.pillar
