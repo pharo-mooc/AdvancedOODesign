@@ -1,8 +1,8 @@
 {
-	"title":"Polymorphic objects",
-	"subtitle": "support for software evolution",
-	"slidesid":"Core",
-	"author":"S. Ducasse"
+	"title" : "Polymorphic objects",
+	"subtitle" : "Support for software evolution",
+	"slidesid" : "Core",
+	"author" : "S. Ducasse"
 }
 
 ${slide:title=Goals}$

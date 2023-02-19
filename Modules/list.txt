@@ -69,18 +69,20 @@
 
 
 ## Module 9: About Inversion of control / Registration [Files Renamed]
+- 4-Principles-04-LawOfDemeter.pillar
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
 - 4-Principles-03-AboutRegistration.pillar
 - 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
-- 4-Principles-04-LawOfDemeter.pillar
+
 - 5-CaseStudy-05-Sokoban-Analysis.pillar
 
 ## Module 10: Type [Files Renamed]
-- 4-Principles-12-DualInterfaces.pillar
-- 4-Principles-09-SubtypingVsSubclassing.pillar
+- 1-Principles-12-DualInterfaces.pillar
+- 2-Principles-09-SubtypingVsSubclassing.pillar
+- 3-Principles-10-DynamicStaticType.pillar
 - 4-Principles-11-PolymorphismSupportEvolution.pillar
-- 4-Principles-05-AboutDefensiveProgramming.pillar
-- 4-Principles-10-DynamicStaticType.pillar
+- 5-Principles-05-AboutDefensiveProgramming.pillar
+
 
 
 
