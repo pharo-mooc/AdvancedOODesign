@@ -1,7 +1,6 @@
 {
   "title" : "Message Sends are Plans for Reuse",
-  "subtitle" : " ",
-  "author" : " S. Ducasse and G. Polito"
+	    "slidesid":"M3-2"
 }
 
 ${slide:title=About this lecture}$

@@ -1,6 +1,6 @@
 {
     "title":"An introduction to design patterns",
-    "author":"S. Ducasse"
+        "slidesid":"M3-1"
 }
 
 ${slide:title=Goal}$

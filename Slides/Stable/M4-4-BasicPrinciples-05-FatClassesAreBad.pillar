@@ -1,7 +1,7 @@
 {
-    "title":"Fat classes are bad",
-   "subtitle":"a.k.a. a large class vs. a class hierarchy",
-    "author":"S. Ducasse"
+	"title":"Fat classes are bad",
+	"subtitle":"a.k.a. a large class vs. a class hierarchy",
+	"slidesid":"M4-4"
 }
 
 ${slide:title=Goal}$
