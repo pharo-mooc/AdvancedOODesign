@@ -1,8 +1,7 @@
 {
 	"title":"Test 101",
 	"subtitle":"The minimum you should know",
-	"slidesid":" ",
-	"author":"S.Ducasse"
+	"slidesid":"M2-1"
 }
 
 ${slide:title=Goal of the lecture|label=less}$
@@ -51,8 +50,10 @@ A test:
 - Performs a stimulus: Add twice the same element
 - Checks the results: Check that the set contains only one element
 
+Similar concepts in any language!
 
-${slide:title=Set testcase}$
+
+${slide:title=Set testcase in Pharo}$
 
 [[[
 TestCase subclass: #SetTest
@@ -68,6 +69,23 @@ SetTest >> testAdd
     self assert: empty size equals: 1.        "Check"
 
 SetTest run: #testAdd
+]]]
+
+${slide:title=Set testcase in Java (Junit40)}$
+
+[[[
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class SetTest {
+
+@Test
+public void testAdd() {
+	Set empty = new Counter(); //Context 
+	empty.add(5); //Stimulus 
+	empty.add(5); 
+	assertEquals(empty.size(),1); //Check
+} }
 ]]]
 
 

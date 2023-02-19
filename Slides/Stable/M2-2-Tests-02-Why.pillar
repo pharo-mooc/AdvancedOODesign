@@ -1,8 +1,7 @@
 {
     "title":"Tests",
     "subtitle":"Why testing is Important?",
-    "author":"S. Ducasse",
-    "slidesid": " "
+    "slidesid": "M2-2"
 }
 
 ${slide:title=Goal}$
@@ -175,10 +174,6 @@ ${slide:title=Characteristics of a good test suite}$
 -- ""Test the API"" not the implementation
 -- ""Limit"" dependency to other elements 
 - Good code coverage
-
-
-
-
 
 
 ${slide:title=Conclusion}$
