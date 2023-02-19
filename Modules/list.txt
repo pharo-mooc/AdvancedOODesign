@@ -35,12 +35,13 @@
 - 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 5: About double dispatch [Files Renamed]
-- 3-DoubleDispatch-01-StoneExercise.pillar
+- 1-DoubleDispatch-01-StoneExercise.pillar
+- 2-DoubleDispatch-04-NoSymmetrical.pillar
 - 3-DoubleDispatch-03-Dice.pillar
-- 6-DesignPattern-04-Visitor.pillar
-- 6-DesignPattern-05-VisitorDiscussions.pillar
-- 3-DoubleDispatch-05-StoneExercise-AboutResult.pillar
-- 3-DoubleDispatch-04-NoSymmetrical.pillar
+- 4-DesignPattern-04-Visitor.pillar
+- 5-DesignPattern-05-VisitorDiscussions.pillar
+- 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
+
 
 
 ## Module 6: Creation [Files Renamed]
