@@ -17,11 +17,11 @@
 - 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
-- 6-DesignPattern-01-IntroDesignPattern.pillar
-- 1-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
-- 6-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
-- 7-Lang-01-Stream.pillar
-- 2-BasicPrinciples-02-FromGlobalToParameter.pillar 
+- 1-DesignPattern-01-IntroDesignPattern.pillar
+- 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
+- 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
+- 4-Lang-01-Stream.pillar
+- 5-BasicPrinciples-02-FromGlobalToParameter.pillar 
 
 ## Module 4: Objects: state + behavior [Files Renamed]
 - 1-BasicPrinciples-01-MethodIsReuse.pillar
