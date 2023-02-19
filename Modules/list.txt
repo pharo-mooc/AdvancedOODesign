@@ -67,13 +67,11 @@
 - 5-DesignPattern-10-Flyweigth.pillar
 - 6-DesignPattern-12-TypeObject.pillar
 
-
 ## Module 9: About Inversion of control / Registration [Files Renamed]
-- 4-Principles-04-LawOfDemeter.pillar
-- 4-Principles-02-AboutClassMethodsAndRegistration.pillar
-- 4-Principles-03-AboutRegistration.pillar
-- 5-CaseStudy-06-LayeredSettingsArchitecture.pillar
-
+- 1-Principles-04-LawOfDemeter.pillar
+- 2-Principles-02-AboutClassMethodsAndRegistration.pillar
+- 3-Principles-03-AboutRegistration.pillar
+- 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - 5-CaseStudy-05-Sokoban-Analysis.pillar
 
 ## Module 10: Type [Files Renamed]
