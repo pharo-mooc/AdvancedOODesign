@@ -1,7 +1,7 @@
 {
     "title":"Command Design Pattern",
     "subtitle" : "---  Actions as objects",
-    "author":"S. Ducasse"
+    "slidesid":"M5-3"
 }
 
 ${slide:title=Goals}$

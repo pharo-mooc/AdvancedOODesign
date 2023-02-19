@@ -1,6 +1,6 @@
 {
   "title":"Avoid Null Checks",
-  "author" : "S. Ducasse, G. Polito, P. Tesone and L. Fabresse"
+    "slidesid":"M5-7"
 }
 
 ${slide:title=Goal}$
