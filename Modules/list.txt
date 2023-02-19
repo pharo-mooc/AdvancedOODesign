@@ -10,11 +10,11 @@
 - 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests	[Files Renamed]
-- 0-Tests-01-101.pillar
-- 0-Tests-02-Why.pillar
-- 0-Tests-03-TDD.pillar
-- 0-Tests-04-XTDD.pillar
-- 0-Tests-05-ParametrizedTests.pillar
+- 1-Tests-01-101.pillar
+- 2-Tests-02-Why.pillar
+- 3-Tests-03-TDD.pillar
+- 4-Tests-04-XTDD.pillar
+- 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
 - 6-DesignPattern-01-IntroDesignPattern.pillar
