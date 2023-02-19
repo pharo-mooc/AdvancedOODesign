@@ -45,14 +45,14 @@
 
 
 ## Module 6: Creation [Files Renamed]
-- 4-Principles-01-LazyInitialization
-- 4-Principles-07-ClassHookVsInstanceHook.pillar
-- 5-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
+- 1-Principles-01-LazyInitialization
+- 2-Principles-07-ClassHookVsInstanceHook.pillar
+- 3-Principles-06-selfVSClassDispatch.pillar
+- 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
 - 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
 - 6-DesignPattern-08-Builder.pillar
 - 7-Lang-05-AboutBuilder.pillar
-- 4-Principles-06-selfVSClassDispatch.pillar
-- 1-Essence-06-DidYouUnderstandSuper.pillar
+- 8-Essence-06-DidYouUnderstandSuper.pillar
 
 ## Module 7: Objects: state + behavior [Files Renamed]
 - 2-BasicPrinciples-04-AboutObjectsVSData.pillar
