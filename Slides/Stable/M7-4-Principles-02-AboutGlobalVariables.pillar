@@ -47,7 +47,7 @@ Symbol >> asIcon
 ]]]
 
 
-${slide:title=Case 2: A disguised lobal variable}$
+${slide:title=Case 2: A disguised global variable}$
 
 [[[
 MyApp >> menu
