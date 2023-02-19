@@ -1,6 +1,6 @@
 {
-    "title" : "Advanced Object-Oriented Design",
-    "subtitle": "",
+    "title" : "Object-Oriented Design",
+    "subtitle": "An advanced and pragmatic Mooc",
     "author":"S. Ducasse, L. Fabresse, G. Polito, P. Tesone",
     "slidesid":"2023"
 }
@@ -10,7 +10,7 @@ ${slide:title=Why this mooc?}$
 
 - From the  success of the Pharo mooc (*http://mooc.pharo.org*)
 
-''I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design. - Anonymous''
+''I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design.'' - Anonymous
 
 
 ${slide:title=Taking the Pharo mooc to the next level}$
@@ -39,6 +39,9 @@ ${slide:title=Topics over several paths}$
 
 ${slide:title=10 modules}$
 
+${columns}$
+
+${column:width=50}$
 
 - Understanding messages
 - Tests and test driven 
@@ -46,12 +49,16 @@ ${slide:title=10 modules}$
 - Elementary design patterns
 - Object Creation
 - Double Dispatch
+
+${column:width=50}$
+
 - Object creation
 - Objects: state and behavior
 - Registration
 - Sharing
 - Types
 
+${endColumns}$
 
 ${slide:title=About Pharo}$
 

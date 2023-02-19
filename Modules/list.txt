@@ -1,4 +1,4 @@
-- 0-AboutTheLectures.pillar (a refaire)
+- 0-AboutTheMooc.pillar
 
 ## Module 1: Understanding messages [Files Renamed]
 
