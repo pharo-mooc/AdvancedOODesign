@@ -59,15 +59,14 @@
 - 7-Lang-05-AboutBuilder.pillar
 - 8-Essence-06-DidYouUnderstandSuper.pillar
 
-
-
 #Module 8: Sharing [Files Renamed]
-- 1-Essence-08-AboutMagicNumbers
-- 4-Principles-08-Sharing.pillar
-- 7-Lang-02-SharedVariables.pillar
-- 7-Lang-03-SharedPools.pillar
+- 1-Lang-02-SharedVariables.pillar
+- 2-Principles-08-Sharing.pillar
+- 3-Lang-03-SharedPools.pillar
+- 4-Essence-08-AboutMagicNumbers
+- 5-DesignPattern-10-Flyweigth.pillar
 - 6-DesignPattern-12-TypeObject.pillar
-- 6-DesignPattern-10-Flyweigth.pillar
+
 
 ## Module 9: About Inversion of control / Registration [Files Renamed]
 - 4-Principles-02-AboutClassMethodsAndRegistration.pillar
