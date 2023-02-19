@@ -1,6 +1,6 @@
 {
-  "title":"About super",
-  "author":"S Ducasse and G. Polito"
+	"title":"About super",
+	"slidesid":"M1-5"
 }
 
 ${slide:title=Goals}$

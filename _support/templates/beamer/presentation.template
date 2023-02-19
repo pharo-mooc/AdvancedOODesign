@@ -17,7 +17,8 @@
 %Information to be included in the title page:
 \title{«& title»}
 \subtitle{«& subtitle»}
-\author{«& author»}
+%\author{«& author»}
+\author{S.Ducasse, L. Fabresse, G. Polito, and P. Tesone}
 \institute{«& complement»}
 \slidesid{«& slidesid»}
 

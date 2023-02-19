@@ -1,8 +1,7 @@
 {
 	"title":"Essence of Dispatch",
 	"subtitle":"Taking Pharo Booleans as Example",
-	"author":"S. Ducasse",
-	"slidesid" : "2022"
+	"slidesid" : "M1-1"
 }
 
 ${slide:title=Objectives}$
