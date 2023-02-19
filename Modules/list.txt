@@ -3,11 +3,11 @@
 ## Module 1: Understanding messages [Files Renamed]
 
 - 1-Essence-01-NotExample.pillar
-- 1-Essence-02-Dispatch.pillar
-- 1-Essence-03-Inheritance-Basic.pillar
-- 1-Essence-04-Self.pillar
-- 1-Essence-05-Super.pillar
-- 5-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
+- 2-Essence-02-Dispatch.pillar
+- 3-Essence-03-Inheritance-Basic.pillar
+- 4-Essence-04-Self.pillar
+- 5-Essence-05-Super.pillar
+- 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests	[Files Renamed]
 - 0-Tests-01-101.pillar
