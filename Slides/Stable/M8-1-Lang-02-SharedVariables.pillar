@@ -1,7 +1,7 @@
 {
 	"title":"Shared variables",
 	"subtitle":"A Pharo code idiom",
-	"author":"S. Ducasse"
+	"slidesid":"M8-1"
 }
 
 ${slide:title=Goal}$

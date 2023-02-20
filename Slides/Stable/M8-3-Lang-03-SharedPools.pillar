@@ -1,7 +1,7 @@
 {
 	"title":"Static sharing across hierarchies",
 	"subtitle":"A Pharo code idiom",
-	"author":"S. Ducasse"
+	"slidesid":"M8-3"
 }
 
 ${slide:title=Goal}$

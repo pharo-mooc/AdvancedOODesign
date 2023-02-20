@@ -1,13 +1,13 @@
 {
-    "title":"TypeObject",
-    "subtitle":"",
-    "author":"Stéphane Ducasse"
+	"title":"TypeObject",
+	"slidesid":"M-8-6"
 }
 
 
 ${slide:title=Goals}$
 
 - Individuals and their description
+- Another form of sharing
 - TypeObject
 
 
@@ -45,9 +45,10 @@ ${slide:title=Video Rental}$
 +>file://figures/rambo3.png|width=60+
 
 
-${slide:title=How to implement this}$
+${slide:title=How to implement this?}$
 
 - Should we implement all the description on the class level?
+- Should we have a separate class?
 
 ${slide:title=All in class level}$
 
@@ -78,7 +79,7 @@ PlantDescription
 
 ${slide:title=Dynamic}$
 
-Depending on your domain, the typed object and TypeObject relationship can be dynamic
+- Depending on your domain, the typed object and TypeObject relationship can be dynamic
 
 
 
@@ -88,9 +89,9 @@ Depending on your domain, the typed object and TypeObject relationship can be dy
 
 ${slide:title=Conclusion}$
 
-- Flyweigth is useful to ensure uniqueness and limit memory footprint
-- It does not avoid spurious object creation requests
-- Better fix the cause than the consequences
+TypeObject
 
+- Make explicit the relation to the objet description
+- can be description-oriented class
 
 
