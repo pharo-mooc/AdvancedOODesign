@@ -1,7 +1,7 @@
 {
-    "title" : "The two interfaces",
-    "subtitle" : "about programming deltas",
-    "author" : "Stéphane Ducasse"
+	"title" : "The two interfaces",
+	"subtitle" : "In presence of delta programming",
+	"slidesid":"M10-1"
 }
 
 ${slide:title=Outline}$

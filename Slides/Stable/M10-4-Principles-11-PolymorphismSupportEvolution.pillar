@@ -1,8 +1,7 @@
 {
 	"title" : "Polymorphic objects",
 	"subtitle" : "Support for software evolution",
-	"slidesid" : "Core",
-	"author" : "S. Ducasse"
+	"slidesid":"M10-4"
 }
 
 ${slide:title=Goals}$

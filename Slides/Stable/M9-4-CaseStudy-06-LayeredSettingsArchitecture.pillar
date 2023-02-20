@@ -1,7 +1,7 @@
 {
-    "title":"Application settings",
-    "subtitle":"From a monolithic to a modular architecture",
-    "author":"S. Ducasse"
+	"title":"Application settings",
+	"subtitle":"From a monolithic to a modular architecture",
+	"slidesid":"M9-4"
 }
 
 ${slide:title=Goals}$

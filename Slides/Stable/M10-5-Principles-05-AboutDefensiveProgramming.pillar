@@ -1,6 +1,6 @@
 {
-    "title":"About defensive programming",
-   "author":"S. Ducasse"
+	"title":"About defensive programming",
+	"slidesid":"M10-5"
 }
 
 ${slide:title=Goal}$

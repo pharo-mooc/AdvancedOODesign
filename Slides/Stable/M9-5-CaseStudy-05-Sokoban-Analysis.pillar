@@ -1,7 +1,6 @@
 {
-    "title":"Learning from a Sokoban implementation",
-    "subtitle":"",
-    "author":"S.Ducasse"
+	"title":"Learning from a Sokoban implementation",
+	"slidesid":"M9-5"
 }
 
 ${slide:title=Goal}$

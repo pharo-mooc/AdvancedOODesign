@@ -1,7 +1,7 @@
 {
     "title":"About Registration",
     "subtitle":"When class method-based registration is too much",
-    "author":"S. Ducasse"
+	"slidesid":"M9-3"
 }
 
 ${slide:title=Goal}$
