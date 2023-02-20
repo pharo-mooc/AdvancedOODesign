@@ -1,6 +1,6 @@
 {
 	"title":"TypeObject",
-	"slidesid":"M-8-6"
+	"slidesid":"M8-6"
 }
 
 
@@ -68,7 +68,7 @@ ${slide:title=TypeObject}$
 
 [[[
 Plant
-	age, size, lastPestAttack, flowerColor, 
+	age, size, lastPestAttack, flowerColor
 ]]]
 
 [[[
@@ -90,8 +90,7 @@ ${slide:title=Dynamic}$
 ${slide:title=Conclusion}$
 
 TypeObject
-
-- Make explicit the relation to the objet description
+- makes explicit the relation to the objet description
 - can be description-oriented class
 
 

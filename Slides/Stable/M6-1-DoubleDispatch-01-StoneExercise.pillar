@@ -1,7 +1,7 @@
 {
-    "title" : "A double dispatch starter",
-    "slidesid" : "Stone Paper Scissors",
-    "author":"S. Ducasse, G. Polito, P. Tesone, and L. Fabresse"
+	"title" : "A double dispatch starter",
+	"slidesid" : "Stone Paper Scissors",
+	"slidesid":"M6-1"
 }
 
 ${slide:title=Goals}$

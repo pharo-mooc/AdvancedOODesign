@@ -1,7 +1,7 @@
 {
-    "title" : "Double dispatch",
-    "slidesid" : "does not have to be symmetrical",
-    "author" : "S. Ducasse"
+	"title" : "Double dispatch",
+	"slidesid" : "does not have to be symmetrical",
+	"slidesid":"M6-2"
 }
 
 ${slide:title=Goals}$

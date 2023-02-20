@@ -1,7 +1,7 @@
 {
-    "title":"Customization degree of hooks",
-    "subtitle":"Class vs. instance hooks",
-    "author":"Stéphane Ducasse"
+	"title":"Customization degree of hooks",
+	"subtitle":"Class vs. instance hooks",
+	"slidesid":"M7-2"
 }
 
 ${slide:title=Goal}$

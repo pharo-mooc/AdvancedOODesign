@@ -1,7 +1,7 @@
 {
-  "title":"About Null Check",
-  "subtitle" : "The case of lazy initialization"
-  "author" : "S. Ducasse, G. Polito, P. Tesone and L. Fabresse"
+	"title":"About Null Check",
+	"subtitle" : "The case of lazy initialization"
+	"slidesid":"M7-1"
 }
 
 ${slide:title=Use Lazy Initialization when Necessary}$

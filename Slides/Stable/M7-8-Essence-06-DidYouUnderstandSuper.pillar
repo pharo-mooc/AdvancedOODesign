@@ -1,6 +1,6 @@
 {
-  "title" : "Did You Really Understand Super?",
-  "author":"S. Ducasse and L. Fabresse"
+	"title" : "Did You Really Understand Super?",
+	"slidesid":"M7-8"
 }
 
 ${slide:title=What you will learn}$
