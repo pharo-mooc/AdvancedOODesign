@@ -3,8 +3,8 @@
 ## Module 1: Understanding messages [Files Renamed]
 
 - 1-Essence-01-NotExample.pillar
-- 2-Essence-02-Dispatch.pillar
-- 3-Essence-03-Inheritance-Basic.pillar
+- [Luc] 2-Essence-02-Dispatch.pillar
+- [Luc] 3-Essence-03-Inheritance-Basic.pillar
 - 4-Essence-04-Self.pillar
 - 5-Essence-05-Super.pillar
 - 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
@@ -12,19 +12,19 @@
 ## Module 2: Tests	[Files Renamed]
 - 1-Tests-01-101.pillar
 - 2-Tests-02-Why.pillar
-- 3-Tests-03-TDD.pillar
+- [Luc] 3-Tests-03-TDD.pillar
 - 4-Tests-04-XTDD.pillar
 - 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
 - 1-DesignPattern-01-IntroDesignPattern.pillar
-- 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
-- 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
+- [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
+- [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
 - 4-Lang-01-Stream.pillar
-- 5-BasicPrinciples-02-FromGlobalToParameter.pillar 
+- 5-BasicPrinciples-02-FromGlobalToParameter.pillar
 
 ## Module 4: Objects: state + behavior [Files Renamed]
-- 1-BasicPrinciples-01-MethodIsReuse.pillar
+- [Luc] 1-BasicPrinciples-01-MethodIsReuse.pillar
 - 2-BasicPrinciples-04-AboutObjectsVSData.pillar
 - 3-BasicPrinciples-03-AboutGlobalVariable.pillar
 - 4-BasicPrinciples-05-FatClassesAreBad.pillar
@@ -32,27 +32,27 @@
 - 6-DesignPattern-09-Decorator.pillar
 
 ## Module 5: Elementary design patterns [Files Renamed]
-- 1-DesignPattern-03-Composite.pillar
+- [Luc] 1-DesignPattern-03-Composite.pillar
 - 2-DesignPattern-11-State.pillar
 - 3-DesignPattern-07-Command.pillar
-- 4-BasicPrinciples-06-UseVsInheritance.pillar
+- [Luc] 4-BasicPrinciples-06-UseVsInheritance.pillar
 - 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
 - 6-Lang-04-BlocksVsObjects.pillar
 - 7-Principles-01-AvoidIsNil.pillar
 - 8-CaseStudy-02-AboutFluidAPI.pillar
 
-## Module 6: About double dispatch [Files Renamed] 
+## Module 6: About double dispatch [Files Renamed]
 - 1-DoubleDispatch-01-StoneExercise.pillar
 - 2-DoubleDispatch-04-NoSymmetrical.pillar
 - 3-DoubleDispatch-03-Dice.pillar
-- 4-DesignPattern-04-Visitor.pillar
-- 5-DesignPattern-05-VisitorDiscussions.pillar
+- [Luc] 4-DesignPattern-04-Visitor.pillar
+- [Luc] 5-DesignPattern-05-VisitorDiscussions.pillar
 - 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 
 ## Module 7: Creation [Files Renamed]
 - 1-Principles-01-LazyInitialization
 - 2-Principles-07-ClassHookVsInstanceHook.pillar
-- 3-Principles-06-selfVSClassDispatch.pillar
+- [Luc] 3-Principles-06-selfVSClassDispatch.pillar
 - 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
 - 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
 - 6-DesignPattern-08-Builder.pillar
@@ -63,22 +63,22 @@
 - 1-Lang-02-SharedVariables.pillar
 - 2-Principles-08-Sharing.pillar
 - 3-Lang-03-SharedPools.pillar
-- 4-Essence-08-AboutMagicNumbers
+- [Luc] 4-Essence-08-AboutMagicNumbers
 - 5-DesignPattern-10-Flyweigth.pillar
 - 6-DesignPattern-12-TypeObject.pillar
 
 ## Module 9: About Inversion of control / Registration [Files Renamed]
 - 1-Principles-04-LawOfDemeter.pillar
-- 2-Principles-02-AboutClassMethodsAndRegistration.pillar
-- 3-Principles-03-AboutRegistration.pillar
+- [Luc] 2-Principles-02-AboutClassMethodsAndRegistration.pillar
+- [Luc] 3-Principles-03-AboutRegistration.pillar
 - 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - 5-CaseStudy-05-Sokoban-Analysis.pillar
 
 ## Module 10: Type [Files Renamed]
-- 1-Principles-12-DualInterfaces.pillar
+- [Luc] 1-Principles-12-DualInterfaces.pillar
 - 2-Principles-09-SubtypingVsSubclassing.pillar
 - 3-Principles-10-DynamicStaticType.pillar
-- 4-Principles-11-PolymorphismSupportEvolution.pillar
+- [Luc] 4-Principles-11-PolymorphismSupportEvolution.pillar
 - 5-Principles-05-AboutDefensiveProgramming.pillar
 
 
@@ -97,13 +97,13 @@
 
 ## Todo
 
-	
+
 Lectures
-	- revisit TypeObject - 
+	- revisit TypeObject -
 	- Parcours?
 	- Quizzes
 	- Nombres de videos + nombres de slides
-	
+
 - Badges
 
 Katas
