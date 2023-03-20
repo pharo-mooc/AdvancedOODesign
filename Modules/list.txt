@@ -13,8 +13,8 @@
 - [Guille] 1-Tests-01-101.pillar
 - [Guille] 2-Tests-02-Why.pillar
 - [Luc] 3-Tests-03-TDD.pillar
-- 4-Tests-04-XTDD.pillar
-- 5-Tests-05-ParametrizedTests.pillar
+- [Pablo] 4-Tests-04-XTDD.pillar
+- [Pablo] 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
 - 1-DesignPattern-01-IntroDesignPattern.pillar
@@ -25,19 +25,19 @@
 
 ## Module 4: Objects: state + behavior [Files Renamed]
 - [Luc] 1-BasicPrinciples-01-MethodIsReuse.pillar
-- 2-BasicPrinciples-04-AboutObjectsVSData.pillar
+- [Pablo] 2-BasicPrinciples-04-AboutObjectsVSData.pillar
 - 3-BasicPrinciples-03-AboutGlobalVariable.pillar
-- 4-BasicPrinciples-05-FatClassesAreBad.pillar
+- [Pablo] 4-BasicPrinciples-05-FatClassesAreBad.pillar
 - [Guille] 5-DesignPattern-06-Singleton.pillar
 - [Guille] 6-DesignPattern-09-Decorator.pillar
 
 ## Module 5: Elementary design patterns [Files Renamed]
 - [Luc] 1-DesignPattern-03-Composite.pillar
-- 2-DesignPattern-11-State.pillar
-- 3-DesignPattern-07-Command.pillar
+- [Pablo] 2-DesignPattern-11-State.pillar
+- [Pablo] 3-DesignPattern-07-Command.pillar
 - [Luc] 4-BasicPrinciples-06-UseVsInheritance.pillar
-- 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
-- 6-Lang-04-BlocksVsObjects.pillar
+- [Pablo] 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
+- [Pablo] 6-Lang-04-BlocksVsObjects.pillar
 - [Guille] 7-Principles-01-AvoidIsNil.pillar
 - 8-CaseStudy-02-AboutFluidAPI.pillar
 
@@ -55,8 +55,8 @@
 - [Luc] 3-Principles-06-selfVSClassDispatch.pillar
 - 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
 - 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
-- 6-DesignPattern-08-Builder.pillar
-- 7-Lang-05-AboutBuilder.pillar
+- [Pablo] 6-DesignPattern-08-Builder.pillar
+- [Pablo] 7-Lang-05-AboutBuilder.pillar
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
 
 #Module 8: Sharing [Files Renamed]
@@ -65,19 +65,19 @@
 - 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
 - [Guille] 5-DesignPattern-10-Flyweigth.pillar
-- 6-DesignPattern-12-TypeObject.pillar
+- [Pablo] 6-DesignPattern-12-TypeObject.pillar
 
 ## Module 9: About Inversion of control / Registration [Files Renamed]
 - [Guille] 1-Principles-04-LawOfDemeter.pillar
 - [Luc] 2-Principles-02-AboutClassMethodsAndRegistration.pillar
 - [Luc] 3-Principles-03-AboutRegistration.pillar
-- 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
+- [Pablo] 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - [Guille] 5-CaseStudy-05-Sokoban-Analysis.pillar
 
 ## Module 10: Type [Files Renamed]
 - [Luc] 1-Principles-12-DualInterfaces.pillar
 - 2-Principles-09-SubtypingVsSubclassing.pillar
-- 3-Principles-10-DynamicStaticType.pillar
+- [Pablo] 3-Principles-10-DynamicStaticType.pillar
 - [Luc] 4-Principles-11-PolymorphismSupportEvolution.pillar
 - [Guille] 5-Principles-05-AboutDefensiveProgramming.pillar
 
