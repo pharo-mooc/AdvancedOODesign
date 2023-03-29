@@ -3,15 +3,10 @@
 	"slidesid":"M1-2"
 }
 
-
 ${slide:title=Remember: Implementing not in two methods}$
 
 +Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
 
-${slide:title=Stepping back}$
-
-- Let the receiver decide
-- ""Do not ask, tell""
 
 ${slide:title=Ok so what?}$
 
@@ -19,6 +14,7 @@ ${slide:title=Ok so what?}$
 - So is it ""really"" useful?
 - What are the lessons to learn?
 - What are the properties of the solution?
+
 
 ${slide:title=Imagine having more than two classes}$
 
@@ -28,54 +24,53 @@ ${column:width=45}$
 [[[
 MicAbstractBlock
 		MicAbstractAnnotatedBlock
-			MicAnnotatedBlock
+			    MicAnnotatedBlock
 		MicContinuousMarkedBlock
-			MicCommentBlock
-			MicQuoteBlock
-			MicTableBlock
+			    MicCommentBlock
+			    MicQuoteBlock
+			    MicTableBlock
 		MicIntermediateBlock
 		MicListBlock
-			MicOrderedListBlock
-			MicUnorderedListBlock
+			    MicOrderedListBlock
+			    MicUnorderedListBlock
 		MicListItemBlock
 		MicParagraphBlock
-			MacParagraphBlock
-			MacRawParagraphBlock
+			    MacParagraphBlock
+			    MacRawParagraphBlock
 		MicRootBlock
 		MicSectionBlock
-		
+
 
 ]]]
 
 ${column:width=55}$
 
 [[[
-	MicSingleLineBlock
-		MicAnchorBlock
-		MicHeaderBlock
-		MicHorizontalLineBlock
-	MicStartStopMarkupBlock
-		MicEnvironmentBlock
-		...
-		MicMetaDataBlock
-		MicSameStartStopMarkupBlock
-			MicCodeBlock
-			MicMathBlock
-				MicMathBlockExtensionForTest
-				MicMultilineComment
+	    MicSingleLineBlock
+	        	MicAnchorBlock
+	        	MicHeaderBlock
+	        	MicHorizontalLineBlock
+	    MicStartStopMarkupBlock
+	    	    MicEnvironmentBlock
+	    	    ...
+	    	    MicMetaDataBlock
+	    	    MicSameStartStopMarkupBlock
+	    	    	    MicCodeBlock
+	    	    	    MicMathBlock
+	    	    	    	    MicMathBlockExtensionForTest
+	    	    	    	    MicMultilineComment
 ]]]
 
-Imagine just a method that would have to have one condition for each of such cases!
+Imagine just a method that have one condition for each of such cases!
 
 ${endColumns}$
 
 ${slide:title=A message send is an open conditional}$
 
-- Sending a message selects the right method
-- It can be seen as a condition ""without explicit ifs""
-- The choice is dynamic 
-- It selects the method based on the receiver
-
+Sending a message:
+- selects the ""right"" method to execute based on the class of the receiver
+- can be seen as a condition ""without explicit ifs""
+- is a dynamic choice
 
 ${slide:title=Select the right method}$
 
@@ -90,13 +85,7 @@ ${slide:title=Sending a message is making a choice}$
 
 - Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
 - Sending a message is a ""choice"" operator
-
-
-${slide:title=How do we express choices?}$
-
-- Ok we have a choice operation... then
-- ""How do we express choices""?
-
+- So ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
 
@@ -119,7 +108,7 @@ ${slide:title=Class hierarchy supports for dynamic dispatch}$
 - More modular
 - No need to recompile exiting methods
 - No need to introduce complex conditions
-- An hierarchy provides a way to specialize behavior
+- A hierarchy provides a way to specialize behavior
 - You only focus on one class at a time
 
 +>file://figures/Design-FatVsDispatch.pdf|width=40+
@@ -129,8 +118,7 @@ ${slide:title=Message dispatch supports modularity}$
 
 +>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
-More modular: We can package different classes in different packages
-
+We can package different classes in different packages (better modularity)
 
 ${slide:title=Limit impact of changes}$
 
@@ -139,13 +127,12 @@ ${slide:title=Limit impact of changes}$
 If client has a way to get instances of ==D== (in addition to classes of first package), the client code does not have to change
 
 
-${slide:title=Message sends are better than case statements}$
+${slide:title=Avoid conditionals}$
 
-- Message sends are supporting ""a choice""
-- You could say: They act as "case statements"
-- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent
-
-
+- Message sends are supporting ""choices""
+- The execution engine acts as a conditional switch: Use it!
+- Classes act as "case statements"
+- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent (i.e. the receiver)
 
 ${slide:title=Let the receiver decide}$
 
@@ -154,14 +141,11 @@ ${slide:title=Let the receiver decide}$
 - Client code is more declarative: give orders
 - Different receivers may be substituted dynamically
 
-${slide:title=Avoid conditionals}$
-
-- Use objects and messages, when you can
-- The execution engine acts as a conditional switch: Use it!
-- Check the AntiIfCampaign
-
 ${slide:title=Summary: Cornerstone of OOP}$
-- Let the receiver decide
+
+- Avoid conditionals (cf. AntiIfCampaign)
+- Use objects and messages whenever you can
+- Let the receiver decide (Do not ask, tell)
 - Message sends act as potential dynamic conditionals
-- Class hierarchy: support for dynamic dispatch
-- Avoid conditionals
+- Class hierarchy supports for dynamic dispatch
+
