@@ -17,15 +17,15 @@ ${slide:title=Study}$
 [[[
 inpectionPillarTree
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
-    ^ SpTreePresenter new 
+    ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
-        display: [ :each | 
+        display: [ :each |
             String
-                streamContents: [ :stream | 
+                streamContents: [ :stream |
                     stream
                         nextPutAll: each class name.
-                        each class = PRHeader ifTrue: 
+                        each class = PRHeader ifTrue:
                             [ stream nextPutAll: '( level ';
                             nextPutAll: each level asString;
                             nextPutAll: ' )' ].
@@ -38,10 +38,10 @@ ${slide:title=Study}$
 [[[
 ...
             String
-                streamContents: [ :stream | 
+                streamContents: [ :stream |
                     stream
                         nextPutAll: each class name.
-                        each class = PRHeader ifTrue: 
+                        each class = PRHeader ifTrue:
                             [ stream nextPutAll: '( level ';
                             nextPutAll: each level asString;
                             nextPutAll: ' )' ].
@@ -53,12 +53,12 @@ Why the client of a document is forced to define this behavior?
 
 ${slide:title=Reuse is your friend!}$
 
-Better define a method 
+Better define a method
 [[[
 displayStringOn: stream
 	stream
     		nextPutAll: each class name.
-    		each class = PRHeader ifTrue: 
+    		each class = PRHeader ifTrue:
         		[ stream nextPutAll: '( level ';
 				nextPutAll: each level asString;
 				nextPutAll: ' )' ]
@@ -70,12 +70,12 @@ Call (reuse) a method!
 [[[
 inpectionPillarTree
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
-    ^ SpTreePresenter new 
+    ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
-        display: [ :each | 
+        display: [ :each |
             String
-                streamContents: [ :stream | 
+                streamContents: [ :stream |
                    each displayStringOn: stream ].
             ] ];
         yourself
@@ -100,7 +100,7 @@ stream contents
 ${slide:title=streamContents: to the rescue}$
 
 [[[
-String streamContents: [:s | #(1 2 3) printOn: stream ]	
+String streamContents: [:s | #(1 2 3) printOn: stream ]
 ]]]
 
 - Encapsulate creation
@@ -113,11 +113,11 @@ ${slide:title=Encapsulate actions}$
 
 
 [[[
-SequenceableCollection class >> streamContents: blockWithArg	
+SequenceableCollection class >> streamContents: blockWithArg
 	^ self new: 100 streamContents: blockWithArg
 
 SequenceableCollection class >> new: newSize streamContents: blockWithArg
-	
+
 	| stream |
 	stream := WriteStream on: (self streamSpecies new: newSize).
 	blockWithArg value: stream.
@@ -139,7 +139,7 @@ ${slide:title=Another example of action encapsulation}$
 AbstractFileReference>> readStreamDo: aBlock
 	| stream |
 	stream := self readStream.
-	^ [ aBlock value: stream ] 
+	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
 ]]]
 

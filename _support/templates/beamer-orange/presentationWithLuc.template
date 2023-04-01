@@ -1,0 +1,67 @@
+% -*- mode: latex; -*- mustache tags: {{=« »=}} «! the '&' below prevents HTML escaping. »
+
+% add the PATH to retrieve cls and sty beamer styles files
+\makeatletter
+\providecommand*{\input@path}{}
+\edef\input@path{{_result/pdf/_support/templates/beamer/}{_result/pdf/_support/templates/beamer/imgs}{_support/templates/beamer/}\input@path}
+\makeatother
+
+%Apparently luc created an alias named root in each subfolder that pointed to the root folder.
+
+\documentclass[aspectratio=169]{pharoslides} % format 16/9
+% \documentclass{pharoslides} % format 4/3
+
+\graphicspath{{./}{figures/}{../figures/}{_support/templates/beamer/imgs/}{_support/templates/beamer/}}
+
+
+%Information to be included in the title page:
+\title{«& title»}
+\subtitle{«& subtitle»}
+\author{«& author»}
+\institute{«& complement»}
+\slidesid{«& slidesid»}
+
+\begin{document}
+
+\frame[plain]{\titlepage}
+
+«& content»
+
+% \setlength{\textwidth}{\originaltextwidth}
+\setbeamertemplate{background canvas}{\insertBorderForHandout}
+
+\begin{frame}[plain]
+
+\begin{minipage}{\originaltextwidth}
+\centering
+\large
+
+\vspace{2em}
+
+A course by 
+
+\vspace{1em}
+
+S. Ducasse, L. Fabresse, G. Polito, and Pablo Tesone
+\vspace{1.5em}
+
+\includegraphics[width=80px]{by-nc-nd.png}\\
+\vspace{0.15cm}
+
+\mbox{\centering\raisebox{0.4cm}{\includegraphics[width=100px]{inriaLogo.png}}\hspace{2cm}\includegraphics[width=60px]{logo-IMT.png}}\\
+
+\medskip
+\tiny
+Except where otherwise noted, this work is licensed under CC BY-NC-ND 3.0 France\\
+\url{https://creativecommons.org/licenses/by-nc-nd/3.0/fr/}\\
+
+\vspace{1em}
+
+\includegraphics[width=400px]{simplebandeau.png}\\
+
+
+
+\end{minipage}
+\end{frame}
+
+\end{document}

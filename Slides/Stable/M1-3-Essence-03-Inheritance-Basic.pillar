@@ -24,7 +24,7 @@ ${columns}$
 
 ${column:width=60}$
 
-- Often we want small adaptations
+- Often, we want small adaptations
 - We want to extend existing behavior and state
 - We do not want to reimplement everything: We want to reuse
 - Solution: ""class inheritance""
@@ -42,11 +42,10 @@ ${columns}$
 
 ${column:width=60}$
 
-A subclass
-- can ""add"" state and behavior:
--- ==color==, ==borderColor==, ...
+A subclass:
+- can ""add"" state and behavior: ==color==, ==borderColor==, ...
 - can ""use"" superclass behavior and state
-- can ""specialize"" and ""redefine"" superclass behavior
+- can ""redefine"" superclass' behavior to ""specialize"" it
 
 ${column:width=40}$
 
@@ -66,9 +65,9 @@ ${columns}$
 
 ${column:width=70}$
 
-- ==Object== is the root of most classes 
+- ==Object== is the root of most classes
 -- defines the common behavior of all objects
--- raising an error, class access, ...
+-- raising errors, class access, ...
 
 ${column:width=30}$
 
@@ -85,7 +84,7 @@ ${columns}$
 ${column:width=70}$
 
  ==ProtoObject== (==Object=='s superclass) has a special purpose:
-- e.g. raising as much as errors as possible
+- raising as much errors as possible
 - so that the system can catch such errors and do something with them
 - useful for building advanced techniques such as proxy objects
 
@@ -98,7 +97,7 @@ ${endColumns}$
 
 ${slide:title=Two aspects of inheritance}$
 
-Inheritance is
+Inheritance is:
 - ""static"" for state/instance variables (i.e., during class creation)
 - ""dynamic"" for behavior (i.e., during execution)
 
@@ -131,7 +130,7 @@ ${column:width=50}$
 - Happens at ""run time""
 - The method is looked up
 -- starting from the receiver's class
--- then going to the superclass
+-- then going along superclasses
 
 ${column:width=50}$
 
@@ -141,7 +140,7 @@ ${endColumns}$
 
 ${slide:title=What you should know}$
 
-- Inheritance allows a class to "refine" and "add" state and behavior
+- Inheritance allows developpers of a class to "add" state and behavior and "redefine" behavior
 - A class has 1 and only 1 superclass
 - A class eventually inherits from ==Object==
 - Inheritance of state is static
