@@ -133,10 +133,10 @@ ${column:width=60}$
 
 ${column:width=40}$
 [[[
-	aA foo
-	>>> ...
-	aB foo
-	>>> ...
+> aA foo
+...
+>	aB foo
+...
 ]]]
 
 ${endColumns}$
@@ -154,10 +154,10 @@ ${column:width=60}$
 
 ${column:width=40}$
 [[[
-	aA foo
-	>>> 10
-	aB foo
-	>>> 50
+>	aA foo
+10
+> aB foo
+50
 ]]]
 
 ${endColumns}$
@@ -174,10 +174,10 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-	aA bar
-	>>> ...
-	aB bar
-	>>> ...
+> aA bar
+...
+> aB bar
+...
 ]]]
 
 ${endColumns}$
@@ -196,10 +196,10 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-	aA bar
-	>>> 10
-	aB bar
-	>>> 50
+> aA bar
+10
+> aB bar
+50
 ]]]
 
 ${endColumns}$
@@ -213,8 +213,8 @@ ${column:width=40}$
 +>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=90+
 
 [[[
-	aB bar
-	>>> 50
+> aB bar
+50
 ]]]
 
 ${column:width=65}$
@@ -249,12 +249,12 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-    aA bar
-    >>> ...
-    aB bar
-    >>> ...
-    aC bar
-    >>> ...
+> aA bar
+...
+> aB bar
+...
+> aC bar
+...
 ]]]
 
 ${endColumns}$
@@ -270,12 +270,12 @@ ${column:width=60}$
 ${column:width=40}$
 
 [[[
-    aA bar
-    >>> 10
-    aB bar
-    >>> 10
-    aC bar
-    >>> 50
+> aA bar
+10
+> aB bar
+10
+> aC bar
+50
 ]]]
 
 ${endColumns}$
