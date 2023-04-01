@@ -1,7 +1,7 @@
 {
   "title":"Inheritance and Lookup: Self",
   "subtitle":"Understanding lookup once for all",
-  "slidesid":"M1-4"
+  "slidesid":"M1S4"
 }
 
 ${slide:title=Goals}$
@@ -29,7 +29,7 @@ ${column:width=38}$
 
 ${column:width=62}$
 
-+>file://figures/InheritanceDiagram-sendingMessage.png|width=75+
++>file://figures/InheritanceDiagram-sendingMessage.pdf|width=75+
 
 ${endColumns}$
 
@@ -45,7 +45,7 @@ The lookup starts in the ""class"" of the ""receiver"" then:
 
 ${column:width=62}$
 
-+>file://figures/InheritanceDiagram-lookupTwoStages.png|width=70+
++>file://figures/InheritanceDiagram-lookupTwoStages.pdf|width=70+
 
 ${endColumns}$
 
@@ -59,7 +59,7 @@ Sending the message ==color== to ==aColoredRectangle==
 
 ${column:width=53}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=60+
++>file://figures/InheritanceDiagram-lookup-superclass.pdf|width=60+
 
 ${endColumns}$
 
@@ -73,15 +73,14 @@ Sending the message ==area== to ==aColoredRectangle==
 
 ${column:width=53}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=60+
++>file://figures/InheritanceDiagram-lookup-superclass.pdf|width=60+
 
 ${endColumns}$
 
 
-${slide:title=About lookup}$
+${slide:title=About lookup implementation}$
 
-
-- Most of the time, the result of a lookup is cached
+- Most of the time, the result of a lookup is ""cached"" and a lookup happens only once
 - In some languages, there are dispatch tables
 - The point is that conceptually there is a lookup at execution
 
@@ -92,7 +91,7 @@ ${columns}$
 
 ${column:width=50}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=80+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=80+
 
 ${column:width=50}$
 
@@ -113,7 +112,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=100+
 
 
 ${column:width=40}$
@@ -129,7 +128,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=100+
 
 
 ${column:width=40}$
@@ -151,7 +150,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=100+
 
 ${column:width=40}$
 [[[
@@ -170,7 +169,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=100+
 
 ${column:width=40}$
 
@@ -192,7 +191,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=100+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=100+
 
 ${column:width=40}$
 
@@ -211,7 +210,7 @@ ${columns}$
 
 ${column:width=40}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=90+
 
 [[[
 	aB bar
@@ -266,7 +265,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethodThreeClasses.png|width=90+
++>file://figures/LookupWithSelfInSuperclassMethodThreeClasses.pdf|width=90+
 
 ${column:width=40}$
 
