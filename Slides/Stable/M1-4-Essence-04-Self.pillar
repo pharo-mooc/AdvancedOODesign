@@ -244,7 +244,7 @@ ${columns}$
 
 ${column:width=60}$
 
-+>file://figures/LookupWithSelfInSuperclassMethodThreeClasses.png|width=90+
++>file://figures/LookupWithSelfInSuperclassMethodThreeClasses.pdf|width=90+
 
 ${column:width=40}$
 
