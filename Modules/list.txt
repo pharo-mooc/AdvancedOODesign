@@ -5,7 +5,7 @@
 - [Stef] 1-Essence-01-NotExample.pillar
 - [Luc] 2-Essence-02-Dispatch.pillar
 - [Luc] 3-Essence-03-Inheritance-Basic.pillar
-- 4-Essence-04-Self.pillar
+- [Stef] 4-Essence-04-Self.pillar
 - [Guille] 5-Essence-05-Super.pillar
 - 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
