@@ -1,13 +1,13 @@
 {
 	"title":"Essence of Dispatch",
-	"subtitle":"Taking Pharo Booleans as Example",
-	"slidesid" : "M1-1"
+	"subtitle":"Taking Pharo Booleans as example",
+	"slidesid" : "M1S1"
 }
 
 ${slide:title=Objectives}$
 
 - Understanding of message passing (late binding) for ""real"" this time
-- The ""heart of OOP""
+- The ""heart of Object-Oriented Design""
 - Looking at a beautiful implementation in Pharo
 
 ${slide:title=Context: Booleans}$
@@ -31,7 +31,7 @@ ${slide:title=Three exercises}$
 ${slide:title=Exercise 1: Implement Not}$
 
 Propose an implementation of Not in a world where:
-- You have: ==true==, ==false==
+- You have: ==true==, ==false== objects
 - You only have objects and messages
 
 How would you implement the message ==not==?
@@ -46,16 +46,17 @@ How would you implement the message ==not==?
 
 ${slide:title=Hint 1: No conditionals}$
 
-The solution does not use conditionals (i.e., no ==if==)
+The solution does not use explicit conditionals (i.e., no ==if==)
 
 ${slide:title=Hint 2: How do we express choices in OOP?}$
 
 In OOP, the choice is expressed 
 - By defining classes with ""compatible"" methods
-- By ""sending"" a message to an instance of such class
-- Let the receiver decide
+- By ""sending"" a message to an instance of such a class
+- Let the receiver decide!
 
-Example 
+${slide:title=Hint 2: An example of choice in OOP}$
+
 [[[
    x open
 ]]]
@@ -65,15 +66,15 @@ Example
 
 ${slide:title=Hint 3: With at least two classes}$
 
-- ==true== is the singleton instance of ==True==
-- ==false== is the singleton instance of ==False==
+- ==true== is the singleton instance of the class ==True==
+- ==false== is the singleton instance of the class ==False==
 
 The Pharo implementation uses three classes:
-- ==Boolean== (abstract), ==True==, and ==False==
+- The class ==Boolean== (abstract), ==True==, and ==False==
 
 ${slide:title=Hint 3: With at least two classes}$
 
-==Boolean== is not needed per se but it improves reuse
+The class ==Boolean== is not needed per se but it improves reuse
 
 +Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=50+
 
@@ -105,8 +106,8 @@ ${slide:title=Message lookup is choosing the right method}$
 
 ${slide:title=Boolean implementation}$
 
-- ==Boolean== is abstract
--  ==True== and ==False== implement
+- The class ==Boolean== is abstract
+-  The classes ==True== and ==False== implement
 -- logical operations ==&==, ==not==
 -- control structures ==and:==, ==or:==, ==ifTrue:==, ==ifFalse:==, ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
 -- reuse some logic from ==Boolean==
@@ -209,13 +210,13 @@ ${slide:title=Or Implementation in two methods}$
 ${slide:title=Step back}$
 
  ""Do not ask, tell""
-- we delegate to the correct Boolean object
-- each subclass implements its own part
+- we delegate to the correct ==Boolean== object
+- each subclass implements its ""own"" logic
 
 
 ${slide:title=Summary}$
 
 The solution to implement boolean operations:
--- does NOT use conditionals (if)
+- does NOT use conditionals (if)
 - ""Do not ask, tell""
 -- lets the receiver decide
