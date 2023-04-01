@@ -1,6 +1,6 @@
 {
     "title" : "Object-Oriented Design",
-    "subtitle": "An advanced and pragmatic Mooc",s
+    "subtitle": "An advanced and pragmatic Mooc",
     "slidesid":"2023"
 }
 
@@ -85,8 +85,6 @@ ${slide:title=Polymorphism}$
 - Looking at object API
 - To produce reusable and extensible programs
 - Not much as class structural relation (subtyping)
-
-
 
 ${slide:title=A unique mooc}$
 
