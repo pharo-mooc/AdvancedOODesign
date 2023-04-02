@@ -152,4 +152,4 @@ ${slide:title=What you should know}$
 - ==super== always represents the receiver
 - ==super== changes the lookup:
 -- a super send starts the lookup in the class above it
-- self sends act as a hook: code of subclasses may be invoked
+- self sends act as a hook: code of subclasses may be invoked (see Lectures for more)
