@@ -12,6 +12,7 @@ The case study shows how to go from a monolithic design with one kind of formats
 - [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests	[Files Renamed]
+This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer. 
 - [Guille] 1-Tests-01-101.pillar
 - [Guille] 2-Tests-02-Why.pillar
 - [Luc] 3-Tests-03-TDD.pillar
