@@ -1,57 +1,59 @@
 {
-    "title" : "Object-Oriented Design",
-    "subtitle": "An advanced and pragmatic Mooc",
-    "slidesid":"2023"
+"title" : "Advanced Object-Oriented Design",
+"slidesid":"2023"
 }
 
-
-${slide:title=Why this mooc?}$
-
-- Following the  success of the Pharo mooc (*http://mooc.pharo.org*)
-
-''I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design.'' - Anonymous
 
 
 ${slide:title=Going to the next level}$
 
-- Focus on object-oriented design
+-  Object-oriented design to the roots
 - Unique value
 - From object designer experts
+
+${slide:title=Why this mooc?}$
+
+Following the  success of the Pharo mooc (*http://mooc.pharo.org*)
+
+''I have already learned so much ! I have spent the last 20 years or so in software development and, following this Mooc, I realized I hadn’t really grasped the essence of object oriented design.'' - Anonymous
+
+
+
 
 ${slide:title=Objectives}$
 
 - Revisit basic elements such as encapsulation, delegation
-- Think about essential aspects of OOP
+- Think about essential aspects of object-oriented design
 - Learn key Design Patterns
-- Analyse real case studies
+- Analyze real case studies
 - Things about Pharo code idioms
 
 ${slide:title=10 modules}$
 
-+>file://figures/Map.pdf+
++>file://figures/MapL.pdf|width=80+
 
-${slide:title=10 modules}$
+%${slide:title=10 modules}$
 
-${columns}$
+%${columns}$
 
-${column:width=50}$
+%${column:width=50}$
 
-- Understanding messages
-- Tests and test driven 
-- Hooks
-- Elementary design patterns
-- Object Creation
-- Double Dispatch
+%- Understanding messages
+%- Tests and test driven 
+%- Hooks
+%- Elementary design patterns
+%- Object Creation
+%- Double Dispatch
 
-${column:width=50}$
+%${column:width=50}$
 
-- Objects: state and behavior
-- Object creation
-- Registration
-- Sharing objects
-- Types
+%- Objects: state and behavior
+%- Object creation
+%- Registration
+%- Sharing objects
+%- Types
 
-${endColumns}$
+%${endColumns}$
 
 ${slide:title=About Pharo}$
 
@@ -61,20 +63,13 @@ All the code samples and examples are taken from Pharo (*http://www.pharo.org*)
 
 
 ${slide:title= Why Pharo?}$
-- Pharo is pure and powerful object-oriented language (read more at *http://www.pharo.org*)
+
+- Pharo is pure and powerful object-oriented language (See *http://www.pharo.org*)
 - With only objects, messages, and lambdas, Pharo helps us to focus on important ideas!
 - Complement the excellent Pharo mooc (*http://mooc.pharo.org*)
 
 
-
-${slide:title=About vocabulary: The case of polymorphism}$
-
-- To avoid some misunderstandings
-- The word "Polymorphism" is overloaded
-- Literally, it is strange: having multiple forms :)
-- It could mean subtyping: when a class is a subclass of another one.
-
-${slide:title=Our stance}$
+${slide:title=Our definition of polymorphism}$
 
 ''If it walks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.''
 
@@ -84,14 +79,9 @@ We use the terms ""polymorphic"" or ""polymorphism"" in the sense of:
 - an object can be replaced by another one because both present the same API (set of messages),
 - polymorphic objects do not have to be subtypes
 
-${slide:title=Polymorphism}$
-
-- Looking at object API
-- To produce reusable and extensible programs
-- Not much as class structural relation (subtyping)
-
 ${slide:title=A unique mooc}$
 
 - More than 60 years of experience in OO design and practices
 - Concrete cases
 - Knowledge actionable in many languages
+
