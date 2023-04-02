@@ -10,20 +10,30 @@ ${slide:title=Goal}$
 - How to avoid creating spurious objects
 - ==asString== and ==printString== inside ==printOn:==
 
-
 ${slide:title=printString: setting the stage}$
+
+- Can get a textual representation of any object
+
+[[[
+> Apple new printString
+'an Apple'
+
+> Date today printString
+'2 April 2023'
+]]]
+
+${slide:title=printString: implementation}$
 
 [[[
 Object >> printString
 	^ self printStringLimitedTo: 50000
-	
+
 Object >> printStringLimitedTo: limit
 	^self printStringLimitedTo: limit using: [:s | self printOn: s]
 ]]]
 
 ${slide:title=printStringLimitedTo:using:}$
 
-==streamContents: [ :s | self printOn: s ]== creates a stream and gather object textual representation
 
 [[[
 Object >> printStringLimitedTo: limit
@@ -35,14 +45,13 @@ Object >> printStringLimitedTo: limit
    ^ limitedString , '...etc...'
 ]]]
 
+- ==streamContents: [ :s | self printOn: s ]== creates a stream and gather object textual representation
+- each object can place text inside the stream
 
 
+${slide:title=Some suboptimal use: The case of displayStringOn:}$
 
 
-
-${slide:title=The case of displayStringOn:}$
-
-- When we get a stream, better use it directly
 [[[
 MessageTally >> displayStringOn: aStream
 	self displayIdentifierOn: aStream.
@@ -52,9 +61,10 @@ MessageTally >> displayStringOn: aStream
 		nextPutAll: ')'
 ]]]
 
-==self tally printString==
-- Creates a new stream
-- Get its contents to be able to put in the first stream
+- When we get a stream, better use it directly
+- ==self tally printString==
+-- Creates a ""new"" stream
+-- And get its contents to put in the first stream
 
 ${slide:title=Better}$
 
@@ -70,7 +80,6 @@ MessageTally >> displayStringOn: aStream
 [[[
 Stream >> print: anObject
 	"Have anObject print itself on the receiver."
-
 	anObject printOn: self
 ]]]
 
@@ -83,15 +92,15 @@ printProtocol: protocol sourceCode: sourceCode
 
 	^ String streamContents: [ :stream |
 		stream
-			nextPutAll: '"protocol: '; 
+			nextPutAll: 'protocol: '; 
 			nextPutAll: protocol printString;
-			nextPut: $"; cr; cr;
+			cr; cr;
 			nextPutAll: sourceCode ]	
 ]]]
 
 ==protocol printString==
 - Creates a new stream
-- Get its contents to be able to put in the first stream
+- Get its contents to put in the first stream
 
 ${slide:title=Better use print:}$
 
@@ -100,14 +109,11 @@ printProtocol: protocol sourceCode: sourceCode
 
 	^ String streamContents: [ :stream |
 		stream
-			nextPutAll: '"protocol: '; 
+			nextPutAll: 'protocol: '; 
 			print: protocol;
-			nextPut: $"; cr; cr;
+			cr; cr;
 			nextPutAll: sourceCode ]	
 ]]]
-
-
-
 
 
 ${slide:title=About asString}$
@@ -122,7 +128,7 @@ Object >> asString
 ]]]
 
 - ==asString== should be used when we convert an object to its string representation
-- now check before calling it inside a ==streamContents==
+- Check before calling it inside a ==streamContents==
 
 
 ${slide:title=Conclusion}$
@@ -130,4 +136,5 @@ ${slide:title=Conclusion}$
 - Check protocols (==printString==, ==printOn:==, ==asString==)
 - Read code around
 - Streams are powerful containers
-
+-- can be passed around
+-- no need to create streams for basic sub process
