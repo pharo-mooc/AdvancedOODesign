@@ -137,4 +137,4 @@ ${slide:title=Conclusion}$
 - Read code around
 - Streams are powerful containers
 -- can be passed around
--- no need to create streams for basic sub process
+-- no need to create intermediairy streams for basic sub process
