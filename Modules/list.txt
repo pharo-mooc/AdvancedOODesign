@@ -7,7 +7,7 @@
 - [Luc] 3-Essence-03-Inheritance-Basic.pillar
 - [Stef] 4-Essence-04-Self.pillar
 - [Guille] 5-Essence-05-Super.pillar
-- 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
+- [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests	[Files Renamed]
 - [Guille] 1-Tests-01-101.pillar

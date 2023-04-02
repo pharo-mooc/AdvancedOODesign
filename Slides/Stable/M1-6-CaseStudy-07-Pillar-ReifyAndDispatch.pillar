@@ -1,15 +1,15 @@
 {
-    "title":"Reification and delegation",
-    "subtitle":"Microdown in Pillar case study",
-	"slidesid":"M1-6"
+"title":"Reification and delegation",
+"subtitle":"A case study: Microdown in Pillar",
+"slidesid":"M1S6"
 }
 
 
 ${slide:title=Goals}$
 
-- Creating specific objects supports delegation
+- Creating dedicated objects ""supports"" delegation
 - Delegation creates ""dispatch"" spaces (Strategy Design Pattern)
-- Study a concrete case: Pillar handing now Microdown format
+- Study a concrete case: Pillar handing new Microdown format
 - Think about modularity
 
 
@@ -17,17 +17,17 @@ ${slide:title=Case study: introducing .md file in Pillar}$
 
 
 ""Existing""
-- Pillar is a document compilation chain to produce books, slides, sites
+- Pillar is a document compilation chain: it produces books, slides, sites
 - Pillar used .pillar file containing Pillar text
-""New requirement"": Now Pillar should handle .md files containing Microdown text
+""New requirement"": Pillar should handle .md files containing Microdown text
 - How to support this new requirement?
 
 ${slide:title=Pillar's .pillar file management}$
 
 How to get a document parsed?
 - We ask the parser!
-- The parser turns pillar file into a document tree
-- There is ""only one"" parser associated to a document
+- The parser turns a pillar file into a document tree
+- There is one parser associated to a document
 
 [[[
 PRDocument parser parseFile: aFileReference
@@ -35,6 +35,7 @@ PRDocument parser parseFile: aFileReference
 
 - It avoids to hardcode ==PRParser== everywhere 
 - Worked to substittute different versions of PetitParser parser
+
 
 
 ${slide:title=Case study: Pillar supports .pillar }$
@@ -55,18 +56,19 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 	^ PRDocument parser parse: anInputFile file	
 ]]]
 
-${slide:title=Problems}$
+${slide:title=Challenges}$
 
 ==PRDocument parser== implications 
-- There is only one parser
+- There is "only one" parser
 - Only one syntax
 
-Other limits
+""Other limits""
 - Checks for the file extension are hardcoded
 - File does not know its project (book,...)
 - Access to project configuration (user option) is cumbersome
 
-At the end we do not have the possibility to distinguish between a .pillar and .md file
+We cannot distinguish between a .pillar and .md file
+
 
 ${slide:title=Solution: Introduce InputDocument}$
 
