@@ -1,7 +1,7 @@
 {
     "title" : "Global To Parameter",
     "subtitle":"Basic but important",
-    "slidesid":"M3-5"
+    "slidesid":"M3S5"
 }
 
 ${slide:title=Goal}$
@@ -13,9 +13,9 @@ ${slide:title=Goal}$
 
 ${slide:title=Roadmap}$
 
-- Example: Analysis of Transcript usage
+- Example: Transcript usage
 - Cure
-- Analysis
+- Stepping back
 - Other analysis
 - Related to the plague of Singleton Design Pattern 
 
@@ -36,9 +36,7 @@ myMethod
 ]]]
 
 
-${slide:title=The core of the problem}$
-
-When not in development 
+${slide:title=The core of the problem: when deployed}$
 
 [[[
 MicAbstractBlock >> iterate
@@ -54,7 +52,7 @@ MicAbstractBlock >> iterate
 		cr.
 ]]]
 
-- What if I would like to have a specific log for Microdown?
+- What if I would like to have a specific log?
 - What if we want to test that such logs are correct?
 
 
