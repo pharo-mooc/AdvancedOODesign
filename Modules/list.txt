@@ -13,6 +13,7 @@ The case study shows how to go from a monolithic design with one kind of formats
 
 ## Module 2: Tests	[Files Renamed]
 This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer. 
+
 - [Guille] 1-Tests-01-101.pillar
 - [Guille] 2-Tests-02-Why.pillar
 - [Luc] 3-Tests-03-TDD.pillar
@@ -20,7 +21,9 @@ This module covers an important aspect: testing applications and how to take adv
 - [Pablo] 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
-- 1-DesignPattern-01-IntroDesignPattern.pillar
+In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible. The case study will be about going from monolithic to parametrized objects.
+
+- [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
 - [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
 - [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
 - 4-Lang-01-Stream.pillar
