@@ -59,15 +59,22 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 ${slide:title=Challenges}$
 
 ==PRDocument parser== implications 
-- There is "only one" parser
+- There is **only one** parser
 - Only one syntax
 
 ""Other limits""
-- Checks for the file extension are hardcoded
+- Checks for file extension are hardcoded
 - File does not know its project (book,...)
 - Access to project configuration (user option) is cumbersome
 
 We cannot distinguish between a .pillar and .md file
+
+${slide:title=Glimpse at a solution}$
+
+- Get an object representing a specific inputs (.pillar, .md)
+- Each input will know its format and corresponding parser
+
+Now we get one parser per document type
 
 
 ${slide:title=Solution: Introduce InputDocument}$
@@ -77,6 +84,9 @@ First step:
 - ==InputDocument== wraps files and more information (file extension, parser...)
 
 ${slide:title=Step 1: Introduce InputDocument}$
+
+- When a file ends by ==.pillar==
+- Create an instance of ==PRInputDocument==
 
 [[[
 PRBuilAllStrategy >> filesToBuildOn: aProject
@@ -91,6 +101,10 @@ PRBuilAllStrategy >> filesToBuildOn: aProject
 					yourself ] ]
 ]]]
 
+${slide:title=Step 1: Introduce InputDocument}$
+
+A ==PRInputDocument== knows its parser
+
 [[[			
 PRInputDocument >> parser
 	file extension = 'pillar'
@@ -98,20 +112,20 @@ PRInputDocument >> parser
 	self error: 'No parser for document extension: ', file extension
 ]]]
 
-${slide:title=Not much chagnes but still }$
+${slide:title=A little chicken step}$
 
-- We do not distribute responsibility
+We do not distribute responsibility yet
 
 [[[
 ... select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
 ]]]
 
 
-${slide:title=Support for .mic/.md files}$
+${slide:title=Support for .md files}$
 
-- Now Pillar compilation chain should accept .md file
-- Different syntax!
-- Different parser!
+- Pillar compilation chain should accept .md files
+- Different syntax
+- Different parser
 
 ${slide:title=Refining InputDocument into a simple hierarchy}$
 
@@ -121,8 +135,7 @@ ${slide:title=Refining InputDocument into a simple hierarchy}$
 +.>file://figures/PillarInputFile.pdf|width=100+
 
 
-${slide:title=InputFile is now responsible for its parser}$
-
+${slide:title=InputFile objects are responsible for their parser}$
 
 [[[	
 PRAbstractOutputDocument >> parseInputFile: anInputFile
@@ -130,6 +143,7 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 ]]]
 
 becomes
+
 [[[
 PRAbstractOutputDocument >> parseInputFile: anInputFile	
 	^ anInputFile parsedDocument
@@ -156,20 +170,26 @@ PRMicrodownInputDocument >> parserClass
 
 ${slide:title=Delegating extension checks}$
 
-[[[		
+Each input document handles its extension.
+
+[[[
 PRPillarInputDocument >> doesHandleExtension: anExtension
 	^ anExtension = 'pillar'		
 ]]]
 
 [[[
 PRMicrodownInputDocument >> doesHandleExtension: anExtension
-	^ anExtension = 'mic'
+	^ anExtension = 'md'
 ]]]
+
+${slide:title=What if we want optional format}$
+
+- We can parse .md and .pillar
+- How to make them optional?
 
 ${slide:title=Registration mechanism to support modularity}$
 
-- Need to create objects of the right kind (==PRMicrodownInputDocument== or ==PRPillarInputDocument==)
-- Use a registration mechanism, so that input documents can declare their existence
+- Use a registration mechanism, so that new input document kinds can declare their existence
 
 [[[
 PRInputDocument class >> inputClassForFile: aFile
@@ -179,12 +199,12 @@ PRInputDocument class >> inputClassForFile: aFile
 			ifNone: [ PRNoInputDocument  ]
 ]]]
 
-- Note: Registration could be better (check corresponding Lecture)
+- Note: the registration could be better (see corresponding Lectures)
 
 
 ${slide:title=Creating the right kind of InputDocument objects}$
 
-Now we are ready to create the adequate InputDocument objects
+Create the adequate ==InputDocument== objects
 
 [[[
 PRBuilAllStrategy >> filesToBuildOn: aProject
@@ -198,11 +218,11 @@ PRBuilAllStrategy >> filesToBuildOn: aProject
 
 ${slide:title=Conclusion}$
 
-- Turning ""implicit into an object""
-- Turning one object into objects of different but polymorphic classes
-- Defining ""polymorphic behavior"" to be able to delegate 
+- Turn ""implicit into an object""
+- Specialize one object into objects of different but polymorphic classes
+- Define ""polymorphic behavior"" to be able to delegate 
 - Create dispatch spaces
-- Using registration to create modular design
+- Use registration to obtain a modular design
  
 
 
