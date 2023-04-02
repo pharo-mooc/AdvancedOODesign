@@ -1,6 +1,6 @@
 {
 	"title":"About super",
-	"slidesid":"M1-5"
+	"slidesid":"M1S5"
 }
 
 ${slide:title=Goals}$
@@ -15,7 +15,7 @@ ${columns}$
 
 ${column:width=50}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.pdf|width=85+
 
 ${column:width=50}$
 
@@ -33,17 +33,17 @@ ${columns}$
 
 ${column:width=80}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.pdf|width=85+
 
 ${column:width=30}$
 
 [[[
-    aA bar
-    >>> ...
-    aB bar
-    >>> ...
-    aC bar
-    >>> ...
+> aA bar
+...
+> aB bar
+...
+> aC bar
+...
 ]]]
 
 ${endColumns}$
@@ -54,17 +54,17 @@ ${columns}$
 
 ${column:width=80}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=85+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.pdf|width=85+
 
 ${column:width=30}$
 
 [[[
-    aA bar
-    >>> 10
-    aB bar
-    >>> 20
-    aC bar
-    >>> 100
+> aA bar
+10
+> aB bar
+20
+> aC bar
+100
 ]]]
 
 ${endColumns}$
@@ -75,7 +75,7 @@ ${columns}$
 
 ${column:width=54}$
 
-+>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.png|width=100+
++>file://figures/LookupWithSuperInSuperclassMethodThreeClasses.pdf|width=100+
 
 ${column:width=46}$
 
@@ -109,7 +109,7 @@ ${columns}$
 
 ${column:width=45}$
 
-+>file://figures/LookupWithSelfInSuperclassMethod.png|width=90+
++>file://figures/LookupWithSelfInSuperclassMethod.pdf|width=90+
 
 ${column:width=55}$
 
@@ -128,7 +128,7 @@ ${columns}$
 
 ${column:width=50}$
 
-+>file://figures/superIsStatic.png|width=65aA+
++>file://figures/superIsStatic.pdf|width=65aA+
 
 ${column:width=50}$
 
@@ -142,7 +142,7 @@ ${slide:title=Even some books got it wrong}$
 - ""Wrong"" definition: ''==super== looks for the method in the superclass of the ""receiver""'s class''
 - With this definition, this example would loop forever:
 
-+>file://figures/LookupWithWrongDefinition.png|width=65+
++>file://figures/LookupWithWrongDefinition.pdf|width=50+
 
 In reality it ""does not"" loop, the definition is wrong
 
