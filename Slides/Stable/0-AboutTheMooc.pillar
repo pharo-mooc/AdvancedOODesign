@@ -28,6 +28,10 @@ ${slide:title=Objectives}$
 
 ${slide:title=10 modules}$
 
++>file://figures/Map.pdf+
+
+${slide:title=10 modules}$
+
 ${columns}$
 
 ${column:width=50}$
@@ -41,10 +45,10 @@ ${column:width=50}$
 
 ${column:width=50}$
 
-- Object creation
 - Objects: state and behavior
+- Object creation
 - Registration
-- Sharing
+- Sharing objects
 - Types
 
 ${endColumns}$
