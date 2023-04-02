@@ -21,12 +21,12 @@ This module covers an important aspect: testing applications and how to take adv
 - [Pablo] 5-Tests-05-ParametrizedTests.pillar
 
 ## Module 3: Hooks 	[Files Renamed]
-In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible. The case study will be about going from monolithic to parametrized objects.
+In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible using hooks. The case study will be about going from monolithic to parametrized objects.
 
 - [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
 - [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
 - [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
-- 4-Lang-01-Stream.pillar
+- [Stef] 4-Lang-01-Stream.pillar
 - 5-BasicPrinciples-02-FromGlobalToParameter.pillar
 
 ## Module 4: Objects: state + behavior [Files Renamed]
