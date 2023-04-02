@@ -1,6 +1,8 @@
 - 0-AboutTheMooc.pillar
 
 ## Module 1: Understanding messages [Files Renamed]
+This first module revisits elementary concepts around self, super and the power of dispatching to dedicated objects. 
+The case study shows how to go from a monolithic design with one kind of formats to the handling of optional different formats in the Pillar ddocument compilation chain.
 
 - [Stef] 1-Essence-01-NotExample.pillar
 - [Luc] 2-Essence-02-Dispatch.pillar
