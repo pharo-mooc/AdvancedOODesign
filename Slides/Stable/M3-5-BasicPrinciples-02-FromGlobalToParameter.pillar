@@ -7,7 +7,7 @@
 ${slide:title=Goal}$
 
 - Globals are not a fatality
-- Some can be turned as computation parameters (such as instance variables)
+- Some can be turned into computation parameters (such as instance variables)
 - There are pros and cons
 
 
