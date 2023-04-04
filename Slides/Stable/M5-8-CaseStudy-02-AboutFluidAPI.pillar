@@ -1,18 +1,19 @@
 {
-	"title":"About Fluid API",
+	"title":"About Fluid APIs",
 	"subtitle":"The case of the class definition",
-	"slidesid":"M5-8"
+	"slidesid":"M5S8"
 }
 
 
 ${slide:title=Goal}$
 
+- Fluid API?
 - Think modular
 - Looking at the class definition printer
-- Fluid API
 
 
-${slide:title=Fluid API}$
+
+${slide:title=What is a fluid API?}$
 
 [[[
 	x foo: aString bar: anotherString babar: aThirdString
@@ -44,9 +45,9 @@ or
 
 
 
-${slide:title=Context: class definition}$
+${slide:title=Our context: class definition}$
 
-- How to support the ""evolution"" of class definition
+- How to support the ""evolution"" of class definition?
 - Supporting: package, various formats, slots
 - Without parameter ""explosion""
 
@@ -63,15 +64,8 @@ ArrayedCollection variableSubclass: #Array
 
 ${slide:title=Pharo up to Pharo 90}$
 
-- Avoids poolDictionaries: when not used, but still...
+- Avoids poolDictionaries: when not used
 - Supports package
-
-[[[
-ArrayedCollection variableSubclass: #Array
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''Collections-Sequenceable-Base''
-]]]
 
 [[[
 Object subclass: #Point
@@ -80,15 +74,26 @@ Object subclass: #Point
 	package: ''Kernel-BasicObjects'''
 ]]]
 
+[[[
+ArrayedCollection variableSubclass: #Array
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	package: ''Collections-Sequenceable-Base''
+]]]
+
+
+
 ${slide:title=Method parameter explosion}$
 
 Modern class definition should support: 
 - Packages, tags, slots, 
-- New kind of subclasses (ephemerons,....)
-Challenge: How to support new information without method parameter combinatorial explosion?
+- Various instance format: Word, Byte, Variable, Indexed....
+- New kind of format: ephemerons,....
+
+""Challenge:"" How to support new information without method parameter combinatorial explosion?
 
 
-${slide:title=Using Fluid API}$
+${slide:title=Using a Fluid API}$
 
 - Using a fluid API (cascade instead of mandatory parameters)
 - Only the necessary parameters

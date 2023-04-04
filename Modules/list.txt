@@ -50,7 +50,7 @@ In this module we will present some important and simple design patterns such as
 - [Pablo] 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
 - [Pablo] 6-Lang-04-BlocksVsObjects.pillar
 - [Guille] 7-Principles-01-AvoidIsNil.pillar
-- 8-CaseStudy-02-AboutFluidAPI.pillar
+- [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 6: About double dispatch [Files Renamed]
 - 1-DoubleDispatch-01-StoneExercise.pillar
