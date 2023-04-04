@@ -1,16 +1,16 @@
 {
-	"title" : "A double dispatch starter",
-	"slidesid" : "Stone Paper Scissors",
-	"slidesid":"M6-1"
+    "title" : "A double dispatch starter",
+    "subtitle" : "Stone Paper Scissors",
+    "slidesid":"M6S1"
 }
 
 ${slide:title=Goals}$
 
 - In the quest of dispatch
 - No conditionals!
-- implementing: 
+- Implementing: 
 [[[
->>> (Stone new vs: Paper new)
+> Stone new vs: Paper new
 #paper
 ]]]
 
@@ -22,19 +22,19 @@ ${slide:title=Stone Paper Scissors: one Test}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-	self assert: (Stone new vs: Paper new) equals: #paper
+        self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 ${slide:title=The inverse too}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-		self assert: (Stone new vs: Paper new) equals: #paper
+        self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-		self assert: (Paper new vs: Stone new) equals: #paper
+        self assert: (Paper new vs: Stone new) equals: #paper
 ]]]
 
 
@@ -42,20 +42,20 @@ ${slide:title=Let us start}$
 
 [[[
 StonePaperScissorsTest >> testPaperIsWinning
-		self assert: (Stone new vs: Paper new) equals: #paper
+        self assert: (Stone new vs: Paper new) equals: #paper
 ]]]
 
 [[[
 Stone >> vs: anotherTool
-		^ ...
+        ^ ...
 ]]]
 
-${slide:title=Hint 0}$
+${slide:title=Hint 1}$
 
 - The solution does not contain an explicit condition (No if, no checks)
 - Remember sending a message is making a choice: it selects the right method
 
-${slide:title=Hint 1: 3 classes}$
+${slide:title=Hint 2: 3 classes}$
 
 - ==Stone==
 - ==Paper==
@@ -66,57 +66,57 @@ ${slide:title=More hints}$
 
 - When we execute the method ==vs:== we know the receiver of the message
 - So we have already half of the solution
-- What if we introduce another method ==playAgainstStone== to make another choice?
+- Introduce another method ==playAgainstStone== to make ""another"" choice
 
 ${slide:title=Defining Paper >> playAgainstStone}$
 
 [[[
 Stone >> vs: anotherTool
-		^ ... playAgainstStone
+        ^ ... playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
-		^ ...
+        ^ ...
 ]]]
 
 ${slide:title=Defining Paper >> playAgainstStone}$
 
 [[[
 Stone >> vs: anotherTool
-		^ anotherTool playAgainstStone
+        ^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
-		^ ...
+        ^ ...
 ]]]
 
-${slide:title=Paper playAgainstStone defined}$
+${slide:title=Paper playAgainstStone definition}$
 
 [[[
 Stone >> vs: anotherTool
-		^ anotherTool playAgainstStone
+        ^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
->> 		^ #paper
+         ^ #paper
 ]]]
 
 ${slide:title=Stone new vs: Scissor new}$
 
 Works for 
 [[[
->>> Stone new vs: Paper new
+> Stone new vs: Paper new
 #paper
 ]]]
 
 But not for 
 
 [[[
->>> Stone new vs: Scissor new
-#stone
+> Stone new vs: Scissor new
+...
 ]]]
 
 - How to fix this?
@@ -127,102 +127,102 @@ ${slide:title=Supporting aScissor as argument}$
 
 [[[
 Stone >> vs: aScissor
-		^ aScissor playAgainstStone
+        ^ aScissor playAgainstStone
 ]]]
 
 - So we should implement ==playAgainstStone== on ==Scissor==
 
 [[[
 Scissors >> playAgainstStone
-		^ ...
+        ^ ...
 ]]]
 
 ${slide:title=Other playAgainstStone definitions}$
 
 [[[
 Scissors >> playAgainstStone
-		^ #stone
+        ^ #stone
 ]]]
 
 [[[
 Stone >> playAgainstStone
-		^ #draw
+        ^ #draw
 ]]]
 
 
 
-${slide:title=Complete code for Stone as receiver}$
+${slide:title=Full code of Stone}$
 
 [[[
 Stone >> vs: anotherTool
-		^ anotherTool playAgainstStone
+        ^ anotherTool playAgainstStone
 ]]]
 
 [[[
 Paper >> playAgainstStone
-		^ #paper
+        ^ #paper
 ]]]
 
 [[[
 Scissors >> playAgainstStone
-		^ #stone
+        ^ #stone
 ]]]
 
 [[[
 Stone >> playAgainstStone
-		^ #draw
+        ^ #draw
 ]]]
 
 
 ${slide:title=Stepping back}$
 
-- We know that a method is executed on a class (here ==Stone==)
+- While executing the method ==Stone>>vs:==, we ""know"" that the method is executed on ==Stone== class
 - We ""send another message to the argument"" to select another method (here ==playAgainstStone==)
-- Two messages to be able to select a method based on its receiver AND argument
+- Conclusion: ""Two"" messages to be able to select a method based on its receiver AND argument
 
 
 
-${slide:title=Full Scissors code}$
+${slide:title=Full code of Scissors}$
 
 [[[
 Scissors >> vs: anotherTool
-		^ anotherTool playAgainstScissors
+        ^ anotherTool playAgainstScissors
 ]]]
 
 [[[
 Scissors >> playAgainstScissors
-		^ #draw
+        ^ #draw
 ]]]
 
 [[[
 Paper >> playAgainstScissors
-		^ #scissors
+        ^ #scissors
 ]]]
 
 [[[
 Stone >> playAgainstScissors
-		^ #stone
+        ^ #stone
 ]]]
 
-${slide:title=Full Paper code}$
+${slide:title=Full code of Paper}$
 [[[
 Paper >> vs: anotherTool
-		^ anotherTool playAgainstPaper
+        ^ anotherTool playAgainstPaper
 ]]]
 
 [[[
 Scissors >> playAgainstPaper
-		^ #scissors
+        ^ #scissors
 ]]]
 
 [[[
 Paper >> playAgainstPaper
-		^ #draw
+        ^ #draw
 ]]]
 
 [[[
 Stone >> playAgainstPaper
-		^ #paper
+        ^ #paper
 ]]]
 
 ${slide:title=Solution overview}$
@@ -240,18 +240,18 @@ ${slide:title=Double dispatch}$
 ${slide:title=Remark}$
 
 - In this toy example we do not need to pass the argument during the double dispatch
-- But in general this is important as we want to do something with the first receiver (as in Visitor DP)
+- But in general this is important as we want to do something with the first receiver (as in Visitor Design Pattern)
 
 [[[
 Scissors >> playAgainstPaper
-		^ #scissors
+        ^ #scissors
 ]]]
 
 will just be
 
 [[[
 Scissors >> playAgainstPaper: aScissors
-		^ #scissors
+        ^ #scissors
 ]]]
 
 ${slide:title=With an argument}$

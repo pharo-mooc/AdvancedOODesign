@@ -1,4 +1,4 @@
-- 0-AboutTheMooc.pillar
+- [Stef] 0-AboutTheMooc.pillar
 
 ## Module 1: Understanding messages
 This first module revisits elementary concepts around self, super and the power of dispatching to dedicated objects. 
@@ -53,7 +53,7 @@ In this module we will present some important and simple design patterns such as
 - [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 6: About double dispatch [Files Renamed]
-- 1-DoubleDispatch-01-StoneExercise.pillar
+- [Stef] 1-DoubleDispatch-01-StoneExercise.pillar
 - [Guille] 2-DoubleDispatch-04-NoSymmetrical.pillar
 - 3-DoubleDispatch-03-Dice.pillar
 - [Luc] 4-DesignPattern-04-Visitor.pillar
