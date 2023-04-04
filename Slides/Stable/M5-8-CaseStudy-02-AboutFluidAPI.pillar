@@ -5,13 +5,59 @@
 }
 
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
+- Think about fixed and large parameter-driven APIs
 - Fluid API?
 - Think modular
 - Looking at the class definition printer
 
+${slide:title=Numberous mandatory parameter APIs}$
 
+[[[
+DockingBarMorph >>
+add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: anAction keyText: aText
+
+]]]
+
+as invoked in
+
+[[[
+add: wordingString icon: aForm help: helpString subMenu: aMenuMorph
+	"Append the given submenu with the given label."
+
+	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: nil keyText: nil
+]]]
+
+- May forces users to specify all parameters (often with ==nil==)
+
+${slide:title=Handling optional parameters may blow up API}$
+
+[[[
+add: wordingString icon: aForm help: helpString subMenu: aMenuMorph
+	"Append the given submenu with the given label."
+
+	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: nil keyText: nil
+]]]
+
+into 
+
+[[[
+add: wordingString icon: aForm help: helpString subMenu: aMenuMorph
+	"Append the given submenu with the given label."
+
+	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph
+]]]
+
+Requires 
+[[[
+add: w icon: f help: h subMenu: m
+add: w icon: f help: h subMenu: m action: a
+add: w icon: f help: h subMenu: m action: a keyText: t
+]]]
+
+
+- May result in multiple methods to handle all the cases of optional value
 
 ${slide:title=What is a fluid API?}$
 
@@ -45,7 +91,7 @@ or
 
 
 
-${slide:title=Our context: class definition}$
+${slide:title=A key context: class definition}$
 
 - How to support the ""evolution"" of class definition?
 - Supporting: package, various formats, slots
@@ -119,9 +165,7 @@ Object class << Point class
 - Compact
 - Extensible
 
-${slide:title=Support complex slots}$
-
-Previous Pharo class definition did not support well slots
+${slide:title=Support well complex slots}$
 
 [[[
 SpAbstractWidgetPresenter << #SpDiffPresenter
@@ -139,7 +183,7 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 ]]]
 
 
-${slide:title=Supporting traits}$
+${slide:title=Support for traits}$
 
 [[[
 Trait << #TTranscript
@@ -150,13 +194,13 @@ Trait << #TTranscript
 
 ${slide:title=Builder API roles}$
 
-- a ""starting/creator"" message: to create a kind of accumulator (an holder of arguments)
+- a ""starting/creator"" message: to create a kind of ""accumulator"" (an holder of arguments)
 -- this one can be omitted when the builder is already created by the framework
-- some configuration/setter objects
+- some ""configuration/setter"" messages
 - a ""closing"" message: to perform an action ""once"" the arguments are passed around
 
 
-${slide:title=Two specific roles}$
+${slide:title=Roles in class definition}$
 
 [[[
 SpAbstractWidgetPresenter << #SpDiffPresenter
@@ -165,8 +209,19 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 	package: 'Spec2-Core'
 ]]]
 
-- ==< <== creates a class builder
+- ==< <== creates a class ""builder""
 - ==package:== tells the builder to create and install the configured class
+
+${slide:title=Created vs. builder objects}$
+
+You may have 
+- the object created also be its own builder object
+- or a separate one: a ClassBuilder whose role is to configure classes
+-- this clear separation is usually better
+-- produces clearer API
+
+In both cases, you need a builder like API
+
 
 ${slide:title=In Seaside}$
 
@@ -184,14 +239,25 @@ html orderedList with: [
    html listItem: 'Item 2' ].
 ]]]
 
+
+
+
+
+
+
+
 ${slide:title=Analysis of Fluid API}$
 
 ""Pros:""
 - Handles combinatorial explosion
 - Handles optional argument
+- Forces initialization with good default values
+-- default values are not passed around via extra parameters but initialized in the configured object
+
 
 ""Cons:""
 - The message order can be important
+--  use configuration messages with more than one argument
 - There is a need for a closing message (==package:==)
 
 
@@ -201,6 +267,6 @@ ${slide:title=Conclusion}$
 -- container creator
 -- setters
 -- closer
-- Fluid API is nice when we face many optional/exclusive parameters
-- Still always think about the builder and closing message. 
+- A fluid API is nice when we face many optional/exclusive parameters
+- See lectures on builder idioms
 
