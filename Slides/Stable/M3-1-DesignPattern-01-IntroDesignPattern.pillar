@@ -1,6 +1,6 @@
 {
     "title":"An introduction to design patterns",
-        "slidesid":"M3-1"
+        "slidesid":"M3S1"
 }
 
 ${slide:title=Goal}$
@@ -41,13 +41,13 @@ Design patterns are ''recurrent solutions to design problems''
 
 ${slide:title=What are design patterns?}$
 
-- Elegant solutions that a novice would not think of
-- Generic
-- Independent on specific type system or language
-- Well-proven
+- ""Elegant"" solutions that a novice would not think of
+- ""Generic""
+- ""Independent"" on specific type system or language
+- ""Well-proven""
 --Successfully tested in several systems
-- Simple
-- Can be combined for more complex solutions
+- ""Simple""
+- Can be combined together for more complex solutions
 
 
 ${slide:title=Watchout!}$
@@ -68,7 +68,7 @@ Design Patterns are ""names""
 
 ${slide:title=What design patterns are not}$
 
-- A design pattern is not just one implementation
+- A design pattern is ""not"" just one implementation
 - A design pattern is ''illustrated'' using one ''possible'' implementation 
 - But alternate implementations exist
 
@@ -77,7 +77,7 @@ ${slide:title=Elements of a pattern}$
 - ""Pattern name"": Increase design vocabulary
 - ""Pattern intent"": Describe the goal
 - ""Problem description"": When to apply it, in what context to use it
-- ""Solution description"" (generic !):
+- ""Solution description"" (generic):
 -- The elements that make up the design
 -- Their relationships, responsibilities, and collaborations
 - ""Consequences"": Results and trade-offs of applying the pattern
@@ -103,7 +103,7 @@ ${slide:title=Strategy application}$
 
 +.>file://figures/DP-StrategyExample.pdf|width=90+
 
-${slide:title=Some pattern categories}$
+${slide:title=Some categories}$
 
 ""Creational Patterns""
 - Instantiation and configuration of classes and objects

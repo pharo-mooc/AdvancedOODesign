@@ -1,21 +1,21 @@
 {
     "title" : "Global To Parameter",
     "subtitle":"Basic but important",
-    "slidesid":"M3-5"
+    "slidesid":"M3S5"
 }
 
 ${slide:title=Goal}$
 
 - Globals are not a fatality
-- Some can be turned as computation parameters (such as instance variables)
+- Some can be turned into computation parameters (such as instance variables)
 - There are pros and cons
 
 
 ${slide:title=Roadmap}$
 
-- Example: Analysis of Transcript usage
+- Example: Transcript usage
 - Cure
-- Analysis
+- Stepping back
 - Other analysis
 - Related to the plague of Singleton Design Pattern 
 
@@ -36,9 +36,7 @@ myMethod
 ]]]
 
 
-${slide:title=The core of the problem}$
-
-When not in development 
+${slide:title=The core of the problem on released soft}$
 
 [[[
 MicAbstractBlock >> iterate
@@ -54,7 +52,7 @@ MicAbstractBlock >> iterate
 		cr.
 ]]]
 
-- What if I would like to have a specific log for Microdown?
+- What if I would like to have a specific log?
 - What if we want to test that such logs are correct?
 
 
@@ -62,8 +60,8 @@ ${slide:title=Analysis}$
 
 Some facts:
 - You may not want the extra dependencies (such as Transcript) in your code
-- With Transcript, ""your"" log can be mixed with ""other"" logs
-- You do not want to ""dirty"" build log without a bit of control
+- Using ==Transcript==, ""your"" log can be mixed with ""other"" logs
+- You do not want to ""dirty"" build logs without a bit of control
 
 Far worse and more important:
 - You cannot reliably write tests to be sure that the log is correctly happening
@@ -72,8 +70,8 @@ Far worse and more important:
 ${slide:title=The solution: Use locality and encapsulation}$
 
 - Think about object self-containment
-- What is the object encapsulate a log stream
-- Add an instance variable to hold a stream
+- An object encapsulates a log stream
+- Easy! Just add an instance variable to hold a stream
 
 [[[
 MicAbstractBlock >>initialize
@@ -102,7 +100,7 @@ MicAbstractBlock >> logStream: aStream
 - Bonus: You can write ""tests in isolation""
 
 
-${slide:title=Comparing}$
+${slide:title=From monolithic to parametrizable}$
 
 +>file://figures/GlobalVSInstance.pdf|width=75+
 
@@ -120,12 +118,12 @@ RubScrollTextMorph >> defaultScrollTarget
 	^ textArea
 ]]]
 
-- Why ==Color lightGray veryMuchLighter== is hardcoded?
+Why ==Color lightGray veryMuchLighter== is hardcoded?
 
 
 ${slide:title=A solution}$
 
-- Make it configurable!
+Make it configurable!
 
 [[[
 RubScrollTextMorph >> defaultScrollTarget
@@ -140,7 +138,7 @@ RubScrollTextMorph >> initialize
 	defaultBackgroundColor := Color lightGray veryMuchLighter
 ]]]
 
-${slide:title=Supporting personalisation}$
+${slide:title=Supporting personalization}$
 
 [[[
 RubScrollTextMorph >> setBackgroundColor: aColor
@@ -149,31 +147,31 @@ RubScrollTextMorph >> setBackgroundColor: aColor
 
 Now each instance can have its specific value!
 
-
 ${slide:title=Instance variables}$
 
- Instance variables are parameter of your computation
-
-
+- Instance variables are state of objects
+- Instance variables are also ''parameters'' of your computation
+- You can also share state with class scope variables (sharedVariables in Pharo)
+- See lectures in Module ""Sharing objects""
 
 ${slide:title=About Globals}$
 
-Pros:
+""Pros:""
 - You do not have to add an instance variable to your domain
 - You do not have to initialize such global on your specific case 
 
-Cons: 
+""Cons: ""
 - You have ""only one"" (e.g., if an entity belongs to one global model, you cannot have two entites living in different models)
 - Testing requires care and is sometimes ""not possible"" or cumbersome because of ""side effects""
 - You cannot ""initialize"", ""specialize"" the global for your context (there is only one)
 
 ${slide:title=About parametrization}$
 
-Sometimes you cannot add an instance variable to your objects
+Sometimes you simply ""cannot"" add an instance variable to your objects
 - Too many of them
 - Fixed size inherited from old design
-- About space consumption, check Sharing Lectures and Flyweigth
-At least factor the global usage to ease future changes
+- About space consumption, check Sharing Lectures and Flyweigth Design Pattern
+- Factor the global usage to ease future changes
 
 ${slide:title=In general: Avoid Globals}$
 

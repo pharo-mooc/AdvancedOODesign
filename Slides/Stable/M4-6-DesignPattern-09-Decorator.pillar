@@ -1,7 +1,7 @@
 {
-    "title":"Decorator Design Pattern",
-	"subtitle":"An composable alternative to subclassing",
-    "slidesid":"M4-6"
+"title":"Decorator Design Pattern",
+"subtitle":"A composable alternative to subclassing",
+"slidesid":"M4S6"
 }
 
 ${slide:title=Goals}$
@@ -9,12 +9,11 @@ ${slide:title=Goals}$
 - Decorator
 - Think about API
 
-
 ${slide:title=Decorator}$
 
 ""From the book:""
-- Attach additional responsibilities to an object ""dynamically"". 
-- Decorators provide a flexible alternative to subclassing for extending functionality.
+- Attach additional responsibilities to an object ""dynamically""
+- Decorators provide a flexible alternative to subclassing for extending functionality
 
 
 ${slide:title=Decorator core}$
@@ -43,10 +42,10 @@ ${slide:title=Decorator nesting}$
 
 ${slide:title=Transparent to the client}$
 
-- A client manipulates a component or a decorated component
+- A client manipulates ""transparently"" a component or a decorated component
 - A client talks to the decorator which talks to the decoratee (a component or a another decorator)
 
-- Strong implication: component and decorator MUST expose the same API
+- Strong implication: component and decorator ""must"" expose the same API
 
 
 
@@ -152,7 +151,7 @@ ${slide:title=Analysis}$
 
 ${slide:title=About dynamically}$
 
-Attach additional responsibilities to an object ""dynamically"". 
+Attach additional responsibilities to an object ""dynamically""
 
 - The decorator is based on delegation: The decoration delegates messages to its decoratee (Component or decorated component) it does not specialize to the decoratee
 - To attach dynamic means that we should control the creation chain (the client reference)
@@ -173,7 +172,7 @@ ${slide:title=When not use decorator}$
 
 ${slide:title=Do not use reflection}$
 
-- Do not use reflection to handle when decorators have different APIs.
+- Do not use reflection to handle when decorators have different APIs
 -- This is a Bad Idea (tm)
 -- Makes the design brittle
 -- Makes error difficult to catch

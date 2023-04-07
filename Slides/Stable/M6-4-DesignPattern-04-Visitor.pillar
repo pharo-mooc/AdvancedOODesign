@@ -1,7 +1,7 @@
 {
 	"title":"Visitor",
 	"subtitle":"Modular and extensible first class actions",
-	"slidesid":"M6-4"
+	"slidesid":"M6S4"
 }
 
 
@@ -278,6 +278,17 @@ ${slide:title=Stepping back: double dispatch is the key point}$
 - The items mentions to the Visitor how ""they"" want to be visited
 
 +.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=60+
+
+
+${slide:title=Imagine a tree of shapes}$
+
++.>file://figures/SimpleTree.pdf|width=40+
+
+${slide:title=Each node will respond differently to a visit}$
+
++.>file://figures/SimpleTreeWithVisitMethods.pdf|width=60+
+
+The visitor is then notified precisely with the corresponding node in argument
 
 ${slide:title=Visitor: another look at it}$
 

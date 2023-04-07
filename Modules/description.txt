@@ -12,7 +12,7 @@ you will not develop the same way after following this unique lecture.
 This mooc will immerge you in advanced object-oriented design. It is built on more than 60 years
 of expert teaching object-oriented design.
 
-This mooc invites you to a journey around 11 modules (with over 60 videos) covering the following topics
+This mooc invites you to a journey around 10 modules (with over 60 videos) covering the following topics
 	- test-driven design
 	- essential object-oriented concepts
 	- foundational elements
