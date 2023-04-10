@@ -1,7 +1,7 @@
 {
-	"title" : "About results",
-	"subtitle" : "The case of Stone Paper Scissors",
-	"slidesid":"M6-6"
+	"title" : "Stone Paper Scissors",
+	"subtitle" : "The case of results",
+	"slidesid":"M6S6"
 }
 
 ${slide:title=Goals}$
@@ -13,12 +13,18 @@ ${slide:title=Goals}$
 ${slide:title=Remember}$
 
 [[[
->>> (Stone new vs: Paper new)
+> Stone new vs: Paper new
 #paper
 ]]]
 
 
-+An overview of a possible solution using double dispatch.>file://figures/StonePaperScissors.pdf|width=80+
++An overview of a possible solution using double dispatch.>file://figures/StonePaperScissorsNoParameters.pdf|width=80+
+
+
+${slide:title=What should we return?}$
+
+- What symbols, numbers?
+- Consequences?
 
 
 ${slide:title=Returning numbers}$
@@ -41,28 +47,29 @@ StonePaperScissorsTest >> testStoneIsWinning
 
 ${slide:title=Returning number analysis}$
 
-- We have to know the call to know how to interpret the number. 
-- Here paper is winning but it got different results!
+- We have to know the message sent to know how to interpret the number
 
 [[[
->>> Stone new vs: Paper new
+> Stone new vs: Paper new
 -1
 
->>> Paper new vs: Stone new
+> Paper new vs: Stone new
 1
 ]]]
+
+- Here paper is winning but it got different results!
 
 ${slide:title=Returning symbols analysis}$
 
 [[[
->>> Stone new vs: Paper new
+> Stone new vs: Paper new
 #paper
 
->>> Paper new vs: Stone new
+> Paper new vs: Stone new
 #paper
 ]]]
 
-- With symbols we know who won.
+- With symbols we know who won
 - We will have to compare to do something
 
 [[[
@@ -94,7 +101,7 @@ It feels that there are too many parameters.
 ${slide:title=Simply with objects}$
 
 [[[
-Paper new vs: Paper new withResultHandler: ResultDisplayer new
+Paper new vs: Paper new withResultHandler: ResultHandler new
 ]]]
 
 [[[
@@ -104,12 +111,13 @@ Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
 
 - It feels like the "Do not not ask tell"
 - We can have different result handlers
-
+- Feel free to experiment to see how it goes
 
 
 ${slide:title=Stepping back}$
 
-- Symbols looks better than numbers for returning information
+
+- Symbols looks better than numbers for returning information for this case but there are numerous cases where a number is definitively better
 - Creating result handlers can be heavy
 - Context and scenarios often give you information to see 
 -- where to invest
@@ -118,7 +126,6 @@ ${slide:title=Stepping back}$
 
 ${slide:title=Conclusion}$
 
-Objects are 
-- Powerful
-- Modular
-- Just send a message :)
+A desihn solution is often dependent on a context
+- Try alternate solutions, compare them
+- Exercise your design taste

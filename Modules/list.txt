@@ -58,7 +58,7 @@ In this module we will present some important and simple design patterns such as
 - [Stef] 3-DoubleDispatch-03-Dice.pillar
 - [Luc] 4-DesignPattern-04-Visitor.pillar
 - [Luc] 5-DesignPattern-05-VisitorDiscussions.pillar
-- 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
+- [Ste] 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 
 ## Module 7: Creation [Files Renamed]
 - [Guille] 1-Principles-01-LazyInitialization
