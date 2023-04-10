@@ -1,7 +1,7 @@
 {
 	"title":"Behavior delegation at work",
 	"subtitle":"The case of the class printer",
-	"slidesid":"M7-5"
+	"slidesid":"M7S5"
 }
 
 
@@ -21,7 +21,7 @@ How to support ""various"" class definition formats in a ""modular"" way?
 - How to ""control"" the complexity?
 -- Slots should not be displayed in Old Pharo
 - How to avoid ""checks"" everywhere?
-- And removal one definition any time without recompilation
+- And can we support removing one definition at any time without recompilation
 
 
 ${slide:title=First hacked version in Pharo 70/80}$
@@ -72,7 +72,7 @@ Think 5 min how you would solve it
 ${slide:title=Solution: Delegating to a class definition printer}$
 
 - Create class definition printers
-- A kind of Strategy
+- A kind of Strategy Design Pattern
 - A hierarchy of printers \+ a factory \+ some double dispatch
 
 [[[
@@ -85,7 +85,7 @@ ClassDefinitionPrinter ( forClass )
 
 ${slide:title=Solution: Delegating to a class definition printer}$
 
-+>file://figures/ClassPrinterFluid.pdf|width=100+
++>file://figures/ClassPrinterFluid.pdf|width=90+
 
 
 ${slide:title=The class asks a printer}$
@@ -95,7 +95,7 @@ ClassDescription >> definitionString
 	^ self definitionPrinter definitionString
 ]]]
 
-The printer factory creates and return a printer for the class.
+The printer factory creates and return a printer for the class
 [[[	
 ClassDescription >> definitionPrinter
 	^ ClassDefinitionPrinter for: self
@@ -108,6 +108,22 @@ Knows how to print
 - class (==classDefinitionString==)
 - metaclass (==metaclassDefinitionString==)
 - trait (==traitDefinitionString==)
+
+${slide:title=Fluid class printer at work}$
+
+A class
+[[[
+Object << #Point
+		slots: { #x . #y };
+		tag: 'BasicObjects';
+		package: 'Kernel'
+]]]
+
+A metaclass without class instance variables
+
+[[[
+Object class << Point class
+]]]
 
 ${slide:title=Fluid printer: a class}$
 
@@ -147,6 +163,7 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString
 
 ${slide:title=Old Pharo cannot display slots}$
 
+
 [[[
 OldPharoClassDefinitionPrinter >> classDefinitionString
 	^ forClass needsSlotClassDefinition 
@@ -154,6 +171,8 @@ OldPharoClassDefinitionPrinter >> classDefinitionString
 			ifFalse: [ self basicClassDefinitionString ]
 ]]]
 
+If the class has slots then 
+- ask a fluid class printer to do the job
 
 
 ${slide:title=Tool logic is now simpler}$
@@ -169,14 +188,14 @@ ${slide:title=Analysis}$
 
 - ""Modular"": One format = one printer
 - One printer supports ""multiple"" related features (expansion, template, class printing)
-- Support ""reuse"" within the hierarchy
+- Supports ""reuse"" within the hierarchy
 - ""Defaulting"" within printers
 -- if necessary legacy printer redirects to fluid printer
 
 
 ${slide:title=More challenges}$
 
-How to support printing ""different"" objects on ""different"" printers
+How to support printing ""different"" objects on ""different"" printers?
 - Traits, Classes, and Metaclasses
 - Legacy, OldPharo, and Fluid
 

@@ -64,8 +64,8 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 1-Principles-01-LazyInitialization
 - [Guille] 2-Principles-07-ClassHookVsInstanceHook.pillar
 - [Luc] 3-Principles-06-selfVSClassDispatch.pillar
-- [Stef]4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
-- 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
+- [Stef] 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
+- [Stef] 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
 - [Pablo] 6-DesignPattern-08-Builder.pillar
 - [Pablo] 7-Lang-05-AboutBuilder.pillar
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
