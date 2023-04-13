@@ -1,13 +1,13 @@
 {
 	"title" : "a Die + a DieHandle: ",
 	"subtitle":"Practicing dispatch more",
-	"slidesid":"M6-3"
+	"slidesid":"M6S3"
 }
 
 
 ${slide:title=Goals}$
 
-- How conditionals can be turned into extensible design using messages
+- Conditionals can be turned into extensible design using messages
 - Basis for more complex situation such as the Visitor Design Pattern
 
 ${slide:title=Remember Die and DieHandle}$
@@ -57,7 +57,7 @@ DieTest >> testAddTwoDice
 
 ${slide:title=New requirement: N. 2}$
 
-Now  we want to be able to add a dice to an dice handle and the inverse
+We want to be able to add a dice to a dice handle and the inverse
 
 
 [[[
@@ -94,6 +94,9 @@ Die >> + aDieOrADieHandle
 	^ selfAsDieHandle + aDieOrADieHandle
 ]]]
 
+We are on class ==Die== so we
+- systematically create a dieHandle with the receiver and 
+- sum it with the argument
 
 ${slide:title=Possible solution with conditions}$
 
@@ -117,7 +120,8 @@ DieHandle >> + aDieOrADieHandle
 
 ${slide:title=Limits of this approach}$
 
-- It does not scale! 
+- Works for two cases but does not really scale! 
+- Each time you have a new case you have to change this method
 - If we have different objects that should interact with different operations e.g.,
 -- different kinds of text objects: list, figures, paragraph, section, title, text, reference...
 -- different operations: rendering text, HTML, LaTeX
@@ -125,7 +129,7 @@ ${slide:title=Limits of this approach}$
 ${slide:title=Hints}$
 
 - Sending a message is making a choice
--- the system selects the correct method for a given receiver and executes it 
+-- the system ""selects the correct"" method for a given receiver and executes it 
 - To select a method based on the receiver AND the argument, we have to send a message to the argument
 
 ${slide:title=Sketch of the solution}$
@@ -133,14 +137,14 @@ ${slide:title=Sketch of the solution}$
 - When we add two elements (die or dieHandle) together
 - We tell ""the argument"" that we want to add the receiver
 - We are explicit about the receiver state since we know it
--- when the receiver is a die we say to the argument that we want to "add a die"
--- when the receiver is a die handle we say to the argument that we want to "add a die handle"
+-- when the receiver is a die we say to the argument that we d "add a die"
+-- when the receiver is a die handle we say to the argument that we "add a die handle"
 
 Let us do it now!
 
 ${slide:title=First adding two dice}$
 
-We know how to do it. 
+A first try
 
 [[[	
 Die >> + aDie
@@ -156,14 +160,13 @@ ${slide:title=Limits}$
 
 [[[	
 Die >> + aDie
-	
 	^ DieHandle new 
 			addDie: self; 
 			addDie: aDie; 
 			yourself
 ]]]
 
-But aDie can be 
+But ==aDie== can be 
 - a dice
 - a die handle
 For example as in 
@@ -196,9 +199,12 @@ ${slide:title=Adding Two Dice and Ready for More}$
 
 ${slide:title=Handling DieHandle as Argument}$
 
+For example: 
 [[[
 (Die withFaces: 6) + 2 D20
 ]]]
+
+We just have to define a different ==sumWithDie:== method on ==DieHandle==
 
 [[[
 DieHandle >> sumWithDie: aDie
@@ -227,6 +233,7 @@ We get two messages/choices
 
 ${slide:title=DieHandle as a receiver}$
 
+Our solution should support:
 [[[
 2 D20 + (Die withFaces: 6)
 ]]]
@@ -262,7 +269,7 @@ DieHandle >> sumWithHandle: aDieHandle
 ]]]
 
 
-${slide:title=Now the argument can be a die }$
+${slide:title=Now the argument can be a die}$
 
 Since the argument can be a die, we define ==sumWithHandle:== also on ==Die==
 

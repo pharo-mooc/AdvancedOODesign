@@ -1,7 +1,7 @@
 {
 	"title":"Delegation of actions and accumulator",
 	"subtitle":"Form validation as an example",
-	"slidesid":"M7-4"
+	"slidesid":"M7S4"
 }
 
 ${slide:title=Scenario}$
@@ -14,12 +14,19 @@ ${slide:title=The case: Validation}$
 
 - We want to validate UI forms
 - Nested components may want to validate ""or not"" their contents
--- at input field or just at the OK level
+-- at input field or just at the pane level
+
 
 +.>file://figures/ValidationExample.png|width=60+
 
+${slide:title=Validation}$
 
-${slide:title=A tree of instances}$
+What should return the validation? 
+- Yes no?
+- Specific objects with semantics 
+-- e.g. filepath is invalid?
+
+${slide:title=A formular: A tree of instances}$
 
 +.>file://figures/DistributionOfReponsibility.pdf|width=80+
 
@@ -27,19 +34,41 @@ ${slide:title=A tree of instances}$
 ${slide:title=A first design}$
 
 - Any presenter can validate its contents
-- Per default does not nothing
+- Per default does nothing
 
 [[[
-SpPresenter >> validate
-	^ self 
+SpPresenter >> invalid
+	^ false
+	
+SpPresenter >> report
+	^ OkReport new
 ]]]
 
-[[[
-SpOptionPresenter >> validate
+${slide:title=A given item can refine it}$
 
+
+[[[
+MyFilePathPresenter >> invalid
+	^ self path isEndingBy: 'git'
+
+MyFilePathPresenter >> report
+	^ WrongFileEndingReport new expecting: 'git' ; for: self path
+]]]
+
+${slide:title=A first design: Container}$
+
+A container defines the semantics of collection for its children
+
+[[[
+SpOptionPresenter >> invalid
+	^ self children anySatisfy: [:each | each invalid ]
+	
+SpOptionPresenter >> report
 	| report |
 	report := SpValidationReport new. 
-	self children do: [ :presenter | presenter validate ]
+	self children do: [ :childPresenter | 
+		childPresenter invalid ifTrue: [ report add: childPresenter report ]].
+	^ report
 ]]]
 
 
@@ -50,10 +79,9 @@ ${slide:title=Flow's first design}$
 
 ${slide:title=Analysis}$
 
-- We need to have a report to know if the validation failed or not
-- Should ==validate== return a report?
-- If ==validate== returns a report then we have to return an ok report for anybody
-- Force a report for any instances?
+- To have a report we need to know if the validation failed or not
+- Should ==invalid== return a report?
+- If ==invalid== returns a report then we have to return an ok report for anybody
 
 ${slide:title=Flow's first design}$
 
@@ -66,37 +94,38 @@ Pass around a basket and let any sub instance decides if it wants to participate
 
 +.>file://figures/DistributionOfReponsibility3.pdf|width=60+
 
-${slide:title=Second design: code}$
+${slide:title=Second design: default}$
+
+By default do not add to the report
+
 [[[
 SpPresenter >> validateInto: aReport
 	^ self
 ]]]
 
-[[[
-SpOptionPresenter >> validate
 
-	| report |
-	report := SpValidationReport new. 
-	self children do: [ :presenter | presenter validateInto: report ].
-	^ report
-]]]
-
-
-${slide:title=Local and global together}$
-
-[[[
-SpTextInputFieldWithValidation >> validateInto: aValidationReport
-	self validate.
-	aValidationReport addAll: validationErrors
-]]]
+${slide:title=Second design: Containers and leaves}$
 
 Each validating subcomponent
 - gets the responsibility to fill up the report
 - can bring its information to the report
 
+[[[
+MyFilePathPresenter >> validateInto: aReport
+	^ aReport add: (WrongFileEndingReport new expecting: 'git'; for: self path)
+]]]
+
+[[[
+SpOptionPresenter >> validateInto: aReport 
+
+	self children do: [ :presenter | presenter validateInto: aReport ].
+	^ aReport
+]]]
 
 
 ${slide:title=Conclusion}$
 
+- Question interrogative forms
 - Let the object decides if it wants to join a process but passing a container
-
+- You may also have some double dispatch between the report and the container
+- Explore design 
