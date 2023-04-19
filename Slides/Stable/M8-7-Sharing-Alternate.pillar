@@ -49,7 +49,7 @@ BlElement >> border: aBlBorder
 
 ${slide:title=Overview}$
 
-+>file://figures/SharableBloc.pdf|width=60+
++>file://figures/SharableBloc.pdf|width=90+
 
 ${slide:title=BlElementVisuals and setup}$
 	 
@@ -58,83 +58,66 @@ ${slide:title=BlElementVisuals and setup}$
 - But without one instance variable per prorperty
 
 ${slide:title=BlElementVisuals}$
+
+- Define API and default values
+
 [[[
 Object << #BlElementVisuals
 	sharedVariables: { #DefaultBorder . #DefaultBackground . #DefaultGeometry . #DefaultVisibility };
 	package: 'Bloc'
 ]]]
 
-
-
 [[[
 BlElementVisuals >> defaultBackground
 	^ DefaultBackground
 ]]]
 
-
 [[[
 BlElementVisuals >> background: aBlBackground
-	"Change the background and return new visuals to be used instead of the previous one (not necessarily a new instance)"
-
 	^ self subclassResponsibility
 ]]]
-
-Same for the others.
-
-
-${slide:title=BlElementVisuals}$
-
-[[[
-BlElement >> border: aBlBorder
-	"Change my border and invalidate me. aBlBorder can be created using BlBorderBuilder. Raises BlElementBorderChangedEvent"
-	self border = aBlBorder
-		ifTrue: [ ^ self ].
-	visuals := visuals border: aBlBorder.
-	self geometry releaseStrokedBoundsCache.
-	self eventDispatcher dispatchBorderChanged.
-	self invalidate
-]]]
-
 
 
 
 ${slide:title=BlDefaultVisuals}$
 
 - ==BlDefaultVisuals== a kind of singleton that holds many default values to be shared between multiples elements.
-
-Getters access default shared value
+- Getters access default shared value
 [[[
- BlDefaultVisuals >> background
- 	^ self defaultBackground
+BlDefaultVisuals >> background
+	^ self defaultBackground
 ]]]
 
 
 ${slide:title=BlDefaultVisuals: setters are key}$
 
-In addition, ==BlDefaultVisuals== of read only because when my setters are executed, they do not modify myself but
+==BlDefaultVisuals== is kind of  read only because setters are executed, they do not modify but
 create and return a new instance of ==BlCustomVisuals==.
 
 [[[
 BlDefaultVisuals >> background: aBlBackground
-	"Change the background and return new visuals to be used instead of the previous one (not necessarily a new instance)"
+	"Change the background and return new visuals to be used instead of previous one"
 
 	^ BlCustomVisuals new background: aBlBackground
 ]]]
 
-
 ${slide:title=BlCustomVisuals}$
 
-Now we can do instance specific customization
+Instance specific customization
+
+[[[
+BlElementVisuals << #BlCustomVisuals
+	slots: { #geometry . #border . #background . #outskirts .  #effect ... };
+	package: 'Bloc'
+]]]
 
 [[[
 BlCustomVisuals >> background: aBlBackground
-	"Change the background and return new visuals to be used instead of the previous one (not necessarily a new instance)"
-
 	background := aBlBackground
 ]]]
 
-- BlCustomVisuals stored in place of ==BlDefaultVisuals==` singleton to accumulate modifications of the default. 
-- I accumulate modifications because contrary to `BlDefaultVisuals` my setters modify myself.
+- ==BlCustomVisuals== stored in place of ==BlDefaultVisuals== singleton to accumulate modifications of the default. 
+- I accumulate modifications because contrary to ==BlDefaultVisuals== my setters modify myself.
 
 
 ${slide:title=There is a catch}$
@@ -144,25 +127,19 @@ Users should always store the result of the setters sent to a visuals
 [[[
 BlElement >> background: aBlBackground
 	"Change my background to a given one.
-	Color and Form can be used as background - they will be converted to an appropriate background object.
-	It is also possible to create a more complicated composite background with the help of BlBackgroundBuilder.
-	Raises BlElementBackgroundChangedEvent.
-	aBlBackground must not be nil. "
-	
+	Raises BlElementBackgroundChangedEvent."
+
 	...
 
 	visuals := visuals background: aNewBackground.
-	
+
 	...
 ]]]
 
 - It is not really nice to hijack setter semantics this way.
-- The 
-
 
 ${slide:title=What is the difference with the TypeTable/typeTable}$
 
-- Here we group different values in a single object.
-- We avoid to have one instance variable per customisation point.
-- But still we have instance-based and sharing.
-
+- Group different values in a single object
+- Avoid to have one instance variable per customisation point
+- But still we have instance-based and sharing
