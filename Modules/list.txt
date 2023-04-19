@@ -71,12 +71,13 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
 
 #Module 8: Sharing [Files Renamed]
-- 1-Lang-02-SharedVariables.pillar
+- [Stef ] 1-Lang-02-SharedVariables.pillar
 - 2-Principles-08-Sharing.pillar
 - 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
 - [Guille] 5-DesignPattern-10-Flyweigth.pillar
 - [Pablo] 6-DesignPattern-12-TypeObject.pillar
+- [ Stef ] 8-7-Sharing-Alternate.pillar
 
 ## Module 9: About Inversion of control / Registration [Files Renamed]
 - [Guille] 1-Principles-04-LawOfDemeter.pillar

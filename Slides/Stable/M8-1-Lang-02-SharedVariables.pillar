@@ -1,7 +1,7 @@
 {
 	"title":"Shared variables",
 	"subtitle":"A Pharo code idiom",
-	"slidesid":"M8-1"
+	"slidesid":"M8-S1"
 }
 
 ${slide:title=Goal}$
@@ -11,23 +11,21 @@ ${slide:title=Goal}$
 
 ${slide:title=Instance variables are local to one object}$
 
+Nothing new!
 
 - An instance variable value is ""only accessible and local"" to the object it belongs to
 - If you modify an instance variable, you only modify that variable
-No news!
+
 
 ${slide:title=Shared variables are shared by all the instances of a hierarchy}$
 
 - ""All"" the instances of a class and its subclasses ""share the SAME"" shared variable
-- If you modify a shared variables, it impacts all the instances
+- If you modify a shared variable, it impacts all the instances
 - A shared variable is usually initialized at class load time (class initialize method)
 - shared variables
 -- called ClassVariables in Smalltalk
 -- called SharedVariables in Pharo
 
-${slide:title=Color's ComponentMask is a shared variable}$
-
-+>file://figures/SharedVariableColor.pdf|width=75+
 
 
 ${slide:title=Color example}$
@@ -43,7 +41,12 @@ Object << #Color
 ]]]
 
 
-${slide:title=Shared variables are accessible from both instance and class methods}$
+${slide:title=Color's ComponentMask is a shared variable}$
+
++>file://figures/SharedVariableColor.pdf|width=75+
+
+
+${slide:title=Shared variables: accessible from instance methods}$
 
 [[[
 Color >> setRed: r green: g blue: b 
@@ -59,7 +62,7 @@ Color >> setRed: r green: g blue: b
 	cachedBitPattern := nil
 ]]]
 
-${slide:title=Shared variables are accessible from both instance and class methods}$
+${slide:title=Shared variables: accessible from class methods}$
 
 [[[
 Color class >> initialize
@@ -86,9 +89,10 @@ ${slide:title=Shared Variables of String}$
 
 [[[
 ArrayedCollection << #String
-	slots: {};
-	sharedVariables: { #CaseSensitiveOrder . #CSSeparators . #CSNonSeparators . #UppercasingTable . 
-	#CSLineEnders . #LowercasingTable . #CaseInsensitiveOrder . #TypeTable . #Tokenish . #AsciiOrder };
+	sharedVariables: { #CaseSensitiveOrder . #CSSeparators . 
+	#CSNonSeparators . #UppercasingTable . 
+	#CSLineEnders . #LowercasingTable . #CaseInsensitiveOrder . 
+	#TypeTable . #Tokenish . #AsciiOrder };
 	package: 'Collections-Strings'
 ]]]
 
@@ -129,13 +133,13 @@ Symbol class >> selectorsContaining: aString
 ]]]
 
 
-${slide:title=Investigating...}$
+%${slide:title=Investigating...}$
 
-[[[
-Smalltalk globals allClasses 
-	select: [:each | each classVariablesString isEmpty not
-				and: [ each hasSubclasses ]]
-]]]
+%[[[
+%Smalltalk globals allClasses 
+%	select: [:each | each classVariablesString isEmpty not
+%				and: [ each hasSubclasses ]]
+%]]]
 
 
 
