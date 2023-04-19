@@ -1,14 +1,14 @@
 {
-    "title":"More about sharing",
+    "title":"A variation on sharing",
     "slideid":"M8-S7"
 }
 
 
-${slide:title=Goals}$
+${slide:title=Remember}$
 
 We saw
-- Shared variable to share between all instances of a class and instances of its subclasses
-- Mixing instance variable and share variable: we get sharing by default and possible instance based customization
+- Shared variables to share between all instances of a class and instances of its subclasses
+- Mixing an instance variable and a share variable: sharing by default and instance-based customization
 - Flyweigth
 Here is another variation on that theme taken from Bloc
 
@@ -21,6 +21,7 @@ ${slide:title=BlElement}$
 
 ${slide:title=BlElement property example}$
 
+Properties are managed via an instance of ==BlElementVisuals==
 [[[
 BlElement >> border
 	^ visuals border
@@ -32,19 +33,11 @@ BlElement >> clipChildren
 ]]]
 
 
-${slide:title=BlElement}$
+${slide:title=The objectives}$
 
-[[[
-BlElement >> border: aBlBorder
-	"Change my border and invalidate me. aBlBorder can be created using BlBorderBuilder. Raises BlElementBorderChangedEvent"
-	self border = aBlBorder
-		ifTrue: [ ^ self ].
-	visuals := visuals border: aBlBorder.
-	self geometry releaseStrokedBoundsCache.
-	self eventDispatcher dispatchBorderChanged.
-	self invalidate
-]]]
-
+- Default visuals are shared
+- A property can be modified
+- How to support property modification without paying an instance variable for all the shared default?
 
 
 ${slide:title=Overview}$
@@ -53,9 +46,9 @@ ${slide:title=Overview}$
 
 ${slide:title=BlElementVisuals and setup}$
 	 
-- Kind of a pattern to make sure that many default values can be shared by default
-- And modifications to these defaults on a per instance level
-- But without one instance variable per prorperty
+- Make sure that many default values are shared by default
+- And that modifications to these defaults is possible on a per instance level
+- ""But"" without one instance variable per property
 
 ${slide:title=BlElementVisuals}$
 
@@ -81,17 +74,33 @@ BlElementVisuals >> background: aBlBackground
 
 ${slide:title=BlDefaultVisuals}$
 
+- A subclass of  ==BlElementVisuals==
 - ==BlDefaultVisuals== a kind of singleton that holds many default values to be shared between multiples elements.
-- Getters access default shared value
+
+[[[
+BlElement >> initialize
+	...
+	visuals := BlDefaultVisuals uniqueInstance.
+	...
+]]]
+
+${slide:title=BlDefaultVisuals getters}$
+
+Getters access default shared value
 [[[
 BlDefaultVisuals >> background
 	^ self defaultBackground
 ]]]
 
 
+[[[
+defaultBackground
+	^ DefaultBackground
+]]]
+
 ${slide:title=BlDefaultVisuals: setters are key}$
 
-==BlDefaultVisuals== is kind of  read only because setters are executed, they do not modify but
+==BlDefaultVisuals== is kind of read only, when setters are executed, they do not modify but
 create and return a new instance of ==BlCustomVisuals==.
 
 [[[
@@ -103,7 +112,7 @@ BlDefaultVisuals >> background: aBlBackground
 
 ${slide:title=BlCustomVisuals}$
 
-Instance specific customization
+Support for instance specific property modification
 
 [[[
 BlElementVisuals << #BlCustomVisuals
@@ -120,7 +129,7 @@ BlCustomVisuals >> background: aBlBackground
 - I accumulate modifications because contrary to ==BlDefaultVisuals== my setters modify myself
 
 
-${slide:title=There is a catch}$
+${slide:title=There is a catch - Property modification}$
 
 Users should always store the result of the setters sent to a visuals
 
@@ -143,3 +152,10 @@ ${slide:title=What is the difference with the TypeTable/typeTable}$
 - Group different values in a single object
 - Avoid to have one instance variable per customisation point
 - But still we have instance-based and sharing
+
+${slide:title=Analysis}$
+
+- Is all the complexity needed?
+- Requires some memory analysis:
+-- empty instance variables per instance that shared a default
+- How many objects?
