@@ -116,8 +116,8 @@ BlCustomVisuals >> background: aBlBackground
 	background := aBlBackground
 ]]]
 
-- ==BlCustomVisuals== stored in place of ==BlDefaultVisuals== singleton to accumulate modifications of the default. 
-- I accumulate modifications because contrary to ==BlDefaultVisuals== my setters modify myself.
+- ==BlCustomVisuals== stored in place of ==BlDefaultVisuals== singleton to accumulate modifications of the default
+- I accumulate modifications because contrary to ==BlDefaultVisuals== my setters modify myself
 
 
 ${slide:title=There is a catch}$
@@ -136,7 +136,7 @@ BlElement >> background: aBlBackground
 	...
 ]]]
 
-- It is not really nice to hijack setter semantics this way.
+- It is not really nice to hijack setter semantics this way
 
 ${slide:title=What is the difference with the TypeTable/typeTable}$
 
