@@ -59,7 +59,10 @@ S.Ducasse, L. Fabresse, G. Polito, and P. Tesone
 \vspace{1.5em}
 
 
-\includegraphics[width=80px]{inr_logo_rouge.pdf}\hspace{0.5cm}\hspace{0.5cm}\includegraphics[width=70px]{ILL_principal.pdf}\hspace{0.5cm}\includegraphics[width=60px]{logo-IMT.jpg}
+%\includegraphics[width=80px]{inr_logo_rouge.pdf}\hspace{0.5cm}\includegraphics[width=70px]{ILL_principal.pdf}\hspace{0.5cm}\includegraphics[width=60px]{logo-IMT.jpg}
+
+\raisebox{0.1ex}{\includegraphics[width=80px]{inr_logo_rouge.pdf}}\hspace{0.5cm}\raisebox{-1.2ex}{\includegraphics[width=70px]{ILL_principal.pdf}}\hspace{0.5cm}\raisebox{-1.4ex}{\includegraphics[width=60px]{logo-IMT.jpg}}
+
 
 \vspace{0.05cm}
 \includegraphics[width=50px]{by-nc-nd-eu.pdf}
@@ -72,9 +75,13 @@ S.Ducasse, L. Fabresse, G. Polito, and P. Tesone
 Except where otherwise noted, this work is licensed under CC BY-NC-ND 3.0 France\\
 \url{https://creativecommons.org/licenses/by-nc-nd/3.0/fr/}\\
 
+\begin{center}
+2023
+\end{center}
 %\vspace{1em}
 
 %\includegraphics[width=400px]{simplebandeau.png}\\
+
 
 
 

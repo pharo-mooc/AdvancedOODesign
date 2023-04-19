@@ -4,15 +4,37 @@
 }
 
 
-${slide:title=Thinking more about sharing}$
+${slide:title=Goals}$
 
-- In another lecture we saw that we can have sharing by default and possible instance based customization.
-- Here is another variation on that theme taken from Bloc.
+We saw
+- Shared variable to share between all instances of a class and instances of its subclasses
+- Mixing instance variable and share variable: we get sharing by default and possible instance based customization
+- Flyweigth
+Here is another variation on that theme taken from Bloc
+
+
+${slide:title=BlElement}$
+
+BlElement is the basic graphical element
+- has many properties
+- background, border, clipChildren, elevation, geometry, compositingMode, effect, focusability, focused, mouseCursor, opacity, outskirts, visibility
+
+${slide:title=BlElement property example}$
+
+[[[
+BlElement >> border
+	^ visuals border
+]]]
+
+[[[
+clipChildren
+	^ visuals clipChildren
+]]]
 
 
 ${slide:title=Overview}$
 
-+>file://figures/SharableBloc.pdf+
++>file://figures/SharableBloc.pdf|width=80+
 
 ${slide:title=BlElementVisuals and setup}$
 	 
@@ -47,8 +69,7 @@ ${slide:title=BlDefaultVisuals}$
 
 - ==BlDefaultVisuals== a kind of singleton that holds many default values to be shared between multiples elements.
 
-
- Getters access default shared value
+Getters access default shared value
 [[[
  BlDefaultVisuals >> background
  	^ self defaultBackground
@@ -79,7 +100,7 @@ BlCustomVisuals >> background: aBlBackground
 	background := aBlBackground
 ]]]
 
-- BlCustomVisuals stored in place of ==BlDefaultVisuals` singleton to accumulate modifications of the default. 
+- BlCustomVisuals stored in place of ==BlDefaultVisuals==` singleton to accumulate modifications of the default. 
 - I accumulate modifications because contrary to `BlDefaultVisuals` my setters modify myself.
 
 
