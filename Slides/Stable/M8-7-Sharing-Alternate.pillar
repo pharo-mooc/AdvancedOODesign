@@ -15,9 +15,9 @@ Here is another variation on that theme taken from Bloc
 
 ${slide:title=BlElement}$
 
-BlElement is the basic graphical element
+==BlElement== is the basic graphical element
 - has many properties
-- background, border, clipChildren, elevation, geometry, compositingMode, effect, focusability, focused, mouseCursor, opacity, outskirts, visibility
+- ==background==, ==border==, ==clipChildren==, ==elevation==, ==geometry==, ==compositingMode==, ==effect==, ==focusability==, ==focused==, ==mouseCursor==, ==opacity==, ==outskirts==, ==visibility==
 
 ${slide:title=BlElement property example}$
 
@@ -27,18 +27,35 @@ BlElement >> border
 ]]]
 
 [[[
-clipChildren
+BlElement >> clipChildren
 	^ visuals clipChildren
 ]]]
 
 
+${slide:title=BlElement}$
+
+[[[
+BlElement >> border: aBlBorder
+	"Change my border and invalidate me. aBlBorder can be created using BlBorderBuilder. Raises BlElementBorderChangedEvent"
+	self border = aBlBorder
+		ifTrue: [ ^ self ].
+	visuals := visuals border: aBlBorder.
+	self geometry releaseStrokedBoundsCache.
+	self eventDispatcher dispatchBorderChanged.
+	self invalidate
+]]]
+
+
+
 ${slide:title=Overview}$
 
-+>file://figures/SharableBloc.pdf|width=80+
++>file://figures/SharableBloc.pdf|width=60+
 
 ${slide:title=BlElementVisuals and setup}$
 	 
-I'm a kind of pattern to make sure that many default values can be shared by default, but that modifications to these defaults can also be used on a per instance level. 
+- Kind of a pattern to make sure that many default values can be shared by default
+- And modifications to these defaults on a per instance level
+- But without one instance variable per prorperty
 
 ${slide:title=BlElementVisuals}$
 [[[
@@ -63,6 +80,22 @@ BlElementVisuals >> background: aBlBackground
 ]]]
 
 Same for the others.
+
+
+${slide:title=BlElementVisuals}$
+
+[[[
+BlElement >> border: aBlBorder
+	"Change my border and invalidate me. aBlBorder can be created using BlBorderBuilder. Raises BlElementBorderChangedEvent"
+	self border = aBlBorder
+		ifTrue: [ ^ self ].
+	visuals := visuals border: aBlBorder.
+	self geometry releaseStrokedBoundsCache.
+	self eventDispatcher dispatchBorderChanged.
+	self invalidate
+]]]
+
+
 
 
 ${slide:title=BlDefaultVisuals}$
