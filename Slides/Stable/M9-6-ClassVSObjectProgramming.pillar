@@ -12,22 +12,26 @@ ${slide:title=Goal}$
 
 ${slide:title=Studying a class hierarchy}$
 
-+.>file://figures/ClassVsObject.pdf|width=60+
++.>file://figures/ClassVsObject.pdf|width=90+
 
 
 ${slide:title=Analysis}$
 
-- Too data oriented
+- Data-oriented classes
 - Static
 -- We have to create a new class for each new changer
+
 
 ${slide:title=Compare with}$
 
 +.>file://figures/ClassVsObject2.pdf|width=60+
 
-- We just create instance
-- We can decorate instances 
-- Need to store them somewhere: Factory?
+Pros: 
+- Just create instances
+-  Can decorate instances 
+
+Points to consider: 
+- Need to store them somewhere: Factory
 
 ${slide:title=Conclusion}$
 
