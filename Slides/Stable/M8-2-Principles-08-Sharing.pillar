@@ -1,6 +1,6 @@
 {
 	"title":"Sharing with instance specific possibilities",
-	"slidesid":"M8-2"
+	"slidesid":"M8S2"
 }
 
 ${slide:title=Goals}$
@@ -12,9 +12,9 @@ ${slide:title=Goals}$
 
 ${slide:title=Instance vs. class sharing}$
 
-""Instance specific."" 
+""Instance specific"" 
 - An instance variable (most of the time) holds ""instance specific values""
-""Shared between all instances of a class."" 
+""Shared between all instances of a class"" 
 - A shared variable  (static or class variables) holds a value that is ""shared among all instances"" of the class
 
 
@@ -42,14 +42,15 @@ Object << #Scanner
 ]]]
 
 - What? ==TypeTable== and ==typeTable== are defined at the instance and class sharing level. A bug?
-- No this is a nice design
+- No! This is a nice design
 - Do you see it?
 
 
 ${slide:title=Further investigation}$
 
-- ==TypeTable== the shared variablea
--- is initialized ""once"" to hold the table of kind of elements 
+- ==TypeTable== the shared variable
+-- is initialized ""once"" to hold the table of elements 
+-- not used by any instance method
 - ==typeTable== the instance variable
 -- is used by every instance method
 -- is initialized by pointing to ==TypeTable==
@@ -62,15 +63,15 @@ ${slide:title=Explanation}$
 - By default all instances share the same typeTable
 - All methods can access it via ==typeTable==
 
-+.>file://figures/Sharing.pdf|width=60+
++.>file://figures/Sharing.pdf|width=50+
 
 
 ${slide:title=Specific state for specific instances}$
 
-- Copying the state of ==typeTable== and customizing it supports instance specific behavior.
-- All methods can still access it via ==typeTable==
+- Copy the state of ==typeTable== and modify it per instance
+- All methods access instance specific modified state via ==typeTable== instance variable
 
-+.>file://figures/Sharing2.pdf|width=80+
++.>file://figures/Sharing2.pdf|width=70+
 
 ${slide:title=Shared variable points to the share table}$
 
@@ -112,9 +113,10 @@ A subclass has just to specialize ==initScanner== without copying the initializa
 MyScanner >> initScanner 
 	super initScanner.
 	typeTable := typeTable copy.
+	self modifyTypeTable
 ]]]
 
-
+All the instance of ==MyScanner== will have their own table.
 
 ${slide:title=Conclusion}$
 

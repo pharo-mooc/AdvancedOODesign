@@ -71,8 +71,8 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
 
 #Module 8: Sharing [Files Renamed]
-- [Stef ] 1-Lang-02-SharedVariables.pillar
-- 2-Principles-08-Sharing.pillar
+- [Stef] 1-Lang-02-SharedVariables.pillar
+- [Stef] 2-Principles-08-Sharing.pillar
 - 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
 - [Guille] 5-DesignPattern-10-Flyweigth.pillar
