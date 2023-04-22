@@ -18,15 +18,21 @@ ${slide:title=Studying a class hierarchy}$
 ${slide:title=Analysis}$
 
 - Too data oriented
-- We have to create a new class for each new changer
+- Static
+-- We have to create a new class for each new changer
 
 ${slide:title=Compare with}$
 
 +.>file://figures/ClassVsObject2.pdf|width=60+
 
+- We just create instance
+- We can decorate instances 
+- Need to store them somewhere: Factory?
+
 ${slide:title=Conclusion}$
 
-- ""Favor"" class instances over classes
 
+- ""Favor"" instances over classes
+- 
 
 
