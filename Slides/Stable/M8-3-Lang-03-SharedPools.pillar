@@ -1,7 +1,7 @@
 {
 	"title":"Static sharing across hierarchies",
 	"subtitle":"A Pharo code idiom",
-	"slidesid":"M8-3"
+	"slidesid":"M8S3"
 }
 
 ${slide:title=Goal}$
@@ -11,9 +11,13 @@ ${slide:title=Goal}$
 
 ${slide:title=Remember: Sharing within a hierarchy}$
 
-- A shared variable can be accessed from the instance and class side of a class
-- But also from its subclasses
-- Usually a shared variable is initialized from the class side. 
+A shared variable can be accessed from 
+- the instance methods and
+- the class methods of the class defining it.
+
+I can also be accessed
+- from its subclasses
+- Usually a shared variable is initialized from class side of a root
 
 ${slide:title=Remember ComponentMask}$
 
@@ -22,16 +26,16 @@ ${slide:title=Remember ComponentMask}$
 ${slide:title=Need for sharing across different hierarchies}$
 
 - Sometimes we need to share values (generally constants) over ""multiple"" hierarchies: 
--- For example LF, CR, ... in ==String== and ==Text==,
-- We don't want to repeat the shared variables and their initialization.
+-- For example LF, CR, ... in ==String== and ==Text==
+- We don't want to repeat the shared variables and their initialization
 
 ${slide:title=SharedPools to the rescue}$
 
 A SharedPool is a ""group of shared variables""
-- It contains the definition 
+- It contains the definition and
 - the initialization of shared variables
 
-Users (classes) just have to declare that they use a shared pool to get access to the values
+Users (classes) just declare that they use a shared pool to access its shared variables
 
 ${slide:title=A SharedPool definition}$
 
@@ -81,8 +85,7 @@ Magnitude << #DateAndTime
 
 ${slide:title=SharedPool's sharedVariable access}$
 
-A shared variable defined in a shared pools is accessed as if defined in the class itself
-
+A shared variable defined in a shared pool is accessed as if defined in the class itself
 
 [[[
 DateAndTime >> secondsSinceMidnightLocalTime
@@ -91,7 +94,6 @@ DateAndTime >> secondsSinceMidnightLocalTime
 
 [[[
 Duration class >> days: aNumber
-
 	^ self seconds: aNumber * SecondsInDay nanoSeconds: 0
 ]]]
 
@@ -135,6 +137,6 @@ ${slide:title=Warning! Only for constants}$
 ${slide:title=Conclusion}$
 
 Shared pools are 
-- Handy to ""share constants"" over multiple classes
+- Handy to ""share constants"" over multiple classes (potentially in different inheritance trees)
 - Handy to manage constants for bindings to C-libraries
 - ""Only"" use them to share constants
