@@ -1,0 +1,32 @@
+{
+	"title":"Class vs. Object-Oriented Programming",
+	"slidesid":"M9S6"
+}
+
+${slide:title=Goal}$
+
+- Think about object
+- Think about object-oriented programming
+- Class programming is not object-oriented programming
+
+
+${slide:title=Studying a class hierarchy}$
+
++.>file://figures/ClassVsObject.pdf|width=60+
+
+
+${slide:title=Analysis}$
+
+- Too data oriented
+- We have to create a new class for each new changer
+
+${slide:title=Compare with}$
+
++.>file://figures/ClassVsObject2.pdf|width=60+
+
+${slide:title=Conclusion}$
+
+- ""Favor"" class instances over classes
+
+
+

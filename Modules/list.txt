@@ -85,6 +85,7 @@ In this module we will present some important and simple design patterns such as
 - [Luc] 3-Principles-03-AboutRegistration.pillar
 - [Pablo] 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - [Guille] 5-CaseStudy-05-Sokoban-Analysis.pillar
+- [Stef] 6-ClassVsObject.pillar
 
 ## Module 10: Type [Files Renamed]
 - [Luc] 1-Principles-12-DualInterfaces.pillar
