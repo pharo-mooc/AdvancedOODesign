@@ -9,13 +9,16 @@ ${slide:title=Goals}$
 - Class programming is not object-oriented programming
 - Favor objects!
 
-${slide:title=Problem}$
+${slide:title=Class-based programming design}$
 
 Sometimes we get class-based programming design
 - Classes are used as data holder
 - Instances all share the same data
-- Requires a new class to represent a new instance
-- No real state
+- Require a new class to represent a new instance or not configuration of data
+- No real instance speicific state
+
+- Thanks Yann for the discussions
+
 
 ${slide:title=Studying a class hierarchy}$
 
@@ -25,25 +28,26 @@ ${slide:title=Studying a class hierarchy}$
 ${slide:title=Analysis}$
 
 - Data-oriented classes
-- Static
--- We have to create a new class for each new changer
-- A class represent an instance
+- Static: We have to create a new class for each new changer
+- A class represents an instance! Fishy
+- A class state should describe instance shape not instance values
+- Each instance can have a different state
 
-${slide:title=Compare with}$
+${slide:title=Compare with instance-based design}$
 
 +.>file://figures/ClassVsObject2.pdf|width=60+
 
 
-${slide:title=Analysis$
-
+${slide:title=Analysis}$
 
 Pros: 
 - Just create instances
+- You can have a multiple of state
 -  Can decorate instances 
 
 
 [[[
-PropertyChanger new
+Changer new
 	command: CommandPosition;
 	mutliFormClass: PropertyDualInput new;
 	....
@@ -54,7 +58,7 @@ PropertyChanger new
 
 ${slide:title=With subclasses}$
 
-+.>file://figures/ClassVsObject3.pdf|width=60+
++.>file://figures/ClassVsObject3.pdf|width=90+
 
 
 ${slide:title=Discovery mechanism}$
@@ -65,14 +69,14 @@ Need a registry/discovery mechanism
 
 - Instance-based 
 -- Need to store them somewhere: Factory
--- explicit registration
+-- Explicit registration
 
 
 
 ${slide:title=Conclusion}$
 
-
+- When you need a new class to represent a new instance, this is fishy
+- A class describes the shape of instance not their values
 - ""Favor"" instances over classes
-- Thanks Yann for the discussions
 
 
