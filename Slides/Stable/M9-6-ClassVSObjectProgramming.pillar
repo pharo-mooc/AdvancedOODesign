@@ -3,12 +3,19 @@
 	"slidesid":"M9S6"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
-- Think about object
 - Think about object-oriented programming
 - Class programming is not object-oriented programming
+- Favor objects!
 
+${slide:title=Problem}$
+
+Sometimes we get class-based programming design
+- Classes are used as data holder
+- Instances all share the same data
+- Requires a new class to represent a new instance
+- No real state
 
 ${slide:title=Studying a class hierarchy}$
 
@@ -20,18 +27,47 @@ ${slide:title=Analysis}$
 - Data-oriented classes
 - Static
 -- We have to create a new class for each new changer
-
+- A class represent an instance
 
 ${slide:title=Compare with}$
 
 +.>file://figures/ClassVsObject2.pdf|width=60+
 
+
+${slide:title=Analysis$
+
+
 Pros: 
 - Just create instances
 -  Can decorate instances 
 
-Points to consider: 
-- Need to store them somewhere: Factory
+
+[[[
+PropertyChanger new
+	command: CommandPosition;
+	mutliFormClass: PropertyDualInput new;
+	....
+	yourself
+]]]
+
+
+
+${slide:title=With subclasses}$
+
++.>file://figures/ClassVsObject3.pdf|width=60+
+
+
+${slide:title=Discovery mechanism}$
+
+Need a registry/discovery mechanism
+- Class-based 
+-- Annotation, hierarchy query, explicit registration
+
+- Instance-based 
+-- Need to store them somewhere: Factory
+-- explicit registration
+
+
 
 ${slide:title=Conclusion}$
 
