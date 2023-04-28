@@ -4,7 +4,7 @@
     "slidesid":"M3S5"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Globals are not a fatality
 - Some can be turned into computation parameters (such as instance variables)
@@ -17,7 +17,7 @@ ${slide:title=Roadmap}$
 - Cure
 - Stepping back
 - Other analysis
-- Related to the plague of Singleton Design Pattern 
+- Related to Singleton Design Pattern plague
 
 ${slide:title=The case: Transcript}$
 
