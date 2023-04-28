@@ -16,10 +16,11 @@ ${slide:title=Goals}$
 ${slide:title=Case study: introducing .md file in Pillar}$
 
 
-""Existing""
+Existing:
 - Pillar is a document compilation chain: it produces books, slides, sites
 - Pillar used .pillar file containing Pillar text
-""New requirement"": Pillar should handle .md files containing Microdown text
+New requirement: 
+- Pillar should handle .md files containing Microdown text
 - How to support this new requirement?
 
 ${slide:title=Pillar's .pillar file management}$
@@ -58,11 +59,11 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 
 ${slide:title=Challenges}$
 
-==PRDocument parser== implications 
+==PRDocument parser== implications:
 - There is **only one** parser
 - Only one syntax
 
-""Other limits""
+Other limits:
 - Checks for file extension are hardcoded
 - File does not know its project (book,...)
 - Access to project configuration (user option) is cumbersome
