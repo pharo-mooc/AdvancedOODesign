@@ -11,12 +11,12 @@ ${slide:title=Goals/Roadmap}$
 - See that globals may take different forms
 - Study some cases
 - Think modular
-- Dispatch requires instances of different classes
+- Polymorphic dispatch requires instances of different classes
 
 ${slide:title=Autopsy of an error}$
 
 [[[
-MyApp >> menu
+... >> menu
     ...
     icon: (Smalltalk icons iconNamed: #window)
     ...
@@ -27,9 +27,9 @@ MyApp >> menu
 
 ${slide:title=Case 1: Smalltalk icons}$
 
-- One global variable
-- What if as an application I want to extend, slightly change icons for ""my"" application only
-- Cannot have two icon sets used by widget side by side at the same time to compare them
+- ==Smalltalk icons== acts as a global variable
+- What if we want to have icons specific to an specific application
+- We cannot have two icon sets used by widgets side by side at the same time to compare them
 
 ${slide:title=Case 2: A disguised global variable}$
 
@@ -67,8 +67,10 @@ ${slide:title=Case 2: A disguised global variable}$
 
 - One global variable but disguished: ""only one"" place to edit but still fundamentally one global variable
 - There is ""only one"" icon table
+- We cannot dispatch to a different object (there is only one ==Symbol== class)
 - MyApp cannot extend or slightly change icons for my application only!
 - I cannot simply have two icon sets at the same time to compare them
+
 
 
 ${slide:title=A better approach}$
