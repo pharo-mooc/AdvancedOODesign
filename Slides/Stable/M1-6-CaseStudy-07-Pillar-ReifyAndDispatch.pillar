@@ -171,7 +171,7 @@ PRMicrodownInputDocument >> parserClass
 
 ${slide:title=Delegating extension checks}$
 
-Each input document handles its extension.
+Each input document handles its extension
 
 [[[
 PRPillarInputDocument >> doesHandleExtension: anExtension
