@@ -4,11 +4,11 @@
 }
 
 
-${slide:title=Goals}$
+${slide:title=Goals/Roadmap}$
 
-- Globals (but also Singleton) are not nice because ""globally"" shared
+- Understand that globals (but also Singleton) are not nice because ""globally"" shared
 - Difficult to test
-- Globals may take different forms
+- See that globals may take different forms
 - Study some cases
 - Think modular
 - Dispatch requires instances of different classes
@@ -102,7 +102,7 @@ Accessing programmatically a class is usually done as:
 Smalltalk globals at: #Point
 ]]]
 
-- People wanted a shorter version for scripting
+People wanted a shorter version for scripting
 
 [[[
 #Point asClass
@@ -119,7 +119,7 @@ Symbol >> asClass
 
 ${slide:title=Case 3: asClass analysis}$
 
-Same limits as before
+Same limits as before:
 - Another global entry point
 - What if we want to remotely access a class in another system
 - We can only have one namespace
@@ -164,11 +164,11 @@ browseMethodFull
 - One global entry point
 - Everybody refers to this single point! 
 - Yes this is called monolithic thinking
-- Only one toolset possible at the same time (could be ok).
+- Only one toolset possible at the same time (could be ok)
 
 ${slide:title=Case 4: Smalltalk tools possible solution}$
 
-- Objects should refer to instance variable and messages
+- Objects should refer to instance variables and messages
 - Avoid direct reference to a global
 
 [[[
