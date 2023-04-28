@@ -7,8 +7,8 @@
 ${slide:title=Goal}$
 
 - Think about ""intermediary object creation""
-- How to avoid creating spurious objects
-- ==asString== and ==printString== inside ==printOn:==
+- Avoid creating spurious objects
+- Use ==asString== and ==printString== inside ==printOn:==
 
 ${slide:title=printString: setting the stage}$
 
@@ -46,7 +46,7 @@ Object >> printStringLimitedTo: limit
 ]]]
 
 - ==streamContents: [ :s | self printOn: s ]== creates a stream and gather object textual representation
-- each object can place text inside the stream
+- Each object can place text inside the stream
 
 
 ${slide:title=Some suboptimal use: The case of displayStringOn:}$
@@ -63,8 +63,8 @@ MessageTally >> displayStringOn: aStream
 
 - When we get a stream, better use it directly
 - ==self tally printString==
--- Creates a ""new"" stream
--- And get its contents to put in the first stream
+-- creates a ""new"" stream
+-- and gets its contents to put in the first stream
 
 ${slide:title=Better}$
 
@@ -137,4 +137,4 @@ ${slide:title=Conclusion}$
 - Read code around
 - Streams are powerful containers
 -- can be passed around
--- no need to create intermediairy streams for basic sub process
+-- no need to create intermediary streams for basic sub processes
