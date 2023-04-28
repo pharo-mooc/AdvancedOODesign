@@ -16,7 +16,7 @@ ${slide:title=Goals}$
 
 ${slide:title=Goals}$
 
-+Stone Paper Scissors.>file://figures/StonePaperScissorsGame.pdf|width=50+
++Stone Paper Scissors.>file://figures/StonePaperScissorsGame2.pdf|width=30+
 
 ${slide:title=Stone Paper Scissors: one Test}$
 
@@ -261,7 +261,7 @@ ${slide:title=With an argument}$
 
 ${slide:title=Extending it...}$
 
-+>file://figures/StonePaperScissorsLizzardSpockGame.pdf|width=60+
++>file://figures/StonePaperScissorsLizzardSpockGame2.pdf|width=60+
 
 
 ${slide:title=Extensible}$
