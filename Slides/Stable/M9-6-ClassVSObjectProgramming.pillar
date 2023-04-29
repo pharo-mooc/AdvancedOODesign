@@ -6,18 +6,16 @@
 ${slide:title=Goals}$
 
 - Think about object-oriented programming
-- Class programming is not object-oriented programming
+- Understand that class programming is not object-oriented programming
 - Favor objects!
 
 ${slide:title=Class-based programming design}$
 
-Sometimes we get class-based programming design
+Sometimes we get class-based programming design:
 - Classes are used as data holder
-- Instances all share the same data
-- Require a new class to represent a new instance or not configuration of data
-- No real instance speicific state
-
-- Thanks Yann for the discussions
+- Instances share the ""same"" data
+- Require a new class to represent a new instance or configuration of data
+- No real instance specific state
 
 
 ${slide:title=Studying a class hierarchy}$
@@ -42,8 +40,8 @@ ${slide:title=Analysis}$
 
 Pros: 
 - Just create instances
-- You can have a multiple of state
--  Can decorate instances 
+- Can represent multiple and different configurations
+- Can decorate instances 
 
 
 [[[
@@ -61,9 +59,8 @@ ${slide:title=With subclasses}$
 +.>file://figures/ClassVsObject3.pdf|width=90+
 
 
-${slide:title=Discovery mechanism}$
+${slide:title=Need a discovery mechanism}$
 
-Need a registry/discovery mechanism
 - Class-based 
 -- Annotation, hierarchy query, explicit registration
 
