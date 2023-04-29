@@ -4,7 +4,7 @@
 	"slidesid":"M8-S1"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Revisit ''shared'' variables (e.g., ClassVariables in Smalltalk jargon)
 - Think about scope of sharing
@@ -22,7 +22,7 @@ ${slide:title=Shared variables are shared by all the instances of a hierarchy}$
 - ""All"" the instances of a class and its subclasses ""share the SAME"" shared variable
 - If you modify a shared variable, it impacts all the instances
 - A shared variable is usually initialized at class load time (class initialize method)
-- shared variables
+- Shared variables
 -- called ClassVariables in Smalltalk
 -- called SharedVariables in Pharo
 
@@ -81,7 +81,7 @@ Color class >> initialize
 
 
 
-${slide:title=Shared variable's example: String}$
+${slide:title=Shared variable example: String}$
 
 +>file://figures/SharedVariableString.pdf|width=90+
 
@@ -103,10 +103,6 @@ ${slide:title=Shared variable CaseSensitiveOrder accessed in subclass method}$
 ByteSymbol >> beginsWith: prefix
 	"Answer whether the receiver begins with the given prefix string.
 	The comparison is case-sensitive."
-
-	"(#pharo beginsWith: #pharoProject) >>> false"
-	"(#pharo beginsWith: #phuro) >>> false"
-	"(#pharo beginsWith: #pha) >>> true"
 	
 	prefix class isBytes ifFalse: [^super beginsWith: prefix].
 	
