@@ -6,9 +6,9 @@
 
 ${slide:title=Remember}$
 
-We saw
-- Shared variables to share between all instances of a class and instances of its subclasses
-- Mixing an instance variable and a share variable: sharing by default and instance-based customization
+We saw:
+- Shared variables to share info between all instances of a class and instances of its subclasses
+- Mixing an instance variable and a shared variable: sharing by default and instance-based customization
 - Flyweigth
 Here is another variation on that theme taken from Bloc
 
@@ -16,7 +16,7 @@ Here is another variation on that theme taken from Bloc
 ${slide:title=BlElement}$
 
 ==BlElement== is the basic graphical element
-- has many properties
+- It has many properties:
 - ==background==, ==border==, ==clipChildren==, ==elevation==, ==geometry==, ==compositingMode==, ==effect==, ==focusability==, ==focused==, ==mouseCursor==, ==opacity==, ==outskirts==, ==visibility==
 
 ${slide:title=BlElement property example}$
@@ -52,7 +52,7 @@ ${slide:title=BlElementVisuals and setup}$
 
 ${slide:title=BlElementVisuals}$
 
-- Define API and default values
+==BlElementVisuals== defines API and default values
 
 [[[
 Object << #BlElementVisuals
@@ -86,7 +86,7 @@ BlElement >> initialize
 
 ${slide:title=BlDefaultVisuals getters}$
 
-Getters access default shared value
+Getters access default shared values
 [[[
 BlDefaultVisuals >> background
 	^ self defaultBackground
@@ -100,8 +100,8 @@ defaultBackground
 
 ${slide:title=BlDefaultVisuals: setters are key}$
 
-==BlDefaultVisuals== is kind of read only, when setters are executed, they do not modify but
-create and return a new instance of ==BlCustomVisuals==.
+- ==BlDefaultVisuals== is kind of read only, when setters are executed, 
+- they do not modify but create and return a ""new"" instance of ==BlCustomVisuals==
 
 [[[
 BlDefaultVisuals >> background: aBlBackground
@@ -125,8 +125,8 @@ BlCustomVisuals >> background: aBlBackground
 	background := aBlBackground
 ]]]
 
-- ==BlCustomVisuals== stored in place of ==BlDefaultVisuals== singleton to accumulate modifications of the default
-- I accumulate modifications because contrary to ==BlDefaultVisuals== my setters modify myself
+- ==BlCustomVisuals== stored in place of ==BlDefaultVisuals== singleton to keep modifications
+- ==BlCustomVisuals== accumulates modifications because contrary to ==BlDefaultVisuals== its setters modify the receiver
 
 
 ${slide:title=There is a catch - Property modification}$
