@@ -7,8 +7,8 @@
 
 ${slide:title=Goals}$
 
-- Conditionals can be turned into extensible design using messages
-- Basis for more complex situation such as the Visitor Design Pattern
+- See how conditionals can be turned into extensible design using messages
+- Set the basis for more complex situation such as the Visitor Design Pattern
 
 ${slide:title=Remember Die and DieHandle}$
 
@@ -134,11 +134,12 @@ ${slide:title=Hints}$
 
 ${slide:title=Sketch of the solution}$
 
-- When we add two elements (die or dieHandle) together
-- We tell ""the argument"" that we want to add the receiver
-- We are explicit about the receiver state since we know it
--- when the receiver is a die we say to the argument that we d "add a die"
--- when the receiver is a die handle we say to the argument that we "add a die handle"
+- When we add two elements (==die== or ==dieHandle==) together,
+- We tell ""the argument"" to add itself to the receiver
+
+We are explicit about the receiver since we know it:
+- When the receiver is a die, we tell the argument to add itself ""to a die""
+- When the receiver is a die handle, we tell the argument add itself ""to a  die handle""
 
 Let us do it now!
 
@@ -166,9 +167,10 @@ Die >> + aDie
 			yourself
 ]]]
 
-But ==aDie== can be 
-- a dice
-- a die handle
+But ==aDie== can be:
+- A dice
+- A die handle
+
 For example as in 
 [[[
 (Die withFaces: 6) + 2 D20
@@ -226,9 +228,9 @@ ${slide:title=Sending a Message is Making a Choice}$
 
 ${slide:title=Sending a Message is Making a Choice}$
 
-We get two messages/choices
-- one message for ==\+== 
--  one message for ==sumWithDie:==
+We get two messages/choices:
+- One message for ==\+== 
+- One message for ==sumWithDie:==
 
 
 ${slide:title=DieHandle as a receiver}$
@@ -253,9 +255,9 @@ DieHandle >> + aDicable
 	^ aDicable sumWithHandle: self
 ]]]
 
-Then we have to support
-- summing two die handles
-- summing one die handle and a die
+Then we have to support:
+- Summing two die handles
+- Summing one die handle and a die
 
 ${slide:title=Summing an handle with another one}$
 
