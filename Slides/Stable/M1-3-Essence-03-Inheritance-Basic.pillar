@@ -24,16 +24,15 @@ ${columns}$
 ${column:width=60}$
 
 Needs:
-- We want small adaptations
-- We want to extend existing behavior and state
-- We do not want to reimplement everything: We want to reuse
+- We want to adapt the code by extending existing behavior and state
+- We do not want to reimplement everything
 
 Solution: ""class inheritance""
 - A class extends the definition of its superclass
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram-from-ObjectNoProto|width=90+
++>file://figures/InheritanceDiagram.pdf|width=60+
 
 ${endColumns}$
 
@@ -50,7 +49,7 @@ A subclass:
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=90+
++>file://figures/InheritanceDiagram.pdf|width=60+
 
 ${endColumns}$
 
@@ -66,7 +65,7 @@ ${column:width=70}$
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-from-ObjectNoProto.pdf|width=100+
++>file://figures/InheritanceDiagram-from-ObjectNoProto.pdf|width=80+
 
 ${endColumns}$
 
@@ -85,7 +84,7 @@ ${column:width=70}$
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-Proto.pdf|width=100+
++>file://figures/InheritanceDiagram-Proto.pdf|width=80+
 
 ${endColumns}$
 
@@ -111,7 +110,7 @@ ${column:width=65}$
 
 ${column:width=35}$
 
-+>file://figures/InheritanceDiagram.png|width=100+
++>file://figures/InheritanceDiagram.png|width=80+
 
 ${endColumns}$
 

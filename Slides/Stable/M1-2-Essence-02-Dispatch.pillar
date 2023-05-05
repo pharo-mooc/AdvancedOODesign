@@ -5,7 +5,7 @@
 
 ${slide:title=Remember: Implementing not in two methods}$
 
-+Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
++Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=70+
 
 
 ${slide:title=Ok so what?}$
@@ -67,7 +67,7 @@ ${endColumns}$
 
 ${slide:title=A message send is an open conditional}$
 
-Sending a message:
+Sending a message
 - selects the ""right"" method to execute based on the class of the receiver
 - can be seen as a condition ""without explicit ifs""
 - is a dynamic choice
@@ -113,8 +113,8 @@ ${endColumns}$
 
 ${slide:title=Sending a message is making a choice}$
 
-- Message send is a ""choice"" operator
-- Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
+- Message sending is a ""choice"" operator
+- Each time you send a message, the execution engine ""selects the right method"" depending on the class of the receiver
 - So, ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
@@ -141,7 +141,7 @@ ${slide:title=Class hierarchy supports for dynamic dispatch}$
 - No need to recompile existing methods
 - You only focus on one class at a time
 
-+>file://figures/Design-FatVsDispatch.pdf|width=40+
++>file://figures/Design-FatVsDispatch.pdf|width=50+
 
 
 ${slide:title=Message dispatch supports modularity}$
@@ -154,7 +154,7 @@ ${slide:title=Limit impact of changes}$
 
 +>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
-If a client receives instances of ==E== (in addition to classes of first package), the client code does not have to change
+If a client receives instances of ==D== (in addition to classes of first package), the client code does not have to change
 
 
 ${slide:title=Message Send is powerful}$
@@ -176,6 +176,4 @@ ${slide:title=Summary: Cornerstone of OOP}$
 - Avoid conditionals (cf. AntiIfCampaign)
 - Use objects and messages whenever you can
 - Let the receiver decide (Do not ask, tell)
-- Message sends act as potential dynamic conditionals
 - Class hierarchy supports for dynamic dispatch
-
