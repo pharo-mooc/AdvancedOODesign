@@ -14,7 +14,7 @@
     </font-face>
   </defs>
   <metadata> Produced by OmniGraffle 7.11.5 
-    <dc:date>2023-05-05 10:20:27 +0000</dc:date>
+    <dc:date>2023-05-05 10:24:04 +0000</dc:date>
   </metadata>
   <g id="Canvas_2" fill="none" stroke-dasharray="none" fill-opacity="1" stroke="none" stroke-opacity="1">
     <title>Canvas 2</title>
@@ -206,6 +206,34 @@
       <g id="Graphic_55">
         <text transform="translate(323.8989 .07255814)" fill="black">
           <tspan font-family="Helvetica" font-size="12" font-weight="700" fill="black" x="0" y="11">Root</tspan>
+        </text>
+      </g>
+      <g id="Line_68">
+        <line x1="233.56" y1="147.84" x2="233.56" y2="129.3" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_67">
+        <path d="M 233.56 117.3 L 226.56 129.3 L 240.56 129.3 Z" stroke="black" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="1"/>
+      </g>
+      <g id="Graphic_66">
+        <rect x="188.56" y="162.33999" width="90" height="14" fill="white"/>
+      </g>
+      <g id="Graphic_65">
+        <rect x="188.56" y="162.34" width="90" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_64">
+        <text transform="translate(193.56 161.57256)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" font-weight="700" fill="black" x="0" y="11">operation</tspan>
+        </text>
+      </g>
+      <g id="Graphic_63">
+        <rect x="188.56" y="148.33999" width="90" height="14" fill="white"/>
+      </g>
+      <g id="Graphic_62">
+        <rect x="188.56" y="148.34" width="90" height="14" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_61">
+        <text transform="translate(224.8964 148.68884)" fill="black">
+          <tspan font-family="Helvetica" font-size="12" font-weight="700" fill="black" x="0" y="11">AA</tspan>
         </text>
       </g>
     </g>
