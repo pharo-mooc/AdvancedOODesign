@@ -74,22 +74,42 @@ Sending a message:
 
 ${slide:title=Select the right method}$
 
-${column:width=50}$
+${columns}$
+
+${column:width=40}$
 
 [[[
-aCollection := {a,b',c}.
+aCollection := {a,b,c}.
+...
 aCollection do: [ :e |
     e operation]
 ]]]
 
 ${column:width=50}$
 
-+>file://figures/Design-FatVsDispatchNoFat.pdf|width=75+
++>file://figures/Design-FatVsDispatchNoFat2.pdf|width=95+
 
+${endColumns}$
 
 ${slide:title=But dynamically: new objects can be chosen}$
 
-+>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=75+
+${columns}$
+
+${column:width=40}$
+
+[[[
+aCollection := {a,b,c}.
+...
+aCollection do: [ :e |
+    e operation]
+]]]
+
+${column:width=50}$
+
++>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=95+
+
+${endColumns}$
+
 
 ${slide:title=Sending a message is making a choice}$
 
