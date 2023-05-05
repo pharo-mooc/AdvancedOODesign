@@ -23,7 +23,7 @@ ${slide:title=TDD is about the flow}$
 ${slide:title=TDD: Write your test}$
 
 - Imagine we just created the class ==Counter==
-- Testing counter value setter/getter
+- Write a test about setting and getting a counter value
 
 [[[
 CounterTest >> testCount
@@ -51,9 +51,9 @@ ${slide:title=TDD: Rerun *all* the tests}$
 
 ${slide:title=TDD: When all the tests are green}$
 - Commit and take a break ;-)
-- Then it is a good time to
+- Then, it is a good time to
 -- ""Clean"" and ""refactor"" your code if necessary
--- Then, rerun ""all"" the tests
+-- and then, rerun ""all"" the tests
 
 ${slide:title=Why writing test first?}$
 
