@@ -11,7 +11,7 @@ ${slide:title=Remember: Implementing not in two methods}$
 ${slide:title=Ok so what?}$
 
 - You will probably never implement ==Booleans== in the future
-- So is it ""really"" useful?
+- So, is it ""really"" useful?
 - What are the lessons to learn?
 - What are the properties of the solution?
 
@@ -73,6 +73,16 @@ Sending a message:
 - is a dynamic choice
 
 ${slide:title=Select the right method}$
+
+${column:width=50}$
+
+[[[
+aCollection := {a,b',c}.
+aCollection do: [ :e |
+    e operation]
+]]]
+
+${column:width=50}$
 
 +>file://figures/Design-FatVsDispatchNoFat.pdf|width=75+
 
