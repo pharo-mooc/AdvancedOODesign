@@ -85,7 +85,7 @@ ${slide:title=Sending a message is making a choice}$
 
 - Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
 - Sending a message is a ""choice"" operator
-- So ""How do we express choices""?
+- So, ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
 
@@ -106,9 +106,9 @@ ${slide:title=One class vs. a hierarchy}$
 ${slide:title=Class hierarchy supports for dynamic dispatch}$
 
 - More modular
-- No need to recompile exiting methods
 - No need to introduce complex conditions
 - A hierarchy provides a way to specialize behavior
+- No need to recompile existing methods
 - You only focus on one class at a time
 
 +>file://figures/Design-FatVsDispatch.pdf|width=40+
@@ -132,7 +132,7 @@ ${slide:title=Avoid conditionals}$
 - Message sends are supporting ""choices""
 - The execution engine acts as a conditional switch: Use it!
 - Classes act as "case statements"
-- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent (i.e. the receiver)
+- But with messages, the case statement is ""extensible"" by adding new classes without breaking client code
 
 ${slide:title=Let the receiver decide}$
 
