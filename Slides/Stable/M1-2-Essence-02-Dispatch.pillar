@@ -79,7 +79,7 @@ ${columns}$
 ${column:width=40}$
 
 [[[
-aCollection := {a,b,c}.
+aCollection := {a.bb.c}.
 ...
 aCollection do: [ :e |
     e operation]
@@ -98,7 +98,7 @@ ${columns}$
 ${column:width=40}$
 
 [[[
-aCollection := {a,b,c}.
+aCollection := {a.bb.c.aa}.
 ...
 aCollection do: [ :e |
     e operation]
@@ -113,8 +113,8 @@ ${endColumns}$
 
 ${slide:title=Sending a message is making a choice}$
 
+- Message send is a ""choice"" operator
 - Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
-- Sending a message is a ""choice"" operator
 - So, ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
@@ -125,8 +125,8 @@ Could we have the same solution with a ""single"" ==Boolean== class?
 
 ${slide:title=Classes play case roles}$
 
-- To activate the choice operator we must have ""choices"": classes
-- A class represents a choice (a case)
+- To activate the choice operator we must have ""choices""
+- A ""class"" represents a choice (a case)
 
 
 ${slide:title=One class vs. a hierarchy}$
@@ -148,16 +148,16 @@ ${slide:title=Message dispatch supports modularity}$
 
 +>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
-We can package different classes in different packages (better modularity)
+We can package different classes into different packages (better modularity)
 
 ${slide:title=Limit impact of changes}$
 
-+>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
++>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=75+
 
-If client has a way to get instances of ==D== (in addition to classes of first package), the client code does not have to change
+If a client receives instances of ==D== (in addition to classes of first package), the client code does not have to change
 
 
-${slide:title=Avoid conditionals}$
+${slide:title=Message Send is powerful}$
 
 - Message sends are supporting ""choices""
 - The execution engine acts as a conditional switch: Use it!
