@@ -18,7 +18,7 @@ ${slide:title=Write tests first}$
 
 ${slide:title=TDD is about the flow}$
 
-+>file://figures/TDD-workflow.pdf|width=50+
++>file://figures/TDD-workflow.pdf|width=42+
 
 ${slide:title=TDD: Write your test}$
 
