@@ -6,9 +6,9 @@
 
 ${slide:title=Goals}$
 
-- In the quest of dispatch
-- No conditionals!
-- Implementing: 
+- Exercise dispatch
+- Do not use conditionals!
+- Implement: 
 [[[
 > Stone new vs: Paper new
 #paper
@@ -16,7 +16,7 @@ ${slide:title=Goals}$
 
 ${slide:title=Goals}$
 
-+Stone Paper Scissors.>file://figures/StonePaperScissorsGame.pdf|width=50+
++Stone Paper Scissors.>file://figures/StonePaperScissorsGame2.pdf|width=30+
 
 ${slide:title=Stone Paper Scissors: one Test}$
 
@@ -52,7 +52,7 @@ Stone >> vs: anotherTool
 
 ${slide:title=Hint 1}$
 
-- The solution does not contain an explicit condition (No if, no checks)
+- The solution does not contain an explicit condition (no if, no checks)
 - Remember sending a message is making a choice: it selects the right method
 
 ${slide:title=Hint 2: 3 classes}$
@@ -261,7 +261,7 @@ ${slide:title=With an argument}$
 
 ${slide:title=Extending it...}$
 
-+>file://figures/StonePaperScissorsLizzardSpockGame.pdf|width=60+
++>file://figures/StonePaperScissorsLizzardSpockGame2.pdf|width=60+
 
 
 ${slide:title=Extensible}$

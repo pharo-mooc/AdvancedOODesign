@@ -1,14 +1,14 @@
 {
-    "title" : "Global To Parameter",
+    "title" : "Global to parameter",
     "subtitle":"Basic but important",
     "slidesid":"M3S5"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
-- Globals are not a fatality
+- Verify that globals are not a fatality
 - Some can be turned into computation parameters (such as instance variables)
-- There are pros and cons
+- Understand pros and cons
 
 
 ${slide:title=Roadmap}$
@@ -17,7 +17,7 @@ ${slide:title=Roadmap}$
 - Cure
 - Stepping back
 - Other analysis
-- Related to the plague of Singleton Design Pattern 
+- Related to Singleton Design Pattern plague
 
 ${slide:title=The case: Transcript}$
 
@@ -74,7 +74,7 @@ ${slide:title=The solution: Use locality and encapsulation}$
 - Easy! Just add an instance variable to hold a stream
 
 [[[
-MicAbstractBlock >>initialize
+MicAbstractBlock >> initialize
 	super initialize.
 	logStream := WriteStream on: (String new: 1000)
 ]]]
@@ -82,7 +82,7 @@ MicAbstractBlock >>initialize
 - Use and write to THAT stream
 
 [[[
-MicAbstractBlock >>closeMe
+MicAbstractBlock >> closeMe
 	logStream << 'Closing ' << self class name; cr
 ]]]
 
@@ -102,7 +102,7 @@ MicAbstractBlock >> logStream: aStream
 
 ${slide:title=From monolithic to parametrizable}$
 
-+>file://figures/GlobalVSInstance.pdf|width=75+
++>file://figures/GlobalVSInstance.pdf|width=80+
 
 
 
@@ -150,17 +150,17 @@ Now each instance can have its specific value!
 ${slide:title=Instance variables}$
 
 - Instance variables are state of objects
-- Instance variables are also ''parameters'' of your computation
+- Instance variables are also ""parameters"" of your computation
 - You can also share state with class scope variables (sharedVariables in Pharo)
 - See lectures in Module ""Sharing objects""
 
-${slide:title=About Globals}$
+${slide:title=About globals}$
 
-""Pros:""
+Pros:
 - You do not have to add an instance variable to your domain
 - You do not have to initialize such global on your specific case 
 
-""Cons: ""
+Cons:
 - You have ""only one"" (e.g., if an entity belongs to one global model, you cannot have two entites living in different models)
 - Testing requires care and is sometimes ""not possible"" or cumbersome because of ""side effects""
 - You cannot ""initialize"", ""specialize"" the global for your context (there is only one)
@@ -170,12 +170,12 @@ ${slide:title=About parametrization}$
 Sometimes you simply ""cannot"" add an instance variable to your objects
 - Too many of them
 - Fixed size inherited from old design
-- About space consumption, check Sharing Lectures and Flyweigth Design Pattern
+- About space consumption, check Lectures about Sharing and Flyweigth Design Pattern
 - Factor the global usage to ease future changes
 
-${slide:title=In general: Avoid Globals}$
+${slide:title=In general: Avoid globals}$
 
 - Avoid Singleton
-- Avoid Globals 
-- They make your code less modular, less ""testable""
-- Check Lectures on Singleton and Disguised Singleton
+- Avoid globals 
+- They make your code ""less"" modular, less ""testable""
+- Check lectures on Singleton and Disguised Singleton

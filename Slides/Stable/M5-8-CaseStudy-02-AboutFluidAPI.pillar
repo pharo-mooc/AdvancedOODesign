@@ -10,7 +10,7 @@ ${slide:title=Goals}$
 - Think about fixed and large parameter-driven APIs
 - Fluid API?
 - Think modular
-- Looking at the class definition printer
+- Study the class definition printer
 
 ${slide:title=Numberous mandatory parameter APIs}$
 
@@ -29,7 +29,7 @@ add: wordingString icon: aForm help: helpString subMenu: aMenuMorph
 	self add: wordingString icon: aForm help: helpString subMenu: aMenuMorph action: nil keyText: nil
 ]]]
 
-- May forces users to specify all parameters (often with ==nil==)
+- May force users to specify all parameters (often with ==nil==)
 
 ${slide:title=Handling optional parameters may blow up API}$
 
@@ -214,7 +214,7 @@ SpAbstractWidgetPresenter << #SpDiffPresenter
 
 ${slide:title=Created vs. builder objects}$
 
-You may have 
+You may have:
 - the object created also be its own builder object
 - or a separate one: a ClassBuilder whose role is to configure classes
 -- this clear separation is usually better

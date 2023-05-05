@@ -1,12 +1,12 @@
 {
   "title":"Inheritance and Lookup: Self",
-  "subtitle":"Understanding lookup once for all",
+  "subtitle":"Understand lookup once for all",
   "slidesid":"M1S4"
 }
 
 ${slide:title=Goals}$
 
- Understanding
+ Understand:
 - Sending a message
 - Method lookup
 - Semantics of ==self==/==this==
@@ -95,8 +95,8 @@ ${column:width=50}$
 
 ${column:width=50}$
 
-- Take 5 min and write the definition of ==self== (==this== in Java).
-- your definition should have two points:
+- Take 5 min and write the definition of ==self== (==this== in Java)
+- Your definition should have two points:
 -- what does ==self== represent?
 -- how is a method looked up when a message is sent to ==self==?
 

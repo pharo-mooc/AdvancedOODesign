@@ -55,16 +55,17 @@ ${slide:title=10 modules}$
 
 %${endColumns}$
 
-${slide:title=About Pharo}$
+${slide:title=Code examples from Pharo}$
 
-All the code samples and examples are taken from Pharo (*http://www.pharo.org*)
+%All the code samples and examples are from Pharo (*http://www.pharo.org*)
 
-+>file://figures/Pharo.jpg+
++>file://figures/Pharo.jpg|width=65+
+Courtesy Pavel Krivanek
 
 
-${slide:title= Why Pharo?}$
+${slide:title= Why Pharo (http://www.pharo.org)?}$
 
-- Pharo is pure and powerful object-oriented language (See *http://www.pharo.org*)
+- Pharo is pure and powerful object-oriented language
 - With only objects, messages, and lambdas, Pharo helps us to focus on important ideas!
 - Complement the excellent Pharo mooc (*http://mooc.pharo.org*)
 

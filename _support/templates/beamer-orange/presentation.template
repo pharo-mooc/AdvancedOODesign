@@ -39,16 +39,33 @@
 
 \vspace{2em}
 
-A course by
-
+\begin{scriptsize}
+Produced as part of the course on http://www.fun-mooc.fr
+\end{scriptsize}
 \vspace{1em}
 
+\begin{Large}
+Advanced Object-Oriented Design and Development \\ with Pharo
+\end{Large}
+\vspace{1em}
+
+\begin{small}
+A course by
+\end{small}
+
+\begin{small}
 S.Ducasse, L. Fabresse, G. Polito, and P. Tesone
+\end{small}
 \vspace{1.5em}
 
-\includegraphics[width=80px]{by-nc-nd-eu.pdf}\\
-\vspace{0.15cm}
-\includegraphics[width=80px]{inr_logo_rouge.jpg}\hspace{0.5cm}\hspace{0.5cm}\includegraphics[width=60px]{ILL_principal.png}\hspace{0.5cm}%\includegraphics[width=60px]{logo-IMT.png}
+
+%\includegraphics[width=80px]{inr_logo_rouge.pdf}\hspace{0.5cm}\includegraphics[width=70px]{ILL_principal.pdf}\hspace{0.5cm}\includegraphics[width=60px]{logo-IMT.jpg}
+
+\raisebox{0.1ex}{\includegraphics[width=80px]{inr_logo_rouge.pdf}}\hspace{0.5cm}\raisebox{-1.2ex}{\includegraphics[width=70px]{ILL_principal.pdf}}\hspace{0.5cm}\raisebox{-1.4ex}{\includegraphics[width=60px]{logo-IMT.jpg}}
+
+
+\vspace{0.05cm}
+\includegraphics[width=50px]{by-nc-nd-eu.pdf}
 
 %\mbox{\centering\raisebox{0.4cm}{\includegraphics[width=100px]{inriaLogo.png}}}
 %\hspace{2cm}\includegraphics[width=60px]{logo-IMT.png}}\\
@@ -58,9 +75,13 @@ S.Ducasse, L. Fabresse, G. Polito, and P. Tesone
 Except where otherwise noted, this work is licensed under CC BY-NC-ND 3.0 France\\
 \url{https://creativecommons.org/licenses/by-nc-nd/3.0/fr/}\\
 
+\begin{center}
+2023
+\end{center}
 %\vspace{1em}
 
 %\includegraphics[width=400px]{simplebandeau.png}\\
+
 
 
 

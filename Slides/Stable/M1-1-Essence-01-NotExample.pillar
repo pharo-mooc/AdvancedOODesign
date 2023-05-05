@@ -6,18 +6,18 @@
 
 ${slide:title=Objectives}$
 
-- Understanding of message passing (late binding) for ""real"" this time
+- Understand of message passing (late binding) for ""real"" this time
 - The ""heart of Object-Oriented Design""
-- Looking at a beautiful implementation in Pharo
+- Look at a beautiful implementation in Pharo
 
 ${slide:title=Context: Booleans}$
 
 In Pharo, Booleans have a superb implementation!
 
-You get the classical messages
+You get the classical messages:
 - ==&==, ==|==, ==not== (eager)
 - ==or:==, ==and:== (lazy)
-And some less traditional ones
+And some less traditional ones:
 - ==ifTrue:ifFalse:==, ==ifFalse:ifTrue:==
 -- Yes, conditionals are messages sent to boolean objects
 
@@ -53,7 +53,7 @@ ${slide:title=Hint 2: How do we express choices in OOP?}$
 In OOP, the choice is expressed 
 - By defining classes with ""compatible"" methods
 - By ""sending"" a message to an instance of such a class
-- Let the receiver decide!
+Let the receiver decide!
 
 ${slide:title=Hint 2: An example of choice in OOP}$
 
@@ -99,7 +99,7 @@ ${slide:title=Implementation hierarchy}$
 +Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethods.png|width=80+
 
 
-${slide:title=Message lookup is choosing the right method}$
+${slide:title=Message lookup chooses the right method}$
 
 +Not implementation.>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
 
@@ -209,14 +209,16 @@ ${slide:title=Or Implementation in two methods}$
 
 ${slide:title=Step back}$
 
- ""Do not ask, tell""
-- we delegate to the correct ==Boolean== object
-- each subclass implements its ""own"" logic
+- An example of ""Do not ask, tell"" principle application
+- Here: 
+-- We ""delegate"" to the correct ==Boolean== object
+-- Each subclass implements its ""own"" logic
 
 
 ${slide:title=Summary}$
 
-The solution to implement boolean operations:
-- does NOT use conditionals (if)
+- The solution to implement boolean operations does NOT use explicit conditionals (if)
+- Sending a message is doing a choice
+Remember two important principles
 - ""Do not ask, tell""
--- lets the receiver decide
+- ""Let the receiver decide""
