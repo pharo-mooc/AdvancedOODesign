@@ -152,9 +152,9 @@ We can package different classes into different packages (better modularity)
 
 ${slide:title=Limit impact of changes}$
 
-+>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=75+
++>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
-If a client receives instances of ==D== (in addition to classes of first package), the client code does not have to change
+If a client receives instances of ==E== (in addition to classes of first package), the client code does not have to change
 
 
 ${slide:title=Message Send is powerful}$
