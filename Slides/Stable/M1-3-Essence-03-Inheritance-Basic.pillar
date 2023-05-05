@@ -17,7 +17,6 @@ ${slide:title=Inheritance}$
 - It is based on the expression of a delta
 -- Only specify the differences to the superclasses
 
-
 ${slide:title=The basics}$
 
 ${columns}$
@@ -34,7 +33,7 @@ Solution: ""class inheritance""
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=90+
++>file://figures/InheritanceDiagram-from-ObjectNoProto|width=90+
 
 ${endColumns}$
 
@@ -54,12 +53,6 @@ ${column:width=40}$
 +>file://figures/InheritanceDiagram.png|width=90+
 
 ${endColumns}$
-
-
-
-
-
-
 
 ${slide:title=Root of inheritance hierarchy}$
 
@@ -142,7 +135,7 @@ ${endColumns}$
 
 ${slide:title=What you should know}$
 
-- Inheritance allows developpers of a class to "add" state and behavior and "redefine" behavior
+- Inheritance allows developpers of a class to ""add"" state and behavior and ""redefine"" behavior
 - A class has 1 and only 1 superclass (single inheritance model)
 - A class eventually inherits from ==Object==
 - Inheritance of state is static
