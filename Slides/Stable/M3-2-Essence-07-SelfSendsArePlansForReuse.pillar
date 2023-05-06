@@ -1,11 +1,11 @@
 {
-  "title" : "Message Sends are Plans for Reuse",
-	    "slidesid":"M3-2"
+    "title" : "Message Sends are Plans for Reuse",
+    "slidesid":"M3-2"
 }
 
 ${slide:title=About this lecture}$
 
-- Related to sending a message is making a choice lecture
+- Related to the "Essence of Dispatch" (sending a message is making a choice)
 - Relevant to any object-oriented language
 - Another essential aspect of object-oriented design
 
@@ -18,7 +18,7 @@ ${slide:title=Let us start to reflect }$
 
 Anecdotes
 - ''I like big methods because I can see all the code''
-- ''I do not like small methods'' 
+- ''I do not like small methods''
 
 Questions
 - Why large methods leads to ''under-optimal'' design?
@@ -31,44 +31,37 @@ ${slide:title=Remember...}$
 - ==self== ""always represents the receiver""
 - method lookup starts in the ""class of the receiver"" (except for super)
 
-+>file://figures/Design-FatVsDispatch.png|width=75+
++>file://figures/Design-FatVsDispatch.pdf|width=75+
 
 
 
 ${slide:title=An example}$
 
-Imagine
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := mainCoordinate / maximizeViewRatio.
-   self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+   self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
 ]]]
 
-What if we want to change the ==defaultNodeSize== formula in a subclass
+What are the possible solutions to change the ==defaultNodeSize== formula in a subclass?
 
 
-
-${slide:title=Duplication as a bad solution}$
+${slide:title=Bad solution: duplication}$
 
 Duplicate the code in a subclass
 
 [[[
-Node subclass: OurSpecificNode
+Node subclass: NodeWithMargins
    ...
 ]]]
 
 [[[
-OurSpecificNode >> setWindowWithRatioForDisplay
+NodeWithMargins >> setWindowWithRatioForDisplay
   | defaultNodeSize |
-  defaultNodeSize :=
-     (mainCoordinate / maximizeViewRatio) + 10.
-  self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+  defaultNodeSize := (mainCoordinate / maximizeViewRatio) + 10.
+  self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
   previousNodeSize := defaultNodeSize.
 ]]]
 
@@ -79,43 +72,41 @@ ${slide:title=Avoid duplication}$
 -- changing one copy requires changing others
 - Note that in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
 
-${slide:title=A much better solution}$
+${slide:title=Essence of a better solution}$
 
 ${columns}$
 
-${column:width=50}$
+${column:width=60}$
 
 - Define small methods
 - Send messages
 - Subclasses can override such methods
 
-${column:width=50}$
+${column:width=40}$
 
-+>file://figures/SelfIsDynamic.png|width=70+
++>file://figures/SelfIsDynamic.png|width=80+
 
 ${endColumns}$
 
-${slide:title=We can refactor this}$
+${slide:title=Applying it on our example}$
+
+We can refactor this:
 
 [[[
 Node >> setWindowWithRatioForDisplay
   | defaultNodeSize |
   defaultNodeSize := (mainCoordinate / maximizeViewRatio).
-  self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+  self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
   previousNodeSize := defaultNodeSize.
 ]]]
 
-${slide:title=Into ...}$
+into:
 
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := self ratio.
-   self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+   self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
 ]]]
 
@@ -125,68 +116,65 @@ Node >> ratio
 ]]]
 
 
-${slide:title=Subclasses reuse superclass logic}$
+${slide:title=Subclasses can now reuse the superclass logic}$
 
 [[[
 Node >> ratio
    ^ mainCoordinate / maximizeViewRatio
 ]]]
 
-A subclass can refine the behavior
+A subclass can redefine this behavior into:
 
 [[[
-OurSpecificNode >> ratio
+NodeWithMargins >> ratio
    ^ super ratio + 10
 ]]]
 
+
 ${slide:title=Another step}$
 
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := self ratio.
-   self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+   self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
 ]]]
 
-What if we want have a different ==UINode==.
+How to use a different ==UINode== in subclasses?
 
 
+${slide:title=Another step: same solution applied}$
 
-${slide:title=Another step}$
-
-We can also extract the ==UINode== instantiation.
+We can also extract the ==UINode== instantiation into a separate method.
 
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := self ratio.
-   self window add: self uiNode.
+   self window add: self createUINode.
    previousNodeSize := defaultNodeSize.
 ]]]
 
 [[[
-Node >> uiNode
-   ^ UINode new
-          with: bandWidth * 55 / defaultWindowSize
+Node >> createUINode
+   ^ UINode new with: bandWidth * 55 / defaultWindowSize
 ]]]
 
-${slide:title=Do not hardcode class use}$
+${slide:title=Improvement: do not hardcode class use}$
+
+Refactor this:
 
 [[[
-Node >> uiNode
-   ^ UINode new
-          with: bandWidth * 55 / defaultWindowSize
+Node >> createUINode
+   ^ UINode new with: bandWidth * 55 / defaultWindowSize
 ]]]
 
-${slide:title=Define methods returning classes}$
+into:
 
 [[[
-Node >> uiNode
-   ^ self uiNodeClass new
-        with: bandWidth * 55 / defaultWindowSize.
+Node >> createUINode
+   ^ self uiNodeClass new with: bandWidth * 55 / defaultWindowSize.
 ]]]
 
 [[[
@@ -194,20 +182,20 @@ Node >> uiNodeClass
    ^ UINode
 ]]]
 
-${slide:title=Many small messages}$
+It is better to define methods that returns classes.
+BTW, this is easy in Pharo because classes are regular objects!
 
-Small messages are a sign of good design, because:
-- each little method is a potential ""hook"" for customization
-- gives name to expressions
 
-Some developers complain about all these small methods
-- But small methods are good
-- Give meaningful name to methods
-- Do not need to read all method definitions
+${slide:title=Many take-away messages}$
+
+Small methods are a sign of good design, because:
+- they give a name to expressions
+- they a potential ""hook"" for redefinition in subclasses
+- encapsulate complexitiy (no need to read all method definitions) if their name is meaningful
 
 ${slide:title=Gruyere-oriented programming}$
 
-+.>file://figures/gruyereWithSlogan|width=95+
++.>file://figures/gruyereWithSlogan|width=65+
 
 ${slide:title=Conclusion}$
 
@@ -216,6 +204,6 @@ ${slide:title=Conclusion}$
 -- i.e., a place where subclasses can ""inject variations""
 
 - Prefer small methods because:
--- this gives names to expressions
--- this gives freedom to subclasses
+-- it gives names to expressions
+-- each one is an extensibility point for subsclasses
 
