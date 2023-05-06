@@ -109,7 +109,7 @@ Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
 	^ aResultHandler paperWon
 ]]]
 
-- It feels like the "Do not not ask tell"
+- It feels like the "Do not ask tell"
 - We can have different result handlers
 - Feel free to experiment to see how it goes
 
@@ -117,7 +117,7 @@ Paper >> playAgainstStone: aStone withResultHandler: aResultHandler
 ${slide:title=Stepping back}$
 
 
-- Symbols looks better than numbers for returning information for this case but there are numerous cases where a number is definitively better
+- Symbols look better than numbers for returning information for this case but there are numerous cases where a number is definitively better
 - Creating result handlers can be heavy
 - Context and scenarios often give you information to see 
 -- where to invest
@@ -126,6 +126,6 @@ ${slide:title=Stepping back}$
 
 ${slide:title=Conclusion}$
 
-A desihn solution is often dependent on a context
+A design solution is often dependent on a context
 - Try alternate solutions, compare them
 - Exercise your design taste

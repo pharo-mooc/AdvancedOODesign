@@ -5,10 +5,10 @@
 }
 
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Think ""modular""
-- Looking at the class definition printer
+- Look at the class definition printer
 - Check design approach in Pharo
 
 ${slide:title=Context and challenges}$
