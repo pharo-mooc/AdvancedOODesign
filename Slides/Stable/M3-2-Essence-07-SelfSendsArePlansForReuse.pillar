@@ -182,7 +182,7 @@ Node >> uiNodeClass
    ^ UINode
 ]]]
 
-It is better to define methods that returns classes.
+It is a good practice to define methods that return classes.
 BTW, this is easy in Pharo because classes are regular objects!
 
 
@@ -190,8 +190,8 @@ ${slide:title=Many take-away messages}$
 
 Small methods are a sign of good design, because:
 - they give a name to expressions
-- they a potential ""hook"" for redefinition in subclasses
-- encapsulate complexitiy (no need to read all method definitions) if their name is meaningful
+- they are a potential ""hook"" for extensibility in subclasses (redefinition)
+- they encapsulate complexitiy (no need to read all method definitions) if their name is meaningful
 
 ${slide:title=Gruyere-oriented programming}$
 
@@ -205,5 +205,5 @@ ${slide:title=Conclusion}$
 
 - Prefer small methods because:
 -- it gives names to expressions
--- each one is an extensibility point for subsclasses
+-- each one is an extensibility point for subclasses
 
