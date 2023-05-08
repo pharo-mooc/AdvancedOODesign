@@ -72,13 +72,13 @@ testConvert
 ${slide:title=fromString: and convert interplay}$
 
 [[[
-testFromStringIsCoherentWithConvert
+testConvertFromRR0000
    | table aColorString |
    table := #('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F').
 
    table do: [ :each |
       aColorString := '#', each, each, '0000'.
-      self assert: ((Color fromString: aColorString) convert sameAs: aColorString)].
+      self assert: (Color fromString: aColorString) convert equals: aColorString ].
 ]]]
 
 ${slide:title=Understanding code}$
@@ -169,7 +169,7 @@ ${slide:title=Characteristics of a good test suite}$
 
 - Deterministic
 - Self-explained
-- Simple/Unit/Short: with few assertions (not 10th not hundred)
+- Simple/Unit/Short: with few assertions (not tens not hundreds)
 - Change less frequently than the rest: 
 -- ""Test the API"" not the implementation
 -- ""Limit"" dependency to other elements 
