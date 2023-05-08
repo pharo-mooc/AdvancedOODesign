@@ -53,14 +53,6 @@ BDConnect class >> uniqueInstance
 	^ UniqueInstance
 ]]]
 
-${slide:title=Different kinds of singleton}$
-
-- ""Persistent singleton"": only one instance exists and its identity does not change 
-
-- ""Transient singleton"": only one instance exists at any time, but that instance ""changes""  
-
-- ""Single active instance singleton"": a single instance is active at any point in time, but other ""dormant instances may"" also exist. 
-
 ${slide:title=Should we override new?}$
 
 [[[

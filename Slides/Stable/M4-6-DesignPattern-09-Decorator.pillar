@@ -28,10 +28,10 @@ ${slide:title=Often mixed with inheritance}$
 
 ${slide:title=Decorator}$
 
-- A decorator wraps an instance of the component
--- It is placed between the client and the component
--- It propagates or not messages to the component
-- Easier to understand when the ==Decorator== is a subclass of ==Component== but not necessary (think duck typing)
+- A decorator wraps an instance of the decoree
+-- It is placed between the client and the decoree
+-- It propagates or not messages to the decoree
+- Easier to understand when the ==Decorator== is a subclass of ==Decoree== but not necessary (think duck typing)
 
 
 ${slide:title=Decorator nesting}$
@@ -42,13 +42,10 @@ ${slide:title=Decorator nesting}$
 
 ${slide:title=Transparent to the client}$
 
-- A client manipulates ""transparently"" a component or a decorated component
-- A client talks to the decorator which talks to the decoratee (a component or a another decorator)
+- A client manipulates ""transparently"" decorated and undecorated elements
+- A client talks to the decorator which talks to the decoree (a leaf object or a another decorator)
 
-- Strong implication: component and decorator ""must"" expose the same API
-
-
-
+- Strong Implication: decoree and decorator ""must"" expose the same API
 
 
 
@@ -149,33 +146,21 @@ ${slide:title=Analysis}$
 
 
 
-${slide:title=About dynamically}$
+${slide:title=About dynamic behavior}$
 
-Attach additional responsibilities to an object ""dynamically""
+Decorators attach additional responsibilities to an object
 
-- The decorator is based on delegation: The decoration delegates messages to its decoratee (Component or decorated component) it does not specialize to the decoratee
-- To attach dynamic means that we should control the creation chain (the client reference)
+- The decorator is based on delegation
+- We should control the creation of the decoration chain (the client reference)
 
+- Strong Implication: decorated objects do not know how if they are decorated. Changing the decoration chain at runtime is not easy.
 
+${slide:title=When not to use decorator}$
 
+- When decorations should have different APIs
+- When the decorations should change dynamically
 
-${slide:title=Commander and its decorators}$
-
-+>file://figures/DecoratorWithSpec2.pdf|width=75+
-
-
-${slide:title=When not use decorator}$
-
-- When properties have different APIs
-- 
-
-
-${slide:title=Do not use reflection}$
-
-- Do not use reflection to handle when decorators have different APIs
--- This is a Bad Idea (tm)
--- Makes the design brittle
--- Makes error difficult to catch
+- Think twice when the APIs are HUGE
 
 ${slide:title=Conclusion}$
 
