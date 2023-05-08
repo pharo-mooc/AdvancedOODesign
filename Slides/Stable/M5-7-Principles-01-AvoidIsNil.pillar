@@ -97,8 +97,8 @@ Your clients can just iterate and manipulate the returned value
 ${slide:title=About nil}$
 
  Limit the propagation of ==nil==
-- by having method returning ==nil==
-- avoid storing ==nil==
+- not having methods returning ==nil==
+- avoid storing ==nil== in variables
 
 ${slide:title=Initialize your object state}$
 
@@ -112,10 +112,7 @@ Archive >> initialize
 	members := OrderedCollection new
 ]]]
 
-
-
-
--
+- When default values are not enough, provide a constructor method
 
 ${slide:title=Sometimes you have to check...}$
 
@@ -213,8 +210,9 @@ Sometimes it is difficult to apply the ==NullObject==
 
 ${slide:title=null object vs. NullObject}$
 
-Sometimes it is possible to get a specific instance with default null values
+Sometimes it is possible to get a specific instance initialized with null values
 - ==NullTimeZone== is instance of ==TimeZone== but represents a null object
+- Null values could be good default values: empty collections, zeros...
 
 
 
@@ -222,7 +220,8 @@ ${slide:title=For exceptional cases, use exceptions}$
 
 For exceptional cases, replace ==nil== by exceptions:
 - ""avoid"" error codes because they require ==if== in clients
-- exceptions may be handled by the client, or the client's client, or ...
+- exceptions are handled in the correct layer
+- i.e., by the client, or the client's client, or ...
 
 [[[
 FileStream >> nextPutAll: aByteArray
