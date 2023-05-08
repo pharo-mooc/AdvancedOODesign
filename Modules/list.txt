@@ -89,7 +89,7 @@ In this module we will present some important and simple design patterns such as
 
 ## Module 10: Type [Files Renamed]
 - [Luc] 1-Principles-12-DualInterfaces.pillar
-- 2-Principles-09-SubtypingVsSubclassing.pillar
+- [Pablo] 2-Principles-09-SubtypingVsSubclassing.pillar
 - [Pablo] 3-Principles-10-DynamicStaticType.pillar
 - [Luc] 4-Principles-11-PolymorphismSupportEvolution.pillar
 - [Guille] 5-Principles-05-AboutDefensiveProgramming.pillar

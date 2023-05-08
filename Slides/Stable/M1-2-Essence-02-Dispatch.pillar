@@ -5,13 +5,13 @@
 
 ${slide:title=Remember: Implementing not in two methods}$
 
-+Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=80+
++Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=70+
 
 
 ${slide:title=Ok so what?}$
 
 - You will probably never implement ==Booleans== in the future
-- So is it ""really"" useful?
+- So, is it ""really"" useful?
 - What are the lessons to learn?
 - What are the properties of the solution?
 
@@ -67,25 +67,55 @@ ${endColumns}$
 
 ${slide:title=A message send is an open conditional}$
 
-Sending a message:
+Sending a message
 - selects the ""right"" method to execute based on the class of the receiver
 - can be seen as a condition ""without explicit ifs""
 - is a dynamic choice
 
 ${slide:title=Select the right method}$
 
-+>file://figures/Design-FatVsDispatchNoFat.pdf|width=75+
+${columns}$
 
+${column:width=40}$
+
+[[[
+aCollection := {a.bb.c}.
+...
+aCollection do: [ :e |
+    e operation]
+]]]
+
+${column:width=50}$
+
++>file://figures/Design-FatVsDispatchNoFat2.pdf|width=95+
+
+${endColumns}$
 
 ${slide:title=But dynamically: new objects can be chosen}$
 
-+>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=75+
+${columns}$
+
+${column:width=40}$
+
+[[[
+aCollection := {a.bb.c.aa}.
+...
+aCollection do: [ :e |
+    e operation]
+]]]
+
+${column:width=50}$
+
++>file://figures/Design-FatVsDispatchNoFatDyn.pdf|width=95+
+
+${endColumns}$
+
 
 ${slide:title=Sending a message is making a choice}$
 
-- Each time you send a message, the execution ""selects the right"" method depending on the class of the receiver
-- Sending a message is a ""choice"" operator
-- So ""How do we express choices""?
+- Message sending is a ""choice"" operator
+- Each time you send a message, the execution engine ""selects the right method"" depending on the class of the receiver
+- So, ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
 
@@ -95,8 +125,8 @@ Could we have the same solution with a ""single"" ==Boolean== class?
 
 ${slide:title=Classes play case roles}$
 
-- To activate the choice operator we must have ""choices"": classes
-- A class represents a choice (a case)
+- To activate the choice operator we must have ""choices""
+- A ""class"" represents a choice (a case)
 
 
 ${slide:title=One class vs. a hierarchy}$
@@ -106,33 +136,33 @@ ${slide:title=One class vs. a hierarchy}$
 ${slide:title=Class hierarchy supports for dynamic dispatch}$
 
 - More modular
-- No need to recompile exiting methods
 - No need to introduce complex conditions
 - A hierarchy provides a way to specialize behavior
+- No need to recompile existing methods
 - You only focus on one class at a time
 
-+>file://figures/Design-FatVsDispatch.pdf|width=40+
++>file://figures/Design-FatVsDispatch.pdf|width=50+
 
 
 ${slide:title=Message dispatch supports modularity}$
 
 +>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
-We can package different classes in different packages (better modularity)
+We can package different classes into different packages (better modularity)
 
 ${slide:title=Limit impact of changes}$
 
 +>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
-If client has a way to get instances of ==D== (in addition to classes of first package), the client code does not have to change
+If a client receives instances of ==D== (in addition to classes of first package), the client code does not have to change
 
 
-${slide:title=Avoid conditionals}$
+${slide:title=Message Send is powerful}$
 
 - Message sends are supporting ""choices""
 - The execution engine acts as a conditional switch: Use it!
 - Classes act as "case statements"
-- But with messages, the case statement is ""dynamic"" in the sense that it depends on the objects to which the message is sent (i.e. the receiver)
+- But with messages, the case statement is ""extensible"" by adding new classes without breaking client code
 
 ${slide:title=Let the receiver decide}$
 
@@ -146,6 +176,4 @@ ${slide:title=Summary: Cornerstone of OOP}$
 - Avoid conditionals (cf. AntiIfCampaign)
 - Use objects and messages whenever you can
 - Let the receiver decide (Do not ask, tell)
-- Message sends act as potential dynamic conditionals
 - Class hierarchy supports for dynamic dispatch
-

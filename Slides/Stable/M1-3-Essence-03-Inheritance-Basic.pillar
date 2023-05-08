@@ -7,7 +7,7 @@ ${slide:title=Goal}$
 
 - What is inheritance?
 - When to use it?
-- BTW, Pharo has the same inheritance as Java
+- BTW, Pharo has the same inheritance model as Java
 
 ${slide:title=Inheritance}$
 
@@ -17,22 +17,22 @@ ${slide:title=Inheritance}$
 - It is based on the expression of a delta
 -- Only specify the differences to the superclasses
 
-
 ${slide:title=The basics}$
 
 ${columns}$
 
 ${column:width=60}$
 
-- Often, we want small adaptations
-- We want to extend existing behavior and state
-- We do not want to reimplement everything: We want to reuse
-- Solution: ""class inheritance""
+Needs:
+- We want to adapt the code by extending existing behavior and state
+- We do not want to reimplement everything
+
+Solution: ""class inheritance""
 - A class extends the definition of its superclass
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=90+
++>file://figures/InheritanceDiagram.pdf|width=60+
 
 ${endColumns}$
 
@@ -49,15 +49,9 @@ A subclass:
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.png|width=90+
++>file://figures/InheritanceDiagram.pdf|width=60+
 
 ${endColumns}$
-
-
-
-
-
-
 
 ${slide:title=Root of inheritance hierarchy}$
 
@@ -71,7 +65,7 @@ ${column:width=70}$
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-from-ObjectNoProto.pdf|width=100+
++>file://figures/InheritanceDiagram-from-ObjectNoProto.pdf|width=80+
 
 ${endColumns}$
 
@@ -90,7 +84,7 @@ ${column:width=70}$
 
 ${column:width=30}$
 
-+>file://figures/InheritanceDiagram-Proto.pdf|width=100+
++>file://figures/InheritanceDiagram-Proto.pdf|width=80+
 
 ${endColumns}$
 
@@ -116,7 +110,7 @@ ${column:width=65}$
 
 ${column:width=35}$
 
-+>file://figures/InheritanceDiagram.png|width=100+
++>file://figures/InheritanceDiagram.png|width=80+
 
 ${endColumns}$
 
@@ -140,8 +134,8 @@ ${endColumns}$
 
 ${slide:title=What you should know}$
 
-- Inheritance allows developpers of a class to "add" state and behavior and "redefine" behavior
-- A class has 1 and only 1 superclass
+- Inheritance allows developpers of a class to ""add"" state and behavior and ""redefine"" behavior
+- A class has 1 and only 1 superclass (single inheritance model)
 - A class eventually inherits from ==Object==
 - Inheritance of state is static
 - Inheritance of behavior is dynamic
