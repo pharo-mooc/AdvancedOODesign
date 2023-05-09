@@ -15,20 +15,20 @@ Obvious but it is always good to hear it again
 ${slide:title=Case Study}$
 
 [[[
-inpectionPillarTree
+PRTree>>inpectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
         display: [ :each |
             String streamContents: [ :stream |
-                stream
-                    nextPutAll: each class name.
-                    each class = PRHeader ifTrue:
-                        [ stream nextPutAll: '( level ';
+                stream nextPutAll: each class name.
+                each class = PRHeader ifTrue: [
+                    stream
+                        nextPutAll: '( level ';
                         nextPutAll: each level asString;
                         nextPutAll: ' )' ].
-             ] ];
+        ] ];
         yourself
 ]]]
 
@@ -37,10 +37,10 @@ ${slide:title=Case Study: client side complexitiy}$
 [[[
 ...
             String streamContents: [ :stream |
-                stream
-                    nextPutAll: each class name.
-                    each class = PRHeader ifTrue:
-                        [ stream nextPutAll: '( level ';
+                stream nextPutAll: each class name.
+                each class = PRHeader ifTrue: [
+                    stream
+                        nextPutAll: '( level ';
                         nextPutAll: each level asString;
                         nextPutAll: ' )' ].
 ...
@@ -49,37 +49,42 @@ ${slide:title=Case Study: client side complexitiy}$
 
 Why the client of a document is forced to define this behavior?
 
-${slide:title=Reuse is your friend!}$
+${slide:title=Better define two methods}$
 
-Better define a method
 [[[
-displayStringOn: stream
-	stream
-    		nextPutAll: each class name.
-    		each class = PRHeader ifTrue:
-        		[ stream nextPutAll: '( level ';
-				nextPutAll: each level asString;
-				nextPutAll: ' )' ]
+PRObject>>displayStringOn: stream
+	stream nextPutAll: self class name
 ]]]
 
-${slide:title=and call the method}$
-
-Call (reuse) a method!
 [[[
-inpectionPillarTree
+PRHeader>>displayStringOn: stream
+	super displayStringOn: stream.
+    stream
+            nextPutAll: '( level ';
+            nextPutAll: self level asString;
+            nextPutAll: ' )' ]
+]]]
+
+cf. Hook and Template Lecture!
+
+${slide:title=and Send a message}$
+
+Sending a message will call a method (reuse its code)!
+
+[[[
+PRTree>>inpectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
         display: [ :each |
-            String
-                streamContents: [ :stream |
-                   each displayStringOn: stream ].
-            ] ];
-        yourself
+            String streamContents: [ :stream |
+                each displayStringOn: stream ].
+      ];
+      yourself
 ]]]
 
-${slide:title=Another annoying logic repetition}$
+${slide:title=Another example: logic repetition}$
 
 [[[
 ...
@@ -107,7 +112,7 @@ String streamContents: [:s | #(1 2 3) printOn: stream ]
 - Encapsulate termination
 
 
-${slide:title=Encapsulate actions}$
+${slide:title=Encapsulate actions using blocks}$
 
 
 [[[
