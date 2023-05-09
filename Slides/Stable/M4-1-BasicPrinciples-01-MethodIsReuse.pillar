@@ -7,81 +7,84 @@
 
 ${slide:title=Executing a method is reusing its code}$
 
-Obvious but it is alwatys good to hear it again
-- Defining method enriches the API of an object
+Obvious but it is always good to hear it again
+- Defining a method enriches the API of an object
 - Calling a method is the first level of reuse
 
 
-${slide:title=Study}$
+${slide:title=Case Study}$
 
 [[[
-inpectionPillarTree
+PRTree>>inpectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
         display: [ :each |
-            String
-                streamContents: [ :stream |
+            String streamContents: [ :stream |
+                stream nextPutAll: each class name.
+                each class = PRHeader ifTrue: [
                     stream
-                        nextPutAll: each class name.
-                        each class = PRHeader ifTrue:
-                            [ stream nextPutAll: '( level ';
-                            nextPutAll: each level asString;
-                            nextPutAll: ' )' ].
-             ] ];
+                        nextPutAll: '( level ';
+                        nextPutAll: each level asString;
+                        nextPutAll: ' )' ].
+        ] ];
         yourself
 ]]]
 
-${slide:title=Study}$
+${slide:title=Case Study: client side complexitiy}$
 
 [[[
 ...
-            String
-                streamContents: [ :stream |
+            String streamContents: [ :stream |
+                stream nextPutAll: each class name.
+                each class = PRHeader ifTrue: [
                     stream
-                        nextPutAll: each class name.
-                        each class = PRHeader ifTrue:
-                            [ stream nextPutAll: '( level ';
-                            nextPutAll: each level asString;
-                            nextPutAll: ' )' ].
+                        nextPutAll: '( level ';
+                        nextPutAll: each level asString;
+                        nextPutAll: ' )' ].
 ...
 ]]]
 
 
 Why the client of a document is forced to define this behavior?
 
-${slide:title=Reuse is your friend!}$
+${slide:title=Better define two methods}$
 
-Better define a method
 [[[
-displayStringOn: stream
-	stream
-    		nextPutAll: each class name.
-    		each class = PRHeader ifTrue:
-        		[ stream nextPutAll: '( level ';
-				nextPutAll: each level asString;
-				nextPutAll: ' )' ]
+PRObject>>displayStringOn: stream
+	stream nextPutAll: self class name
 ]]]
 
-${slide:title=and call the method}$
-
-Call (reuse) a method!
 [[[
-inpectionPillarTree
+PRHeader>>displayStringOn: stream
+	super displayStringOn: stream.
+    stream
+            nextPutAll: '( level ';
+            nextPutAll: self level asString;
+            nextPutAll: ' )' ]
+]]]
+
+cf. Hook and Template Lecture!
+
+${slide:title=and Send a message}$
+
+Sending a message will call a method (reuse its code)!
+
+[[[
+PRTree>>inpectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
         children: [ :aNode | aNode children ];
         display: [ :each |
-            String
-                streamContents: [ :stream |
-                   each displayStringOn: stream ].
-            ] ];
-        yourself
+            String streamContents: [ :stream |
+                each displayStringOn: stream ].
+      ];
+      yourself
 ]]]
 
-${slide:title=Another annoying logic repetition}$
+${slide:title=Another example: logic repetition}$
 
 [[[
 ...
@@ -109,7 +112,7 @@ String streamContents: [:s | #(1 2 3) printOn: stream ]
 - Encapsulate termination
 
 
-${slide:title=Encapsulate actions}$
+${slide:title=Encapsulate actions using blocks}$
 
 
 [[[
@@ -148,7 +151,9 @@ AbstractFileReference>> readStreamDo: aBlock
 
 ${slide:title=Stepping back}$
 
-- Encapsulate logic in powerful API
+- Encapsulate logic in the API
+- Blocks (closure) helps building powerful API
+-- but don't abuse them! (cf. Blocks vs Objects lecture)
 - Avoid spreading knowledge in clients
 - Avoid duplication of logic in clients
 
