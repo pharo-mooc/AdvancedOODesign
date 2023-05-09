@@ -1,13 +1,13 @@
 {
   "title":"Hooks and Template",
-  "subtitle":"One of cornerstone of OOP",
+  "subtitle":"One of the cornerstones of OOP",
     "slidesid":"M3-3"
 }
 
 
 ${slide:title=Goal/Outline}$
 
-- Hook and Template
+- Hook and Template methods
 - printString/printOn: case
 - copy case
 
@@ -15,8 +15,8 @@ ${slide:title=Remember...}$
 
 - Sending a message is making a choice
 - A class defines one possible choice
-- Self-sends are plans for reuse (e.g., defines a hook):
--- i.e., a place where subclasses can inject variations
+- Self-sends are plans for reuse
+- A Self-send defines a hook i.e. a place where subclasses can inject variations
 
 ${slide:title=The template method}$
 
@@ -24,12 +24,12 @@ ${slide:title=The template method}$
 - Hooks are places to be customized by subclasses
 - Hooks may or may not have a default behavior
 
-+>file://figures/hookAndTemplate.png|width=85+
++>file://figures/hookAndTemplate.pdf|width=60+
 
 
 ${slide:title=Principle}$
 
-+>file://figures/SelfIsDynamic.pdf|width=40+
++>file://figures/SelfIsDynamic.pdf|width=35+
 
 
 
@@ -41,7 +41,7 @@ Example of ==printString==
 'a Delay(10000 msecs)'
 ]]]
 
-${slide:title=printString template method}$
+${slide:title=The printString template method}$
 
 [[[
 Object >> printString
@@ -58,6 +58,8 @@ Object >> printStringLimitedTo: limit
    limitedString size < limit ifTrue: [ ^ limitedString ].
    ^ limitedString , '...etc...'
 ]]]
+
+Do you see the hook?
 
 ${slide:title=printOn: A default hook}$
 
@@ -81,7 +83,7 @@ Object >> printOn: aStream
       nextPutAll: title
 ]]]
 
-${slide:title=Hook refinement}$
+${slide:title=Hook refinement in Delay}$
 
 [[[
 >>> (Delay forSeconds: 1) printString
@@ -98,7 +100,7 @@ Delay >> printOn: aStream
       nextPutAll: ' msecs)'
 ]]]
 
-${slide:title=Hook redefinition}$
+${slide:title=Hook redefinition in False}$
 
 [[[
 >>> true not printString
@@ -111,12 +113,12 @@ False >> printOn: aStream
    aStream nextPutAll: 'false'
 ]]]
 
-${slide:title=Hook redefinition}$
+${slide:title=Hook redefinition in Interval}$
 
 [[[
->>> 1 to: 100
+>>> (1 to: 100) printString
 (1 to: 100)
->>> 1 to: 100 by: 3
+>>> (1 to: 100 by: 3) printString
 (1 to: 100 by: 3)
 ]]]
 
@@ -150,7 +152,7 @@ Object >> copy
   Copy is a template method in the sense of Design Patterns.
   So do not override it. Override postCopy instead. P
   ay attention that normally you should call postCopy of your superclass too."
-  
+
     ^ self shallowCopy postCopy
 ]]]
 
@@ -165,15 +167,15 @@ ${slide:title=Default hook}$
 
 [[[
 Object >> postCopy
-  "I'm a hook method in the sense of Design Patterns Template/Hook Method. 
-  I'm called by copy. 
-  self is a shallow copy, subclasses should copy fields as necessary to 
+  "I'm a hook method in the sense of Design Patterns Template/Hook Method.
+  I'm called by copy.
+  self is a shallow copy, subclasses should copy fields as necessary to
   complete the full copy"
-  
+
   ^ self
 ]]]
 
-${slide:title=postCopy: Refinement}$
+${slide:title=Bag>>postCopy: refinement}$
 
 [[[
 Collection subclass: #Bag
@@ -195,15 +197,14 @@ ${slide:title=Dictionary >> postCopy: Deeper copy}$
 
 [[[
 Dictionary >> postCopy
-   "Must copy the associations, or later store will affect both the original and the copy"
-   array := array 
-               collect: [ :association |
-                          association ifNotNil: [ association copy ] ]
+    "Must copy the associations, or later store will affect both the original and the copy"
+    array := array collect: [ :association |
+        association ifNotNil: [ association copy ] ]
 ]]]
 
 ${slide:title=Conclusion}$
 
-- Hooks and Template is a very common design pattern
+- Hooks and Template is a very common pattern
 - Template method sets the context
 - Hooks specify variations
 - A self-send message defines a hook

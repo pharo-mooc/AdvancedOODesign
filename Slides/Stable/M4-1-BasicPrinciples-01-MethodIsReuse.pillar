@@ -7,12 +7,12 @@
 
 ${slide:title=Executing a method is reusing its code}$
 
-Obvious but it is alwatys good to hear it again
-- Defining method enriches the API of an object
+Obvious but it is always good to hear it again
+- Defining a method enriches the API of an object
 - Calling a method is the first level of reuse
 
 
-${slide:title=Study}$
+${slide:title=Case Study}$
 
 [[[
 inpectionPillarTree
@@ -21,30 +21,28 @@ inpectionPillarTree
         roots: { self };
         children: [ :aNode | aNode children ];
         display: [ :each |
-            String
-                streamContents: [ :stream |
-                    stream
-                        nextPutAll: each class name.
-                        each class = PRHeader ifTrue:
-                            [ stream nextPutAll: '( level ';
-                            nextPutAll: each level asString;
-                            nextPutAll: ' )' ].
+            String streamContents: [ :stream |
+                stream
+                    nextPutAll: each class name.
+                    each class = PRHeader ifTrue:
+                        [ stream nextPutAll: '( level ';
+                        nextPutAll: each level asString;
+                        nextPutAll: ' )' ].
              ] ];
         yourself
 ]]]
 
-${slide:title=Study}$
+${slide:title=Case Study: client side complexitiy}$
 
 [[[
 ...
-            String
-                streamContents: [ :stream |
-                    stream
-                        nextPutAll: each class name.
-                        each class = PRHeader ifTrue:
-                            [ stream nextPutAll: '( level ';
-                            nextPutAll: each level asString;
-                            nextPutAll: ' )' ].
+            String streamContents: [ :stream |
+                stream
+                    nextPutAll: each class name.
+                    each class = PRHeader ifTrue:
+                        [ stream nextPutAll: '( level ';
+                        nextPutAll: each level asString;
+                        nextPutAll: ' )' ].
 ...
 ]]]
 
@@ -148,7 +146,9 @@ AbstractFileReference>> readStreamDo: aBlock
 
 ${slide:title=Stepping back}$
 
-- Encapsulate logic in powerful API
+- Encapsulate logic in the API
+- Blocks (closure) helps building powerful API
+-- but don't abuse them! (cf. Blocks vs Objects lecture)
 - Avoid spreading knowledge in clients
 - Avoid duplication of logic in clients
 
