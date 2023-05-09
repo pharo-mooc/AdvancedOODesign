@@ -105,6 +105,6 @@ EmptyBlock >> drawOn: aCanvas view: aView
 
 ${slide:title=Conclusion}$
 
-- Double dispatch is creating a varation point without hardcoding the path
+- Double dispatch is creating a variation point without hardcoding the path
 - Modular 
 - Can be asymmetrical
