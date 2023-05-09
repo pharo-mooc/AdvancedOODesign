@@ -4,6 +4,11 @@
 	"slidesid":"M7S4"
 }
 
+${slide:title=Objectives}$
+
+- Think about objects
+- Look at objects as accumulators
+
 ${slide:title=Scenario}$
 
 - How can we navigate a tree of instances (widgets)?

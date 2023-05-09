@@ -32,8 +32,8 @@ A unit test that is not ""automated does NOT EXIST!""
 ${slide:title=Unit tests}$
 
 - Unit tests ensure that you get the specified behavior of a class
-- Normally ''unit'' tests test a single class
-- A test one scenario: one point!
+- Normally ''unit'' tests do test a single feature
+- A test: one scenario, one point!
 
 ${slide:title=Anatomy of a test}$
 
@@ -43,14 +43,12 @@ A test:
 - ""Checks"" the result with ""assertions""
 
 
-${slide:title=Example: Testing set addition}$
+${slide:title=Example: Testing duplicate set insertion}$
 
 A test:
 - Creates a context: Create an empty set
 - Performs a stimulus: Add twice the same element
 - Checks the results: Check that the set contains only one element
-
-Similar concepts in any language!
 
 
 ${slide:title=Set testcase in Pharo}$
@@ -63,10 +61,15 @@ TestCase subclass: #SetTest
 [[[
 SetTest >> testAdd 
     | empty |
-    empty := Set new.                      "Context"
-    empty add: 5.                             "Stimulus"
+    "Context"
+    empty := Set new.
+
+    "Stimulus"
+    empty add: 5.
     empty add: 5. 
-    self assert: empty size equals: 1.        "Check"
+
+    "Check"
+    self assert: empty size equals: 1.        
 
 SetTest run: #testAdd
 ]]]
@@ -81,10 +84,15 @@ class SetTest {
 
 @Test
 public void testAdd() {
-	Set empty = new Counter(); //Context 
-	empty.add(5); //Stimulus 
+    //Context 
+	Set empty = new Counter();
+    
+    //Stimulus 
+	empty.add(5);
 	empty.add(5); 
-	assertEquals(empty.size(),1); //Check
+    
+    //Check
+	assertEquals(empty.size(),1);
 } }
 ]]]
 
@@ -92,8 +100,8 @@ public void testAdd() {
 ${slide:title=Success, failures, and errors}$
 
 - Success: a test passes
-- A failure is a failed assertion, i.e., an anticipated problem that you test failed
-- An error is a condition you didn’t check for, i.e., a runtime error.
+- A failure is a failed assertion, i.e., a verified property/assertion failed
+- An error is an unexpected condition, i.e., an unexpected runtime error
 
 
 ${slide:title=A failure}$
@@ -104,8 +112,10 @@ If we get ==empty size== returning 2 instead of 1.
 SetTest >> testAdd 
     | empty |
     empty := Set new.
+    
     empty add: 5.
     empty add: 5.
+    
     self assert: empty size equals: 1.
 ]]]
 
@@ -150,14 +160,11 @@ SetTestCase >> setUp
  ==setUp== is executed for you before any test execution
 
 [[[
-SetTestCase >> testOccurrences
-    self
-      assert: (empty occurrencesOf: 0)
-      equals: 0.
-    empty add: 5; add: 5.
-    self
-      assert: (empty occurrencesOf: 5)
-      equals: 1
+SetTestCase >> testAdd
+    empty add: 5.
+    empty add: 5.
+
+    self assert: empty size equals: 1.
 ]]]
 
 
@@ -171,7 +178,7 @@ ${slide:title=About writing tests}$
 - Even better, write them before the code
 -- Act as your first client, produce a better interface
 - Active documentation is always in sync
-- It has a cost: writing them, maintaining them, so make them worth
+- They have a cost: writing them, maintaining them. Make them worth
 - But pay off is Huge
 
 
@@ -185,26 +192,24 @@ Sure! Nobody can but:
 
 ${slide:title=Testing style: TDD}$
 
-"The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run."
+"The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run." — “Test Infected”, Beck & Gamma, 1998
 
 - Write unit tests that thoroughly test a single class
 - Write tests as you develop (even before you implement your class!)
 - Write tests for every new piece of functionality
-
-''Developers should spend 25-50\% of their time developing tests.''
 
 (see next lecture)
 
 ${slide:title=Good tests}$
 
 - Repeatable
-- No human intervention
-- ''self-described''
+- Do not require human intervention
+- Are ''self-described''
 - Change less often than the system
-- Tells a story
+- Tell a story
 
 ${slide:title=Conclusion}$
 
 - Invest in tests
-- Use Xtreme TDD: write a test, execute, debug and code in the debugger (see following lecture)
+- Use Xtreme TDD: write a test, execute, debug, and code in the debugger (see following lecture)
 - Tests are your best investment

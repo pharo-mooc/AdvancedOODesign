@@ -16,7 +16,7 @@ ${slide:title=Singleton intent}$
 
 - ""From the book"":  Ensure that a class has only one instance, and provide a global point of access to it
 
-- ""Better"": Ensure that a class has only one instance available ""at the same time""
+- ""Better"": Ensure that a class has only one instance available ""at the any time""
 
 ${slide:title=Problem/Solution}$
 
@@ -49,17 +49,9 @@ Object << #BDConnect
 [[[
 BDConnect class >> uniqueInstance 
 	UniqueInstance isNil 
-	      ifTrue: [ UniqueInstance := self basicNew initialize].
+	      ifTrue: [ UniqueInstance := self new ].
 	^ UniqueInstance
 ]]]
-
-${slide:title=Different kinds of singleton}$
-
-- ""Persistent singleton"": only one instance exists and its identity does not change 
-
-- ""Transient singleton"": only one instance exists at any time, but that instance ""changes""  
-
-- ""Single active instance singleton"": a single instance is active at any point in time, but other ""dormant instances may"" also exist. 
 
 ${slide:title=Should we override new?}$
 
@@ -90,14 +82,14 @@ Author class >> new
 ${slide:title=Method name variation (II)}$
 
 ""default""
-- Some meaningful default instance, but there is no reason to bar the user from ""creating more instances""
+- Some meaningful default instance, but there is no reason to stop the user from ""creating more instances""
 
 ""current""
 - Keep the same instance system-wide, but we also want to ""change it"" under some circumstances
 
 ${slide:title=Discussion}$
 
-- Even if the language supports global variables avoid to store a Singleton in a global
+- Even if the language supports global variables, avoid to store a Singleton in a global
 - A class is already acting as a global and it can manage the Singleton (one single entry point)
 
 
@@ -105,8 +97,8 @@ ${slide:title=Discussion}$
 ${slide:title=Shared variable vs class instance variable}$
 
 In Pharo we have:
-- ""SharedVariable"": shared between all the class of a hierarchy
-- ""class instance variable"": specific to a single class
+- ""Shared variables"": shared between all the class of a hierarchy
+- ""Class instance variables"": specific to a single class
 
 
 +.>file://figures/PerClassPerHierarchy.pdf|width=50+
@@ -127,7 +119,7 @@ Holding a singleton with
 
 ${slide:title=Singleton misunderstanding}$
 
-- Singleton is ""about time"": one instance available at the same time is possible
+- Singleton is ""about time"": only one instance at the any time is possible
 
 - Singleton is ""not"" about access: don't use a singleton because it is easier to access one instance!
 
