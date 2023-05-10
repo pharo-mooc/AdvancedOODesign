@@ -36,7 +36,7 @@ ${slide:title=Decorator}$
 
 ${slide:title=Decorator nesting}$
 
-- A decorator wraps an instance or decorated instance of the component
+A decorator wraps an instance or decorated instance of the component
 
 +>file://figures/DP-Decorator.pdf|width=75+
 
