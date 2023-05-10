@@ -100,8 +100,8 @@ public void testAdd() {
 ${slide:title=Success, failures, and errors}$
 
 - Success: a test passes
-- A failure is a failed assertion, i.e., a verified property/assertion failed
-- An error is an unexpected condition, i.e., an unexpected runtime error
+- A ""failure"" is a failed assertion, i.e., a verified property/assertion failed
+- An ""error"" is an ""unexpected"" condition, i.e., an unexpected runtime error
 
 
 ${slide:title=A failure}$
@@ -192,7 +192,7 @@ Sure! Nobody can but:
 
 ${slide:title=Testing style: TDD}$
 
-"The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run." — “Test Infected”, Beck & Gamma, 1998
+''The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run.'' — Test Infected, Beck & Gamma, 1998
 
 - Write unit tests that thoroughly test a single class
 - Write tests as you develop (even before you implement your class!)
