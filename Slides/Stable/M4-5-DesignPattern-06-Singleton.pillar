@@ -1,7 +1,7 @@
 {
 	"title":"Singleton",
 	"subtitle":"a highly misunderstood pattern",
-	"slidesid":"M4-5"
+	"slidesid":"M4S5"
 }
 
 
@@ -20,7 +20,7 @@ ${slide:title=Singleton intent}$
 
 ${slide:title=Problem/Solution}$
 
-- ""Problem:"" We need 
+- ""Problem:"" Need 
 -- a way to keep some persistent objects around
 -- or a class with a unique instance
 - ""Solution:""  Store the first time an instance is created and return it each time a new instance is requested
@@ -81,18 +81,33 @@ Author class >> new
 
 ${slide:title=Method name variation (II)}$
 
+
+${columns}$
+
+${column:width=70}$
+
 ""default""
 - Some meaningful default instance, but there is no reason to stop the user from ""creating more instances""
 
 ""current""
 - Keep the same instance system-wide, but we also want to ""change it"" under some circumstances
 
+${column:width=30}$
+
+${endColumns}$
+
 ${slide:title=Discussion}$
+
+${columns}$
+
+${column:width=70}$
 
 - Even if the language supports global variables, avoid to store a Singleton in a global
 - A class is already acting as a global and it can manage the Singleton (one single entry point)
 
+${column:width=30}$
 
+${endColumns}$
 
 ${slide:title=Shared variable vs class instance variable}$
 
@@ -101,20 +116,20 @@ In Pharo we have:
 - ""Class instance variables"": specific to a single class
 
 
-+.>file://figures/PerClassPerHierarchy.pdf|width=50+
++.>file://figures/PerClassPerHierarchy.pdf|width=70+
 
 
 ${slide:title=One per hierarchy or one per class}$
 
 
 Holding a singleton with 
-- ""Shared variable"": One singleton for a complete hierarchy
+- ""a shared variable"": One singleton for a complete hierarchy
 
-- ""Class instance variable"":  
+- ""a class instance variable"":  
 -- One singleton per class
 -- Each subclass has its own singleton
 
-+.>file://figures/PerClassPerHierarchy.pdf|width=50+
++.>file://figures/PerClassPerHierarchy.pdf|width=60+
 
 
 ${slide:title=Singleton misunderstanding}$
@@ -125,20 +140,32 @@ ${slide:title=Singleton misunderstanding}$
 
 ${slide:title=Singleton acid test}$
 
+${columns}$
+
+${column:width=70}$
 - If you can add one instance variable to your object and suddenly you do not need a singleton then it was not a singleton but an ugly disguised global variable!
 
 - Sometimes you cannot add an instance variable so the Singleton is ok
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Testing singletons}$
 
+${columns}$
+
+${column:width=70}$
 - Singletons are global variables so this makes them more difficult to test
 - When running tests, you want to avoid to change the current singleton
 - Be careful about not breaking the current singleton
 - ==RPackageOrganizer== is a singleton: should not be destroyed when tests are run
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Example: RPackageOrganizer}$
 
-- ==RPackageOrganizer== uses ==withOrganizer: aNewOrganizer do: aBlock== for testing behavior
+==RPackageOrganizer== uses ==withOrganizer: aNewOrganizer do: aBlock== for testing behavior
 
 [[[
 withOrganizer: aNewOrganizer do: aBlock

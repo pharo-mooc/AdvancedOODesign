@@ -28,30 +28,44 @@ ${slide:title=Often mixed with inheritance}$
 
 ${slide:title=Decorator}$
 
+${columns}$
+
+${column:width=80}$
 - A decorator wraps an instance of the decoree
 -- It is placed between the client and the decoree
 -- It propagates or not messages to the decoree
 - Easier to understand when the ==Decorator== is a subclass of ==Decoree== but not necessary (think duck typing)
 
+${column:width=20}$
+
+${endColumns}$
 
 ${slide:title=Decorator nesting}$
 
-- A decorator wraps an instance or decorated instance of the component
+A decorator wraps an instance or decorated instance of the component
 
 +>file://figures/DP-Decorator.pdf|width=75+
 
 ${slide:title=Transparent to the client}$
 
+
+${columns}$
+
+${column:width=80}$
+
 - A client manipulates ""transparently"" decorated and undecorated elements
-- A client talks to the decorator which talks to the decoree (a leaf object or a another decorator)
+- A client talks to the decorator which ""delegates"" to the decoree (a leaf object or a another decorator)
 
-- Strong Implication: decoree and decorator ""must"" expose the same API
+- ""Strong Implication:"" decoree and decorator ""must"" expose the same API
 
+${column:width=20}$
+
+${endColumns}$
 
 
 ${slide:title=Example of Stream}$
 
-ZnStreams are decorators of Streams.
+ZnStreams are decorators of Streams
 
 [[[
 ZnNewLineWriterStream
@@ -71,7 +85,7 @@ AbstractFileReference >> readStreamEncoded: anEncoding
 			encoding: anEncoding
 ]]]
 
-- ==ZnCharacterReadStream== is decorating another stream with an encoding.
+- ==ZnCharacterReadStream== is decorating another stream with an encoding
 
 ${slide:title=Implementation}$
 
@@ -136,10 +150,18 @@ ZnNewLineWriterStream >> nextPut: aCharacter
 
 ${slide:title=Analysis}$
 
+${columns}$
+
+${column:width=80}$
 - All decorators should have the same API
 - ==close==, ==flush==, ==nextPut:==, ==contents==, ==next==, ==atEnd==, ==on:==
 - Stream decorator individual behavior can be reused and composed 
 
+
+
+${column:width=20}$
+
+${endColumns}$
 %${slide:title=Microdown builder in action}$
 
 %+>file://figures/ClassComments.png|width=85+
@@ -150,19 +172,25 @@ ${slide:title=About dynamic behavior}$
 
 Decorators attach additional responsibilities to an object
 
+
 - The decorator is based on delegation
 - We should control the creation of the decoration chain (the client reference)
 
-- Strong Implication: decorated objects do not know how if they are decorated. Changing the decoration chain at runtime is not easy.
+- ""Strong Implication:"" decorated objects ""do not know how"" if they are decorated. 
+-- Changing the decoration chain at runtime is not simple.
+
+
+
 
 ${slide:title=When not to use decorator}$
 
-- When decorations should have different APIs
+- When decorations have different APIs
 - When the decorations should change dynamically
 
 - Think twice when the APIs are HUGE
 
 ${slide:title=Conclusion}$
 
+- Decorators can represent composable facets of an object
 - Pay attention all the decorators should implement the same API
 - Decorator is modular but within a common API
