@@ -32,14 +32,18 @@ DieHandle >> + aDieHandle
 ${slide:title=What happen when subclassing?}$
 
 [[[
-DieHandle subclass: #MemoDieHandle.
+    DieHandle subclass: #MemoDieHandle
+        ...
+]]]
 
+[[[
 (MemoDieHandle new add: (Die faces: 4); yourself)
    + (MemoDieHandle new add: (Die faces: 6); yourself)
 > aDieHandle
 ]]]
 
-We get a ==DieHandle== instance back and not a ==MemoDieHandle== instance!
+- We get a ==DieHandle== instance back and not a ==MemoDieHandle== instance!
+- Current ==DieHandle>>+== always returns an instance of ==DieHandle== (""hardcoded class use"") even if the receiver is a subclass
 
 ${slide:title=Solution 1: Creating a hook method}$
 
