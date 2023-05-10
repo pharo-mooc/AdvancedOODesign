@@ -1,7 +1,8 @@
 _result
 __results
 __results*
-**/*.aux 
+__slides*
+**/*.aux
 **/*.DS_Store
 **/*.out
 **/*.log

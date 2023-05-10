@@ -1,22 +1,22 @@
 - [Stef] 0-AboutTheMooc.pillar
 
 ## Module 1: Understanding messages
-This first module revisits elementary concepts around self, super and the power of dispatching to dedicated objects. 
+This first module revisits elementary concepts around self, super and the power of dispatching to dedicated objects.
 The case study shows how to go from a monolithic design with one kind of formats to the handling of optional different formats in the Pillar ddocument compilation chain.
 
 - [Stef] 1-Essence-01-NotExample.pillar
-- [Luc] 2-Essence-02-Dispatch.pillar
-- [Luc] 3-Essence-03-Inheritance-Basic.pillar
++ [Luc] 2-Essence-02-Dispatch.pillar
++ [Luc] 3-Essence-03-Inheritance-Basic.pillar
 - [Stef] 4-Essence-04-Self.pillar
 - [Guille] 5-Essence-05-Super.pillar
 - [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests
-This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer. 
+This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer.
 
 - [Guille] 1-Tests-01-101.pillar
 - [Guille] 2-Tests-02-Why.pillar
-- [Luc] 3-Tests-03-TDD.pillar
++ [Luc] 3-Tests-03-TDD.pillar
 - [Pablo] 4-Tests-04-XTDD.pillar
 - [Pablo] 5-Tests-05-ParametrizedTests.pillar
 
@@ -24,16 +24,16 @@ This module covers an important aspect: testing applications and how to take adv
 In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible using hooks. The case study will be about going from monolithic to parametrized objects.
 
 - [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
-- [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
-- [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
++ [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
++ [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
 - [Stef] 4-Lang-01-Stream.pillar
 - [Stef] 5-BasicPrinciples-02-FromGlobalToParameter.pillar
 
 ## Module 4: Objects: state + behavior
-In this module we will focus on basic principle showing for example the difference between data and objects. We will start also to present 
+In this module we will focus on basic principle showing for example the difference between data and objects. We will start also to present
 some design patterns such as Singleton and Decorator
 
-- [Luc] 1-BasicPrinciples-01-MethodIsReuse.pillar
++ [Luc] 1-BasicPrinciples-01-MethodIsReuse.pillar
 - [Pablo] 2-BasicPrinciples-04-AboutObjectsVSData.pillar
 - [Stef] 3-BasicPrinciples-03-AboutGlobalVariable.pillar
 - [Pablo] 4-BasicPrinciples-05-FatClassesAreBad.pillar
@@ -41,7 +41,7 @@ some design patterns such as Singleton and Decorator
 - [Guille] 6-DesignPattern-09-Decorator.pillar
 
 ## Module 5: Elementary design patterns [Files Renamed]
-In this module we will present some important and simple design patterns such as composite or state. We will then propose to compare use versus inheritance a way to understand the forces in presence. 
+In this module we will present some important and simple design patterns such as composite or state. We will then propose to compare use versus inheritance a way to understand the forces in presence.
 
 - [Luc] 1-DesignPattern-03-Composite.pillar
 - [Pablo] 2-DesignPattern-11-State.pillar
@@ -63,7 +63,7 @@ In this module we will present some important and simple design patterns such as
 ## Module 7: Creation [Files Renamed]
 - [Guille] 1-Principles-01-LazyInitialization
 - [Guille] 2-Principles-07-ClassHookVsInstanceHook.pillar
-- [Luc] 3-Principles-06-selfVSClassDispatch.pillar
++ [Luc] 3-Principles-06-selfVSClassDispatch.pillar
 - [Stef] 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
 - [Stef] 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
 - [Pablo] 6-DesignPattern-08-Builder.pillar

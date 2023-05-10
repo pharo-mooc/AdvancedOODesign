@@ -13,6 +13,7 @@ SLIDES= [
     "Slides/Stable/M3-2-Essence-07-SelfSendsArePlansForReuse.pillar",
     "Slides/Stable/M3-3-DesignPattern-02-HookAndTemplate.pillar",
     "Slides/Stable/M4-1-BasicPrinciples-01-MethodIsReuse.pillar",
+    "Slides/Stable/M5-1-DesignPattern-03-Composite.pillar",
     "Slides/Stable/M5-4-BasicPrinciples-06-UseVsInheritance.pillar",
     "Slides/Stable/M6-4-DesignPattern-04-Visitor.pillar",
     "Slides/Stable/M6-5-DesignPattern-05-VisitorDiscussions.pillar",

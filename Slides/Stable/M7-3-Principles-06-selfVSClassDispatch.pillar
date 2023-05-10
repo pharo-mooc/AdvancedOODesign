@@ -7,87 +7,71 @@
 ${slide:title=Goal}$
 
 - ==self== represents the receiver
-- Class receive messages
+- classes receive messages too
 
 
-${slide:title=Imagine}$
+${slide:title=Context}$
 
-To support 
+To support
 [[[
-(DieHandle new add: (Die faces: 4); yourself) 
+(DieHandle new add: (Die faces: 4); yourself)
 	+ (DieHandle new add: (Die faces: 6); yourself)
 ]]]
 
-We defined ==\+== as 
+We defined ==\+== as
 
 [[[
 DieHandle >> + aDieHandle
   | handle |
   handle := DieHandle new.
-  self dice do: [ :each | handle addDie: each ]. 
-  aDieHandle dice do: [ :each | handle addDie: each ]. 
+  self dice do: [ :each | handle addDie: each ].
+  aDieHandle dice do: [ :each | handle addDie: each ].
   ^ handle
 ]]]
 
-${slide:title=What Is the difference...}$
+${slide:title=What happen when subclassing?}$
 
-Between 
 [[[
-DieHandle >> + aDieHandle
-  | handle |
-  handle := DieHandle new.
-]]]
-
-And 
-[[[
-DieHandle >> + aDieHandle
-  | handle |
-  handle := self class new.
-]]]
-
-Let us see....
-
-${slide:title=What if we create a new subclass}$
-[[[
-DieHandle subclass: MemoDieHandle
-  ....
+    DieHandle subclass: #MemoDieHandle
+        ...
 ]]]
 
 [[[
-(MemoDieHandle new add: (Die faces: 4); yourself) 
+(MemoDieHandle new add: (Die faces: 4); yourself)
    + (MemoDieHandle new add: (Die faces: 6); yourself)
 > aDieHandle
 ]]]
 
-We get a ==DieHandle== instance back and not a ==MemoDieHandle== instance!!!
+- We get a ==DieHandle== instance back and not a ==MemoDieHandle== instance!
+- Current ==DieHandle>>+== always returns an instance of ==DieHandle== (""hardcoded class use"") even if the receiver is a subclass
 
-${slide:title=Solution 1: Creating a hook}$
+${slide:title=Solution 1: Creating a hook method}$
 
 [[[
 DieHandle >> + aDieHandle
   | handle |
   handle := self handleClass new.
-  self dice do: [ :each | handle addDie: each ]. 
-  aDieHandle dice do: [ :each | handle addDie: each ]. 
+  self dice do: [ :each | handle addDie: each ].
+  aDieHandle dice do: [ :each | handle addDie: each ].
   ^ handle
 ]]]
 
 [[[
 DieHandle >> handleClass
   ^ DieHandle
-]]] 
+]]]
 
-A subclass may redefine ==handleClass== 
+A subclass may redefine ==handleClass==
 
 [[[
 MemoDieHandle >> handleClass
   ^ MemoDieHandle
-]]] 
+]]]
 
-${slide:title=Solution 1: Creating a hook}$
+${slide:title=Solution 1: Creating a hook method}$
 
 [[[
-(MemoDieHandle new add: (Die faces: 4); yourself) 
+(MemoDieHandle new add: (Die faces: 4); yourself)
    + (MemoDieHandle new add: (Die faces: 6); yourself)
 > aMemoDieHandle
 ]]]
@@ -96,30 +80,83 @@ We get an instance of the subclass!
 
 ${slide:title=But we can do better!}$
 
-Let us see
+Pros:
+- Extensibility
+
+Cons:
 - In each subclass we should redefine the hook method  ==handleClass==
-- This is tedious
+- This is tedious and error prone (developper might forget)
 
 ${slide:title=Solution 2}$
 
 [[[
 DieHandle >> + aDieHandle
   | handle |
-  handle := self class new.
-  self dice do: [ :each | handle addDie: each ]. 
-  aDieHandle dice do: [ :each | handle addDie: each ]. 
+  handle := self handleClass new.
+  self dice do: [ :each | handle addDie: each ].
+  aDieHandle dice do: [ :each | handle addDie: each ].
   ^ handle
+
+DieHandle >> handleClass
+    ^ self class
 ]]]
 
-- ==self class== always returns the class of the receiver
-- We get instances of the same kind of the receiver 
+- ==self class== always returns the class of the receiver (it works for subclasses too!)
+- We get instances of the same kind of the receiver
 
-${slide:title=Conclusion}$
+${slide:title=Summary}$
 
-If we define a subclass of ==DieHandle==, 
-and send the message ==\+== to an instance
 
-- With ==DieHandle new==, ==\+== does not return an instance of the subclass but of ==DieHandle==
+${columns}$
+${column:width=58}$
 
-- With ==self class new==, ==\+== returns an instance of the receiver: an instance of a potential subclass
+- Do not hardcode class use
+
+${column:width=42}$
+
+[[[
+DieHandle >> + aDieHandle
+  | handle |
+  handle := DieHandle new.
+  ...
+]]]
+
+${endColumns}$
+
+
+${columns}$
+${column:width=58}$
+
+- Encapsulate class use in a self send (a ""hook"")
+- Extensible solution but requires redefinition
+
+${column:width=42}$
+
+[[[
+  ...
+  handle := self handleClass new.
+  ...
+
+DieHandle >> handleClass
+    ^ DieHandle
+]]]
+
+${endColumns}$
+
+${columns}$
+${column:width=58}$
+
+- Return the class of the receiver
+- Gracefully adapt to future subclasses
+- Still extensible by redefinition
+
+${column:width=42}$
+
+[[[
+DieHandle >> handleClass
+  ^ self class
+]]]
+
+${endColumns}$
+
 

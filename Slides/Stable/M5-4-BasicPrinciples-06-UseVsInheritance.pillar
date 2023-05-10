@@ -15,7 +15,7 @@ ${slide:title=Outline}$
 - Some criteria
 - Solutions
 - Comparing solutions
- 
+
 
 ${slide:title=Exercise setup}$
 
@@ -41,14 +41,14 @@ ${slide:title=With inheritance}$
 TextEditor < #SlowFormatingTextEditor
 
 SlowFormatingTextEditor >> format
-	 self formatSlowButPreciseColoring: text 
+	 self formatSlowButPreciseColoring: text
 ]]]
 
 [[[
 TextEditor < #FastFormatingTextEditor
 
 FastFormatingTextEditor >> format
-	 self formatFastColoring: text 
+	 self formatFastColoring: text
 ]]]
 
 
@@ -56,7 +56,7 @@ FastFormatingTextEditor >> format
 TextEditor < #NullFormatingTextEditor
 
 NullFormatingTextEditor >> format
-	^ self "do nothing" 
+	^ self "do nothing"
 ]]]
 
 
@@ -72,9 +72,9 @@ ${slide:title=With conditionals}$
 [[[
 TextEditor >> format
 	currentSelection = #slow
-		ifTrue: [ self formatSlowButPreciseColoring: text] 
+		ifTrue: [ self formatSlowButPreciseColoring: text]
 		ifFalse: [ currentSelection = #fast
-			ifTrue: [self formatFastColoring: text] 
+			ifTrue: [self formatFastColoring: text]
 			....]
 ]]]
 
@@ -82,15 +82,15 @@ TextEditor >> format
 ${slide:title=With registry and meta programming}$
 
 [[[
-Object subclass: #TextEditor 
+Object subclass: #TextEditor
 	currentSelection formatters text
 ]]]
 
 [[[
 TextEditor class >> initialize
-	self formatters 
-		at: #slow put: #slowFormat: ; 
-		at: #fast put: #fastFormat: ; 
+	self formatters
+		at: #slow put: #slowFormat: ;
+		at: #fast put: #fastFormat: ;
 		at: #null put: #nullFormat: ;
 		at: #tex put: #texFormat:
 ]]]
@@ -125,7 +125,7 @@ ${slide:title=Inheritance?}$
 
 ${slide:title=Inheritance?}$
 
-You can get an explosion of classes 
+You can get an explosion of classes
 - we do not want a hierarchy for each text editor features to be ""multiplied"" with previous ones (imagine completion, grammatical verification, compilation,....)
 - API of TextEditor can get large: no clear identification of responsibilities
 
@@ -135,7 +135,7 @@ ${slide:title=Conditionals?}$
 
 ""Dynamic use:"" we can use a different formatter dynamically.
 
-But 
+But
 ""Addition:""
 - adding a version requires to edit and ""recompile"" the conditionals
 ""Packaging: ""
@@ -151,19 +151,19 @@ ${slide:title=Delegating to a formatter}$
 +.>file://figures/colorizer.pdf|width=90+
 
 [[[
-myEditor formatter: FastFormatter new. 
+myEditor formatter: FastFormatter new.
 myEditor format.
 myEditor formatter: SlowFormatter new.
 ]]]
 
 ${slide:title=Delegating to a formatter}$
 
-""Dynamic use:"" 
+""Dynamic use:""
 - we can use a different formatter dynamically. Just create a new instance and set it.
 ""Addition:""
 - adding a version is just adding a new class
 ""Packaging: ""
-- we package a new algorithm separately 
+- we package a new algorithm separately
 
 
 ${slide:title=Strategy Design Pattern}$
@@ -184,11 +184,11 @@ ${slide:title=Conclusion}$
 
 Inheritance
 - is about ""incremental static"" definition
-- It can lead of static design
-- It help defining ""abstractions""
+- can lead to static design
+- helps defining ""abstractions""
 
-Delegation 
-- can bring runtime ""flexibility"" and modularity
+Delegation
+- brings runtime ""flexibility"" and modularity
 
 
 
