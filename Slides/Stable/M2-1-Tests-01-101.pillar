@@ -1,7 +1,7 @@
 {
 	"title":"Test 101",
 	"subtitle":"The minimum you should know",
-	"slidesid":"M2-1"
+	"slidesid":"M2S1"
 }
 
 ${slide:title=Goal of the lecture|label=less}$

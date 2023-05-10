@@ -1,7 +1,7 @@
 {
     "title":"Tests",
     "subtitle":"Why testing is Important?",
-    "slidesid": "M2-2"
+    "slidesid": "M2S2"
 }
 
 ${slide:title=Goal}$
