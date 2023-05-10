@@ -139,17 +139,17 @@ Imagine that we want to test a transformation of a piece of code
 Better have a setup that is independent of the compiler
 - Manually build the test input and store it in a test setup
 
-Think about API even in the test setup
+Think about ""API"" even in the test setup
 
 
 ${slide:title=Positive and negative tests }$
 
-Positive
+""Positive""
 - If I do the normal stuff, 
 - It passes!
 - Example: You can log in with the correct credentials
 
-Negative
+""Negative""
 - If I do not behave correctly,
 - It breaks!
 - Example: You must not be able to load with incorrect credentials
