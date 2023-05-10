@@ -145,7 +145,7 @@ Executed ""systematically"" before and after each test run
 - ==setUp== allows us to specify and reuse the context
 - ==tearDown== to clean after test execution
 
-+>file://figures/SetUpTearDown.png|width=60+
++>file://figures/SetUpTearDown.pdf|width=60+
 
 ${slide:title=Defining a setUp method}$
 
