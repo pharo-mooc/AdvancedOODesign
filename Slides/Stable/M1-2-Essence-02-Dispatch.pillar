@@ -5,7 +5,7 @@
 
 ${slide:title=Remember: Implementing not in two methods}$
 
-+Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.png|width=70+
++Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.pdf|width=70+
 
 
 ${slide:title=Ok so what?}$
@@ -79,7 +79,7 @@ ${columns}$
 ${column:width=40}$
 
 [[[
-aCollection := {a.bb.c}.
+aCollection := {a . bb . c}.
 ...
 aCollection do: [ :e |
     e operation]
@@ -98,7 +98,7 @@ ${columns}$
 ${column:width=40}$
 
 [[[
-aCollection := {a.bb.c.aa}.
+aCollection := {a . bb . c . aa}.
 ...
 aCollection do: [ :e |
     e operation]
