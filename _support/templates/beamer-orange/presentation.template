@@ -3,16 +3,13 @@
 % add the PATH to retrieve cls and sty beamer styles files
 \makeatletter
 \providecommand*{\input@path}{}
-\edef\input@path{{_result/pdf/_support/templates/beamer/}{_result/pdf/_support/templates/beamer/imgs}{_support/templates/beamer/}\input@path}
+\edef\input@path{{_result/pdf/_support/templates/beamer}{_result/pdf/_support/templates/beamer/imgs}{_support/templates/beamer}\input@path}
 \makeatother
-
-%Apparently luc created an alias named root in each subfolder that pointed to the root folder.
 
 \documentclass[aspectratio=169]{pharoslides} % format 16/9
 % \documentclass{pharoslides} % format 4/3
 
 \graphicspath{{./}{figures/}{../figures/}{_support/templates/beamer/imgs/}{_support/templates/beamer/}}
-
 
 %Information to be included in the title page:
 \title{«& title»}
