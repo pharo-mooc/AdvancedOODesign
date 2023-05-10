@@ -115,15 +115,19 @@ ${slide:title=Sending a message is making a choice}$
 
 - Message sending is a ""choice"" operator
 - Each time you send a message, the execution engine ""selects the right method"" depending on the class of the receiver
-- So, ""How do we express choices""?
+- So, the next question is:
+-- ""How do we express choices""?
 
 ${slide:title=How do we express choices?}$
 
-Could we have the same solution with a ""single"" ==Boolean== class?
+- Could we have the same solution for ==not== with a ""single"" ==Boolean== class?
+- No! we would have conditionals in the ==not== and or methods!
 
 +>file://figures/Design-FatVsDispatchBoolean.pdf|width=75+
 
-${slide:title=Classes play case roles}$
+
+
+${slide:title=Classes play case distinct choices}$
 
 - To activate the choice operator we must have ""choices""
 - A ""class"" represents a choice (a case)
@@ -133,12 +137,12 @@ ${slide:title=One class vs. a hierarchy}$
 
 +>file://figures/Design-FatVsDispatch.pdf|width=75+
 
-${slide:title=Class hierarchy supports for dynamic dispatch}$
+${slide:title=Class hierarchy supports dynamic dispatch}$
 
-- More modular
-- No need to introduce complex conditions
-- A hierarchy provides a way to specialize behavior
-- No need to recompile existing methods
+- More ""modular""
+- No need to introduce ""complex"" conditions
+- A hierarchy provides a way to ""specialize"" behavior
+- No need to ""recompile existing"" methods
 - You only focus on one class at a time
 
 +>file://figures/Design-FatVsDispatch.pdf|width=50+
@@ -148,32 +152,35 @@ ${slide:title=Message dispatch supports modularity}$
 
 +>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
-We can package different classes into different packages (better modularity)
+- We can package different classes into different packages (better modularity)
+
 
 ${slide:title=Limit impact of changes}$
 
 +>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
-If a client receives instances of ==D== (in addition to classes of first package), the client code does not have to change
+- If a client receives instances of ==D== (in addition to classes of first package), its code does not have to change
+- merthod ==operation== of ==D== instances will be executed naturally
 
 
-${slide:title=Message Send is powerful}$
+${slide:title=Message send is powerful}$
 
 - Message sends are supporting ""choices""
 - The execution engine acts as a conditional switch: Use it!
-- Classes act as "case statements"
-- But with messages, the case statement is ""extensible"" by adding new classes without breaking client code
+- Classes act as "cases/choices"
+- But with messages, the case statement is ""extensible"":
+-- adding new classes without breaking client code
 
 ${slide:title=Let the receiver decide}$
 
 - Sending a message lets the receiver decide
 - Client does not have to decide
-- Client code is more declarative: give orders
+- Client code is more declarative: ""give orders""
 - Different receivers may be substituted dynamically
 
-${slide:title=Summary: Cornerstone of OOP}$
+${slide:title=Summary: a cornerstone of OOP}$
 
 - Avoid conditionals (cf. AntiIfCampaign)
 - Use objects and messages whenever you can
-- Let the receiver decide (Do not ask, tell)
+- Let the receiver decide: ""Do not ask, tell""
 - Class hierarchy supports for dynamic dispatch
