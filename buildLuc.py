@@ -5,6 +5,7 @@ import sys
 import argparse
 
 OUTDIR="__results.luc"
+OUTDIR_FINISHED="__results.luc.reviewed"
 
 SLIDES= [
     "Slides/Stable/M1-2-Essence-02-Dispatch.pillar",
@@ -24,6 +25,23 @@ SLIDES= [
     "Slides/Stable/M10-1-Principles-12-DualInterfaces.pillar",
     "Slides/Stable/M10-4-Principles-11-PolymorphismSupportEvolution.pillar ",
 ]
+
+# [DONE] M1-2
+# [DONE] M1-3
+# [DONE] M2-3
+# [DONE] M3-2
+# [DONE] M3-3
+# [DONE] M4-1
+# M5-1  - Composite
+# [DONE] M5-4
+# M6-4 - Visitor 1
+# M6-5 - Visitor 2
+# [DONE] M7-3
+# M8-4
+# M9-2
+# M9-3
+# M10-1
+# M10-4
 
 
 class MyTerm:
@@ -60,6 +78,7 @@ def main():
         filesToCompile = [ SLIDES[int(args.slide)] ]
 
     os.system("mkdir -p "+OUTDIR)
+    os.system("mkdir -p "+OUTDIR_FINISHED)
 
     for pillarfile in filesToCompile:
         pdffile = pillarfile.rsplit('.', 1)[0] + '.pdf'

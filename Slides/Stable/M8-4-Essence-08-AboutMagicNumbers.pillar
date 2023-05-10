@@ -3,28 +3,24 @@
 	"slidesid":"M8-4"
 }
 
-
 ${slide:title=What you will learn}$
 
 - Think about setters
 - Think about customization
 
-${slide:title=Remember}$
+${slide:title=Case study}$
 
-Imagine
 [[[
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := mainCoordinate / maximizeViewRatio.
-   self window add:
-      (UINode new
-         with: bandWidth * 55 / defaultWindowSize).
+   self window add: (UINode new with: bandWidth * 55 / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
 ]]]
 
 How programmers can change 55 to 65?
 
-${slide:title=Solution 1: introduce a variable}$
+${slide:title=Introduce an instance variable}$
 
 [[[
 Object << Node
@@ -36,13 +32,14 @@ Object << Node
 Node >> setWindowWithRatioForDisplay
    | defaultNodeSize |
    defaultNodeSize := mainCoordinate / maximizeViewRatio.
-   self window add:
-      (UINode new
-         with: bandWidth * percent / defaultWindowSize).
+   self window add: (UINode new with: bandWidth * percent / defaultWindowSize).
    previousNodeSize := defaultNodeSize.
 ]]]
 
-${slide:title=Initialize and setter}$
+
+${slide:title=Initialize it and add a setter}$
+
+Initialize the value:
 
 [[[
 Node >> initialize
@@ -50,31 +47,32 @@ Node >> initialize
 	percent := 55
 ]]]
 
-Now how can the user change it?
+and add a setter:
 
 [[[
 Node >> percent: aZeroToHundred
 	percent := aZeroToHundred
 ]]]
 
-${slide:title=Now clients can decide}$
+${slide:title=Now clients decide}$
+
+Clients can customize this value:
 
 [[[
 Node new percent: 65
 Node new percent: 70
 ]]]
 
-How can we make that we can have subclass encapsulating certain configurations?
-
+But, how subclasses can encapsulate certain configurations (values)?
 
 ${slide:title=Defining a hook}$
 
 [[[
 Node >> defaultPercent
     ^ 55
-]]] 
+]]]
 
-[[[	
+[[[
 Node >> initialize
     super initialize
     percent := self defaultPercent.
@@ -83,30 +81,23 @@ Node >> initialize
 
 ${slide:title=Customizing a hook}$
 
-[[[	
+[[[
 MyNode >> defaultPercent
    ^ 65
 ]]]
 
-- Subclasses can override the value
-- Users can still set the value but can reuse the default value
-
-
-${slide:title=Constants}$
-
-- When magic numbers are constants
-- Use shared pools (a.k.a. enums)
-- Can be shared amongst hierarchies
-
+- Subclasses can:
+-- override the value (==initialize==)
+-- override the default value (==defaultPercent==)
+- Clients can:
+-- set the value (==percent:==)
+-- reuse the default value (==defaultPercent==)
 
 
 ${slide:title=Conclusion}$
 
-- Code can be reused and refined in subclasses
-- Sending a message in a class defines a ""hook"":
--- i.e., a place where subclasses can ""inject variations""
-
-- Prefer small methods because:
--- this gives names to expressions
--- this gives freedom to subclasses
-
+- Magic numbers are specific values that may be constant
+- Do not hide them in code
+- Let clients customize these values (setters) if applicable
+- Use hooks to define and reuse magic numbers (meaningful names)
+- Use shared pools (a.k.a. enums) that can be shared among hierarchies
