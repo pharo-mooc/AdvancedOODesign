@@ -46,7 +46,7 @@ In this module we will present some important and simple design patterns such as
 - [Luc] 1-DesignPattern-03-Composite.pillar
 - [Pablo] 2-DesignPattern-11-State.pillar
 - [Pablo] 3-DesignPattern-07-Command.pillar
-+ [Luc] 4-BasicPrinciples-06-UseVsInheritance.pillar
++ [Luc] 4-BasicPrinciples-06-DelegationVsInheritance.pillar
 - [Pablo] 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
 - [Pablo] 6-Lang-04-BlocksVsObjects.pillar
 - [Guille] 7-Principles-01-AvoidIsNil.pillar
