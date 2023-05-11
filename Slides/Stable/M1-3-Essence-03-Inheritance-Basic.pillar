@@ -110,7 +110,7 @@ ${column:width=65}$
 
 ${column:width=35}$
 
-+>file://figures/InheritanceDiagram.png|width=80+
++>file://figures/InheritanceDiagram.pdf|width=70+
 
 ${endColumns}$
 
@@ -128,7 +128,7 @@ ${column:width=50}$
 
 ${column:width=50}$
 
-+>file://figures/InheritanceDiagram-lookup-superclass.png|width=75+
++>file://figures/InheritanceDiagram-lookup-superclass.pdf|width=65+
 
 ${endColumns}$
 
