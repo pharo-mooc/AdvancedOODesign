@@ -11,25 +11,25 @@ ${slide:title=About this lecture}$
 
 ${slide:title=What you will learn}$
 
-- Message sends are hooks for subclasses
+- Message sends are ""hooks"" for subclasses
 - Message sends are places where subclasses code can be invoked
 
-${slide:title=Let us start to reflect }$
+${slide:title=Let us start to reflect}$
 
-Anecdotes
+""Anecdotes""
 - ''I like big methods because I can see all the code''
 - ''I do not like small methods''
 
-Questions
-- Why large methods leads to ''under-optimal'' design?
+""Questions""
+- Why large methods lead to ''under-optimal'' design?
 - Why writing small methods is a sign of good design?
 
 ${slide:title=Remember...}$
 
-- a message send makes a choice
-- a class hierarchy defines the choices
+- A message send makes a choice
+- A class hierarchy defines the possible choices
 - ==self== ""always represents the receiver""
-- method lookup starts in the ""class of the receiver"" (except for super)
+- Method lookup starts in the ""class of the receiver"" (except for super)
 
 +>file://figures/Design-FatVsDispatch.pdf|width=75+
 
@@ -67,10 +67,18 @@ NodeWithMargins >> setWindowWithRatioForDisplay
 
 ${slide:title=Avoid duplication}$
 
+${columns}$
+
+${column:width=70}$
+
 - Duplication is not a good practice:
 -- duplication copies bugs
 -- changing one copy requires changing others
 - Note that in Java-like languages, using ==private== attributes makes duplication in subclasses impossible
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Essence of a better solution}$
 
@@ -194,10 +202,19 @@ BTW, this is easy in Pharo because classes are regular objects!
 
 ${slide:title=Many take-away messages}$
 
-Small methods are a sign of good design, because:
-- they give a name to expressions
+
+${columns}$
+
+${column:width=70}$
+
+""Small"" methods are a sign of good design, because:
+- they give a ""name"" to expressions
 - they are a potential ""hook"" for extensibility in subclasses (redefinition)
-- they encapsulate complexitiy (no need to read all method definitions) if their name is meaningful
+- they encapsulate complexity (no need to read all method definitions) if their name is meaningful
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Gruyere-oriented programming}$
 
@@ -209,7 +226,7 @@ ${slide:title=Conclusion}$
 - Sending a message in a class defines a ""hook"":
 -- i.e., a place where subclasses can ""inject variations""
 
-- Prefer small methods because:
+- Prefer ""small"" methods because:
 -- it gives names to expressions
 -- each one is an extensibility point for subclasses
 
