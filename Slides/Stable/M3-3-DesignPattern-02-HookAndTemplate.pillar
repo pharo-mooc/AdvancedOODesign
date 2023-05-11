@@ -178,10 +178,8 @@ Object >> postCopy
 ${slide:title=Bag>>postCopy: refinement}$
 
 [[[
-Collection subclass: #Bag
-   instanceVariableNames: 'contents'
-   classVariableNames: ''
-   package: 'Collections-Unordered'
+Collection << #Bag
+   slots: { #contents }
 ]]]
 
 [[[

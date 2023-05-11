@@ -36,7 +36,7 @@ ${columns}$
 ${column:width=52}$
 
 [[[
-Object < #TextEditor
+Object << #TextEditor
     slots: { #text }
 
 TextEditor >> format
@@ -84,8 +84,8 @@ TextEditor >> format
 ${slide:title=With one class, a registry and meta-programming}$
 
 [[[
-Object subclass: #TextEditor
-    instanceVariableNames: 'currentSelection formatters text'
+Object << #TextEditor
+    slots: { #currentSelection. #formatters. #text }
 ]]]
 
 [[[

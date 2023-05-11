@@ -32,7 +32,7 @@ DieHandle >> + aDieHandle
 ${slide:title=What happen when subclassing?}$
 
 [[[
-    DieHandle subclass: #MemoDieHandle
+    DieHandle << #MemoDieHandle
         ...
 ]]]
 

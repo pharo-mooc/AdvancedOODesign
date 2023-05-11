@@ -9,7 +9,7 @@ ${slide:title=Goals}$
 
 - Studying examples
 - Understanding Visitor
-- Pros and cons 
+- Pros and cons
 
 ${slide:title=Example: basic arithmetic expressions}$
 
@@ -32,8 +32,8 @@ ${columns}$
 
 ${column:width=50}$
 
-- An expression: a Composite 
-- with number and operation expressions 
+- An expression: a Composite
+- with number and operation expressions
 
 ${column:width=50}$
 
@@ -96,7 +96,7 @@ ${slide:title=First design: behavior defined in the domain}$
 
 [[[
 ENumber >> evaluate
-	^ value 
+	^ value
 ]]]
 
 [[[
@@ -105,7 +105,7 @@ EPlus >> evaluate
 ]]]
 
 [[[
-ENumber >> print 
+ENumber >> print
 	stream nextPutAll: value asString
 ]]]
 
@@ -129,7 +129,7 @@ Should we ""mix"" the information about the treatment of items and the items the
 
 ${slide:title=Let us see on a real system: Pillar}$
 
-We have 
+We have
 - the core hierarchy is about 50 classes
 - export to LaTeX (two versions)
 - export to HTML
@@ -140,11 +140,11 @@ We have
 
 ${slide:title=First design conclusion}$
 
-Putting all the behavior inside the domain objects 
+Putting all the behavior inside the domain objects
 
 - ""Blows up"" the class API / state / methods
 - ""Mixes"" concerns
-- Is ""not modular"": we cannot have ""one"" operation only 
+- Is ""not modular"": we cannot have ""one"" operation only
 - ""Prevents extension"": To add a new behavior I should change the domain
 
 ${slide:title=Alternate design: using a visitor}$
@@ -164,7 +164,7 @@ A ""Visitor"":
 
 ${slide:title=Visitor's intent}$
 
-- Represents an ""operation"" to be performed on the elements of an object structure in a class ""separate"" from the elements themselves. 
+- Represents an ""operation"" to be performed on the elements of an object structure in a class ""separate"" from the elements themselves.
 - Visitor lets you define a new operation ""without changing the classes of the elements"" on which it operates.
 
 
@@ -216,29 +216,29 @@ Evaluator >> visitTimes: anExpression
    | l r |
    l := anExpression left acceptVisitor: self.
    r := anExpression right acceptVisitor: self.
-   ^ l * r 
+   ^ l * r
 ]]]
 
 ${slide:title=Invoking the Visitor}$
 
 [[[
-Evaluator new evaluate: 
-	(EPlus 
-		left: (ENumber value: 1) 
+Evaluator new evaluate:
+	(EPlus
+		left: (ENumber value: 1)
 		right: (ETimes left: (ENumber value: 3) right: (ENumber value: 2)))
-> 7 
+> 7
 ]]]
 
 [[[
 Evaluator >> evaluate: anExpression
    ^ anExpression acceptVisitor: self
-]]]	
+]]]
 
 ${slide:title=Example: Printer}$
 
 [[[
-Visitor subclass: #Printer
-   iv: 'stream level'
+Visitor << #Printer
+   slots: { #stream. #level. }
 ]]]
 [[[
 Printer >> visitNumber: aNumber
@@ -309,9 +309,9 @@ ${slide:title=When to use a Visitor}$
 
 Examples:
 - Parse tree (ProgramNode) uses a visitor for
--- the compilation (emitting code on CodeStream), 
+-- the compilation (emitting code on CodeStream),
 -- pretty printing, syntax hilighting
--- different analysis pass, 
+-- different analysis pass,
 -- rotten green test analysis
 - Rendering documents (Document) in different formats
 -- nodes expansion, HTML, LaTeX, ...

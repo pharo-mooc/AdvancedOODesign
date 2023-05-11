@@ -53,7 +53,7 @@ ${slide:title=Bad solution: duplication}$
 Duplicate the code in a subclass
 
 [[[
-Node subclass: NodeWithMargins
+Node << #NodeWithMargins
    ...
 ]]]
 
