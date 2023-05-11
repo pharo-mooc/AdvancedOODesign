@@ -115,15 +115,23 @@ Some criteria:
 
 ${slide:title=Evaluating inheritance-based solution}$
 
-Pros:
+${columns}$
+
+${column:width=75}$
+
+""Pros:""
 - Addition: adding a new formatting algorithm is done by subclassing
 - Packaging: formatting algorithms are modularised in separate classes
 
-Cons:
+""Cons:""
 - Dynamic switch
--- you have to create the right ==TextEditor== at beginning
+-- Have to create the right ==TextEditor== at beginning
 -- Difficult to ""change"" it dynamically (external references) and we do not want to reopen the text editor
 - Addition: combinatorial explosion (cf. next slide)
+
+${column:width=25}$
+
+${endColumns}$
 
 ${slide:title=Evaluating inheritance-based solution}$
 
@@ -131,8 +139,8 @@ ${columns}$
 
 ${column:width=55}$
 
-- we do not want a hierarchy for each text editor features to be multiplied with previous ones (Single/Multi-Pane, completion, grammatical verification, compilation,....)
-- the API of TextEditor can get large: no clear identification of responsibilities
+- Do not want a hierarchy for each text editor features to be multiplied with previous ones (Single/Multi-Pane, completion, grammatical verification, compilation,....)
+- API of TextEditor can get large: no clear identification of responsibilities
 
 ${column:width=45}$
 
@@ -142,12 +150,21 @@ ${endColumns}$
 
 ${slide:title=Evaluating conditionals-based solution}$
 
-Pros:
+${columns}$
+
+${column:width=70}$
+
+
+""Pros:""
 - Dynamic switch: we can use a different formatting algorithm dynamically
 
-Cons:
+""Cons:""
 - Addition: adding a version requires to edit and ""recompile"" the conditionals
 - Packaging: we cannot package a new algorithm separately
+
+${column:width=30}$
+
+${endColumns}$
 
 
 ${slide:title=Solution with delegation}$
@@ -166,13 +183,13 @@ myEditor formatter: SlowFormatter new.
 
 ${slide:title=Evaluating the delegation to a formatter}$
 
-Pros:
+""Pros:""
 - Addition: just add a new formatter subclass
 - Packaging: formatting algorithms are well ""modularised"" in separate classes
 - Dynamic switch: just create a new formatter instance and set it in the editor
 - Uniform API between the Editors and the Formatters (==format:==)
 
-Cons:
+""Cons:""
 - The formatter should access the state of the text (i.e. the text, positions... contained in the text editor)
 - The API of the TextEditor should be opened to support it
 

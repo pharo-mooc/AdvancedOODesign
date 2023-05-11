@@ -8,15 +8,15 @@
 ${slide:title=Goal/Outline}$
 
 - Hook and Template methods
-- printString/printOn: case
-- copy case
+- ==printString==/==printOn:== case
+- The case of ==copy==
 
 ${slide:title=Remember...}$
 
 - Sending a message is making a choice
 - A class defines one possible choice
 - Self-sends are plans for reuse
-- A Self-send defines a hook i.e. a place where subclasses can inject variations
+- A self-send defines a hook i.e., a place where subclasses can inject variations
 
 ${slide:title=The template method}$
 
@@ -37,7 +37,7 @@ ${slide:title=Studying the printString template method}$
 
 Example of ==printString==
 [[[
->>> (Delay forSeconds: 10) printString
+> (Delay forSeconds: 10) printString
 'a Delay(10000 msecs)'
 ]]]
 
@@ -64,11 +64,11 @@ Do you see the hook?
 ${slide:title=printOn: A default hook}$
 
 [[[
->>> Node new printString
+> Node new printString
 a Node
 ]]]
 [[[
->>> Apple new printString
+> Apple new printString
 an Apple
 ]]]
 
@@ -86,7 +86,7 @@ Object >> printOn: aStream
 ${slide:title=Hook refinement in Delay}$
 
 [[[
->>> (Delay forSeconds: 1) printString
+> (Delay forSeconds: 1) printString
 a Delay(1000 msecs)
 ]]]
 
@@ -103,7 +103,7 @@ Delay >> printOn: aStream
 ${slide:title=Hook redefinition in False}$
 
 [[[
->>> true not printString
+> true not printString
 false
 ]]]
 
@@ -116,9 +116,9 @@ False >> printOn: aStream
 ${slide:title=Hook redefinition in Interval}$
 
 [[[
->>> (1 to: 100) printString
+> (1 to: 100) printString
 (1 to: 100)
->>> (1 to: 100 by: 3) printString
+> (1 to: 100 by: 3) printString
 (1 to: 100 by: 3)
 ]]]
 
@@ -158,7 +158,8 @@ Object >> copy
 
 [[[
 Object >> shallowCopy
-  "Answer a copy of the receiver which shares the receiver's instance variables. Subclasses that need to specialize the copy should specialize the postCopy hook method."
+  "Answer a copy of the receiver which shares the receiver's instance variables. 
+  Subclasses that need to specialize the copy should specialize the postCopy hook method."
   <primitive: 148>
   ...
 ]]]
@@ -203,7 +204,7 @@ Dictionary >> postCopy
 ${slide:title=Conclusion}$
 
 - Hooks and Template is a very common pattern
-- Template method sets the context
-- Hooks specify variations
+- A ""template"" method sets the context
+- ""Hooks"" specify variations
 - A self-send message defines a hook
 - Sending a message to another object opens space for dispatch (see Strategy Design lecture)

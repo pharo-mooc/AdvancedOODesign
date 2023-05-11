@@ -39,6 +39,11 @@ Node >> setWindowWithRatioForDisplay
 
 ${slide:title=Initialize it and add a setter}$
 
+
+${columns}$
+
+${column:width=70}$
+
 Initialize the value:
 
 [[[
@@ -54,7 +59,15 @@ Node >> percent: aZeroToHundred
 	percent := aZeroToHundred
 ]]]
 
+${column:width=30}$
+
+${endColumns}$
+
 ${slide:title=Now clients decide}$
+
+${columns}$
+
+${column:width=70}$
 
 Clients can customize this value:
 
@@ -64,6 +77,11 @@ Node new percent: 70
 ]]]
 
 But, how subclasses can encapsulate certain configurations (values)?
+
+${column:width=30}$
+
+${endColumns}$
+
 
 ${slide:title=Defining a hook}$
 

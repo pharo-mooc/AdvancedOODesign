@@ -15,7 +15,7 @@ Obvious but it is always good to hear it again
 ${slide:title=Case Study}$
 
 [[[
-PRTree>>inpectionPresenter
+PRTree >> inpectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
@@ -27,8 +27,7 @@ PRTree>>inpectionPresenter
                     stream
                         nextPutAll: '( level ';
                         nextPutAll: each level asString;
-                        nextPutAll: ' )' ].
-        ] ];
+                        nextPutAll: ' )' ] ] ];
         yourself
 ]]]
 
@@ -62,12 +61,12 @@ PRHeader>>displayStringOn: stream
     stream
             nextPutAll: '( level ';
             nextPutAll: self level asString;
-            nextPutAll: ' )' ]
+            nextPutAll: ' )'
 ]]]
 
 cf. Hook and Template Lecture!
 
-${slide:title=and Send a message}$
+${slide:title=And send a message}$
 
 Sending a message will call a method (reuse its code)!
 
@@ -79,8 +78,7 @@ PRTree>>inpectionPresenter
         children: [ :aNode | aNode children ];
         display: [ :each |
             String streamContents: [ :stream |
-                each displayStringOn: stream ].
-      ];
+                    each displayStringOn: stream ] ];
       yourself
 ]]]
 
@@ -106,7 +104,7 @@ ${slide:title=streamContents: to the rescue}$
 String streamContents: [:s | #(1 2 3) printOn: stream ]
 ]]]
 
-- Encapsulate creation
+- Encapsulate string creation
 - Optimized
 - Hide details
 - Encapsulate termination
@@ -118,7 +116,9 @@ ${slide:title=Encapsulate actions using blocks}$
 [[[
 SequenceableCollection class >> streamContents: blockWithArg
 	^ self new: 100 streamContents: blockWithArg
+]]]
 
+[[[
 SequenceableCollection class >> new: newSize streamContents: blockWithArg
 
 	| stream |

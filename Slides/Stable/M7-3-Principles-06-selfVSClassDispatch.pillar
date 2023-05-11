@@ -7,7 +7,7 @@
 ${slide:title=Goal}$
 
 - ==self== represents the receiver
-- classes receive messages too
+- Classes receive messages too
 
 
 ${slide:title=Context}$
@@ -80,12 +80,20 @@ We get an instance of the subclass!
 
 ${slide:title=But we can do better!}$
 
-Pros:
+${columns}$
+
+${column:width=70}$
+
+""Pros:""
 - Extensibility
 
-Cons:
+""Cons:""
 - In each subclass we should redefine the hook method  ==handleClass==
 - This is tedious and error prone (developper might forget)
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Solution 2}$
 
