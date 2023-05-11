@@ -6,12 +6,9 @@
 
 ${slide:title=Outline}$
 
-- Reminders
-- Some questions
-- Two different clients!
-
-
-
+- Reminder: the essence of OOP
+- One question
+- Classes have two different kind of clients!
 
 ${slide:title=Back to the roots: Inheritance}$
 
@@ -19,82 +16,86 @@ ${columns}$
 
 ${column:width=60}$
 
-- Often we want small adaptations to existing classes
-- Do not want to reimplement everything: We want to reuse existing behavior
+- Needs:
+-- Usually we want small adaptations to existing classes
+-- We want to ""reuse"" existing behavior (not reimplement)
 - Solution: ""class inheritance""
-- A class ""extends"" the definition of its superclass
--- add state
--- ""extend"" / ""specialize"" behavior
 
 ${column:width=40}$
 
-+>file://figures/InheritanceDiagram.pdf|width=90+
++>file://figures/InheritanceDiagram.pdf|width=55+
 
 ${endColumns}$
 
+${slide:title=Inheritance: expressing deltas}$
 
+Inheritance is a reuse mechanism.
 
-${slide:title=Inheritance: expressing delta}$
+A class:
+- does not reimplement the code of its superclasses
+- extends the definition of its superclasses
+-- add state
+-- extends/specializes behavior
+- expresses a ""delta"" i.e., differences to its superclasses
 
-Inheritance is a reuse mechanism
-- Do not reimplement the code of the superclasses in subclass
-- ""Extend"" or ""Specialize"" superclass behavior
-A subclass expresses a ""delta""
-- Only specify the differences to the superclasses
+${slide:title=Time to think}$
 
-
-
-${slide:title=What are the consequences of}$
+What are the consequences of the idiom: ``""Fields should be private""''?
 
 [[[
-A
-	{ private x ;
-	void foo(){ ... x ...}
-	}
+class A {
+    private x ;
+
+    void foo(){ ... x ...}
+}
 ]]]
 
 ${slide:title=Consequences}$
 
-- Cannot access x from clients - ok sounds good
-- Cannot access x from subclasses - no ok!
-How can I express a good delta?
-- Cannot even copy and paste the body of ==foo(){ ...}== in subclasses to extend it manually!
+${columns}$
+
+${column:width=65}$
+
+- Clients cannot access ==x==
+-- sounds good
+- But, subclasses cannot access ==x== too
+-- not ok because how can we express a delta?
+-- copying the body of ==foo== in subclasses to extend it manually is also impossible!
+
+${column:width=30}$
+
+${endColumns}$
+
 
 ${slide:title=Clients?}$
 
 What are the clients of a class?
-- Its users (e.g., Person is client of Address)
-- But also its ""subclasses""!
+- Its users (e.g., ==Person== is a client of ==Address==)
+- But also its subclasses i.e., its ""extenders""
 
-${slide:title=What do you think about this?}$
+${slide:title=Extensibility?}$
 
-Fields should be private
+- Think about your extenders
+-- When writing a class, you cannot predict how it MUST be extended in 5 years from now!
+- ==final== and ==private== prevent expressing deltas
+-- better use ==protected==
 
-${slide:title=You cannot predict the future}$
+${slide:title=So, the correct idiom is...}$
 
-- You are not the Kwisatz Haderach!
-- You cannot predict how your classes MUST be extended in 5 years from now!
-- Think about your extenders!
-- No final no private, use protected!
+To support both encapsulation and ""extension"":
 
-${slide:title=The correct idiom is...}$
-
-- Fields should be private AND class should provide ""protected"" accessors
+- Fields should be private ""AND"" the class should provide ""protected"" accessors
 Or
 - Fields should be ""protected""
-Favor protected
-- Support encapsulation AND extension
 
 ${slide:title=Benefits}$
-
 
 ${columns}$
 
 ${column:width=60}$
 
-- Your clients cannot access your state
-- And your subclasses are empowered
--- A subclass can ""extend/refine the behavior of the superclass""
+- Clients cannot access your state (""encapsulation"")
+- Subclasses can ""extend""/""refine"" the behavior of superclasses (""extensibility"")
 
 ${column:width=40}$
 
@@ -102,11 +103,10 @@ ${column:width=40}$
 
 ${endColumns}$
 
-${slide:title=OOP is about encapsulation AND extension}$
+${slide:title=Conclusion}$
 
-A class has always two clients:
-- Its ""users""
-- Its ""extenders""
-
-
+- OOP is about encapsulation AND extension
+- A class has always two kind of clients:
+-- its ""users""
+-- its ""extenders""
 

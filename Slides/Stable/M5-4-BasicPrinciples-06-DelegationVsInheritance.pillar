@@ -127,7 +127,7 @@ ${column:width=75}$
 - Dynamic switch
 -- Have to create the right ==TextEditor== at beginning
 -- Difficult to ""change"" it dynamically (external references) and we do not want to reopen the text editor
-- Addition: combinatorial explosion (cf. next slide)
+- Addition: combinatorial explosion (see next lecture)
 
 ${column:width=25}$
 

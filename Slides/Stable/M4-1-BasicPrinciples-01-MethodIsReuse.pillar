@@ -64,7 +64,7 @@ PRHeader>>displayStringOn: stream
             nextPutAll: ' )'
 ]]]
 
-cf. Hook and Template Lecture!
+see Hook and Template Lecture!
 
 ${slide:title=And send a message}$
 
@@ -153,7 +153,7 @@ ${slide:title=Stepping back}$
 
 - Encapsulate logic in the API
 - Blocks (closure) helps building powerful API
--- but don't abuse them! (cf. Blocks vs Objects lecture)
+-- but don't abuse them! (see Blocks vs Objects lecture)
 - Avoid spreading knowledge in clients
 - Avoid duplication of logic in clients
 

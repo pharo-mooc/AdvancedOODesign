@@ -6,7 +6,6 @@ import argparse
 
 OUTDIR="__results.luc"
 OUTDIR_FINISHED="__results.luc.reviewed"
-
 SLIDES= [
     "Slides/Stable/M1-2-Essence-02-Dispatch.pillar",
     "Slides/Stable/M1-3-Essence-03-Inheritance-Basic.pillar",

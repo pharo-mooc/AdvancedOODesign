@@ -180,7 +180,7 @@ ${slide:title=Let the receiver decide}$
 
 ${slide:title=Summary: a cornerstone of OOP}$
 
-- Avoid conditionals (cf. AntiIfCampaign)
+- Avoid conditionals (see AntiIfCampaign)
 - Use objects and messages whenever you can
 - Let the receiver decide: ""Do not ask, tell""
 - Class hierarchy supports for dynamic dispatch
