@@ -1,7 +1,7 @@
 {
 	"title":"DieHandle new vs. self class new",
 	"subtitle": "When classes are first class citizen",
-	"slidesid":"M7-3"
+	"slidesid":"M7S3"
 }
 
 ${slide:title=Goal}$

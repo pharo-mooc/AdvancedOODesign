@@ -1,7 +1,7 @@
 {
 	"title" : "Polymorphic objects",
 	"subtitle" : "Support for software evolution",
-	"slidesid":"M10-4"
+	"slidesid":"M10S4"
 }
 
 ${slide:title=Goals}$
@@ -71,7 +71,7 @@ Canvas >> display
 
 ${slide:title=Step back}$
 
-- Coding against an API 
+- Coding against an API
 - Producing polymorphic objects (substituable objects) is KEY for evolution
 - This is free in dynamically-typed languages
 
@@ -159,6 +159,6 @@ ${slide:title=Interfaces and nominal types}$
 ${slide:title=Conclusion}$
 
 Polymorphism and interfaces support evolution
-- Focusing on APIs is better for evolution than typing relationship 
+- Focusing on APIs is better for evolution than typing relationship
 
 

@@ -1,7 +1,7 @@
 {
 	"title" : "The two interfaces",
 	"subtitle" : "In presence of delta programming",
-	"slidesid":"M10-1"
+	"slidesid":"M10S1"
 }
 
 ${slide:title=Outline}$
@@ -47,7 +47,7 @@ A subclass expresses a ""delta""
 ${slide:title=What are the consequences of}$
 
 [[[
-A 
+A
 	{ private x ;
 	void foo(){ ... x ...}
 	}
@@ -68,7 +68,7 @@ What are the clients of a class?
 
 ${slide:title=What do you think about this?}$
 
-Fields should be private 
+Fields should be private
 
 ${slide:title=You cannot predict the future}$
 
