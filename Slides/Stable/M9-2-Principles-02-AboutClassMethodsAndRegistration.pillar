@@ -119,11 +119,11 @@ EvaluateCommandLineHandler class >> commandName
 
 ${slide:title=Evaluation}$
 
-Pros:
+""Pros"":
 - Modular design
 - Extensible
 
-Cons:
+""Cons"":
 - Checking all subclasses all the times is ""costly""
 - Do you need such a dynamic behavior?
 -- For the command line, each application may define its own commands

@@ -62,10 +62,10 @@ ${endColumns}$
 
 ${slide:title=Registration for `Free'}$
 
-Pros:
+""Pros"":
 - Each time a new class is loaded it is taken into account
 
-Cons:
+""Cons"":
 - We are querying the system each time
 - Most of the time for nothing
 - Expensive mechanism
@@ -98,10 +98,10 @@ ${endColumns}$
 
 ${slide:title=Solution 1: Evaluation}$
 
-Pros:
+""Pros"":
 - Do not have to query all the classes all the time
 
-Cons:
+""Cons"":
 - You have to keep this list up to date
 - Listing explicitly classes may introduce undesired dependencies to other packages!
 
