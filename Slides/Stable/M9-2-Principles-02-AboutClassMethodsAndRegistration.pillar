@@ -79,6 +79,11 @@ ${endColumns}$
 
 ${slide:title=The Pharo command-line interface (CLI)}$
 
+
+${columns}$
+
+${column:width=60}$
+
 [[[language=bash
 $ pharo Pharo.image eval "10 factorial"
 3628800
@@ -87,6 +92,11 @@ $ pharo Pharo.image eval "10 factorial"
 - it uses the same approach
 - each subclass of ==CommandLineHandler== processes one type of command
 - the correct subclass is selected by sending messages to the class
+
+${column:width=40}$
+
+${endColumns}$
+
 
 ${slide:title=The command-line handler}$
 
