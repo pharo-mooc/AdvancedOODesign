@@ -8,70 +8,70 @@
 ${slide:title=Outline}$
 
 - Motivating examples
-- Composite design pattern presentation
-- Composite discussions
-
-
+- Presentation of the Composite design pattern
+- Discussions on Composite
 
 
 ${slide:title=File entry examples}$
+
+${columns}$
+
+${column:width=40}$
 
 [[[
 Pharo.image
 ]]]
 
 [[[
-F1
+MOOC_Files/
 	Pharo.image
 	Pharo.changes
 ]]]
 
 [[[
-F1
-	src
-	doc
-	images
+MOOC_Files/
+	src/
+	doc/
+	images/
 		Pharo.image
 		Pharo.changes
 ]]]
 
+${column:width=55}$
+
+${endColumns}$
+
+
 ${slide:title=File entries}$
 
-An entry is a
-- file
+An entry is:
+- a file
 - or a folder with entries as children
-
-
-${slide:title=Same with Trees}$
-
-A tree is a
-- leave
-- or a node with trees as children
-
 
 ${slide:title=Documents}$
 
-A document is composed of
-- title
-- table of contents
+A document is composed of:
+- a title
+- a table of contents
 - chapters
 
-A chaper is composed of  sections
+A chapter is composed of:
+- sections
 
-A section is composed of
+A section is composed of:
 - paragraphs
 - figures
 - lists
-- sections
+- sub-sections
 
-${slide:title=A diagram}$
+${slide:title=Diagram}$
 
 - A diagram is composed of elements
-- An element is
+- An element is:
 -- a circle
 -- a segment
 -- a text
--- a group (i.e, diagram)
+-- a group of elements (i.e, diagram)
 
 ${slide:title=Now the question!}$
 
@@ -82,125 +82,150 @@ We do not want to have to check if we are talking to an element or a diagram com
 
 ${slide:title=Composite motivation}$
 
+${columns}$
+
+${column:width=65}$
+
 Elements and diagrams should offer the same API!
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=70+
++.>file://figures/DP-CompositeParticipants.pdf|width=95+
 
+${column:width=30}$
 
+${endColumns}$
 
 ${slide:title=Composite: Intent}$
 
 - Compose objects into tree structures to represent ""part-whole"" hierarchies
-- Composite lets clients treat ""individual"" objects and ""compositions"" of objects ""uniformly""
+- Let clients treat ""individual"" objects and ""compositions"" of objects ""uniformly""
 
-${slide:title=Composite design essence}$
+Client's code:
 
-+.>file://figures/DP-CompositeEssence.pdf|width=80+
+[[[
+aGraphic draw
+]]]
 
-${slide:title=Composite design essence}$
+==aGraphic== being a ==Text==, ==Circle==, ... or even ==Diagram== (group of ==Graphics==)
+
+${slide:title=Essence of the Composite design pattern}$
+
+${columns}$
+
+${column:width=60}$
+
++.>file://figures/DP-CompositeEssence.pdf|width=90+
+
+${column:width=35}$
+
+${endColumns}$
+
+${slide:title=Essence of the Composite desing pattern}$
 
 What is key:
-- Leaves offers the ""same"" API than the composite
-- Each leave will do something ""different"" but with the ""same"" API (polymorphism)
-- Composite will offer the same API and some functionality to manage children
-
-
-This brings ""substituability"" between the parts and the composite!
-- Clients do not have to care
-
-
+- Leaves offer the ""same"" API as the composite
+- Each leave do something ""different"" but with the ""same"" API (polymorphism)
+- Composite offers the same API and some functionality to manage children
+- Leaves and the composite are ""substituable""
+-- Clients do not have to check
 
 ${slide:title=Composite participants: Client}$
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=70+
++.>file://figures/DP-CompositeParticipants.pdf|width=45+
 
-""Client"" manipulates objects in the composition through the ""Component"" interface (here Graphic)
+""Client"" manipulates objects in the composition through the ""Component"" interface (here ==Graphic==)
 
 
 ${slide:title=Composite participants: Component}$
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=70+
++.>file://figures/DP-CompositeParticipants.pdf|width=45+
 
-""Component"" (here Graphic)
+""Component"" (here ==Graphic==)
 - declares the interface for objects in the composition
-- ""may"" implement default behavior for common interfaces
+- ""may"" implement a default behavior for common interface
 - ""may"" declare an interface for accessing and managing its child components
-
+-- see Lecture on ``Polymorphic objects''
 
 ${slide:title=Composite participants: Leaf}$
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=70+
++.>file://figures/DP-CompositeParticipants.pdf|width=45+
 
-""Leaf"" (here Circle, Segment, Text, ...)
-- represents leaf objects in the composition.
-- has usually no children
+""Leaf"" (here ==Circle==, ==Segment==, ==Text==, ...)
+- represents leaf objects in the composition
+- usually has no children
 - defines behavior for primitive objects in the composition using a ""polymorphic"" API
-
 
 ${slide:title=Composite participants: Composite}$
 
-+.>file://figures/DP-CompositeParticipants.pdf|width=70+
++.>file://figures/DP-CompositeParticipants.pdf|width=45+
 
-""Composite"" (here Group)
+""Composite"" (here ==Diagram==)
 - defines behavior for components with children via a ""polymorphic"" API (here ==draw==)
 - stores child components
-- implements child-related operations (add/remove...)
+- implements child-related operations (==add==,==remove==,...)
 
 ${slide:title=Composite consequences}$
 
 - Defines class hierarchies consisting of primitive and composite objects exposing a common polymorphic API
-- Clients do not have to explicitely check: Composite and leaves objects are treated uniformly
+- Clients do not have to check and treat composite and leaves objects uniformly
 - Adding new leaves is simple
 
-${slide:title=In dynamically-typed languages}$
+${slide:title=Important!}$
 
-Polymorphism is expressed as classes exposing compatible API not compiled-time type check
-- A composite and leaves do ""not"" have to inherit from a common ancestor
-- Having a common ancestor eases understanding the composite, but it not mandatory
+A Design Pattern is:
+- a name and an intent
+- can have multiple implementations (pros/cons)
 
-+.>file://figures/DP-compositeEssenceAlternate2.pdf|width=70+
+${slide:title=Composite in dynamically-typed languages}$
+
+- Polymorphism results from compatible API and not compile-time types checking (see Lecture on Polymorphic objects)
+- So, composite and leaves do ""not"" have to inherit from a common ancestor
+-- more difficult recognize the composite but it works
+
++.>file://figures/DP-compositeEssenceAlternate2.pdf|width=50+
 
 
-${slide:title=Alternate extreme implementation}$
+${slide:title=Composite: extreme implementation}$
 
-- A Design Pattern is a name + intent
-- Its implementation can have multiple forms
+Extreme Composite implementation:
+- a single class
+- component (leaves) are composite with no children
+- the gain of such an implementation is unclear
 
-+.>file://figures/DP-compositeEssenceAlternate.pdf|width=70+
-
-- Now the gain treating a leave as a container with a single element is unclear
++.>file://figures/DP-compositeEssenceAlternate.pdf|width=60+
 
 ${slide:title=Frequently Asked Questions}$
 
 Can Composite contain any type of child?
-- Yes
-- Now the domain may impose some constraints
-- And the implementation can enforce at the composite level
+- Yes if they implement the common API
+- Wrappers or adapters can help with third-party objects
 
-Can the Composite' s number of children limited?
-- Again it can be possible to control
+Can we limit the depth of a composite object (number of children)?
+- Yes
 
 Can we have different Composites within the same system?
-- Yes and each Composite can have a different constraints, behavior, ..., delagating behavior
-
+- Yes and each Composite can have a different constraints, behavior, ...
 
 ${slide:title=About Composite behavior}$
 
-Forward/Delegation
-- ""Simple forward"". Send the message to all the children and merge the results without performing any other behavior
-- ""Selective forward"". Conditionally forward to some children
-- ""Extended forward"". Extra behavior
-- ""Override"". Instead of delegating
+Variations on Composite's behavior:
+- ""Simple forward"". sends the message to all the children and merge the results without performing any other behavior
+- ""Selective forward"". conditionally forwards the message to some children
+- ""Extended forward"". adds an extra behavior and delegates to leaves
+- ""Overriding"". does not delegate to leaves
 
 
 ${slide:title=Composite and other design patterns}$
 
-""Composite and Visitors:"" Visitors walk on structured recursive objects e.g. composites
+""Composite and Visitors""
+- Visitors walk on structured recursive objects e.g. composites
+- see Lectures on Visitor
 
-""Composite and Factories:"" Factories can create composite elements
+""Composite and Factories""
+- Factories can create composite elements
 
 ${slide:title=Conclusion}$
 
-- Composite is a natural way of composing structural relationships
-- Composite provides uniform API to clients
-- Basis for complex treatment expressed as Visitor
+- Composite is about composing objects into tree structures to represent part-whole hierarchies
+- Composite provides a uniform API to clients for leaves and composite
+- Basis for complex treatments expressed as Visitors
+-- see Lectures on Visitor
