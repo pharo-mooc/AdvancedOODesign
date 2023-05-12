@@ -1,7 +1,7 @@
 {
 	"title":"Test 101",
 	"subtitle":"The minimum you should know",
-	"slidesid":"M2-1"
+	"slidesid":"M2S1"
 }
 
 ${slide:title=Goal of the lecture|label=less}$
@@ -100,8 +100,8 @@ public void testAdd() {
 ${slide:title=Success, failures, and errors}$
 
 - Success: a test passes
-- A failure is a failed assertion, i.e., a verified property/assertion failed
-- An error is an unexpected condition, i.e., an unexpected runtime error
+- A ""failure"" is a failed assertion, i.e., a verified property/assertion failed
+- An ""error"" is an ""unexpected"" condition, i.e., an unexpected runtime error
 
 
 ${slide:title=A failure}$
@@ -145,7 +145,7 @@ Executed ""systematically"" before and after each test run
 - ==setUp== allows us to specify and reuse the context
 - ==tearDown== to clean after test execution
 
-+>file://figures/SetUpTearDown.png|width=60+
++>file://figures/SetUpTearDown.pdf|width=60+
 
 ${slide:title=Defining a setUp method}$
 
@@ -192,7 +192,7 @@ Sure! Nobody can but:
 
 ${slide:title=Testing style: TDD}$
 
-"The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run." — “Test Infected”, Beck & Gamma, 1998
+''The style here is to write a few lines of code, then a test that should run, or even better, to write a test that won't run, then write the code that will make it run.'' — Test Infected, Beck & Gamma, 1998
 
 - Write unit tests that thoroughly test a single class
 - Write tests as you develop (even before you implement your class!)

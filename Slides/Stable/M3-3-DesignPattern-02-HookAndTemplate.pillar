@@ -1,22 +1,23 @@
 {
   "title":"Hooks and Template",
   "subtitle":"One of the cornerstones of OOP",
-    "slidesid":"M3-3"
+    "slidesid":"M3S3"
 }
 
 
 ${slide:title=Goal/Outline}$
 
 - Hook and Template methods
-- printString/printOn: case
-- copy case
+- ==printString==/==printOn:== case
+- The case of ==copy==
 
 ${slide:title=Remember...}$
 
 - Sending a message is making a choice
 - A class defines one possible choice
 - Self-sends are plans for reuse
-- A Self-send defines a hook i.e. a place where subclasses can inject variations
+- A self-send defines a hook
+-- i.e., a place where subclasses can inject variations
 
 ${slide:title=The template method}$
 
@@ -24,7 +25,7 @@ ${slide:title=The template method}$
 - Hooks are places to be customized by subclasses
 - Hooks may or may not have a default behavior
 
-+>file://figures/hookAndTemplate.pdf|width=60+
++>file://figures/hookAndTemplate.pdf|width=50+
 
 
 ${slide:title=Principle}$
@@ -37,7 +38,7 @@ ${slide:title=Studying the printString template method}$
 
 Example of ==printString==
 [[[
->>> (Delay forSeconds: 10) printString
+> (Delay forSeconds: 10) printString
 'a Delay(10000 msecs)'
 ]]]
 
@@ -64,11 +65,11 @@ Do you see the hook?
 ${slide:title=printOn: A default hook}$
 
 [[[
->>> Node new printString
+> Node new printString
 a Node
 ]]]
 [[[
->>> Apple new printString
+> Apple new printString
 an Apple
 ]]]
 
@@ -85,8 +86,12 @@ Object >> printOn: aStream
 
 ${slide:title=Hook refinement in Delay}$
 
+${columns}$
+
+${column:width=70}$
+
 [[[
->>> (Delay forSeconds: 1) printString
+> (Delay forSeconds: 1) printString
 a Delay(1000 msecs)
 ]]]
 
@@ -100,10 +105,19 @@ Delay >> printOn: aStream
       nextPutAll: ' msecs)'
 ]]]
 
+${column:width=30}$
+
+${endColumns}$
+
+
 ${slide:title=Hook redefinition in False}$
 
+${columns}$
+
+${column:width=70}$
+
 [[[
->>> true not printString
+> true not printString
 false
 ]]]
 
@@ -113,12 +127,17 @@ False >> printOn: aStream
    aStream nextPutAll: 'false'
 ]]]
 
+${column:width=30}$
+
+${endColumns}$
+
+
 ${slide:title=Hook redefinition in Interval}$
 
 [[[
->>> (1 to: 100) printString
+> (1 to: 100) printString
 (1 to: 100)
->>> (1 to: 100 by: 3) printString
+> (1 to: 100 by: 3) printString
 (1 to: 100 by: 3)
 ]]]
 
@@ -158,7 +177,8 @@ Object >> copy
 
 [[[
 Object >> shallowCopy
-  "Answer a copy of the receiver which shares the receiver's instance variables. Subclasses that need to specialize the copy should specialize the postCopy hook method."
+  "Answer a copy of the receiver which shares the receiver's instance variables.
+  Subclasses that need to specialize the copy should specialize the postCopy hook method."
   <primitive: 148>
   ...
 ]]]
@@ -177,11 +197,14 @@ Object >> postCopy
 
 ${slide:title=Bag>>postCopy: refinement}$
 
+
+${columns}$
+
+${column:width=65}$
+
 [[[
-Collection subclass: #Bag
-   instanceVariableNames: 'contents'
-   classVariableNames: ''
-   package: 'Collections-Unordered'
+Collection << #Bag
+   slots: { #contents }
 ]]]
 
 [[[
@@ -192,6 +215,11 @@ Bag >> postCopy
 
 - ==contents== is a ==Dictionary==
 - ==postCopy== recursively invoke ==copy== on the dictionary
+
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Dictionary >> postCopy: Deeper copy}$
 
@@ -205,7 +233,8 @@ Dictionary >> postCopy
 ${slide:title=Conclusion}$
 
 - Hooks and Template is a very common pattern
-- Template method sets the context
-- Hooks specify variations
+- A ""template"" method sets the context
+- ""Hooks"" specify variations
 - A self-send message defines a hook
-- Sending a message to another object opens space for dispatch (see Strategy Design lecture)
+- Sending a message to another object opens space for dispatch
+-- see Strategy Design lecture

@@ -1,7 +1,7 @@
 {
     "title":"Composite",
     "subtitle": "A nice and common design pattern ",
-        "slidesid":"M5-1"
+    "slidesid":"M5S1"
 }
 
 
@@ -37,28 +37,28 @@ F1
 
 ${slide:title=File entries}$
 
-An entry is a 
-- file 
+An entry is a
+- file
 - or a folder with entries as children
 
 
 ${slide:title=Same with Trees}$
 
-A tree is a 
-- leave 
+A tree is a
+- leave
 - or a node with trees as children
 
 
 ${slide:title=Documents}$
 
-A document is composed of 
+A document is composed of
 - title
 - table of contents
 - chapters
 
 A chaper is composed of  sections
 
-A section is composed of 
+A section is composed of
 - paragraphs
 - figures
 - lists
@@ -99,7 +99,7 @@ ${slide:title=Composite design essence}$
 
 ${slide:title=Composite design essence}$
 
-What is key: 
+What is key:
 - Leaves offers the ""same"" API than the composite
 - Each leave will do something ""different"" but with the ""same"" API (polymorphism)
 - Composite will offer the same API and some functionality to manage children
@@ -132,7 +132,7 @@ ${slide:title=Composite participants: Leaf}$
 +.>file://figures/DP-CompositeParticipants.pdf|width=70+
 
 ""Leaf"" (here Circle, Segment, Text, ...)
-- represents leaf objects in the composition. 
+- represents leaf objects in the composition.
 - has usually no children
 - defines behavior for primitive objects in the composition using a ""polymorphic"" API
 
@@ -177,7 +177,7 @@ Can Composite contain any type of child?
 - Now the domain may impose some constraints
 - And the implementation can enforce at the composite level
 
-Can the Composite' s number of children limited? 
+Can the Composite' s number of children limited?
 - Again it can be possible to control
 
 Can we have different Composites within the same system?

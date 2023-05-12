@@ -1,6 +1,6 @@
 {
 	"title":"Some Visitor discussions",
-	"slidesid":"M6-5"
+	"slidesid":"M6S5"
 }
 
 
@@ -113,13 +113,13 @@ RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
 	aSequenceNode statements do: [ :each | self visitNode: each ]
 ]]]
 
-vs. 
+vs.
 
 [[[
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
 	self visitTemporaryNodes: aSequenceNode temporaries.
 	aSequenceNode statements do: [ :each | self visitVariable: each ]
-		
+
 RBProgramNodeVisitor >> visitVariable: aNode
 	^ aNode
 ]]]

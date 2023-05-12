@@ -74,11 +74,11 @@ The Pharo implementation uses three classes:
 
 ${slide:title=Hint 3: With at least two classes}$
 
-The class ==Boolean== is not needed per se but it improves reuse
+
 
 +Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=50+
 
-
+The class ==Boolean== is not needed per se but it improves reuse
 
 ${slide:title=Implementation of Not in two methods}$
 
@@ -217,8 +217,9 @@ ${slide:title=Step back}$
 
 ${slide:title=Summary}$
 
+We saw:
 - The solution to implement boolean operations does NOT use explicit conditionals (if)
-- Sending a message is doing a choice
+- ""Sending a message is making a choice""
 Remember two important principles
 - ""Do not ask, tell""
 - ""Let the receiver decide""

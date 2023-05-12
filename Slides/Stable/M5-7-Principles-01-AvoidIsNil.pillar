@@ -1,9 +1,9 @@
 {
   "title":"Avoid Null Checks",
-    "slidesid":"M5-7"
+    "slidesid":"M5S7"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Understanding the implication behind returning nil
 - Looking at provider side
@@ -72,7 +72,7 @@ ${slide:title=Consequences!}$
 
 ${slide:title=Solution: Return polymorphic objects}$
 
-When possible, return polymorphic objects:
+When possible, return ""polymorphic"" objects:
 - when returning a collection, return an empty one
 - when returning a number, return 0
 
@@ -116,8 +116,17 @@ Archive >> initialize
 
 ${slide:title=Sometimes you have to check...}$
 
+${columns}$
+
+${column:width=70}$
+
 - Sometimes you have to check some conditions before doing an action
 - When possible, you can turn the default case into an object, a Null Object.
+
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Example}$
 
@@ -144,11 +153,19 @@ ${slide:title=Example}$
 
 ${slide:title=Solution: Use NullObject}$
 
+
+${columns}$
+
+${column:width=70}$
+
 - A null object proposes a ""polymorphic"" API and embeds default actions/values.
 - Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
 
 Let us create a ==NoTool== class whose behavior is to do nothing.
 
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Solution: NoTool}$
 
@@ -187,18 +204,34 @@ ${slide:title=Solution: With initialization and NoTool}$
 
 +>figures/NullObject3.pdf+
 
-${slide:title=NullObject Pros}$
+${slide:title=NullObject pros}$
 
-- Simplifies client code: real collaborators and null objects offer the same API
-- Encapsulates do nothing behavior 
-- Makes do nothing behavior reusable
+${columns}$
+
+${column:width=70}$
+
+- Simplifies client code: real collaborators and null objects ""offer the same API""
+- Encapsulates do ""nothing behavior""
+- Makes do nothing behavior ""reusable""
+
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=NullObject drawback}$
 
+
+${columns}$
+
+${column:width=70}$
+
 - Encapsulate null values: may be difficult to mix with real objects
 - A NullObject is not mutable into a real object
-- All clients should agree on the same do-nothing behavior
+- All clients should ""agree on the same do-nothing"" behavior
 
+${column:width=30}$
+
+${endColumns}$
 
 ${slide:title=Difficulty applying NullObject}$
 
