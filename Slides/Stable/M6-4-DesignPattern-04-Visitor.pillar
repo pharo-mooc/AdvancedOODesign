@@ -8,8 +8,8 @@
 ${slide:title=Goals}$
 
 - Studying examples
-- Understanding Visitor
-- Pros and cons
+- Understanding the Visitor design pattern
+- Discussions on pros and cons
 
 ${slide:title=Example: basic arithmetic expressions}$
 
@@ -23,30 +23,24 @@ Plus
 ]]]
 
 Remarks:
-- In Pharo we can just extend ==Number== so no need of ==ENumber== ==value:== but this is a detail
-- Here we reify everything
+- In this example, we reify everything
+- In Pharo, no need to wrap numbers with ==ENumber== because can extend ==Number==
+-- this is a detail
 
 ${slide:title=Basic arithmetic expressions as Composite}$
 
 ${columns}$
 
-${column:width=50}$
+${column:width=45}$
 
-- An expression: a Composite
-- with number and operation expressions
+An expression is represented by a Composite with numbers and operations
+(see Lecture on Composite)
 
-${column:width=50}$
+${column:width=45}$
 
-+.>file://figures/Visitor-ExpressionHierarchy.pdf|width=80+
++.>file://figures/Visitor-ExpressionHierarchy.pdf|width=90+
 
 ${endColumns}$
-
-
-
-
-
-
-
 
 
 ${slide:title=Some expressions}$
@@ -73,17 +67,18 @@ Plus
 
 ${slide:title=Operations on the expressions}$
 
-We want to evaluate expressions, and print them
+We want two operations on expressions:
 
-Evaluating
+- Evaluate
 [[[
 1 + (3 * 2)
-gives 7
+> 7
 ]]]
 
-Printing
+- Print (in Polish notation)
 [[[
-+1*32
+1 + (3 * 2)
+> +1*32
 ]]]
 
 
@@ -101,7 +96,7 @@ ENumber >> evaluate
 
 [[[
 EPlus >> evaluate
-   ^  left evaluate + right evaluate.
+   ^  left evaluate + right evaluate
 ]]]
 
 [[[
@@ -114,64 +109,51 @@ EPlus >> print
 ...
 ]]]
 
-${slide:title=First design analysis}$
+${slide:title=First design: analysis}$
 
-What if we need a stack to print well the expressions?
-- Should we define the stack ""in"" the expression classes even if this is related ""only"" to print?
+- Some operations require some state
+-- e.g. a stack is needed to print expressions in infix notation
+- Where should we define such state?
+-- ""in"" the expression classes?
+-- even if this is ""only"" related to print?
 
+Should we ""mix"" the state of operations on items with the items themselves?
 
-${slide:title=First design analysis}$
+${slide:title=Overview of a real system}$
 
-Should we ""mix"" the information about the treatment of items and the items themselves?
-- What if we need a table for mathematical expressions ""specific"" to the LaTeX generation?
-- What if we need a table for mathematical expression ""specific"" to the RDF generation?
-
-
-${slide:title=Let us see on a real system: Pillar}$
-
-We have
-- the core hierarchy is about 50 classes
+The Pillar Pharo library:
+- a core hierarchy of 50 classes (document model)
 - export to LaTeX (two versions)
 - export to HTML
 - export to Beamer
 - export to ASCIIdoc, Markdown, Microdown
 - transform trees for expansion
 - code checkers
+- ...
 
-${slide:title=First design conclusion}$
+${slide:title=First design: conclusion}$
 
-Putting all the behavior inside the domain objects
+Putting all the behavior inside domain objects:
 
 - ""Blows up"" the class API / state / methods
 - ""Mixes"" concerns
 - Is ""not modular"": we cannot have ""one"" operation only
-- ""Prevents extension"": To add a new behavior I should change the domain
+- ""Prevents extension"": adding a new behavior requires changing the domain
 
-${slide:title=Alternate design: using a visitor}$
+${slide:title=Essence of the Visitor design pattern}$
 
 A ""Visitor"":
-- ""decouples"" operation from the structure
-- ""represents"" an operation
-
-
-- Supports ""modularity""
--- can package visitors in separate packages
+- ""Represents"" an operation
+- ""Decouples"" this operation from the domain objects it applies to (separate class)
+- Supports ""modularity"" (separate package)
 - Supports ""extension""
--- a visitor defines an set of messages to be defined (e.g., ==visitX==)
--- new visitors are easy to define
+-- We define ""once"" a set of messages (e.g., ==visitX==) in domain objects
+-- Then, new visitors (operations) are easy to define ""without changing domain objects"" it operates on
 
 
+${slide:title=Alternate Visitor-based design}$
 
-${slide:title=Visitor's intent}$
-
-- Represents an ""operation"" to be performed on the elements of an object structure in a class ""separate"" from the elements themselves.
-- Visitor lets you define a new operation ""without changing the classes of the elements"" on which it operates.
-
-
-${slide:title=Visitor's design}$
-
-+.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=80+
-
++.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=70+
 
 
 ${slide:title=Visitor \+ Composite}$
@@ -222,10 +204,10 @@ Evaluator >> visitTimes: anExpression
 ${slide:title=Invoking the Visitor}$
 
 [[[
-Evaluator new evaluate:
-	(EPlus
+expr := (EPlus
 		left: (ENumber value: 1)
-		right: (ETimes left: (ENumber value: 3) right: (ENumber value: 2)))
+		right: (ETimes left: (ENumber value: 3) right: (ENumber value: 2))).
+Evaluator new evaluate: expr.
 > 7
 ]]]
 
@@ -238,11 +220,11 @@ ${slide:title=Example: Printer}$
 
 [[[
 Visitor << #Printer
-   slots: { #stream. #level. }
+    slots: { #stream. #level. }
 ]]]
 [[[
 Printer >> visitNumber: aNumber
-     stream nextPutAll: aNumber value asString
+    stream nextPutAll: aNumber value asString
 ]]]
 
 [[[
