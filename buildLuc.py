@@ -5,7 +5,7 @@ import sys
 import argparse
 
 OUTDIR="__results.luc"
-OUTDIR_FINISHED="__results.luc.reviewed"
+
 SLIDES= [
     "Slides/Stable/M1-2-Essence-02-Dispatch.pillar",
     "Slides/Stable/M1-3-Essence-03-Inheritance-Basic.pillar",
@@ -14,7 +14,7 @@ SLIDES= [
     "Slides/Stable/M3-3-DesignPattern-02-HookAndTemplate.pillar",
     "Slides/Stable/M4-1-BasicPrinciples-01-MethodIsReuse.pillar",
     "Slides/Stable/M5-1-DesignPattern-03-Composite.pillar",
-    "Slides/Stable/M5-4-BasicPrinciples-06-UseVsInheritance.pillar",
+    "Slides/Stable/M5-4-BasicPrinciples-06-DelegationVsInheritance.pillar",
     "Slides/Stable/M6-4-DesignPattern-04-Visitor.pillar",
     "Slides/Stable/M6-5-DesignPattern-05-VisitorDiscussions.pillar",
     "Slides/Stable/M7-3-Principles-06-selfVSClassDispatch.pillar",
@@ -24,24 +24,6 @@ SLIDES= [
     "Slides/Stable/M10-1-Principles-12-DualInterfaces.pillar",
     "Slides/Stable/M10-4-Principles-11-PolymorphismSupportEvolution.pillar ",
 ]
-
-# [DONE] M1-2
-# [DONE] M1-3
-# [DONE] M2-3
-# [DONE] M3-2
-# [DONE] M3-3
-# [DONE] M4-1
-# M5-1  - Composite
-# [DONE] M5-4
-# M6-4 - Visitor 1
-# M6-5 - Visitor 2
-# [DONE] M7-3
-# M8-4
-# M9-2
-# M9-3
-# M10-1
-# M10-4
-
 
 class MyTerm:
     HEADER = '\033[95m'
@@ -76,13 +58,12 @@ def main():
     if(args.slide is not None):
         filesToCompile = [ SLIDES[int(args.slide)] ]
 
-    os.system("mkdir -p "+OUTDIR)
-    os.system("mkdir -p "+OUTDIR_FINISHED)
+    os.system(f"rm -fr {OUTDIR} && mkdir -p {OUTDIR}")
 
     for pillarfile in filesToCompile:
         pdffile = pillarfile.rsplit('.', 1)[0] + '.pdf'
         MyTerm.print(pillarfile,MyTerm.WARNING)
-        cmd = "pillar build pdf "+pillarfile+" && cp _result/pdf/"+pdffile+" "+OUTDIR
+        cmd = f"pillar build pdf {pillarfile} && cp _result/pdf/{pdffile} {OUTDIR}"
         MyTerm.print(cmd)
         os.system(cmd)
 
