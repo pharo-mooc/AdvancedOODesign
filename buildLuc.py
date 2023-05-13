@@ -57,8 +57,8 @@ def main():
     filesToCompile = SLIDES
     if(args.slide is not None):
         filesToCompile = [ SLIDES[int(args.slide)] ]
-
-    os.system(f"rm -fr {OUTDIR} && mkdir -p {OUTDIR}")
+    else:
+        os.system(f"rm -fr {OUTDIR} && mkdir -p {OUTDIR}")
 
     for pillarfile in filesToCompile:
         pdffile = pillarfile.rsplit('.', 1)[0] + '.pdf'

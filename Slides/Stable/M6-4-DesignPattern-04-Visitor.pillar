@@ -18,14 +18,19 @@ Imagine a simple mathematical system
 
 [[[
 Plus
-	left: (ENumber value: 1)
-	right: (Times left: (ENumber value: 3) right: (ENumber value: 2))
+	left: (Number value: 1)
+	right: (Times left: (Number value: 3) right: (Number value: 2))
 ]]]
 
 Remarks:
 - In this example, we reify everything
-- In Pharo, no need to wrap numbers with ==ENumber== because can extend ==Number==
--- this is a detail
+- In Pharo, no need to wrap numbers with our own ==Number== because can extend the Pharo core ==Number==
+
+[[[
+Plus
+	left: 1
+	right: (Times left: 3 right: 2)
+]]]
 
 ${slide:title=Basic arithmetic expressions as Composite}$
 
@@ -38,7 +43,7 @@ An expression is represented by a Composite with numbers and operations
 
 ${column:width=45}$
 
-+.>file://figures/Visitor-ExpressionHierarchy.pdf|width=90+
++.>file://figures/Visitor-ExpressionHierarchy.pdf|width=80+
 
 ${endColumns}$
 
@@ -47,25 +52,29 @@ ${slide:title=Some expressions}$
 
 1
 [[[
-ENumber value: 1
+Number value: 1
 ]]]
 
 (3 \* 2)
 [[[
-Times left: (ENumber value: 3) right: (ENumber value: 2)
+Times left: (Number value: 3) right: (Number value: 2)
 ]]]
 
 1 \+ (3 \* 2)
 [[[
 Plus
-	left: (ENumber value: 1)
-	right: (Times left: (ENumber value: 3) right: (ENumber value: 2))
+	left: (Number value: 1)
+	right: (Times left: (Number value: 3) right: (Number value: 2))
 ]]]
 
 
 
 
 ${slide:title=Operations on the expressions}$
+
+${columns}$
+
+${column:width=60}$
 
 We want two operations on expressions:
 
@@ -81,35 +90,53 @@ We want two operations on expressions:
 > +1*32
 ]]]
 
+${column:width=35}$
+
+${endColumns}$
+
 
 ${slide:title=First design: behavior defined in the domain}$
 
-+.>file://figures/Visitor-ExpressionHierarchyWithBehavior.pdf|width=40+
+
++.>file://figures/Visitor-ExpressionHierarchyWithBehavior.pdf|width=35+
 
 
 ${slide:title=First design: behavior defined in the domain}$
+
+${columns}$
+
+${column:width=55}$
 
 [[[
-ENumber >> evaluate
+Number >> evaluate
 	^ value
 ]]]
 
 [[[
-EPlus >> evaluate
+Plus >> evaluate
    ^  left evaluate + right evaluate
 ]]]
 
 [[[
-ENumber >> print
+Number >> print
 	stream nextPutAll: value asString
 ]]]
 
 [[[
-EPlus >> print
+Plus >> print
 ...
 ]]]
 
+
+${column:width=40}$
+
+${endColumns}$
+
 ${slide:title=First design: analysis}$
+
+${columns}$
+
+${column:width=70}$
 
 - Some operations require some state
 -- e.g. a stack is needed to print expressions in infix notation
@@ -118,6 +145,10 @@ ${slide:title=First design: analysis}$
 -- even if this is ""only"" related to print?
 
 Should we ""mix"" the state of operations on items with the items themselves?
+
+${column:width=25}$
+
+${endColumns}$
 
 ${slide:title=Overview of a real system}$
 
@@ -142,7 +173,8 @@ Putting all the behavior inside domain objects:
 
 ${slide:title=Essence of the Visitor design pattern}$
 
-A ""Visitor"":
+
+A Visitor:
 - ""Represents"" an operation
 - ""Decouples"" this operation from the domain objects it applies to (separate class)
 - Supports ""modularity"" (separate package)
@@ -150,35 +182,115 @@ A ""Visitor"":
 -- We define ""once"" a set of messages (e.g., ==visitX==) in domain objects
 -- Then, new visitors (operations) are easy to define ""without changing domain objects"" it operates on
 
+${slide:title=Overview of a Visitor-based design}$
 
-${slide:title=Alternate Visitor-based design}$
++.>file://figures/Visitor-ExpressionHierarchyEssence.pdf|width=60+
 
-+.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=70+
+${slide:title=Visitor: key points}$
+
+${columns}$
+
+${column:width=50}$
+
+A Visitor:
+- requires a structure to operate on
+- performs different actions based on the kind of the elements
+-- ""knows"" what operation to do for a ==Number==, a ==Plus==, and a ==Times==
+- manages its ""own specific"" state
+- is ""independent"" of other ones
+
+Visitor \+ Composite: a ""perfect"" match
+
+${column:width=50}$
+
++.>file://figures/Visitor-ExpressionHierarchyEssence.pdf|width=100+
+
+${endColumns}$
 
 
-${slide:title=Visitor \+ Composite}$
+${slide:title=Using Visitors}$
 
-A visitor requires a structure to perform different actions based on the kind of element
-- ""Perfect"" match with a composite
-- ""Uses double dispatch""
+${columns}$
 
-A visitor separates a treatment from the data structure (Composite) it applies to.
-
-${slide:title=Based on double dispatch}$
-
-
-Each composite element accepts a visitor and tell it how to visit it
+${column:width=60}$
 
 [[[
-X >> accept: aVisitor
-	aVisitor visitX: self
+"1+(3*2)"
+expr := (Plus
+		    left: (Number value: 1)
+		    right: (Times
+                        left: (Number value: 3)
+                        right: (Number value: 2))).
+
+Evaluator new evaluate: expr.
+> 7
+
+Printer new print: expr.
+> +1*32
+
+InfixPrinter new print: expr.
+> 1+(3*2)
 ]]]
 
-Key to avoid terrible conditional checks
+
+${column:width=35}$
+
+${endColumns}$
 
 
+${slide:title=Visitor implemention: Domain instrumentation}$
 
-${slide:title=Example: Evaluator Visitor}$
+${columns}$
+
+${column:width=35}$
+
+Prepare the domain to accept Visitors:
+- add ==acceptVisitor:== on each composite element
+- tells the visitor passed in parameter how to visit it
+
+""only once for all Visitors""
+
+${column:width=60}$
+
++.>file://figures/Visitor-ExpressionHierarchyWithAccept2.pdf|width=100+
+
+${endColumns}$
+
+
+${slide:title=Visitor implemention: Domain instrumentation}$
+
+[[[
+Number >> acceptVisitor: aVisitor
+   ^ aVisitor visitNumber: self
+]]]
+
+[[[
+Plus >> acceptVisitor: aVisitor
+   ^ aVisitor visitPlus: self
+]]]
+
+[[[
+Times >> acceptVisitor: aVisitor
+   ^ aVisitor visitTimes: self
+]]]
+
+- ""only once for all Visitors""
+- Domain objets tell to the Visitor how they want to be visited
+-- ==visitNumber:==, ==visitPlus:==, ==visitTimes:==, ==visitXXX:==
+
+
+${slide:title=Visitor implemention}$
+
+${columns}$
+
+${column:width=35}$
+
+A Visitor:
+- executes the right operation for an element
+- propagates recursively on composite elements
+-- ==acceptVisitor:==
+
+${column:width=60}$
 
 [[[
 Evaluator >> visitNumber: aNumber
@@ -201,88 +313,43 @@ Evaluator >> visitTimes: anExpression
    ^ l * r
 ]]]
 
-${slide:title=Invoking the Visitor}$
+${endColumns}$
+
+
+${slide:title=Visitor: an extensible design}$
+
+Supporting a new operation is simple:
+- Define a new Visitor class
+-- e.g, ==Printer==
+- Implement the expected API
+-- i.e., ==visitNumber==, ==visitPlus== and ==visitTimes==
+- Use it
 
 [[[
-expr := (EPlus
-		left: (ENumber value: 1)
-		right: (ETimes left: (ENumber value: 3) right: (ENumber value: 2))).
-Evaluator new evaluate: expr.
-> 7
+anExpression acceptVisitor: Printer new
 ]]]
 
 [[[
-Evaluator >> evaluate: anExpression
-   ^ anExpression acceptVisitor: self
+Printer new print: anExpression
 ]]]
 
-${slide:title=Example: Printer}$
+${slide:title=Visitor: step back}$
 
-[[[
-Visitor << #Printer
-    slots: { #stream. #level. }
-]]]
-[[[
-Printer >> visitNumber: aNumber
-    stream nextPutAll: aNumber value asString
-]]]
+Did you really understood the subtle interaction between ==acceptVisitor== and ==visitXXX== methods?
 
-[[[
-Printer >> visitPlus: anExpression
-    stream nextPutAll: '+'.
-    anExpression left acceptVisitor: self.
-    anExpression right acceptVisitor: self.
-]]]
-[[[
-Printer >> visitTimes: anExpression
-    stream nextPutAll: '*'.
-    anExpression left acceptVisitor: self.
-    anExpression right acceptVisitor: self.
-]]]
+${slide:title=Visitor core: Double dispatch}$
 
-${slide:title=Expression Visitor analysis}$
-
-- Each visitor ""knows"" what to do for a number, a plus,  and times operation
-- Each visitor manages its ""own specific"" state
-- Each visitor is ""independent"" of other ones
-- Double dispatch supports the decoupling
-
-${slide:title=A protocol for extension}$
-
-To extend a visitor:
-- Define a class which has the expected API i.e., ==visitX== methods
-- Apply the visitor to the structure
+Double dispatch:
+- Is the core mechanism of Visitor
+- Is key to avoid conditional checks everywhere
+- Provides decoupling between:
+-- Visitors and domain objects
+-- Different visitors
 
 
-${slide:title=Stepping back: double dispatch is the key point}$
+${slide:title=Double dispatch}$
 
-- The Visitor knows the elementary operations (e.g., evaluating a plus, a minus, and a value)
-- The items mentions to the Visitor how ""they"" want to be visited
-
-+.>file://figures/Visitor-ExpressionsVisitorPrinciple.pdf|width=60+
-
-
-${slide:title=Imagine a tree of shapes}$
-
-+.>file://figures/SimpleTree.pdf|width=40+
-
-${slide:title=Each node will respond differently to a visit}$
-
-+.>file://figures/SimpleTreeWithVisitMethods.pdf|width=60+
-
-The visitor is then notified precisely with the corresponding node in argument
-
-${slide:title=Visitor: another look at it}$
-
-Visitor design provides a ""pluggable distributed recursive treatment"" of a composite structure
-- ==acceptVisitor:== is recursively propagated on sub elements.
-[[[
-Printer >> visitPlus: anExpression
-    stream nextPutAll: '*'.
-    anExpression left acceptVisitor: self.
-    anExpression right acceptVisitor: self.
-]]]
-
+TODO
 
 
 ${slide:title=When to use a Visitor}$
@@ -306,6 +373,8 @@ Changing node elements
 
 
 ${slide:title=Conclusion}$
+
+Visitor design provides a ""pluggable distributed recursive treatment"" of a composite structure
 
 ""Pros:""
 - Visitor is a good pattern
