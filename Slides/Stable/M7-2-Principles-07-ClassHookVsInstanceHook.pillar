@@ -68,7 +68,7 @@ CHInterpreter new
 ${slide:title=Analysis}$
 
 - What if we have a more complex instantiation?
-- And we want to encapsulate it and let the extender changes it.
+- And we want to encapsulate it and let the extender change it
 - ==self classScopeClass new xxx== is not at a good granularity
 
 [[[
@@ -114,7 +114,7 @@ CHInterpreter >> visit...: arg
 ]]]
 
 [[[
-CHInterpreter >> newClassScope: arg
+CHInterpreter >> newClassScopeNewFor: arg
 
 	^ self newClassScope doSomethingWith: arg
 

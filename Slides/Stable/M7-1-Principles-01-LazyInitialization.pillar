@@ -15,13 +15,13 @@ FreeTypeFont >> descent
                                self face unitsPerEm) negated ]
 ]]]
 
-- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized.
+- This is only when the method ==descent== is executed that ==cachedDescent== will be initialized
 
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 
-- Lazy initialization trades time vs runtime cost (==ifNil:== check)
-- You should always use this accessor
+- Defers initialization and caches the result
 - Pay attention you should NOT access directly an instance variable used in a lazy setting 
+- You should always use this accessor
 - Else you can get exposed to ==nil== value
 
 ${slide:title=Conclusion}$
