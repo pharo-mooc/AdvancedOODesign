@@ -318,6 +318,10 @@ ${endColumns}$
 
 ${slide:title=Visitor: an extensible design}$
 
+${columns}$
+
+${column:width=60}$
+
 Supporting a new operation is simple:
 - Define a new Visitor class
 -- e.g, ==Printer==
@@ -333,55 +337,81 @@ anExpression acceptVisitor: Printer new
 Printer new print: anExpression
 ]]]
 
+${column:width=35}$
+
+${endColumns}$
+
 ${slide:title=Visitor: step back}$
+
+${columns}$
+
+${column:width=60}$
 
 Did you really understood the subtle interaction between ==acceptVisitor== and ==visitXXX== methods?
 
-${slide:title=Visitor core: Double dispatch}$
+${column:width=35}$
 
-Double dispatch:
-- Is the core mechanism of Visitor
-- Is key to avoid conditional checks everywhere
-- Provides decoupling between:
--- Visitors and domain objects
--- Different visitors
+${endColumns}$
 
 
 ${slide:title=Double dispatch}$
 
-TODO
++.>file://figures/Visitor-ExpressionHierarchyPrinterDispatch.pdf |width=90+
+
+
+${slide:title=Double dispatch}$
+
++.>file://figures/Visitor-ExpressionHierarchyPrinterDoubleDispatch.pdf |width=90+
+
+
+${slide:title=Visitor core: Double dispatch}$
+
+
+${columns}$
+
+${column:width=35}$
+
+Double dispatch:
+- Core mechanism of Visitor
+- No conditional checks
+- Provides decoupling between:
+-- Visitors and domain objects
+-- Different visitors
+
+${column:width=65}$
+
++.>file://figures/Visitor-ExpressionHierarchyPrinterDoubleDispatch.pdf |width=100+
+
+${endColumns}$
+
 
 
 ${slide:title=When to use a Visitor}$
 
-- Whenever you have a number of items on which you have to perform a number of actions
+Whenever you have to perform multiple operations on structured object graphs
 
 Examples:
-- Parse tree (ProgramNode) uses a visitor for
--- the compilation (emitting code on CodeStream),
+- Parse tree (==ProgramNode==) uses a Visitor for
+-- the compilation (emitting code on ==CodeStream==),
 -- pretty printing, syntax hilighting
--- different analysis pass,
--- rotten green test analysis
-- Rendering documents (Document) in different formats
+-- different analysis pass, rotten green test analysis
+- Rendering documents (==Document==) in different formats
 -- nodes expansion, HTML, LaTeX, ...
 
 ${slide:title=When using a Visitor is challenging}$
 
-Changing node elements
-- If the elements of the composite ""change"", you will have to change ""all"" your visitors
-- Problem known as the expression problems in statically-typed languages
-
+- If the elements of the composite ""change""
+-- It requires to change ""all"" Visitors
+- Related to the ''expression problem'' in statically-typed languages
 
 ${slide:title=Conclusion}$
 
-Visitor design provides a ""pluggable distributed recursive treatment"" of a composite structure
-
 ""Pros:""
-- Visitor is a good pattern
-- It provides modular and extensible design
+- Visitor is a very nice pattern
+- It provides a modular and extensible design
 - Double dispatch makes it plug and play
 
 ""Cons:""
-- Can look more complex
-- It is not well adapted to changing structures
+- Can look complex
+- Not well adapted to changing structures
 
