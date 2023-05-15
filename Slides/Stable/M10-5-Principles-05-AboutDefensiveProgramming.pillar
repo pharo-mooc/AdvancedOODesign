@@ -7,7 +7,7 @@ ${slide:title=Goal}$
 
 - Thinking about spurious checks
 - Dynamically-typed languages do not need explicit type checks
-- Favor test
+- Favor testing
 
 ${slide:title=Preamble}$
 
@@ -20,7 +20,7 @@ Object >> assert: aBlock description: aStringOrBlock
 ]]]
 	
 - ==assert:description:== is checking and in addition raises and error. 
-- It changes the program execution
+- It changes the program control flow
 
 
 ${slide:title=Defensive Example}$
@@ -36,10 +36,10 @@ BlLayoutCommonConstraints >> padding: aBlPadding
 ]]]
 
 
-${slide:title=Drawbacks of the approach}$
+${slide:title=Analysis of the approach}$
 
 - Runtime cost
-- Assertions can be optional so we should not consider that they are executed.
+- Assertions can be optional so we should not consider that they are executed
 - Assertions can be a good help to track problems and stabilize
 
 
@@ -50,7 +50,7 @@ BlLayoutCommonConstraints >> padding: aBlPadding
 	"Change element's margin to a BlMargin. aBlPadding must not be nil."
 	
 	aBlPadding isNil
-		ifTrue: [ 'Padding must not be nil' ].
+		ifTrue: [ self error: 'Padding must not be nil' ].
 	
 	padding := aBlPadding
 ]]]
@@ -115,7 +115,7 @@ BlLayoutCommonConstraints >> padding: aBlPadding
 ]]]
 
 - It is slow
-- It prevents to pass polymorphic objects 
+- It prevents to extend the program and pass polymorphic objects
 
 
 ${slide:title=Conclusion}$
@@ -123,8 +123,3 @@ ${slide:title=Conclusion}$
 - Avoid optional checks that are only for debugging purpose
 - Avoid explicit type-checks
 - Favor tests
-
-
-
-
-

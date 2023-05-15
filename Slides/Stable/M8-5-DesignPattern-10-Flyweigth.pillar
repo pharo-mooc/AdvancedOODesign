@@ -32,12 +32,12 @@ ${slide:title=Symbol creation}$
 
 - At creation time check if there is not already a symbol object created for that surface syntax
 
-```
+[[[
 Symbol class >> intern: aStringOrSymbol
 
 	^ (self findInterned: aStringOrSymbol) ifNil: [ 
 		NewSymbols add: aStringOrSymbol createSymbol ]
-```
+]]]
 
 
 ${slide:title=Case Study: Color}$
@@ -61,14 +61,14 @@ ${slide:title=A legitimate question}$
 
 Should we turn ==Color== into a flyweigth?
 - Cost of interning it
-- Would a flyweigth solves the spurious creation requests? No
+- Would a flyweigth solve the spurious creation requests? No
 - Do we need to create different colors or always the same?
 
 
 ${slide:title=When the domain should get into play}$
 
 - Return colors without creating them endlessly
-- a Palette is a cache at the level of the domain
+- A palette is a cache at the level of the domain
 
 
 ${slide:title=Palette limits}$

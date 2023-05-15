@@ -41,7 +41,7 @@ ${slide:title=Looking the implemented core model}$
 
 
 
-${slide:title=Let us ""Speculate about Design""}$
+${slide:title=Let us "Speculate about Design"}$
 
 ${columns}$
 
@@ -49,9 +49,9 @@ ${column:width=60}$
 
 - Apply ""Speculate about Design"" object-oriented reengineering pattern
 
-- ""Intent:"" Progressively refine a design against source code by checking hypotheses about the design against the source code. 
+- ""Intent:"" Progressively refine a design against source code by checking hypotheses about the design against the source code
 
-- Use your development expertise to conceive a hypothetical class diagram representing the design.
+- Use your development expertise to conceive a hypothetical class diagram representing the design
 
 ${column:width=40}$
 
@@ -166,7 +166,7 @@ The model only defines ==EmptyBlock== and ==Wall==
 
 - No ==Player==, no ==Target==, no ==Box==.
 - ""Too much logic"" is put in ==EmptyBlock==
-- Too many question, ""not enough Tell"" (""Do not Ask, Tell"")
+- Too many questions, ""not enough Tell"" (""Do not Ask, Tell"")
 
 ${slide:title=With a better model}$	
 
@@ -207,7 +207,7 @@ EmptyBlock >> drawOn: aCanvas
 
 ${slide:title=A solution supporting multiple canvases}$
 
-To be able to have the rendering supporting multiple back-ends (morphic, Cairo...)
+To supporting multiple rendering back-ends (morphic, Cairo...),
 drawing should not be in the Block classes
 
 

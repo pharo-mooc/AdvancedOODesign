@@ -91,7 +91,7 @@ ${column:width=60}$
 
 - Apply ""Move behavior close to data"" object-oriented reengineering pattern
 
-- ""Intent:"" Strengthen encapsulation by moving behavior from indirect clients to the class containing the data it operates on.
+- ""Intent:"" Strengthen encapsulation by moving behavior from indirect clients to the class containing the data it operates on
 -- if data and behavior are not close (Feature Envy code smell)
 -- then logic is distributed/duplicated in clients!
 
@@ -173,7 +173,7 @@ ${slide:title=LOD is a \*\*heuristic\*\*}$
 
 ${slide:title=LOD can produce bloated APIs}$
 
-Do we create around 50 methods per instance variable holding a collection
+Do we create around 50 methods per instance variable holding a collection?
 
 [[[
 Object subclass: #FMMethods 
