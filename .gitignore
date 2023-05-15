@@ -1,6 +1,7 @@
 _result
 __results
 __results*
+!__results.luc
 __slides*
 **/*.aux
 **/*.DS_Store
