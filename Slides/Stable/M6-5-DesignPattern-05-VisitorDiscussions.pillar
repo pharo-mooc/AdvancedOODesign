@@ -14,11 +14,20 @@ More on Visitor:
 
 ${slide:title=Controlling the traversal}$
 
+${columns}$
+
+${column:width=60}$
+
 A visitor embeds a structure traversal that can be implemented:
 - in the visitors
 - in the domain elements themselves
 
 Usually the visitor controls the traversal but maybe the domain elements are more important
+
+${column:width=35}$
+
+${endColumns}$
+
 
 ${slide:title=Visitor in control}$
 
@@ -51,108 +60,78 @@ Should we use class extension instead of a Visitor?
 -- Each Visitor ""encapsulates a complex operation""
 -- Each Visitor has its ""own"" state
 
-${slide:title=VisitMethods encode a context}$
+${slide:title=Visit methods granularity}$
 
-- The granularity of visit methods has an impact on the hooks they offer
-- ""visit*"" methods can be used to provide context
+${columns}$
 
-%${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
+${column:width=70}$
 
-%Compare
-%[[[
-%RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-%	aSequenceNode temporaries do: [:each | self visitNode: each ].
-%	aSequenceNode statements do: [ :each | self visitNode: each ]
-%]]]
+Compare these two Visitors:
 
-%vs.
++.>file://figures/Visitor-visitHooks.pdf|width=60+
 
-%[[[
-%RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-%	self visitTemporaryNodes: aSequenceNode temporaries.
-%	aSequenceNode statements do: [ :each | self visitNode: each ]
-%
-%RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection
-%	^ aNodeCollection	do: [ :each | self visitTempDefinitionNode: each ]
-%
-%RBProgramNodeVisitor >> visitTempDefinitionNode: aNode
-%	^ aNode acceptVisitor: self
-%]]]
+- ==SimpleNodeVisitor== only provides ==visitNode== whihc is very high-level
+-- retrieving temporary variables would require to test and filter nodes
+- ==ProgramNodeVisitor== has richer API
+-- ==visitTemporaryVariable== is only invoked on temporaries
+
+${column:width=25}$
+
+${endColumns}$
+
+${slide:title=Visit methods encode a context}$
+
+${columns}$
+
+${column:width=70}$
+
+- The granularity of visit methods has an impact
+- Each ""visit*"" method provides a contextualized hook
+- A too high-level API requires a lot of tests
+- A too specialized API spread information on multiple visit methods which is not good too
+-- retrieving all variables involve a lot of hooks: ==visitTemporaryVariable==, ==visitLocalVariable==, ...
+
++.>file://figures/Visitor-visitHooks.pdf|width=60+
+
+${column:width=25}$
+
+${endColumns}$
 
 
-${slide:title=Example: visitTemporariesNode: vs. visitNode:}$
 
-Compare
-[[[
-RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-	aSequenceNode temporaries do: [:each | self visitNode: each ].
-	aSequenceNode statements do: [ :each | self visitNode: each ]
-]]]
-
-vs.
-
-[[[
-RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements do: [ :each | self visitNode: each ]
-]]]
-
-- ==visitTemporaryNodes:== encodes the fact that it is only invoked on temporaries
-- No need to guess by looking at parent or other information
-- But there is a loss...
-
-${slide:title=Short cutting double dispatch}$
-
-Compare:
-[[[
-RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements do: [ :each | self visitNode: each ]
-]]]
-
-vs.
+${slide:title=About shortcutting the double dispatch}$
 
 [[[
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements do: [ :each | self visitVariable: each ]
-
-RBProgramNodeVisitor >> visitVariable: aNode
-	^ aNode
+    aSequenceNode statements do: [ :each | self visitVariable: each ]
 ]]]
 
-${slide:title=Limits}$
+Directly use ==visitVariable:==
+- shortcuts the double dispatch
+- does not let the domain decide
+- prevents the use of a more specialized API: ==visitLocalVariable==, ==visitTemporaryVariable==, ==visitInstanceVariable==
 
 [[[
 RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
-	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements do: [ :each | self visitVariable: each ]
+    aSequenceNode statements do: [ :each |
+        each acceptVisitor: self ]
 ]]]
-
-
-The use of ==visitVariable: aNode==
-- Short cuts the double dispatch
-- Lose the possibility of letting ""any object participates"" by telling the visitor how to handle it
-
-
-
-${slide:title=Building generic Visitors can be difficult}$
-
-- Should ==visit== methods return always a result?
-- Should ==visit== methods collect the values on collection?
-
-There is no definitive solution
-- Often the solution is to have an abstract visitor and to redefine most of the logic per families of tasks
-
 
 
 ${slide:title=Should we promote collections as domain nodes?}$
 
-- When we iterate on a collection (e.g., of nodes), the collection is not part of the composite domain
+- When we iterate on a collection of nodes, the collection is not part of the composite domain
 - Should we turn such a collection into a domain element?
 - Not necessarily, it depends
 -- can you change the domain?
 -- think in terms of the benefit e.g., having the possibility to define ==visitArrayOf...==
+
+${slide:title=Building generic Visitors is difficult}$
+
+There is no definitive solution.
+Usually, it is better to:
+- have an abstract visitor
+- redefine most of the logic per families of tasks
 
 ${slide:title=Visit methods and static types}$
 
@@ -169,8 +148,17 @@ Two alternatives to implement visit methods in statically-typed languages:
 
 ${slide:title=Conclusion}$
 
+${columns}$
+
+${column:width=70}$
+
 - Visitor can be tricky to master
--- use ==accept==/==visit== vocabulary which helps readability
+-- using ==accept==/==visit== vocabulary helps readability
 - Visitor is powerful for complex structure operations
 -- it provides a ""pluggable recursive treatment"" of a composite structure
+
+${column:width=25}$
+
+${endColumns}$
+
 
