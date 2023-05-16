@@ -1,5 +1,6 @@
 {
 	"title":"Essence of Dispatch",
+    "subtitle":"Let the receiver decide",
 	"slidesid":"M1S2"
 }
 
@@ -8,7 +9,7 @@ ${slide:title=Remember: Implementing not in two methods}$
 +Not implementation>file://figures/BooleanHiearchyAndInstancesWithNotMethodsLookup.pdf|width=70+
 
 
-${slide:title=Ok so what?}$
+${slide:title=What is the point?}$
 
 - You will probably never implement ==Booleans== in the future
 - So, is it ""really"" useful?
@@ -29,11 +30,9 @@ MicAbstractBlock
 			    MicCommentBlock
 			    MicQuoteBlock
 			    MicTableBlock
-		MicIntermediateBlock
 		MicListBlock
 			    MicOrderedListBlock
 			    MicUnorderedListBlock
-		MicListItemBlock
 		MicParagraphBlock
 			    MacParagraphBlock
 			    MacRawParagraphBlock
@@ -61,7 +60,7 @@ ${column:width=55}$
 	    	    	    	    MicMultilineComment
 ]]]
 
-Imagine just a method that have one condition for each of such cases!
+Imagine a method that has one condition for each of these cases!
 
 ${endColumns}$
 
@@ -121,7 +120,7 @@ ${slide:title=Sending a message is making a choice}$
 ${slide:title=How do we express choices?}$
 
 - Could we have the same solution for ==not== with a ""single"" ==Boolean== class?
-- No! we would have conditionals in the ==not== and or methods!
+- No! We would have conditionals in the ==not== and ==or== methods!
 
 +>file://figures/Design-FatVsDispatchBoolean.pdf|width=75+
 
@@ -160,7 +159,7 @@ ${slide:title=Limit impact of changes}$
 +>file://figures/Design-FatVsDispatchWithPackages2.pdf|width=65+
 
 - If a client receives instances of ==D== (in addition to classes of first package), its code does not have to change
-- merthod ==operation== of ==D== instances will be executed naturally
+- Method ==operation== of ==D== instances will be executed naturally
 
 
 ${slide:title=Message send is powerful}$
