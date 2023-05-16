@@ -13,7 +13,7 @@ ${slide:title=Exercise setup}$
 
 Imagine the class ==TextEditor== and the definition of several algorithms:
 - ==formatWithTeX(t)== to color TeX
-- ==formatFastColoring(t)== to color text fast
+- ==formatFastColoring(t)== to fastly color the text
 - ==formatSlowButPreciseColoring(t)== to color ...
 - ==formatRTF(t)==
 - ...
@@ -25,7 +25,7 @@ ${slide:title=Agenda}$
 - Two first solutions:
 -- with inheritance
 -- with one class and conditionals
-- Define some criteria and compare
+- Define some criteria to compare solutions
 - A third solution with delegation
 - Evaluation
 
