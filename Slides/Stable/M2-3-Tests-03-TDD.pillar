@@ -58,7 +58,7 @@ ${slide:title=TDD: When all the tests are green}$
 ${slide:title=Why writing test first?}$
 
 - You specify ""what"" you want to get in tests (executable specification)
-- You think ""how you build/assemble"" to get the functionnality
+- You think ""how to build/assemble"" to get the functionnality
 - You are your first client: strengthen your APIs
 - You get a ""clear"" context
 - You can debug on the spot
