@@ -232,7 +232,7 @@ Dictionary >> postCopy
 
 ${slide:title=Conclusion}$
 
-- Hooks and Template is a very common pattern
+- ''Hooks and Template'' is a very common pattern
 - A ""template"" method sets the context
 - ""Hooks"" specify variations
 - A self-send message defines a hook
