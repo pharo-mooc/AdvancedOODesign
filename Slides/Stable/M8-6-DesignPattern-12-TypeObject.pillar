@@ -21,9 +21,6 @@ Gymnocalycium mihanovichii (a south american well known cactus)
 +>file://figures/Gymno.png|width=60+
 
 
-
-
-
 ${slide:title=An individual vs. its description}$
 
 - You can several G. Mihanovichii and each one can be different
@@ -39,7 +36,7 @@ ${slide:title=Still one description of their kind}$
 ${slide:title=Video Rental}$
 
 - There is a difference between a video description and the actual BlueRay you have in your hand.
-- The description describes all the RamboIII blueRay
+- The description describes all the RamboIII Blueray
 - A given blueray can be scratched and its box broken
 
 +>file://figures/rambo3.png|width=60+
@@ -47,23 +44,29 @@ ${slide:title=Video Rental}$
 
 ${slide:title=How to implement this?}$
 
-- Should we implement all the description on the class level?
+- Should we implement all the descriptions on the class level?
 - Should we have a separate class?
 
 ${slide:title=All in class level}$
 
 - Putting all the description information at the class level could work
 - Cannot change dynamically
-- Cannot be shared between different kind of objects
+- Our instance can get big easily
+- Duplicated information in all instances
+- Cannot be shared between different kinds of objects
 
 ${slide:title=TypeObject}$
 
 - Introduce a TypeObject whose responsibility is to gather description specific properties
 - ==PlantDescription== vs ==Plant==
+- We can share the description instance
+- Information is only once
+
++>file://figures/TypeObject.pdf|width=80+
 
 ${slide:title=TypeObject}$
 
-- Define instance specific properties in typed object class
+- Define instance-specific properties in typed object class
 - Define instance description specific properties in the ==TypeObject== associated with the typed Object
 
 [[[
@@ -80,17 +83,15 @@ PlantDescription
 ${slide:title=Dynamic}$
 
 - Depending on your domain, the typed object and TypeObject relationship can be dynamic
-
-
-
-
-
-
+- The description evolves with the program
+- Changing one description affects all described instances
 
 ${slide:title=Conclusion}$
 
 TypeObject
-- makes explicit the relation to the objet description
-- can be description-oriented class
+
+- It makes explicit the relation to the object description
+- We encapsulate state and behaviour that is common to a type of objects
+- A dynamic way of handling descriptions
 
 
