@@ -15,7 +15,7 @@ ${slide:title=Inheritance}$
 -- We do not reimplement the code of the superclasses
 -- We extend it or customize it
 - It is based on the expression of a delta
--- Only specify the differences to the superclasses
+-- Specify only the differences to the superclasses
 
 ${slide:title=The basics}$
 
