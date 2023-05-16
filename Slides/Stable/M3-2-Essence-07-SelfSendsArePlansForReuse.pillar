@@ -14,7 +14,7 @@ ${slide:title=What you will learn}$
 - Message sends are ""hooks"" for subclasses
 - Message sends are places where subclasses code can be invoked
 
-${slide:title=Let us start to reflect}$
+${slide:title=Let's start thinking}$
 
 ""Anecdotes""
 - ''I like big methods because I can see all the code''
@@ -96,7 +96,7 @@ ${column:width=40}$
 
 ${endColumns}$
 
-${slide:title=Applying it on our example}$
+${slide:title=Applying it to our example}$
 
 We can refactor this:
 
@@ -216,9 +216,24 @@ ${column:width=30}$
 
 ${endColumns}$
 
-${slide:title=Gruyere-oriented programming}$
+${slide:title=Emmental-oriented programming}$
 
-+.>file://figures/gruyereWithSlogan|width=65+
+${columns}$
+
+
+${column:width=50}$
+
+Object-oriented programming is Emmental-oriented programming!
+
+""Subclasses fill up the holes""
+
+${column:width=45}$
+
++>file://figures/emmental.jpg|width=80+
+
+Dieter Seeger, CC BY-SA 2.0, via Wikimedia Commons
+
+${endColumns}$
 
 ${slide:title=Conclusion}$
 
