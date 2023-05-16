@@ -78,7 +78,7 @@ ${slide:title=Now the question!}$
 - How do we draw diagram elements?
 - How do we draw a diagram?
 
-We do not want to have to check if we are talking to an element or a diagram composed of elements!
+We do not want to have to check if we are talking to an element or to a diagram composed of elements!
 
 ${slide:title=Composite motivation}$
 
@@ -124,7 +124,7 @@ ${slide:title=Essence of the Composite desing pattern}$
 What is key:
 - Leaves offer the ""same"" API as the composite
 - Each leave do something ""different"" but with the ""same"" API (polymorphism)
-- Composite offers the same API and some functionality to manage children
+- The composite element offers the same API and some functionality to manage children
 - Leaves and the composite are ""substituable""
 -- Clients do not have to check
 
@@ -165,21 +165,21 @@ ${slide:title=Composite participants: Composite}$
 
 ${slide:title=Composite consequences}$
 
-- Defines class hierarchies consisting of primitive and composite objects exposing a common polymorphic API
+- Leaves and composite objects expose a common polymorphic API
 - Clients do not have to check and treat composite and leaves objects uniformly
 - Adding new leaves is simple
 
 ${slide:title=Important!}$
 
-A Design Pattern is:
-- a name and an intent
+A Design Pattern:
+- is a name and an intent
 - can have multiple implementations (pros/cons)
 
 ${slide:title=Composite in dynamically-typed languages}$
 
 - Polymorphism results from compatible API and not compile-time types checking (see Lecture on Polymorphic objects)
 - So, composite and leaves do ""not"" have to inherit from a common ancestor
--- more difficult recognize the composite but it works
+-- more difficult to recognize the composite but it works
 
 +.>file://figures/DP-compositeEssenceAlternate2.pdf|width=50+
 
@@ -188,7 +188,7 @@ ${slide:title=Composite: extreme implementation}$
 
 Extreme Composite implementation:
 - a single class
-- component (leaves) are composite with no children
+- the components (leaves) are composite with no children
 - the gain of such an implementation is unclear
 
 +.>file://figures/DP-compositeEssenceAlternate.pdf|width=60+
@@ -207,11 +207,11 @@ Can we have different Composites within the same system?
 
 ${slide:title=About Composite behavior}$
 
-Variations on Composite's behavior:
-- ""Simple forward"". sends the message to all the children and merge the results without performing any other behavior
-- ""Selective forward"". conditionally forwards the message to some children
-- ""Extended forward"". adds an extra behavior and delegates to leaves
-- ""Overriding"". does not delegate to leaves
+Variations on Composite behavior:
+- ""Simple forward"" sends the message to all the children and merges the results without performing any other behavior
+- ""Selective forward"" conditionally forwards the message to some children
+- ""Extended forward"" adds an extra behavior and delegates to leaves
+- ""Overriding"" does not delegate to leaves
 
 
 ${slide:title=Composite and other design patterns}$
