@@ -39,7 +39,7 @@ ${slide:title=A first test}$
 
 + >file://figures/XTDD3.png|width=90+
 
-${slide:title=A first test}$
+${slide:title=A first test (II)}$
 
 + >file://figures/XTDD3.png|width=60+
 
@@ -81,7 +81,7 @@ ${slide:title=Create a method on the fly (II)}$
 
 + >file://figures/XTDD10.png|width=90+
 
-${slide:title=Edit the method in the debugger (III)}$
+${slide:title=Edit the method in the debugger}$
 
 + >file://figures/XTDD11.png|width=80+
 
@@ -104,18 +104,20 @@ ${slide:title=Continue the execution...}$
 
 ${slide:title=Supporting the programmer flow}$
 
-- The system ""created"" a new method for us
-- ""Removed"" the stack element with Error
-- ""Replaced"" it with a call to the new method
-- ""Relaunched"" execution
+- The system 
+-- ""created"" a new method for us
+-- ""Removed"" the stack element with Error
+-- ""Replaced"" it with a call to the new method
+-- ""Relaunched"" execution
 - We edited it and recompiled the method
-- ""Continued"" execution
+- The system ""Continued"" execution
 
 ${slide:title=New method}$
 
-The system created a new method
+The system:
+- Created a new method
 - Removed the stack element with Error
-- Replace it with a ""call"" to the new method
+- Replaced it with a ""call"" to the new method
 
 [[[
 count: anInteger
