@@ -137,4 +137,4 @@ ${slide:title=Conclusion}$
 - Pharo makes it easy to iterate over subclasses
 -- it enables modular and extensible design
 -- but this is ""costly""
-- More on registration in the next lecture
+- Related to the lecture on ''Registration''
