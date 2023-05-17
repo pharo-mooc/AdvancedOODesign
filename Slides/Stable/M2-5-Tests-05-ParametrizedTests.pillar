@@ -4,7 +4,7 @@
 	"slidesid":"M2-5"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - How to ""reuse"" test logic with specific value sets?
 - How can we run tests with ""all"" possible combinations?
@@ -80,7 +80,7 @@ We can execute tests
 
 ${slide:title=Problem two}$
 
-Imagine we have a test and we would like to apply to other collections.
+Imagine we have a test and we would like to apply it to other collections.
 
 [[[
 MyTest >> testAdd
@@ -164,9 +164,9 @@ MyTest class >> testParameters
 ]]]
 
 - ==collectionClass== and ==item== will take the values from the options
-- Tests with all possible combinations of item and collectionClass are then run
+- Tests are then run with all possible combinations of item and collectionClass
 
 ${slide:title=Conclusion}$
 
 - Parametrized tests are handy
-- You can get more tests out of your testcase
+- You can get more tests out of your test case
