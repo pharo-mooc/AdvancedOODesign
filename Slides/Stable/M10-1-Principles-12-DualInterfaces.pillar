@@ -106,7 +106,7 @@ ${endColumns}$
 ${slide:title=Conclusion}$
 
 - OOP is about encapsulation AND extension
-- A class has always two kind of clients:
+- A class has always two kinds of clients:
 -- its ""users""
 -- its ""extenders""
 
