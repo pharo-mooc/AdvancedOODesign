@@ -135,7 +135,7 @@ Usually, it is better to:
 
 ${slide:title=Visit methods and static types}$
 
-Two alternatives to implement visit methods in statically-typed languages:
+Two alternatives to implement visit methods in statically typed languages:
 - Using overloading
 -- e.g., ==visit(Number)==, ==visit(Plus)==, ==visit(Times)==
 - Using different methods

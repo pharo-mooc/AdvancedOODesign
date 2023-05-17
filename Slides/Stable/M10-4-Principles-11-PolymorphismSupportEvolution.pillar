@@ -58,7 +58,7 @@ ${columns}$
 
 ${column:width=65}$
 
-What happen if you cannot subclass ==Shape==?
+What happens if you cannot subclass ==Shape==?
 
 [[[
 Shape (draw)
@@ -105,7 +105,7 @@ In dynamically-typed languages:
 - ""Duck typing""
 -- ''If it walks like a duck and it quacks like a duck, then it is a duck''
 
-${slide:title=What about statically-typed languages?}$
+${slide:title=What about statically typed languages?}$
 
 Static types can get in your way:
 
@@ -129,7 +129,7 @@ ${slide:title=Interface concept}$
 An interface:
 - has a name
 - defines a type
-- have one or more super-types
+- has one or more super-types
 - contains a group of method signatures
 - may contain default methods
 
@@ -179,14 +179,14 @@ ${slide:title=Classes and Interfaces}$
 ${slide:title=Interfaces: step back}$
 
 
-- Typing a variable using a class restricts the possible values of that variable to instances that class or one of its subclasses
+- Typing a variable using a class restricts the possible values of that variable to instances of that class or of one of its subclasses
 
 [[[
 Shape shape;
 Collection<Shape> shapes;
 ]]]
 
-- Interfaces are nice mechanism for statically-typed languages to define what is expected without restricting evolution
+- In statically typed languages, interfaces provide a nice way to define what is expected without restricting evolution
 
 [[[
 IShape shape;
@@ -209,6 +209,6 @@ ${slide:title=Conclusion}$
 -- Focusing on APIs is better for evolution than typing relationship
 
 - In dynamically-typed languages, polymorphism is free
-- In statically-typed languages, interfaces are key to create polymorphic objects not restricted to a specific class hierarchy
+- In statically typed languages, interfaces are key to create polymorphic objects not restricted to a specific class hierarchy
 
 - Related to the Adapter Design Pattern
