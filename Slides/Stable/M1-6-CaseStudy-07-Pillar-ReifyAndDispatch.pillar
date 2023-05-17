@@ -9,24 +9,24 @@ ${slide:title=Goals}$
 
 - Creating dedicated objects ""supports"" delegation
 - Delegation creates ""dispatch"" spaces (Strategy Design Pattern)
-- Study a concrete case: Pillar handing new Microdown format
+- Study a concrete case: Pillar handling new Microdown format
 - Think about modularity
 
 
 ${slide:title=Case study: introducing .md file in Pillar}$
 
 
-Existing:
+""Existing:""
 - Pillar is a document compilation chain: it produces books, slides, sites
 - Pillar used .pillar file containing Pillar text
-New requirement: 
+""New requirement:""
 - Pillar should handle .md files containing Microdown text
 - How to support this new requirement?
 
 ${slide:title=Pillar's .pillar file management}$
 
-How to get a document parsed?
-- We ask the parser!
+""How to get a document parsed?""
+- Ask the parser
 - The parser turns a pillar file into a document tree
 - There is one parser associated to a document
 
@@ -34,7 +34,7 @@ How to get a document parsed?
 PRDocument parser parseFile: aFileReference
 ]]]
 
-- It avoids to hardcode ==PRParser== everywhere 
+- Avoids to hardcode ==PRParser== everywhere 
 - Worked to substittute different versions of PetitParser parser
 
 
@@ -60,10 +60,10 @@ PRAbstractOutputDocument >> parseInputFile: anInputFile
 ${slide:title=Challenges}$
 
 ==PRDocument parser== implications:
-- There is **only one** parser
+- There is ""only one"" parser
 - Only one syntax
 
-Other limits:
+""Other limits:""
 - Checks for file extension are hardcoded
 - File does not know its project (book,...)
 - Access to project configuration (user option) is cumbersome
@@ -72,7 +72,7 @@ We cannot distinguish between a .pillar and .md file
 
 ${slide:title=Glimpse at a solution}$
 
-- Get an object representing a specific inputs (.pillar, .md)
+- Define an object representing a specific inputs (.pillar, .md)
 - Each input will know its format and corresponding parser
 
 Now we get one parser per document type
@@ -80,7 +80,7 @@ Now we get one parser per document type
 
 ${slide:title=Solution: Introduce InputDocument}$
 
-First step:
+""First step:""
 - Instead of manipulating files, manipulate ==InputDocument== ""objects""
 - ==InputDocument== wraps files and more information (file extension, parser...)
 
@@ -115,7 +115,7 @@ PRInputDocument >> parser
 
 ${slide:title=A little chicken step}$
 
-We do not distribute responsibility yet
+We did not distribute responsibility ""yet""
 
 [[[
 ... select: [ :file | file isFile and: [ file extension = 'pillar' ] ]
@@ -217,14 +217,19 @@ PRBuilAllStrategy >> filesToBuildOn: aProject
 			yourself ]
 ]]]
 
-${slide:title=Conclusion}$
+${slide:title=Step back}$
 
 - Turn ""implicit into an object""
-- Specialize one object into objects of different but polymorphic classes
+- Specialize one object into ""objects of different but polymorphic"" classes
 - Define ""polymorphic behavior"" to be able to delegate 
 - Create dispatch spaces
 - Use registration to obtain a modular design
- 
 
 
+${slide:title=Conclusion}$
 
+- Define objects and their own behavior
+- Delegate to such objects
+- Think about place to create such objects
+- ""Tell do not ask"" help you to spot place for variations
+- Read Transform Conditionals of ""Object-Oriented Reengineering Patterns"" Book
