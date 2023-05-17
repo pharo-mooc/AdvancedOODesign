@@ -29,7 +29,7 @@ DieHandle >> + aDieHandle
   ^ handle
 ]]]
 
-${slide:title=What happen when subclassing?}$
+${slide:title=What happens when subclassing?}$
 
 [[[
     DieHandle << #MemoDieHandle
