@@ -35,17 +35,19 @@ ${column:width=40}$
 ${endColumns}$
 
 
-${slide:title=Remember the previous lecture}$
+${slide:title=Remember...}$
 
+An extensible design by iterating subclasses:
 
 ${columns}$
 
-${column:width=60}$
+${column:width=70}$
 
 [[[
 PillarParser >> documentClasses
     ^ DocumentItem allSubclasses
-        sorted: [ :class1 :class2 | class1 priority < class2 priority ]
+        sorted: [ :class1 :class2 |
+            class1 priority < class2 priority ]
 ]]]
 [[[
 PillarParser >> parse: line
@@ -55,7 +57,7 @@ PillarParser >> parse: line
                 ifTrue: [ ^ subclass newFromLine: line ] ]
 ]]]
 
-${column:width=40}$
+${column:width=25}$
 
 ${endColumns}$
 
@@ -160,7 +162,7 @@ ${slide:title=Unregistration is a concern}$
 
 Explicit registration requires unregistration.
 
-- The registration holder (here ==PillarParser==) should offer way to remove a registration
+- The registration holder (here ==PillarParser==) should offer a way to remove a registration
 - Registered classes have the responsibility to unregister themselves (e.g. class unloading)
 
 ${slide:title=Conclusion}$
