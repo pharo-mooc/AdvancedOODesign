@@ -24,7 +24,8 @@ Plus
 
 Remarks:
 - In this example, we reify everything
-- In Pharo, no need to wrap numbers with our own ==Number== because can extend the Pharo core ==Number==
+- Pharo supports class extension
+-- So, no need to wrap numbers with our own ==Number==, we could directly extend the Pharo core ==Number==
 
 [[[
 Plus
@@ -248,7 +249,7 @@ Prepare the domain to accept Visitors:
 - add ==acceptVisitor:== on each composite element
 - tells the visitor passed in parameter how to visit it
 
-""only once for all Visitors""
+""Only once for all Visitors""
 
 ${column:width=60}$
 
@@ -274,7 +275,7 @@ Times >> acceptVisitor: aVisitor
    ^ aVisitor visitTimes: self
 ]]]
 
-- ""only once for all Visitors""
+- ""Only once for all Visitors""
 - Domain objets tell to the Visitor how they want to be visited
 -- ==visitNumber:==, ==visitPlus:==, ==visitTimes:==, ==visitXXX:==
 
@@ -393,7 +394,7 @@ Whenever you have to perform multiple operations on structured object graphs
 Examples:
 - Parse tree (==ProgramNode==) uses a Visitor for
 -- the compilation (emitting code on ==CodeStream==),
--- pretty printing, syntax hilighting
+-- pretty printing, syntax highlighting
 -- different analysis pass, rotten green test analysis
 - Rendering documents (==Document==) in different formats
 -- nodes expansion, HTML, LaTeX, ...
@@ -402,7 +403,7 @@ ${slide:title=When using a Visitor is challenging}$
 
 - If the elements of the composite ""change""
 -- It requires to change ""all"" Visitors
-- Related to the ''expression problem'' in statically-typed languages
+- Related to the ''expression problem'' in statically typed languages
 
 ${slide:title=Conclusion}$
 
