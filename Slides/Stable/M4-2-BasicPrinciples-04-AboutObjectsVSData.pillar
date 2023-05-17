@@ -1,6 +1,6 @@
 {
 	"title":"Objects vs. Data",
-	"subtitle":"an API perspective studying the class Point",
+	"subtitle":"An API perspective studying the class Point",
 	"slidesid":"M4-2"
 }
 
@@ -32,7 +32,7 @@ ${slide:title=Java Points - the 'rest'}$
 Inherited from Point2D
 - ==distance()== and ==clone()==
 
-${slide:title=Analysis: Java Point}$
+${slide:title=Analysis: Java Points}$
 
 - A super poor data structure
 - A dry holder of integers
@@ -123,7 +123,7 @@ public void go(int distance){
 ]]]
 
 
-${slide:title=Analysis (2)}$
+${slide:title=Analysing Java Example}$
 - Have to recreate explicitly a point ==distance + position.x()==
 - Arithmetic of Points is defined ""outside"" of them!
 -- Points cannot sum themselves
@@ -163,18 +163,18 @@ Bot >> go: aDistance
 - We can compose points, rectangles, and numbers
 
 
-${slide:title=Analysis}$
+${slide:title=Analysis Pharo Example}$
 
-- In Pharo ==Point==s are more than a data structure
-- They define ""advanced"" behavior
+- In Pharo ==Point==s 
+-- are more than a data structure
+-- define ""advanced"" behavior
 - Functionality is not in clients
 - Clients ""benefit and reuse"" behavior!
 
 
 ${slide:title=What you should know}$
 
-- Objects are not data structures
-- Objects are more than structure
+- Objects are more than a data structure
 - Objects are about behavior and services they offer
-- An object should encapsulate logic and lets its client ""reuse"" such logic!
+- An object should encapsulate logic and let its client ""reuse"" that logic!
 
