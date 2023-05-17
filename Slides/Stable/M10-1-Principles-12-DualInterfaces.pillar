@@ -36,7 +36,7 @@ A class:
 - extends the definition of its superclasses
 -- add state
 -- extends/specializes behavior
-- expresses a ""delta"" i.e., differences to its superclasses
+- expresses a ""delta"" i.e. differences to its superclasses
 
 ${slide:title=Time to think}$
 
@@ -71,7 +71,7 @@ ${slide:title=Clients?}$
 
 What are the clients of a class?
 - Its users (e.g., ==Person== is a client of ==Address==)
-- But also its subclasses i.e., its ""extenders""
+- But also its subclasses i.e. its ""extenders""
 
 ${slide:title=Extensibility?}$
 

@@ -43,7 +43,7 @@ ${slide:title=Visitor detractors}$
 
 ''Visitor is not object-oriented because it externalizes behavior out of objects.''
 
-- Yes, operations applied on objects are defined outside the objects
+- Yes, operations applied to objects are defined outside themselves
 - Are you ready to lose:
 -- ""clear separation"" between operations related state and domain object state?
 -- the possibility to ""package multiple"" behaviors ""separately""?
@@ -53,7 +53,7 @@ ${slide:title=Visitor detractors}$
 ${slide:title=Visitor vs. class extension}$
 
 - Pharo supports class extension
--- i.e., defining methods on a class in another package than the class package
+-- i.e. defining methods on a class in another package than the class package
 
 Should we use class extension instead of a Visitor?
 - No, using a Visitor is better because:
@@ -70,8 +70,8 @@ Compare these two Visitors:
 
 +.>file://figures/Visitor-visitHooks.pdf|width=60+
 
-- ==SimpleNodeVisitor== only provides ==visitNode== whihc is very high-level
--- retrieving temporary variables would require to test and filter nodes
+- ==SimpleNodeVisitor== only provides ==visitNode== which is very high-level
+-- retrieving temporary variables would require testing and filtering nodes
 - ==ProgramNodeVisitor== has richer API
 -- ==visitTemporaryVariable== is only invoked on temporaries
 
@@ -88,7 +88,7 @@ ${column:width=70}$
 - The granularity of visit methods has an impact
 - Each ""visit*"" method provides a contextualized hook
 - A too high-level API requires a lot of tests
-- A too specialized API spread information on multiple visit methods which is not good too
+- A too specialized API spreads information over multiple visit methods which is not good too
 -- retrieving all variables involve a lot of hooks: ==visitTemporaryVariable==, ==visitLocalVariable==, ...
 
 +.>file://figures/Visitor-visitHooks.pdf|width=60+
@@ -106,7 +106,7 @@ RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode
     aSequenceNode statements do: [ :each | self visitVariable: each ]
 ]]]
 
-Directly use ==visitVariable:==
+Direct use of ==visitVariable:==
 - shortcuts the double dispatch
 - does not let the domain decide
 - prevents the use of a more specialized API: ==visitLocalVariable==, ==visitTemporaryVariable==, ==visitInstanceVariable==

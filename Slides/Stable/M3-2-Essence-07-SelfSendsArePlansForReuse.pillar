@@ -239,7 +239,7 @@ ${slide:title=Conclusion}$
 
 - Code can be reused and refined in subclasses
 - Sending a message in a class defines a ""hook"":
--- i.e., a place where subclasses can ""inject variations""
+-- i.e. a place where subclasses can ""inject variations""
 
 - Prefer ""small"" methods because:
 -- it gives names to expressions

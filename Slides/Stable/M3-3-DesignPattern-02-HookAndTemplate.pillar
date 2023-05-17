@@ -17,7 +17,7 @@ ${slide:title=Remember...}$
 - A class defines one possible choice
 - Self-sends are plans for reuse
 - A self-send defines a hook
--- i.e., a place where subclasses can inject variations
+-- i.e. a place where subclasses can inject variations
 
 ${slide:title=The template method}$
 

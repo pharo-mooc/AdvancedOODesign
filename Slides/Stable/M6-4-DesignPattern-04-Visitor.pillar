@@ -327,7 +327,7 @@ Supporting a new operation is simple:
 - Define a new Visitor class
 -- e.g, ==Printer==
 - Implement the expected API
--- i.e., ==visitNumber==, ==visitPlus== and ==visitTimes==
+-- i.e. ==visitNumber==, ==visitPlus== and ==visitTimes==
 - Use it
 
 [[[

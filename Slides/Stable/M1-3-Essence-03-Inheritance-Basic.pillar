@@ -92,8 +92,8 @@ ${endColumns}$
 ${slide:title=Two aspects of inheritance}$
 
 Inheritance is:
-- ""static"" for state/instance variables (i.e., during class creation)
-- ""dynamic"" for behavior (i.e., during execution)
+- ""static"" for state/instance variables (i.e. during class creation)
+- ""dynamic"" for behavior (i.e. during execution)
 
 ${slide:title=Inheritance of instance variables}$
 
