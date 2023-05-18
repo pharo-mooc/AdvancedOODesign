@@ -6,19 +6,19 @@
 
 ${slide:title=Goals}$
 
-- Decorator
+- Present the Decorator Design Pattern
 - Think about API
 
 ${slide:title=Decorator}$
 
 ""From the book:""
-- Attach additional responsibilities to an object ""dynamically""
+- ""Dynamically"" attach additional responsibilities to an object 
 - Decorators provide a flexible alternative to subclassing for extending functionality
 
 
 ${slide:title=Decorator core}$
 
-+>file://figures/DP-Decorator.pdf|width=80+
++>file://figures/DP-Decorator.pdf|width=85+
 
 
 ${slide:title=Often mixed with inheritance}$
@@ -31,10 +31,12 @@ ${slide:title=Decorator}$
 ${columns}$
 
 ${column:width=80}$
-- A decorator wraps an instance of the decoree
--- It is placed between the client and the decoree
--- It propagates or not messages to the decoree
-- Easier to understand when the ==Decorator== is a subclass of ==Decoree== but not necessary (think duck typing)
+
+A decorator wraps a decoree
+- It is placed between the client and the decoree
+- It propagates or not messages to the decoree
+
+ Easier to understand when the ==Decorator== is a subclass of ==Decoree== but not necessary (think duck typing)
 
 ${column:width=20}$
 
@@ -176,8 +178,8 @@ Decorators attach additional responsibilities to an object
 - The decorator is based on delegation
 - We should control the creation of the decoration chain (the client reference)
 
-- ""Strong Implication:"" decorated objects ""do not know how"" if they are decorated. 
--- Changing the decoration chain at runtime is not simple.
+- ""Strong Implication:"" decorated objects ""do not know"" if they are decorated
+-- Changing the decoration chain at runtime is not simple
 
 
 
