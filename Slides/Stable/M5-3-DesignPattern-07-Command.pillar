@@ -1,7 +1,7 @@
 {
     "title":"Command Design Pattern",
-    "subtitle" : "---  Actions as objects",
-    "slidesid":"M5-3"
+    "subtitle" : "Actions as objects",
+    "slidesid":"M5S3"
 }
 
 ${slide:title=Goals}$
@@ -68,8 +68,8 @@ RbsRobot >> execute: aString
 ${slide:title=Analysis}$
 
 - Each time we add a new order we ""have to modify"" ==execute:==
-- Imagine that executing a ==mov== order cost a lot 
--- better to have one over many ones
+- Imagine if a ==mov== order cost a lot 
+-- Better to have one over many ones
 -- ==mov 10 mov 10 mov 10== -> ==mov 30==
 -- Not simple to perform a simple path optimization
 - How to replay the exact low-level executions
@@ -146,11 +146,11 @@ RbsRobot >> executeCommandBased: aString
 ${slide:title=Analysis of extensibility in place}$
 
 
-+>file://figures/RbsCommand.pdf|width=55+
++>file://figures/RbsCommand.pdf|width=75+
 
 - Each command is ""responsible"" for handling its ""own data""
 - Each command encapsulates its state, applicability and action
-- We can now manipulate actions (log, sorts,....)
+- Can now manipulate actions (log, sort, undo....)
 
 
 
@@ -158,7 +158,9 @@ ${slide:title=Command cons}$
 
 - Not all operations should be turned into Command objects
 - Produce large hierarchies of simple classes
-
+- Pay attention not to externalize key object behavior
+-- a class should still be complete
+-- better if a command represents an existing behavior
 
 
 ${slide:title=Commander: a Command framework}$
@@ -176,7 +178,7 @@ Commander is a little framework for commands using decorators
 
 ${slide:title=Core commander}$
 
-+>file://figures/FirstDecorator.pdf|width=70+
++>file://figures/FirstDecorator.pdf|width=80+
 
 
 ${slide:title=Add Contact}$
@@ -252,6 +254,7 @@ StCommand >> execute
 ${slide:title=Conclusion}$
 
 - Commands are first class actions
-- Adapted for manipulation of actions (Undo, replay)
+- Adapted for manipulation of actions (undo, replay)
+
 
 
