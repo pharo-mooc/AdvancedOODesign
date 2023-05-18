@@ -1,13 +1,13 @@
 {
 	"title":"Fat classes are bad",
-	"subtitle":"a.k.a. a large class vs. a class hierarchy",
-	"slidesid":"M4-4"
+	"subtitle":"a.k.a. A large class vs. a class hierarchy",
+	"slidesid":"M4S4"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Remember the ''Implementing Not'' Lectures
-- Transform Self Type Check Reengineering pattern
+- ''Transform Self Type Check'' Object-Oriented Reengineering pattern
 
 
 ${slide:title=Example: BibTeX}$
@@ -61,7 +61,7 @@ isBook
 	^ self type = #book
 ]]]
 
-- It is always worth to have a look at users of these ==isSomething== methods.
+It is always worth to have a look at users of these ==isSomething== methods
 
 ${slide:title=Another example: CZField}$
 
@@ -103,23 +103,25 @@ CZField >> visitField: aField
 ${slide:title=When using a Fat class}$
 
 Not having a class hierarchy: 
-- Not ""possible to dispatch"" logic because there is ""only one"" class 
+-  ""Impossible to dispatch"" logic because there is ""only one"" class 
 - Simple extensions require ""many changes"" to the conditional code
 - Difficult subclassing ""without duplicating/adapting"" the methods containing the conditional code
-- Adding a new behavior always ""results in changes"" to the same set of methods and always results in adding a new case to the conditional code.
+- Adding a new behavior always results in:
+-- changes to the same set of methods and 
+-- adding a new case to the conditional code
 - Remember the Implementing Not Lectures
 
 
 ${slide:title=Two kinds of type checking conditionals}$
 
-- Self type checks 
--- check some internal values to invoke self methods
--- not that bad
+""Self type checks""
+- check some internal values to invoke self methods
+- not that bad
 
-- Client type checks
--- violate ""do not ask, tell""
--- defeat late binding and inverse the flow of control
--- not necessary in a large class
+""Client type checks""
+- Violate The ""do not ask, tell"" principle
+- Defeat late binding and inverse the flow of control
+- Unnecessary in a large class
 
 ${slide:title=Transform self type transformation}$
 
@@ -136,5 +138,6 @@ ${slide:title=Conclusion}$
 
 - Favor dispatch
 - Create classes to encapsulate knowledge
-- ""Do not ask, tell""
+- Apply the ""Do not ask, tell"" principle
+- Read ''Object-Oriented Reengineering Patterns''
 
