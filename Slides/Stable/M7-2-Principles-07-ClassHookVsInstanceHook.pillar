@@ -4,11 +4,11 @@
 	"slidesid":"M7-2"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
 - Thinking about hooks
 - Granularity of hooks: class vs instance creation
-- Do we or not customize instance creation
+- Do we customize instance creation or not?
 - Customisation of instance creation
 
 ${slide:title=Example: Introducing a hook}$
@@ -46,7 +46,7 @@ CHInterpreter2 >> classScopeClass
 	^ MyClassScope
 ]]]
 
-- Ok it works!
+- Ok, it works!
 
 ${slide:title=Black box parametrization}$
 
@@ -68,7 +68,7 @@ CHInterpreter new
 ${slide:title=Analysis}$
 
 - What if we have a more complex instantiation?
-- And we want to encapsulate it and let the extender change it
+- And we want to encapsulate it and let the extender change it?
 - ==self classScopeClass new xxx== is not at a good granularity
 
 [[[
