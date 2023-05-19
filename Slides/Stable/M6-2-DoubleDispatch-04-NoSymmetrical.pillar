@@ -1,43 +1,48 @@
 {
 	"title" : "Double dispatch",
-	"slidesid" : "does not have to be symmetrical",
-	"slidesid":"M6-2"
+	"slidesid" : "Does not have to be symmetrical",
+	"slidesid":"M6S2"
 }
 
 ${slide:title=Goals}$
 
-- In the quest of dispatch
+- Look at double dispatch
 - Double dispatch does not have to be symmetrical
 
 
 ${slide:title=Remember}$
 
 [[[
->>> (Stone new vs: Paper new)
+> (Stone new vs: Paper new)
 #paper
 ]]]
 
 [[[
->>> 1 + 3.3
-4.3
-]]]
-
-[[[
->>> 3.3 + 1
-4.3
+> (Scissors new vs: Paper new)
+#scissors
 ]]]
 
 
 ${slide:title=Imagine a game model}$	
 
-+.>file://figures/SokobanOld.png|width=30+
+${columns}$
 
-- ==Block==
--- ==Box==
--- ==BoxOnTarget==
--- ==EmptyBlock==
--- ==Player==
--- ==Wall==
+${column:width=70}$
+
++.>file://figures/SokobanOld.png|width=60+
+
+${column:width=30}$
+
+==Block==
+- ==Box==
+- ==BoxOnTarget==
+- ==EmptyBlock==
+- ==Player==
+- ==Wall==
+
+${endColumns}$
+
+
 
 ${slide:title=Too many ifs....}$
 
@@ -86,7 +91,7 @@ EmptyBlock >> drawOn: aCanvas view: aView
 
 ${slide:title=Double dispatch}$	
 
-Each block tells the view how to draw it. 
+Each block ""tells"" the view how to draw it
 
 [[[
 GameView >> drawBlock: aBlock on: aCanvas
