@@ -49,8 +49,8 @@ Die class >> new
   ^ inst
 ]]]
 
-- No ==super== is not the superclass
-- No ==inst== is not an instance of the superclass
+- No, ==super== is not the superclass
+- No, ==inst== is not an instance of the superclass
 
 ${slide:title=Hint 2: super is the message receiver}$
 
@@ -97,7 +97,7 @@ ${slide:title=Solution}$
 
 ${slide:title=Summary}$
 
-- Sending a message is looking up for the method and applying it on the receiver
+- Sending a message is looking up the method and applying it on the receiver
 - Now you should really understand ==super== :)
 - ==super== is the receiver of the message and the method lookup starts in the superclass of the class  containing the expression
 
