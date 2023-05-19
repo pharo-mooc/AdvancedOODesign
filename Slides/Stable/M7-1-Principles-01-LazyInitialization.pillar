@@ -8,25 +8,30 @@
 ${slide:title=Goals}$
 
 - Think about object initialization
-- Present Lazy initialization
+- Present ""Lazy Initialization""
+- Complement to 'Avoid Nil' Lectures
 
 ${slide:title=Problem}$
 
-- Reduce startup time
+- Need to reduce startup time
 - How can we do less at the beginning?
-- Sometimes you do not want to be forced to initialize all the state at instance creation time
+- Sometimes you do not want to be ""forced"" to initialize all the state at ""instance creation time""
 
 ${slide:title=Solution}$
 
-- Only perform initialization if the state is used
+- ""Only"" perform initialization ""if"" the state is used
 - Delay initialization until needed
 
 ${slide:title=Lazy initialization}$
 
 - Let ==nil== value in instance variable
-- Do not initialize instance variable at instantiation time
-- Do not access instance variable directly
-- Only access instance variable via a lazy accessor
+- Do not initialize instance variable at ""instantiation time""
+- Do not expose instance variable ==nil==
+-- Do not access instance variable ""directly""
+- Only access instance variable via a ""lazy accessor""
+
+
+${slide:title=Lazy accessor}$
 
 [[[
 MyObject >> x
@@ -35,9 +40,9 @@ MyObject >> x
 
 
 
-${slide:title=Use Lazy Initialization when Necessary}$
+${slide:title=Example of Lazy Initialization}$
 
-You can defer initialization of a variable to its first use:
+Defer initialization of a variable to its first use
 
 [[[
 FreeTypeFont >> descent
@@ -50,12 +55,17 @@ FreeTypeFont >> descent
 
 ${slide:title=Solution: Use Lazy Initialization when Necessary}$
 
-- Defers initialization and caches the result
+- ""Defer"" initialization and caches the result
 - Pay attention you should NOT access directly an instance variable used in a lazy setting 
-- You should always use this accessor
-- Else you can get exposed to ==nil== value
+- You should ""always use the lazy accessor""
+- Else you expose to ==nil== value and will force client to check
+
+${slide:title=Pros/Cons}$
+
+- Lazy initialization trade execution at instance creation time for a check at each execution (==ifNil:==)
 
 ${slide:title=Conclusion}$
+
 
 - Lazy initialization is another tool at hand
 - Don't over use it
