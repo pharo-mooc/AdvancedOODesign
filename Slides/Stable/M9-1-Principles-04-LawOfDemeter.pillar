@@ -8,15 +8,15 @@ ${slide:title=Goal and outline}$
 
 - Think about coupling
 - Present Law of Demeter
-- 'Move Behavior close to Data' from Object-Oriented Reengineering Pattern book
+- ""Move Behavior closer to Data"" from Object-Oriented Reengineering Pattern book
 - Tradeoffs
 
 
 ${slide:title=Symptoms of costly coupling}$
 
 - ""Reuse:"" I cannot reuse this component in another application
-- ""Substition:"" I cannot easily substitute this part for another one
-- ""Encapsulation:"" when a change far away happens, I get impacted
+- ""Substitution:"" I cannot easily substitute this part for another one
+- ""Encapsulation:"" When a change happens far away, I get impacted
 - ""Untestable:"" I cannot test this part
 
 
@@ -50,7 +50,7 @@ You should ""only"" send messages to:
 - an argument passed to you
 - instance variables
 - an object you create
-- self, super your class
+- ==self==, ==super==, and your class
 
 You should ""avoid""
 - ""global"" variables
@@ -83,7 +83,7 @@ ${slide:title=Solution: Respect encapsulation}$
 
 
 
-${slide:title=Let us ""Move behavior close to data""}$
+${slide:title=Let us "Move behavior close to data"}$
 
 ${columns}$
 
@@ -165,7 +165,7 @@ WorldState >> updateToNewResolution: originalEvent
 
 
 
-${slide:title=LOD is a \*\*heuristic\*\*}$
+${slide:title=LOD is a "heuristic"}$
 
 - Pay attention! A too strict application of the LOD can lead to ""bloated class API""
 - Encapsulating collections may produce large interfaces so not applying the LoD may help
