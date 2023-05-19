@@ -106,9 +106,9 @@ IdleState >> howMuchIsIt: aMachine
 ]]]
 
 
-${slide:title=Advantanges}$
+${slide:title=Advantages}$
 
-- Each state just implements their operations
+- Each state just implements its operations
 - State transitions are implemented in each state
 - Less conditional code
 - Elegant solution when having many states
@@ -126,23 +126,25 @@ ${slide:title=Where to Put the instance state? (1/3)}$
 ${slide:title=Where to Put the instance state? (2/3)}$
 
 - In the Machine Object:
--- Useful if the internal state is the same for all the machine state
--- We don't need to copy on each state change
+-- Useful if the internal state is the same for all the machine states
+-- We don't need to copy on every state change
 -- Bad if each state has different instance variables
 
 ${slide:title=Where to Put the instance state? (3/3)}$
 
 - In the State Object:
--- Useful if the internal state is different for all the machine state
+-- Useful if the internal state is different for all the machine states
 -- Each state object has direct access to the instance state, we don't need accessors
 -- Creating a state requires passing all instance variables that it stores
 
 ${slide:title=Conclusion}$
 
-- Useful having an object with many states
+State pattern:
+
+- Is useful when we have an object with many states
 - Encapsulates the operations and the state transitions
-- Use delegation instead of conditional code
-- Easy to add new states and operations
+- Uses delegation instead of conditional code
+- It is easy to add new states and operations
 - It is a more complex solution, we need to trade off the new complexity vs clarity/flexibility
 
 

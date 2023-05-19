@@ -13,7 +13,7 @@ ${slide:title=Goals}$
 
 ${slide:title=Analysing a case}$
 
-- Imagine that you have a cactus collection and you want to manage them. 
+- Imagine that you have a cactus collection and you want to manage them
 - There is a difference between one plant and its kind
 
 Gymnocalycium mihanovichii (a south american well known cactus)
@@ -24,7 +24,7 @@ Gymnocalycium mihanovichii (a south american well known cactus)
 ${slide:title=An individual vs. its description}$
 
 - You can several G. Mihanovichii and each one can be different
-- Different flowers, pest attack, ...
+- Different flowers, pest attacks, ...
 
 +>file://figures/Gymnos.png|width=60+
 
@@ -50,21 +50,21 @@ ${slide:title=How to implement this?}$
 ${slide:title=All in class level}$
 
 - Putting all the description information at the class level could work
-- Cannot change dynamically
-- Our instance can get big easily
-- Duplicated information in all instances
-- Cannot be shared between different kinds of objects
+-- Cannot change dynamically
+-- Our instance can get big easily
+-- Duplicated information in all instances
+-- Cannot be shared between different kinds of objects
 
 ${slide:title=TypeObject}$
 
-- Introduce a TypeObject whose responsibility is to gather description specific properties
+- Introduce a TypeObject whose responsibility is to gather description-specific properties
 - ==PlantDescription== vs ==Plant==
 - We can share the description instance
-- Information is only once
+- Information is not repeated in many objects
 
 +>file://figures/TypeObject.pdf|width=80+
 
-${slide:title=TypeObject}$
+${slide:title=TypeObject (II)}$
 
 - Define instance-specific properties in typed object class
 - Define instance description specific properties in the ==TypeObject== associated with the typed Object
@@ -80,18 +80,18 @@ PlantDescription
 ]]]
 
 
-${slide:title=Dynamic}$
+${slide:title=Dynamic TypeObjects}$
 
-- Depending on your domain, the typed object and TypeObject relationship can be dynamic
+- Depending on your domain the typed object and TypeObject relationship can be dynamic
 - The description evolves with the program
 - Changing one description affects all described instances
 
 ${slide:title=Conclusion}$
 
-TypeObject
+TypeObject:
 
-- It makes explicit the relation to the object description
-- We encapsulate state and behaviour that is common to a type of objects
-- A dynamic way of handling descriptions
+- makes explicit the relation to the object description
+- encapsulates state and behaviour that is common to a type of objects
+- is a dynamic way of handling descriptions
 
 
