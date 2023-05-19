@@ -6,9 +6,9 @@
 
 ${slide:title=Goals}$
 
-- Discuss relation between the ""API"" of a class and its ""subclasses""?
-- Discuss relation between the ""API"" of a class and its ""clients""?
-- Compare ""subtyping"" \& ""subclassing""?
+- Discuss the relation between the ""API"" of a class and its ""subclasses""
+- Discuss the relation between the ""API"" of a class and its ""clients""
+- Compare ""subtyping"" \& ""subclassing""
 - Impact on design
 - Subtyping is good even in dynamically-typed languages
 
@@ -23,8 +23,8 @@ class Poem extends LinkedList
 ]]]
 
 What do you think about it?
-- Yes we can write this code
-- What do you think of? Does it make sense?
+- Yes, we can write this code
+- What do you think of it? Does it make sense?
 A poem API 
 - is ==addWord(word)==, ==isAlexandrin()==, ==isHaiku()==, ...
 - should not contain ==addBeforeLink(aLinkOrObject, otherLink)== (that is part of ==LinkedList==)
@@ -40,8 +40,8 @@ class Stack extends LinkedList
 ]]]
 
 What do you think about it?
-- Yes we can write this code. 
-- What do you think of? Does it make sense?
+- Yes, we can write this code. 
+- What do you think of it? Does it make sense?
 A ==Stack== API 
 - is ==pop()==,==push(el)==, ==top()==, ==isEmpty()== 
 - should not contain ==LinkedList== methods.
@@ -55,7 +55,7 @@ It reuses the superclass code.
 
 ${slide:title=Subtyping/subclassing and type systems}$
 
-Did you notice previous code snippets were in java tiny syntax... because:
+Did you notice previous code snippets were in Java tiny syntax... because:
 - You ""can"" use subtyping and subclassing in ""dynamically-typed"" languages
 - You ""can"" use subtyping and subclassing in ""statically-typed"" languages
 
@@ -102,8 +102,8 @@ We get ==size==, ==includes:==, ==do:==, ==collect:== for free.
 ${slide:title=Wait!}$
 
 - What do we do with the ""rest"" of the ==OrderedCollection== API?
-- Our stack also understands: ==add:beforeIndex:==, ==addAllFirstUnlessAlreadyPresent:==, ==join:==...
-- a Stack ""is not"" an ==OrderedCollection==!
+- Our Stack also understands: ==add:beforeIndex:==, ==addAllFirstUnlessAlreadyPresent:==, ==join:==...
+- A Stack ""is not"" an ==OrderedCollection==!
 - In a client program we cannot replace an ==OrderedCollection== by a ==Stack==
 
 ${slide:title=Wait!}$
@@ -175,7 +175,7 @@ ${slide:title=Compare the two replacements}$
 
 ${slide:title=Back to Stack}$
 
-Better use composition! A stack holds a collection of elements
+Better use composition! A Stack holds a collection of elements
 
 [[[
 Object << Stack
@@ -221,7 +221,7 @@ Stack >> removeFirst
 	self error
 ]]]
 
-This is a sign for bad design decision
+This is a sign of a bad design decision
 - Cheap 
 - But you will pay later
 
@@ -239,8 +239,8 @@ push: anElement
 
 What is the good superclass?
 - ==Stack== Probably.
-- It would be better if the client program behavior but not mandatory or possible.
-- A subclass does not have to make sure that client program works (this is behavioral subtyping )
+- It would be better if the client handles this behavior, but maybe it is not mandatory or possible.
+- A subclass does not have to make sure that the client program works (this is behavioral subtyping )
 
 ${slide:title=About Liskov Substitution Principle (LSP)}$
 
@@ -249,8 +249,8 @@ ${slide:title=About Liskov Substitution Principle (LSP)}$
 - LSP is about behavioral typing (about the same behavior)
 - Most of the time when you define subclass to change behavior
 
-- By definition a subclass often exhibits a slightly different behavior than its superclass
-- Therefore LSP looks useless in such context.
+- By definition, a subclass often exhibits a slightly different behavior than its superclass
+- Therefore LSP looks useless in such a context.
 
 ${slide:title= Inheritance and polymorphism}$
 
@@ -270,7 +270,7 @@ ${slide:title='extend' one term for two concepts}$
 ${slide:title=Conclusion}$
 
 - Subtyping is about  program specification ""reuse""
-- Subtyping is about to create ""family of classes sharing common API""
+- Subtyping is about creating ""family of classes sharing common API""
 - ""Avoid"" subclassing: it is a bad idea
 
 
