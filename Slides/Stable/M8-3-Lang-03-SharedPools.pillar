@@ -17,7 +17,7 @@ A shared variable can be accessed from
 
 I can also be accessed
 - from its subclasses
-- Usually a shared variable is initialized from class side of a root
+- Usually, a shared variable is initialized from the class side of a root
 
 ${slide:title=Remember ComponentMask}$
 
@@ -131,7 +131,7 @@ Week class >> startDay
 
 ${slide:title=Warning! Only for constants}$
 
-- Only store ""constant"" objects in shared pools
+- You should only store ""constant"" objects in shared pools
 - Else you are creating global variables and you are breaking testability in isolation
 
 ${slide:title=Conclusion}$
