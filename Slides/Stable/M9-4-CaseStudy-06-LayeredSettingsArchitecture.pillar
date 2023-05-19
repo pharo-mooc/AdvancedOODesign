@@ -19,8 +19,8 @@ ${slide:title=The case of Preferences}$
 ${slide:title=Challenges}$
 
 - How to make sure that we can have 
--- One application with ""only its"" preferences and its dependencies
--- A ""modular"" definition of preferences
+-- One application with ""only its"" preferences and its dependencies?
+-- A ""modular"" definition of preferences?
 - How do we make sure that 
 -- ""domain"" objects do ""not"" refer to preference objects and 
 -- still can offer preferences to the user?
@@ -135,12 +135,12 @@ ${slide:title=A new architecture}$
 - A class ""defines state / methods"" that implement ""its"" customization points
 - The class ""declares"" its settings via description
 - The settings browser collects the ""setting declaration"" and builds a UI for the user
-- The settings browser ""configure"" objects ""using settings description""
+- The settings browser ""configures"" objects ""using settings description""
 
 ${slide:title=Supporting Internal control flow}$
 
 - Limiting external dependencies
-- Renforcing locality
+- Reinforcing locality
 
 +.>file://figures/Settings-PreferenceModularFlow.pdf|width=90+
 
@@ -209,14 +209,14 @@ ${slide:title=Analysis}$
 
 ""Modular""
 - The domain can be loaded alone
-- Not dependencies to unnecessary stuff
+- We don't have dependencies to unnecessary stuff
 
 ${slide:title=About customization}$
 
 - An object should be ""designed to be customisable""
 - The logic flow should be ""internal""
 - The object logic should ""not be tight to a preference object""
-- The object cusotmisation can be set from an external object (like the Setting browser)
+- The object customisation can be set from an external object (like the Setting browser)
 
 
 ${slide:title=Conclusion}$
