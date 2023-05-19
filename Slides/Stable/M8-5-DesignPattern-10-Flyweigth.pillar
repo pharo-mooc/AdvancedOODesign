@@ -1,5 +1,5 @@
 {
-	"title":"Flyweigth",
+	"title":"Flyweight",
 	"slidesid":"M8-5"
 }
 
@@ -10,14 +10,14 @@ ${slide:title=Goals}$
 - Symbols
 - The case of color
 
-${slide:title=Flyweigth}$
+${slide:title=Flyweight}$
 
 Intent: Use sharing to support large numbers of fine-grained objects efficiently
 
 
 ${slide:title=Example: Symbol}$
 
-- Ensure uniqueness of symbols 
+- Ensure the uniqueness of symbols 
 - Reduce memory footprint
 - Two symbols #unique are referring to the exact same object!
 
@@ -59,9 +59,9 @@ UITheme >> textColor
 
 ${slide:title=A legitimate question}$
 
-Should we turn ==Color== into a flyweigth?
+Should we turn ==Color== into a flyweight?
 - Cost of interning it
-- Would a flyweigth solve the spurious creation requests? No
+- Would a flyweight solve the spurious creation requests? No
 - Do we need to create different colors or always the same?
 
 
@@ -81,7 +81,7 @@ The case of implicit colors:
 
 ${slide:title=Conclusion}$
 
-- Flyweigth is useful to ensure uniqueness and limit memory footprint
+- Flyweight is useful to ensure uniqueness and limit memory footprint
 - It does not avoid spurious object creation requests
 - Better fix the cause than the consequences
 
