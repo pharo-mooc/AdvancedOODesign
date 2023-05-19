@@ -13,8 +13,8 @@ ${slide:title=Goal}$
 ${slide:title=Microdown}$
 
 A better markdown :)
-- compact (subset of markdown)
-- more extensible (superset of markdown)
+- compact (a subset of markdown)
+- more extensible (a superset of markdown)
 
 Used for:
 - class comments
@@ -239,8 +239,8 @@ ${slide:title=With block parameter design}$
 aBuilder header: [ :builder | builder text: 'Factory method' ] withLevel: 2.
 ]]]
 
-- Each API can have its owns  the builder 
-- We can have an hierarchy of builders each one representing finer context
+- Each API can have its owns builder 
+- We can have a hierarchy of builders, each one representing a finer context
 - More verbose
 
 
@@ -254,17 +254,17 @@ rawHeader: aBloc withLevel: anInteger
 ]]]
 
 Each subclass can specialize ==rawHeader: aBloc withLevel: anInteger== 
-- or an equivalent hook to suse a specific builder passed as argument of the ==value:==
+- or any other equivalent hook to use a specific builder. It is passed as argument of ==value:==
 
 ${slide:title=Analysis}$
 
 ""Pros:""
 - With an explicit argument builder, we can also subclass the builder and modify partially the builder behavior
--- We could have specialisation builder that produces table of contents
+-- We could have a specialisation builder that produces the table of contents
 - It feels like visitor hooks
 
 ""Cons:""
-- You have to define an extra parameter to all the wrapping APIs
+- You have to define an extra parameter for all the wrapping APIs
 
 
 ${slide:title=Conclusion}$
