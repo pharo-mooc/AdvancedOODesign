@@ -3,9 +3,9 @@
 	"slidesid":"M10-5"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
-- Thinking about spurious checks
+- Think about spurious checks
 - Dynamically-typed languages do not need explicit type checks
 - Favor testing
 
@@ -19,7 +19,7 @@ Object >> assert: aBlock description: aStringOrBlock
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]]]
 	
-- ==assert:description:== is checking and in addition raises and error. 
+- ==assert:description:== is checking and in addition raises an error. 
 - It changes the program control flow
 
 
