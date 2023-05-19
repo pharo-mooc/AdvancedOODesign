@@ -5,10 +5,10 @@
 
 ${slide:title=Goals}$
 
-- Understanding the implication behind returning nil
-- Looking at provider side
+- Understand the implication behind returning nil
+- Analyze at provider side
 - Object initialization avoids nil propagation
-- Looking at client side
+- Look at client side
 - Null Object 
 
 ${slide:title=nil?}$
@@ -20,12 +20,12 @@ ${slide:title=nil?}$
 
 ${slide:title=Looking at provider side}$
 
-- What is the impact of code generating nil?
+- What is the impact of code generating ==nil==s?
 
 
 ${slide:title=Example}$
 
-Imagine an inferencer that looks for rules that correspond to a fact. 
+Imagine an inferencer that looks for rules that correspond to a fact
 
 [[[
 | inf | 
@@ -36,7 +36,7 @@ inf
 	addRule: #rainy -> #'umbrella'.
 
 inf rulesForFact: #sunny 
-> #(Fact (sunglasses) Fact(umbrella))
+> { Rule(sunny - sunglasses) . Rule(sunny - solar cream) }
 
 inf rulesForFact: #cloudy
 > nil
@@ -48,11 +48,11 @@ ${slide:title=Example code}$
 
 [[[
 Inferencer >> rulesForFact: aFact
-	self noRule ifTrue: [ ^ nil ]
+	(self noRule: aFact) ifTrue: [ ^ nil ]
 	^ self rulesAppliedTo: aFact
 ]]]
 
-- Here ==rulesForFact:== returns ==nil== to indicate that there is no rules for a fact.
+- Here ==rulesForFact:== returns ==nil== to indicate that there is no rules for a fact
 - What are the consequences?
 
 
@@ -63,11 +63,10 @@ ${slide:title=Consequences!}$
 
 [[[
 (inferencer rulesForFact: 'a')
-   ifNotNil: [ :rules |
-      rules do: [ :each | ... ]
+   ifNotNil: [ :rules | rules do: [ :each | ... ]
 ]]]
 
-- Code ends up full of nil checks
+- Client code ends up full of ==nil== checks (==ifNil:==, ==ifNotNil==, ==isNil==)
 
 
 ${slide:title=Solution: Return polymorphic objects}$
@@ -81,7 +80,7 @@ ${slide:title=Solution: Return polymorphic objects}$
 
 [[[
 Inferencer >> rulesForFact: aFact
-	self noRule ifTrue: [ ^ #() ]
+	(self noRule: aFact) ifTrue: [ ^ #() ]
 	^ self rulesAppliedTo: aFact
 ]]]
 
@@ -97,14 +96,27 @@ Your clients can just iterate and manipulate the returned value
 ${slide:title=About nil}$
 
  Limit the propagation of ==nil==
-- not having methods returning ==nil==
-- avoid storing ==nil== in variables
+- Methods should not return ==nil==
+- Avoid storing ==nil== in variable
+- ""Initialize"" well your object instance variables!
 
 ${slide:title=Initialize your object state}$
 
-Avoid ==nil== checks by initializing your variables:
-- By default instance variables are initialized with ==nil==
-- The responsibility of an object is to ""correctly initialize"" its state
+${columns}$
+
+${column:width=70}$
+
+Remember by default instance variables are initialized with ==nil==
+- This is developer responsibilities to produce well-initialized objects
+- Avoid ==nil== checks by initializing your variables:
+
+${column:width=30}$
+
+${endColumns}$
+
+${slide:title=Initialization example}$
+
+The responsibility of an object is to ""correctly initialize"" its state
 
 [[[
 Archive >> initialize
@@ -121,16 +133,17 @@ ${columns}$
 ${column:width=70}$
 
 - Sometimes you have to check some conditions before doing an action
-- When possible, you can turn the default case into an object, a Null Object.
-
+- When possible, you can turn the default case into an object (a Null Object)
 
 ${column:width=30}$
 
 ${endColumns}$
 
-${slide:title=Example}$
 
-From the perspective of the client
+${slide:title=An example calling for a Null Object}$
+
+- Imagine a palette manipulates tools
+- Palette has a selected tool
 
 [[[
 ToolPalette >> nextAction
@@ -142,32 +155,47 @@ ToolPalette >> previousAction
       ifNotNil: [ :tool | tool detachHandles ]
 ]]]
 
-Here we are forced to check that there is a selected tool. 
-- Why not having always one selected?
-- Even one doing nothing?
 
 ${slide:title=Example}$
 
 +>figures/NullObject2.pdf+
 
+${slide:title=Analysis}$
 
-${slide:title=Solution: Use NullObject}$
+
+[[[
+ToolPalette >> nextAction
+   self selectedTool
+      ifNotNil: [ :tool | tool attachHandles ]
+]]]
+
+
+Forced to check that there is a selected tool
+- Why not having always one selected?
+- Even one doing nothing?
+
+
+
+
+${slide:title=Solution: Apply NullObject Design Pattern}$
 
 
 ${columns}$
 
 ${column:width=70}$
 
-- A null object proposes a ""polymorphic"" API and embeds default actions/values.
-- Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley.
-
-Let us create a ==NoTool== class whose behavior is to do nothing.
+- A null object proposes a ""polymorphic"" API and embeds ""default"" actions/values
+- Woolf, Bobby (1998). "Null Object". In Pattern Languages of Program Design 3. Addison-Wesley
+- Read it!
 
 ${column:width=30}$
 
 ${endColumns}$
 
+
 ${slide:title=Solution: NoTool}$
+
+Create a ==NoTool== class whose behavior is to do nothing
 
 [[[
 AbstractTool << #NoTool
@@ -190,7 +218,7 @@ ToolPalette >> initialize
    self selectedTool: NoTool new
 ]]]
 
-And we get no forced ==ifNil:== tests anymore
+Not forced to use ==ifNil:== tests anymore
 
 [[[   
 ToolPalette >> nextAction
