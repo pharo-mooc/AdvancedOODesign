@@ -42,7 +42,7 @@ MyObject >> x
 
 ${slide:title=Example of Lazy Initialization}$
 
-Defer initialization of a variable to its first use
+You defer the initialization of the variable to its first use
 
 [[[
 FreeTypeFont >> descent
@@ -68,5 +68,5 @@ ${slide:title=Conclusion}$
 
 
 - Lazy initialization is another tool at hand
-- Don't over use it
+- Don't overuse it
 
