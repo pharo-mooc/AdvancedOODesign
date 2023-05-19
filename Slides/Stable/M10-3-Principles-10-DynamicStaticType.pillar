@@ -12,7 +12,6 @@ ${slide:title=Outline}$
 - Method lookup
 
 
-
 ${slide:title=Message Sending}$
 
 ${columns}$
@@ -38,7 +37,7 @@ ${column:width=38}$
 
 The lookup starts in the ""class"" of the ""receiver"" then:
 - if the method is defined in the class, it is returned
-- otherwise the search continues in the superclass
+- otherwise, the search continues in the superclass
 
 ${column:width=62}$
 
@@ -49,8 +48,8 @@ ${endColumns}$
 ${slide:title=It was the essence}$
 
 Questions:
-- How types influence (polute) this beautiful model?
-- Static types, dynamic types, overloading
+- How do types influence (pollute) this beautiful model?
+- Static types, dynamic types, overloading?
 
 
 ${slide:title=The type of a variable}$
@@ -59,7 +58,7 @@ ${columns}$
 
 ${column:width=50}$
 
-Let us a simple program model:
+Let's take a simple program model:
 - a variable is a box with a label: its type.
 - a variable contains a reference to objects.
 
@@ -78,7 +77,7 @@ ${slide:title=Type checker}$
 
 During compilation 
 - A type checker is a tool that tries to make sure that correct objects are put in variables
-- Using type information the type checker avoids that an unknown message is sent to an object
+- Using type information the type checker avoids an unknown message being sent to an object
 
 
 ${slide:title=Static vs. Dynamic Types}$
@@ -87,10 +86,10 @@ ${slide:title=Static vs. Dynamic Types}$
 A a = new B();
 ]]]
 
-- The static type of variable ==a== is ==A==  i.e., the declared label of the box.
+- The static type of variable ==a== is ==A==  i.e. the declared label of the box.
 -- The static type never changes.
 
-- The dynamic type of ==a== is ==B==  i.e., the class of the object currently bound to a.
+- The dynamic type of ==a== is ==B==  i.e. the class of the object currently bound to a.
 -- The dynamic type may change throughout the program.
 
 [[[
@@ -113,7 +112,7 @@ A a = new B();
 
 ${slide:title=Static types}$
 
-Pay attention method signatures also define static types
+Pay attention to method signatures also define static types
 
 [[[
 	foo (A a){
@@ -123,7 +122,7 @@ Pay attention method signatures also define static types
 	foo(new B());
 ]]]
 
-static type of a is A, dynamic type of a is B
+the static type of a is A, dynamic type of a is B
 
 
 
@@ -208,7 +207,7 @@ B b = new B(); A a = b;
 ]]]
 
 - Step 1: the static type of ==b== is ==B==, so we look in ==B== and its superclass ==A==
-- Step 2: There is a method m (in fact two ==m(A a)== and ==m(B b)==)
+- Step 2: There is a method ==m== (in fact two ==m(A a)== and ==m(B b)==)
 - Step 3: the static type of a is A we will look for ==m(A a)==
 
 The dynamic type of ==b== is ==B==.
@@ -241,7 +240,7 @@ B b = new B(); A a = b;
 ]]]
 
 - Step 1: receiver static type is ==A==: we only look in ==A==
-- Step 2: there is a method m
+- Step 2: there is a method ==m==
 - Step 3: the static type of ==b== is ==B== but since ==A== is a supertype of ==B== this is ok we will look for ==“m(A a)”==
 
 The dynamic type of ==a== is ==B==
@@ -258,8 +257,8 @@ class B extends A {void m(B b) { println("B.m(B)"); }}
 B b = new B(); A a = b; C c = new C;
 ]]]
 
-- Step 1: We look only in A
-- Step 2: there is a method m
+- Step 1: We look only in ==A==
+- Step 2: there is a method ==m==
 - Step 3: C the static type of ==c== does not match ==A== there is no subtype relations
 Does not compile!
 
@@ -267,9 +266,9 @@ Does not compile!
 ${slide:title=Conclusion}$
 
 - Examples used so far were simple
-- By careful with static types, it can get tricky
-- Check lecture on overloading 
-- Check lectures on interfaces
+- Be careful with static types, it can get tricky
+- More details on the lectures on overloading if needed
+- More details on the lectures on interfaces if needed
 
 
 
