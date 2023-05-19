@@ -69,7 +69,7 @@ Behavior >> printSubclassesOn: aStream level: level
 			[:subclass | subclass printSubclassesOn: aStream level: level + 1]
 ]]]
 
-${slide:title=Analyis}$
+${slide:title=Analysis}$
 
 ""Pros""
 - ""Procedural"" decomposition
@@ -80,11 +80,11 @@ ${slide:title=Analyis}$
 
 ${slide:title=Limits }$
 
-""Does not"" work if we need:
-- To filter subclasses (==RBLintRule printHierarchy==)
-- To cut above a given superclass or if class is from a given package
-- Do not want to see instance variables
-- End up with ""too many"" arguments
+- ""Does not"" work:
+-- If we need to filter subclasses (==RBLintRule printHierarchy==)
+-- If we need to cut above a given superclass or if a class is from a given package
+-- If do not want to see instance variables
+-- We end up with ""too many"" arguments
 [[[
 printSubclassesOn: aStream level: level filtering: aCol cut: above showVariable: bool
 ]]]
@@ -133,7 +133,7 @@ API
 - ==doNotShowState==, ==doNotShowSuperclasses==
 - ==limitedToClasses:== to offer specific scope
 - ==excludedClasses:== to remove unwanted subclasses
-- ==cr==, ==tab==, ==nextPutAll:== to let decorations
+- ==cr==, ==tab==, ==nextPutAll:== let us have decorations
 
 
 ${slide:title=DatePrinter vs. Date printOn:}$
@@ -146,7 +146,7 @@ Different date formats
 10-01-2023
 01 / 10 / 2023
 ]]]
-- Should ==printOn:== handles all this?
+- Should ==printOn:== handle all this?
 - ==mmddyyyy==, ==ddmmyyyy== support limited scenario
 - Printing a date can be the responsibility of a specific object
 
@@ -184,12 +184,12 @@ ${slide:title=Stepping back}$
 
 - Created ""little objects"" that can be configured!
 - The object holds the ""specific state"" for its computation
-- The API can extended if needed
-- Functionality can be ""nicely tested"" and packaged in autonomous manner
+- The API can be extended if needed
+- Functionality can be ""nicely tested"" and packaged in an autonomous manner
 
 ${slide:title=Further thought}$
 
-- Turning a method into an object is the key point of Command Design pattern
+- Turning a method into an object is the key point of the Command Design pattern
 - This is also the case in Visitor
 - An object is a ""powerful"" entity
 
