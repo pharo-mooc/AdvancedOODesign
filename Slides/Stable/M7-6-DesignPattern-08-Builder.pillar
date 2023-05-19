@@ -16,23 +16,23 @@ ${slide:title=Goals}$
 ${slide:title=Creating objects}$
 
 - Can be cumbersome or complex involving invariants
-- Created objects can evolved over time
-- Created objects can be changed under the feet of users
-- Finding correct creation API can be daunting
+- Created objects can evolve over time
+- Created objects can be changed under the users' feet
+- Finding the correct creation API can be daunting
 
 ${slide:title=Builder's intent}$
 
-""From the book:"" Separate the construction of a complex objet from its internal representation so that the same 
-construction process can create different representations
+""From the book:"" Separate the construction of a complex object from its internal representation so that the same 
+the construction process can create different representations
 
 
 ${slide:title=Builder}$
 
-A builder: an object representing and controling the creation of other objects
+A builder: an object representing and controlling the creation of other objects
 - Encapsulates object creation logic
-- Garantees that the objects are well created
-- Decouple object creation from the effective created objects
--- Support multiple back-ends
+- Guarantees that the objects are well created
+- Decouples object creation from the effectively created objects
+-- Supports multiple back-ends
 
 ${slide:title=Setting example}$
 
@@ -72,9 +72,9 @@ ${slide:title=Setting builder analysis}$
 
 - ""Avoid"" hardcoding references to Setting objects in the domain
 - Act as a DSL
-- Garantee that the objects are well created
+- Guarantee that the objects are well created
 - ""Encapsulate creation logic""
-- Decouple object creation from the effective created objects
+- Decouple object creation from the effectively created objects
 
 
 ${slide:title=Microdown builder in action}$
@@ -121,7 +121,7 @@ code block
 
 ${slide:title=Microdown builder analysis}$
 
-- Provides an high level API to script Microdown text
+- Provides a high-level API to script Microdown text
 - Avoid string manipulation!
 - Let Microdown evolves without impacting users!
 
@@ -146,15 +146,15 @@ such as:'.
 
 ${slide:title=When to apply it}$
 
-- The domain is structured and have some regularity in the object creation
-- When one want one single entry point (e.g., refactoring)
+- The domain is structured and has some regularity in the object creation
+- When we want one single entry point (e.g., refactoring)
 - To stabilise an API, while the implementation is evolving
 
 
 ${slide:title=Conclusion}$
 
-A builder: an object representing and controling the creation of other objects
+A builder: an object representing and controlling the creation of other objects
 - Encapsulates object creation logic
-- Garantees that the objects are well created
-- Decouple object creation from the effective created objects
-- Support evolution
+- Guarantees that the objects are well created
+- Decouples object creation from the effectively created objects
+- Supports evolution
