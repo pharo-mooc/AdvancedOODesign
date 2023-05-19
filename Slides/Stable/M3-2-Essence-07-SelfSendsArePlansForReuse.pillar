@@ -5,14 +5,16 @@
 
 ${slide:title=About this lecture}$
 
-- Related to the "Essence of Dispatch" (sending a message is making a choice)
+- Related to:
+-- 'Sending a message is making a choice' and
+-- ==self== semantics
 - Relevant to any object-oriented language
 - Another essential aspect of object-oriented design
 
 ${slide:title=What you will learn}$
 
 - Message sends are ""hooks"" for subclasses
-- Message sends are places where subclasses code can be invoked
+- Message sends are places where code of subclasses can be invoked
 
 ${slide:title=Let's start thinking}$
 
@@ -86,8 +88,8 @@ ${columns}$
 
 ${column:width=60}$
 
-- Define small methods
-- Send messages
+- Define ==small== methods for each aspects
+- Send messages to ==self==
 - Subclasses can override such methods
 
 ${column:width=40}$
@@ -124,6 +126,8 @@ Node >> ratio
 ]]]
 
 
+
+
 ${slide:title=Subclasses can now reuse the superclass logic}$
 
 [[[
@@ -138,7 +142,8 @@ NodeWithMargins >> ratio
    ^ super ratio + 10
 ]]]
 
-How is computed ==defaultNodeSize== evaluating this expression:
+- In general there is no real need to invoke super ratio, but in our example this is better
+- ==defaultNodeSize== is computed when we execute:
 
 [[[
 NodeWithMargins new setWindowWithRatioForDisplay
@@ -160,7 +165,7 @@ How to use a different ==UINode== in subclasses?
 
 ${slide:title=Another step: same solution applied}$
 
-We can also extract the ==UINode== instantiation into a separate method.
+Extract the ==UINode== instantiation into a separate method.
 
 [[[
 Node >> setWindowWithRatioForDisplay
@@ -196,11 +201,12 @@ Node >> uiNodeClass
    ^ UINode
 ]]]
 
-It is a good practice to define methods that return classes.
-BTW, this is easy in Pharo because classes are regular objects!
+- Subclasses can change UI node class
+- Good practice to define methods that return classes
+- BTW, easy in Pharo because classes are regular objects!
 
 
-${slide:title=Many take-away messages}$
+${slide:title=Many take-aways}$
 
 
 ${columns}$
@@ -209,8 +215,11 @@ ${column:width=70}$
 
 ""Small"" methods are a sign of good design, because:
 - they give a ""name"" to expressions
-- they are a potential ""hook"" for extensibility in subclasses (redefinition)
 - they encapsulate complexity (no need to read all method definitions) if their name is meaningful
+- they ease testing
+- they support ==self==-send messages
+- ==self==-send messages are potential ""hooks"" for extensibility in subclasses (redefinition)
+
 
 ${column:width=30}$
 
@@ -238,10 +247,10 @@ ${endColumns}$
 ${slide:title=Conclusion}$
 
 - Code can be reused and refined in subclasses
-- Sending a message in a class defines a ""hook"":
+- Sending a message to ==self== in a class defines a ""hook"":
 -- i.e. a place where subclasses can ""inject variations""
 
 - Prefer ""small"" methods because:
 -- it gives names to expressions
--- each one is an extensibility point for subclasses
+-- each message to a small method is an extensibility point for subclasses
 
