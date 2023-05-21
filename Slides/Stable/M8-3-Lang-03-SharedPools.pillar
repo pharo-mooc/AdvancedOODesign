@@ -6,8 +6,9 @@
 
 ${slide:title=Goals}$
 
-- Understand shared pools (==SharedPools==)
 - Revisit sharing
+- Understand shared pools (==SharedPools==)
+
 A question: 
 - Using shared variables, we can share values over multiple subclasses within the ""same"" hierarchy.
 - How can we share objects between ""different"" hierarchies?
