@@ -1,5 +1,6 @@
 If you are either a beginner or an expert in object-oriented programming you will love this MOOC because it will change the way you program with objects.
-I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we will present this MOOC on Advanced Object-Oriented Design and Development with Pharo.
+I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we will present this MOOC on Advanced Object-Oriented Design and Development with Pharo. We have accumulated over 60 years of experience in 
+OO design building large systems such as Pharo or the pillar document compilation toolchain. 
 
 This mooc is rich and offers unique lectures. 
 We will 
@@ -23,7 +24,7 @@ debugger is one of the coolest features of Pharo.
 
 If you liked the Pharo mooc http://mooc.pharo.org, you will just love "Advanced Object-Oriented Design and Development with Pharo ". It will bring you to the next level.
 
-
+At the end of this mooc you will have a totally new perspective on Object-oriented design and you will never program the same way. 
 
 
 
