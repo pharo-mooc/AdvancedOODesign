@@ -151,7 +151,7 @@ ${slide:title=Message dispatch supports modularity}$
 
 +>file://figures/Design-FatVsDispatchWithPackages.pdf|width=65+
 
-- We can package different classes into different packages (better modularity)
+We can package different classes into different packages (better modularity)
 
 
 ${slide:title=Limit impact of changes}$
