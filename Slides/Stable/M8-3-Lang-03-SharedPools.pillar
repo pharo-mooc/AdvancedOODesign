@@ -1,41 +1,42 @@
 {
-	"title":"Static sharing across hierarchies",
-	"subtitle":"A Pharo code idiom",
+	"title":"Shared Pools",
+	"subtitle":"Static sharing between hierarchies",
 	"slidesid":"M8S3"
 }
 
-${slide:title=Goal}$
+${slide:title=Goals}$
 
+- Understand shared pools (==SharedPools==)
+- Revisit sharing
+A question: 
 - Using shared variables, we can share values over multiple subclasses within the ""same"" hierarchy.
-- How can we share objects across ""different"" hierarchies?
+- How can we share objects between ""different"" hierarchies?
 
 ${slide:title=Remember: Sharing within a hierarchy}$
 
 A shared variable can be accessed from 
-- the instance methods and
-- the class methods of the class defining it.
-
-I can also be accessed
-- from its subclasses
-- Usually, a shared variable is initialized from the class side of a root
+- Instance methods
+- Class methods of the class defining it
+- From its subclasses
+Usually initialized from the class side of a root
 
 ${slide:title=Remember ComponentMask}$
 
 +>file://figures/SharedVariableColor.pdf|width=75+
 
-${slide:title=Need for sharing across different hierarchies}$
+${slide:title=Need for sharing between different hierarchies}$
 
-- Sometimes we need to share values (generally constants) over ""multiple"" hierarchies: 
--- For example LF, CR, ... in ==String== and ==Text==
-- We don't want to repeat the shared variables and their initialization
+- Need to share values (generally constants) between ""multiple"" hierarchies: 
+-- For example LF, CR, ... between the hierarchies of ==String== and ==Text==
+- Don't want to repeat the shared variables and their initialization
 
 ${slide:title=SharedPools to the rescue}$
 
-A SharedPool is a ""group of shared variables""
-- It contains the definition and
+A ==SharedPool== is a ""group of shared variables"" contains
+- the shared pools definition
 - the initialization of shared variables
 
-Users (classes) just declare that they use a shared pool to access its shared variables
+Users (classes) just declare that they use a shared pool to access ""its"" shared variables
 
 ${slide:title=A SharedPool definition}$
 
@@ -97,7 +98,7 @@ Duration class >> days: aNumber
 	^ self seconds: aNumber * SecondsInDay nanoSeconds: 0
 ]]]
 
-==SecondsInDay== is just accessed directly both from the instance or class side
+==SecondsInDay== is just accessed directly both from instance and class side
 
 ${slide:title=SharedPool users (2)}$
 
