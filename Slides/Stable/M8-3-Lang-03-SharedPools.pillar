@@ -132,12 +132,12 @@ Week class >> startDay
 
 ${slide:title=Warning! Only for constants}$
 
-- You should only store ""constant"" objects in shared pools
+- Should only store ""constant"" objects in shared pools
 - Else you are creating global variables and you are breaking testability in isolation
 
 ${slide:title=Conclusion}$
 
-Shared pools are 
-- Handy to ""share constants"" over multiple classes (potentially in different inheritance trees)
+Shared pools are:
+- Handy to ""share constants"" between multiple classes (potentially in different inheritance trees)
 - Handy to manage constants for bindings to C-libraries
 - ""Only"" use them to share constants
