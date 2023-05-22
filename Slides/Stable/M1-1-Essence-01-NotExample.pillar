@@ -72,13 +72,12 @@ ${slide:title=Hint 3: With at least two classes}$
 The Pharo implementation uses three classes:
 - The class ==Boolean== (abstract), ==True==, and ==False==
 
-${slide:title=Hint 3: With at least two classes}$
+${slide:title=Hint 3: With at least 2 classes and 2 methods}$
 
-
-
-+Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=50+
++Boolean Hierarchy>file://figures/BooleanHiearchyAndInstances.png|width=45+
 
 The class ==Boolean== is not needed per se but it improves reuse
+
 
 ${slide:title=Implementation of Not in two methods}$
 
@@ -119,9 +118,7 @@ ${slide:title=Exercise 2: Implement Or}$
 true | true -> true
 true | false -> true
 true | anything -> true
-]]]
 
-[[[
 false | true -> true
 false | false -> false
 false | anything -> anything

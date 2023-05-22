@@ -62,7 +62,7 @@ In this module we will present some important and simple design patterns such as
 - [Stef] M6-7-DoubleDispatch-AddingNumbers.pillar
 
 ## Module 7: Creation [Files Renamed]
-- [Guille] 1-Principles-01-LazyInitialization
+- [Pablo] 1-Principles-01-LazyInitialization
 - [Guille] 2-Principles-07-ClassHookVsInstanceHook.pillar
 + [Luc] 3-Principles-06-selfVSClassDispatch.pillar
 - [Stef] 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
