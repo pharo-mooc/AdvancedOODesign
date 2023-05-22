@@ -27,15 +27,7 @@ ${slide:title=printString: implementation}$
 [[[
 Object >> printString
 	^ self printStringLimitedTo: 50000
-
-Object >> printStringLimitedTo: limit
-	^self printStringLimitedTo: limit using: [:s | self printOn: s]
-]]]
-
-${slide:title=printStringLimitedTo:using:}$
-
-
-[[[
+	
 Object >> printStringLimitedTo: limit
    | limitedString |
    limitedString := String
