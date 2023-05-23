@@ -101,7 +101,7 @@ stream contents
 ${slide:title=streamContents: to the rescue}$
 
 [[[
-String streamContents: [:s | #(1 2 3) printOn: stream ]
+String streamContents: [:stream | #(1 2 3) printOn: stream ]
 ]]]
 
 - Encapsulate string creation
@@ -151,9 +151,9 @@ AbstractFileReference>> readStreamDo: aBlock
 
 ${slide:title=Stepping back}$
 
+- Avoid spreading knowledge in clients
+- Avoid duplication of logic in clients
 - Encapsulate logic in the API
 - Blocks (closure) helps building powerful API
 -- but don't abuse them! (see Blocks vs Objects lecture)
-- Avoid spreading knowledge in clients
-- Avoid duplication of logic in clients
 
