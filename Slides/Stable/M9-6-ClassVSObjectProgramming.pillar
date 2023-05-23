@@ -13,8 +13,8 @@ ${slide:title=Class-based programming design}$
 
 Sometimes we get class-based programming design:
 - Classes are used as data holder
-- Instances share the ""same"" data
-- Require a new class to represent a new instance or configuration of data
+- Instances of such class ""would share"" the ""same"" data
+- Require a ""new class to represent a new"" instance or configuration of data
 - No real instance specific state
 
 
@@ -26,9 +26,9 @@ ${slide:title=Studying a class hierarchy}$
 ${slide:title=Analysis}$
 
 - Data-oriented classes
-- Static: We have to create a new class for each new changer
-- A class represents an instance! Fishy
-- A class state should describe instance shape not instance values
+- Static: We ""have to create"" a new class for each new changer
+- A class ""represents one"" instance! Fishy
+- A class state should describe instance ""shape"" not instance values
 - Each instance can have a different state
 
 ${slide:title=Compare with instance-based design}$
@@ -65,7 +65,7 @@ ${slide:title=Need a discovery mechanism}$
 -- Annotation, hierarchy query, explicit registration
 
 - Instance-based 
--- Need to store them somewhere: Factory
+-- Need to store instances somewhere
 -- Explicit registration
 
 
