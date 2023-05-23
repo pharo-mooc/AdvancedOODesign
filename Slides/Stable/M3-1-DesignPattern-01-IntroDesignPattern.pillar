@@ -60,7 +60,7 @@ Design Patterns are ""names""
 - They create a design ""vocabulary""
 -- Hook and Template, Factory, Composite, Visitor, Observer, Decorator...
 - You can talk at lunch/blackboard about your design in an ""abstract but precise"" way
-- Design patterns are literature: 
+- Design patterns are ""literature"": 
 -- the books are good
 -- read them, reread them, and read them again!
 
@@ -113,7 +113,7 @@ ${slide:title=Some categories}$
 
 ${slide:title=Some creational patterns}$
 
-- ""Abstract factory"" (how to create objects)
+- Abstract factory (how to create objects)
 - ""Builder"" (provide a programmatic way to create objects)
 - Factory Method
 - Prototype
@@ -124,7 +124,7 @@ ${slide:title=Some structural patterns}$
 - Adapter
 - Bridge
 - ""Composite"" (support nested structure and common api)
-- Decorator
+- ""Decorator""
 - Façade (only useful is super limited case)
 - ""Flyweight"" (how to avoid creating too many objects)
 - Proxy
@@ -138,17 +138,19 @@ ${slide:title=Some behavioral patterns}$
 - Mediator
 - Memento
 - Observer
-- State
+- ""State""
 - ""Strategy"" (delegate behavior)
 - ""Template Method"" (hook/template)
 - ""Visitor"" (first class operation on composite)
-- ""Null Object"" 
 
-${slide:title=Alert!}$
+Some others
+- ""Null Object""
+- ""Type object""
 
-Design Patterns are not a panacea!
-- Do not apply them when you do not need them
-- Design Patterns make software more complex
+${slide:title=Not a panacea!}$
+
+- Do not apply Design Patterns when you do not need them
+- They make software more complex
 -- more classes
 -- more indirections, more messages
 - Try to understand when NOT applying them!
@@ -158,7 +160,7 @@ ${slide:title=Alert!}$
 - Patterns are about ""intent"" and ""tradeoffs""
 - Do not confuse ""intent"" and ""implementation""
 
-${slide:title=Some books}$
+${slide:title=About books}$
 
 ${columns}$
 
