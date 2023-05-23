@@ -104,10 +104,10 @@ ${slide:title=streamContents: to the rescue}$
 String streamContents: [:stream | #(1 2 3) printOn: stream ]
 ]]]
 
-- Encapsulate string creation
+- Encapsulates string creation
 - Optimized
-- Hide details
-- Encapsulate termination
+- Hides details
+- Encapsulates termination
 
 
 ${slide:title=Encapsulate actions using blocks}$
