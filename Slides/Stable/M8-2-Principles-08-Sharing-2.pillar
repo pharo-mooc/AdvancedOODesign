@@ -41,10 +41,8 @@ Object << #Scanner
 	package: 'Compiler'
 ]]]
 
-- What? 
 - Why do we have a shared variable ==TypeTable== and an instance variable ==typeTable== are defined at the instance 
-- A bug?
-- No! This is a nice design
+- A bug? - No! This is a nice design
 - Do you see it?
 
 
@@ -71,9 +69,10 @@ ${slide:title=Explanation}$
 ${slide:title=Specific state for specific instances}$
 
 - Copy the state of ==typeTable== and modify it per instance
-- All methods access instance specific modified state via ==typeTable== instance variable
 
 +.>file://figures/Sharing2.pdf|width=70+
+
+- Possible since all methods access instance specific modified state via ==typeTable== instance variable
 
 ${slide:title=Shared variable points to the share table}$
 
@@ -105,14 +104,14 @@ Scanner >> initialize
 ${slide:title=One instance specific state}$
 
 [[[
-Scanner new setTypeTable: (Scanner defaultTypeTable copy) customized for me
+Scanner new setTypeTable: (Scanner defaultTypeTable copy) customizedForThisUse
 ]]]
 
 
 
 ${slide:title=A subclass with instance with specific table}$
 
-A subclass has just to specialize ==initScanner== without copying the initialization of the table.
+A subclass has just to specialize ==initialize== method
 
 [[[
 MyScanner >> initialize
@@ -121,7 +120,7 @@ MyScanner >> initialize
 	self modifyTypeTable
 ]]]
 
-All the instance of ==MyScanner== will have their own table.
+All the instances of ==MyScanner== will have their own table
 
 ${slide:title=Conclusion}$
 
