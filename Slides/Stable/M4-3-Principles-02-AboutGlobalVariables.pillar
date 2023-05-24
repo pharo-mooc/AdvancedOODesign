@@ -7,11 +7,11 @@
 ${slide:title=Goals/Roadmap}$
 
 - Understand that globals (but also Singleton) are not nice because ""globally"" shared
-- Difficult to test
+- ""Difficult"" to test
 - See that globals may take different forms
 - Study some cases
-- Think modular
-- Polymorphic dispatch requires instances of different classes
+- Think ""modular""
+- Polymorphic dispatch requires instances of ""different"" classes
 
 ${slide:title=Autopsy of an error}$
 
@@ -43,6 +43,7 @@ MyApp >> menu
     ...
 ]]]
 
+Here we extend ==Symbol== class
 [[[
 Symbol >> asIcon
 	 ^ Smalltalk icons iconNamed: self
@@ -65,9 +66,9 @@ MyApp >> menu
 
 ${slide:title=Case 2: A disguised global variable}$
 
-- One global variable but disguished: ""only one"" place to edit but still fundamentally one global variable
+- One global variable but disguised: ""only one"" place to edit but still fundamentally one global variable
 - There is ""only one"" icon table
-- We cannot dispatch to a different object (there is only one ==Symbol== class)
+- We ""cannot"" dispatch to a different object (there is only one ==Symbol== class)
 - MyApp cannot extend or slightly change icons for my application only!
 - I cannot simply have two icon sets at the same time to compare them
 
@@ -122,11 +123,11 @@ Symbol >> asClass
 ${slide:title=Case 3: asClass analysis}$
 
 Same limits as before:
-- Another global entry point
+- Another ""global"" entry point
 - What if we want to remotely access a class in another system
 - We can only have one namespace
 - We cannot inject a special namespace for test for example
-- No way to dispatch to a different object
+- ""No way to dispatch"" to a different object
 
 ${slide:title=Case 3: Possible solution}$
 
@@ -188,7 +189,7 @@ MyApp >> browseMethodFull
 
 ${slide:title=Points to consider}$
 
-- With a global, when it changes, all its users are updated
+- With a global, when it changes, all its users are updated for free
 - How to manage the fact that a tool may change?
 - Browsers may register to a ToolEnvironment to be notified and update its instance
 
