@@ -24,9 +24,9 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2023-05-10 13:28:30 +0000</string>
+	<string>2023-05-24 08:50:23 +0000</string>
 	<key>Modifier</key>
-	<string>Carolina HERNANDEZ</string>
+	<string>luc</string>
 	<key>MovementHandleVisible</key>
 	<string>NO</string>
 	<key>NotesVisible</key>
@@ -154,7 +154,7 @@
 					<array>
 						<dict>
 							<key>Bounds</key>
-							<string>{{160.00000000000003, 79.293065910183174}, {44.009765625, 14}}</string>
+							<string>{{160.00000000000003, 79.293065910183174}, {34.0078125, 14}}</string>
 							<key>Class</key>
 							<string>ShapedGraphic</string>
 							<key>FitText</key>
@@ -198,7 +198,7 @@
 {\*\expandedcolortbl;;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 format: t}</string>
+\f0\fs24 \cf0 format}</string>
 								<key>TextAlongPathGlyphAnchor</key>
 								<string>center</string>
 								<key>VerticalPad</key>
@@ -647,7 +647,7 @@
 								<key>element</key>
 								<string>MOVETO</string>
 								<key>point</key>
-								<string>{466.1193950385711, 119.17299652099609}</string>
+								<string>{466.11939503857104, 119.17299652099609}</string>
 							</dict>
 							<dict>
 								<key>element</key>
@@ -659,7 +659,7 @@
 					</dict>
 					<key>Points</key>
 					<array>
-						<string>{466.1193950385711, 119.17299652099609}</string>
+						<string>{466.11939503857104, 119.17299652099609}</string>
 						<string>{439, 65.346402514648446}</string>
 					</array>
 					<key>Style</key>
@@ -843,7 +843,7 @@
 {\*\expandedcolortbl;;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\partightenfactor0
 
-\f0\fs24 \cf0 format: text\
+\f0\fs24 \cf0 format\
     self formatter format: text}</string>
 						<key>TextAlongPathGlyphAnchor</key>
 						<string>center</string>
@@ -1578,7 +1578,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{-2, 1}, {793, 711}}</string>
+		<string>{{-17, 0}, {808, 726}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>

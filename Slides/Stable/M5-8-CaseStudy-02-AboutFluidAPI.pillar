@@ -10,7 +10,7 @@ ${slide:title=Goals}$
 - Think about fixed and large parameter-driven APIs
 - Fluid API?
 - Think modular
-- Study the class definition printer
+- Study the class definition 
 
 ${slide:title=Numberous mandatory parameter APIs}$
 
@@ -27,17 +27,18 @@ as invoked in
 add: wString icon: aForm help: hString subMenu: aMorph
 	"Append the given submenu with the given label."
 
-	self add: wString icon: aForm help: hString subMenu: aMorph action: nil keyText: nil
+	d add: wString icon: aForm help: hString subMenu: aMorph action: nil keyText: nil
 ]]]
 
 - May force users to specify all parameters (often with ==nil==)
 
 ${slide:title=Handling optional parameters may blow up API}$
 
+Turning
 [[[
 add: wString icon: aForm help: hString subMenu: aMorph
 	"Append the given submenu with the given label."
-	self add: wString icon: aForm help: hString subMenu: aMorph action: nil keyText: nil
+	d add: wString icon: aForm help: hString subMenu: aMorph action: nil keyText: nil
 ]]]
 
 into 
@@ -46,7 +47,7 @@ into
 add: wString icon: aForm help: hString subMenu: aMorph
 	"Append the given submenu with the given label."
 
-	self add: wString icon: aForm help: hString subMenu: aMorph
+	d add: wString icon: aForm help: hString subMenu: aMorph
 ]]]
 
 Requires 
@@ -90,9 +91,9 @@ or
 
 ${slide:title=Analysis}$
 
-- No need to pass default value around
-- No combinatorial parameters explosion
-- Users focus on the message they need
+- ""No need"" to pass default value around
+- ""No combinatorial"" parameters explosion
+- Users focus on the message ""they need""
 - Requires good (and modular) initialization
 - Should pay attention to dependencies between parameter
 
@@ -106,10 +107,10 @@ ${slide:title=Historically: a class definition in ST-80}$
 
 [[[
 ArrayedCollection variableSubclass: #Array
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	poolDictionaries: ''''
-	category: ''Collections-Sequenceable-Base'''
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Collections-Sequenceable-Base'
 ]]]
 
 
@@ -120,16 +121,16 @@ ${slide:title=Pharo up to Pharo 90}$
 
 [[[
 Object subclass: #Point
-	instanceVariableNames: ''x y''
-	classVariableNames: ''''
-	package: ''Kernel-BasicObjects'''
+	instanceVariableNames: 'x y'
+	classVariableNames: ''
+	package: 'Kernel-BasicObjects'
 ]]]
 
 [[[
 ArrayedCollection variableSubclass: #Array
-	instanceVariableNames: ''''
-	classVariableNames: ''''
-	package: ''Collections-Sequenceable-Base''
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'Collections-Sequenceable-Base'
 ]]]
 
 
@@ -151,7 +152,7 @@ ${slide:title=Using a Fluid API}$
 - Composable
 - Extensible
 But
-- needs a builder 
+- Needs a builder 
 - (optional) default values
 
 
@@ -204,10 +205,10 @@ Trait << #TTranscript
 
 ${slide:title=Builder API roles}$
 
-- a ""starting/creator"" message: to create a kind of ""accumulator"" (an holder of arguments)
+- A ""starting/creator"" message: to create a kind of ""accumulator"" (an holder of arguments)
 -- this one can be omitted when the builder is already created by the framework
-- some ""configuration/setter"" messages
-- a ""closing"" message: to perform an action ""once"" the arguments are passed around
+- Some ""configuration/setter"" messages
+- A ""closing"" message: to perform an action ""once"" the arguments are passed around
 
 
 ${slide:title=Roles in class definition}$
