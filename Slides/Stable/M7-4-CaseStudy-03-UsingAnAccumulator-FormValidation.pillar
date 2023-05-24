@@ -34,7 +34,7 @@ ${slide:title=Validation}$
 What should return the validation? 
 - Yes/no?
 - Specific objects with semantics 
--- e.g. filepath is isInvalid?
+-- e.g. filepath is isValid?
 
 ${slide:title=A formular: A tree of instances}$
 
@@ -47,8 +47,8 @@ ${slide:title=A first design}$
 - Per default does nothing
 
 [[[
-SpPresenter >> isInvalid
-	^ false
+SpPresenter >> isValid
+	^ true
 ]]]	
 
 [[[	
@@ -60,8 +60,8 @@ ${slide:title=A given item can refine it}$
 
 
 [[[
-MyFilePathPresenter >> isInvalid
-	^ self path isEndingBy: 'git'
+MyFilePathPresenter >> isValid
+	^ self inputField isEndingBy: 'git'
 ]]]
 
 [[[
@@ -74,8 +74,8 @@ ${slide:title=A first design: Container}$
 A container defines the semantics of collection for its children
 
 [[[
-SpOptionPresenter >> isInvalid
-	^ self children anySatisfy: [:each | each isInvalid ]
+SpOptionPresenter >> isValid
+	^ self children allSatisfy: [:each | each isValid ]
 ]]]
 
 [[[	
@@ -83,7 +83,7 @@ SpOptionPresenter >> report
 	| report |
 	report := SpValidationReport new. 
 	self children do: [ :childPresenter | 
-		childPresenter isInvalid ifTrue: [ report add: childPresenter report ]].
+		childPresenter isValid ifFalse: [ report add: childPresenter report ]].
 	^ report
 ]]]
 
@@ -96,8 +96,8 @@ ${slide:title=Flow's first design}$
 ${slide:title=Analysis}$
 
 - To have a report we need to know if the validation failed or not
-- Should ==isInvalid== return a report?
-- If ==isInvalid== returns a report then we have to return an ok report for anybody
+- Should ==isValid== return a report?
+- If ==isValid== returns a report then we have to return an ok report for anybody
 
 ${slide:title=Flow's first design}$
 
