@@ -41,13 +41,11 @@ ${slide:title=Analysis}$
 Pros: 
 - Just create instances
 - Can represent multiple and different configurations
-- Can decorate instances 
-
 
 [[[
 Changer new
 	command: CommandPosition;
-	mutliFormClass: PropertyDualInput new;
+	multiFormClass: PropertyDualInput ;
 	....
 	yourself
 ]]]
