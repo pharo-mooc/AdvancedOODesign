@@ -16,7 +16,7 @@ ${slide:title=File entry examples}$
 
 ${columns}$
 
-${column:width=40}$
+${column:width=35}$
 
 [[[
 Pharo.image
@@ -37,16 +37,16 @@ MOOC_Files/
 		Pharo.changes
 ]]]
 
-${column:width=55}$
+
+${column:width=60}$
+
+A file entry is:
+- a file
+- or a folder with entries as children
+
 
 ${endColumns}$
 
-
-${slide:title=File entries}$
-
-An entry is:
-- a file
-- or a folder with entries as children
 
 ${slide:title=Documents}$
 
@@ -78,7 +78,7 @@ ${slide:title=Now the question!}$
 - How do we draw diagram elements?
 - How do we draw a diagram?
 
-We do not want to have to check if we are talking to an element or to a diagram composed of elements!
+Can we draw ''diagram elements'' (circle, ...) and ''diagrams'' (composed of elements) without explicitly checking?
 
 ${slide:title=Composite motivation}$
 
@@ -125,7 +125,7 @@ What is key:
 - Leaves offer the ""same"" API as the composite
 - Each leave do something ""different"" but with the ""same"" API (polymorphism)
 - The composite element offers the same API and some functionality to manage children
-- Leaves and the composite are ""substituable""
+- Leaves and the composite are ""substitutable""
 -- Clients do not have to check
 
 ${slide:title=Composite participants: Client}$
@@ -162,12 +162,6 @@ ${slide:title=Composite participants: Composite}$
 - defines behavior for components with children via a ""polymorphic"" API (here ==draw==)
 - stores child components
 - implements child-related operations (==add==,==remove==,...)
-
-${slide:title=Composite consequences}$
-
-- Leaves and composite objects expose a common polymorphic API
-- Clients do not have to check and treat composite and leaves objects uniformly
-- Adding new leaves is simple
 
 ${slide:title=Important!}$
 
@@ -227,5 +221,6 @@ ${slide:title=Conclusion}$
 
 - Composite is about composing objects into tree structures to represent part-whole hierarchies
 - Composite provides a uniform API to clients for leaves and composite
+- Composite is extensible (easy to add new leaves)
 - Basis for complex treatments expressed as Visitors
 -- see Lectures on Visitor

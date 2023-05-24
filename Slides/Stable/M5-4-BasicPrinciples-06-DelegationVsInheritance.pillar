@@ -111,7 +111,7 @@ Some criteria:
 - ""Packaging""
 -- Can I deploy a new formatting algorithm separately from others?
 - ""Dynamic switch""
--- Can I dynamically switch to a another formatting algorithm?
+-- Can I dynamically switch to another formatting algorithm?
 
 ${slide:title=Evaluating inheritance-based solution}$
 
