@@ -397,7 +397,7 @@ ${slide:title=Supports (1/2) + (4/3)}$
 	...
 ]]]
 
-${slide:title=Taking care of Integers and Floats}$
+${slide:title=Taking care of Integers and Floats as arguments}$
 
 [[[
 	Fraction >> + aNumber
@@ -429,6 +429,44 @@ ${slide:title=Now supporting: (1/2) + 1 and (1/2) + 2.1}$
 	Float >> sumWithFraction: aFrac
 		^ addf(self, aFrac asFloat)
 ]]]
+
+${slide:title=What about 1 + (1/2)?}$
+
+[[[
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+		...
+	
+]]]
+
+We should define ==Fraction>>sumWithInteger:==
+
+${slide:title=What about 1 + (1/2)}$
+
+[[[
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+
+	Fraction >> sumWithInteger: anInteger
+		...
+	
+]]]
+
+
+${slide:title=Fraction >> sumWithInteger: }$
+
+[[[
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+
+	Fraction >> sumWithInteger: anInteger
+		^ Fraction num: (self num + anInteger * aFrac denum) denum: aFrac denum
+	...
+]]]
+
+- Now we support ==1 + (1/2)==
+- Should do the same for ==0.5 + (3/4)==
+- We let you do it
 
 ${slide:title=Full code for Fraction }$
 
@@ -476,7 +514,7 @@ X >> + aNumber
 
 ${slide:title=Stepping back}$
 
-- We can add ==Fraction== without changing any previous method 
+- We could add ==Fraction== without changing any previous methods 
 - Another example of "Sending a message is making a choice"
 
 ""Different kinds of messages""
@@ -484,14 +522,15 @@ ${slide:title=Stepping back}$
 - Double dispatching messages
 
 ${slide:title=Double Dispatch}$
+
 - Essence of Visitor Design Pattern (see Lecture)
 - Double dispatch is a clear illustration of ""Do not ask, Tell"" OOP tenet
 - Used really frequently for event, drawing, ...
 
 ${slide:title=When not using Double Dispatch}$
 
-- No class to dispatch on
-- We need an different instance of dispatch to!
+- No ""different class"" to dispatch on
+- We need a ""different"" instance of dispatch to!
 
 ${slide:title=Double Dispatch drawback}$
 
@@ -510,3 +549,4 @@ ${slide:title=Conclusion}$
 - Powerful
 - Modular
 - Just send an extra message to an argument and use late binding
+- But can make program execution difficult to follow
