@@ -136,7 +136,7 @@ All microdown elements and their parametrization
 - ==item==...
 
 
-${slide:title=About generation of leave elements}$
+${slide:title=About generation of leaf elements}$
 
 For leaves, i.e., unstructured text or elements
 - Just pass the argument
@@ -151,7 +151,7 @@ aBuilder newLine
 ]]]
 
 
-${slide:title=Codeblock is also a leave element}$
+${slide:title=Codeblock is also a leaf element}$
 
 [[[
 	aBuilder codeblock: 

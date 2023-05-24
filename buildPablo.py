@@ -9,7 +9,6 @@ OUTDIR="__results.pablo"
 SLIDES= [
     "Slides/Stable/M10-2-Principles-09-SubtypingVsSubclassing.pillar",
      "Slides/Stable/M10-3-Principles-10-DynamicStaticType.pillar",
-     "Slides/Stable/M10-5-Principles-05-AboutDefensiveProgramming.pillar",
     "Slides/Stable/M5-2-DesignPattern-11-State.pillar",
      "Slides/Stable/M5-5-CaseStudy-01-TurningAProcIntoAnObject.pillar",
      "Slides/Stable/M5-6-Lang-04-BlocksVsObjects.pillar",
@@ -23,7 +22,8 @@ SLIDES= [
      "Slides/Stable/M8-6-DesignPattern-12-TypeObject.pillar",
      "Slides/Stable/M9-1-Principles-04-LawOfDemeter.pillar",
      "Slides/Stable/M9-4-CaseStudy-06-LayeredSettingsArchitecture.pillar",
-     "Slides/Stable/M9-5-CaseStudy-05-Sokoban-Analysis.pillar"
+     "Slides/Stable/M5-3-DesignPattern-07-Command-Application.pillar",
+	"Slides/Stable/M5-3-DesignPattern-07-Command-Definition.pillar" 
 ]
 
 class MyTerm:
