@@ -7,12 +7,9 @@
 ${slide:title=Objectives}$
 
 - Think about objects
+- Think about structure traversal
 - Look at objects as accumulators
 
-${slide:title=Scenario}$
-
-- How can we navigate a tree of instances (widgets)?
-- Where children can decide to be skipped?
 
 
 ${slide:title=The case: Validation}$
@@ -24,12 +21,20 @@ ${slide:title=The case: Validation}$
 
 +.>file://figures/ValidationExample.png|width=60+
 
+
+${slide:title=Questions}$
+
+- How can we navigate a tree of instances (widgets)?
+- Where children can decide to be skipped?
+- What do we report?
+
+
 ${slide:title=Validation}$
 
 What should return the validation? 
-- Yes no?
+- Yes/no?
 - Specific objects with semantics 
--- e.g. filepath is invalid?
+-- e.g. filepath is isInvalid?
 
 ${slide:title=A formular: A tree of instances}$
 
@@ -42,9 +47,11 @@ ${slide:title=A first design}$
 - Per default does nothing
 
 [[[
-SpPresenter >> invalid
+SpPresenter >> isInvalid
 	^ false
-	
+]]]	
+
+[[[	
 SpPresenter >> report
 	^ OkReport new
 ]]]
@@ -53,9 +60,11 @@ ${slide:title=A given item can refine it}$
 
 
 [[[
-MyFilePathPresenter >> invalid
+MyFilePathPresenter >> isInvalid
 	^ self path isEndingBy: 'git'
+]]]
 
+[[[
 MyFilePathPresenter >> report
 	^ WrongFileEndingReport new expecting: 'git' ; for: self path
 ]]]
@@ -65,14 +74,16 @@ ${slide:title=A first design: Container}$
 A container defines the semantics of collection for its children
 
 [[[
-SpOptionPresenter >> invalid
-	^ self children anySatisfy: [:each | each invalid ]
-	
+SpOptionPresenter >> isInvalid
+	^ self children anySatisfy: [:each | each isInvalid ]
+]]]
+
+[[[	
 SpOptionPresenter >> report
 	| report |
 	report := SpValidationReport new. 
 	self children do: [ :childPresenter | 
-		childPresenter invalid ifTrue: [ report add: childPresenter report ]].
+		childPresenter isInvalid ifTrue: [ report add: childPresenter report ]].
 	^ report
 ]]]
 
@@ -85,8 +96,8 @@ ${slide:title=Flow's first design}$
 ${slide:title=Analysis}$
 
 - To have a report we need to know if the validation failed or not
-- Should ==invalid== return a report?
-- If ==invalid== returns a report then we have to return an ok report for anybody
+- Should ==isInvalid== return a report?
+- If ==isInvalid== returns a report then we have to return an ok report for anybody
 
 ${slide:title=Flow's first design}$
 
