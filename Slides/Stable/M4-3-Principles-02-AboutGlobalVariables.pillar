@@ -66,7 +66,7 @@ MyApp >> menu
 
 ${slide:title=Case 2: A disguised global variable}$
 
-- One global variable but disguished: ""only one"" place to edit but still fundamentally one global variable
+- One global variable but disguised: ""only one"" place to edit but still fundamentally one global variable
 - There is ""only one"" icon table
 - We ""cannot"" dispatch to a different object (there is only one ==Symbol== class)
 - MyApp cannot extend or slightly change icons for my application only!
