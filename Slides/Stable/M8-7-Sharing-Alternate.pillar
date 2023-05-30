@@ -7,10 +7,10 @@
 ${slide:title=Remember}$
 
 We saw:
-- Shared variables to share info between all instances of a class and instances of its subclasses
-- Mixing an instance variable and a shared variable: sharing by default and instance-based customization
+- Shared variables to share info between ""all instances"" of a class and instances of subclasses
+- Mixing an instance variable and a shared variable: ""sharing by default and instance-based"" customization
 - Flyweigth
-Here is another variation on that theme taken from Bloc
+Here is another variation on that theme taken from Bloc graphical framework
 
 
 ${slide:title=BlElement}$
@@ -37,7 +37,7 @@ ${slide:title=The objectives}$
 
 - Default visuals are shared
 - A property can be modified
-- How to support property modification without paying an instance variable for all the shared default?
+- How to support property modification ""without paying"" an instance variable for all the shared default?
 
 
 ${slide:title=Overview}$
@@ -47,7 +47,7 @@ ${slide:title=Overview}$
 ${slide:title=BlElementVisuals and setup}$
 	 
 - Make sure that many default values are shared by default
-- And that modifications to these defaults is possible on a per instance level
+- Modifications to these defaults is possible on a per instance level
 - ""But"" without one instance variable per property
 
 ${slide:title=BlElementVisuals}$
@@ -94,7 +94,7 @@ BlDefaultVisuals >> background
 
 
 [[[
-defaultBackground
+BlDefaultVisuals >> defaultBackground
 	^ DefaultBackground
 ]]]
 
@@ -153,9 +153,11 @@ ${slide:title=What is the difference with the TypeTable/typeTable}$
 - Avoid to have one instance variable per customisation point
 - But still we have instance-based and sharing
 
-${slide:title=Analysis}$
+${slide:title=Analysis/Conclusion}$
 
 - Is all the complexity needed?
+-- Hijack default setter patterns
 - Requires some memory analysis:
 -- empty instance variables per instance that shared a default
 - How many objects?
+  
