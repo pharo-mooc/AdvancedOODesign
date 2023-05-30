@@ -3,7 +3,7 @@
 
 [Stef ]
 With this mooc you will develop a totally new perspective on software design. It will change the way you program with objects.
-I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we created this Mooc based on our academic and industrial experience in OO design building large systems such as Pharo.
+I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we created this Mooc based on our academic and industrial experience  building large systems such as Pharo.
 
 [Pablo ]
 As we are the main developers of the Pharo programming language, this Mooc uses it for all the code examples.
