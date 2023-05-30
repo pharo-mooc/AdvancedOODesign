@@ -85,7 +85,7 @@ ClassDefinitionPrinter ( forClass )
 
 ${slide:title=Solution: Delegating to a class definition printer}$
 
-+>file://figures/ClassPrinterFluid.pdf|width=90+
++>file://figures/ClassPrinterFluidSimpler.pdf|width=90+
 
 
 ${slide:title=The class asks a printer}$
