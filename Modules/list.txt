@@ -1,15 +1,15 @@
-- [Stef] 0-AboutTheMooc.pillar
+- Checked [Stef] 0-AboutTheMooc.pillar
 
 ## Module 1: Understanding messages
 This first module revisits elementary concepts around self, super and the power of dispatching to dedicated objects.
 The case study shows how to go from a monolithic design with one kind of formats to the handling of optional different formats in the Pillar ddocument compilation chain.
 
-- [Stef] 1-Essence-01-NotExample.pillar
+- Checked [Stef] 1-Essence-01-NotExample.pillar
 + [Luc] 2-Essence-02-Dispatch.pillar
 + [Luc] 3-Essence-03-Inheritance-Basic.pillar
-- [Stef] 4-Essence-04-Self.pillar
+- Redone [Stef] 4-Essence-04-Self.pillar
 - [Guille] 5-Essence-05-Super.pillar
-- [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
+- Checked Should redo Slide 4 - this is not a document this is the class PRDOcument [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
 ## Module 2: Tests
 This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer.
@@ -23,7 +23,7 @@ This module covers an important aspect: testing applications and how to take adv
 ## Module 3: Hooks
 In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible using hooks. The case study will be about going from monolithic to parametrized objects.
 
-- [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
+- Checked [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
 + [Luc] 2-Essence-07-SelfSendsArePlansForReuse.pillar (template methods)
 + [Luc] 3-DesignPattern-02-HookAndTemplate.pillar (Copy PostCopy)
 - [Stef] 4-Lang-01-Stream.pillar
@@ -53,7 +53,7 @@ In this module we will present some important and simple design patterns such as
 - [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 6: About double dispatch [Files Renamed]
-- [Stef] 1-DoubleDispatch-01-StoneExercise.pillar
+- Checked [Stef] 1-DoubleDispatch-01-StoneExercise.pillar
 - [Guille] 2-DoubleDispatch-04-NoSymmetrical.pillar
 - [Stef] 3-DoubleDispatch-03-Dice.pillar
 - [Luc] 4-DesignPattern-04-Visitor.pillar
@@ -72,7 +72,7 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
 
 #Module 8: Sharing [Files Renamed]
-- [Stef] 1-Lang-02-SharedVariables.pillar
+- Checked v2 [Stef] 1-Lang-02-SharedVariables.pillar
 - [Stef] 2-Principles-08-Sharing.pillar
 - [Stef] 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
