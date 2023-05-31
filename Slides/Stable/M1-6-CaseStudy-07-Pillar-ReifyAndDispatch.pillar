@@ -28,14 +28,14 @@ ${slide:title=Pillar's .pillar file management}$
 ""How to get a document parsed?""
 - Ask the parser
 - The parser turns a pillar file into a document tree
-- There is one parser associated to a document
+- There was one parser associated to the class ==PRDocument==
 
 [[[
 PRDocument parser parseFile: aFileReference
 ]]]
 
 - Avoids to hardcode ==PRParser== everywhere 
-- Worked to substittute different versions of PetitParser parser
+- Worked to substitute different versions of PetitParser parser
 
 
 
