@@ -50,23 +50,23 @@ In this module we will present some important and simple design patterns such as
 - [Pablo] 5-CaseStudy-01-TurningAProcIntoAnObject.pillar
 - [Pablo] 6-Lang-04-BlocksVsObjects.pillar
 - [Guille] 7-Principles-01-AvoidIsNil.pillar
-- [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
+- Checked [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
 
 ## Module 6: About double dispatch [Files Renamed]
 - Checked [Stef] 1-DoubleDispatch-01-StoneExercise.pillar
 - [Guille] 2-DoubleDispatch-04-NoSymmetrical.pillar
-- [Stef] 3-DoubleDispatch-03-Dice.pillar
+- checked can we remove the slide 20 / remove glitch on slide 26  [Stef] 3-DoubleDispatch-03-Dice.pillar
 - [Luc] 4-DesignPattern-04-Visitor.pillar
 - [Luc] 5-DesignPattern-05-VisitorDiscussions.pillar
-- [Stef] 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
+- checked [Stef] 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 - [Stef] M6-7-DoubleDispatch-AddingNumbers.pillar
 
 ## Module 7: Creation [Files Renamed]
 - [Pablo] 1-Principles-01-LazyInitialization
 - [Guille] 2-Principles-07-ClassHookVsInstanceHook.pillar
 + [Luc] 3-Principles-06-selfVSClassDispatch.pillar
-- [Stef] 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
-- [Stef] 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
+- checked [Stef] 4-CaseStudy-03-UsingAnAccumulator-FormValidation.pillar
+- checked [Stef] 5-CaseStudy-04-PowerOfDelegationClassDefinitionPrinter.pillar
 - [Pablo] 6-DesignPattern-08-Builder.pillar
 - [Pablo] 7-Lang-05-AboutBuilder.pillar
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
@@ -86,7 +86,7 @@ In this module we will present some important and simple design patterns such as
 - [Luc] 3-Principles-03-AboutRegistration.pillar
 - [Pablo] 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - [Guille] 5-CaseStudy-05-Sokoban-Analysis.pillar
-- [Stef] 6-ClassVsObject.pillar
+- Checked [Stef] 6-ClassVsObject.pillar
 
 ## Module 10: Type [Files Renamed]
 - [Luc] 1-Principles-12-DualInterfaces.pillar
