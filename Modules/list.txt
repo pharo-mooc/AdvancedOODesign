@@ -35,7 +35,7 @@ some design patterns such as Singleton and Decorator
 
 + [Luc] 1-BasicPrinciples-01-MethodIsReuse.pillar
 - [Pablo] 2-BasicPrinciples-04-AboutObjectsVSData.pillar
-- [Stef] 3-BasicPrinciples-03-AboutGlobalVariable.pillar
+- Checked okish [Stef] 3-BasicPrinciples-03-AboutGlobalVariable.pillar
 - [Pablo] 4-BasicPrinciples-05-FatClassesAreBad.pillar
 - [Guille] 5-DesignPattern-06-Singleton.pillar
 - [Guille] 6-DesignPattern-09-Decorator.pillar
@@ -74,7 +74,7 @@ In this module we will present some important and simple design patterns such as
 #Module 8: Sharing [Files Renamed]
 - Checked v2 [Stef] 1-Lang-02-SharedVariables.pillar
 - [Stef] 2-Principles-08-Sharing.pillar
-- [Stef] 3-Lang-03-SharedPools.pillar
+- Checked [Stef] 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
 - [Guille] 5-DesignPattern-10-Flyweigth.pillar
 - [Pablo] 6-DesignPattern-12-TypeObject.pillar
