@@ -11,7 +11,7 @@ The case study shows how to go from a monolithic design with one kind of formats
 - [Guille] 5-Essence-05-Super.pillar
 - [Stef] 6-CaseStudy-07-Pillar-ReifyAndDispatch.pillar
 
-## Module 2: Tests
+## Module 2: Test-driven Design
 This module covers an important aspect: testing applications and how to take advantage of test driven design. It shows in particular the power of eXtreme Test Driven Design and how writing tests first and coding in the debugger is empowering the designer.
 
 - [Guille] 1-Tests-01-101.pillar
@@ -20,7 +20,7 @@ This module covers an important aspect: testing applications and how to take adv
 - [Pablo] 4-Tests-04-XTDD.pillar
 - [Pablo] 5-Tests-05-ParametrizedTests.pillar
 
-## Module 3: Hooks
+## Module 3: Hooks: support for evolution
 In this module we will start to look at design pattern. In parallel we will discuss a key point of object-oriented design that is how to design abstraction that extensible using hooks. The case study will be about going from monolithic to parametrized objects.
 
 - [Stef] 1-DesignPattern-01-IntroDesignPattern.pillar
@@ -52,7 +52,7 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 7-Principles-01-AvoidIsNil.pillar
 - [Stef] 8-CaseStudy-02-AboutFluidAPI.pillar
 
-## Module 6: About double dispatch [Files Renamed]
+## Module 6: Double dispatch [Files Renamed]
 - [Stef] 1-DoubleDispatch-01-StoneExercise.pillar
 - [Guille] 2-DoubleDispatch-04-NoSymmetrical.pillar
 - [Stef] 3-DoubleDispatch-03-Dice.pillar
@@ -61,7 +61,7 @@ In this module we will present some important and simple design patterns such as
 - [Stef] 6-DoubleDispatch-05-StoneExercise-AboutResult.pillar
 - [Stef] M6-7-DoubleDispatch-AddingNumbers.pillar
 
-## Module 7: Creation [Files Renamed]
+## Module 7: Object Creation [Files Renamed]
 - [Pablo] 1-Principles-01-LazyInitialization
 - [Guille] 2-Principles-07-ClassHookVsInstanceHook.pillar
 + [Luc] 3-Principles-06-selfVSClassDispatch.pillar
@@ -71,7 +71,7 @@ In this module we will present some important and simple design patterns such as
 - [Pablo] 7-Lang-05-AboutBuilder.pillar
 - [Guille] 8-Essence-06-DidYouUnderstandSuper.pillar
 
-#Module 8: Sharing [Files Renamed]
+#Module 8: Sharing Objects [Files Renamed]
 - [Stef] 1-Lang-02-SharedVariables.pillar
 - [Stef] 2-Principles-08-Sharing.pillar
 - [Stef] 3-Lang-03-SharedPools.pillar
@@ -80,7 +80,7 @@ In this module we will present some important and simple design patterns such as
 - [Pablo] 6-DesignPattern-12-TypeObject.pillar
 - [ Stef ] 8-7-Sharing-Alternate.pillar
 
-## Module 9: About Inversion of control / Registration [Files Renamed]
+## Module 9: Inversion of control [Files Renamed]
 - [Guille] 1-Principles-04-LawOfDemeter.pillar
 - [Luc] 2-Principles-02-AboutClassMethodsAndRegistration.pillar
 - [Luc] 3-Principles-03-AboutRegistration.pillar
@@ -88,7 +88,7 @@ In this module we will present some important and simple design patterns such as
 - [Guille] 5-CaseStudy-05-Sokoban-Analysis.pillar
 - [Stef] 6-ClassVsObject.pillar
 
-## Module 10: Type [Files Renamed]
+## Module 10: About types [Files Renamed]
 - [Luc] 1-Principles-12-DualInterfaces.pillar
 - [Pablo] 2-Principles-09-SubtypingVsSubclassing.pillar
 - [Pablo] 3-Principles-10-DynamicStaticType.pillar
