@@ -1,3 +1,68 @@
+
+
+
+[Stef ]
+With this mooc you will develop a totally new perspective on software design. It will change the way you program with objects.
+I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we created this Mooc based on our academic and industrial experience  building large systems such as Pharo.
+
+[Pablo ]
+As we are the main developers of the Pharo programming language, this Mooc uses it for all the code examples.
+However, this MOOC is relevant to any object-oriented language such as Java or C#.
+Then, this MOOC targets any programmer.
+Whether you are doing your first steps or you are an expert in object-oriented programming, this MOOC will empower you and help you refine your own practice. 
+
+[Luc]
+With more than 60 videos this mooc is organized in 10 nearly independent modules covering essential object-oriented concepts, design principles, software testing, design patterns and concrete case studies. 
+In each module, you will find: lectures, case studies, exercises and quizzes.
+Feel free to follow this mooc in the order that suits you.
+
+[Guille]
+We love automation and tests. This is why we also present test-driven development as a design technique.
+We further present Xtreme TDD and we show how coding in the debugger puts tests at the center of design development and increases your productivity.
+If you liked the Pharo mooc http://mooc.pharo.org/, you will just love "Advanced Object-Oriented Design and Development with Pharo ". It will bring you to the next level on object-oriented design.
+
+
+
+
+—----
+
+This Mooc is about Advanced Object-Oriented Design and Development.
+It is organized in 10 independent modules that you will be able to do in the order that pleases you.
+You will find in each module: lectures, case studies, exercises and quizzes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 If you are either a beginner or an expert in object-oriented programming you will love this MOOC because it will change the way you program with objects.
 I am Stéphane Ducasse, with Luc Fabresse, Guillermo Polito and Pablo Tesone, we will present this MOOC on Advanced Object-Oriented Design and Development with Pharo. We have accumulated over 60 years of experience in 
 OO design building large systems such as Pharo or the pillar document compilation toolchain. 

@@ -95,7 +95,7 @@ ${slide:title=Analysis}$
 - ""No combinatorial"" parameters explosion
 - Users focus on the message ""they need""
 - Requires good (and modular) initialization
-- Should pay attention to dependencies between parameter
+- Should pay attention to dependencies between parameters
 
 ${slide:title=Case study: class definition}$
 

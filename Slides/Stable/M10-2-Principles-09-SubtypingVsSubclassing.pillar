@@ -269,9 +269,9 @@ ${slide:title='extend' one term for two concepts}$
 
 ${slide:title=Conclusion}$
 
-- Subtyping is about  program specification ""reuse""
+- Subclassing is about  program specification ""reuse""
 - Subtyping is about creating ""family of classes sharing common API""
-- ""Avoid"" subclassing: it is a bad idea
+- ""Avoid"" subclassing: it is a bad idea when you want subtyping
 
 
 
