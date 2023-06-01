@@ -1,1 +1,0 @@
-buildAll is a hack to accumulate all the generated pdf. Once pillar will be fixed (and able to take all the files and produce slides we will not need it anymore. Right now pillar is able to lbuild multiple files from a book but not multiple files of slides. A transformer is barking).
