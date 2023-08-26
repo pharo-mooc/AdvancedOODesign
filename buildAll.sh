@@ -1,20 +1,22 @@
+#!/bin/bash
+
+rm -fr __results
 mkdir __results
 
-for OUTPUT in $(find Slides/Stable -name '*.pillar')
+buildSlide() {
+    f=$1
+	echo $f
+	pillar build pdf $f
+	echo _result/pdf/${f%.pillar}.pdf
+	cp _result/pdf/${f%.pillar}.pdf __results
+}
+
+for PILLAR_FILE in $(find Slides/Stable -name '*.pillar')
 do
-	x=$OUTPUT
-	echo $x
-	pillar build pdf $OUTPUT
-	echo _result/pdf/${x%.pillar}.pdf
-	cp _result/pdf/${x%.pillar}.pdf __results
+	buildSlide $PILLAR_FILE
 done
 
-
-for OUTPUT in $(find Slides/Lectures -name '*.pillar')
-do
-	x=$OUTPUT
-	echo $x
-	pillar build pdf $OUTPUT
-	echo _result/pdf/${x%.pillar}.pdf
-	cp _result/pdf/${x%.pillar}.pdf __results
-done
+# for PILLAR_FILE in $(find Slides/Lectures -name '*.pillar')
+# do
+# 	buildSlide $PILLAR_FILE
+# done

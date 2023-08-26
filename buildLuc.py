@@ -47,11 +47,14 @@ class MyTerm:
         print(color + str + MyTerm.ENDC)
 
 
+def basename(s):
+    return s.rsplit('/', 1)[-1]
 
 def main():
     parser = argparse.ArgumentParser(description='Compile Luc Slides')
     # prefixing the argument with -- means it's optional
     parser.add_argument('-s','--slide', help='slide num to compile')
+    parser.add_argument('-f','--force', help='force slide to compile', action='store_true')
     args = parser.parse_args()
 
     filesToCompile = SLIDES
@@ -61,11 +64,27 @@ def main():
         os.system(f"rm -fr {OUTDIR} && mkdir -p {OUTDIR}")
 
     for pillarfile in filesToCompile:
-        pdffile = pillarfile.rsplit('.', 1)[0] + '.pdf'
-        MyTerm.print(pillarfile,MyTerm.WARNING)
-        cmd = f"pillar build pdf {pillarfile} && cp _result/pdf/{pdffile} {OUTDIR}"
-        MyTerm.print(cmd)
-        os.system(cmd)
+        fullpillarfile = pillarfile.strip()
+        pillarfile = basename(fullpillarfile)
+
+        pdffile = basename(fullpillarfile)
+        pdffile = pdffile.rsplit('.', 1)[0] + '.pdf'
+        fullpdffile = "__results/" + pdffile
+
+        # MyTerm.print(pillarfile,MyTerm.WARNING)
+        MyTerm.print(pdffile,MyTerm.WARNING)
+        # MyTerm.print(fullpdffile,MyTerm.WARNING)
+
+        pillarModificationTime = os.stat(fullpillarfile).st_mtime
+        pdfModificationTime = os.stat(fullpdffile).st_mtime
+
+        if (pillarModificationTime>pdfModificationTime) or args.force:
+            cmd = f"pillar build pdf {fullpillarfile} && cp -f {fullpdffile} {OUTDIR}/"
+            # cmd = f"pillar build pdf {fullpillarfile} && cd {OUTDIR} && ln -s ../{fullpdffile}"
+            MyTerm.print(cmd)
+            os.system(cmd)
+        else:
+            MyTerm.print("up to date")
 
 if __name__ == '__main__':
     main()
