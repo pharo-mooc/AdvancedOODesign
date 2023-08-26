@@ -1,0 +1,88 @@
+Mooc
+Identify the key mechanisms and essence of OOD
+
+Module 1: Understanding messages
+Repenser complètement ce qu'est un envoi de message
+Envoyer un message c'est faire un choix basé sur les classes
+Distinguer les 2 approches de l'héritage, statique et dynamique / Comprendre la création de sous-classes
+Comprendre l'envoi d'un message et comprendre le fonctionnement de Lookup
+Comprendre et utiliser Super pour effectuer une bonne recherche de méthode
+Comprendre la mécanique d'une transformation qui rend explicite un comportement implicite
+
+Module 2: Test-driven design
+Comprendre la structure et les bénéfices d'un test / Spécifier un bon test automatique
+Comprendre les bénéfices d'une bonne suite de tests
+Comprendre et appliquer le workflow du TDD
+Connaitre la technique de Xtrem test driven development et l'utiliser avec les outils de Pharo 
+Utiliser les parametrized tests et amplifier leurs usages avec différentes valeurs
+
+Module 3: Hooks: support for evolution
+Identifier un design pattern et les différentes formes existantes
+Prévoir des hook permettant l'extension du code
+Analyser des exemples de hook et template
+Qu'est-ce qu'une stream ?
+Passer d'un design global monolitique à un design paramétrable
+
+Module 4: Object state & behavior
+Enrichir l'API des objets
+Comprendre la difference entre un objet et la structure de données et l'importance d'implémenter des opérations dans un objet
+Identifier les différentes formes syntaxiques des global variables
+Identifier le pb des larges classes / remplacer les larges classes par les hiérarchies de classes et la délégation
+Apprendre à implémenter le pattern Singleton avec ses avantages et ses inconvénients 
+Appliquer le Design Pattern Decorator et comprendre quand l'utiliser
+
+Module 5: Elementary design pattern
+Comprendre les design pattern composite pour savoir à quoi il sert et quand l'utiliser
+Utiliser les state design pour la conception d'objets avec beaucoup d'états, des transitions complexes entre les états et des opérations qui dépendent de chaque état
+Comprendre et utiliser command design pattern 
+Utiliser un design pattern dans le monde réel
+Comparer des conceptions basées sur l'héritage de celles basées sur la délégation
+Comprendre les bénéfices d'utiliser les objets pour représenter des algos complexes
+Reconnaitre les situations où il est préférable d'utiliser des objets plutôt que des blocs
+Concevoir de façon modulaire en modélisant l'absence d'objets
+Gérer des méthodes avec un grand nombre d'arguments et concevoir des API
+
+Module 6: Double dispatch
+Avoir une conception plus modulaire / utiliser et comprendre la puissance de l'envoi de messages
+Comprendre que Double dispatch peut s'appliquer à des domaines non symétriques
+Comprendre les mécanismes du double dispatch et l'utiliser via un exemple simple
+Comprendre le design pattern Visitor et savoir l'utiliser
+Utiliser et comprendre les variations possibles sur l'implémentation du design pattern VIsitor
+Réfléchir à ce qui est un retour de valeur
+Approfondir les mécanismes du double dispatch et l'utiliser via un second exemple
+
+Module 7: Object creation
+Retarder l'initialisation des objets
+Analyser et comprendre du l'impact du choix des granularités des hooks
+Ne pas hardcoder les noms de classe et fournir un mécanisme de spécification de nom de classe extensible par défaut 
+Explorer différents designs et explorer le concept d'accumulator
+Utiliser la delegation pour éviter la programmation de conditions complexes
+Utiliser Pattern Builder pour la création de graphes complexes d'objets
+Comprendre les différentes alternatives pour la conception d'API pour les Builder Pattern
+Utiliser Super et Lookup avec un exemple concret et 2 casse-têtes
+
+Module 8: Sharing objects
+Comprendre les variables partagées
+Elargir son spectre de partage d'objet avec la possibilité de mixer le partage avec des infos spécifiques à l'instance
+Grouper des constantes ensemble et à les partager
+Prendre conscience de ne pas hardcoded des constantes dans le code
+Identifier les compromis d'implementation du pattern flyweight
+Comprendre comment représenter de manière plus flexible les attributs communs entre objets
+Découvrir une autre conception du partage d'objet tout en permettant les particularités
+
+Module 9: Inversion of control
+Diminuer l'impact du changement dans des systèmes complexes en suivant la loi de Demeter 
+Utiliser des méthodes de classe pour faire des conceptions extensibles
+Comprendre l'avantage d'un mécanisme de registration explicite
+Comprendre l'exemple d'une application monolithique et voir les différentes solutions pour mieux la modulariser
+Étudier une conception existante et la remodeliser pour la rendre modulaire en utilisant des Dispatch de messages
+Comprendre la programmation objet par opposition à une façon de développer qui se concentre trop sur les classes et pas assez les objets.
+
+Module 10: About types
+Démonter l'idée reçue que les variables d'instances doivent être privées
+Comprendre la différence entre Subclasses et Subtypes
+Comprendre les relations entre l'envoi d'un message associée à la sélection de méthodes lookup et les types statiques
+Comprendre le concept d'interface dans les langages statistiquement typé et son inutilité dans les langages dynamiquement typés
+Comprendre les avantages et inconvénients de faire des checks défensifs dans le code
+
+
