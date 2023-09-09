@@ -1,0 +1,29 @@
+{
+    "title":"Spec Basics",
+    "author":"S. Ducasse"
+}
+
+
+${slide:title=Yes it can feel strange but}$
+
+- First exercise: Watch Karate Kid I (the original movie)
+
++.>file://figures/WaxOnWaxOff.png|width=50+
+
+*https://www.youtube.com/watch?v=SMCsXl9SGgY*
+
+- and do what you are told to do
+
+${slide:title=Our main goal as OO experts}$
+
+- Make sure that you will ""never program the same"" after this lecture!
+- In ""any"" OOP languages!
+
+
+
+${slide:title=Conclusion}$
+
+- A lecture with multiple objectives
+- Remember you can learn a lot!
+
+

@@ -1,0 +1,104 @@
+{
+	"title":"Buidling UI with Spec",
+	"subtitle":"101 Lectures",
+	"slidesid":"Summer"
+}
+
+
+${slide:title=Outline}$
+
+- Spec and its concepts
+- An example 
+
+${slide:title=Spec}$
+
+- Application builder
+- Independent from the back-end (morphic, GTK, Toplo)
+- Build to reuse components (not shown in this lecture)
+
+${slide:title=Angular Stone}$
+
+- To build desktop applications fast
+- Work with different back-ends
+- All Pharo are ported to Spec20
+- Can mix low level cairo and high level widgets
+
+
+${slide:title=Key concepts}$
+
++ >file://figures/coreExtended.pdf|width=95+
+
+${slide:title=Key concepts}$
+
++ >file://figures/core.pdf|width=95+
+
+
+${slide:title=Focus on Presenter part}$
+
+A presenter describes
+- its subcomponents
+- their configuration 
+- their layout 
+- communication with domain model
+
+${slide:title=Example: a simple todo}$
+
++ >file://figures/TodoDone.png|width=95+
+
+
+
+${slide:title=InitializePresenter}$
+
+[[[
+TodoListPresenter >> initializePresenters
+	todoListPresenter := self newTable
+		addColumn: ((SpCheckBoxTableColumn 
+			evaluated: [:task | task isDone]) width: 20);
+		addColumn: (SpStringTableColumn 
+			title: 'Title' evaluated: [:task | task title]);
+		yourself.
+]]]
+
+${slide:title=defaultLayout}$
+
+[[[Smalltalk
+TodoListPresenter >> defaultLayout
+	^ (SpBoxLayout newTopToBottom 
+		add: todoListPresenter;
+		yourself) 
+]]]
+
+${slide:title=Update Presenter}$
+
+[[[
+TodoListPresenter >> updatePresenter
+    todoListPresenter items: TodoTask tasks
+]]]
+
+${slide:title=Initialize window}$
+
+[[[
+TodoListPresenter >> initializeWindow: aWindowPresenter
+
+    aWindowPresenter 
+        title: 'Todo List';
+        initialExtent: 500@500
+]]]
+
+${slide:title=Connecting presenters}$
+
+When a component is composed of multiple ones you may need to maintain some invariant.
+
+Imagine you have a list of items and an item description text and you want to always show the description of the selected item.
+
+[[[
+connectPresenters
+    
+	itemList whenSelectionChangedDo: [ :each | description text: each text]
+]]]
+
+
+${slide:title=Book}$
+
+The forthcoming book freely available at: 
+*https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2>https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2*
