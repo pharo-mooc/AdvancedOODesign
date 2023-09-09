@@ -23,14 +23,29 @@ ${slide:title=Angular Stone}$
 - All Pharo are ported to Spec20
 - Can mix low level cairo and high level widgets
 
+${slide:title=A little notepad}$
+
++ >file://figures/spec-tool-iceberg.png|width=95+
+
+${slide:title=New browser experiment}$
+
++ >file://figures/spec-tool-browser-experiment.png|width=95+
+
+${slide:title=A little notepad}$
+
++ >file://figures/spec-notes-app.png|width=95+
+
+${slide:title=Mixing GTK and Cairo}$
+
++ >file://figures/spec-mix-athens-gtk.png|width=95+
 
 ${slide:title=Key concepts}$
 
-+ >file://figures/coreExtended.pdf|width=95+
++ >file://figures/spec-coreExtended.pdf|width=95+
 
 ${slide:title=Key concepts}$
 
-+ >file://figures/core.pdf|width=95+
++ >file://figures/spec-core.pdf|width=95+
 
 
 ${slide:title=Focus on Presenter part}$
@@ -43,7 +58,7 @@ A presenter describes
 
 ${slide:title=Example: a simple todo}$
 
-+ >file://figures/TodoDone.png|width=95+
++ >file://figures/spec-TodoDone.png|width=95+
 
 
 
