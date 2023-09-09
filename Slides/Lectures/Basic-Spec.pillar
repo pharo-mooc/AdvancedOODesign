@@ -7,8 +7,10 @@
 
 ${slide:title=Outline}$
 
-- Spec and its concepts
-- An example 
+- Spec 
+- Some example
+- Concepts
+- An example of key points
 
 ${slide:title=Spec}$
 
@@ -41,6 +43,8 @@ ${slide:title=Mixing GTK and Cairo}$
 
 ${slide:title=Key concepts}$
 
+${slide:title=Key concepts}$
+
 + >file://figures/spec-coreExtended.pdf|width=95+
 
 ${slide:title=Key concepts}$
@@ -55,6 +59,11 @@ A presenter describes
 - their configuration 
 - their layout 
 - communication with domain model
+
+
+${slide:title=Example}$
+
+Illustrating key API of `SpPresenter`
 
 ${slide:title=Example: a simple todo}$
 
