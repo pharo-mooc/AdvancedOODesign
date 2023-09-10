@@ -1,53 +1,160 @@
 {
-	"title":"Buidling UI with Spec",
-	"subtitle":"101 Lectures",
+	"title":"Pharo in a Nutshell",
+	"subtitle":"",
 	"slidesid":"Summer"
 }
 
 
 ${slide:title=Outline}$
 
-- Spec 
-- Some example
-- Concepts
-- An example of key points
+- Pharo?
+- Vision
+- Model
+- Pharo Syntax
 
-${slide:title=Spec}$
+${slide:title=Pharo?}$
 
-- Application builder
-- Independent from the back-end (morphic, GTK, Toplo)
-- Build to reuse components (not shown in this lecture)
++ >file://figures/pharo.png|width=100+
 
-${slide:title=Angular Stone}$
+${slide:title=Pharo}$
 
-- To build desktop applications fast
-- Work with different back-ends
-- All Pharo are ported to Spec20
-- Can mix low level cairo and high level widgets
+- System: Pure object language + full IDE
+- Powerful, elegant and fun to program
+- Living system under your fingers
+- Works on Mac OSX, Linux, iOS, Android, Windows, Pi - 100\% MIT
+- Great community / industrial consortium
 
-${slide:title=A little notepad}$
 
-+ >file://figures/spec-tool-iceberg.png|width=95+
+${slide:title=Elegant}$
 
-${slide:title=New browser experiment}$
+- Full syntax on a postcard
+- Simple and powerful objet model
 
-+ >file://figures/spec-tool-browser-experiment.png|width=95+
 
-${slide:title=A little notepad}$
+${slide:title=Pharo}$
 
-+ >file://figures/spec-notes-app.png|width=95+
+Mainly objects, messages and lexical closures
 
-${slide:title=Mixing GTK and Cairo}$
 
-+ >file://figures/spec-mix-athens-gtk.png|width=95+
+${slide:title=Full syntax on half a postcard}$
 
-${slide:title=Key concepts}$
++ >file://figures/pharo-fullpostcard.png|width=95+
 
-${slide:title=Spec is based on MVP}$
+${slide:title=Zoom on postcard}$
 
-+ >file://figures/spec-MVP.pdf|width=95+
++ >file://figures/pharo-postcard.png|width=50+
 
-${slide:title=Key concepts}$
+
+${slide:title=Temporary declaration, assignment, separator and return}$
+
+Temporary declaration, assignment, separator, and return
+
+[[[
+
+| a |
+
+a := 40 + 2.
+
+^ a
+
+]]]
+
+${slide:title=Lexical closures: Blocks}$
+
+- closure definition 
+[[[
+[:x | x + 5]
+]]]
+
+- closure execution 
+
+[[[
+> [:x | x + 5] value: 37
+42
+]]]
+
+
+
+
+${slide:title=Messages}$
+
+- Unary messages
+[[[
+Date today
+9 squared
+]]]
+- “Operators” Binary 
+[[[
+4 + 3
+'Black ', 'Chocolate ', 'is good'
+]]]
+- Keywords messages
+[[[	
+2 between: 0 and: 10
+2.betweenAnd(0, 10)
+]]]
+
+
+${slide:title=Control flow operators are messages}$
+
+[[[
+Weather today isRaining 
+   ifTrue: [ self takeUmbrella]
+   ifFalse: [ self takeSunglasses]
+]]]
+
+Yes we send messages to Boolean objects
+
+
+${slide:title=Your own DSL}$
+
+You can easily defined your own DSL
+
+[[[
+False >> siVrai: aBlock1 faux: aBlock2
+	^ aBlock2 value 
+]]]
+
+
+${slide:title=Iterators all the way}$
+
+[[[
+> #( 1 -2 -3 4 -5) collect: [:each | each abs]
+#( 1 2 3 4 5)
+]]]
+
+Yes we send messages to collection to do loops
+
+${slide:title=You can define your own iterator}$
+
+[[[
+#(1 2 3) 
+	do: [:each | stream print: each ]
+	separatedBy: [ stream << ', ']
+
+1, 2, 3
+]]]
+
+
+${slide:title=Class definition}$
+
+[[[
+Object << #Point
+	slots: { #x . #y };
+	package: ‘Kernel'
+]]]
+
+${slide:title=Method definition}$
+
+[[[
+<= aPoint 
+	"Answer whether the receiver is neither below nor to the right of aPoint."
+	^ x <= aPoint x and: [y <= aPoint y]
+]]]
+
+
+	
+${slide:title=Iterators all the way}$
 
 + >file://figures/spec-coreExtended.pdf|width=95+
 
