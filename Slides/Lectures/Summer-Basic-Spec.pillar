@@ -1,0 +1,144 @@
+{
+	"title":"Building UI with Spec",
+	"subtitle":"An introduction",
+	"slidesid":"Summer"
+}
+
+
+${slide:title=Outline}$
+
+- Spec 
+- Some realization
+- Concepts
+- An example of key points
+
+${slide:title=Spec}$
+
+- Application builder
+- Independent from the back-end (morphic, GTK, Toplo)
+- Build to reuse components (not shown in this lecture)
+
+${slide:title=Angular Stone}$
+
+- To build desktop applications fast
+- Work with different back-ends
+- All Pharo are ported to Spec20
+- Can mix low level cairo and high level widgets
+
+${slide:title=A little notepad}$
+
++ >file://figures/spec-tool-iceberg.png|width=95+
+
+${slide:title=New browser experiment}$
+
++ >file://figures/spec-tool-browser-experiment.png|width=95+
+
+${slide:title=A little notepad}$
+
++ >file://figures/spec-notes-app.png|width=95+
+
+${slide:title=Mixing GTK and Cairo}$
+
++ >file://figures/spec-mix-athens-gtk.png|width=95+
+
+${slide:title=Thales Covid room allocation}$
+
++ >file://figures/spec-Groom.png|width=95+
+
+${slide:title=Key concepts}$
+
+${slide:title=Spec is based on MVP}$
+
++ >file://figures/spec-MVP.pdf|width=95+
+
+${slide:title=Key concepts}$
+
++ >file://figures/spec-coreExtended.pdf|width=95+
+
+${slide:title=Key concepts}$
+
++ >file://figures/spec-core.pdf|width=95+
+
+
+${slide:title=Focus on Presenter part}$
+
+A presenter describes
+- its subcomponents
+- their configuration 
+- their layout 
+- communication with domain model
+
+
+${slide:title=Example}$
+
+Illustrating key API of `SpPresenter`
+
+${slide:title=Example: a simple todo}$
+
++ >file://figures/spec-TodoDone.png|width=95+
+
+
+
+${slide:title=InitializePresenter}$
+
+[[[
+TodoListPresenter >> initializePresenters
+	todoListPresenter := self newTable
+		addColumn: ((SpCheckBoxTableColumn 
+			evaluated: [:task | task isDone]) width: 20);
+		addColumn: (SpStringTableColumn 
+			title: 'Title' evaluated: [:task | task title]);
+		yourself.
+]]]
+
+${slide:title=defaultLayout}$
+
+[[[Smalltalk
+TodoListPresenter >> defaultLayout
+	^ (SpBoxLayout newTopToBottom 
+		add: todoListPresenter;
+		yourself) 
+]]]
+
+${slide:title=Update Presenter}$
+
+[[[
+TodoListPresenter >> updatePresenter
+    todoListPresenter items: TodoTask tasks
+]]]
+
+${slide:title=Initialize window}$
+
+[[[
+TodoListPresenter >> initializeWindow: aWindowPresenter
+
+	aWindowPresenter 
+		title: 'Todo List';
+		initialExtent: 500@500
+]]]
+
+${slide:title=Connecting presenters}$
+
+When a component is composed of multiple ones, you may need to maintain some invariant.
+For example, imagine that you have a list of items and an item description text. You may want to always show the description of the selected item.
+
+[[[
+connectPresenters
+
+	itemList whenSelectionChangedDo: [ :each | description text: each text]
+]]]
+
+
+${slide:title=What we did talk about}$
+
+- Application's role
+- Component reuse 
+- Styles
+- Different components (list, tables, menubar, combox)
+- Different Layouts
+- Menus
+
+${slide:title=Free Book}$
+
+The forthcoming book freely available at: 
+*https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2>https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2*

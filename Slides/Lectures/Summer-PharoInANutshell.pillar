@@ -43,6 +43,10 @@ ${slide:title=Mixing GTK and Cairo}$
 
 ${slide:title=Key concepts}$
 
+${slide:title=Spec is based on MVP}$
+
++ >file://figures/spec-MVP.pdf|width=95+
+
 ${slide:title=Key concepts}$
 
 + >file://figures/spec-coreExtended.pdf|width=95+
