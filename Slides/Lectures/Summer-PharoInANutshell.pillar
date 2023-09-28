@@ -8,9 +8,9 @@
 ${slide:title=Outline}$
 
 - Pharo?
-- Vision
 - Model
 - Pharo Syntax
+- Vision
 
 ${slide:title=Pharo?}$
 
@@ -31,14 +31,14 @@ ${slide:title=Elegant}$
 - Simple and powerful objet model
 
 
-${slide:title=Pharo}$
+${slide:title=A Pharo program}$
 
-Mainly objects, messages and lexical closures
+Mainly objects, messages, and lexical closures
 
 
 ${slide:title=Full syntax on half a postcard}$
 
-+ >file://figures/pharo-fullpostcard.png|width=95+
++ >file://figures/pharo-fullpostcard.png|width=80+
 
 ${slide:title=Zoom on postcard}$
 
@@ -47,7 +47,7 @@ ${slide:title=Zoom on postcard}$
 
 ${slide:title=Temporary declaration, assignment, separator and return}$
 
-Temporary declaration, assignment, separator, and return
+Temporary variable declaration, assignment, separator, and return
 
 [[[
 
@@ -103,12 +103,13 @@ Weather today isRaining
    ifFalse: [ self takeSunglasses]
 ]]]
 
-Yes we send messages to Boolean objects
+- Yes we send messages to Boolean objects
+- `ifTrue:ifFalse:` is a method defined on Boolean objects
 
 
-${slide:title=Your own DSL}$
+${slide:title=Can define your own DSL}$
 
-You can easily defined your own DSL
+Just add methods to exiting classes
 
 [[[
 False >> siVrai: aBlock1 faux: aBlock2
@@ -144,6 +145,15 @@ Object << #Point
 	package: ‘Kernel'
 ]]]
 
+${slide:title=Class definition (old)}$
+
+[[[
+Object subclass: #Point
+	instanceVariableNames: 'x y'
+	classVariablesNames: ''
+	package: ‘Kernel'
+]]]
+
 ${slide:title=Method definition}$
 
 [[[
@@ -154,86 +164,66 @@ ${slide:title=Method definition}$
 
 
 	
-${slide:title=Iterators all the way}$
+${slide:title=Model}$
 
-+ >file://figures/spec-coreExtended.pdf|width=95+
-
-${slide:title=Key concepts}$
-
-+ >file://figures/spec-core.pdf|width=95+
-
-
-${slide:title=Focus on Presenter part}$
-
-A presenter describes
-- its subcomponents
-- their configuration 
-- their layout 
-- communication with domain model
+- Dynamically typed
+- Everything is an instance of a class
+- All methods are public virtual (can be packaged outside their class)
+- All attributes are protected
+- Single inheritance
+- Stateful traits
+- Closures everywhere
 
 
-${slide:title=Example}$
+${slide:title=More advanced}$
 
-Illustrating key API of `SpPresenter`
-
-${slide:title=Example: a simple todo}$
-
-+ >file://figures/spec-TodoDone.png|width=95+
-
-
-
-${slide:title=InitializePresenter}$
-
-[[[
-TodoListPresenter >> initializePresenters
-	todoListPresenter := self newTable
-		addColumn: ((SpCheckBoxTableColumn 
-			evaluated: [:task | task isDone]) width: 20);
-		addColumn: (SpStringTableColumn 
-			title: 'Title' evaluated: [:task | task title]);
-		yourself.
-]]]
-
-${slide:title=defaultLayout}$
-
-[[[Smalltalk
-TodoListPresenter >> defaultLayout
-	^ (SpBoxLayout newTopToBottom 
-		add: todoListPresenter;
-		yourself) 
-]]]
-
-${slide:title=Update Presenter}$
-
-[[[
-TodoListPresenter >> updatePresenter
-    todoListPresenter items: TodoTask tasks
-]]]
-
-${slide:title=Initialize window}$
-
-[[[
-TodoListPresenter >> initializeWindow: aWindowPresenter
-
-    aWindowPresenter 
-        title: 'Todo List';
-        initialExtent: 500@500
-]]]
-
-${slide:title=Connecting presenters}$
-
-When a component is composed of multiple ones you may need to maintain some invariant.
-
-Imagine you have a list of items and an item description text and you want to always show the description of the selected item.
-
-[[[
-connectPresenters
-    
-	itemList whenSelectionChangedDo: [ :each | description text: each text]
-]]]
+- Classes are objects
+- Instance variables are first class with a meta object protocol
+- Stack can be reified on demand
+- AST can be fully annotated and transformed on the fly during execution
+- Exceptions are manipulable
 
 
-${slide:title=Book}$
+${slide:title=Reflective}$
 
-The forthcoming book freely available at: 
-*https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2>https://github.com/SquareBracketAssociates/BuildingApplicationWithSpec2*
++ >file://figures/pharo-reflective.png|width=95+
+
+${slide:title=As modeling language}$
+
+- Focus on intrinsic complexity
+- Eliminate accidental complexity
+
+
+${slide:title=Enabler}$
+
+- Learn 
+- Adapt
+- Modify/Model
+
+
+${slide:title=Usually}$
+
+A language is a black box
+
+${slide:title=Introspective}$
+
++ >file://figures/pharo-introspective.png|width=95+
+
+${slide:title=Immersive}$
+
++ >file://figures/pharo-immersive.png|width=95+
+
+
+${slide:title=Each time the code is compiled the 3D changes}$
+
++ >file://figures/pharo-immersive2.png|width=95+
+
+${slide:title=Immersion all the way down}$
+
+We can do the same with web app, sockets, networks, sensors, living programing….
+
+${slide:title=Pharo's goals}$
+
++ >file://figures/pharo-immersive2.png|width=95+
+
+
