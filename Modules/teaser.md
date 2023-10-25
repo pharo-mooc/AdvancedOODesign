@@ -21,7 +21,8 @@ We love automation and tests. This is why we also present test-driven developmen
 We further present Xtreme TDD and we show how coding in the debugger puts tests at the center of design development and increases your productivity.
 If you liked the Pharo mooc http://mooc.pharo.org/, you will just love "Advanced Object-Oriented Design and Development with Pharo ". It will bring you to the next level on object-oriented design.
 
-
+# =========
+Accès V1 du teaser (sans illustrations) : https://vimeo.com/848725239/aca9dff6d5?share=copy
 
 # =========================================
 
