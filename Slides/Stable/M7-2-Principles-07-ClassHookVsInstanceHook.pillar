@@ -93,7 +93,7 @@ CHInterpreter >> visit...: arg
 [[[
 CHInterpreter >> newClassScope
 
-	^ self newClassScope xxx
+	^ self classScopeClass new xxx
 
 ]]]
 
