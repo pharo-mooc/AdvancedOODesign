@@ -84,11 +84,11 @@ This module presents different techniques and design patterns to share objects.
 
 - [Stef] 1-Lang-02-SharedVariables.pillar
 - [Stef] 2-Principles-08-Sharing.pillar
-- Checked [Stef] 3-Lang-03-SharedPools.pillar
+Ici UP - Checked [Stef] 3-Lang-03-SharedPools.pillar
 - [Luc] 4-Essence-08-AboutMagicNumbers
 - [Guille] 5-DesignPattern-10-Flyweigth.pillar
 - [Pablo] 6-DesignPattern-12-TypeObject.pillar
-- [ Stef ] 8-7-Sharing-Alternate.pillar
+ - [ Stef ] 8-7-Sharing-Alternate.pillar
 
 ## Module 9: Inversion of control [Files Renamed]
 
@@ -99,7 +99,7 @@ In this module, we present the law of demeter and different techniques to achiev
 - [Luc] 3-Principles-03-AboutRegistration.pillar
 - [Pablo] 4-CaseStudy-06-LayeredSettingsArchitecture.pillar
 - [Guille] 5-CaseStudy-05-Sokoban-Analysis.pillar
-- Checked [Stef] 6-ClassVsObject.pillar
+- [Stef] 6-ClassVsObject.pillar
 
 ## Module 10: About types [Files Renamed]
 
