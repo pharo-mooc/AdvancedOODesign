@@ -1,8 +1,7 @@
 Here are the videos
 
-Use 
-`ProfStef go`
 
+Core
 - Lecture Pharo Object Model in a Nutshell
 - Lecture Pharo Syntax in a Nutshell
 - Lecture Class and Method Definitions
@@ -11,6 +10,10 @@ Use
 - Lecture Messages: Composition and Precedence
 - Lecture Understanding Messages: Sequence and Cascade
 - Lecture Introduction to Blocks
+
+Exercises
+
+	`ProfStef go`
 
 Extra
 - Lecture Loops
