@@ -24,7 +24,7 @@ The following short videos explain the full language.
 	 
 		<li>M0-6 <span class="label label-primary">Lecture</span>Messages: Composition and Precedence<a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC/Week2/C019-W2S03-Messages-Precedence.pdf"> PDF </a> / <a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC-Videos/EN/Week2/C019SD-W2-S3-EN-V1.mp4"> VIDEO </a></li>
 					  
-		<li>M0-7 <span class="label label-primary">Lecture</span>Messages: Composition and Precedence<a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC/Week2/C019-W2S03-Messages.pdf"> PDF </a> / <a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC-Videos/EN/Week2/C019SD-W2-S3-EN-V1.mp4"> VIDEO </a></li>
+		<li>M0-7 <span class="label label-primary">Lecture</span>Understanding Messages: Sequence and Cascade<a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC/Week2/C019-W2S04-Messages-Sequence.pdf"> PDF </a> / <a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC-Videos/EN/Week2/C019SD-W2-S4-EN-V1.mp4"> VIDEO </a></li>
 		
 		<li>M0-8 <span class="label label-primary">Lecture</span>Introduction to Blocks<a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC/Week2/C019-W2S06-Blocks.pdf"> PDF </a> / <a href="http://rmod-pharo-mooc.lille.inria.fr/MOOC/PharoMOOC-Videos/EN/Week2/C019SD-W2-S6-EN-V1.mp4"> VIDEO </a></li>
             </ol>
