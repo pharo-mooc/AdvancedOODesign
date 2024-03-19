@@ -1,0 +1,801 @@
+1
+00:00:05,300 --> 00:00:06,060
+Hi.
+
+2
+00:00:06,260 --> 00:00:09,400
+In this lecture, we are going to
+discuss about the flyweight design
+
+3
+00:00:09,600 --> 00:00:10,360
+pattern.
+
+4
+00:00:10,760 --> 00:00:15,080
+The objective of this short lecture
+is to understand the flyweight pattern
+
+5
+00:00:15,280 --> 00:00:17,680
+and to study two case studies.
+
+6
+00:00:17,900 --> 00:00:21,160
+First, we are going to talk about
+symbols in Pharo and the second
+
+7
+00:00:21,360 --> 00:00:25,420
+one is `Colors`, so how we can use
+flyweights in the case of `Color`.
+
+8
+00:00:27,080 --> 00:00:29,300
+So what is the objective of the
+flyweight pattern?
+
+9
+00:00:29,500 --> 00:00:33,420
+So the intent if you read the book
+is to use sharing to support a large
+
+10
+00:00:33,620 --> 00:00:35,400
+number of fine-grained objects
+efficiently.
+
+11
+00:00:35,600 --> 00:00:39,880
+So what does it mean is that sometimes
+we are going to create a lot of
+
+12
+00:00:40,080 --> 00:00:42,680
+objects that are similar,
+for example characters.
+
+13
+00:00:42,880 --> 00:00:48,780
+So in the character 1 and the character
+2 and we are going to reuse them
+
+14
+00:00:48,980 --> 00:00:49,740
+all over.
+
+15
+00:00:49,940 --> 00:00:53,340
+So why to create many different
+characters when we can actually
+
+16
+00:00:53,540 --> 00:00:56,900
+reuse them because the character
+1 is going to be always the same
+
+17
+00:00:57,100 --> 00:00:57,860
+kind of object.
+
+18
+00:00:58,420 --> 00:01:03,160
+So the flyweight pattern will actually
+tell us to create, for example,
+
+19
+00:01:05,200 --> 00:01:10,620
+a map where we are going to store
+or cache those well-known objects
+
+20
+00:01:10,820 --> 00:01:14,520
+to be able to only create them once,
+store them and reuse them.
+
+21
+00:01:14,720 --> 00:01:16,780
+So at the end, it's actually just
+a cache.
+
+22
+00:01:19,260 --> 00:01:22,580
+Let's see an example with the symbol
+instances in Pharo.
+
+23
+00:01:22,780 --> 00:01:24,440
+So what is a symbol in Pharo?
+
+24
+00:01:24,640 --> 00:01:26,040
+A symbol is like a string.
+
+25
+00:01:26,240 --> 00:01:27,620
+It will behave as a string.
+
+26
+00:01:28,160 --> 00:01:30,900
+So we are going to be able to
+concatenate symbols and so on,
+
+27
+00:01:31,260 --> 00:01:32,280
+but they will be unique.
+
+28
+00:01:33,140 --> 00:01:38,760
+So in that sense, we are going to
+be able to compare symbols using
+
+29
+00:01:38,960 --> 00:01:40,480
+the identity operator.
+
+30
+00:01:40,700 --> 00:01:44,780
+So two symbols, regardless of when
+and how they were created,
+
+31
+00:01:45,200 --> 00:01:47,880
+if they have the same number of
+characters and the same characters,
+
+32
+00:01:48,160 --> 00:01:49,600
+they will be identical.
+
+33
+00:01:49,920 --> 00:01:53,600
+So that means that the system is
+going to ensure that when creating
+
+34
+00:01:53,800 --> 00:01:56,440
+a symbol, we are going to reuse
+the same symbol that existed before.
+
+35
+00:01:58,060 --> 00:02:01,700
+One of the objectives of reusing
+symbols is that we are going to
+
+36
+00:02:01,900 --> 00:02:02,940
+reuse memory footprints.
+
+37
+00:02:03,380 --> 00:02:06,780
+So instead of allocating a lot of
+different symbols that actually
+
+38
+00:02:06,980 --> 00:02:09,500
+have the same value, we are going
+to reuse them when they have the
+
+39
+00:02:09,700 --> 00:02:10,460
+same value.
+
+40
+00:02:12,100 --> 00:02:18,320
+So in this case, when we are going
+to use symbols, we can be sure that
+
+41
+00:02:18,520 --> 00:02:20,100
+they are referring to the same object.
+
+42
+00:02:20,300 --> 00:02:23,820
+So that is what this piece of code
+ensures.
+
+43
+00:02:25,740 --> 00:02:28,620
+So how does it work in the case of Pharo?
+
+44
+00:02:29,500 --> 00:02:33,720
+So if we check how symbols are created,
+there is in the symbol class,
+
+45
+00:02:33,920 --> 00:02:35,440
+there is a method that is intern.
+
+46
+00:02:37,340 --> 00:02:40,640
+So that takes as parameter string
+or symbol.
+
+47
+00:02:41,500 --> 00:02:44,580
+What this method is going to do
+is to check if this string or symbol
+
+48
+00:02:44,780 --> 00:02:47,240
+is already in the internal flyweight
+implementation.
+
+49
+00:02:47,800 --> 00:02:51,440
+And if it is not there,
+it will create a corresponding symbol
+
+50
+00:02:51,640 --> 00:02:52,680
+and install it in the table.
+
+51
+00:02:54,180 --> 00:02:59,400
+So first, we check if that symbol
+or string is already internal.
+
+52
+00:02:59,760 --> 00:03:03,800
+If it is not there, we're going
+to add it into the table.
+
+53
+00:03:05,860 --> 00:03:10,520
+Now the symbol implementation here
+is a symbol, it's an implementation
+
+54
+00:03:10,720 --> 00:03:13,880
+of the flyweight pattern that will
+create new objects dynamically.
+
+55
+00:03:14,080 --> 00:03:18,100
+So we don't know all the potential
+symbols that we're going to use
+
+56
+00:03:18,300 --> 00:03:19,060
+beforehand.
+
+57
+00:03:19,260 --> 00:03:22,240
+So that is why, every time that
+we need a new symbol,
+
+58
+00:03:22,440 --> 00:03:25,820
+we need to be able to support the
+creation and addition of new symbols
+
+59
+00:03:26,020 --> 00:03:27,520
+in the internal table.
+
+60
+00:03:29,740 --> 00:03:32,320
+A separate case study is the case
+of `Colors`.
+
+61
+00:03:32,820 --> 00:03:36,060
+So for example, in Pharo,
+we have the UITheme class that
+
+62
+00:03:36,260 --> 00:03:39,940
+represents the themes,
+so for example, the dark theme or
+
+63
+00:03:40,140 --> 00:03:42,660
+the light theme, and you can change
+how Pharo looks like.
+
+64
+00:03:45,220 --> 00:03:48,600
+And the UITheme is going to actually
+create a lot of `Colors`.
+
+65
+00:03:48,820 --> 00:03:50,920
+So it will, for example,
+dark theme is going to create a
+
+66
+00:03:51,120 --> 00:03:55,640
+lot of `Colors` in the dark with
+dark nuance or the light theme will
+
+67
+00:03:55,840 --> 00:03:59,080
+create whiter or similar `Colors`.
+
+68
+00:03:59,280 --> 00:04:03,340
+We have solarized themes that will
+be more yellowish and so on.
+
+69
+00:04:04,580 --> 00:04:07,800
+And every time that we are going
+to paint something in the screen,
+
+70
+00:04:08,000 --> 00:04:09,120
+we're going to use a lot of `Colors`.
+
+71
+00:04:09,600 --> 00:04:15,600
+So the question is, do we create lot,
+thousands of similar `Colors` or not?
+
+72
+00:04:16,200 --> 00:04:21,140
+And so, if we look at the code of
+UITheme, we see, for example,
+
+73
+00:04:21,440 --> 00:04:24,780
+we have this kind of method,
+so background `Color` and text `Color`
+
+74
+00:04:24,980 --> 00:04:28,140
+that say, okay, I'm going to use
+the `Color` white as the background
+
+75
+00:04:28,340 --> 00:04:30,880
+`Color`, and I'm going to use a
+`Color` black as a text `Color`.
+
+76
+00:04:31,080 --> 00:04:34,340
+So this is for example,
+the case of a default theme that
+
+77
+00:04:34,540 --> 00:04:35,300
+will be white.
+
+78
+00:04:36,180 --> 00:04:40,120
+The question that we can ask ourselves
+is, should we turn `Color` into
+
+79
+00:04:40,320 --> 00:04:41,080
+a flyweight?
+
+80
+00:04:41,780 --> 00:04:45,900
+Because if we see the code as we
+had it before, we have background
+
+81
+00:04:46,100 --> 00:04:51,140
+`Color` that is returning `Color` white.
+
+82
+00:04:53,820 --> 00:04:58,520
+So in this method `Color` white
+always returning a new `Color` or
+
+83
+00:04:58,720 --> 00:05:00,700
+is going to reuse the same white
+`Color`?
+
+84
+00:05:01,760 --> 00:05:05,080
+So the thing that we should take
+into account to decide if we should
+
+85
+00:05:05,280 --> 00:05:10,560
+intern an object or not,
+is first the cost of interning it.
+
+86
+00:05:11,920 --> 00:05:16,720
+So how expensive would it be to
+add it to a table or to hash this
+
+87
+00:05:16,920 --> 00:05:19,320
+object to look for it in an efficient
+way?
+
+88
+00:05:20,500 --> 00:05:23,720
+Also, one thing to see is that,
+for example, in this case,
+
+89
+00:05:24,220 --> 00:05:28,820
+having a flyweight will save us
+from allocating a lot of different
+
+90
+00:05:29,020 --> 00:05:33,460
+objects that represent the same value,
+but it will not save us from having
+
+91
+00:05:33,660 --> 00:05:34,420
+a lot of requests.
+
+92
+00:05:34,620 --> 00:05:43,400
+So if we have here our flyweight
+that has our white `Color` and our
+
+93
+00:05:43,600 --> 00:05:48,440
+red `Color`, still we could have
+a client.
+
+94
+00:05:49,600 --> 00:05:55,180
+So this one will have one of each,
+but the client can make maybe dozens
+
+95
+00:05:55,380 --> 00:05:56,140
+of requests.
+
+96
+00:05:56,920 --> 00:06:03,760
+So here, if we make a flyweight
+for `Colors`, we are not solving
+
+97
+00:06:03,960 --> 00:06:06,500
+the cause of the problem,
+which is actually a client that
+
+98
+00:06:06,700 --> 00:06:08,840
+is requesting dozens of times for
+the same object.
+
+99
+00:06:09,960 --> 00:06:15,640
+So we need to check if actually
+the cost in the execution time comes
+
+100
+00:06:15,840 --> 00:06:19,800
+from actually allocating objects
+here or from actually a bad client
+
+101
+00:06:20,000 --> 00:06:23,300
+that is making a bad number of requests.
+
+102
+00:06:25,300 --> 00:06:27,500
+Also, some other questions that
+we could ask ourselves.
+
+103
+00:06:27,700 --> 00:06:31,540
+So do we need to create always different
+`Colors` dynamically or the number
+
+104
+00:06:31,740 --> 00:06:34,600
+of `Colors` will be fixed statically?
+
+105
+00:06:35,080 --> 00:06:37,640
+In that case, for example,
+we could think about the table of
+
+106
+00:06:37,840 --> 00:06:41,340
+fixed `Colors` that we can reuse,
+or otherwise we need to think about
+
+107
+00:06:41,540 --> 00:06:46,100
+the system, like in the symbols,
+that will be able to grow dynamically
+
+108
+00:06:46,300 --> 00:06:49,600
+and where we are going to be able
+to add new `Colors` dynamically.
+
+109
+00:06:50,380 --> 00:06:54,480
+The other thing that actually is
+super important is that we are going
+
+110
+00:06:54,680 --> 00:06:58,460
+to be able to cache objects that
+are value objects.
+
+111
+00:06:58,660 --> 00:07:03,660
+So objects do not need to change
+or need to be immutable once in
+
+112
+00:07:03,860 --> 00:07:04,620
+the flyweight.
+
+113
+00:07:04,820 --> 00:07:08,460
+Otherwise, if we are going to be
+able to mutate the white object
+
+114
+00:07:08,660 --> 00:07:11,740
+and turn it into a green object,
+then all the users of the white
+
+115
+00:07:11,940 --> 00:07:15,460
+object will suddenly be a green object,
+which will be a string.
+
+116
+00:07:17,120 --> 00:07:21,380
+So we're going to use a flyweight
+to be able to return `Colors` to
+
+117
+00:07:21,580 --> 00:07:23,260
+a client without creating them
+endlessly.
+
+118
+00:07:23,460 --> 00:07:28,040
+So that means that the flyweight
+will save us from allocating objects.
+
+119
+00:07:30,980 --> 00:07:34,060
+So it will have less allocations.
+
+120
+00:07:35,360 --> 00:07:38,960
+We could implement a flyweight as,
+for example, a palette of `Colors`,
+
+121
+00:07:39,160 --> 00:07:42,420
+which at the end is just a cache
+at the level of the domain.
+
+122
+00:07:42,620 --> 00:07:46,420
+So we're going to provide a domain
+object that is, for example,
+
+123
+00:07:46,620 --> 00:07:49,520
+a palette of `Colors` that will
+somehow manage two things at the
+
+124
+00:07:49,720 --> 00:07:50,480
+same time.
+
+125
+00:07:50,680 --> 00:07:54,200
+First, provide a domain representation
+for something that is useful.
+
+126
+00:07:54,400 --> 00:07:58,220
+For example, a palette of objects
+that has different `Color` for
+
+127
+00:07:58,420 --> 00:08:00,600
+particular usage, like,
+for example, the UITheme.
+
+128
+00:08:02,060 --> 00:08:05,080
+And at the same time,
+it will serve as a cache to avoid
+
+129
+00:08:05,280 --> 00:08:06,040
+allocation.
+
+130
+00:08:07,060 --> 00:08:11,360
+So the flyweight is at the end,
+just the case of a domain cache.
+
+131
+00:08:12,340 --> 00:08:15,940
+So what are the possible limitations
+of such a palette implementation?
+
+132
+00:08:16,660 --> 00:08:19,420
+First, we can think about implicit
+`Colors`.
+
+133
+00:08:19,620 --> 00:08:22,280
+So here, for example,
+we can compare `Color` red,
+
+134
+00:08:22,480 --> 00:08:26,100
+darker, darker against self
+`selectedBackgroundColor`.
+
+135
+00:08:26,440 --> 00:08:31,560
+So here, what we see on the left
+piece of code is that we have a
+
+136
+00:08:31,760 --> 00:08:36,960
+`Color` red that if implemented
+as a flyweight, it will return us
+
+137
+00:08:37,160 --> 00:08:38,520
+always the same red `Color`.
+
+138
+00:08:39,400 --> 00:08:42,960
+However, when we're asking darker,
+darker to that `Color`,
+
+139
+00:08:43,160 --> 00:08:46,080
+that will create new objects,
+new darker `Colors` every time.
+
+140
+00:08:46,460 --> 00:08:53,200
+So darker is a message that given
+a `Color`, it will return a new
+
+141
+00:08:53,400 --> 00:08:56,100
+`Color` that is slightly different
+from the receiver.
+
+142
+00:08:56,300 --> 00:08:58,480
+So here we will return a darker,
+darker red.
+
+143
+00:08:59,420 --> 00:09:03,340
+We need to take care that our darker
+methods or our modification methods
+
+144
+00:09:03,540 --> 00:09:09,780
+also goes through the flyweight
+in order to respect the pattern.
+
+145
+00:09:10,180 --> 00:09:13,940
+Otherwise the darker,
+darker methods are not under our
+
+146
+00:09:14,140 --> 00:09:14,900
+control.
+
+147
+00:09:15,100 --> 00:09:17,140
+And then, we are going to have the
+same problem as before,
+
+148
+00:09:17,340 --> 00:09:19,680
+but now these methods are escaping
+the flyweight.
+
+149
+00:09:20,840 --> 00:09:26,680
+Another thing is that just saying
+`Color` red, darker, darker all
+
+150
+00:09:26,880 --> 00:09:31,520
+over our code is not actually
+representing the domain problem.
+
+151
+00:09:31,960 --> 00:09:34,140
+So instead we could have,
+for example, a method
+
+152
+00:09:34,340 --> 00:09:39,800
+`selectedBackgroundColor`, as in here,
+that will return a `Color` red,
+
+153
+00:09:40,000 --> 00:09:44,120
+darker, darker, but it will also
+give us a point of interception
+
+154
+00:09:44,320 --> 00:09:48,900
+where we will be able to cache the
+`Color` that we're creating.
+
+155
+00:09:49,920 --> 00:09:55,920
+Now we have to really take care
+of this because patterns like this
+
+156
+00:09:56,120 --> 00:10:02,260
+could be useful to creating `Colors`
+as such, but they could be a bad
+
+157
+00:10:02,460 --> 00:10:04,120
+design practice when used wrongly.
+
+158
+00:10:06,340 --> 00:10:12,700
+As a conclusion, you can implement
+a flyweight pattern to be sure that
+
+159
+00:10:12,900 --> 00:10:16,560
+you have unique objects and that
+you're limiting the memory footprint
+
+160
+00:10:16,760 --> 00:10:18,040
+of the creation of such objects.
+
+161
+00:10:20,300 --> 00:10:25,240
+Be careful that the flyweight will
+help you to limit memory footprint,
+
+162
+00:10:25,440 --> 00:10:30,180
+but it will not help you to reduce
+the number of requests made to that
+
+163
+00:10:30,380 --> 00:10:31,140
+flyweight.
+
+164
+00:10:33,200 --> 00:10:37,320
+So be careful that you need to better
+fix the cause than the consequences
+
+165
+00:10:37,520 --> 00:10:38,280
+sometimes.
+
+166
+00:10:38,480 --> 00:10:41,240
+So sometimes you will need to,
+for example, profile your application
+
+167
+00:10:41,440 --> 00:10:45,900
+to understand when the problem is
+in the allocation of objects or
+
+168
+00:10:46,100 --> 00:10:48,120
+in the client of those allocations.
+

@@ -1,0 +1,886 @@
+1
+00:00:04,140 --> 00:00:06,200
+Hello, welcome back.
+
+2
+00:00:06,820 --> 00:00:10,280
+In this presentation,
+we are going to talk about the state
+
+3
+00:00:10,480 --> 00:00:11,240
+Design Pattern.
+
+4
+00:00:12,380 --> 00:00:16,920
+The goal for this presentation is
+to present this pattern in the most
+
+5
+00:00:17,040 --> 00:00:17,880
+clear way possible.
+
+6
+00:00:18,540 --> 00:00:24,520
+We are going to start with a motivating
+example that will allow us to present
+
+7
+00:00:24,720 --> 00:00:28,500
+the characteristics and the good
+use of this design pattern.
+
+8
+00:00:28,700 --> 00:00:33,580
+We are going to represent the different
+states of our machine,
+
+9
+00:00:34,240 --> 00:00:36,500
+of our state machine as objects.
+
+10
+00:00:37,240 --> 00:00:41,440
+And we are going to encapsulate
+in each of these objects the operations
+
+11
+00:00:41,640 --> 00:00:42,960
+and the state transitions.
+
+12
+00:00:43,760 --> 00:00:49,200
+Also, we are going to talk some
+details about how to handle the
+
+13
+00:00:49,400 --> 00:00:50,440
+state machine state.
+
+14
+00:00:52,780 --> 00:00:59,100
+We are going to start by analyzing
+an example where to apply this design
+
+15
+00:00:59,300 --> 00:01:00,060
+pattern.
+
+16
+00:01:00,260 --> 00:01:05,400
+We are going to have,
+in our example, an automatic coffee
+
+17
+00:01:05,600 --> 00:01:06,360
+machine.
+
+18
+00:01:06,560 --> 00:01:10,280
+The idea of this machine is that
+it will produce for us a coffee
+
+19
+00:01:10,480 --> 00:01:12,940
+once we pay for it.
+
+20
+00:01:13,320 --> 00:01:21,480
+So the machine will pass into different
+states, it will start waiting for
+
+21
+00:01:21,680 --> 00:01:22,440
+an order.
+
+22
+00:01:22,840 --> 00:01:27,560
+Then once we select the beverage
+that we want, the coffee that we want,
+
+23
+00:01:28,120 --> 00:01:30,800
+it will wait for our payment.
+
+24
+00:01:31,220 --> 00:01:36,600
+It will do the coffee and this coffee,
+once it's ready, it will be taken
+
+25
+00:01:36,800 --> 00:01:37,560
+by the user.
+
+26
+00:01:37,760 --> 00:01:44,780
+We can represent these states by
+this simple state diagram,
+
+27
+00:01:44,980 --> 00:01:48,820
+where we start with the waiting
+for order.
+
+28
+00:01:49,100 --> 00:01:51,860
+In this case, we call it the 'Idle State'.
+
+29
+00:01:53,260 --> 00:01:58,720
+Once the user accepts one order,
+we are going to pass to the second
+
+30
+00:01:58,920 --> 00:02:00,820
+state, that is waiting for payment.
+
+31
+00:02:01,640 --> 00:02:08,880
+The machine will stay in this 'ToPay
+State' until we pay enough money.
+
+32
+00:02:09,360 --> 00:02:11,880
+And then, it will start making coffee.
+
+33
+00:02:12,080 --> 00:02:19,020
+It will continue making coffee until
+it ends and changing its state to
+
+34
+00:02:19,220 --> 00:02:19,980
+Coffee Ready.
+
+35
+00:02:20,180 --> 00:02:25,260
+As we see, we have four states and
+the machine will be moving in these
+
+36
+00:02:25,460 --> 00:02:28,480
+states during all its life.
+
+37
+00:02:28,780 --> 00:02:33,300
+In this case, when we model this
+machine as an object,
+
+38
+00:02:33,500 --> 00:02:36,180
+we are going to have exactly the
+same operations.
+
+39
+00:02:36,380 --> 00:02:38,180
+We are going to accept an order.
+
+40
+00:02:39,320 --> 00:02:43,780
+We are going to be able to tell
+the user 'howMuchIsIt',
+
+41
+00:02:43,980 --> 00:02:49,480
+this order, so the user can put
+money to pay for it.
+
+42
+00:02:49,680 --> 00:02:51,580
+That is the third operation.
+
+43
+00:02:52,000 --> 00:02:57,880
+We are going to get the 'coffeeDone'
+when it's ready and we are going
+
+44
+00:02:58,080 --> 00:03:00,820
+to be able to take the coffee from
+the machine.
+
+45
+00:03:01,840 --> 00:03:06,360
+These are the operations that are
+exposed by our coffee machine.
+
+46
+00:03:06,560 --> 00:03:11,340
+When we are having these operations,
+not all operations are available
+
+47
+00:03:11,540 --> 00:03:13,280
+when we use the machine.
+
+48
+00:03:13,820 --> 00:03:17,260
+They depend on the state that we
+are using.
+
+49
+00:03:17,560 --> 00:03:22,420
+For example, we cannot enter money
+into the machine until we select
+
+50
+00:03:22,620 --> 00:03:25,840
+correctly which is the coffee that
+we want.
+
+51
+00:03:26,040 --> 00:03:35,240
+So if we model this in our Smalltalk
+code, we can see that our code starts
+
+52
+00:03:35,440 --> 00:03:42,840
+having a lot of conditional questions
+like this one, where we check in
+
+53
+00:03:43,040 --> 00:03:48,860
+which state we are to allow the
+user to do the operation or not.
+
+54
+00:03:49,060 --> 00:03:54,880
+In this case, if we are not in the
+correct state, we are going to raise
+
+55
+00:03:55,080 --> 00:03:55,840
+an error.
+
+56
+00:03:56,640 --> 00:04:01,080
+So we are going to ask for each
+of the operations if we are not
+
+57
+00:04:01,280 --> 00:04:02,760
+in the correct state.
+
+58
+00:04:03,400 --> 00:04:08,040
+Also, other thing that happened
+is that we are going to handle the
+
+59
+00:04:08,240 --> 00:04:10,540
+state of the machine by hand.
+
+60
+00:04:10,740 --> 00:04:17,880
+So in each of the operations,
+we are going to have mixed conditional
+
+61
+00:04:18,080 --> 00:04:24,700
+code to check if we are in the correct
+state, code to handle the transitions
+
+62
+00:04:24,900 --> 00:04:31,760
+of a state, and then the real code
+that will do the actual operation.
+
+63
+00:04:33,240 --> 00:04:39,140
+This starts being much more complex
+than only having the real operation.
+
+64
+00:04:40,710 --> 00:04:46,690
+So we can see that this pattern
+is repeated in all the operations
+
+65
+00:04:46,890 --> 00:04:47,650
+that we have.
+
+66
+00:04:47,850 --> 00:04:53,350
+In this case, we cannot ask the
+machine how much is the coffee that
+
+67
+00:04:53,550 --> 00:04:58,830
+we want if we don't select it first
+or if we are not in the correct
+
+68
+00:04:59,030 --> 00:04:59,790
+machine state.
+
+69
+00:05:00,190 --> 00:05:07,230
+So we see exactly the same pattern
+again when we have to have a conditional
+
+70
+00:05:07,430 --> 00:05:09,710
+code to check if we are in the correct
+state.
+
+71
+00:05:09,910 --> 00:05:15,130
+Even when we have a really simple
+
+72
+00:05:15,330 --> 00:05:19,230
+operation that in this case is just
+returning an instance variable,
+
+73
+00:05:19,630 --> 00:05:26,550
+we have a lot of boilerplate code,
+code that is complex and does not
+
+74
+00:05:26,750 --> 00:05:28,730
+add to the final operation.
+
+75
+00:05:29,250 --> 00:05:33,210
+So what is the idea behind the state
+Design Pattern?
+
+76
+00:05:33,410 --> 00:05:40,230
+Basically, is that we are going
+to have objects to represent our states.
+
+77
+00:05:41,070 --> 00:05:48,830
+We are going to have our coffee machine,
+that is our subject, and it will
+
+78
+00:05:49,030 --> 00:05:55,430
+delegate to another object the
+operations and the transitions of
+
+79
+00:05:55,630 --> 00:05:56,390
+a state.
+
+80
+00:05:56,590 --> 00:06:02,510
+We are going to represent in our
+case each of the four states,
+
+81
+00:06:02,710 --> 00:06:10,630
+we are going to represent with a class,
+where we can implement the different
+
+82
+00:06:10,830 --> 00:06:13,310
+behaviors for each of the states.
+
+83
+00:06:15,210 --> 00:06:19,810
+It's important to see,
+in this case, we have selected to
+
+84
+00:06:20,010 --> 00:06:24,610
+have a common superclass for the states.
+
+85
+00:06:24,810 --> 00:06:30,430
+But this is not needed and just
+what we need is that they have the
+
+86
+00:06:30,630 --> 00:06:34,250
+same interface or they understand
+the same message.
+
+87
+00:06:35,030 --> 00:06:42,970
+In this case, we have selected to
+have a common superclass because
+
+88
+00:06:43,170 --> 00:06:46,870
+what we are going to do in each
+of the operations in the common
+
+89
+00:06:47,070 --> 00:06:53,310
+superclass is to mark them as invalid
+and just raise an error.
+
+90
+00:06:53,510 --> 00:07:01,190
+In this case, all the operations
+that are not supported by the current
+
+91
+00:07:01,390 --> 00:07:06,390
+state will just return and will
+raise just an error.
+
+92
+00:07:07,570 --> 00:07:12,790
+As I said before, the key point
+in this Design Pattern is that the
+
+93
+00:07:12,990 --> 00:07:17,610
+coffee machine, the object that
+has the complex state,
+
+94
+00:07:18,750 --> 00:07:24,170
+the complex state is a complex state
+machine, will delegate to each of
+
+95
+00:07:24,370 --> 00:07:27,810
+the states the operations that we
+want to do.
+
+96
+00:07:28,130 --> 00:07:33,890
+We have rewritten our method acceptOrder
+to send the message to the machine
+
+97
+00:07:34,090 --> 00:07:39,150
+state, to the new object that represents
+
+98
+00:07:39,350 --> 00:07:40,110
+the state.
+
+99
+00:07:40,310 --> 00:07:46,410
+When we are in the idle state,
+the machine will send the message
+
+100
+00:07:46,610 --> 00:07:47,750
+acceptOrder.
+
+101
+00:07:48,410 --> 00:07:53,290
+We are going to do the lookup and
+find the correct method and the
+
+102
+00:07:53,490 --> 00:07:58,530
+code in the Idlestate class will
+
+103
+00:07:58,730 --> 00:08:04,750
+execute and we are going to perform
+the operation and we are going to
+
+104
+00:08:04,950 --> 00:08:06,970
+change to the new state.
+
+105
+00:08:08,540 --> 00:08:14,680
+We can see this pattern again in
+the other operation that we analyzed
+
+106
+00:08:14,880 --> 00:08:19,460
+before, that is how much is it the
+coffee that we are asking,
+
+107
+00:08:19,660 --> 00:08:22,640
+and we see that we have the same
+pattern.
+
+108
+00:08:23,360 --> 00:08:28,140
+We delegate in the machineState
+to perform the operation,
+
+109
+00:08:28,340 --> 00:08:30,620
+in this case just returning the price.
+
+110
+00:08:30,820 --> 00:08:36,220
+We have for all the states an
+
+111
+00:08:36,420 --> 00:08:41,120
+implementation that raises an error
+because is our default implementation.
+
+112
+00:08:41,320 --> 00:08:49,940
+But in the correct state,
+we are going to return the correct
+
+113
+00:08:50,140 --> 00:08:50,900
+value.
+
+114
+00:08:51,100 --> 00:08:55,460
+In this case, we have a lot of
+advantages.
+
+115
+00:08:55,660 --> 00:09:00,260
+The idea is that in each state,
+in each object that represents our
+
+116
+00:09:00,460 --> 00:09:05,320
+state, we are going to just implement
+the operations that we care on.
+
+117
+00:09:06,440 --> 00:09:12,360
+Also, we are hiding in these objects,
+in this implementation,
+
+118
+00:09:12,580 --> 00:09:17,320
+the state transitions,
+that in this case is simple and
+
+119
+00:09:17,520 --> 00:09:20,660
+we have a circular state transitions.
+
+120
+00:09:20,860 --> 00:09:24,680
+We go from one state only to the
+next one and so on.
+
+121
+00:09:24,880 --> 00:09:30,040
+But this could have been more and
+more complex, it gets easily more
+
+122
+00:09:30,240 --> 00:09:31,000
+and more complex.
+
+123
+00:09:32,040 --> 00:09:34,660
+We also have less conditional code.
+
+124
+00:09:34,960 --> 00:09:44,620
+We are using much more delegation,
+we are using the idea of tell and
+
+125
+00:09:44,820 --> 00:09:45,580
+don't ask.
+
+126
+00:09:45,780 --> 00:09:52,200
+This eases a lot the reading of
+the code and these properties that
+
+127
+00:09:52,400 --> 00:09:56,640
+we are marking, like just implementing
+the needed operations,
+
+128
+00:09:57,000 --> 00:10:04,180
+encapsulating the transitions in
+each of the class of the states
+
+129
+00:10:04,380 --> 00:10:08,160
+and having less conditional code,
+start being more and more important
+
+130
+00:10:08,360 --> 00:10:12,060
+when we have much more states or
+more complex transitions.
+
+131
+00:10:13,000 --> 00:10:18,200
+We have an additional point that
+is interesting to talk and to analyze
+
+132
+00:10:18,400 --> 00:10:23,660
+in this design pattern,
+is that where to put the instance state.
+
+133
+00:10:23,920 --> 00:10:28,060
+When I say, instance state,
+I mean the state of, in this case,
+
+134
+00:10:28,260 --> 00:10:30,800
+in the next example, the coffee machine.
+
+135
+00:10:31,120 --> 00:10:36,980
+So we have to select where to put,
+in this case, the instance state
+
+136
+00:10:37,180 --> 00:10:38,120
+of our coffee machine.
+
+137
+00:10:38,320 --> 00:10:43,200
+In this case, in this example,
+we have just two instance variables
+
+138
+00:10:43,400 --> 00:10:48,160
+and we can select to put them in
+the machine object, in the coffee
+
+139
+00:10:48,360 --> 00:10:52,580
+machine object, or each of the state
+objects that we have.
+
+140
+00:10:53,600 --> 00:11:00,940
+If we put it in the coffee machine
+object, this is useful because this
+
+141
+00:11:01,140 --> 00:11:04,160
+state is used by all the machine states.
+
+142
+00:11:04,360 --> 00:11:10,120
+So they are common, they can delegate
+to the coffee machine to use the
+
+143
+00:11:10,320 --> 00:11:12,100
+internal state of the coffee machine.
+
+144
+00:11:13,300 --> 00:11:17,080
+When we change from one state to
+the other, we don't need to copy
+
+145
+00:11:17,280 --> 00:11:18,040
+these values.
+
+146
+00:11:18,240 --> 00:11:22,400
+So this simplifies the changing
+of one state to the other.
+
+147
+00:11:23,420 --> 00:11:28,780
+But there is a problem that in this
+example is not clear,
+
+148
+00:11:28,980 --> 00:11:34,080
+but if we have a lot of instance
+
+149
+00:11:34,280 --> 00:11:41,600
+variables in the coffee machine,
+we will need to use them and the
+
+150
+00:11:41,800 --> 00:11:47,060
+problem is if these instance variables
+are different from state to state.
+
+151
+00:11:47,260 --> 00:11:50,920
+For example, in our example,
+if in the either state,
+
+152
+00:11:51,120 --> 00:11:54,820
+we are using a set of instance variables
+that is different than the ones
+
+153
+00:11:55,020 --> 00:12:02,000
+that we are using in the state while
+the machine is doing the beverage,
+
+154
+00:12:02,200 --> 00:12:03,140
+is doing the drink.
+
+155
+00:12:03,680 --> 00:12:08,120
+So the problem with that is that
+maybe we have instance variables
+
+156
+00:12:08,320 --> 00:12:11,480
+that we are not using in all the cases.
+
+157
+00:12:11,680 --> 00:12:17,920
+The other alternative that we can
+explore is if we put the state in
+
+158
+00:12:18,120 --> 00:12:19,360
+the state object itself.
+
+159
+00:12:19,560 --> 00:12:25,300
+We will put all the instance variables,
+all the internal state of the coffee
+
+160
+00:12:25,500 --> 00:12:28,620
+machine in its state objects.
+
+161
+00:12:29,680 --> 00:12:30,580
+This is useful.
+
+162
+00:12:31,160 --> 00:12:38,760
+It's a great idea when each state
+of the coffee machine has different
+
+163
+00:12:38,960 --> 00:12:39,940
+internal state.
+
+164
+00:12:40,140 --> 00:12:42,600
+We need a different set of instance
+variable.
+
+165
+00:12:44,650 --> 00:12:52,950
+It's also good because we can do
+that each state object can directly
+
+166
+00:12:53,150 --> 00:12:54,990
+access this instance state.
+
+167
+00:12:55,210 --> 00:13:01,850
+We don't need to use messages or
+sending accessors only to the machine,
+
+168
+00:13:02,170 --> 00:13:07,270
+to the coffee machine,
+but it has the consequence that
+
+169
+00:13:07,470 --> 00:13:13,250
+every time that we change a state,
+that we create a new state and assign
+
+170
+00:13:13,450 --> 00:13:18,390
+it to the coffee machine,
+we need to copy, we need to pass
+
+171
+00:13:18,590 --> 00:13:25,090
+all instance variables to it and
+we have to pass the state from one
+
+172
+00:13:25,290 --> 00:13:26,790
+state object to the next one.
+
+173
+00:13:26,990 --> 00:13:32,510
+As a conclusion, the state pattern
+is useful and is used a lot when
+
+174
+00:13:32,710 --> 00:13:39,310
+we have an object that has a life
+with many states that have a complex
+
+175
+00:13:39,510 --> 00:13:45,030
+translation between states and that
+have different operations for each
+
+176
+00:13:45,230 --> 00:13:49,550
+of the states because it encapsulates
+the operations and the state
+
+177
+00:13:49,750 --> 00:13:50,510
+transitions.
+
+178
+00:13:50,710 --> 00:13:54,550
+So we use more delegation instead
+of conditional code.
+
+179
+00:13:54,990 --> 00:14:00,930
+We just will delegate in the state
+instead of implementing conditional
+
+180
+00:14:01,130 --> 00:14:06,810
+code and allows us more flexibility
+towards new states and new operations.
+
+181
+00:14:08,170 --> 00:14:13,470
+Of course, as using any design pattern,
+this is a more complex solution
+
+182
+00:14:13,670 --> 00:14:14,830
+than doing it directly.
+
+183
+00:14:15,030 --> 00:14:21,970
+So we have to balance it and decide
+when we need to use this new complexity
+
+184
+00:14:22,170 --> 00:14:27,410
+versus the clarity and flexibility
+that we win with using this new tool.
+
+185
+00:14:28,070 --> 00:14:32,570
+As any tool that we have in our toolbox,
+there are cases when we are going
+
+186
+00:14:32,770 --> 00:14:35,450
+to use it and cases when we are
+not going to use it.
+
+187
+00:14:35,650 --> 00:14:40,410
+And it's important to understand
+the consequences, the positive and
+
+188
+00:14:40,610 --> 00:14:45,070
+negative consequences of using one
+or other tool, in this case,
+
+189
+00:14:45,390 --> 00:14:46,150
+the state pattern.
+

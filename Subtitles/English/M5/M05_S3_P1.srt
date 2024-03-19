@@ -1,0 +1,913 @@
+1
+00:00:04,270 --> 00:00:06,670
+- Hello,
+welcome to this presentation.
+
+2
+00:00:07,290 --> 00:00:10,050
+In this presentation,
+we are going to present the Command
+
+3
+00:00:10,250 --> 00:00:11,010
+Design Pattern.
+
+4
+00:00:11,730 --> 00:00:16,070
+The goals for this presentation
+starts with a little example for
+
+5
+00:00:16,270 --> 00:00:17,910
+having a motivation for this Pattern.
+
+6
+00:00:18,410 --> 00:00:22,830
+Then, we are going to see which
+is the power of reification of actions.
+
+7
+00:00:23,550 --> 00:00:27,890
+And finally, we are going to enter
+in the Command Design Pattern.
+
+8
+00:00:28,090 --> 00:00:29,570
+Let's start with an example.
+
+9
+00:00:30,010 --> 00:00:33,910
+Imagine that we have a robot that
+we can script, that we can script
+
+10
+00:00:34,110 --> 00:00:39,850
+with a string that has this shape,
+where we have the action to do and
+
+11
+00:00:40,050 --> 00:00:41,210
+the parameter to the action.
+
+12
+00:00:41,410 --> 00:00:45,010
+In this case, for example,
+take the direction to the east or
+
+13
+00:00:45,210 --> 00:00:50,370
+move two units or take the direction
+to the north and move three units.
+
+14
+00:00:52,540 --> 00:00:54,840
+Let's see how we can implement this.
+
+15
+00:00:55,220 --> 00:01:00,860
+Well, first, what we can do is take
+our string and splitting it on the
+
+16
+00:01:01,060 --> 00:01:04,040
+new line character, so we have a
+collection of orders.
+
+17
+00:01:04,520 --> 00:01:09,320
+For each order, we are going to
+have one string that we are going
+
+18
+00:01:09,520 --> 00:01:15,040
+to again split, in this case,
+by the space character.
+
+19
+00:01:16,120 --> 00:01:21,160
+Like that, we are going to have
+for each order, a pair that is the
+
+20
+00:01:21,360 --> 00:01:25,140
+operation and the parameter for
+this operation.
+
+21
+00:01:25,920 --> 00:01:30,900
+So later, we can take our collection
+of orders and in this case,
+
+22
+00:01:31,100 --> 00:01:37,240
+the variable orders will contain
+an array where we will have a pair
+
+23
+00:01:37,440 --> 00:01:45,700
+with the first element will be the
+order and then the parameter of it.
+
+24
+00:01:46,240 --> 00:01:55,180
+Then for example, we can have one
+'dir,' #north and so on.
+
+25
+00:01:55,380 --> 00:01:59,660
+This is the structure that we have
+in our collections of orders.
+
+26
+00:01:59,860 --> 00:02:04,120
+So we are going to take each of
+them and we are going to see if
+
+27
+00:02:04,320 --> 00:02:09,000
+the operation is moved,
+we are going to tell the robot to
+
+28
+00:02:09,200 --> 00:02:12,800
+do this operation parsing the second
+argument.
+
+29
+00:02:13,320 --> 00:02:18,480
+The same, if this is not moved,
+we are going to check if it's a
+
+30
+00:02:18,680 --> 00:02:21,740
+'dir' operation and we are going
+to execute that.
+
+31
+00:02:22,060 --> 00:02:27,340
+As we see, we have conditional code
+that will test each of the actions
+
+32
+00:02:27,540 --> 00:02:28,300
+that we are doing.
+
+33
+00:02:28,500 --> 00:02:32,020
+Now let's see what happen when we
+tried to add more operations to
+
+34
+00:02:32,220 --> 00:02:32,980
+our robot.
+
+35
+00:02:33,180 --> 00:02:37,060
+Imagine that we want to add a 'pick'
+operation or a 'drop' operation
+
+36
+00:02:37,260 --> 00:02:42,380
+or a 'return' operation that takes
+back the robot to the base.
+
+37
+00:02:43,760 --> 00:02:47,960
+In this case, what we are going
+to do is adding more and more
+
+38
+00:02:48,160 --> 00:02:49,480
+conditional code on it.
+
+39
+00:02:49,680 --> 00:02:54,260
+As we had before, just asking for
+move and 'dir,' now we are going
+
+40
+00:02:54,460 --> 00:03:00,500
+to ask for if it's a 'drop,' 'pick'
+or 'first.' Seeing that adding here
+
+41
+00:03:00,700 --> 00:03:04,240
+more and more operations,
+what that does is that we have more
+
+42
+00:03:04,440 --> 00:03:09,980
+conditional code, increasing the
+amount of complexity of this method.
+
+43
+00:03:10,240 --> 00:03:14,320
+Each time we add a new operation,
+we are going to have a longer method
+
+44
+00:03:14,520 --> 00:03:17,660
+that has more and more complex
+conditional code.
+
+45
+00:03:18,240 --> 00:03:21,340
+So let's analyze up to here the
+example that we have.
+
+46
+00:03:22,040 --> 00:03:26,600
+In this example, when we add a new
+order, we have to modify exactly
+
+47
+00:03:26,800 --> 00:03:29,240
+the same method all the time.
+
+48
+00:03:29,640 --> 00:03:34,680
+Adding them is highly expensive
+because we have to improve the
+
+49
+00:03:34,880 --> 00:03:36,060
+complexity of this method.
+
+50
+00:03:36,440 --> 00:03:41,940
+Adding more and more orders,
+finish with a really big execute method.
+
+51
+00:03:42,560 --> 00:03:47,820
+Also imagine if we want to have
+orders that are more complex.
+
+52
+00:03:48,040 --> 00:03:53,060
+In this scenario, we can have an
+order that allows us to execute
+
+53
+00:03:53,260 --> 00:03:55,220
+many mov at the same time.
+
+54
+00:03:55,600 --> 00:04:01,040
+Let's see, for example,
+if moving once, executing mov 10 mov 10
+
+55
+00:04:01,160 --> 00:04:03,660
+and mov 10 is more expensive.
+
+56
+00:04:03,800 --> 00:04:09,020
+We can unify them in a single mov 30.
+
+57
+00:04:09,690 --> 00:04:13,700
+Doing the three instead of doing
+three mov, doing only one.
+
+58
+00:04:14,380 --> 00:04:21,600
+In this case, well, we will have
+our text that represents the action,
+
+59
+00:04:21,920 --> 00:04:28,080
+the string, the extra strings and
+manipulating strings to compact them
+
+60
+00:04:28,760 --> 00:04:33,120
+itself into this mov 30 is complex.
+
+61
+00:04:33,300 --> 00:04:39,340
+We want to have objects to manipulate
+them because they are easy to modify.
+
+62
+00:04:40,200 --> 00:04:45,180
+Also, let's see another example
+where our solution is really short
+
+63
+00:04:45,280 --> 00:04:49,660
+is that what happen if we want to
+replay this action that we have done.
+
+64
+00:04:49,820 --> 00:04:53,980
+But in the inverse order to make
+it come back to the home base
+
+65
+00:04:54,100 --> 00:04:54,800
+for example.
+
+66
+00:04:54,980 --> 00:04:58,860
+Well, you can tell me okay,
+we are going to iterate now the
+
+67
+00:04:58,940 --> 00:05:01,040
+string in backwards.
+
+68
+00:05:01,120 --> 00:05:03,060
+But that again is complex.
+
+69
+00:05:03,180 --> 00:05:05,320
+We want to have a better solution.
+
+70
+00:05:05,720 --> 00:05:12,680
+So in this example, let's introduce
+the idea of the Command Design Pattern.
+
+71
+00:05:13,720 --> 00:05:18,240
+This is the intention that we have
+taken from the Design Pattern book
+
+72
+00:05:18,340 --> 00:05:22,400
+from the Gang of Four,
+but it says exactly what we want.
+
+73
+00:05:22,640 --> 00:05:28,000
+We want to encapsulate in this case,
+the operations as objects,
+
+74
+00:05:29,060 --> 00:05:31,750
+a request or operations as an object.
+
+75
+00:05:32,260 --> 00:05:36,660
+Then letting like this as we have
+objects, we can start parameterizing
+
+76
+00:05:36,760 --> 00:05:41,540
+them by the client, modifying them
+for example, for each of the operations
+
+77
+00:05:41,640 --> 00:05:46,300
+in the parameters to use or the
+order to execute it.
+
+78
+00:05:46,520 --> 00:05:49,960
+And then, as we have objects,
+we can do operations on them.
+
+79
+00:05:50,820 --> 00:05:57,180
+We can queue them, we can log them,
+we can undo them or we can for example,
+
+80
+00:05:57,460 --> 00:06:02,560
+compact many of them in a single
+operation or do whatever operation
+
+81
+00:06:02,720 --> 00:06:07,620
+we want because now we have objects
+and they are more powerful than
+
+82
+00:06:07,680 --> 00:06:09,900
+having just a text representation.
+
+83
+00:06:11,460 --> 00:06:17,320
+Basically, a Command is just reification
+of an order or an action itself
+
+84
+00:06:17,340 --> 00:06:21,700
+in that we want to create as an
+object that in case will represent
+
+85
+00:06:21,900 --> 00:06:25,860
+an order or an action on more complex
+object.
+
+86
+00:06:26,980 --> 00:06:30,720
+Usually in a Command,
+we are going to encapsulate more
+
+87
+00:06:30,730 --> 00:06:35,180
+than just the action that we are
+executing, we are going to encapsulate
+
+88
+00:06:35,210 --> 00:06:38,760
+all the context, all the elements
+that it needs to execute.
+
+89
+00:06:38,920 --> 00:06:43,100
+For example, we can encapsulate
+all the parameters, we can encapsulate
+
+90
+00:06:43,320 --> 00:06:49,520
+how this is a log or for example,
+information to create a menu or
+
+91
+00:06:49,530 --> 00:06:51,200
+how to display this action.
+
+92
+00:06:52,120 --> 00:06:57,600
+And Commands are really useful when
+we want to have and do operations
+
+93
+00:06:57,740 --> 00:07:05,200
+because as we are going to create
+a list of objects with each of our
+
+94
+00:07:05,210 --> 00:07:09,680
+actions, we can keep this list and
+basically reverse the order and
+
+95
+00:07:09,760 --> 00:07:15,310
+execute and still executing in reverse
+order we can execute it in them
+
+96
+00:07:15,320 --> 00:07:17,580
+back in an undo fashion.
+
+97
+00:07:17,680 --> 00:07:23,540
+And as each action, each Command,
+it knows what are the arguments
+
+98
+00:07:23,550 --> 00:07:26,880
+and what it is doing,
+it's easy to implement a reverse
+
+99
+00:07:26,980 --> 00:07:27,480
+operation.
+
+100
+00:07:27,680 --> 00:07:31,720
+In the case of the road,
+if it has turned to the east,
+
+101
+00:07:31,740 --> 00:07:38,640
+we can make it turn it in the west
+direction, which is basically a
+
+102
+00:07:39,740 --> 00:07:41,120
+stricter of a Command.
+
+103
+00:07:41,280 --> 00:07:45,260
+Well, we have two roles clearly defined.
+
+104
+00:07:45,480 --> 00:07:51,680
+In one side, we have the clients
+of our Command Pattern and then
+
+105
+00:07:51,690 --> 00:07:55,340
+we will have the object that we
+are modifying with these actions.
+
+106
+00:07:56,200 --> 00:08:00,530
+Then we are going to have concrete
+objects representing each of the
+
+107
+00:08:00,570 --> 00:08:01,700
+operations that we want.
+
+108
+00:08:02,580 --> 00:08:06,580
+In this case, it's common that we
+have a Command abstract superclass
+
+109
+00:08:06,680 --> 00:08:09,980
+between the concrete Commands,
+but this is not required.
+
+110
+00:08:12,260 --> 00:08:14,880
+Usually, it is decided because we
+are going to put all the Command
+
+111
+00:08:14,980 --> 00:08:20,880
+behavior in the superclass,
+but that is just a decision we can
+
+112
+00:08:20,890 --> 00:08:28,180
+have a Command Design Pattern just
+using a polymorphic message that
+
+113
+00:08:28,190 --> 00:08:32,280
+is the most important thing because
+who will create the action will
+
+114
+00:08:32,290 --> 00:08:36,180
+create the Command will configure
+it and eventually somebody will
+
+115
+00:08:36,210 --> 00:08:40,820
+send the message execute,
+to execute it in a polymorphic way.
+
+116
+00:08:41,020 --> 00:08:44,340
+It is the same, it executes the
+concrete action one or the concrete
+
+117
+00:08:44,470 --> 00:08:45,100
+Command2.
+
+118
+00:08:46,190 --> 00:08:50,090
+Let's see our example in action,
+let's put the Design Pattern in
+
+119
+00:08:50,130 --> 00:08:50,670
+our example.
+
+120
+00:08:50,850 --> 00:08:55,910
+In this case, we are going to a
+superclass in Command,
+
+121
+00:08:56,370 --> 00:08:57,750
+common abstract superclass.
+
+122
+00:08:57,890 --> 00:09:00,710
+But the important thing is that
+we are going to create an object
+
+123
+00:09:00,750 --> 00:09:02,530
+for each of the operations that we have.
+
+124
+00:09:03,310 --> 00:09:07,640
+In this case, we are going to create
+one for the DirectionCommand and
+
+125
+00:09:07,840 --> 00:09:11,320
+we are going to give in it the direction
+that we want to turn.
+
+126
+00:09:13,270 --> 00:09:18,170
+In this case, in our solution,
+we are going to have two methods
+
+127
+00:09:18,370 --> 00:09:19,190
+in our Command.
+
+128
+00:09:19,390 --> 00:09:23,310
+In one side, we are going to have
+a method to handle the arguments
+
+129
+00:09:23,510 --> 00:09:28,730
+to parse the arguments and store
+it in the correct values for the
+
+130
+00:09:28,930 --> 00:09:32,390
+Command storing in the instance
+variable direction the value that
+
+131
+00:09:32,590 --> 00:09:33,350
+has extracted.
+
+132
+00:09:33,550 --> 00:09:38,390
+And then, we will have an executeOn
+that will do the action.
+
+133
+00:09:38,590 --> 00:09:42,130
+Each of the operations,
+each of the Commands will do is
+
+134
+00:09:42,330 --> 00:09:46,510
+affect a specific action depending
+on what we are doing.
+
+135
+00:09:46,710 --> 00:09:48,990
+For the move, we have exactly the same.
+
+136
+00:09:49,190 --> 00:09:53,470
+For the move, in this case,
+we are going to get the argument
+
+137
+00:09:53,670 --> 00:09:56,970
+direction from the arguments and
+we are going to extract it.
+
+138
+00:09:57,170 --> 00:10:00,930
+In this case, the Commands are simple
+and just has one argument,
+
+139
+00:10:01,130 --> 00:10:05,570
+but this same architecture,
+the same solution can be used to
+
+140
+00:10:05,770 --> 00:10:11,010
+extract more complex arguments from
+the collection of orders.
+
+141
+00:10:11,210 --> 00:10:17,090
+And then, exactly the same when
+we are executing the action on the
+
+142
+00:10:17,290 --> 00:10:21,010
+robot we are going to delegate the
+correct action into the robot.
+
+143
+00:10:21,210 --> 00:10:27,170
+As we see, now the executeCommand
+will be much much simpler.
+
+144
+00:10:27,370 --> 00:10:32,450
+We are going to have exactly the
+same code to parse the strings,
+
+145
+00:10:32,650 --> 00:10:37,350
+but later when we are executing
+each of the orders, we are going
+
+146
+00:10:37,550 --> 00:10:39,950
+to delegate to the Command to execute.
+
+147
+00:10:40,150 --> 00:10:42,290
+We are going to decide which is
+the Command to execute,
+
+148
+00:10:42,490 --> 00:10:47,630
+just create a new instance and parsed
+the arguments and execute it.
+
+149
+00:10:47,830 --> 00:10:51,450
+So in this case, we are going to
+create this Command for class,
+
+150
+00:10:51,650 --> 00:10:56,730
+we'll take, we'll delegate in each
+of the Commands and ask if the given
+
+151
+00:10:56,930 --> 00:11:00,710
+string that represent the Command
+applies for each of them.
+
+152
+00:11:00,910 --> 00:11:07,210
+As we see in this example,
+we have reduced all the conditional
+
+153
+00:11:07,410 --> 00:11:12,310
+code, all the boilerplate code that
+we have before that was not adding.
+
+154
+00:11:12,510 --> 00:11:15,990
+It was just adding complexity to
+our solution.
+
+155
+00:11:16,190 --> 00:11:20,890
+In this case, the solution is much
+easier because we are just delegating
+
+156
+00:11:21,090 --> 00:11:23,130
+into the correct class.
+
+157
+00:11:23,330 --> 00:11:30,470
+In our scenario, if we want just
+to add new Commands to our robot,
+
+158
+00:11:30,670 --> 00:11:36,610
+we just add new classes extending
+by Command and each Command is now
+
+159
+00:11:36,810 --> 00:11:41,870
+responsible for handling the arguments
+and the information needed to perform
+
+160
+00:11:42,070 --> 00:11:42,830
+the action.
+
+161
+00:11:43,030 --> 00:11:49,410
+It also encapsulates the applicability
+and what to do in this action.
+
+162
+00:11:49,610 --> 00:11:54,170
+This is important because now we
+have an object that we can use to
+
+163
+00:11:54,370 --> 00:12:02,490
+ask and demand information and now
+we have a collection of objects
+
+164
+00:12:02,690 --> 00:12:05,110
+that we can do many things.
+
+165
+00:12:05,310 --> 00:12:09,370
+For example, we can log them,
+we can sort them in the correct order,
+
+166
+00:12:09,570 --> 00:12:14,690
+we can undo it, we can merge them
+if they are needed because we have
+
+167
+00:12:14,890 --> 00:12:18,670
+objects and we now have a better
+representation for our actions.
+
+168
+00:12:18,870 --> 00:12:25,490
+But there are always consequences
+of using a Design Pattern and in
+
+169
+00:12:25,690 --> 00:12:26,690
+this case is not different.
+
+170
+00:12:26,890 --> 00:12:33,710
+Well, not all operations that we
+have in our solution should be turned
+
+171
+00:12:33,910 --> 00:12:38,230
+into Command objects because basically
+when we start adding more and more
+
+172
+00:12:38,430 --> 00:12:43,210
+Commands, we are going to have a
+large hierarchy of simple classes
+
+173
+00:12:43,410 --> 00:12:44,930
+that will grow and grow.
+
+174
+00:12:45,130 --> 00:12:49,550
+So we need to select which are the
+operations that we want to represent
+
+175
+00:12:49,750 --> 00:12:50,510
+as Commands.
+
+176
+00:12:50,710 --> 00:12:56,550
+Also it's important that we keep
+the behavior of the object that
+
+177
+00:12:57,110 --> 00:13:00,550
+is exposed in the actions inside
+the object because if not,
+
+178
+00:13:00,750 --> 00:13:07,230
+we can tend to break the encapsulation
+and break the nature of the object.
+
+179
+00:13:07,430 --> 00:13:12,230
+If the robot just do nothing now,
+we are going to have a problem.
+
+180
+00:13:12,430 --> 00:13:14,550
+It's not a nice solution.
+
+181
+00:13:14,750 --> 00:13:19,490
+As a conclusion, you have to think
+the idea, the main idea in the Design
+
+182
+00:13:19,690 --> 00:13:23,250
+Pattern is that we are going to
+take actions and we are going to
+
+183
+00:13:23,450 --> 00:13:27,670
+take orders and operations and we
+are going to reify them as objects.
+
+184
+00:13:27,870 --> 00:13:33,130
+We are going to create first class
+citizens for these operations.
+
+185
+00:13:33,330 --> 00:13:38,650
+And so, like that we can use it
+as any other object in our system.
+
+186
+00:13:38,850 --> 00:13:43,770
+This solution is great when we have
+to do operations like undoing the
+
+187
+00:13:43,970 --> 00:13:47,350
+operations that we have executed,
+we have a list of operations and
+
+188
+00:13:47,550 --> 00:13:52,590
+then we want to reverse them in
+order and undo them, when we want
+
+189
+00:13:52,790 --> 00:13:56,590
+to replay the same, when we want
+to optimize before executing or
+
+190
+00:13:56,790 --> 00:14:02,250
+when we are delaying the execution
+between the creation of the objects
+
+191
+00:14:02,450 --> 00:14:04,310
+and this real execution.
+

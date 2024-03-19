@@ -1,0 +1,446 @@
+1
+00:00:04,270 --> 00:00:07,370
+Pablo Tesone - Hello,
+welcome to this lecture.
+
+2
+00:00:07,650 --> 00:00:12,050
+In this lecture, we are going to
+talk About Null Check and how it
+
+3
+00:00:12,250 --> 00:00:14,710
+is used in the case of Lazy
+Initialization.
+
+4
+00:00:16,190 --> 00:00:19,590
+We are going to think about the
+initialization of an object,
+
+5
+00:00:19,790 --> 00:00:21,790
+what happens when we create a new
+object.
+
+6
+00:00:22,430 --> 00:00:28,370
+We are going to present the idea
+of lazy initialization and this
+
+7
+00:00:28,570 --> 00:00:31,290
+lecture is a complement to 'Avoid
+Nil' lecture.
+
+8
+00:00:31,910 --> 00:00:36,610
+It's suggested that you can review
+also this lecture to get the whole
+
+9
+00:00:36,810 --> 00:00:39,810
+idea and the whole picture of the
+subjects that we are presenting.
+
+10
+00:00:41,820 --> 00:00:44,400
+What is the problem that we are
+attacking today?
+
+11
+00:00:44,720 --> 00:00:50,480
+Well, we need to reduce the startup
+time or the time that we take to
+
+12
+00:00:50,680 --> 00:00:52,100
+create a new instance of an object.
+
+13
+00:00:53,540 --> 00:00:57,680
+What can have this impact in the
+startup time?
+
+14
+00:00:58,280 --> 00:01:03,020
+When we initialize a lot of instance
+variables and we need to do a lot
+
+15
+00:01:03,220 --> 00:01:07,580
+of calculations and allocate a lot
+of objects that are referred from
+
+16
+00:01:07,780 --> 00:01:11,520
+our object, we can take a lot of
+time and we can take a lot of memory.
+
+17
+00:01:12,800 --> 00:01:18,860
+And there is another situation is
+that we are forced from the beginning
+
+18
+00:01:19,060 --> 00:01:23,200
+to initialize all the object,
+all the state of our instance when
+
+19
+00:01:23,400 --> 00:01:24,160
+we create it.
+
+20
+00:01:25,600 --> 00:01:27,160
+So what is the solution?
+
+21
+00:01:27,360 --> 00:01:31,380
+We want to see how we can do less
+of this work in the beginning,
+
+22
+00:01:31,580 --> 00:01:32,580
+in the initialization.
+
+23
+00:01:34,220 --> 00:01:38,340
+Our solution or the idea that we
+are presenting in this lecture is
+
+24
+00:01:38,540 --> 00:01:42,460
+only to perform the initialization
+of the state that we are going to use.
+
+25
+00:01:43,100 --> 00:01:48,080
+We are going to only calculate this
+new state or this state that we
+
+26
+00:01:48,280 --> 00:01:50,680
+are going to initialize when we use it.
+
+27
+00:01:51,240 --> 00:01:55,400
+And this will produce that it will
+only be used, it will only be calculated
+
+28
+00:01:55,600 --> 00:01:58,600
+when we are using it without needing
+to do it before.
+
+29
+00:02:00,080 --> 00:02:04,960
+So we are delaying the initialization
+of our objects until it's really needed.
+
+30
+00:02:07,670 --> 00:02:10,470
+So this is the general strategy
+that we are going to do.
+
+31
+00:02:10,670 --> 00:02:14,890
+We are going to instantiate our
+object and let all the instance
+
+32
+00:02:16,810 --> 00:02:20,770
+variables that are difficult to
+initialize in nil.
+
+33
+00:02:21,050 --> 00:02:26,650
+And then, when we are going to use
+this instance variable,
+
+34
+00:02:26,850 --> 00:02:27,890
+we want to give it a value.
+
+35
+00:02:28,350 --> 00:02:29,390
+How do we do so?
+
+36
+00:02:29,910 --> 00:02:34,610
+Well, we are going to not access
+the instance variable directly.
+
+37
+00:02:34,810 --> 00:02:35,750
+This is important.
+
+38
+00:02:36,210 --> 00:02:40,530
+It's an important thing that we
+will have to have in mind.
+
+39
+00:02:40,730 --> 00:02:44,810
+We are not going to use the variable
+directly, but we are going to use
+
+40
+00:02:45,010 --> 00:02:47,830
+an accessor method to access them.
+
+41
+00:02:49,350 --> 00:02:53,190
+Also an important thing is that
+in the initialization time,
+
+42
+00:02:53,390 --> 00:02:56,090
+we are not going to do anything
+in the initialization time because
+
+43
+00:02:56,290 --> 00:02:58,530
+it's what we want really to do.
+
+44
+00:03:01,280 --> 00:03:06,700
+In our accessors, we are going to
+do some kind of little work extra
+
+45
+00:03:06,900 --> 00:03:07,740
+that we don't usually.
+
+46
+00:03:08,000 --> 00:03:13,080
+Usually, when we write an accessor,
+a method that access the value of
+
+47
+00:03:13,280 --> 00:03:18,060
+a given instance variable,
+we just implement this part,
+
+48
+00:03:18,400 --> 00:03:19,380
+returning the value.
+
+49
+00:03:19,740 --> 00:03:27,260
+In this case, we are going also
+to check if the instance variable
+
+50
+00:03:27,460 --> 00:03:32,860
+is nil and if it's nil,
+we are going to give to it a default
+
+51
+00:03:33,060 --> 00:03:34,640
+value like in this case.
+
+52
+00:03:34,920 --> 00:03:40,220
+This is a really small example,
+but we are going to see that this
+
+53
+00:03:40,420 --> 00:03:45,060
+can get more and more complex and
+when it's getting complex is where
+
+54
+00:03:45,260 --> 00:03:46,600
+it gets more and more powerful.
+
+55
+00:03:48,000 --> 00:03:53,580
+For example, in this other example,
+we have a better use of the lazy
+
+56
+00:03:53,780 --> 00:03:54,540
+initialization.
+
+57
+00:03:54,740 --> 00:04:03,260
+Basically, we have a complex calculation
+to get the value of our instance
+
+58
+00:04:03,460 --> 00:04:04,220
+variable.
+
+59
+00:04:04,440 --> 00:04:08,260
+As we can see, it's sending messages,
+it's doing arithmetic operations
+
+60
+00:04:08,460 --> 00:04:14,300
+and this can take time to execute
+and time to calculate.
+
+61
+00:04:14,860 --> 00:04:21,600
+So we want to really do it only
+if we really need it.
+
+62
+00:04:22,280 --> 00:04:28,380
+So we see the same pattern of our
+accessor in our lazy accessor,
+
+63
+00:04:28,580 --> 00:04:35,140
+we have the normal accessor to the
+variable, but if it is nil,
+
+64
+00:04:35,440 --> 00:04:39,000
+we do the assignation with the value
+that we are calculating.
+
+65
+00:04:40,820 --> 00:04:46,200
+In this way, we only execute the
+complex and expensive calculation
+
+66
+00:04:46,400 --> 00:04:48,020
+when we really need it.
+
+67
+00:04:49,400 --> 00:04:53,760
+Other thing to have in clear is
+that we are storing this value in
+
+68
+00:04:53,960 --> 00:04:54,720
+the instance variable.
+
+69
+00:04:55,360 --> 00:04:59,360
+So the second time that we access
+the instance variable through the
+
+70
+00:04:59,560 --> 00:05:01,760
+accessor, we already have the value
+calculated.
+
+71
+00:05:03,080 --> 00:05:09,500
+This idea of using lazy initialization
+can allow us to defer the initialization
+
+72
+00:05:09,700 --> 00:05:10,740
+and store the results.
+
+73
+00:05:11,820 --> 00:05:16,180
+In this way, we delay the execution
+of expensive code to calculate the
+
+74
+00:05:16,380 --> 00:05:19,700
+values and also we cache them to
+be used later.
+
+75
+00:05:21,220 --> 00:05:26,880
+One big problem or one big constraint
+of this solution is that we never
+
+76
+00:05:27,080 --> 00:05:30,160
+should access directly the instance
+variable.
+
+77
+00:05:30,980 --> 00:05:34,240
+We always need to use the accessor.
+
+78
+00:05:37,510 --> 00:05:41,370
+If we are not doing so,
+we are in the risk of exposing a
+
+79
+00:05:41,570 --> 00:05:46,930
+nil value and we will break all
+the idea of having lazy initialization.
+
+80
+00:05:47,290 --> 00:05:52,590
+So the good thing about lazy
+initialization is that we can cache
+
+81
+00:05:52,790 --> 00:05:58,110
+the values and defer the initialization
+until we need it, but the cost is
+
+82
+00:05:58,310 --> 00:06:01,470
+that we use always the lazy accessor.
+
+83
+00:06:03,600 --> 00:06:05,640
+What are the good things of this?
+
+84
+00:06:05,840 --> 00:06:11,580
+Well, as I said before,
+we can avoid the creation or the
+
+85
+00:06:11,780 --> 00:06:17,680
+calculation of a complex object
+until the time we really need it.
+
+86
+00:06:18,240 --> 00:06:21,360
+But there is always a trade off.
+
+87
+00:06:21,560 --> 00:06:26,480
+So if we use lazy initialization,
+we will perform a check for nil
+
+88
+00:06:27,220 --> 00:06:33,980
+every time that we access the instance
+variable through the lazy accessor.
+
+89
+00:06:35,780 --> 00:06:40,520
+As a conclusion, we can say that
+lazy initialization is another tool
+
+90
+00:06:40,720 --> 00:06:46,140
+that we have to have in our toolbox,
+but we don't have to overuse it.
+
+91
+00:06:47,000 --> 00:06:51,680
+It's good when we are having objects
+that have some instance variables
+
+92
+00:06:51,880 --> 00:06:59,240
+that we don't use all the time,
+but also they are complex or expensive
+
+93
+00:06:59,440 --> 00:07:00,200
+to calculate.
+
+94
+00:07:00,400 --> 00:07:03,740
+So we can defer the initialization
+until the moment we use it. &nbsp;
+

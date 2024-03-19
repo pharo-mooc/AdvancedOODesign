@@ -1,0 +1,679 @@
+1
+00:00:03,080 --> 00:00:06,900
+Hello, in this lecture,
+we will discuss something really
+
+2
+00:00:07,100 --> 00:00:07,860
+important.
+
+3
+00:00:08,080 --> 00:00:11,180
+This is that message sends are plans
+for reuse.
+
+4
+00:00:13,620 --> 00:00:17,880
+And this lecture is related to a
+previous lecture on sending a message
+
+5
+00:00:18,080 --> 00:00:19,020
+is making a choice.
+
+6
+00:00:20,420 --> 00:00:23,600
+And the self-semantics that you
+already saw in the previous lecture.
+
+7
+00:00:24,460 --> 00:00:28,220
+This lecture is relevant to any
+object-oriented language,
+
+8
+00:00:28,460 --> 00:00:31,740
+even if we will use Pharo as usual
+in this MOOC.
+
+9
+00:00:31,960 --> 00:00:36,480
+And this is another essential aspect
+of object-oriented design.
+
+10
+00:00:39,300 --> 00:00:43,520
+So what you will learn in this lecture,
+this is that message sends are hooks
+
+11
+00:00:43,720 --> 00:00:45,460
+for subclasses.
+
+12
+00:00:45,840 --> 00:00:49,240
+And message sends are places where
+code of subclasses can be invoked.
+
+13
+00:00:50,560 --> 00:00:52,400
+So let's dig into it.
+
+14
+00:00:52,860 --> 00:00:54,500
+Let's start with simple thinking.
+
+15
+00:00:55,680 --> 00:01:00,680
+Sometimes you may heard some anecdotes
+like, I do not like, I like big
+
+16
+00:01:00,880 --> 00:01:04,600
+methods because like that,
+I can see all the code in one place,
+
+17
+00:01:04,900 --> 00:01:09,500
+or I do not like small methods because
+the code is scattered in different
+
+18
+00:01:09,700 --> 00:01:10,460
+methods.
+
+19
+00:01:10,820 --> 00:01:15,020
+And the questions are,
+why large methods lead to under-optimal
+
+20
+00:01:15,220 --> 00:01:15,980
+design?
+
+21
+00:01:16,880 --> 00:01:19,840
+And why writing small methods is
+a sign of good design?
+
+22
+00:01:21,060 --> 00:01:24,480
+And we will try to answer that by
+looking at examples.
+
+23
+00:01:25,200 --> 00:01:30,100
+So remember, when you send a message
+to an object, you are making a choice.
+
+24
+00:01:31,120 --> 00:01:34,140
+Because the system will select the
+right method to execute,
+
+25
+00:01:35,500 --> 00:01:37,440
+given the receiver that will receive
+the message.
+
+26
+00:01:40,520 --> 00:01:45,800
+You express as a programmer the
+choices by adding classes in the
+
+27
+00:01:46,000 --> 00:01:49,440
+hierarchy: each class represents
+one possible choice.
+
+28
+00:01:50,240 --> 00:01:53,380
+And self always represents the current
+receiver.
+
+29
+00:01:53,640 --> 00:01:55,600
+This is the object that will receive
+the message.
+
+30
+00:01:57,100 --> 00:01:59,360
+And the method lookup starts in
+the class of the receiver.
+
+31
+00:01:59,560 --> 00:02:03,020
+This is automatic, except for (super)
+that you already saw in another lecture.
+
+32
+00:02:05,160 --> 00:02:08,080
+So given all of that,
+here is an example.
+
+33
+00:02:08,660 --> 00:02:11,600
+So we are in a Node class.
+
+34
+00:02:12,700 --> 00:02:16,200
+And in this class, there is a method
+setWindowWithRatioForDisplay.
+
+35
+00:02:18,800 --> 00:02:22,660
+And the question is, what are the
+possible solutions to change the
+
+36
+00:02:22,860 --> 00:02:26,280
+defaultNodeSize formula in subclasses?
+
+37
+00:02:26,480 --> 00:02:31,800
+If I want to define a new subclass
+of node that changes this expression
+
+38
+00:02:32,000 --> 00:02:35,880
+and only this expression here,
+what can I do?
+
+39
+00:02:36,080 --> 00:02:38,800
+Solution one, I can duplicate the code.
+
+40
+00:02:39,380 --> 00:02:43,120
+So for example, here,
+I start by creating a new subclass,
+
+41
+00:02:43,320 --> 00:02:44,080
+#NodeWithMargins.
+
+42
+00:02:44,280 --> 00:02:47,180
+Okay, this is a new subclass of Node.
+
+43
+00:02:47,900 --> 00:02:49,740
+And now, I can redefine this method.
+
+44
+00:02:50,900 --> 00:02:55,800
+I will copy paste all the code and
+I change this expression by adding
+
+45
+00:02:56,000 --> 00:02:56,760
+a margin.
+
+46
+00:02:57,840 --> 00:03:01,280
+So clearly, this is a bad solution.
+
+47
+00:03:02,040 --> 00:03:03,020
+So why is it bad?
+
+48
+00:03:03,220 --> 00:03:06,380
+This is a bad solution because when
+you are duplicating code,
+
+49
+00:03:07,340 --> 00:03:08,280
+you are copying bugs.
+
+50
+00:03:09,180 --> 00:03:14,160
+So if there is a bug in the superclass
+code, you will copy the bug inside
+
+51
+00:03:14,360 --> 00:03:15,120
+the subclass.
+
+52
+00:03:16,680 --> 00:03:20,360
+And if you want to change the code,
+it means that you have multiple copies.
+
+53
+00:03:20,560 --> 00:03:22,600
+So you need to change everywhere.
+
+54
+00:03:24,740 --> 00:03:30,620
+In some languages such as Java,
+using the private keyword prevents
+
+55
+00:03:30,820 --> 00:03:35,320
+duplicating the code because some
+instance variables are not accessible
+
+56
+00:03:35,520 --> 00:03:36,280
+in the subclass.
+
+57
+00:03:36,680 --> 00:03:41,540
+So this is something that you should
+take into account.
+
+58
+00:03:44,300 --> 00:03:48,460
+So what is the essence of a better
+solution instead of duplicating code?
+
+59
+00:03:48,880 --> 00:03:51,420
+This is something that we already
+saw in previous lectures.
+
+60
+00:03:52,560 --> 00:03:56,900
+So the idea is to define small methods
+and to have a hierarchy of classes.
+
+61
+00:03:57,100 --> 00:04:01,360
+For example, if I define a new object,
+this is an instance of C,
+
+62
+00:04:01,560 --> 00:04:04,340
+the C class, and I send it a bar
+message.
+
+63
+00:04:05,200 --> 00:04:07,220
+So if you remember the lookup.
+
+64
+00:04:07,520 --> 00:04:10,260
+So it means that the method is lookup
+in the hierarchy chain.
+
+65
+00:04:10,960 --> 00:04:15,900
+And then, we will find the bar method
+in the A class.
+
+66
+00:04:17,180 --> 00:04:20,860
+It will be the code of this method
+is doing a self-send here,
+
+67
+00:04:21,160 --> 00:04:22,160
+'self foo'.
+
+68
+00:04:22,580 --> 00:04:25,380
+And there is a default foo
+implementation in A.
+
+69
+00:04:27,280 --> 00:04:31,040
+But foo is redefined in the C class
+here.
+
+70
+00:04:31,340 --> 00:04:35,780
+And this message send will correctly
+return 42.
+
+71
+00:04:36,780 --> 00:04:41,980
+Because the foo method will be correctly
+resolved in the class of the receiver.
+
+72
+00:04:45,640 --> 00:04:47,900
+Now let's apply this to our example.
+
+73
+00:04:48,460 --> 00:04:51,320
+If I come back to my method here.
+
+74
+00:04:51,520 --> 00:04:52,960
+So this is the original method.
+
+75
+00:04:53,160 --> 00:04:55,760
+Now I can completely apply this pattern.
+
+76
+00:04:56,820 --> 00:05:01,760
+I can isolate the expression here
+in a self-send ratio.
+
+77
+00:05:03,000 --> 00:05:03,760
+Okay.
+
+78
+00:05:04,040 --> 00:05:10,440
+And I can implement a ratio method
+in the Node class here with a default
+
+79
+00:05:10,640 --> 00:05:11,400
+expression.
+
+80
+00:05:13,660 --> 00:05:17,360
+And now, what I'm able to do in
+a subclass.
+
+81
+00:05:17,560 --> 00:05:21,740
+For example, if I have a node with
+margin class, which is a subclass
+
+82
+00:05:21,940 --> 00:05:22,700
+of node.
+
+83
+00:05:22,900 --> 00:05:24,920
+And it means that I can redefine
+the ratio method.
+
+84
+00:05:26,180 --> 00:05:34,580
+I can, using a super send,
+call the super method to reuse the code,
+
+85
+00:05:34,900 --> 00:05:38,560
+the default implementation of the
+ratio and add a margin of 10.
+
+86
+00:05:39,880 --> 00:05:44,760
+So in the general way,
+there is no need to invoke the super
+
+87
+00:05:44,960 --> 00:05:45,720
+implementation.
+
+88
+00:05:45,920 --> 00:05:48,140
+This is just because,
+in this case, we want to extend it.
+
+89
+00:05:48,340 --> 00:05:51,560
+So we reuse the default implementation
+and we add a new margin.
+
+90
+00:05:54,120 --> 00:05:54,880
+Okay.
+
+91
+00:05:55,560 --> 00:06:02,960
+So now I have a new subclass that
+can use the regular method
+
+92
+00:06:03,160 --> 00:06:05,060
+setWindowWithRatioForDisplay.
+
+93
+00:06:05,700 --> 00:06:09,840
+But it will use a different ratio
+that has been refined in the subclass.
+
+94
+00:06:10,780 --> 00:06:11,540
+Another step.
+
+95
+00:06:12,020 --> 00:06:16,900
+Now, we have this version of the
+method in the Node class.
+
+96
+00:06:17,100 --> 00:06:22,100
+And the question is, how to use
+a different UINode in subclasses.
+
+97
+00:06:22,620 --> 00:06:28,060
+If I want to create a new subclass
+that does not use an UINode instance,
+
+98
+00:06:28,260 --> 00:06:31,280
+but a new class, another node,
+another kind of node,
+
+99
+00:06:32,440 --> 00:06:33,500
+how to do that?
+
+100
+00:06:34,780 --> 00:06:37,680
+You should think one minute on your
+side.
+
+101
+00:06:39,380 --> 00:06:41,480
+And the answer is to use exactly
+the same pattern.
+
+102
+00:06:41,760 --> 00:06:48,180
+So now, we can extract exactly the
+same way this instance creation
+
+103
+00:06:48,380 --> 00:06:52,520
+into a self method, into another
+method here, create UINode that
+
+104
+00:06:52,720 --> 00:06:54,200
+I can implement in the Node class.
+
+105
+00:06:55,480 --> 00:06:58,460
+And here, I have exactly the same
+expression as before.
+
+106
+00:06:58,800 --> 00:07:00,580
+I instantiate a UINode.
+
+107
+00:07:01,640 --> 00:07:06,680
+But now, it opens the door to redefine
+this method in a subclass.
+
+108
+00:07:06,880 --> 00:07:12,860
+For example, in a subclass,
+I can redefine this create UINode
+
+109
+00:07:13,060 --> 00:07:15,280
+to change it.
+
+110
+00:07:15,480 --> 00:07:17,040
+But I can even do better.
+
+111
+00:07:17,760 --> 00:07:24,440
+What I can do is that I can here
+isolate the name of the class in
+
+112
+00:07:24,640 --> 00:07:28,040
+another self-send, the UINode class
+here.
+
+113
+00:07:30,700 --> 00:07:36,220
+So it means that I can directly
+return the name, the class UINode.
+
+114
+00:07:37,180 --> 00:07:41,760
+So now subclasses just need to redefine
+the UINode class and not the whole
+
+115
+00:07:41,960 --> 00:07:42,720
+expression.
+
+116
+00:07:42,920 --> 00:07:46,640
+It's not mandatory to redefine the
+create UINode, the whole method.
+
+117
+00:07:48,360 --> 00:07:52,160
+So this is a good practice to define
+methods of written classes.
+
+118
+00:07:52,800 --> 00:07:56,700
+It helps a lot extensibility in
+subclasses by redefining it.
+
+119
+00:07:56,900 --> 00:08:00,320
+And it's really easy in Pharo because
+classes are regular objects,
+
+120
+00:08:00,540 --> 00:08:02,500
+but this is not the case in all
+languages.
+
+121
+00:08:05,420 --> 00:08:07,600
+So there are many takeaways in these
+lectures.
+
+122
+00:08:08,360 --> 00:08:13,240
+So you should remember that small
+methods are a good sign of good design.
+
+123
+00:08:14,100 --> 00:08:16,640
+Because we give name to the expressions.
+
+124
+00:08:17,760 --> 00:08:21,220
+We saw it with the ratio or with
+the creation of a UINode.
+
+125
+00:08:22,180 --> 00:08:24,220
+They encapsulate some complexity.
+
+126
+00:08:25,320 --> 00:08:30,140
+And if we give a nice name to methods,
+it means that it is easier to read
+
+127
+00:08:30,340 --> 00:08:31,100
+for the programmer.
+
+128
+00:08:32,400 --> 00:08:36,120
+It is testing because if I have
+smaller methods, it is easier to
+
+129
+00:08:36,320 --> 00:08:38,860
+write tests, to test specific portions
+of the code.
+
+130
+00:08:40,180 --> 00:08:45,040
+It supports self-send messages,
+like that, it opens the door for
+
+131
+00:08:45,240 --> 00:08:47,140
+subclasses to redefine part of the
+behavior.
+
+132
+00:08:48,680 --> 00:08:52,140
+So it means that there are potential
+hooks for subclasses.
+
+133
+00:08:55,220 --> 00:08:59,720
+So if you look at it,
+object-oriented programming is a
+
+134
+00:08:59,920 --> 00:09:01,660
+kind of Emmental-oriented programming.
+
+135
+00:09:02,200 --> 00:09:05,540
+This is a Swiss cheese in which
+we have holes like that.
+
+136
+00:09:06,220 --> 00:09:09,080
+And holes are filled up by subclasses.
+
+137
+00:09:09,280 --> 00:09:15,560
+In fact, in superclasses,
+we already create holes with self-send
+
+138
+00:09:15,760 --> 00:09:21,900
+messages that will be filled up
+or will be adapted by subclasses.
+
+139
+00:09:22,100 --> 00:09:28,120
+So in conclusion, code can be reused
+and refined by subclasses.
+
+140
+00:09:28,400 --> 00:09:31,980
+Sending a message to self in a class
+defines a hook.
+
+141
+00:09:33,040 --> 00:09:37,720
+And subclasses can use this hook
+to inject variations.
+
+142
+00:09:39,440 --> 00:09:43,260
+So at the end, prefer small methods
+in your code.
+
+143
+00:09:43,460 --> 00:09:44,880
+It gives names to the expressions.
+
+144
+00:09:45,600 --> 00:09:50,860
+And each message to small method
+is an extensibility point for
+
+145
+00:09:51,060 --> 00:09:51,820
+subclasses.
+

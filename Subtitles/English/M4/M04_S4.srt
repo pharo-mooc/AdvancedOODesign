@@ -1,0 +1,639 @@
+1
+00:00:02,930 --> 00:00:05,290
+- Hello, welcome to this lecture.
+
+2
+00:00:05,690 --> 00:00:09,710
+In this lecture, we are going to
+present why Fat classes are bad.
+
+3
+00:00:10,330 --> 00:00:15,730
+We are going to present a dichotomy
+between having a class hierarchy
+
+4
+00:00:15,930 --> 00:00:17,910
+and having a large class.
+
+5
+00:00:19,090 --> 00:00:24,500
+Basically, the goal for this class
+is to present the Transform Self
+
+6
+00:00:24,700 --> 00:00:26,150
+Type Check Reengineering pattern.
+
+7
+00:00:27,250 --> 00:00:32,490
+It is good, if you don't remember,
+to recheck the Implementing Not
+
+8
+00:00:32,690 --> 00:00:33,450
+lectures.
+
+9
+00:00:33,650 --> 00:00:34,930
+Let's start with an example.
+
+10
+00:00:35,450 --> 00:00:40,830
+We are going to create a program
+to process BibTeX files.
+
+11
+00:00:41,090 --> 00:00:47,390
+BibTeX files are a way of representing
+documents such as articles,
+
+12
+00:00:47,930 --> 00:00:51,730
+proceedings, and books,
+and have information about their
+
+13
+00:00:51,930 --> 00:00:57,210
+authors, titles, the publisher,
+the year, and much more information
+
+14
+00:00:57,410 --> 00:00:58,390
+for each of them.
+
+15
+00:00:59,270 --> 00:01:04,590
+As we can see, in this kind of file,
+we have different kinds of entries.
+
+16
+00:01:05,090 --> 00:01:08,910
+We have inproceedings,
+books, articles, techreports,
+
+17
+00:01:09,730 --> 00:01:11,330
+PhD, and a lot more.
+
+18
+00:01:11,850 --> 00:01:15,110
+And for each of them,
+we will have different fields.
+
+19
+00:01:15,650 --> 00:01:22,030
+We will have a key to identify them
+inside the file, but also we are
+
+20
+00:01:22,230 --> 00:01:24,950
+going to have the year,
+the institution, the authors,
+
+21
+00:01:25,210 --> 00:01:31,850
+the book title, and the title,
+and these fields change by the type
+
+22
+00:01:32,050 --> 00:01:33,990
+of entry that we have.
+
+23
+00:01:34,570 --> 00:01:38,130
+There are some that are common,
+but some that are unique for each
+
+24
+00:01:38,330 --> 00:01:39,310
+kind of entry.
+
+25
+00:01:39,650 --> 00:01:44,510
+We have a little library that already
+handles these kinds of files,
+
+26
+00:01:44,710 --> 00:01:47,030
+and it's called Citezen.
+
+27
+00:01:47,790 --> 00:01:54,290
+Well, in this one, we are representing
+these entries as instances of the
+
+28
+00:01:54,490 --> 00:01:56,890
+class #CZEntry.
+
+29
+00:01:57,550 --> 00:02:05,930
+We can see that in this one,
+we have instance variables to represent
+
+30
+00:02:06,130 --> 00:02:13,210
+all of the fields, keys,
+types, and all the elements in any
+
+31
+00:02:13,410 --> 00:02:16,490
+given element inside the BibTeX.
+
+32
+00:02:16,690 --> 00:02:20,050
+We have one single class to represent
+them all.
+
+33
+00:02:20,270 --> 00:02:26,170
+It's common that we will have this
+kind of pattern of methods.
+
+34
+00:02:26,570 --> 00:02:33,910
+We have an `isArticle` method that
+will return true if the element
+
+35
+00:02:34,110 --> 00:02:39,050
+that we are processing inside the
+BibTeX file is an article and will
+
+36
+00:02:39,250 --> 00:02:40,620
+return false in all the other cases.
+
+37
+00:02:40,820 --> 00:02:43,910
+We have the same for our `isBook`.
+
+38
+00:02:45,070 --> 00:02:50,910
+It checks the type of the object
+of the entry and returns true or
+
+39
+00:02:51,110 --> 00:02:52,650
+false if it's the correct type.
+
+40
+00:02:54,250 --> 00:02:59,550
+In this case, we are going to have
+a lot of them, one for each of the
+
+41
+00:02:59,750 --> 00:03:02,390
+types of entries that we have in
+our BibTeX file.
+
+42
+00:03:03,390 --> 00:03:09,750
+This same pattern is happening to
+us in the field, in the representation
+
+43
+00:03:09,950 --> 00:03:13,470
+of each of the fields in the entries,
+in the BibTeX entries.
+
+44
+00:03:13,830 --> 00:03:19,110
+In this case, we are going to have
+one single class to represent all
+
+45
+00:03:19,310 --> 00:03:21,850
+the fields that we can have in a
+BibTeX entry.
+
+46
+00:03:22,290 --> 00:03:25,290
+In this case, we have exactly the
+same problem.
+
+47
+00:03:25,590 --> 00:03:31,530
+We were going to be able to identify
+if a field is of a given type.
+
+48
+00:03:31,730 --> 00:03:35,550
+In this case, for example,
+if `is Doi` of the document - the
+
+49
+00:03:35,750 --> 00:03:41,890
+DOI is an international unique code
+given for each document in the academic
+
+50
+00:03:42,090 --> 00:03:44,780
+world - but it's the same for all
+of them.
+
+51
+00:03:44,980 --> 00:03:51,610
+It could be `isDoi` or we can have
+if `isTitle` or if `isURL` or whatever.
+
+52
+00:03:51,810 --> 00:03:53,350
+We are going to have many of them.
+
+53
+00:03:54,810 --> 00:03:57,250
+How is this impacting us?
+
+54
+00:03:57,530 --> 00:04:02,050
+Well, the consequence of having
+all these methods to ask about the
+
+55
+00:04:02,250 --> 00:04:07,810
+type of field is that we have a
+lot of repetition of this kind of
+
+56
+00:04:08,010 --> 00:04:08,770
+bad pattern.
+
+57
+00:04:09,570 --> 00:04:10,790
+Look what we have in this method.
+
+58
+00:04:11,110 --> 00:04:14,590
+First, the first thing that you
+should see is that it's a really
+
+59
+00:04:14,790 --> 00:04:15,550
+long method.
+
+60
+00:04:16,070 --> 00:04:19,730
+And also that it has a lot of
+conditional code.
+
+61
+00:04:20,130 --> 00:04:24,670
+We have different behaviors depending
+on the type of the field.
+
+62
+00:04:25,190 --> 00:04:29,990
+If we have a field that is a PDF,
+we will produce the output in a
+
+63
+00:04:30,190 --> 00:04:30,950
+single way.
+
+64
+00:04:31,150 --> 00:04:34,610
+If it's a URL, in another way,
+and so on.
+
+65
+00:04:35,390 --> 00:04:41,070
+Because what this method is doing
+is printing, and generating HTML code,
+
+66
+00:04:41,490 --> 00:04:43,590
+depending on the kind of field that
+we have.
+
+67
+00:04:44,110 --> 00:04:50,590
+But we see that this pattern is
+really evil because it generates
+
+68
+00:04:50,790 --> 00:04:54,790
+a long method that has a lot of
+conditional code.
+
+69
+00:04:55,730 --> 00:05:02,430
+So, the consequences of having a
+Fat class is basically that we are
+
+70
+00:05:02,630 --> 00:05:09,750
+taking all our naturally existing
+hierarchy - we have a lot of types
+
+71
+00:05:09,950 --> 00:05:14,810
+of fields, a lot of types of entries
+- and we are collapsing all of them
+
+72
+00:05:15,010 --> 00:05:16,330
+in a single class.
+
+73
+00:05:17,210 --> 00:05:22,030
+So, we don't have a class hierarchy,
+we have a single Fat class.
+
+74
+00:05:23,210 --> 00:05:26,390
+As we have only one class,
+we cannot use dispatch,
+
+75
+00:05:26,710 --> 00:05:28,150
+we cannot use polymorphism.
+
+76
+00:05:28,490 --> 00:05:32,930
+It's not possible to dispatch because
+we only have one class and we have
+
+77
+00:05:33,130 --> 00:05:38,450
+to use all these methods that are
+`isBook`, `isTitle`, `isURL`.
+
+78
+00:05:40,870 --> 00:05:48,230
+And we don't have a nice solution
+where we use dispatch and we are
+
+79
+00:05:48,430 --> 00:05:53,130
+breaking the rule that we are always
+saying is "Tell, don't ask".
+
+80
+00:05:53,350 --> 00:05:56,230
+We want to dispatch instead of having
+a conditional code.
+
+81
+00:05:56,510 --> 00:06:02,730
+When we start adding new types in
+the file or fields, we will have
+
+82
+00:06:02,930 --> 00:06:05,210
+to modify many of these methods.
+
+83
+00:06:05,590 --> 00:06:09,610
+We will have to modify many of these
+long methods to add new conditional
+
+84
+00:06:09,610 --> 00:06:10,430
+codes.
+
+85
+00:06:11,750 --> 00:06:19,770
+Also, if we want to subclass these
+really big classes with really complex
+
+86
+00:06:19,970 --> 00:06:24,490
+code, we are going to see that we
+will be starting duplicating and
+
+87
+00:06:24,690 --> 00:06:31,090
+changing and adapting and doing
+mostly hacks to go over this problem.
+
+88
+00:06:33,110 --> 00:06:36,350
+As I said before, every time that
+we have a new behavior,
+
+89
+00:06:36,550 --> 00:06:40,770
+we will have to change exactly the
+same methods, adding more and more
+
+90
+00:06:40,970 --> 00:06:43,590
+conditional code and making it more
+complex.
+
+91
+00:06:45,550 --> 00:06:49,470
+This is a good example of a problem
+that we have already talked about
+
+92
+00:06:49,670 --> 00:06:51,410
+in the Implementing Not lectures.
+
+93
+00:06:51,770 --> 00:06:57,170
+So, if you don't have it in mind,
+please go back to that lecture and
+
+94
+00:06:57,370 --> 00:06:59,130
+see some of them.
+
+95
+00:06:59,570 --> 00:07:02,510
+In these kinds of questions,
+conditional code that we do,
+
+96
+00:07:02,890 --> 00:07:08,870
+we can call it type checking because
+we are asking all the time what
+
+97
+00:07:09,070 --> 00:07:15,270
+is the type of the object:
+is it a book, is it an article?
+
+98
+00:07:15,670 --> 00:07:20,610
+Well, this is not bad per se,
+but we have to take care when to use it.
+
+99
+00:07:20,970 --> 00:07:26,170
+This is good when we can encapsulate
+
+100
+00:07:26,370 --> 00:07:32,790
+this behavior inside our own class
+and we can do self methods.
+
+101
+00:07:33,690 --> 00:07:37,570
+But it's really bad when the clients
+start using them.
+
+102
+00:07:37,950 --> 00:07:43,090
+When these methods are used,
+these messages are sent from outside
+
+103
+00:07:43,290 --> 00:07:44,050
+our class.
+
+104
+00:07:44,270 --> 00:07:50,180
+So, we have to take care of this
+and this is a smell that we
+
+105
+00:07:50,380 --> 00:07:52,910
+are doing something wrong and we
+have to refactor our code.
+
+106
+00:07:53,770 --> 00:08:01,010
+What we are suggesting in this lecture
+is if we have the code in this shape,
+
+107
+00:08:01,210 --> 00:08:06,390
+where we have a client who sends
+a message m() and this message is
+
+108
+00:08:06,590 --> 00:08:11,010
+implemented in a method where we
+have different cases using a lot
+
+109
+00:08:11,210 --> 00:08:15,090
+of conditional code, and we are
+executing different code for each
+
+110
+00:08:15,290 --> 00:08:23,490
+of these cases, we can refactor this,
+delegating this behavior in a new class.
+
+111
+00:08:23,690 --> 00:08:27,370
+In this case, for example,
+for case B, we are going to have
+
+112
+00:08:27,570 --> 00:08:33,350
+a new implementation and the idea
+is that we are going to have a new
+
+113
+00:08:33,550 --> 00:08:38,670
+class B that handles that behavior
+
+114
+00:08:38,870 --> 00:08:40,510
+and only that behavior.
+
+115
+00:08:40,770 --> 00:08:44,970
+For example, B could be our class
+representing the books,
+
+116
+00:08:45,170 --> 00:08:50,210
+and C could be for our articles,
+and so on.
+
+117
+00:08:50,990 --> 00:08:56,770
+The client now will delegate these
+
+118
+00:08:56,970 --> 00:08:59,670
+objects through a new method.
+
+119
+00:09:00,110 --> 00:09:05,810
+In this case, we put a generic name
+`hook()`, but it can be any name.
+
+120
+00:09:06,030 --> 00:09:10,230
+But the important thing is that
+we are extracting this code that
+
+121
+00:09:10,430 --> 00:09:18,070
+is in each of the cases and putting
+each in a separate class.
+
+122
+00:09:22,230 --> 00:09:28,510
+In this case, we can have or not
+have a common superclass.
+
+123
+00:09:28,870 --> 00:09:37,290
+This depends if we have or have
+not reused each of these real objects
+
+124
+00:09:37,490 --> 00:09:38,850
+implementing our behavior.
+
+125
+00:09:39,170 --> 00:09:42,970
+As a conclusion, we have to always
+favor dispatch.
+
+126
+00:09:43,430 --> 00:09:47,110
+We have to prefer to use dispatch
+before conditional code.
+
+127
+00:09:48,330 --> 00:09:53,830
+We can create little classes that
+encapsulate little knowledge.
+
+128
+00:09:54,270 --> 00:09:56,970
+They are cheap to use,
+they are cheap to maintain,
+
+129
+00:09:57,170 --> 00:10:00,530
+and they produce more clear code
+than conditional code.
+
+130
+00:10:01,790 --> 00:10:07,650
+And remember, because this is a
+mantra that justifies a lot of our
+
+131
+00:10:07,850 --> 00:10:11,390
+design decisions and that produces
+a better code quality:
+
+132
+00:10:12,010 --> 00:10:13,430
+Do not ask, tell.
+
+133
+00:10:14,130 --> 00:10:18,650
+Basically, delegate before using
+conditional code.
+
+134
+00:10:18,850 --> 00:10:22,390
+If you just want it in the same order,
+do not use conditional code,
+
+135
+00:10:22,670 --> 00:10:24,110
+delegate to other options.
+

@@ -1,0 +1,1479 @@
+1
+00:00:03,880 --> 00:00:04,640
+Hello.
+
+2
+00:00:05,520 --> 00:00:08,960
+In this lecture, we are going to
+see one of our case studies,
+
+3
+00:00:09,260 --> 00:00:10,840
+which is a Sokoban implementation.
+
+4
+00:00:11,700 --> 00:00:14,800
+So the goal of this lecture is to
+think about how to model,
+
+5
+00:00:15,000 --> 00:00:17,940
+in this case, a Sokoban,
+how to think about games also,
+
+6
+00:00:18,140 --> 00:00:23,100
+and in particular, how do we use
+our knowledge on messages and conditions
+
+7
+00:00:23,300 --> 00:00:24,060
+that we saw before.
+
+8
+00:00:25,240 --> 00:00:28,100
+For this, we're going to study a
+Sokoban game.
+
+9
+00:00:28,300 --> 00:00:31,440
+So a Sokoban game, for those that
+don't know it, it's a game where
+
+10
+00:00:31,640 --> 00:00:35,420
+there's a `Player` that has to `Push`
+`Boxes`, so like these `Boxes`,
+
+11
+00:00:35,960 --> 00:00:38,920
+into squares that have a `Target`.
+
+12
+00:00:39,400 --> 00:00:42,940
+So the goal of the game is to `Push`
+all the `Boxes` into each of the
+
+13
+00:00:43,140 --> 00:00:43,900
+`Targets`.
+
+14
+00:00:44,100 --> 00:00:45,060
+So it's a puzzle game.
+
+15
+00:00:47,920 --> 00:00:52,360
+In this lecture, we are going to
+study an open source implementation
+
+16
+00:00:52,560 --> 00:00:56,360
+made by students of the Ivan Franko
+University in Lviv, in Ukraine.
+
+17
+00:00:56,560 --> 00:00:59,980
+So thank you so much for your
+implementation that will serve us
+
+18
+00:01:00,180 --> 00:01:00,940
+to study.
+
+19
+00:01:01,400 --> 00:01:07,080
+So in this game, as you can see,
+we have the typical concerns of Sokoban.
+
+20
+00:01:07,280 --> 00:01:12,040
+So we will have squares that are
+`Walls` that we cannot cross with
+
+21
+00:01:12,240 --> 00:01:13,000
+our `Robot`.
+
+22
+00:01:13,200 --> 00:01:14,740
+So we have a `Robot` that we will
+move around.
+
+23
+00:01:15,320 --> 00:01:19,000
+The `Robot` will be able to `Push`
+`Boxes` into these `Targets`,
+
+24
+00:01:19,200 --> 00:01:24,860
+and all these free places,
+we are going to be able to walk
+
+25
+00:01:25,060 --> 00:01:26,660
+around with the `Robot`.
+
+26
+00:01:27,180 --> 00:01:31,400
+So we'll check the different classes
+implemented in the implementation
+
+27
+00:01:31,600 --> 00:01:32,360
+we have.
+
+28
+00:01:32,680 --> 00:01:34,300
+These are the main classes that we see.
+
+29
+00:01:34,500 --> 00:01:37,520
+So we have `Blocks`, we have
+`EmptyBlocks`, and `Walls` that
+
+30
+00:01:37,720 --> 00:01:38,520
+are subclasses of `Blocks`.
+
+31
+00:01:38,940 --> 00:01:42,320
+We have a `GameModel`,
+a `Block`, a `Maze`, we have a
+
+32
+00:01:42,520 --> 00:01:47,300
+`MazeTemplate`, we have a `MoveResult`,
+and then we have `Moves` with subclasses
+
+33
+00:01:47,500 --> 00:01:49,280
+like `Push`, and then we have also
+a `NoMove`.
+
+34
+00:01:53,180 --> 00:01:57,620
+So let's take a step back before
+going back to that design and think
+
+35
+00:01:57,820 --> 00:02:02,320
+about what is the design that we
+would like to have in that Sokoban.
+
+36
+00:02:02,720 --> 00:02:06,820
+Yeah, so let's use, for example,
+here one of the patterns in the
+
+37
+00:02:07,020 --> 00:02:09,260
+object oriented reengineering book.
+
+38
+00:02:10,040 --> 00:02:13,420
+So of course, you don't need to
+read the book to use this pattern,
+
+39
+00:02:13,620 --> 00:02:16,320
+but of course, this book has a lot
+of other patterns that are interesting
+
+40
+00:02:16,520 --> 00:02:21,540
+to see, and they talk about how
+do we take a look at an application
+
+41
+00:02:21,740 --> 00:02:24,720
+that we don't know and how can we
+reengineer it or even understand
+
+42
+00:02:24,920 --> 00:02:27,760
+it without previous knowledge about it.
+
+43
+00:02:28,000 --> 00:02:31,000
+So in this case, this pattern is
+a speculate about design,
+
+44
+00:02:31,620 --> 00:02:34,900
+and the objective is to think about
+the model, think about the problem
+
+45
+00:02:35,380 --> 00:02:39,940
+that we are working on,
+and what is the possible design
+
+46
+00:02:40,140 --> 00:02:44,000
+that is going to fit this problem
+without actually looking at
+
+47
+00:02:44,200 --> 00:02:44,960
+implementation.
+
+48
+00:02:45,160 --> 00:02:49,900
+Yeah, so that is to use our expertise
+and our previous knowledge to try
+
+49
+00:02:50,100 --> 00:02:53,280
+to come up with ideas on the possible
+design that we are going to have.
+
+50
+00:02:53,480 --> 00:02:56,440
+Let's forget a bit about what I
+showed you before.
+
+51
+00:02:56,640 --> 00:03:01,680
+We are going to compare it later,
+but take some minutes to try to
+
+52
+00:03:01,880 --> 00:03:04,360
+understand what are the different
+classes that you are going to have
+
+53
+00:03:04,560 --> 00:03:06,560
+in this game.
+
+54
+00:03:10,280 --> 00:03:13,000
+So maybe you arrive to a list like this.
+
+55
+00:03:13,200 --> 00:03:17,720
+So we have `Walls` that will be
+representing these squares that
+
+56
+00:03:17,920 --> 00:03:19,000
+the `Robot` cannot trespass.
+
+57
+00:03:19,260 --> 00:03:22,080
+We will have the `Floor` that are
+the squares that the `Robot` is
+
+58
+00:03:22,280 --> 00:03:23,560
+going to be able to walk on.
+
+59
+00:03:24,080 --> 00:03:27,820
+We are going to have `Boxes`,
+maybe, like these `Boxes`,
+
+60
+00:03:28,020 --> 00:03:29,720
+the `Boxes` that we are going to move.
+
+61
+00:03:30,360 --> 00:03:31,740
+Then we are going to have the `Robot`.
+
+62
+00:03:31,940 --> 00:03:35,260
+Of course, if we are going to move
+it and draw it, probably a `Robot`
+
+63
+00:03:35,460 --> 00:03:36,960
+is a good object to have in this model.
+
+64
+00:03:37,420 --> 00:03:41,040
+We are going to have the `Targets`,
+or maybe you chose another name for it,
+
+65
+00:03:41,240 --> 00:03:44,900
+but these little crosses here is
+the place where we have to put the
+
+66
+00:03:45,100 --> 00:03:45,860
+`Boxes`.
+
+67
+00:03:46,060 --> 00:03:49,480
+And then maybe you arrive to the
+conclusion that we need to model
+
+68
+00:03:49,680 --> 00:03:52,820
+also the `Board` for the entire game.
+
+69
+00:03:53,740 --> 00:03:57,520
+Of course, maybe there is also the
+possibility, since I already influenced
+
+70
+00:03:57,720 --> 00:04:02,080
+you with the previous model,
+that maybe we want to model also
+
+71
+00:04:02,280 --> 00:04:06,040
+the `Levels` or having `Templates`
+to be able to edit `Levels` more easily.
+
+72
+00:04:06,240 --> 00:04:13,060
+And of course, if we want to not
+only model the static part of the
+
+73
+00:04:13,260 --> 00:04:17,880
+system, we also want to model how
+it works, maybe we want to model
+
+74
+00:04:18,080 --> 00:04:18,840
+the `Moves`.
+
+75
+00:04:19,380 --> 00:04:23,660
+If we go back to what we saw before,
+what we can see is that here we
+
+76
+00:04:23,860 --> 00:04:27,820
+have three groups of model objects.
+
+77
+00:04:28,220 --> 00:04:31,300
+So here we have, on the bottom we
+have everything that is related
+
+78
+00:04:31,500 --> 00:04:32,260
+to `Moves`.
+
+79
+00:04:32,780 --> 00:04:35,160
+So it's the dynamic part of the system.
+
+80
+00:04:36,040 --> 00:04:39,500
+Then we have these four different
+things that are representing the game.
+
+81
+00:04:40,240 --> 00:04:43,720
+So like the big `Board` of the game.
+
+82
+00:04:44,320 --> 00:04:47,380
+So there is a model, there is a state,
+there is a `Maze`, there is a
+
+83
+00:04:47,580 --> 00:04:50,440
+`Template`, but all of them will
+represent similar things about the
+
+84
+00:04:50,640 --> 00:04:51,400
+entire `Board`.
+
+85
+00:04:52,140 --> 00:04:56,040
+And then, the smallest part of the
+system is representing actually
+
+86
+00:04:56,240 --> 00:05:00,600
+the richest part of the system,
+which is the `Robot`,
+
+87
+00:05:00,800 --> 00:05:03,160
+the `Walls`, the `Boxes`,
+and all that.
+
+88
+00:05:05,180 --> 00:05:11,060
+So if we take a look at this,
+what we can see is that this model
+
+89
+00:05:11,260 --> 00:05:12,560
+is a bit shallow.
+
+90
+00:05:13,020 --> 00:05:17,540
+So it doesn't represent the entire
+things or all the objects that we
+
+91
+00:05:17,740 --> 00:05:18,520
+saw in our model.
+
+92
+00:05:19,400 --> 00:05:21,680
+So that means that we are going
+to have probably different cases.
+
+93
+00:05:22,290 --> 00:05:26,960
+So when a `Robot` wants to move
+on a `Wall`, when a `Robot` wants
+
+94
+00:05:27,160 --> 00:05:33,180
+to actually `Push` a `Box`,
+when the `Robot` is going to reach
+
+95
+00:05:33,380 --> 00:05:35,760
+a `Target`, for example,
+so we are going to have different
+
+96
+00:05:35,960 --> 00:05:36,720
+cases there.
+
+97
+00:05:36,920 --> 00:05:40,000
+And if we don't have them modeled
+as classes, we're going to have
+
+98
+00:05:40,200 --> 00:05:42,600
+them as tricky conditionals.
+
+99
+00:05:42,900 --> 00:05:46,980
+So remember that the basis of
+object-oriented programming is to
+
+100
+00:05:47,180 --> 00:05:49,620
+have different classes,
+to have different cases because
+
+101
+00:05:49,820 --> 00:05:53,580
+then we can use messages and classes
+to dispatch conditions.
+
+102
+00:05:54,400 --> 00:05:56,840
+So instead of having a fat class
+that does a lot of things using
+
+103
+00:05:57,040 --> 00:06:01,180
+conditionals, we're going to use
+a lot of small classes like these.
+
+104
+00:06:02,280 --> 00:06:05,960
+And then, it's going to be the dispatch,
+the message send that is going to
+
+105
+00:06:06,160 --> 00:06:08,240
+decide what is the operation that
+we're going to execute.
+
+106
+00:06:08,920 --> 00:06:12,500
+Remember the lecture,
+for example, of implemented or not
+
+107
+00:06:12,700 --> 00:06:17,860
+in `Booleans.` So if we go a bit
+
+108
+00:06:18,060 --> 00:06:22,380
+deeper and we check the API of these
+classes, particularly the API of
+
+109
+00:06:22,580 --> 00:06:27,540
+the `Boxes`, we see that it has
+a lot of methods that are going
+
+110
+00:06:27,740 --> 00:06:29,380
+to return conditionals.
+
+111
+00:06:29,580 --> 00:06:30,880
+So these are testing methods.
+
+112
+00:06:32,160 --> 00:06:34,780
+So they are, for example,
+they are the methods for asking
+
+113
+00:06:34,980 --> 00:06:37,140
+if a `Block` is empty,
+if there is a `Wall`,
+
+114
+00:06:37,480 --> 00:06:40,820
+if the `Block` has a `Player` on
+top of it, if it has a `Target`
+
+115
+00:06:41,020 --> 00:06:42,060
+and if it has `Blocks`.
+
+116
+00:06:43,220 --> 00:06:46,640
+And if we check how this API is used,
+we find methods like this one.
+
+117
+00:06:47,220 --> 00:06:51,460
+So this is the method that will
+draw one `Block` in the screen.
+
+118
+00:06:53,340 --> 00:06:59,680
+So it has to check all the potential
+combinations of the state of our
+
+119
+00:06:59,880 --> 00:07:02,540
+model to be able to know how to
+draw it properly.
+
+120
+00:07:02,940 --> 00:07:05,320
+So here, for example,
+it says if it is just a `Wall`,
+
+121
+00:07:05,520 --> 00:07:06,460
+then it will draw a `Wall`.
+
+122
+00:07:07,680 --> 00:07:09,400
+Otherwise, it has to check if it
+is an `emptyBlock`.
+
+123
+00:07:09,680 --> 00:07:11,760
+So if there's nothing on top of it.
+
+124
+00:07:12,860 --> 00:07:16,640
+In that case, it will draw,
+it has to check if it is empty but
+
+125
+00:07:16,840 --> 00:07:17,600
+has a `Target`.
+
+126
+00:07:17,800 --> 00:07:20,280
+And then, if it's empty and it has
+a `Target`, it has to draw a `Target`.
+
+127
+00:07:20,820 --> 00:07:22,120
+Otherwise, it draws an empty `Block`.
+
+128
+00:07:23,380 --> 00:07:26,560
+On the other way, it will check
+if it has a `Player` or a `Box`.
+
+129
+00:07:26,860 --> 00:07:29,640
+And if it has a `Player` and a `Target`,
+it has to draw a `Player`.
+
+130
+00:07:29,940 --> 00:07:32,020
+Otherwise, it has to draw a `Target`
+and so on.
+
+131
+00:07:32,260 --> 00:07:37,400
+So it is a pretty complicated code
+and it's fairly easy to make a mistake
+
+132
+00:07:37,600 --> 00:07:38,360
+here.
+
+133
+00:07:39,780 --> 00:07:43,740
+So if we analyze it a bit,
+so in a more higher `Level`,
+
+134
+00:07:44,220 --> 00:07:48,540
+what we see is that our model only
+defines `emptyBlocks` and `Walls`,
+
+135
+00:07:49,040 --> 00:07:51,680
+but there are no `Players`,
+no `Target`, no `Boxes`.
+
+136
+00:07:51,880 --> 00:07:57,680
+But those are important things for
+drawing and for us to actually to
+
+137
+00:07:57,880 --> 00:07:59,200
+implement the behavior of our game.
+
+138
+00:08:00,180 --> 00:08:04,240
+So that means that there will be
+too much logic in the `emptyBlock`
+
+139
+00:08:04,480 --> 00:08:07,460
+because the `emptyBlock` is the
+one that actually is representing
+
+140
+00:08:07,660 --> 00:08:10,540
+the `Targets`, the `Players` and
+the `Boxes`.
+
+141
+00:08:12,480 --> 00:08:16,820
+And this is also following a bad
+pattern, which is asking too many
+
+142
+00:08:17,020 --> 00:08:17,780
+questions to the model.
+
+143
+00:08:18,440 --> 00:08:23,260
+So here we would like to follow
+this directive.
+
+144
+00:08:23,700 --> 00:08:24,960
+So tell don't ask.
+
+145
+00:08:25,480 --> 00:08:28,740
+So instead of asking an object,
+okay, are you like this,
+
+146
+00:08:28,940 --> 00:08:29,700
+are you like that.
+
+147
+00:08:29,900 --> 00:08:30,920
+So I can take the decision.
+
+148
+00:08:31,680 --> 00:08:34,140
+Let's better tell the object to
+take the decision because the object
+
+149
+00:08:34,340 --> 00:08:38,800
+has all the information it needs
+to take that decision.
+
+150
+00:08:40,580 --> 00:08:43,280
+So let's think, okay,
+what would be a better model?
+
+151
+00:08:43,480 --> 00:08:46,940
+Maybe we could have an abstract
+superclass like `Tile`.
+
+152
+00:08:47,260 --> 00:08:49,020
+Yeah, so we could have a `Tile`.
+
+153
+00:08:50,720 --> 00:08:52,820
+And then, we could have subclasses of it.
+
+154
+00:08:55,580 --> 00:08:57,740
+Here we could see, for example,
+we could have a `Box`.
+
+155
+00:08:58,300 --> 00:09:04,180
+We could have a `Box` in a `Target`
+that, for example, we are going
+
+156
+00:09:04,380 --> 00:09:07,380
+to use it to draw it with a different
+color because once the `Box` is
+
+157
+00:09:07,580 --> 00:09:12,620
+on a `Target`, we know that that
+
+158
+00:09:12,820 --> 00:09:16,060
+`Box` is already matching the result
+of the puzzle.
+
+159
+00:09:16,660 --> 00:09:21,340
+Then we could have, for example,
+an `emptyBlock` that is going to
+
+160
+00:09:21,540 --> 00:09:24,440
+represent a place where actually
+the `Robot` can walk on.
+
+161
+00:09:24,740 --> 00:09:26,640
+We can have `Player` and we can
+have `Wall`.
+
+162
+00:09:28,160 --> 00:09:32,380
+Yeah, so at the end, the game is
+just a collection of `Tiles`.
+
+163
+00:09:36,160 --> 00:09:40,040
+And then, once we have a model reached
+like this, we can just send messages
+
+164
+00:09:40,240 --> 00:09:42,900
+to these objects and then each of
+these objects, they are going to
+
+165
+00:09:43,100 --> 00:09:43,900
+do the right thing.
+
+166
+00:09:44,300 --> 00:09:49,300
+If we want to replace this all and
+trick implementation, one way to
+
+167
+00:09:49,500 --> 00:09:54,280
+do it is to use our nicer model
+and to use delegation on the new
+
+168
+00:09:54,480 --> 00:09:55,540
+classes that we are using.
+
+169
+00:09:55,740 --> 00:09:58,780
+So we are just going to delegate
+to tell the objects to do something.
+
+170
+00:10:00,120 --> 00:10:05,180
+So since now we have `Boxes` or
+`Blocks` here that are going to
+
+171
+00:10:05,380 --> 00:10:07,700
+be of different kinds,
+of different classes,
+
+172
+00:10:08,180 --> 00:10:12,080
+so what we can do is to tell each
+`Block`, draw yourself in this canvas.
+
+173
+00:10:12,280 --> 00:10:15,680
+And then, I don't know who you are,
+but you know who you are,
+
+174
+00:10:15,880 --> 00:10:17,180
+so you know how to draw yourself.
+
+175
+00:10:18,060 --> 00:10:21,400
+So then, for example,
+if we have a `Wall`, the `Wall`
+
+176
+00:10:21,600 --> 00:10:24,740
+will have all the drawing of the
+`Wall` here.
+
+177
+00:10:24,940 --> 00:10:29,360
+And if we have an `emptyBlock`,
+we will have all the code that draws
+
+178
+00:10:29,560 --> 00:10:30,640
+an `emptyBlock` in here.
+
+179
+00:10:30,940 --> 00:10:33,800
+That will lead to actually simpler
+code in each part.
+
+180
+00:10:34,000 --> 00:10:39,580
+And if we want to later replace
+one part of the system or even add
+
+181
+00:10:39,780 --> 00:10:42,920
+a new kind of `Blocks`,
+we are going to be able to do it
+
+182
+00:10:43,120 --> 00:10:43,880
+more easily.
+
+183
+00:10:45,560 --> 00:10:49,060
+So that solution not only supports
+different kind of `Blocks`,
+
+184
+00:10:49,260 --> 00:10:50,940
+it also supports multiple canvases.
+
+185
+00:10:51,140 --> 00:10:57,560
+So before, what we saw is that the
+application was being drawn in a
+
+186
+00:10:57,760 --> 00:11:02,520
+Cairo canvas, which is a 2D API
+to do games.
+
+187
+00:11:04,440 --> 00:11:08,160
+But instead, we could replace that
+with different canvases,
+
+188
+00:11:08,360 --> 00:11:11,380
+like, for example, Morphic in Pharo
+or even an HTML canvas.
+
+189
+00:11:15,280 --> 00:11:19,460
+So to do that, one thing that we
+can do is to not only tell the `Block`
+
+190
+00:11:19,660 --> 00:11:22,540
+to draw on a canvas, so we can send
+extra parameters.
+
+191
+00:11:22,880 --> 00:11:26,100
+So here, for example,
+we can say the `Block` draw on this
+
+192
+00:11:26,300 --> 00:11:28,840
+canvas, but I am going to send you
+the view.
+
+193
+00:11:29,040 --> 00:11:30,400
+Like that, you can take more decisions.
+
+194
+00:11:31,200 --> 00:11:34,860
+And here, for example,
+the `Wall` can tell the canvas,
+
+195
+00:11:35,280 --> 00:11:38,680
+the view, okay, view,
+draw a `Wall` in this canvas.
+
+196
+00:11:40,400 --> 00:11:44,140
+In this way, what we have is a lot
+of different `Blocks`,
+
+197
+00:11:46,080 --> 00:11:52,520
+as we saw before, and each of these
+will understand, drawOnfor,
+
+198
+00:11:57,780 --> 00:12:02,460
+and then they're going to send a
+message to aCanvas, to a view,
+
+199
+00:12:02,980 --> 00:12:08,240
+actually, to aView, that will understand
+how to draw each of the elements.
+
+200
+00:12:09,780 --> 00:12:17,280
+Draw X, draw Y, and then the `Block`
+is going to delegate the actual
+
+201
+00:12:17,480 --> 00:12:19,960
+drawing to the view.
+
+202
+00:12:20,280 --> 00:12:22,300
+And this will allow us to have different
+kind of views.
+
+203
+00:12:22,860 --> 00:12:26,880
+So, for example, we can have a Cairo
+view or we can have an HTML view page.
+
+204
+00:12:28,820 --> 00:12:32,920
+So what we have seen here is an
+implementation of double dispatch.
+
+205
+00:12:33,240 --> 00:12:36,820
+So that means that the decision
+of how to draw a `Block`,
+
+206
+00:12:37,080 --> 00:12:39,440
+in particular, is not only
+responsibility of the `Block`,
+
+207
+00:12:39,640 --> 00:12:44,560
+is the responsibility of both the
+`Block` and the canvas or the view.
+
+208
+00:12:45,520 --> 00:12:48,460
+So that is why it is a double dispatch
+because the decision is taken by
+
+209
+00:12:48,660 --> 00:12:49,420
+two different objects.
+
+210
+00:12:51,920 --> 00:12:56,420
+So this shows how sending messages
+is powerful and modular because
+
+211
+00:12:56,620 --> 00:13:01,380
+we can add now new kind of canvases
+and new kind of `Blocks` by simply
+
+212
+00:13:01,580 --> 00:13:03,520
+just extending the existing hierarchies.
+
+213
+00:13:03,960 --> 00:13:07,960
+Now, let's take a step back and
+let's look again at these testing
+
+214
+00:13:08,160 --> 00:13:08,920
+methods.
+
+215
+00:13:09,120 --> 00:13:14,060
+So here, we had this `isWall` and
+`isWall` method, both in `Wall`
+
+216
+00:13:14,260 --> 00:13:20,040
+and `emptyBlock`, that were returning
+true and false in one case and another.
+
+217
+00:13:21,140 --> 00:13:25,220
+So take a couple of minutes to think,
+okay, what do you think about these
+
+218
+00:13:25,420 --> 00:13:26,180
+methods?
+
+219
+00:13:26,380 --> 00:13:27,140
+Are they good?
+
+220
+00:13:27,340 --> 00:13:28,100
+Are they not good?
+
+221
+00:13:28,300 --> 00:13:29,060
+Are they useful?
+
+222
+00:13:29,260 --> 00:13:30,500
+And so on.
+
+223
+00:13:32,700 --> 00:13:37,240
+So every time that we see one of
+these methods, you could think that
+
+224
+00:13:37,440 --> 00:13:41,800
+you are actually hiding some
+implementation details.
+
+225
+00:13:42,160 --> 00:13:47,900
+So here, actually, this is`Wall`
+is just a hidden way to write isKindOf
+
+226
+00:13:48,100 --> 00:13:53,000
+or isInstanceOf in Java,
+which is actually a bad practice.
+
+227
+00:13:54,280 --> 00:14:01,720
+One of the bad parts of this is that,
+of course, now this code that requires
+
+228
+00:14:01,920 --> 00:14:06,180
+that the `Block` is an instance
+of a `Wall`, now it cannot work
+
+229
+00:14:06,380 --> 00:14:07,820
+with other kind of `Walls`.
+
+230
+00:14:08,280 --> 00:14:12,380
+So all the `Walls` that we implement,
+they need to be inheriting from `Wall`.
+
+231
+00:14:12,580 --> 00:14:15,260
+Otherwise, we cannot add new kind
+of `Walls` that are not part of
+
+232
+00:14:15,460 --> 00:14:16,220
+the same hierarchy.
+
+233
+00:14:16,440 --> 00:14:17,940
+Otherwise, this test will be false.
+
+234
+00:14:21,320 --> 00:14:24,600
+Now, if we go back to the model
+and we take a look at the other part,
+
+235
+00:14:24,800 --> 00:14:27,660
+the dynamic part of the system,
+which represent all the `Moves`,
+
+236
+00:14:28,040 --> 00:14:33,420
+what we see is these objects that
+represent the actions that we're
+
+237
+00:14:33,620 --> 00:14:34,380
+going to do.
+
+238
+00:14:34,580 --> 00:14:35,880
+So we're going to move something.
+
+239
+00:14:36,080 --> 00:14:38,980
+So we're going to move the `Robots` up,
+down, left, or right.
+
+240
+00:14:39,440 --> 00:14:43,300
+We're going to `Push` a `Box` if
+we move in some direction and there
+
+241
+00:14:43,500 --> 00:14:44,260
+is a `Box` in that direction.
+
+242
+00:14:45,620 --> 00:14:49,040
+We're going to actually `NoMove`
+at all if we are trying to go in
+
+243
+00:14:49,240 --> 00:14:50,860
+a direction where there is a `Wall`.
+
+244
+00:14:51,640 --> 00:14:56,280
+And then, there is a result that,
+so actually, all these are the result
+
+245
+00:14:56,480 --> 00:14:57,640
+of trying to move.
+
+246
+00:14:57,920 --> 00:15:02,040
+So I'm trying to go up and then going up,
+if there is a `Wall`,
+
+247
+00:15:02,240 --> 00:15:03,000
+I'm going to have `NoMove`.
+
+248
+00:15:03,680 --> 00:15:05,560
+If there was a `Box`,
+I'm going to have `Push`.
+
+249
+00:15:05,760 --> 00:15:08,600
+And if there was nothing,
+I'm going to have a move.
+
+250
+00:15:10,580 --> 00:15:15,260
+So these are representations or
+reifications of the actions of the
+
+251
+00:15:15,300 --> 00:15:15,940
+`Player`.
+
+252
+00:15:17,100 --> 00:15:21,700
+And having them as a subject,
+they are not only good to be able
+
+253
+00:15:21,900 --> 00:15:25,260
+to manipulate them, but also because
+we can store them, for example,
+
+254
+00:15:25,560 --> 00:15:29,760
+for to be able to record them later
+and replay the game automatically.
+
+255
+00:15:32,060 --> 00:15:37,320
+If we take a look at the API of
+these `Moves`, we see the same kind
+
+256
+00:15:37,520 --> 00:15:38,420
+of pattern again.
+
+257
+00:15:38,620 --> 00:15:42,620
+So we check, okay, so all the `Moves`
+understand if they are move,
+
+258
+00:15:42,820 --> 00:15:44,520
+if they are `Push`, or if they are
+`NoMove`.
+
+259
+00:15:45,860 --> 00:15:49,440
+So we are probably smelling that
+here we are going to see the same
+
+260
+00:15:49,640 --> 00:15:55,240
+kind of pattern of nested condition,
+which at the end are the same thing
+
+261
+00:15:55,440 --> 00:15:59,540
+as asking, oh, is the class of this
+move this class or not?
+
+262
+00:16:02,160 --> 00:16:07,540
+If we actually take a look at how
+they are used, what we see is that
+
+263
+00:16:07,740 --> 00:16:12,940
+the game states is requested to
+move the `Robot` to a direction.
+
+264
+00:16:13,140 --> 00:16:15,880
+The direction is moving up,
+down, left or right.
+
+265
+00:16:16,400 --> 00:16:22,480
+And then the `Maze`, which is the
+model behind, is going to give us,
+
+266
+00:16:22,800 --> 00:16:25,160
+okay, if you want to move in this
+direction, this is the result.
+
+267
+00:16:27,020 --> 00:16:32,300
+So here inside the move by,
+it is checking if in the direction
+
+268
+00:16:32,500 --> 00:16:35,860
+that we want to move,
+we find a `Wall`, a `Box` or nothing.
+
+269
+00:16:37,220 --> 00:16:41,720
+And then, what we are going to do
+is to here we are checking if the
+
+270
+00:16:41,920 --> 00:16:43,920
+move is a move or a `Push` or something
+else.
+
+271
+00:16:44,580 --> 00:16:46,900
+And then we count the count in the
+number of `Moves` and the number
+
+272
+00:16:47,100 --> 00:16:47,860
+of `Pushes`.
+
+273
+00:16:48,360 --> 00:16:49,600
+And then we add it to a collection.
+
+274
+00:16:52,140 --> 00:16:53,400
+So what is the problem of this?
+
+275
+00:16:54,260 --> 00:16:57,740
+So here the main problem is that
+if we want to add a new kind of
+
+276
+00:16:57,940 --> 00:17:00,540
+move or a new kind of `Block` that
+has a different behavior,
+
+277
+00:17:01,240 --> 00:17:03,820
+we are not going to be able to extend
+it easily.
+
+278
+00:17:04,180 --> 00:17:05,780
+So how can we do it better?
+
+279
+00:17:07,320 --> 00:17:11,040
+Of course, the same solution as
+before is applicable in here.
+
+280
+00:17:11,440 --> 00:17:14,960
+What we can do is to tell the objects
+to do something and not to ask them
+
+281
+00:17:15,160 --> 00:17:15,920
+what they are.
+
+282
+00:17:16,180 --> 00:17:23,020
+So instead of asking the move if
+they are a move or a `Push` or something
+
+283
+00:17:23,220 --> 00:17:26,660
+else, what we can do is to tell the move,
+update`Block`.
+
+284
+00:17:27,340 --> 00:17:32,100
+You know who you are,
+so please tell the `Block` what
+
+285
+00:17:32,300 --> 00:17:33,100
+it should do.
+
+286
+00:17:33,300 --> 00:17:35,320
+And then we send the `GameState` as
+parameter.
+
+287
+00:17:36,700 --> 00:17:39,500
+So here, for example,
+a move, it will just increment the
+
+288
+00:17:39,700 --> 00:17:40,460
+number of `Moves`.
+
+289
+00:17:40,660 --> 00:17:47,220
+So the move will ask,
+will tell actually the `GameState` to
+
+290
+00:17:47,420 --> 00:17:48,180
+increment the `Moves`.
+
+291
+00:17:49,720 --> 00:17:51,940
+However, the `Push`, we have a different
+implementation.
+
+292
+00:17:53,040 --> 00:17:56,160
+It will do the same thing as its
+superclass.
+
+293
+00:17:56,360 --> 00:18:00,960
+Remember that 'move' is a superclass
+of a `Push` here.
+
+294
+00:18:01,960 --> 00:18:05,980
+And then, the super will actually
+execute the one in the superclass.
+
+295
+00:18:07,720 --> 00:18:11,720
+And besides incrementing the `Moves`,
+because this one will execute this one,
+
+296
+00:18:12,060 --> 00:18:15,500
+this message send will execute that
+method, it will also increase the
+
+297
+00:18:15,700 --> 00:18:16,460
+number of `Pushes`.
+
+298
+00:18:17,140 --> 00:18:20,520
+And then, if we have a `NoMove`,
+that means that we couldn't do anything
+
+299
+00:18:20,720 --> 00:18:21,480
+because there was a `Wall`.
+
+300
+00:18:21,680 --> 00:18:23,220
+We are just going to do nothing.
+
+301
+00:18:23,700 --> 00:18:25,680
+So this is what this method does.
+
+302
+00:18:28,260 --> 00:18:31,880
+As a conclusion, try to think about
+the classes that you are going to
+
+303
+00:18:32,080 --> 00:18:32,840
+use in your model.
+
+304
+00:18:33,320 --> 00:18:36,680
+Remember that little class hierarchies
+are good because they help you to
+
+305
+00:18:36,880 --> 00:18:37,640
+do dispatch.
+
+306
+00:18:38,180 --> 00:18:42,500
+So the dispatch and the message
+is actually the most powerful thing
+
+307
+00:18:42,700 --> 00:18:43,520
+that you are going to see here.
+
+308
+00:18:46,080 --> 00:18:52,280
+So it is also in this same sense,
+it is better to have many small
+
+309
+00:18:52,480 --> 00:18:54,680
+classes than a big one,
+because many small classes they
+
+310
+00:18:54,880 --> 00:18:55,960
+will help you doing dispatch.
+
+311
+00:18:56,160 --> 00:18:57,960
+They will make it natural.
+
+312
+00:18:59,760 --> 00:19:02,500
+Also, challenge these kind of testing
+methods.
+
+313
+00:19:02,780 --> 00:19:08,000
+Every time that you see an is,
+is, is, isX, isY ask yourself if
+
+314
+00:19:08,200 --> 00:19:09,620
+there was a better solution for that.
+
+315
+00:19:11,440 --> 00:19:13,960
+And check their use, maybe you will
+find a nest of worms.
+

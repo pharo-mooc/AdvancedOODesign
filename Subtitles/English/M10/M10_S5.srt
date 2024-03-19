@@ -1,0 +1,640 @@
+1
+00:00:04,420 --> 00:00:08,260
+Hi, in this lecture, we are going
+to discuss defensive programming,
+
+2
+00:00:08,680 --> 00:00:11,940
+in particular in the case for
+dynamically typed object-oriented
+
+3
+00:00:12,140 --> 00:00:12,900
+language.
+
+4
+00:00:13,100 --> 00:00:17,460
+We are going to discuss spurious checks,
+in particularly for the case when
+
+5
+00:00:17,660 --> 00:00:20,140
+we are going to validate data in
+our methods.
+
+6
+00:00:20,740 --> 00:00:24,620
+We are going to discuss the impact
+of those type checks and checks
+
+7
+00:00:24,820 --> 00:00:29,860
+in dynamically typed languages and
+we are going to discuss the impact
+
+8
+00:00:30,060 --> 00:00:31,420
+of testing to avoid those checks.
+
+9
+00:00:32,080 --> 00:00:36,480
+Before going into checks,
+let's discuss a bit about this method,
+
+10
+00:00:36,680 --> 00:00:39,120
+the assertion method that we are
+going to use through the slides.
+
+11
+00:00:39,780 --> 00:00:44,860
+So this method is an assertion method
+where objects are going to assert
+
+12
+00:00:45,060 --> 00:00:49,120
+that a certain condition is true
+or false and if false,
+
+13
+00:00:49,440 --> 00:00:51,400
+we are going to throw an exception.
+
+14
+00:00:52,740 --> 00:00:57,320
+So this method, `assert:description`,
+we are going to use it like this,
+
+15
+00:00:57,520 --> 00:01:05,660
+so self, assert:[Condition] description,
+
+16
+00:01:07,400 --> 00:01:09,300
+and then what happens if it fails.
+
+17
+00:01:10,640 --> 00:01:14,820
+So we check the condition and if
+it fails the condition,
+
+18
+00:01:15,020 --> 00:01:19,440
+we are going to throw an error with
+this message.
+
+19
+00:01:20,940 --> 00:01:23,640
+So it's important to understand
+that this method will change the
+
+20
+00:01:23,840 --> 00:01:24,600
+control flow.
+
+21
+00:01:24,800 --> 00:01:28,180
+So if the assertion fails,
+the rest of the method in the caller
+
+22
+00:01:28,380 --> 00:01:29,920
+will not be able to execute.
+
+23
+00:01:30,880 --> 00:01:32,280
+Let's see this with an example.
+
+24
+00:01:32,480 --> 00:01:35,980
+So here, for example,
+we see in the context of a graphics
+
+25
+00:01:36,180 --> 00:01:41,040
+framework a method that sets the
+`padding` inside an object.
+
+26
+00:01:41,240 --> 00:01:42,580
+So this is just a normal setter.
+
+27
+00:01:42,780 --> 00:01:47,320
+So here we take an argument and
+then a parameter and we are setting
+
+28
+00:01:47,520 --> 00:01:51,180
+it into a local variable,
+an instance variable,
+
+29
+00:01:52,080 --> 00:01:55,480
+and before actually setting it as
+in a normal setter we are going
+
+30
+00:01:55,680 --> 00:02:00,180
+to assert here that the `padding`
+that the argument we are receiving
+
+31
+00:02:00,380 --> 00:02:02,560
+is not nil.
+
+32
+00:02:03,100 --> 00:02:08,320
+So in that case, if the `padding` is nil,
+we are going to throw an exception
+
+33
+00:02:08,520 --> 00:02:10,880
+checking that the `padding` must
+not be nil.
+
+34
+00:02:11,080 --> 00:02:16,320
+The question that we can ask ourselves
+is, is this assertion here worth it?
+
+35
+00:02:17,640 --> 00:02:18,880
+So let's analyze it a bit.
+
+36
+00:02:19,080 --> 00:02:22,580
+First, we need to think about the
+runtime cost of such assertions.
+
+37
+00:02:22,940 --> 00:02:26,040
+Of course, in many different languages
+assertions can be optional.
+
+38
+00:02:26,240 --> 00:02:32,080
+We can turn them on and off and,
+for example, avoid them to be compiled
+
+39
+00:02:32,280 --> 00:02:34,000
+at all at the end.
+
+40
+00:02:35,100 --> 00:02:38,580
+So for example, we could think that
+they are never executed in production.
+
+41
+00:02:38,780 --> 00:02:41,860
+So in that case, they don't have
+any runtime cost.
+
+42
+00:02:42,060 --> 00:02:45,140
+So that could be, for example,
+a potential benefit.
+
+43
+00:02:45,340 --> 00:02:51,000
+And they could also help us track
+problems and stabilize the code
+
+44
+00:02:51,200 --> 00:02:51,960
+when developing.
+
+45
+00:02:52,160 --> 00:02:56,180
+So we don't want to have nil as
+a `padding` in any object.
+
+46
+00:02:56,380 --> 00:02:59,700
+So let's validate it right away.
+
+47
+00:03:01,580 --> 00:03:05,680
+Now let's think about the same code,
+but written a bit differently.
+
+48
+00:03:05,880 --> 00:03:10,100
+Instead of having an assertion error,
+we are going to just check it directly.
+
+49
+00:03:10,320 --> 00:03:14,340
+We are going to check if the `padding`
+is nil, then we are going to throw
+
+50
+00:03:14,540 --> 00:03:15,300
+an error.
+
+51
+00:03:15,760 --> 00:03:18,480
+So what is the difference between
+the previous example and this one?
+
+52
+00:03:19,160 --> 00:03:20,380
+Of course, the goal is the same.
+
+53
+00:03:20,580 --> 00:03:22,200
+We don't want that the `padding` is nil.
+
+54
+00:03:22,400 --> 00:03:26,420
+We don't want our code to be broken
+because the `padding` is nil,
+
+55
+00:03:26,620 --> 00:03:27,380
+actually.
+
+56
+00:03:27,580 --> 00:03:30,720
+Because if we avoid `padding` to be nil,
+that means that our code in the
+
+57
+00:03:30,920 --> 00:03:34,560
+rest of our program knows that the
+`padding` can never be nil and it
+
+58
+00:03:34,760 --> 00:03:35,520
+can be simpler code.
+
+59
+00:03:36,400 --> 00:03:43,680
+I refer you to the null object sections
+and avoid nil check in the other
+
+60
+00:03:43,880 --> 00:03:44,640
+lectures.
+
+61
+00:03:46,060 --> 00:03:50,000
+Now, of course here, we are checking
+that the `padding` cannot be nil.
+
+62
+00:03:51,740 --> 00:03:57,880
+But it doesn't avoid that we set
+any junk object as a `padding`.
+
+63
+00:03:58,080 --> 00:04:05,720
+So we could for example say `padding`
+colon and we could put string here.
+
+64
+00:04:06,740 --> 00:04:10,840
+So if we put string as a `padding`,
+our code actually will be broken too.
+
+65
+00:04:11,420 --> 00:04:17,220
+So why not checking that this is
+not a string or this is not some
+
+66
+00:04:17,420 --> 00:04:18,180
+other object.
+
+67
+00:04:19,800 --> 00:04:24,540
+So this means actually that this
+test here, this check is not enough
+
+68
+00:04:24,740 --> 00:04:27,580
+to solve all our problems and maybe
+it's not worth.
+
+69
+00:04:31,160 --> 00:04:33,700
+Here is a proposal for a better
+setter method.
+
+70
+00:04:34,560 --> 00:04:40,280
+This is just taking the parameter
+here and setting it into this as
+
+71
+00:04:40,480 --> 00:04:41,680
+better without doing any checks.
+
+72
+00:04:42,200 --> 00:04:45,680
+Of course, a `padding` is still
+expected to not be nil,
+
+73
+00:04:45,880 --> 00:04:50,440
+but it is also expected to not be
+string and other invalid `padding`.
+
+74
+00:04:51,940 --> 00:04:54,080
+So what are the advantages of this?
+
+75
+00:04:54,280 --> 00:04:56,860
+Take a couple of minutes and think
+about that.
+
+76
+00:04:57,060 --> 00:04:59,860
+We're going to discuss it in a couple
+of slides.
+
+77
+00:05:03,680 --> 00:05:05,560
+Before going into that,
+let's see another example.
+
+78
+00:05:06,160 --> 00:05:11,860
+So here, we have for example this
+source method in an event and it
+
+79
+00:05:12,060 --> 00:05:13,940
+is also implemented using assertions.
+
+80
+00:05:14,140 --> 00:05:18,880
+So we are going to assert if we
+have no source, then we cannot access
+
+81
+00:05:19,080 --> 00:05:19,840
+the source.
+
+82
+00:05:20,040 --> 00:05:24,420
+So this is defensively checking
+that you cannot get the source out
+
+83
+00:05:24,620 --> 00:05:26,920
+of an object if it doesn't have a source.
+
+84
+00:05:28,320 --> 00:05:32,700
+Again, these assertions are conceptually
+optional, so this code could not
+
+85
+00:05:32,900 --> 00:05:35,080
+be there and the code should be
+still okay.
+
+86
+00:05:36,000 --> 00:05:40,700
+But it still looks like a leftover
+from debugging because this will
+
+87
+00:05:40,900 --> 00:05:43,880
+just throw in development an assertion
+error.
+
+88
+00:05:44,440 --> 00:05:46,940
+If we wanted, for example,
+to catch that exception because
+
+89
+00:05:47,140 --> 00:05:50,940
+it's a valid exception in the domain,
+then maybe it could be better to
+
+90
+00:05:51,140 --> 00:05:52,740
+make it an explicit exception.
+
+91
+00:05:55,180 --> 00:05:59,680
+We could, of course, turn that code
+into this just by removing the
+
+92
+00:05:59,880 --> 00:06:05,260
+assertions and then this code now
+it's an explicit check that is,
+
+93
+00:06:05,460 --> 00:06:07,220
+of course, mandatory in all our code.
+
+94
+00:06:08,800 --> 00:06:12,620
+So then, every time that we are
+going to access the source of an event,
+
+95
+00:06:12,820 --> 00:06:19,260
+we are going to check always if
+it has the source and in which case
+
+96
+00:06:19,460 --> 00:06:21,900
+in case it doesn't, we're going
+to throw an error.
+
+97
+00:06:22,100 --> 00:06:26,080
+We can later replace for example
+this error with a domain exception
+
+98
+00:06:26,280 --> 00:06:28,040
+for our particular case.
+
+99
+00:06:30,180 --> 00:06:34,440
+What this actually changes from
+the previous example is that we
+
+100
+00:06:34,640 --> 00:06:38,560
+can catch in the caller or even
+in any of the callers in the call chain,
+
+101
+00:06:38,760 --> 00:06:41,940
+we can catch the error if we need it.
+
+102
+00:06:42,640 --> 00:06:45,540
+Of course, the reader knows that
+there is a check for real.
+
+103
+00:06:45,740 --> 00:06:49,880
+This is actually a domain decision
+to avoid people getting the source
+
+104
+00:06:50,080 --> 00:06:52,060
+if it is not there.
+
+105
+00:06:52,980 --> 00:06:57,440
+Of course, it would be better and
+simpler to always have a source.
+
+106
+00:06:58,340 --> 00:07:02,380
+But if the domain actually supports
+that having a source is actually
+
+107
+00:07:02,580 --> 00:07:05,340
+an optional part of the domain,
+we should think about that.
+
+108
+00:07:05,540 --> 00:07:10,000
+Of course, if having a source is
+optional, we can think of replacing
+
+109
+00:07:10,200 --> 00:07:12,120
+this with a null object.
+
+110
+00:07:13,580 --> 00:07:18,660
+Another variant of the checks that
+we saw before is to check explicitly
+
+111
+00:07:18,860 --> 00:07:19,620
+for types.
+
+112
+00:07:19,840 --> 00:07:23,780
+In this case, we are checking that
+our `padding` isKindOf BlPadding.
+
+113
+00:07:25,380 --> 00:07:29,260
+This is equivalent to doing an instance
+of check in Java.
+
+114
+00:07:32,920 --> 00:07:35,620
+What are the benefits and the
+disadvantages of this solution?
+
+115
+00:07:36,360 --> 00:07:40,880
+First, we have to understand that
+making an instance of check around
+
+116
+00:07:41,080 --> 00:07:44,480
+isKindOf check is slow because it
+has to traverse the entire hierarchy
+
+117
+00:07:44,680 --> 00:07:49,760
+to understand if the object is actually
+of the requested class.
+
+118
+00:07:51,940 --> 00:07:54,720
+One of the other disadvantages of
+this solution is that it prevents
+
+119
+00:07:54,920 --> 00:07:58,140
+to extend the program with polymorphic
+objects.
+
+120
+00:07:58,540 --> 00:08:01,880
+Imagine that tomorrow I would like
+to have a `padding`, a different
+
+121
+00:08:02,080 --> 00:08:05,540
+`padding`, but without sharing the
+hierarchy of the BlPadding.
+
+122
+00:08:06,580 --> 00:08:11,660
+I could implement a BlPadding object
+or another similar object to BlPpadding
+
+123
+00:08:11,940 --> 00:08:15,880
+that has exactly the same interface,
+understand the same messages,
+
+124
+00:08:16,680 --> 00:08:19,840
+but it doesn't inherit from the
+Blpadding class.
+
+125
+00:08:20,780 --> 00:08:26,700
+In such a case, I would not be able
+to use my `padding` in this code
+
+126
+00:08:26,900 --> 00:08:31,440
+here because this code is actually
+checking that the object needs to
+
+127
+00:08:31,640 --> 00:08:35,280
+be in the hierarchy of Blpadding
+and it's not checking that it needs
+
+128
+00:08:35,480 --> 00:08:36,500
+to implement the same interface.
+
+129
+00:08:37,440 --> 00:08:42,380
+So this check is preventing me to
+implement polymorphic objects.
+
+130
+00:08:44,520 --> 00:08:51,280
+As a conclusion, avoid using optional
+check that can be used mainly for
+
+131
+00:08:51,480 --> 00:08:54,280
+debugging purposes or remove them
+after debugging.
+
+132
+00:08:55,820 --> 00:09:01,960
+Also avoid using explicit type-checks
+because they prevent code evolution
+
+133
+00:09:02,180 --> 00:09:06,560
+and favour tests because actually
+what we have seen as assertions
+
+134
+00:09:06,760 --> 00:09:10,820
+in the code and checks in the preamble
+of the methods could have been different
+
+135
+00:09:11,020 --> 00:09:12,560
+tests in our source code.
+

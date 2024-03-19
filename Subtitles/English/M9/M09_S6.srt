@@ -1,0 +1,603 @@
+1
+00:00:04,840 --> 00:00:08,360
+Welcome to this little lecture,
+where I want to stress the difference
+
+2
+00:00:08,560 --> 00:00:12,820
+between object-oriented programming
+and class-oriented programming.
+
+3
+00:00:13,460 --> 00:00:17,560
+You will wonder what is it,
+and I will show you what is
+
+4
+00:00:17,760 --> 00:00:20,740
+class-oriented programming and that
+you should not do it.
+
+5
+00:00:21,620 --> 00:00:25,120
+So the idea, this is really to think
+again what is object-oriented
+
+6
+00:00:25,340 --> 00:00:33,400
+programming and that sometimes,
+you may think that you are programming
+
+7
+00:00:33,600 --> 00:00:37,180
+in an object-oriented way,
+but you are doing it more in a class
+
+8
+00:00:37,380 --> 00:00:39,960
+way and this is not very nice.
+
+9
+00:00:40,600 --> 00:00:43,860
+What you see is that sometimes,
+you get class-based programming
+
+10
+00:00:44,060 --> 00:00:50,220
+design where class are used as data
+holder in the sense that instance
+
+11
+00:00:50,420 --> 00:00:53,980
+of such a class would share the
+same data.
+
+12
+00:00:54,180 --> 00:00:57,620
+So this means that all your instances
+will have the same values.
+
+13
+00:00:58,820 --> 00:01:02,360
+So in that case, you say okay,
+why do I need a class that normally
+
+14
+00:01:02,560 --> 00:01:08,000
+generates instances, different instances
+if now I generate instances,
+
+15
+00:01:08,200 --> 00:01:09,640
+but they are all the same data.
+
+16
+00:01:10,820 --> 00:01:15,520
+And in this design, often what you
+will see is that you have to write
+
+17
+00:01:15,720 --> 00:01:21,120
+a new class to represent a new instance
+and this is really a big red sign
+
+18
+00:01:21,320 --> 00:01:22,080
+you should not.
+
+19
+00:01:22,700 --> 00:01:26,860
+So in such design, what you see
+is that you have no real instance
+
+20
+00:01:27,060 --> 00:01:27,820
+specific state.
+
+21
+00:01:28,320 --> 00:01:29,640
+I did a sketch of that.
+
+22
+00:01:29,840 --> 00:01:35,860
+So imagine the following hierarchy,
+you have a class changer that has
+
+23
+00:01:36,060 --> 00:01:36,820
+different methods.
+
+24
+00:01:37,020 --> 00:01:41,100
+It has the method 'commandClass',
+it has the method 'order' and
+
+25
+00:01:41,300 --> 00:01:42,060
+'multiFormClass'.
+
+26
+00:01:42,780 --> 00:01:47,940
+And for example, a subclass
+PositionChanger will implement these
+
+27
+00:01:48,140 --> 00:01:51,100
+three methods and background will
+implement the three methods and
+
+28
+00:01:51,300 --> 00:01:53,220
+identifier will implement the three
+methods.
+
+29
+00:01:53,640 --> 00:01:59,920
+And for example, (the commandClass
+will return the commandPattern as
+
+30
+00:02:00,120 --> 00:02:02,280
+the commandClass associated
+commandPosition).
+
+31
+00:02:03,700 --> 00:02:08,900
+The multiFormClass will return FormPoint
+and for example, the order will return 2.
+
+32
+00:02:09,260 --> 00:02:13,080
+And then, we see that in all the
+classes the same so background will
+
+33
+00:02:13,280 --> 00:02:15,540
+return the command that is the
+CommandBackground.
+
+34
+00:02:16,460 --> 00:02:22,280
+The multiForm will return the FormColor
+and here the order 10 and the same
+
+35
+00:02:22,480 --> 00:02:23,320
+for this identifier.
+
+36
+00:02:23,840 --> 00:02:29,300
+What we see from this design is
+that of course I can have an instance
+
+37
+00:02:29,500 --> 00:02:30,260
+here.
+
+38
+00:02:31,080 --> 00:02:34,300
+Let's call it aIdentifierChanger.
+
+39
+00:02:37,520 --> 00:02:41,000
+I can have another one,
+no problem, I can have multiple of them.
+
+40
+00:02:45,000 --> 00:02:49,480
+But they all share this,
+they all share that and they all
+
+41
+00:02:49,680 --> 00:02:50,440
+share that.
+
+42
+00:02:50,640 --> 00:02:53,860
+So this means that each time I will
+send a message order here,
+
+43
+00:02:54,060 --> 00:02:59,440
+I will get one here, order I will
+get one.
+
+44
+00:03:00,240 --> 00:03:05,500
+So you can these classes can have
+multiple instance but they all have
+
+45
+00:03:05,700 --> 00:03:06,460
+the same state.
+
+46
+00:03:06,660 --> 00:03:09,740
+The same, these classes can have
+instances and it will have all the
+
+47
+00:03:09,940 --> 00:03:10,700
+same state.
+
+48
+00:03:11,140 --> 00:03:17,040
+So and now if I want to create a
+new instance, basically what I am
+
+49
+00:03:17,240 --> 00:03:19,820
+forced to do, I am forced to create
+a new subclass.
+
+50
+00:03:20,060 --> 00:03:28,140
+So here, we'll have a new subclass,
+here with a commandClass that will
+
+51
+00:03:28,340 --> 00:03:32,160
+return something and order that
+will return I don't know 42,
+
+52
+00:03:32,360 --> 00:03:33,120
+why not.
+
+53
+00:03:34,120 --> 00:03:37,340
+And there is something fishy,
+so let's analyze it a bit.
+
+54
+00:03:37,540 --> 00:03:41,880
+So when I see such kind of class,
+I know that they are data oriented,
+
+55
+00:03:42,080 --> 00:03:43,000
+they are really static.
+
+56
+00:03:43,340 --> 00:03:47,960
+They are static in the sense that
+I have to create a new classes for
+
+57
+00:03:48,160 --> 00:03:49,420
+each new instance.
+
+58
+00:03:51,140 --> 00:03:56,120
+And a class in fact represent only
+one instance even if I can create
+
+59
+00:03:56,320 --> 00:04:01,420
+multiple of them, I cannot do much
+with them because I can only do
+
+60
+00:04:01,620 --> 00:04:05,720
+the same and they will reply to
+in the exactly same state.
+
+61
+00:04:06,400 --> 00:04:15,260
+So what we should see is that a
+class should describe instance shape
+
+62
+00:04:15,460 --> 00:04:16,360
+not values.
+
+63
+00:04:18,180 --> 00:04:19,540
+And that's a key difference.
+
+64
+00:04:20,060 --> 00:04:24,260
+Each instance can potentially have
+a different state.
+
+65
+00:04:25,040 --> 00:04:28,180
+Maybe it is initialized by default one,
+but we can change it.
+
+66
+00:04:28,400 --> 00:04:30,980
+In the design that I showed you
+previously, this is impossible.
+
+67
+00:04:31,180 --> 00:04:34,480
+You can always get the same design.
+
+68
+00:04:36,160 --> 00:04:41,640
+Let's compare now with the equivalent
+of the previous one with a simple
+
+69
+00:04:41,840 --> 00:04:42,600
+single class.
+
+70
+00:04:42,900 --> 00:04:47,560
+In that design, what I will do is
+that I will define instance variable
+
+71
+00:04:52,800 --> 00:04:57,140
+and some setters and getters.
+
+72
+00:04:57,340 --> 00:04:59,620
+So here I have the getters.
+
+73
+00:05:01,280 --> 00:05:07,100
+Each of these getters will return
+the value that are stored in this
+
+74
+00:05:07,300 --> 00:05:09,040
+variable for each object.
+
+75
+00:05:09,440 --> 00:05:14,720
+So here for example I will have
+a changer that is configured as
+
+76
+00:05:14,920 --> 00:05:18,000
+the identifier that we saw on the
+previous slide.
+
+77
+00:05:18,480 --> 00:05:21,320
+And here, this one will have the
+same information, but configured
+
+78
+00:05:21,520 --> 00:05:23,460
+as the background and the position.
+
+79
+00:05:24,180 --> 00:05:31,080
+And these three instances have different
+states and they will behave differently.
+
+80
+00:05:31,620 --> 00:05:36,800
+When I send the message order to
+this one, I will get a result that
+
+81
+00:05:37,000 --> 00:05:41,680
+is different from that one and I
+will get access to the state of
+
+82
+00:05:41,880 --> 00:05:42,640
+this object.
+
+83
+00:05:45,840 --> 00:05:49,420
+So with this design we just create
+instances.
+
+84
+00:05:49,620 --> 00:05:53,280
+They can represent multiple and
+different configurations of the
+
+85
+00:05:53,480 --> 00:05:57,140
+same values and potentially we could
+decorate them.
+
+86
+00:05:57,340 --> 00:06:01,340
+So this means that we could say,
+oh, you are an instance and I wrap
+
+87
+00:06:01,540 --> 00:06:04,180
+you in another object or I do something
+else with you.
+
+88
+00:06:06,820 --> 00:06:10,020
+And to create one, we just specify
+what we want.
+
+89
+00:06:10,620 --> 00:06:16,100
+Here, I said, I would like to have
+a new one with I don't know something
+
+90
+00:06:16,300 --> 00:06:17,060
+else than before.
+
+91
+00:06:17,720 --> 00:06:23,260
+And here, I will specify okay this
+is the new value.
+
+92
+00:06:25,240 --> 00:06:30,860
+So with subclass what we can also
+do is that we can potentially if
+
+93
+00:06:31,060 --> 00:06:36,060
+this is important for us,
+we can create a new subclass that's
+
+94
+00:06:36,260 --> 00:06:39,520
+inherited from the previous one
+where it has a specific initialized
+
+95
+00:06:39,720 --> 00:06:45,480
+method where I define some default
+values and I can have multiple instances
+
+96
+00:06:45,680 --> 00:06:51,300
+here, but that would be a position
+
+97
+00:06:51,500 --> 00:06:54,080
+too because this is about position
+but I could change.
+
+98
+00:06:54,280 --> 00:06:58,740
+For example, I could say,
+I want to put a different command.
+
+99
+00:06:59,240 --> 00:07:04,680
+So I could say commandClass:
+or please use this one because I
+
+100
+00:07:04,880 --> 00:07:05,640
+have an extension.
+
+101
+00:07:05,840 --> 00:07:13,500
+So I would say, CommandPosition2
+and then this means that this instance
+
+102
+00:07:13,700 --> 00:07:17,480
+will have a different state from
+this one, but still I encapsulate
+
+103
+00:07:17,680 --> 00:07:21,140
+here some knowledge that apparently
+is better.
+
+104
+00:07:22,620 --> 00:07:28,580
+So what you should see also is that
+from that perspective,
+
+105
+00:07:28,780 --> 00:07:34,360
+this design need a discovery mechanism
+or you have to store your instance
+
+106
+00:07:34,560 --> 00:07:38,940
+variable somewhere while in the
+previous one you just add the class.
+
+107
+00:07:39,140 --> 00:07:42,600
+So you know okay there is one single
+entry point because this is the class.
+
+108
+00:07:42,800 --> 00:07:49,040
+So if I write a ChangerPosition,
+there is only class there is one
+
+109
+00:07:49,240 --> 00:07:57,340
+class ChangerPosition in the system,
+so it was providing a single access
+
+110
+00:07:57,540 --> 00:07:58,300
+point.
+
+111
+00:07:58,500 --> 00:08:01,240
+Now, if we use instances,
+it means that we can have multiple
+
+112
+00:08:01,440 --> 00:08:03,660
+instances with different states.
+
+113
+00:08:03,860 --> 00:08:08,300
+And in that case, we should explicitly
+register, so maybe we can have at
+
+114
+00:08:08,500 --> 00:08:13,340
+the class level some annotation
+or something that will have a dictionary
+
+115
+00:08:13,540 --> 00:08:16,260
+to store them with an ID or something
+like that.
+
+116
+00:08:16,460 --> 00:08:21,340
+But this is much better in any way,
+in any case.
+
+117
+00:08:21,920 --> 00:08:26,020
+So the conclusion is that when you
+need to define a new class to represent
+
+118
+00:08:26,220 --> 00:08:29,460
+a new instance, this is fishy,
+run away, change.
+
+119
+00:08:29,660 --> 00:08:34,300
+A class describes the shape of its
+instances, not the value.
+
+120
+00:08:34,500 --> 00:08:38,740
+Sometimes for some values,
+you want to share them and you know
+
+121
+00:08:38,940 --> 00:08:40,420
+that they will not change,
+that's okay.
+
+122
+00:08:40,620 --> 00:08:43,740
+But it cannot be a general like that.
+
+123
+00:08:43,940 --> 00:08:46,880
+So it means that there is something
+wrong.
+
+124
+00:08:47,080 --> 00:08:51,800
+So in general, favor instance over
+classes because that classes are
+
+125
+00:08:52,000 --> 00:08:54,160
+static so you cannot create dynamically.
+
+126
+00:08:54,360 --> 00:08:59,980
+So this means that if you need the
+compiler basically to really define
+
+127
+00:09:00,180 --> 00:09:01,800
+an instance, there is something
+strange. &nbsp;
+

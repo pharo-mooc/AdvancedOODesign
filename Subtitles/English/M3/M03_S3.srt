@@ -1,0 +1,813 @@
+1
+00:00:04,400 --> 00:00:07,840
+Hello, in this lecture,
+we will discuss about hooks and
+
+2
+00:00:08,040 --> 00:00:08,800
+templates.
+
+3
+00:00:10,160 --> 00:00:13,260
+So the goal or the outline of this
+lecture is the following.
+
+4
+00:00:14,020 --> 00:00:17,920
+So we will look at hooks and template
+methods and what are they.
+
+5
+00:00:18,860 --> 00:00:23,400
+We will exemplify them on two examples
+from the Pharo code library,
+
+6
+00:00:23,760 --> 00:00:26,480
+the 'printString/printOn': case
+and the 'copy' case.
+
+7
+00:00:28,400 --> 00:00:31,880
+First of all, remember,
+when you send a message to an object,
+
+8
+00:00:32,600 --> 00:00:33,360
+there is a choice.
+
+9
+00:00:33,560 --> 00:00:36,580
+The system will select the right
+method to execute according to the
+
+10
+00:00:36,780 --> 00:00:37,540
+receiver.
+
+11
+00:00:38,000 --> 00:00:42,200
+And then, each class you define
+defines one possible choice.
+
+12
+00:00:42,980 --> 00:00:48,020
+Self-sends are plans for reuse and
+self-sends defines hooks,
+
+13
+00:00:49,160 --> 00:00:53,500
+places where subclasses can inject
+variations and this is what we will
+
+14
+00:00:53,700 --> 00:00:55,220
+revisit inside this lecture.
+
+15
+00:00:57,020 --> 00:00:58,300
+So what is a template method?
+
+16
+00:00:58,500 --> 00:01:01,440
+A template method specifies a skeleton
+with hooks.
+
+17
+00:01:01,640 --> 00:01:03,820
+So here, you have an example in a class.
+
+18
+00:01:04,040 --> 00:01:05,300
+So this is an AbstractClass.
+
+19
+00:01:06,620 --> 00:01:11,200
+And inside this template method,
+there are some self-send messages here.
+
+20
+00:01:11,940 --> 00:01:16,660
+And if you look at it,
+the 'hookMethod1' is a concrete method.
+
+21
+00:01:16,860 --> 00:01:21,000
+So it means that there is a default
+definition inside the 'AbstractClass'.
+
+22
+00:01:21,720 --> 00:01:23,640
+But the 'hookMethod2' is in italics.
+
+23
+00:01:24,020 --> 00:01:25,280
+So this is an abstract method.
+
+24
+00:01:25,780 --> 00:01:27,860
+Subclasses must redefine the
+'hookMethod2'.
+
+25
+00:01:30,440 --> 00:01:33,320
+And self-send messages,
+we already saw it in a previous lecture,
+
+26
+00:01:33,580 --> 00:01:39,940
+they are hooks, places where subclasses
+can inject variation by redefining
+
+27
+00:01:40,140 --> 00:01:40,900
+those methods.
+
+28
+00:01:41,540 --> 00:01:43,820
+So this is the example that we already
+discussed.
+
+29
+00:01:44,020 --> 00:01:49,740
+If I send the bar message to the obj,
+and obj is an instance of the class C,
+
+30
+00:01:50,220 --> 00:01:54,900
+it means that here, it will correctly
+return 42 because bar,
+
+31
+00:01:55,100 --> 00:01:56,740
+this is a kind of template method.
+
+32
+00:01:57,760 --> 00:02:02,620
+Foo is a hook, and it has been redefined
+in the C class.
+
+33
+00:02:03,840 --> 00:02:08,180
+Let's study this on a real example,
+a real code from the Pharo library.
+
+34
+00:02:09,380 --> 00:02:12,860
+And for example, we will look at
+the `printString` implementation.
+
+35
+00:02:13,060 --> 00:02:16,700
+If I send a `printString` message
+to an object, so here,
+
+36
+00:02:16,900 --> 00:02:20,720
+this is a delay, a delay for a certain
+amount of seconds.
+
+37
+00:02:21,480 --> 00:02:27,820
+So here, for this delay,
+the `printString` method will return
+
+38
+00:02:28,020 --> 00:02:29,660
+a string representation of the object.
+
+39
+00:02:30,140 --> 00:02:33,800
+So it means that here,
+it says this is 'a Delay',
+
+40
+00:02:34,520 --> 00:02:38,140
+an instance of the Delay class,
+and the duration of this delay is
+
+41
+00:02:38,340 --> 00:02:39,400
+this amount of milliseconds.
+
+42
+00:02:40,180 --> 00:02:44,000
+So how is this `printString` method
+implemented?
+
+43
+00:02:44,700 --> 00:02:48,720
+So in fact, it is implemented in
+the object class here,
+
+44
+00:02:50,040 --> 00:02:53,060
+and there is a self-send,
+okay, that specifies the limit.
+
+45
+00:02:53,260 --> 00:02:57,240
+By default, the limit is 50,000
+characters.
+
+46
+00:02:58,440 --> 00:03:02,340
+And if it is longer than that,
+it will be truncated.
+
+47
+00:03:02,880 --> 00:03:04,480
+Okay, this is not really important.
+
+48
+00:03:04,680 --> 00:03:06,460
+What is important is this method.
+
+49
+00:03:08,000 --> 00:03:13,780
+And if you look at the code of this
+method, do you see the hook where it is?
+
+50
+00:03:14,380 --> 00:03:18,820
+This is this self-send here,
+'self printOn'.
+
+51
+00:03:20,480 --> 00:03:25,920
+And if we look at the implementation
+of this `printOn` method,
+
+52
+00:03:27,200 --> 00:03:30,160
+but before looking at the default
+implementation of it,
+
+53
+00:03:30,440 --> 00:03:33,420
+let's have a look of sending
+`printString` to different instances.
+
+54
+00:03:34,160 --> 00:03:39,680
+If I send a `printString` message
+to a node instance, what it displays
+
+55
+00:03:39,880 --> 00:03:40,800
+is a Node.
+
+56
+00:03:41,720 --> 00:03:46,200
+But if I send the `printString`
+message to an Apple, it displays
+
+57
+00:03:46,400 --> 00:03:47,160
+an Apple.
+
+58
+00:03:47,980 --> 00:03:50,860
+So we can see that the article here
+is different.
+
+59
+00:03:52,600 --> 00:03:56,820
+And now we can have a look at the
+default implementation in the object
+
+60
+00:03:57,020 --> 00:03:57,780
+class.
+
+61
+00:03:58,380 --> 00:03:59,760
+So what does it do?
+
+62
+00:03:59,960 --> 00:04:03,360
+Is that basically it will get the
+class name of the object,
+
+63
+00:04:04,240 --> 00:04:07,860
+and then it will test if the first
+letter is a vowel or not,
+
+64
+00:04:08,320 --> 00:04:12,280
+and according to that,
+it will display the correct article.
+
+65
+00:04:13,180 --> 00:04:16,460
+This is the default implementation
+of `printOn` in object.
+
+66
+00:04:16,780 --> 00:04:19,720
+But now this default implementation
+can be refined.
+
+67
+00:04:20,220 --> 00:04:22,020
+And let's have a look at the Delay
+class.
+
+68
+00:04:22,220 --> 00:04:25,240
+Because the Delay class,
+it displays the article,
+
+69
+00:04:25,960 --> 00:04:28,580
+the name of the class,
+but also the duration.
+
+70
+00:04:29,880 --> 00:04:31,040
+And where does it come from?
+
+71
+00:04:31,300 --> 00:04:35,020
+It comes from the fact that the
+`printOn` method, the hook,
+
+72
+00:04:35,620 --> 00:04:37,820
+has been redefined in the Delay class.
+
+73
+00:04:38,640 --> 00:04:41,920
+And this is an extension of the
+default behavior because there is
+
+74
+00:04:42,120 --> 00:04:42,980
+a super call here.
+
+75
+00:04:43,540 --> 00:04:48,510
+So we reuse the default implementation
+from object that displays the article
+
+76
+00:04:48,710 --> 00:04:53,260
+and class name, and then we extend
+it by adding the duration of the
+
+77
+00:04:53,460 --> 00:04:55,440
+delay between parenthesis here.
+
+78
+00:04:57,340 --> 00:05:01,540
+Okay, so in the Delay class,
+we extended the default implementations
+
+79
+00:05:01,740 --> 00:05:02,960
+of the hook `printOn`.
+
+80
+00:05:05,480 --> 00:05:07,000
+But we can go further.
+
+81
+00:05:07,200 --> 00:05:09,780
+We can completely redefine the behavior
+of the `printOn`.
+
+82
+00:05:10,820 --> 00:05:13,820
+For example, for `Booleans` that
+you already saw in a previous lecture,
+
+83
+00:05:14,380 --> 00:05:20,700
+if I send `printString` to a `Boolean`,
+it directly writes a string
+
+84
+00:05:20,900 --> 00:05:22,040
+representation of the `Boolean`.
+
+85
+00:05:22,240 --> 00:05:27,400
+And since there are only two `Booleans`
+in the system, for example,
+
+86
+00:05:27,600 --> 00:05:32,440
+for false, there is only one instance
+of the False class, which is named
+
+87
+00:05:32,640 --> 00:05:36,980
+false, and on the False class,
+there is a definition of the `printOn`
+
+88
+00:05:37,180 --> 00:05:37,940
+method.
+
+89
+00:05:38,140 --> 00:05:42,120
+And inside this method,
+it directly prints 'false' with a
+
+90
+00:05:42,320 --> 00:05:46,080
+lower case because this is the name
+of the unique instance of the False
+
+91
+00:05:46,280 --> 00:05:47,040
+class.
+
+92
+00:05:48,780 --> 00:05:50,200
+Let's have a look at another example.
+
+93
+00:05:50,400 --> 00:05:51,900
+For example, the `Interval` class.
+
+94
+00:05:52,320 --> 00:05:56,220
+Inside the `Interval` class,
+the `printOn` method has been redefined
+
+95
+00:05:56,420 --> 00:06:03,660
+to display the start index of the
+`Interval`, which is displayed there,
+
+96
+00:06:04,360 --> 00:06:08,040
+then the stop index of the `Interval`,
+which is displayed there,
+
+97
+00:06:08,880 --> 00:06:18,500
+and maybe the step of the `Interval`
+there, just by redefining the `printOn`
+
+98
+00:06:18,760 --> 00:06:20,760
+hook inside the `Interval` class.
+
+99
+00:06:21,400 --> 00:06:25,900
+Let's have a look at another example
+of the hooks and templates mechanisms.
+
+100
+00:06:26,740 --> 00:06:28,380
+For example, copying objects.
+
+101
+00:06:28,980 --> 00:06:32,760
+Copying objects might be complex
+because usually, there is a graph
+
+102
+00:06:32,960 --> 00:06:37,040
+of objects that are interconnected
+all together, and there might be
+
+103
+00:06:37,240 --> 00:06:41,540
+some cycles between objects,
+and each class may have a different
+
+104
+00:06:41,740 --> 00:06:44,140
+strategy to `copy` instances of
+themselves.
+
+105
+00:06:45,160 --> 00:06:49,680
+A simple solution for that is to
+use the template method and hooks
+
+106
+00:06:49,880 --> 00:06:52,340
+`copy` and post `copy` that we will
+analyze now.
+
+107
+00:06:52,860 --> 00:06:53,620
+So let's have a look.
+
+108
+00:06:54,140 --> 00:06:57,220
+In the object class, I have the
+`copy` method that is there.
+
+109
+00:06:58,700 --> 00:07:01,300
+And the implementation of the `copy`
+method is this one.
+
+110
+00:07:01,820 --> 00:07:05,320
+So the shallow`copy` is another method,
+which is a primitive.
+
+111
+00:07:05,520 --> 00:07:10,280
+And what does the primitive do is
+that it just copies the receiver
+
+112
+00:07:10,480 --> 00:07:12,380
+and not its dependencies.
+
+113
+00:07:13,300 --> 00:07:16,860
+So all instance variables or all
+things that are around this object
+
+114
+00:07:17,060 --> 00:07:18,760
+are not copied, they are shared
+with the `copy`.
+
+115
+00:07:19,920 --> 00:07:24,360
+But we have a hook there,
+another method, which is post`copy`.
+
+116
+00:07:25,620 --> 00:07:31,120
+And there is a default implementation
+in object of post`copy` that just
+
+117
+00:07:31,320 --> 00:07:32,080
+returns self.
+
+118
+00:07:32,640 --> 00:07:35,040
+So we might think that it is useless.
+
+119
+00:07:35,460 --> 00:07:38,220
+Why having a post`copy` that just
+resends self?
+
+120
+00:07:39,920 --> 00:07:44,380
+And now, we can analyze what we
+can do with that by extension with
+
+121
+00:07:44,580 --> 00:07:45,420
+subclasses.
+
+122
+00:07:45,980 --> 00:07:47,460
+Let's have a look at the Bag class.
+
+123
+00:07:48,180 --> 00:07:50,920
+So a bag is a subclass of collection.
+
+124
+00:07:51,860 --> 00:07:56,940
+And a bag, here, if I have a bag B,
+
+125
+00:07:58,020 --> 00:08:02,040
+this is implemented by having a
+`Dictionary` in the bag.
+
+126
+00:08:02,280 --> 00:08:03,660
+So here, I have a `Dictionary`.
+
+127
+00:08:05,420 --> 00:08:07,900
+And the `Dictionary` has some
+associations.
+
+128
+00:08:08,280 --> 00:08:09,860
+For example, association one.
+
+129
+00:08:10,580 --> 00:08:14,940
+And an association has a key,
+key one, and a value,
+
+130
+00:08:15,320 --> 00:08:16,080
+value one.
+
+131
+00:08:17,260 --> 00:08:20,360
+And it might have multiple associations,
+etc.
+
+132
+00:08:21,520 --> 00:08:27,100
+If I want to duplicate this bag
+B with another bag, B prime,
+
+133
+00:08:27,440 --> 00:08:31,600
+there, and I want to be able to
+insert new elements or to remove
+
+134
+00:08:31,800 --> 00:08:35,820
+new elements, existing elements
+from those two bags independently.
+
+135
+00:08:36,020 --> 00:08:38,720
+I don't want to have too much sharing
+between them.
+
+136
+00:08:39,720 --> 00:08:45,100
+And for that, I will redefine the
+'postCopy' inside the bag and I
+
+137
+00:08:45,300 --> 00:08:46,060
+will extend it.
+
+138
+00:08:46,260 --> 00:08:51,420
+So it means that I will copy the bag,
+B will become B'.
+
+139
+00:08:52,500 --> 00:08:55,160
+But I will, I should also copy
+the `Dictionary`.
+
+140
+00:08:55,480 --> 00:08:56,640
+Otherwise, they will be shared.
+
+141
+00:08:56,840 --> 00:09:00,120
+And I don't want that the `Dictionary`
+is shared between the original bag
+
+142
+00:09:00,320 --> 00:09:01,080
+and the copy.
+
+143
+00:09:01,340 --> 00:09:06,300
+So it means that here I will recursively
+send a copy to the `contents`,
+
+144
+00:09:06,500 --> 00:09:07,380
+which is a `Dictionary`.
+
+145
+00:09:07,580 --> 00:09:08,960
+So the `Dictionary` will be copied.
+
+146
+00:09:09,200 --> 00:09:13,340
+So my copy will have its own dict'
+ there.
+
+147
+00:09:14,740 --> 00:09:16,720
+And now, is it enough?
+
+148
+00:09:16,920 --> 00:09:20,740
+Because if I just do that,
+it means that the association will
+
+149
+00:09:20,940 --> 00:09:21,700
+be shared.
+
+150
+00:09:21,900 --> 00:09:25,580
+And if I change the value at a key,
+at a specific key, it means that
+
+151
+00:09:25,780 --> 00:09:26,540
+it will not work.
+
+152
+00:09:26,740 --> 00:09:33,120
+So we can have a look at the
+implementation of 'postCopy' inside
+
+153
+00:09:33,320 --> 00:09:34,080
+the `Dictionary`.
+
+154
+00:09:34,480 --> 00:09:40,800
+And here, we can see that in
+`Dictionary`, this is recursively
+
+155
+00:09:41,000 --> 00:09:42,340
+sent to 'association'.
+
+156
+00:09:42,660 --> 00:09:46,440
+So 'associations' are also copied
+when I `copy` a `Dictionary`.
+
+157
+00:09:47,600 --> 00:09:54,960
+So coming back for my previous drawing,
+it means that I will also have a
+
+158
+00:09:55,160 --> 00:09:58,080
+duplication of association.
+
+159
+00:09:58,480 --> 00:10:02,560
+And the only things that are shared
+are the real objects.
+
+160
+00:10:05,540 --> 00:10:10,500
+So it means that my two bags,
+B and B', are completely
+
+161
+00:10:10,700 --> 00:10:11,460
+independent.
+
+162
+00:10:11,660 --> 00:10:14,540
+I can insert new values and I can
+remove values.
+
+163
+00:10:15,120 --> 00:10:16,340
+They will work independently.
+
+164
+00:10:16,580 --> 00:10:20,300
+The only things that are shared
+are the real objects and the keys.
+
+165
+00:10:20,860 --> 00:10:25,120
+So in conclusion, Hooks and Templates
+are a very common pattern.
+
+166
+00:10:25,600 --> 00:10:29,980
+The template method sets the context,
+and Hooks specify some variations
+
+167
+00:10:30,180 --> 00:10:32,380
+that can be refined in subclasses.
+
+168
+00:10:33,820 --> 00:10:35,720
+Usually, this is done by self-send.
+
+169
+00:10:35,920 --> 00:10:39,900
+It means that we can provide a default
+implementation in the class.
+
+170
+00:10:41,160 --> 00:10:43,820
+And this can be refined in subclasses.
+
+171
+00:10:44,640 --> 00:10:46,360
+But sometimes, this is not a self-send.
+
+172
+00:10:46,560 --> 00:10:50,840
+Sometimes, I can delegate by sending
+a message to another object and
+
+173
+00:10:51,040 --> 00:10:52,480
+it opens the space for dispatch.
+
+174
+00:10:53,300 --> 00:10:57,660
+And this is related to Strategy
+Design lecture that you will see
+
+175
+00:10:57,860 --> 00:10:58,620
+later on.
+

@@ -1,0 +1,1371 @@
+1
+00:00:04,720 --> 00:00:05,920
+Hello everybody.
+
+2
+00:00:07,140 --> 00:00:11,180
+So this is the first lecture where
+we will show a concrete case step
+
+3
+00:00:11,380 --> 00:00:15,980
+by step and this lecture,
+this is about the reification and
+
+4
+00:00:16,180 --> 00:00:16,940
+the delegation.
+
+5
+00:00:17,140 --> 00:00:21,440
+So basically this is how did we
+integrate inside `.pillar` a new
+
+6
+00:00:21,640 --> 00:00:24,600
+object so that we could have more
+modularity inside `.pillar`.
+
+7
+00:00:26,040 --> 00:00:31,280
+So this is a case study,
+we will show you step by step what
+
+8
+00:00:31,480 --> 00:00:36,380
+we did so that we could get microdown,
+which is a markup language into
+
+9
+00:00:36,580 --> 00:00:38,460
+the `.pillar` compilation chain.
+
+10
+00:00:38,860 --> 00:00:43,220
+So the goal here, this is to show
+you with a concrete case how the
+
+11
+00:00:43,420 --> 00:00:47,400
+fact that you have specific object
+or dedicated object can support
+
+12
+00:00:47,600 --> 00:00:51,320
+delegation and that delegation creates
+dispatch space.
+
+13
+00:00:51,520 --> 00:00:55,860
+So this means that suddenly,
+I will avoid to have conditional,
+
+14
+00:00:56,060 --> 00:00:58,520
+but just send message to the right
+object.
+
+15
+00:00:58,720 --> 00:01:02,060
+You will see that again,
+in the strategy design pattern later
+
+16
+00:01:02,260 --> 00:01:03,020
+in the MOOC.
+
+17
+00:01:04,260 --> 00:01:09,600
+We will study a concrete case,
+the way `.pillar` was changed to
+
+18
+00:01:09,800 --> 00:01:15,040
+introduce the support for microdown
+format and also how can we do it
+
+19
+00:01:15,240 --> 00:01:16,000
+modularly.
+
+20
+00:01:16,200 --> 00:01:19,300
+Pillar, this is basically a document
+compilation chain.
+
+21
+00:01:19,800 --> 00:01:24,900
+It means it produces MOOC's slide
+like the one that you see on the screen,
+
+22
+00:01:25,100 --> 00:01:26,120
+and websites.
+
+23
+00:01:27,180 --> 00:01:31,020
+So Pillar uses a `.pillar` file
+containing Pillar text.
+
+24
+00:01:31,240 --> 00:01:34,420
+So Pillar, this is the name of the
+compilation chain, but this is also
+
+25
+00:01:34,620 --> 00:01:36,260
+the name of the markup language.
+
+26
+00:01:36,460 --> 00:01:42,260
+This is a null markup language that
+we want to remove and use markdown
+
+27
+00:01:42,460 --> 00:01:46,220
+instead, but we want to do that
+step by step so that we can still
+
+28
+00:01:46,420 --> 00:01:51,580
+use Pillar to produce documents
+and slowly use also microdown to
+
+29
+00:01:51,780 --> 00:01:52,920
+produce the same document.
+
+30
+00:01:53,600 --> 00:01:56,760
+So in fact, we got a new requirement
+and this is like in real life.
+
+31
+00:01:57,580 --> 00:02:04,000
+So Pillar should handle markdown
+files containing microdown text
+
+32
+00:02:05,180 --> 00:02:09,180
+and the challenge was,
+Okay, how do we support this new
+
+33
+00:02:09,380 --> 00:02:14,540
+requirement, and how do we do it
+step by step without breaking the
+
+34
+00:02:14,580 --> 00:02:15,000
+system?
+
+35
+00:02:15,080 --> 00:02:16,680
+So that's also something important.
+
+36
+00:02:16,880 --> 00:02:20,480
+This change evolved over a month
+or two and we didn't want it to
+
+37
+00:02:20,680 --> 00:02:21,440
+break everything.
+
+38
+00:02:21,820 --> 00:02:24,300
+Let me show you how Pillar manages
+the file.
+
+39
+00:02:24,580 --> 00:02:30,920
+So basically, Pillar will get as
+input a document with some markdown
+
+40
+00:02:31,120 --> 00:02:38,100
+and then it will ask a parser and
+the parser will convert this input
+
+41
+00:02:38,300 --> 00:02:39,720
+file into a tree of object.
+
+42
+00:02:40,080 --> 00:02:46,980
+So here, you will have for example
+a header, a text and so on.
+
+43
+00:02:47,180 --> 00:02:49,220
+So here, this is a tree of objects.
+
+44
+00:02:50,080 --> 00:02:50,860
+So how this is done?
+
+45
+00:02:51,060 --> 00:02:55,000
+Okay, we ask the parser to parse
+the input.
+
+46
+00:02:55,660 --> 00:02:58,840
+In fact, in Pillar, there are several
+parsers and there is one in particular
+
+47
+00:02:59,040 --> 00:03:02,520
+that is called PRParser and now
+how this is done?
+
+48
+00:03:02,720 --> 00:03:05,620
+This is that there is one parser
+because at that time there was only
+
+49
+00:03:05,820 --> 00:03:10,040
+one syntax associated with the class
+`PRDocument`.
+
+50
+00:03:10,680 --> 00:03:11,920
+This is what we see here.
+
+51
+00:03:12,120 --> 00:03:17,860
+When we want to parse an input,
+we request the class,
+
+52
+00:03:18,060 --> 00:03:23,760
+Okay, Class, can you give me the
+parser and we send the message parser
+
+53
+00:03:23,960 --> 00:03:25,340
+file with the file as reference.
+
+54
+00:03:25,800 --> 00:03:32,020
+So in this version, it was already
+good because it avoids to hardcode
+
+55
+00:03:32,220 --> 00:03:35,580
+the parser everywhere in the code.
+
+56
+00:03:35,860 --> 00:03:40,780
+We only got one single entry point
+to access the parser.
+
+57
+00:03:42,080 --> 00:03:46,080
+This approach worked when we wanted
+to substitute different versions
+
+58
+00:03:46,280 --> 00:03:50,700
+of the parsers that we have to check
+if they are more robust or have
+
+59
+00:03:50,900 --> 00:03:52,740
+different properties like speed
+and things like that.
+
+60
+00:03:53,760 --> 00:03:57,700
+This was nice because we could have,
+we had only one single place to change.
+
+61
+00:03:57,900 --> 00:04:02,560
+Now the problem is that if we want
+to have another format,
+
+62
+00:04:02,760 --> 00:04:04,080
+it does not work anymore.
+
+63
+00:04:05,500 --> 00:04:09,220
+If we look in the build chain,
+so I don't want to go into detail,
+
+64
+00:04:09,420 --> 00:04:14,160
+but in the OutputDocument,
+so this means to produce something,
+
+65
+00:04:14,360 --> 00:04:15,360
+we have a buildOn.
+
+66
+00:04:15,560 --> 00:04:19,300
+What we will do is that we will
+have a parse, this parse expression,
+
+67
+00:04:19,500 --> 00:04:23,080
+then after we will transform the
+document and then we write the code
+
+68
+00:04:23,280 --> 00:04:28,540
+and then we do post transformation
+and this parseInput document this
+
+69
+00:04:28,740 --> 00:04:31,180
+is where we see the expression that
+I mentioned before.
+
+70
+00:04:31,380 --> 00:04:34,740
+We ask the document class,
+"Hey, give me your parser".
+
+71
+00:04:34,940 --> 00:04:40,980
+So basically, this is a global variable
+that is disguised.
+
+72
+00:04:41,180 --> 00:04:47,420
+You will see that there is also
+another lecture on singleton and
+
+73
+00:04:47,620 --> 00:04:50,380
+disguised global variable,
+but this is a typical case.
+
+74
+00:04:50,580 --> 00:04:55,020
+And we parse the file and then this
+guy will return a parsedDocument.
+
+75
+00:04:55,580 --> 00:04:58,480
+So it worked, so this is not the
+problem.
+
+76
+00:04:58,680 --> 00:05:02,300
+This is that when we want to change
+something, then suddenly we have
+
+77
+00:05:02,500 --> 00:05:04,820
+to pay attention because this is
+not easy to change.
+
+78
+00:05:05,020 --> 00:05:08,580
+The implication is that there is
+only one parser, there is only one
+
+79
+00:05:08,780 --> 00:05:12,180
+syntax, it was really good when
+we had only one syntax,
+
+80
+00:05:12,380 --> 00:05:15,760
+but now we have two syntaxes,
+so what do we do?
+
+81
+00:05:15,960 --> 00:05:21,620
+This is the problem, and then also
+the other limits, this is that the
+
+82
+00:05:21,820 --> 00:05:24,420
+check for file extension are hardcoded
+somewhere in the code.
+
+83
+00:05:24,620 --> 00:05:28,320
+So this means that suddenly,
+this is not because you provide
+
+84
+00:05:28,520 --> 00:05:33,240
+an .md file that it will be managed
+correctly because if the system
+
+85
+00:05:33,440 --> 00:05:35,840
+looks for `.pillar` file it will
+ignore the .md file.
+
+86
+00:05:36,300 --> 00:05:40,180
+In addition, for example,
+a file does not know its project.
+
+87
+00:05:40,380 --> 00:05:43,900
+So when the project is an object
+that represents how to build it
+
+88
+00:05:44,100 --> 00:05:46,800
+and things like that and how to
+access the configuration.
+
+89
+00:05:47,000 --> 00:05:49,740
+So basically, at the end,
+we could not distinguish between
+
+90
+00:05:49,940 --> 00:05:56,460
+a `.pillar` and a .md file and even
+if we could, we had only one parser.
+
+91
+00:05:57,770 --> 00:06:02,130
+So what is the solution,
+and we will do this solution step
+
+92
+00:06:02,330 --> 00:06:03,090
+by step.
+
+93
+00:06:03,290 --> 00:06:10,150
+This is, instead of manipulating
+directly a `.pillar` file and a
+
+94
+00:06:10,350 --> 00:06:14,330
+.md file and doing the check,
+what we will do is that we will
+
+95
+00:06:14,530 --> 00:06:19,610
+create an object that represents
+the input and this object will know,
+
+96
+00:06:19,810 --> 00:06:23,210
+Oh, this is a `.pillar` file that
+I should read, in that case,
+
+97
+00:06:23,410 --> 00:06:26,110
+I should invoke the correct parser.
+
+98
+00:06:26,310 --> 00:06:29,990
+So what we will do is that we will
+reify, create an object that has
+
+99
+00:06:30,190 --> 00:06:34,030
+the responsibility to represent
+what is an input and each input
+
+100
+00:06:34,230 --> 00:06:36,870
+will know its format and all kinds
+of things like the parser.
+
+101
+00:06:37,670 --> 00:06:43,910
+And then, we will get one parser
+per input format.
+
+102
+00:06:44,110 --> 00:06:48,270
+So the first step was to introduce
+the class `InputDocument`,
+
+103
+00:06:48,970 --> 00:06:53,630
+so instead of manipulating files,
+we want to manipulate objects.
+
+104
+00:06:53,830 --> 00:06:58,810
+And an `InputDocument` just wraps
+the files and more information like
+
+105
+00:06:59,010 --> 00:07:00,150
+file extension and parser.
+
+106
+00:07:00,350 --> 00:07:04,310
+This was the code for example to
+identify the file that should be
+
+107
+00:07:04,510 --> 00:07:05,270
+treated.
+
+108
+00:07:05,470 --> 00:07:08,390
+You know, it was checking,
+Okay I want to check all the children
+
+109
+00:07:08,590 --> 00:07:12,470
+and I check if this is a file and
+if it has a file extension that
+
+110
+00:07:12,670 --> 00:07:15,970
+is called `.pillar`, and then what
+we did, we said, Okay,
+
+111
+00:07:16,170 --> 00:07:23,810
+in that case here, let's introduce
+a `PillarInputDocument` with specifying.
+
+112
+00:07:24,010 --> 00:07:30,310
+So here, we create our first
+implementation of an `InputDocument`.
+
+113
+00:07:31,050 --> 00:07:35,810
+Like that, suddenly, with this change,
+we don't manipulate any more files,
+
+114
+00:07:36,010 --> 00:07:40,430
+but we manipulate `InputDocument`
+and then naturally we can say,
+
+115
+00:07:40,630 --> 00:07:45,110
+oh, you are an `InputDocument` so
+now the parser, I don't have to
+
+116
+00:07:45,310 --> 00:07:50,770
+ask it to the `PRDocument` of the class,
+but to the `PRInputDocument`.
+
+117
+00:07:51,530 --> 00:07:58,470
+So here I just put the checks that says,
+okay I know this parser,
+
+118
+00:07:58,670 --> 00:08:03,110
+this is `PRDocument` parser and
+now this is responsibility of this
+
+119
+00:08:03,310 --> 00:08:05,330
+`InputDocument` to return the correct
+parser.
+
+120
+00:08:06,550 --> 00:08:09,330
+You see, for the moment,
+the solution does not fully work
+
+121
+00:08:09,530 --> 00:08:15,510
+because it only manages Pillar and
+is still doing a check that at the
+
+122
+00:08:15,710 --> 00:08:16,470
+end we will remove.
+
+123
+00:08:16,670 --> 00:08:21,130
+But this is, we will do it step by step,
+so this is what we call a little
+
+124
+00:08:21,330 --> 00:08:22,090
+chicken step.
+
+125
+00:08:22,290 --> 00:08:25,070
+So one of the ideas is that each
+time we did those changes,
+
+126
+00:08:25,270 --> 00:08:29,050
+we wanted to have always green test
+and little modifications so that
+
+127
+00:08:29,250 --> 00:08:34,050
+we can control what we are breaking
+and do not stay a month with a broken
+
+128
+00:08:34,250 --> 00:08:36,050
+system that says Yes,
+tomorrow, it will work.
+
+129
+00:08:36,250 --> 00:08:39,230
+No, we wanted every day that at
+the end of the day, all our tests
+
+130
+00:08:39,430 --> 00:08:40,190
+were green.
+
+131
+00:08:40,490 --> 00:08:46,810
+So what we see is that here,
+we didn't distribute the responsibility
+
+132
+00:08:47,010 --> 00:08:47,770
+first.
+
+133
+00:08:47,970 --> 00:08:52,430
+What you see is that here,
+we are still doing the checks here
+
+134
+00:08:52,630 --> 00:08:53,430
+and not inside.
+
+135
+00:08:53,630 --> 00:08:56,890
+So the next step will be to move
+this inside this object.
+
+136
+00:08:57,090 --> 00:09:02,530
+So to support .md files,
+the compilation chain should accept
+
+137
+00:09:02,730 --> 00:09:03,490
+.md file.
+
+138
+00:09:03,690 --> 00:09:05,630
+It has a different syntax and a
+different parser.
+
+139
+00:09:05,830 --> 00:09:10,110
+So what we ended up doing because
+I want to show you a synthesized
+
+140
+00:09:10,310 --> 00:09:13,370
+version because else that can be
+really difficult to follow.
+
+141
+00:09:13,570 --> 00:09:20,290
+At the end, we subclass from this
+original `InputDocument` a class
+
+142
+00:09:20,490 --> 00:09:25,650
+that is managing `.pillar` documents,
+and then we did another subclass
+
+143
+00:09:25,850 --> 00:09:27,110
+to manage MicrodownInputDocument.
+
+144
+00:09:27,690 --> 00:09:31,770
+What you see that here the methods,
+this class has two methods.
+
+145
+00:09:31,970 --> 00:09:33,450
+One is called parserClass and
+parsedDocument.
+
+146
+00:09:33,890 --> 00:09:38,910
+So parserClass here will say,
+Oh, I want to use the `.pillar` parser,
+
+147
+00:09:39,530 --> 00:09:43,610
+or this is this document parser
+that we had previously and the
+
+148
+00:09:43,810 --> 00:09:47,350
+parsedDocument, this is the object
+that will have the responsibility
+
+149
+00:09:47,550 --> 00:09:50,110
+to invoke the right parser with
+the file contents.
+
+150
+00:09:50,310 --> 00:09:54,830
+On microdown, we have also the same API.
+
+151
+00:09:55,030 --> 00:09:58,550
+We will have the Microdown parser
+that will return a parser that knows
+
+152
+00:09:58,750 --> 00:10:02,610
+that and then, it will parse the same,
+except that here, you see,
+
+153
+00:10:02,810 --> 00:10:07,710
+there is these little things here
+is that when we were at this phase
+
+154
+00:10:07,910 --> 00:10:13,650
+of the work, we could not do any
+treatment on a Microdown files.
+
+155
+00:10:13,850 --> 00:10:18,690
+We had no visitors and nothing,
+we just wanted to get the Microdown
+
+156
+00:10:18,890 --> 00:10:23,630
+input and convert that internally
+as a Pillar internal model.
+
+157
+00:10:23,830 --> 00:10:25,930
+So that's why here, what we said,
+we said, Oh, you know,
+
+158
+00:10:26,130 --> 00:10:26,890
+this is easy.
+
+159
+00:10:27,090 --> 00:10:30,910
+We parse with the parser,
+and then we convert, we have a visitor
+
+160
+00:10:31,110 --> 00:10:37,530
+that converts the document model
+expressed in Microdown in Pillar.
+
+161
+00:10:37,730 --> 00:10:40,570
+Now this is not anymore the case
+because we are further in the migration.
+
+162
+00:10:40,770 --> 00:10:46,470
+But the idea is this move was the
+cheapest move to be able to get
+
+163
+00:10:46,670 --> 00:10:51,510
+a different syntax working with
+all the tools that we had,
+
+164
+00:10:51,710 --> 00:10:55,210
+like different visitors and
+transformations that I showed at
+
+165
+00:10:55,410 --> 00:10:56,470
+the beginning, the phases.
+
+166
+00:10:56,670 --> 00:11:00,710
+So the idea is that, Okay,
+here we convert a different input
+
+167
+00:11:00,910 --> 00:11:03,390
+into an internal format that is
+the same as before.
+
+168
+00:11:03,590 --> 00:11:09,370
+But you see, this is the `InputDocument`
+of Microdown that is responsible
+
+169
+00:11:09,570 --> 00:11:10,470
+for doing this transformation.
+
+170
+00:11:10,670 --> 00:11:14,750
+When I call, when I use a Pillar
+document, I don't do the transformation.
+
+171
+00:11:14,950 --> 00:11:19,850
+So what you see is that basically,
+what we got is that instead of having
+
+172
+00:11:20,050 --> 00:11:24,030
+this parserInputFile that I show
+you at the beginning on the output
+
+173
+00:11:24,230 --> 00:11:28,170
+document, then it becomes just,
+Oh, you know, I have an input file,
+
+174
+00:11:28,370 --> 00:11:35,750
+I just ask the file to do the job
+and I move this code in the
+
+175
+00:11:35,950 --> 00:11:36,790
+`InputDocument` object.
+
+176
+00:11:37,150 --> 00:11:42,270
+So I give more responsibility to
+my object and this is the same,
+
+177
+00:11:42,470 --> 00:11:46,490
+this is what I show in the UML diagram
+is that we can do the same with the…
+
+178
+00:11:48,730 --> 00:11:51,150
+what you see that you have the same
+input and things like that.
+
+179
+00:11:51,350 --> 00:11:53,910
+So in the UML diagram,
+I was a bit wrong but because we
+
+180
+00:11:54,110 --> 00:11:57,410
+have multiple parsers,
+so here I show that we use the previous
+
+181
+00:11:57,610 --> 00:11:58,370
+parser.
+
+182
+00:11:59,650 --> 00:12:05,470
+So now, we add the delegation,
+the extension checks.
+
+183
+00:12:05,670 --> 00:12:08,850
+We don't want to have a place where
+we have to do "or if this is that"
+
+184
+00:12:09,050 --> 00:12:10,650
+or "if this is that" or "if this
+is that".
+
+185
+00:12:10,850 --> 00:12:15,890
+So what we did is that we introduce
+the responsibility in the
+
+186
+00:12:16,090 --> 00:12:18,530
+`PillarInputDocument` to manage
+the extension.
+
+187
+00:12:18,730 --> 00:12:22,430
+And we said, Do you deal with this
+extension, and each of them said,
+
+188
+00:12:22,630 --> 00:12:24,910
+Okay this is the extension I want
+to deal with.
+
+189
+00:12:25,110 --> 00:12:29,730
+So we could have also includes and
+said okay that you can manage multiple
+
+190
+00:12:29,930 --> 00:12:36,270
+extensions, for example like that,
+I could say something like,
+
+191
+00:12:36,470 --> 00:12:43,350
+if this is MD or if this is md includes
+
+192
+00:12:44,730 --> 00:12:51,290
+an extension, and I would get multiple,
+I would get all these extensions
+
+193
+00:12:51,670 --> 00:12:52,870
+managed for the Microdown.
+
+194
+00:12:53,070 --> 00:12:57,670
+But again, what you see is that
+we pushed this behavior,
+
+195
+00:12:57,870 --> 00:13:01,690
+which was central in a place before,
+that was in the output document,
+
+196
+00:13:01,890 --> 00:13:06,470
+we push it to the corresponding object,
+like that, the object has the
+
+197
+00:13:06,670 --> 00:13:11,650
+responsibility and we are able to
+dispatch, and we don't make a explicit
+
+198
+00:13:11,850 --> 00:13:12,610
+test.
+
+199
+00:13:12,810 --> 00:13:16,550
+So then, we got the following question.
+
+200
+00:13:16,750 --> 00:13:17,870
+What if…
+
+201
+00:13:18,070 --> 00:13:25,510
+So now we could parse .md and `.pillar`
+format, the question was,
+
+202
+00:13:25,710 --> 00:13:29,250
+Okay, now we would like to be able
+to phase out the `.pillar` version.
+
+203
+00:13:29,450 --> 00:13:32,430
+It is still not the case,
+but we want to make sure that they
+
+204
+00:13:32,630 --> 00:13:36,770
+are optional because like that suddenly
+we could say, Oh, please do not
+
+205
+00:13:36,970 --> 00:13:41,390
+load this package, and then we don't
+have the support for `.pillar` because
+
+206
+00:13:41,590 --> 00:13:43,730
+this is what we want to do,
+we don't want to maintain two versions
+
+207
+00:13:43,930 --> 00:13:44,810
+in the long term.
+
+208
+00:13:45,010 --> 00:13:47,370
+So the question was how to make
+them optional.
+
+209
+00:13:47,570 --> 00:13:51,270
+So how to make them optional,
+we use a registration mechanism
+
+210
+00:13:51,470 --> 00:13:56,690
+so that every new `InputDocument`
+kinds can declare their existence
+
+211
+00:13:56,890 --> 00:13:58,050
+and say, Oh.
+
+212
+00:13:58,250 --> 00:14:03,990
+So we define on the `PRInputDocument`
+class an inputClass for aFile.
+
+213
+00:14:04,210 --> 00:14:09,670
+And these methods, based on the
+
+214
+00:14:09,870 --> 00:14:11,730
+extension, you see, this is where
+you see the doesHandle.
+
+215
+00:14:12,530 --> 00:14:19,010
+We could say, Okay, in all the
+subclasses of `PRDocument` is there
+
+216
+00:14:19,210 --> 00:14:21,670
+one that will manage the extension
+of this file.
+
+217
+00:14:21,870 --> 00:14:28,290
+And here, we have a null object that
+we will see in the future lecture.
+
+218
+00:14:28,490 --> 00:14:34,070
+This is a null object pattern that says,
+Oh, by the way, I have no document,
+
+219
+00:14:34,270 --> 00:14:37,610
+so this means that I have no parser,
+I will raise an error and like that,
+
+220
+00:14:37,810 --> 00:14:40,910
+we don't have to do am if,
+if there and things like that,
+
+221
+00:14:41,110 --> 00:14:41,990
+and we can have different…
+
+222
+00:14:42,190 --> 00:14:45,490
+We can manage the null situation.
+
+223
+00:14:45,690 --> 00:14:50,790
+And what you see is that here,
+each subclass, when we load the package,
+
+224
+00:14:50,990 --> 00:14:54,230
+each subclass of `InputDocument`
+will declare and said,
+
+225
+00:14:54,430 --> 00:14:56,470
+Oh, I'm available, I'm here.
+
+226
+00:14:56,670 --> 00:15:01,970
+Now, since they all expose the same
+API which it doesHandleExtension,
+
+227
+00:15:03,630 --> 00:15:08,890
+then we will select the correct
+
+228
+00:15:09,090 --> 00:15:11,130
+one for a given file.
+
+229
+00:15:11,330 --> 00:15:17,910
+Note that this way of doing a
+registration is based on the reflective
+
+230
+00:15:18,110 --> 00:15:21,510
+API of Pharo and we can do a better
+registration.
+
+231
+00:15:21,710 --> 00:15:24,330
+We did it like that in `.pillar`
+because it was cheap,
+
+232
+00:15:24,530 --> 00:15:27,330
+but there are better ways to do
+that and there is a dedicated lecture
+
+233
+00:15:27,530 --> 00:15:29,210
+for this aspect in the future.
+
+234
+00:15:31,030 --> 00:15:36,150
+So what you see is that at the end,
+now we can revisit the code of files
+
+235
+00:15:36,350 --> 00:15:37,770
+to be built that I showed at the
+beginning.
+
+236
+00:15:37,970 --> 00:15:41,110
+And what we do is we said,
+Oh, given a set of files,
+
+237
+00:15:41,310 --> 00:15:46,650
+we just want to create the corresponding
+
+238
+00:15:49,650 --> 00:16:03,370
+because this method here will return
+either a `PRPillarInputDocument`
+
+239
+00:16:03,630 --> 00:16:11,490
+or a 'PRMicrodownInputDocument`.
+
+240
+00:16:11,930 --> 00:16:17,650
+So depending on the file extension,
+
+241
+00:16:17,850 --> 00:16:22,370
+I will get a given `InputDocument`.
+
+242
+00:16:22,990 --> 00:16:29,850
+What you should see is that here,
+I can mix .md and  .pillar  file
+
+243
+00:16:30,050 --> 00:16:34,150
+because for each file,
+I will get the correct input.
+
+244
+00:16:34,350 --> 00:16:39,810
+So now, I can also support the
+incremental migration of the books
+
+245
+00:16:40,010 --> 00:16:45,450
+that are written in a `.pillar`
+and that the author can mix Microdown
+
+246
+00:16:45,970 --> 00:16:46,950
+and `.pillar`.
+
+247
+00:16:47,150 --> 00:16:49,590
+So from that perspective,
+that's really nice.
+
+248
+00:16:49,790 --> 00:16:54,250
+What you see is that this design
+really supports well the end user.
+
+249
+00:16:54,450 --> 00:16:59,930
+So to step back, what we did,
+we turned implicit things into an
+
+250
+00:17:00,130 --> 00:17:00,890
+object.
+
+251
+00:17:01,090 --> 00:17:07,050
+Basically, we were file checking
+plus parser and we turn that into
+
+252
+00:17:07,250 --> 00:17:09,990
+an `InputDocument` object.
+
+253
+00:17:12,650 --> 00:17:17,090
+We specialize this one object because
+at the beginning, there was only one.
+
+254
+00:17:17,290 --> 00:17:25,270
+We specialize this one object into
+hierarchies, so we went from one
+
+255
+00:17:25,470 --> 00:17:29,990
+single class `InputDocument`,
+we turn it into an abstract class
+
+256
+00:17:30,190 --> 00:17:32,390
+with Microdown and `.pillar`.
+
+257
+00:17:32,590 --> 00:17:38,190
+We define polymorphic behavior in
+this object.
+
+258
+00:17:39,770 --> 00:17:44,530
+So here, you have the same API,
+they answer the same message.
+
+259
+00:17:44,730 --> 00:17:48,290
+So this means that from the client
+point of view, here, I could call
+
+260
+00:17:48,490 --> 00:17:51,470
+either this one or that one without
+taking care.
+
+261
+00:17:51,670 --> 00:17:57,670
+So from that perspective,
+the fact that we created this hierarchy
+
+262
+00:17:57,870 --> 00:18:00,430
+and this object, we created dispatch
+space.
+
+263
+00:18:01,190 --> 00:18:05,550
+This means that I just send a message
+and the system will resolve.
+
+264
+00:18:05,750 --> 00:18:09,370
+So if tomorrow, I want an alternate
+syntax, I just have to define a
+
+265
+00:18:09,570 --> 00:18:13,650
+new subclass, which the same API,
+and that will say, Oh I handle,
+
+266
+00:18:13,850 --> 00:18:18,790
+I don't know, 
+ascii doc format or txt or whatever,
+
+267
+00:18:18,990 --> 00:18:22,050
+and plus a parser and I'm done.
+
+268
+00:18:22,250 --> 00:18:28,030
+And then, we use a registration
+mechanism so that each of this can
+
+269
+00:18:28,230 --> 00:18:33,350
+be unloaded and the system can continue
+to work or that we can mix files
+
+270
+00:18:33,550 --> 00:18:34,550
+from different formats.
+
+271
+00:18:34,750 --> 00:18:38,810
+So from that perspective,
+I think that this is a really nice
+
+272
+00:18:39,010 --> 00:18:44,770
+case study to show that creating
+an object was making sure that we
+
+273
+00:18:44,970 --> 00:18:51,710
+can suddenly get a modular system
+and decouple the responsibility.
+
+274
+00:18:53,410 --> 00:18:57,750
+So as a conclusion, what we did
+is that we we define object.
+
+275
+00:18:57,950 --> 00:19:02,010
+We define each object and its own
+behavior, we delegate to such objects
+
+276
+00:19:02,210 --> 00:19:06,630
+and this is really important to think,
+sometimes, if you have a condition,
+
+277
+00:19:06,830 --> 00:19:09,670
+you said, Oh, I am writing a condition.
+
+278
+00:19:09,870 --> 00:19:13,490
+The question is, else,
+do I have an object to which I can
+
+279
+00:19:13,690 --> 00:19:16,850
+send a message, and this is what
+you have with the "Tell,
+
+280
+00:19:17,050 --> 00:19:21,530
+do not ask." At the beginning,
+the files, we are asking the extension
+
+281
+00:19:21,730 --> 00:19:24,430
+and things like that and at the end,
+we have this registration mechanism
+
+282
+00:19:24,630 --> 00:19:28,630
+and we just said, Oh,
+I want to produce that and the system
+
+283
+00:19:28,830 --> 00:19:29,830
+does it for us.
+
+284
+00:19:30,030 --> 00:19:36,830
+So there is a nice pattern that
+is in the Object-Oriented Reengineering
+
+285
+00:19:37,030 --> 00:19:41,690
+Patterns book that is called "Transform
+Conditionals" and I really encourage
+
+286
+00:19:41,890 --> 00:19:43,550
+you to read this chapter.
+
+287
+00:19:44,050 --> 00:19:45,890
+The book is available on the web.
+

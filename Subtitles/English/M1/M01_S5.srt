@@ -1,0 +1,748 @@
+1
+00:00:03,180 --> 00:00:03,940
+- Hello.
+
+2
+00:00:04,140 --> 00:00:07,240
+In this lecture, we are going to
+talk about super and what does it
+
+3
+00:00:07,440 --> 00:00:09,080
+mean to make a super message send.
+
+4
+00:00:09,880 --> 00:00:14,860
+So before in the previous lectures,
+we saw what it means to send a message,
+
+5
+00:00:15,060 --> 00:00:20,020
+what it is the method lookup and
+today we are going to extend the
+
+6
+00:00:20,220 --> 00:00:22,200
+previous lectures with super message
+sends.
+
+7
+00:00:22,400 --> 00:00:26,460
+So we are going to talk about the
+semantics of super and what are
+
+8
+00:00:26,660 --> 00:00:27,420
+the differences with self.
+
+9
+00:00:27,620 --> 00:00:29,720
+Those are the main topics of this
+lecture.
+
+10
+00:00:30,180 --> 00:00:36,540
+So first, I would like that you
+take five minutes to try to write
+
+11
+00:00:36,740 --> 00:00:40,020
+a definition of what is super and
+what does it mean to send a message
+
+12
+00:00:40,220 --> 00:00:41,580
+to super like this here.
+
+13
+00:00:44,200 --> 00:00:46,320
+Your definition should have two
+main points.
+
+14
+00:00:46,520 --> 00:00:47,900
+So what does it mean super?
+
+15
+00:00:48,140 --> 00:00:54,140
+So what does it represent and what
+is the message that is going to
+
+16
+00:00:54,340 --> 00:00:55,760
+be looked up in this message send.
+
+17
+00:00:59,640 --> 00:01:05,640
+Now you can also take five minutes
+here and try to answer these three
+
+18
+00:01:05,840 --> 00:01:06,600
+questions.
+
+19
+00:01:06,800 --> 00:01:09,880
+So imagine that you have these three
+classes; the class A,
+
+20
+00:01:10,080 --> 00:01:11,540
+the class B and the class C.
+
+21
+00:01:11,740 --> 00:01:14,160
+So C inherits from B,
+B inherits from A.
+
+22
+00:01:16,060 --> 00:01:20,160
+They define methods foo and bar
+that are as they are defined in
+
+23
+00:01:20,360 --> 00:01:25,020
+these little boxes here and we have
+three different instances.
+
+24
+00:01:25,220 --> 00:01:32,560
+So we have an instance of A that
+is instantiated like this,
+
+25
+00:01:32,760 --> 00:01:36,520
+we have an instance of B that is
+instantiated like this.
+
+26
+00:01:36,720 --> 00:01:40,820
+So we have an instance of A,
+an instance of B and an instance of C.
+
+27
+00:01:42,390 --> 00:01:46,670
+And we are going to send each of
+these a message bar.
+
+28
+00:01:46,870 --> 00:01:52,370
+Take a couple of minutes to try
+to understand what will be the result
+
+29
+00:01:52,570 --> 00:01:55,170
+of each of these expressions.
+
+30
+00:01:58,020 --> 00:02:03,800
+If you did well, you probably reached
+these answers.
+
+31
+00:02:04,000 --> 00:02:08,140
+So the result to send a message
+bar to an instance of A will be 10,
+
+32
+00:02:08,340 --> 00:02:12,940
+the result of sending a message
+bar to an instance of B is 20 and
+
+33
+00:02:13,140 --> 00:02:17,200
+the result of sending a message
+bar to an instance of C is a 100.
+
+34
+00:02:17,900 --> 00:02:20,040
+So how does it work?
+
+35
+00:02:21,420 --> 00:02:25,200
+First, imagine let's take the third
+example that is probably one of
+
+36
+00:02:25,400 --> 00:02:26,420
+the most interesting here.
+
+37
+00:02:26,620 --> 00:02:30,880
+So we have an instance of C is C new.
+
+38
+00:02:32,680 --> 00:02:36,700
+So the first thing that is going
+to happen is we have here our instance
+
+39
+00:02:36,900 --> 00:02:38,840
+of C and we are sent.
+
+40
+00:02:39,040 --> 00:02:44,000
+So this one is an instance of C
+and we're going to send it the message
+
+41
+00:02:45,620 --> 00:02:49,160
+bar, yeah, okay like this.
+
+42
+00:02:49,360 --> 00:02:53,860
+So we send the message bar to an
+instance of C and following the
+
+43
+00:02:54,060 --> 00:02:56,760
+rules of the method lookup that
+we saw before, the first thing that
+
+44
+00:02:56,960 --> 00:02:59,780
+we need to do is to search for the
+class of the object.
+
+45
+00:02:59,980 --> 00:03:05,520
+So we see that the class of C instance
+is the class C.
+
+46
+00:03:06,280 --> 00:03:09,680
+So we are going to start the lookup
+there and we're going to look for
+
+47
+00:03:09,880 --> 00:03:11,060
+the message, the method bar.
+
+48
+00:03:11,460 --> 00:03:14,380
+So in this case, C doesn't define
+a method bar.
+
+49
+00:03:14,580 --> 00:03:17,640
+So we are going to follow the
+inheritance link and we are going
+
+50
+00:03:17,840 --> 00:03:21,040
+to look for the method bar in the
+superclass.
+
+51
+00:03:21,240 --> 00:03:25,260
+Here we find the the method bar
+in B and this method is defined
+
+52
+00:03:25,460 --> 00:03:26,220
+as in here.
+
+53
+00:03:26,420 --> 00:03:31,700
+So it's saying to return the result
+of 'super bar + self foo'.
+
+54
+00:03:33,000 --> 00:03:38,750
+So now, we need to define what is
+
+55
+00:03:38,830 --> 00:03:39,730
+super bar ?
+
+56
+00:03:39,930 --> 00:03:40,690
+So we are here.
+
+57
+00:03:41,350 --> 00:03:44,030
+So super bar is of course is another
+message sent.
+
+58
+00:03:44,230 --> 00:03:50,490
+So the thing that will change here
+is that super is also a reference
+
+59
+00:03:50,690 --> 00:03:51,850
+to our instance C.
+
+60
+00:03:52,050 --> 00:03:54,930
+But it will change the way the method
+lookup works.
+
+61
+00:03:55,130 --> 00:03:58,690
+So here we're going to send the
+message bar to the object aC.
+
+62
+00:03:59,210 --> 00:04:03,550
+But we're going to start the method
+lookup in A.
+
+63
+00:04:03,750 --> 00:04:08,070
+So we're going to start the method
+lookup in here, we're going to find
+
+64
+00:04:08,270 --> 00:04:12,930
+the method bar in A as it is defined
+in here.
+
+65
+00:04:13,130 --> 00:04:18,450
+We're going to execute cell foo
+and send to it at the instance of
+
+66
+00:04:18,650 --> 00:04:22,770
+C and of course sending the message
+foo to the instance of C,
+
+67
+00:04:22,970 --> 00:04:24,950
+it results in 50.
+
+68
+00:04:27,020 --> 00:04:32,280
+That means that this one,
+it value is 50 and then we are going
+
+69
+00:04:32,480 --> 00:04:36,840
+to do cell foo here again as itself
+is also the instance of C.
+
+70
+00:04:37,040 --> 00:04:40,840
+The result of this expression doing
+the lookup in C and finding this
+
+71
+00:04:41,040 --> 00:04:42,680
+the method foo here again.
+
+72
+00:04:42,880 --> 00:04:43,760
+It's also 50.
+
+73
+00:04:43,960 --> 00:04:48,460
+So at the end, 50 plus 50,
+the result of our main message is 100.
+
+74
+00:04:52,220 --> 00:04:54,880
+So what is the definition of super?
+
+75
+00:04:55,620 --> 00:04:57,940
+Super actually changes where the
+lookup starts.
+
+76
+00:04:58,140 --> 00:05:02,500
+So I already told you in the previous
+slide that super refers to the same
+
+77
+00:05:02,700 --> 00:05:03,720
+object as self.
+
+78
+00:05:03,920 --> 00:05:06,120
+Yeah, so it is a receiver of the
+message.
+
+79
+00:05:07,000 --> 00:05:11,220
+Now take a couple of minutes to
+understand and to try to define
+
+80
+00:05:11,420 --> 00:05:15,320
+where the method lookup starts when
+we have a message to super.
+
+81
+00:05:17,520 --> 00:05:22,460
+So the answer is that the method
+lookup starts in the super class
+
+82
+00:05:22,660 --> 00:05:25,000
+of the class that contains the super
+expression.
+
+83
+00:05:26,100 --> 00:05:31,120
+So imagine that we have the same
+example as before.
+
+84
+00:05:32,100 --> 00:05:38,600
+We have B and we have here a super
+foo and we have method foo in here
+
+85
+00:05:38,800 --> 00:05:39,880
+and we have foo.
+
+86
+00:05:40,080 --> 00:05:45,140
+So since this super foo expression
+is defined in the class B,
+
+87
+00:05:45,580 --> 00:05:48,740
+the method lookup is going to start
+in the super class of B.
+
+88
+00:05:49,580 --> 00:05:53,120
+So super is in B and the lookup
+starts in super class.
+
+89
+00:05:53,640 --> 00:05:54,400
+Yes.
+
+90
+00:05:55,100 --> 00:05:57,380
+There is a main difference between
+self and super.
+
+91
+00:05:58,120 --> 00:05:59,680
+So self is really dynamic.
+
+92
+00:05:59,880 --> 00:06:06,220
+At compile time, we don't know where
+the method is going to be found
+
+93
+00:06:06,420 --> 00:06:09,740
+and what is the kind of object that
+is pointed by self.
+
+94
+00:06:10,000 --> 00:06:13,740
+We only know that it is an object
+from the hierarchy, but we don't
+
+95
+00:06:13,940 --> 00:06:18,940
+know if the object is low in the
+hierarchy, around here or higher
+
+96
+00:06:19,140 --> 00:06:19,900
+in the hierarchy.
+
+97
+00:06:20,520 --> 00:06:24,700
+Yeah, so since we cannot know that,
+we don't know where the method lookup
+
+98
+00:06:24,900 --> 00:06:29,340
+is going to start and we don't know
+exactly at each call site what is
+
+99
+00:06:29,540 --> 00:06:31,180
+the method that is going to be executed.
+
+100
+00:06:33,520 --> 00:06:37,500
+Super differently from self is static.
+
+101
+00:06:37,700 --> 00:06:41,840
+So that means that just by looking
+at the code and how it is organized,
+
+102
+00:06:42,040 --> 00:06:46,360
+I know exactly where the method
+lookup is going to start and I know
+
+103
+00:06:46,560 --> 00:06:48,340
+what is the method that is going
+to be found.
+
+104
+00:06:48,540 --> 00:06:52,780
+So here for example, I know that
+super foo is installed in the class B.
+
+105
+00:06:52,980 --> 00:06:57,540
+so the lookup is going to start
+in A and that means that I'm always
+
+106
+00:06:57,740 --> 00:07:00,440
+going to find this method foo from
+this call side here.
+
+107
+00:07:01,500 --> 00:07:05,900
+That is why we say that super is
+static and it's defined at compile time.
+
+108
+00:07:07,340 --> 00:07:10,780
+What you should know is that even
+some books get it wrong.
+
+109
+00:07:10,980 --> 00:07:15,200
+So there are some books that will
+define super sense in this way.
+
+110
+00:07:15,800 --> 00:07:20,340
+So super looks for a method in the
+super class of the receiver class.
+
+111
+00:07:20,540 --> 00:07:21,540
+What does it mean?
+
+112
+00:07:21,740 --> 00:07:27,240
+Is that if I have an instance of C,
+I do a super send to an instance of C,
+
+113
+00:07:27,440 --> 00:07:30,140
+it will always start from the super
+class of its class.
+
+114
+00:07:30,340 --> 00:07:31,100
+So in this case.
+
+115
+00:07:31,300 --> 00:07:33,420
+it will take its class and start
+from the super class B.
+
+116
+00:07:33,620 --> 00:07:36,520
+The problem with this definition
+is that it may create loops.
+
+117
+00:07:36,720 --> 00:07:38,040
+So this is not the right definition.
+
+118
+00:07:38,240 --> 00:07:42,760
+So let's see with an example what
+happens here when I send to C to
+
+119
+00:07:42,960 --> 00:07:45,320
+this C instance the message foo.
+
+120
+00:07:46,740 --> 00:07:49,740
+What will happen is that we are
+going to send a message foo to a
+
+121
+00:07:49,940 --> 00:07:56,640
+C and with the first time so doing
+a C foo, and this will do a normal
+
+122
+00:07:56,840 --> 00:07:58,480
+message send with a normal method
+lookup.
+
+123
+00:07:58,680 --> 00:08:01,920
+So it will take the C instance,
+it will take its class and then
+
+124
+00:08:02,120 --> 00:08:05,260
+it will look up starting from there
+the method foo.
+
+125
+00:08:05,460 --> 00:08:09,160
+So C doesn't define a method foo,
+it will look up in the super class
+
+126
+00:08:09,360 --> 00:08:12,580
+B and it will find foo defined as this.
+
+127
+00:08:12,780 --> 00:08:15,300
+So this definition of foo will do
+super foo.
+
+128
+00:08:15,500 --> 00:08:19,980
+If we use this definition that we
+saw before, super foo should start
+
+129
+00:08:20,180 --> 00:08:23,660
+from taking the instance the receiver,
+which is a C.
+
+130
+00:08:23,860 --> 00:08:26,860
+It will take its class and then
+its super class and restart the
+
+131
+00:08:27,060 --> 00:08:28,300
+method lookup from there.
+
+132
+00:08:28,500 --> 00:08:32,820
+So that means that it will start
+to look for foo from B.
+
+133
+00:08:34,240 --> 00:08:38,840
+Starting from B will find foo the
+same method foo as before again
+
+134
+00:08:39,040 --> 00:08:41,040
+and it will execute the same method
+foo again.
+
+135
+00:08:41,240 --> 00:08:42,380
+So this will loop like this.
+
+136
+00:08:43,020 --> 00:08:43,780
+Yeah.
+
+137
+00:08:44,140 --> 00:08:48,660
+Instead with our definition that
+is taking the place where the super
+
+138
+00:08:48,860 --> 00:08:53,120
+expression is defined and going
+to the super class to start looking
+
+139
+00:08:53,320 --> 00:08:57,420
+for the method, this expression
+will actually do the following.
+
+140
+00:08:57,620 --> 00:09:01,400
+So we take C, we send a message
+foo like this.
+
+141
+00:09:01,600 --> 00:09:05,360
+We find this method first and then
+we do the super foo.
+
+142
+00:09:05,560 --> 00:09:09,320
+Super foo will start the method
+lookup from A from the super class
+
+143
+00:09:09,520 --> 00:09:14,120
+of the method where the super is
+and it will find the method foo
+
+144
+00:09:14,320 --> 00:09:15,360
+defined above.
+
+145
+00:09:15,920 --> 00:09:20,800
+So that means that this expression
+returns 10 and this expression which
+
+146
+00:09:21,000 --> 00:09:22,220
+is this expression returns 10.
+
+147
+00:09:23,180 --> 00:09:28,740
+What you should know is that self
+and super always represent the receiver.
+
+148
+00:09:29,880 --> 00:09:31,340
+They represent the same object.
+
+149
+00:09:31,540 --> 00:09:35,860
+So what you should think about is
+what happens if you do self equals
+
+150
+00:09:36,060 --> 00:09:42,060
+equals super. So meaning here equals
+identity comparison, the one that
+
+151
+00:09:42,260 --> 00:09:43,900
+really compares object pointers.
+
+152
+00:09:45,140 --> 00:09:49,160
+So the difference between self and
+super is that super changes the
+
+153
+00:09:49,360 --> 00:09:50,120
+method lookup.
+
+154
+00:09:50,320 --> 00:09:53,060
+Self always starts from the class
+of the receiver object.
+
+155
+00:09:54,060 --> 00:09:58,100
+In this sense, self sense act as a hook.
+
+156
+00:09:58,300 --> 00:10:01,940
+That means that they can be redefined
+in subclasses to do different things.
+
+157
+00:10:02,140 --> 00:10:02,900
+However.
+
+158
+00:10:03,100 --> 00:10:05,360
+super always goes up in the hierarchy.
+
+159
+00:10:05,560 --> 00:10:07,600
+So it can never be redefined by
+subclasses.
+

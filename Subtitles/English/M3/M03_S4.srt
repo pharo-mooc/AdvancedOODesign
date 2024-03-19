@@ -1,0 +1,661 @@
+1
+00:00:04,650 --> 00:00:05,520
+- Hello everyone.
+
+2
+00:00:05,720 --> 00:00:09,900
+In this MOOC, we have about four
+lectures that are specific to Pharo
+
+3
+00:00:10,100 --> 00:00:11,430
+and this one is one of them.
+
+4
+00:00:11,630 --> 00:00:14,520
+This is what we call a code idiom.
+
+5
+00:00:14,720 --> 00:00:20,670
+Here, I want to look at how people
+use `printString` and `asString`
+
+6
+00:00:21,150 --> 00:00:22,500
+and how to use them well.
+
+7
+00:00:22,700 --> 00:00:28,200
+So, the goal is to rethink what
+is the creation of intermediary
+
+8
+00:00:28,400 --> 00:00:34,800
+objects and consequently,
+how we avoid creating spurious objects.
+
+9
+00:00:35,000 --> 00:00:38,610
+We don't need to create objects
+just for the sake of creating objects.
+
+10
+00:00:38,810 --> 00:00:40,920
+So, we should understand what we
+are doing.
+
+11
+00:00:41,120 --> 00:00:44,430
+And sometimes what we see is that
+we are doing things without thinking
+
+12
+00:00:44,630 --> 00:00:45,390
+too much.
+
+13
+00:00:45,590 --> 00:00:48,780
+I will show you some bad implementations
+that were in Pharo that normally
+
+14
+00:00:48,980 --> 00:00:49,740
+we fixed.
+
+15
+00:00:49,940 --> 00:00:51,150
+So, let's look at it.
+
+16
+00:00:51,350 --> 00:00:52,130
+So, the context.
+
+17
+00:00:52,500 --> 00:00:57,930
+If we set the stage, in Java,
+this is toString, in Pharo,
+
+18
+00:00:58,130 --> 00:00:58,890
+we call it `printString`.
+
+19
+00:00:59,820 --> 00:01:03,900
+If I create an object,
+`Apple`, if I send a message
+
+20
+00:01:04,100 --> 00:01:05,790
+`printString` to this,
+I will get an Apple.
+
+21
+00:01:05,990 --> 00:01:09,060
+If I have a date object and I send
+a message `printString`,
+
+22
+00:01:09,260 --> 00:01:13,710
+it will tell me, "Okay,
+we are `2nd April 2023`".
+
+23
+00:01:13,910 --> 00:01:18,600
+So, this means that `printString`
+returns a textual representation
+
+24
+00:01:18,800 --> 00:01:19,560
+of the receiver.
+
+25
+00:01:19,760 --> 00:01:21,180
+That's why we have the quotes here.
+
+26
+00:01:22,050 --> 00:01:23,820
+This is not a date; this is a string.
+
+27
+00:01:24,020 --> 00:01:25,410
+So how this is implemented?
+
+28
+00:01:25,610 --> 00:01:30,210
+On the class object, the message
+`printString` is implemented as
+
+29
+00:01:30,410 --> 00:01:31,170
+calling `printStringLimitedTo`.
+
+30
+00:01:31,830 --> 00:01:34,290
+This is to avoid having a too-large
+string.
+
+31
+00:01:35,700 --> 00:01:41,750
+And what you see is that this method
+
+32
+00:01:41,950 --> 00:01:43,550
+calls `printOn`.
+
+33
+00:01:43,750 --> 00:01:52,800
+Basically, you will see that in
+the Hook and Template lecture,
+
+34
+00:01:53,000 --> 00:01:54,300
+so I don't want to go into detail there.
+
+35
+00:01:54,500 --> 00:01:58,800
+But what you see is that we call
+the `printOn` method on the receiver.
+
+36
+00:01:59,070 --> 00:02:04,440
+For example, the method `printOn`
+in `MessageTally` is calling
+
+37
+00:02:04,640 --> 00:02:10,590
+`displayString` and this one is doing:
+"Oh I want to first write something
+
+38
+00:02:10,790 --> 00:02:11,670
+on the stream.
+
+39
+00:02:11,870 --> 00:02:19,250
+After, on this stream,
+I want to place a parenthesis and
+
+40
+00:02:19,450 --> 00:02:22,300
+a character to open something.
+
+41
+00:02:22,690 --> 00:02:27,800
+And after, I will do this,
+and I will come back to that because
+
+42
+00:02:28,000 --> 00:02:28,850
+this is the problem.
+
+43
+00:02:29,050 --> 00:02:33,770
+And once I have finished,
+I will close that with a parenthesis".
+
+44
+00:02:33,970 --> 00:02:38,880
+So, this piece of code looks normal,
+but there is a problem.
+
+45
+00:02:40,270 --> 00:02:48,290
+The problem is that basically
+`printString` here is doing a recursive
+
+46
+00:02:48,490 --> 00:02:51,170
+call and it's creating yet a new stream.
+
+47
+00:02:51,370 --> 00:02:52,160
+So, let's look at it.
+
+48
+00:02:52,880 --> 00:02:56,330
+When I have my `MessageTally` object,
+so if I have my `MessageTally` object,
+
+49
+00:02:57,200 --> 00:03:01,130
+I have a `MessageTally` object,
+it will receive a first message
+
+50
+00:03:01,330 --> 00:03:02,090
+`printString`.
+
+51
+00:03:03,920 --> 00:03:07,100
+This message `printString` will
+create a stream.
+
+52
+00:03:07,300 --> 00:03:09,620
+So, let's imagine that a stream
+is something like that,
+
+53
+00:03:09,820 --> 00:03:12,530
+where we can put elements inside.
+
+54
+00:03:12,730 --> 00:03:16,310
+So, in the first place,
+it will put: "Oh yes,
+
+55
+00:03:16,510 --> 00:03:22,820
+I will put this…" Sorry,
+it's not like that, this is like that.
+
+56
+00:03:23,020 --> 00:03:24,770
+"I will put a parenthesis.
+
+57
+00:03:25,660 --> 00:03:32,340
+And at the end, I will close my
+parenthesis." And to compute the tally,
+
+58
+00:03:32,540 --> 00:03:36,030
+which is basically a number,
+I send `printString` again.
+
+59
+00:03:36,230 --> 00:03:41,070
+So, this means that to be able to
+fill up this stuff, the system is
+
+60
+00:03:41,270 --> 00:03:42,900
+creating yet another stream.
+
+61
+00:03:43,100 --> 00:03:53,160
+So, if my number is, I don't know,
+2055, it will say 2055 as a string.
+
+62
+00:03:53,360 --> 00:03:57,540
+So, it will put the character two,
+the character zero, the character five,
+
+63
+00:03:57,740 --> 00:03:58,500
+the character five.
+
+64
+00:03:59,040 --> 00:04:02,490
+And then, it will copy this into
+this place.
+
+65
+00:04:03,970 --> 00:04:07,090
+And the idea is that why do we need
+to create this stream?
+
+66
+00:04:09,400 --> 00:04:13,450
+It is completely useless because
+the system could use this one instead.
+
+67
+00:04:13,650 --> 00:04:17,020
+Because here, the system creates
+a stream.
+
+68
+00:04:17,230 --> 00:04:19,690
+Then to fill up this stream,
+it creates another stream.
+
+69
+00:04:19,890 --> 00:04:23,800
+Then it copies the element from
+this stream to that one,
+
+70
+00:04:24,000 --> 00:04:25,750
+while it could use this one.
+
+71
+00:04:25,950 --> 00:04:26,980
+So, what is the solution?
+
+72
+00:04:27,180 --> 00:04:31,390
+And it's a little mistake that we
+often make.
+
+73
+00:04:31,990 --> 00:04:34,420
+Basically, it is much better to use that.
+
+74
+00:04:34,620 --> 00:04:44,070
+So, this means that I have my
+`printString` that creates my stream.
+
+75
+00:04:46,730 --> 00:04:50,840
+I put my parenthesis here and I
+call `print`.
+
+76
+00:04:51,170 --> 00:04:52,820
+And what is `print` doing?
+
+77
+00:04:53,020 --> 00:04:56,090
+First, `print` is implemented on
+the stream.
+
+78
+00:04:56,300 --> 00:04:58,360
+So, this is the implementation.
+
+79
+00:04:58,560 --> 00:05:07,030
+It just said; "Oh, an object!" Meaning,
+"I will ask the argument to print
+
+80
+00:05:07,230 --> 00:05:08,800
+itself on myself".
+
+81
+00:05:10,150 --> 00:05:13,810
+This means that here,
+if `tally` is a number,
+
+82
+00:05:14,010 --> 00:05:19,870
+like 2055, then I will execute the
+
+83
+00:05:20,070 --> 00:05:25,480
+`printOn` method to say:
+"Can you place your character on me?" So,
+
+84
+00:05:26,020 --> 00:05:28,720
+this means that suddenly I will
+just put the character.
+
+85
+00:05:28,920 --> 00:05:34,570
+So, the object returned by `self tally`,
+
+86
+00:05:34,770 --> 00:05:38,620
+which is a number basically,
+will just execute its own methods
+
+87
+00:05:38,820 --> 00:05:43,580
+and put the characters one by one
+and close.
+
+88
+00:05:43,910 --> 00:05:48,800
+You see that in this solution,
+there is only one stream because
+
+89
+00:05:49,000 --> 00:05:51,560
+what you should understand is that
+a stream is like a basket.
+
+90
+00:05:51,760 --> 00:05:56,890
+And you say, "Oh, can you put your
+eggs in my basket?" And then you
+
+91
+00:05:57,090 --> 00:05:59,590
+don't need to create another basket
+to put your eggs in and then move
+
+92
+00:05:59,790 --> 00:06:01,740
+your eggs from that basket to the
+other basket.
+
+93
+00:06:01,940 --> 00:06:03,820
+There is one, so let's use it.
+
+94
+00:06:04,600 --> 00:06:06,280
+Let's look at another example.
+
+95
+00:06:07,730 --> 00:06:12,290
+You see here again, in the method
+printProtocol blah blah blah,
+
+96
+00:06:13,520 --> 00:06:14,900
+a stream is created.
+
+97
+00:06:15,100 --> 00:06:18,350
+Okay, so the system creates a stream.
+
+98
+00:06:18,550 --> 00:06:19,760
+We put things inside.
+
+99
+00:06:19,960 --> 00:06:25,000
+So, we have our stream,
+we will write `protocol`,
+
+100
+00:06:25,200 --> 00:06:30,490
+P-R-O-T-O-C-O-L, and then again,
+
+101
+00:06:32,860 --> 00:06:39,270
+we will create another stream to
+place something else inside,
+
+102
+00:06:39,470 --> 00:06:43,020
+like accessing, for example,
+I imagine, because this is a protocol.
+
+103
+00:06:44,380 --> 00:06:49,900
+And then, we will return the contents
+
+104
+00:06:50,100 --> 00:06:51,070
+and move it there.
+
+105
+00:06:52,070 --> 00:06:57,140
+The right solution is just to do that.
+
+106
+00:06:57,340 --> 00:07:04,480
+Meaning, okay, you have a stream,
+you write `protocol`,
+
+107
+00:07:05,370 --> 00:07:11,210
+they are placed in that,
+and then you ask the object protocol:
+
+108
+00:07:11,410 --> 00:07:17,000
+"Hey, object protocol,
+can you print yourself on that stream?
+
+109
+00:07:17,200 --> 00:07:21,700
+Please write yourself in my basket."
+"Okay." And it will write accessing,
+
+110
+00:07:21,900 --> 00:07:22,660
+for example, here.
+
+111
+00:07:22,860 --> 00:07:29,080
+So, just by paying attention that
+
+112
+00:07:29,680 --> 00:07:35,020
+a method like this one,
+`printString`, is actually creating
+
+113
+00:07:35,220 --> 00:07:39,340
+a stream, we can avoid creating
+it because we know, "Oh yes,
+
+114
+00:07:39,760 --> 00:07:43,420
+I should work on this one,
+not on the one that I created just
+
+115
+00:07:43,620 --> 00:07:47,680
+because I forgot, and I created
+one that was not necessary." You
+
+116
+00:07:47,880 --> 00:07:48,730
+have the same with `asString`.
+
+117
+00:07:50,860 --> 00:07:53,740
+Each time you use `asString` inside
+the `printOn` method,
+
+118
+00:07:53,940 --> 00:07:59,880
+you basically are creating yet another
+
+119
+00:08:00,080 --> 00:08:02,700
+stream and this is not necessary.
+
+120
+00:08:02,900 --> 00:08:07,710
+So, you should really pay attention
+when you program, do I need or not
+
+121
+00:08:07,910 --> 00:08:11,460
+to use this method `asString`,
+or can I just use the `printOn` method?
+
+122
+00:08:13,250 --> 00:08:17,510
+It's always good to check because
+we don't need to create these
+
+123
+00:08:18,140 --> 00:08:20,380
+intermediate streams.
+
+124
+00:08:20,580 --> 00:08:24,680
+And you see here, we could say,
+"Oh, yes, what is the problem?
+
+125
+00:08:24,880 --> 00:08:27,860
+This is just one stream." Yes,
+but if you have a list with thousands
+
+126
+00:08:28,060 --> 00:08:32,690
+of objects and you want to get the
+textual representation like in a
+
+127
+00:08:32,890 --> 00:08:37,170
+list or a browser, then you will
+create thousands of objects for nothing.
+
+128
+00:08:37,760 --> 00:08:41,870
+You will create thousands of
+intermediary streams for nothing.
+
+129
+00:08:42,070 --> 00:08:48,260
+So, that's why we wrote this little
+lecture so that you can really
+
+130
+00:08:48,460 --> 00:08:53,840
+understand when you should use or
+not `printString` and how to use
+
+131
+00:08:54,040 --> 00:08:54,800
+`printOn`.
+
+132
+00:08:55,370 --> 00:08:58,820
+The conclusion is that basically,
+it's always nice to check a bit
+
+133
+00:08:59,020 --> 00:09:00,260
+the protocol, like `printString`
+or `printOn`.
+
+134
+00:09:02,060 --> 00:09:06,230
+You see, I look at the implementation
+in Pharo and then we fix many of
+
+135
+00:09:06,430 --> 00:09:09,770
+them because people were always
+making the mistake.
+
+136
+00:09:09,970 --> 00:09:14,000
+So, I guess that now there are even
+quality rules that check that.
+
+137
+00:09:14,840 --> 00:09:18,440
+What you should understand is that
+streams are really powerful containers.
+
+138
+00:09:18,640 --> 00:09:19,610
+They are like baskets.
+
+139
+00:09:19,810 --> 00:09:22,850
+When you pass them around,
+you don't have to create another one.
+
+140
+00:09:23,050 --> 00:09:26,780
+You can just write inside or place
+objects inside a stream.
+
+141
+00:09:26,980 --> 00:09:27,920
+They are made for that.
+
+142
+00:09:28,250 --> 00:09:31,760
+And there is no need to create
+intermediate streams from just basic
+
+143
+00:09:31,960 --> 00:09:32,900
+sub-processes.
+

@@ -1,0 +1,1468 @@
+1
+00:00:03,480 --> 00:00:04,240
+- Hello.
+
+2
+00:00:04,440 --> 00:00:07,800
+In this lecture, I want to give
+you a little introduction to Design
+
+3
+00:00:08,000 --> 00:00:08,760
+Patterns.
+
+4
+00:00:09,150 --> 00:00:11,950
+So what will we see?
+
+5
+00:00:12,150 --> 00:00:15,170
+We will see what are Design Patterns,
+why they are good.
+
+6
+00:00:16,100 --> 00:00:21,860
+We will also show an aspect that
+is often not fully treated in lecture.
+
+7
+00:00:22,060 --> 00:00:23,510
+This is that design patterns are
+not a panacea.
+
+8
+00:00:24,530 --> 00:00:27,680
+So this means that sometimes you
+should not use them, and give some
+
+9
+00:00:27,880 --> 00:00:28,640
+examples.
+
+10
+00:00:28,840 --> 00:00:33,200
+So in fact, Design Pattern,
+they come from this book that is
+
+11
+00:00:33,400 --> 00:00:37,310
+The Timeless Way of Building,
+that has been written by Christopher
+
+12
+00:00:37,510 --> 00:00:38,270
+Alexander.
+
+13
+00:00:38,470 --> 00:00:42,140
+He was an architect, a real architect,
+not a software architect,
+
+14
+00:00:42,340 --> 00:00:46,340
+that tried to write patterns so
+that people can build their own
+
+15
+00:00:46,540 --> 00:00:48,740
+house and cities.
+
+16
+00:00:49,310 --> 00:00:51,590
+So he developed patterns and pattern
+languages.
+
+17
+00:00:51,790 --> 00:00:55,250
+And then he applied, they try to
+apply that, I guess that is in Mexico
+
+18
+00:00:55,450 --> 00:00:59,590
+or something like that,
+where people could build their house.
+
+19
+00:00:59,790 --> 00:01:00,940
+It didn't really work.
+
+20
+00:01:01,140 --> 00:01:04,400
+So from that perspective,
+I think that Christopher Alexander
+
+21
+00:01:04,600 --> 00:01:09,380
+is not very well known as an architect,
+but in software and in particular
+
+22
+00:01:09,580 --> 00:01:12,640
+in object-oriented design,
+it worked wonderfully.
+
+23
+00:01:12,840 --> 00:01:17,410
+And this is what I want to show
+you with this little introduction.
+
+24
+00:01:17,610 --> 00:01:22,250
+So basically, design pattern are
+recurrent solutions to design problems.
+
+25
+00:01:22,580 --> 00:01:27,270
+The idea is that a Design Pattern
+will capture some similar problem
+
+26
+00:01:27,470 --> 00:01:31,140
+that you have at the design level,
+and they are based on the idea that
+
+27
+00:01:31,340 --> 00:01:36,840
+experts in fact often solve the
+same problems with the same solutions.
+
+28
+00:01:37,800 --> 00:01:41,700
+And basically, Design Patterns,
+there are also pros and cons,
+
+29
+00:01:41,900 --> 00:01:42,660
+okay?
+
+30
+00:01:42,860 --> 00:01:45,180
+If you apply this pattern,
+you will gain this, but you will
+
+31
+00:01:45,380 --> 00:01:46,650
+have this disadvantage.
+
+32
+00:01:46,850 --> 00:01:52,260
+And something that is more important
+from my perspective, this is that
+
+33
+00:01:52,460 --> 00:01:53,310
+Design Patterns are literature.
+
+34
+00:01:54,300 --> 00:01:59,160
+So basically, teaching Design Pattern
+is possible.
+
+35
+00:01:59,360 --> 00:02:03,510
+This is just painful usually for
+the teacher and I really encourage
+
+36
+00:02:03,710 --> 00:02:11,130
+you to read them because originally,
+they were written as knowledge that
+
+37
+00:02:11,330 --> 00:02:12,090
+should be read.
+
+38
+00:02:12,730 --> 00:02:16,570
+And I can say that because I've
+wrote some Design Patterns in the
+
+39
+00:02:16,770 --> 00:02:20,230
+past and I saw that really when
+I'm teaching.
+
+40
+00:02:21,350 --> 00:02:22,720
+So what are Design Patterns?
+
+41
+00:02:22,920 --> 00:02:26,900
+So in fact, Design Patterns,
+they are elegant solutions that
+
+42
+00:02:27,100 --> 00:02:29,770
+usually a novice could not really
+think about.
+
+43
+00:02:29,970 --> 00:02:32,960
+They should be generic because we
+don't want to have something that
+
+44
+00:02:33,160 --> 00:02:36,560
+is super specific to a super small
+language or something like that.
+
+45
+00:02:36,760 --> 00:02:39,560
+This is absolutely not interesting
+because it should be language agnostic,
+
+46
+00:02:39,760 --> 00:02:43,340
+so they should be generic and
+independent also of a type system
+
+47
+00:02:43,540 --> 00:02:46,280
+or reflective pictures or things
+like that.
+
+48
+00:02:46,480 --> 00:02:48,080
+Usually, they are well proven.
+
+49
+00:02:48,280 --> 00:02:50,510
+So this means that you don't want
+something that is totally ad-hoc
+
+50
+00:02:50,750 --> 00:02:54,890
+and that works on only one case,
+but that is working most of the time.
+
+51
+00:02:55,090 --> 00:02:57,260
+When you have this problem,
+you can apply this pattern.
+
+52
+00:02:57,460 --> 00:03:02,930
+They should be simple because most
+of them are simple, but the cool
+
+53
+00:03:03,130 --> 00:03:06,200
+aspect of them is that they can
+be composed together to be more
+
+54
+00:03:06,400 --> 00:03:07,400
+complex solutions.
+
+55
+00:03:07,790 --> 00:03:11,870
+So basically, over the MOOC,
+we will show you some Design Patterns
+
+56
+00:03:12,070 --> 00:03:16,700
+that are building bricks that you
+can assemble to produce nice design.
+
+57
+00:03:16,900 --> 00:03:23,010
+What you should pay attention is
+that you should also always be skeptical
+
+58
+00:03:23,210 --> 00:03:25,620
+and take everything with a pinch of salt.
+
+59
+00:03:25,820 --> 00:03:27,650
+This means that there are stupid
+patterns.
+
+60
+00:03:27,850 --> 00:03:30,390
+So in some books, you have,
+for example, the supersuper,
+
+61
+00:03:31,900 --> 00:03:35,170
+which means that maybe one guy invented
+that and he thought that this is
+
+62
+00:03:35,370 --> 00:03:38,290
+a Design Pattern, but this is not,
+this is just a stupid pattern.
+
+63
+00:03:40,260 --> 00:03:45,610
+So the important point,
+in fact, Design Pattern are names.
+
+64
+00:03:45,810 --> 00:03:47,780
+In fact, they create a vocabulary.
+
+65
+00:03:47,980 --> 00:03:51,420
+For example, you have Hook and Template,
+Factory, Composite, Visitor…
+
+66
+00:03:51,620 --> 00:03:52,650
+Those are names.
+
+67
+00:03:52,850 --> 00:03:59,070
+And what I like is that when you
+get this vocabulary, you can talk
+
+68
+00:03:59,270 --> 00:04:04,500
+at lunch or on the blackboard with
+your colleagues and you all share
+
+69
+00:04:05,400 --> 00:04:08,580
+the same vocabulary, that is at
+the same time abstract because this
+
+70
+00:04:08,780 --> 00:04:10,530
+is an abstraction, but very precise.
+
+71
+00:04:10,730 --> 00:04:13,440
+So, for example, it happened to us that,
+for example, we discuss,
+
+72
+00:04:13,640 --> 00:04:17,250
+oh yes, I use composite,
+and we all know what a composite means.
+
+73
+00:04:17,450 --> 00:04:22,500
+So again, read them because like
+that you will really understand
+
+74
+00:04:22,700 --> 00:04:25,200
+the fine grained aspect of the pattern.
+
+75
+00:04:25,710 --> 00:04:31,320
+In this lecture, we will give you
+a good basis and discuss sometimes
+
+76
+00:04:31,520 --> 00:04:36,930
+some advanced point, but read them,
+this is the message, if you didn't
+
+77
+00:04:37,130 --> 00:04:37,890
+get it.
+
+78
+00:04:38,870 --> 00:04:41,360
+So what the Design Patterns are not?
+
+79
+00:04:41,560 --> 00:04:45,080
+So Design Patterns are not just
+one implementation.
+
+80
+00:04:46,120 --> 00:04:49,960
+They are illustrated with one possible
+implementation.
+
+81
+00:04:50,160 --> 00:04:54,520
+But what you should always consider
+is that the implementation is less
+
+82
+00:04:54,720 --> 00:04:57,230
+important than the intent of the
+Design Pattern.
+
+83
+00:04:57,430 --> 00:05:03,370
+This is what I will show you in a moment,
+and that you can bend the implementation
+
+84
+00:05:03,570 --> 00:05:06,820
+to your own needs if you understand
+what was the intent.
+
+85
+00:05:07,090 --> 00:05:08,620
+The element of a Design Pattern.
+
+86
+00:05:08,820 --> 00:05:12,280
+So usually, a pattern has a name
+that is basically your vocabulary.
+
+87
+00:05:13,060 --> 00:05:16,090
+It has an intent that describes
+the goal of the Design Pattern.
+
+88
+00:05:16,840 --> 00:05:20,950
+It has a problem description saying,
+okay, we are in this context and
+
+89
+00:05:21,150 --> 00:05:24,070
+we would like to do that,
+but we don't want to use condition
+
+90
+00:05:24,270 --> 00:05:27,460
+or we want variation or we want
+something that is modular,
+
+91
+00:05:27,660 --> 00:05:28,420
+etc, etc.
+
+92
+00:05:28,930 --> 00:05:30,550
+So this is really the context.
+
+93
+00:05:30,750 --> 00:05:34,570
+And then after, you have a description
+that is usually generic in terms
+
+94
+00:05:34,770 --> 00:05:39,220
+of what are the elements that compose
+the Design Pattern and what are
+
+95
+00:05:39,420 --> 00:05:43,300
+the relationship and responsibility
+between these elements and how do
+
+96
+00:05:43,500 --> 00:05:44,260
+they interact.
+
+97
+00:05:44,460 --> 00:05:45,730
+This is what is called collaboration.
+
+98
+00:05:45,930 --> 00:05:48,600
+And after, usually, we have the
+consequences.
+
+99
+00:05:48,800 --> 00:05:52,420
+So this means, if you apply the pattern,
+what are the results and what are
+
+100
+00:05:52,620 --> 00:05:54,310
+the trade-offs that you get.
+
+101
+00:05:55,000 --> 00:05:58,090
+So I just want to illustrate that
+with the strategy Design Pattern.
+
+102
+00:05:58,290 --> 00:06:01,060
+We will see it again later in the
+lecture.
+
+103
+00:06:02,710 --> 00:06:05,950
+But it's interesting to look at it now.
+
+104
+00:06:06,150 --> 00:06:08,230
+So the strategy Design Pattern,
+the intent.
+
+105
+00:06:08,430 --> 00:06:14,410
+This is define a family of algorithms,
+encapsulate each of these algorithms
+
+106
+00:06:14,610 --> 00:06:19,970
+in a separate class and define each
+class with the same interface so
+
+107
+00:06:20,170 --> 00:06:22,360
+that we can interchange them.
+
+108
+00:06:22,560 --> 00:06:23,710
+So you see, this is the intention.
+
+109
+00:06:23,910 --> 00:06:27,440
+We do not discuss about the
+implementation at this level.
+
+110
+00:06:27,640 --> 00:06:34,190
+Now a possible implementation,
+this is that you have what we call
+
+111
+00:06:34,390 --> 00:06:36,890
+a user that defines a strategy.
+
+112
+00:06:37,090 --> 00:06:40,100
+So let's look at a possible
+implementation.
+
+113
+00:06:40,300 --> 00:06:44,060
+Here, you have a user class that
+has a field strategy.
+
+114
+00:06:44,270 --> 00:06:49,580
+This field, in fact, will hold an
+instance of one of the subclasses
+
+115
+00:06:49,780 --> 00:06:50,570
+of this hierarchy.
+
+116
+00:06:51,080 --> 00:06:56,900
+What is important to see is that here,
+the user class will have one operation
+
+117
+00:06:57,100 --> 00:07:04,950
+and that this operation delegates
+to the operation of the strategy.
+
+118
+00:07:06,880 --> 00:07:08,930
+And what it means?
+
+119
+00:07:09,130 --> 00:07:13,040
+It means that at runtime,
+I can put an instance.
+
+120
+00:07:13,240 --> 00:07:14,990
+So imagine that I have an instance here.
+
+121
+00:07:16,040 --> 00:07:17,870
+So this is strategy one.
+
+122
+00:07:18,070 --> 00:07:20,930
+And this one, this is strategy two.
+
+123
+00:07:21,980 --> 00:07:28,730
+At runtime, my instance of user
+may have a pointer to this guy or
+
+124
+00:07:28,930 --> 00:07:31,010
+a pointer to this guy and change
+dynamically.
+
+125
+00:07:31,790 --> 00:07:35,570
+In any case, the fact that I have
+the same operation will make sure
+
+126
+00:07:35,770 --> 00:07:41,390
+that I can switch dynamically and
+that when I switch, I get automatically
+
+127
+00:07:41,590 --> 00:07:44,720
+the correct operation that is invoked.
+
+128
+00:07:45,170 --> 00:07:50,890
+So strategies, for example,
+are good to be able to encapsulate
+
+129
+00:07:51,090 --> 00:07:51,980
+different behavior.
+
+130
+00:07:52,180 --> 00:07:54,700
+So this means that I can have one
+here and one there.
+
+131
+00:07:54,900 --> 00:07:59,860
+And they are based also on this
+idea of delegation.
+
+132
+00:08:00,060 --> 00:08:03,190
+So this means that the user will
+delegate to the strategy a part
+
+133
+00:08:03,390 --> 00:08:04,150
+of its behavior.
+
+134
+00:08:04,350 --> 00:08:06,280
+This is one implementation.
+
+135
+00:08:06,480 --> 00:08:12,710
+And then, there is the question
+of do I pass or not the user?
+
+136
+00:08:12,910 --> 00:08:16,120
+This means that here,
+with this, do I pass the user or
+
+137
+00:08:16,320 --> 00:08:20,650
+not to the strategy, the boundary
+between the user and the strategy?
+
+138
+00:08:20,850 --> 00:08:23,920
+Because often, what you do is that
+at the beginning of your design,
+
+139
+00:08:24,120 --> 00:08:28,240
+the user and the strategy code are
+mixed together and then you cut
+
+140
+00:08:28,440 --> 00:08:31,570
+it and you separate and you said,
+okay, I have the user on one end
+
+141
+00:08:31,770 --> 00:08:33,310
+and the strategy on the other end.
+
+142
+00:08:33,510 --> 00:08:38,980
+But this means that the strategy
+may need to have access to the state
+
+143
+00:08:39,310 --> 00:08:41,500
+of the user and this is not always
+possible.
+
+144
+00:08:41,700 --> 00:08:46,060
+So then, you will have really what
+we call a design decision that says,
+
+145
+00:08:46,260 --> 00:08:47,980
+okay, should I pass or not?
+
+146
+00:08:48,180 --> 00:08:52,920
+And if I pass the user to the strategy,
+what does it mean in terms of API
+
+147
+00:08:53,120 --> 00:08:53,880
+of the user?
+
+148
+00:08:54,100 --> 00:08:59,740
+So typically, if you look at a text
+editor, you will have a text editor
+
+149
+00:08:59,940 --> 00:09:00,820
+with a formatter.
+
+150
+00:09:01,750 --> 00:09:06,490
+So usually, we will ask the editor,
+oh, we want to format some text
+
+151
+00:09:06,690 --> 00:09:10,990
+and the editor will say,
+oh, no problem, I will ask my formatter.
+
+152
+00:09:11,410 --> 00:09:12,640
+So what is this formatter?
+
+153
+00:09:12,840 --> 00:09:14,950
+That will be one instance of these
+classes.
+
+154
+00:09:15,160 --> 00:09:20,080
+So maybe I will use the fast formatter
+or maybe I will use the slow formatter
+
+155
+00:09:20,280 --> 00:09:23,290
+or a new formatter, or a formatter
+that just does nothing and returns
+
+156
+00:09:23,490 --> 00:09:24,250
+the text.
+
+157
+00:09:24,550 --> 00:09:28,600
+And then, it means that what you
+see that the editor will just forward
+
+158
+00:09:28,800 --> 00:09:34,510
+the message format to the formatter
+and each of the strategy will implement
+
+159
+00:09:34,710 --> 00:09:40,050
+the message format, the method format
+in its own way.
+
+160
+00:09:40,250 --> 00:09:42,720
+So this means that like that,
+from the editor perspective,
+
+161
+00:09:42,920 --> 00:09:45,210
+I can say, oh, you know,
+now I have a large code,
+
+162
+00:09:45,410 --> 00:09:49,230
+so I would like to use the 
+FastFormatter or I want for it to have
+
+163
+00:09:49,430 --> 00:09:51,960
+a beautiful code, so I will use,
+for example, the SlowFormatter.
+
+164
+00:09:53,530 --> 00:10:01,190
+And internally, each of these classes
+can have its own decision.
+
+165
+00:10:01,390 --> 00:10:05,910
+So what you see here is that in
+the FastFormatter, the format method
+
+166
+00:10:06,110 --> 00:10:09,260
+will just invoke this protected method.
+
+167
+00:10:09,460 --> 00:10:13,440
+That's why we put this #,
+the protected method formatFastColoring.
+
+168
+00:10:13,640 --> 00:10:20,160
+Andin the case of the SlowFormatter,
+I will have the same with the format
+
+169
+00:10:20,360 --> 00:10:21,750
+slow, but precise coloring.
+
+170
+00:10:21,950 --> 00:10:27,320
+And the idea, this is really based
+on this delegation.
+
+171
+00:10:27,520 --> 00:10:29,840
+So this link is really super important.
+
+172
+00:10:30,040 --> 00:10:32,720
+And what you see that the design
+is really simple.
+
+173
+00:10:33,350 --> 00:10:36,410
+The user of the strategy delegates
+to the strategy.
+
+174
+00:10:36,620 --> 00:10:37,850
+So let's step back.
+
+175
+00:10:38,050 --> 00:10:41,660
+So this was an illustration of the
+Design Pattern.
+
+176
+00:10:43,230 --> 00:10:47,220
+In fact, if you look at the books,
+they have different categories and
+
+177
+00:10:47,420 --> 00:10:49,710
+usually, the categories you have
+Creational Design Patterns.
+
+178
+00:10:49,910 --> 00:10:53,030
+So they pay attention to how do
+we instantiate object and configure
+
+179
+00:10:53,230 --> 00:10:53,990
+classes.
+
+180
+00:10:54,190 --> 00:10:55,170
+You have Structural Patterns.
+
+181
+00:10:55,370 --> 00:11:02,370
+This is how do we compose class
+in larger structures and separate
+
+182
+00:11:02,570 --> 00:11:06,570
+interfaces and implementation,
+or you have more Behavioral Design
+
+183
+00:11:06,770 --> 00:11:10,020
+Patterns, which are more like
+algorithms, like the strategy,
+
+184
+00:11:10,220 --> 00:11:12,300
+for example, or division of
+responsibility.
+
+185
+00:11:12,500 --> 00:11:17,340
+So if we look a bit at the list,
+I put in bold the one that you will
+
+186
+00:11:17,540 --> 00:11:18,800
+see in the lecture later.
+
+187
+00:11:19,000 --> 00:11:20,760
+So the builder.
+
+188
+00:11:20,960 --> 00:11:25,860
+So the builder, this is how can
+I create a complex object but in
+
+189
+00:11:26,060 --> 00:11:33,150
+a programmatic way, or the singleton,
+this is how can I get a class with
+
+190
+00:11:33,350 --> 00:11:34,200
+only one instance.
+
+191
+00:11:34,400 --> 00:11:36,600
+And for this lecture,
+you should pay attention because
+
+192
+00:11:36,800 --> 00:11:40,620
+most people believe that they get it,
+but most people get it wrong.
+
+193
+00:11:40,820 --> 00:11:44,190
+So you will see that this lecture,
+while the singleton is very simple,
+
+194
+00:11:44,390 --> 00:11:47,250
+there are some challenges that are
+worth understanding.
+
+195
+00:11:49,370 --> 00:11:52,810
+From the structural point of view,
+the Composite Pattern,
+
+196
+00:11:53,010 --> 00:11:57,380
+this is a really natural pattern
+that is supporting nested data structure
+
+197
+00:11:57,580 --> 00:11:59,990
+like trees, document and things
+like that.
+
+198
+00:12:00,200 --> 00:12:01,640
+We will look at the Decorator.
+
+199
+00:12:01,840 --> 00:12:05,510
+So the Decorator, this is how can
+we dynamically attach a new behavior
+
+200
+00:12:06,470 --> 00:12:07,700
+to an object.
+
+201
+00:12:08,860 --> 00:12:12,700
+And we will go over the Flyweight.
+
+202
+00:12:12,900 --> 00:12:17,710
+So the Flyweight, what is interesting,
+this is how can we share and manage
+
+203
+00:12:17,910 --> 00:12:23,050
+a lot of objects without duplicating
+them and making sure that we optimize
+
+204
+00:12:23,250 --> 00:12:24,490
+a bit the space.
+
+205
+00:12:25,290 --> 00:12:28,020
+From the Behavioral Pattern,
+we will look at Command.
+
+206
+00:12:28,220 --> 00:12:32,850
+So Command, this is a pattern that
+is turning an action into an object.
+
+207
+00:12:33,050 --> 00:12:33,860
+So it reifies operation.
+
+208
+00:12:34,500 --> 00:12:39,570
+This is what you get behind do and
+redo or undo and redo.
+
+209
+00:12:39,770 --> 00:12:45,090
+The State Pattern, this means that
+if your domain can be really expressed
+
+210
+00:12:45,290 --> 00:12:47,970
+as a state machine, then we can
+apply the State Pattern.
+
+211
+00:12:48,270 --> 00:12:49,920
+So we saw the strategy.
+
+212
+00:12:50,120 --> 00:12:54,570
+So this means that we delegate behavior
+to objects that are responsible
+
+213
+00:12:54,770 --> 00:12:57,750
+to manage a part of a computation.
+
+214
+00:12:58,560 --> 00:13:01,740
+The Template Method,
+that this is really the core of
+
+215
+00:13:01,940 --> 00:13:02,940
+object-oriented programming.
+
+216
+00:13:03,140 --> 00:13:05,160
+This is a Template Method.
+
+217
+00:13:05,360 --> 00:13:06,690
+This is also named Hook and Template.
+
+218
+00:13:06,890 --> 00:13:10,560
+So this is how can you make,
+from a superclass, make sure that
+
+219
+00:13:10,760 --> 00:13:15,030
+the code of your subclass gets injected
+and used instead of your code.
+
+220
+00:13:15,230 --> 00:13:17,040
+And this is really the extension.
+
+221
+00:13:17,240 --> 00:13:23,820
+This is the extension of object-oriented
+programming when we use inheritance.
+
+222
+00:13:24,750 --> 00:13:26,210
+And we will go over Visitor.
+
+223
+00:13:26,410 --> 00:13:29,730
+So basically, Visitor,
+this is, I want to have first class
+
+224
+00:13:29,930 --> 00:13:34,680
+operation that are expressed on
+a Composite Pattern, but in a modular
+
+225
+00:13:34,880 --> 00:13:35,640
+way.
+
+226
+00:13:35,840 --> 00:13:38,520
+This is one of the most complex
+Design Patterns that we will present
+
+227
+00:13:38,720 --> 00:13:39,750
+in this MOOC.
+
+228
+00:13:39,950 --> 00:13:43,430
+And what we will see is that it
+is using Double Dispatch.
+
+229
+00:13:43,630 --> 00:13:48,180
+So we will do a Double Dispatch lecture,
+so that you can understand a Double
+
+230
+00:13:48,380 --> 00:13:50,970
+Dispatch, but also how this is used
+in the visitor.
+
+231
+00:13:51,660 --> 00:13:56,280
+In this MOOC, we will present also
+some other Design Patterns.
+
+232
+00:13:56,480 --> 00:13:57,510
+One is called Null Object.
+
+233
+00:13:57,710 --> 00:14:03,260
+This is how can we turn a Null Behavior
+into an object instead of having
+
+234
+00:14:03,460 --> 00:14:04,500
+condition in the code.
+
+235
+00:14:04,700 --> 00:14:09,510
+And Type Object, Type Object,
+this is something that you get when
+
+236
+00:14:09,710 --> 00:14:14,550
+you want to separate,
+for example, the kind of object
+
+237
+00:14:14,750 --> 00:14:15,900
+from the object itself.
+
+238
+00:14:16,100 --> 00:14:21,960
+So for example, if you want to represent
+a DVD and the actual DVD.
+
+239
+00:14:22,160 --> 00:14:26,610
+So the DVD as okay, this is this
+video that I want to watch,
+
+240
+00:14:26,810 --> 00:14:28,920
+from the actual physical DVD.
+
+241
+00:14:29,120 --> 00:14:34,800
+If you have a renting,
+if you rent a DVD, physical object,
+
+242
+00:14:35,340 --> 00:14:38,370
+then you want to model that as a
+type object.
+
+243
+00:14:39,740 --> 00:14:42,230
+So this is a bit abstract,
+but you will see that in the lecture,
+
+244
+00:14:42,430 --> 00:14:43,670
+it is a lot clearer.
+
+245
+00:14:44,960 --> 00:14:48,320
+What you should pay attention is
+that Design Patterns are not a panacea.
+
+246
+00:14:48,590 --> 00:14:53,090
+So what is important to understand
+is that after this lecture and once
+
+247
+00:14:53,290 --> 00:14:56,120
+you have read the book also,
+this is important to understand
+
+248
+00:14:56,320 --> 00:14:58,670
+when you do not want to apply a
+Design Pattern.
+
+249
+00:14:59,180 --> 00:15:02,750
+So once, I saw a company that was
+testimony and they said,
+
+250
+00:15:02,950 --> 00:15:06,140
+yes, we implemented in this application,
+we implemented all the Design Patterns
+
+251
+00:15:06,340 --> 00:15:07,160
+from the catalog.
+
+252
+00:15:07,400 --> 00:15:08,990
+And for me, this is a big warning.
+
+253
+00:15:09,190 --> 00:15:12,680
+You don't want to implement all
+the Design Patterns from the catalog
+
+254
+00:15:12,880 --> 00:15:13,980
+in your software.
+
+255
+00:15:14,180 --> 00:15:16,520
+You just want to use the one that
+makes sense.
+
+256
+00:15:16,720 --> 00:15:21,290
+So it looks okay when I say it,
+but I can tell you that when I was
+
+257
+00:15:21,490 --> 00:15:23,510
+discussing with this company,
+I was really scared.
+
+258
+00:15:23,960 --> 00:15:26,870
+So this means that people think
+like that and you should not.
+
+259
+00:15:27,070 --> 00:15:29,810
+So what you should pay attention
+is that Design Patterns make your
+
+260
+00:15:30,010 --> 00:15:30,770
+software more complex.
+
+261
+00:15:30,970 --> 00:15:33,230
+You will have more classes,
+you will have more indirections,
+
+262
+00:15:33,430 --> 00:15:34,620
+you have more messages.
+
+263
+00:15:34,820 --> 00:15:38,930
+So this is important to understand
+when you don't want to apply them.
+
+264
+00:15:39,320 --> 00:15:44,570
+A second alert, this is that Design
+Pattern is about intent and tradeoffs.
+
+265
+00:15:46,670 --> 00:15:52,280
+I need this goal and to reach this goal,
+I will have to pay the price somehow.
+
+266
+00:15:53,130 --> 00:15:55,660
+And you should not confuse intent
+and implementation.
+
+267
+00:15:55,860 --> 00:15:58,260
+This is what I try to show you with
+the strategy.
+
+268
+00:15:59,010 --> 00:16:00,480
+You see the intention of the strategy.
+
+269
+00:16:00,680 --> 00:16:06,210
+This is to define a family of algorithms
+that we can interchange.
+
+270
+00:16:06,810 --> 00:16:08,490
+There is nothing about the
+implementation.
+
+271
+00:16:08,690 --> 00:16:11,580
+You can do it via delegation and
+this is the good way to do it via
+
+272
+00:16:11,780 --> 00:16:12,540
+delegation.
+
+273
+00:16:12,740 --> 00:16:14,280
+But the implementation is not the
+intention.
+
+274
+00:16:15,690 --> 00:16:16,560
+About the book.
+
+275
+00:16:16,760 --> 00:16:22,080
+So there are several books and the
+one that I like, there is Design
+
+276
+00:16:22,280 --> 00:16:23,040
+Patterns.
+
+277
+00:16:23,240 --> 00:16:24,080
+So this one, this is the seminal one.
+
+278
+00:16:24,280 --> 00:16:27,330
+This is the first one by Gamma and
+others.
+
+279
+00:16:27,900 --> 00:16:32,960
+This is called GoF, the Gang of Four,
+because there were four authors.
+
+280
+00:16:33,160 --> 00:16:34,900
+And there is the one that I prefer.
+
+281
+00:16:35,100 --> 00:16:39,240
+This is the Design Patterns Smalltalk
+Companion, because it is better.
+
+282
+00:16:39,440 --> 00:16:40,260
+Let's say it like that.
+
+283
+00:16:40,460 --> 00:16:43,410
+Of course, I am a guy that is doing
+Pharo, so I'm biased.
+
+284
+00:16:43,830 --> 00:16:48,780
+Now I want to show you what I found
+a long time ago on Amazon.
+
+285
+00:16:48,980 --> 00:16:52,560
+And there was this guy,
+Nicolas Weidmann from Zurich.
+
+286
+00:16:52,760 --> 00:16:53,850
+He said, okay, I'm a C++ programmer.
+
+287
+00:16:54,050 --> 00:16:57,750
+I've been developing in C++.
+
+288
+00:16:57,950 --> 00:16:58,710
+for nine years.
+
+289
+00:16:58,910 --> 00:17:00,240
+And I work, I have the GoF book.
+
+290
+00:17:00,440 --> 00:17:01,830
+I've never liked it.
+
+291
+00:17:02,310 --> 00:17:06,990
+So and he said, the Smalltalk Companion
+is much easier to read and to
+
+292
+00:17:07,190 --> 00:17:07,950
+understand.
+
+293
+00:17:08,150 --> 00:17:10,950
+So when I read that, I was like,
+oh wow, that's cool that he is
+
+294
+00:17:11,150 --> 00:17:15,550
+mentioning that because I like the
+Smalltalk one.
+
+295
+00:17:16,070 --> 00:17:17,360
+But I'm not a C++ programmer.
+
+296
+00:17:18,110 --> 00:17:21,470
+In any case, you can read both of them,
+they are cool.
+
+297
+00:17:21,680 --> 00:17:27,020
+So in fact Design Patterns are reusable
+solution to common problems that
+
+298
+00:17:27,220 --> 00:17:29,420
+are based on experience from real
+systems.
+
+299
+00:17:29,620 --> 00:17:33,140
+That's really what is interesting,
+this is that the design has been
+
+300
+00:17:33,340 --> 00:17:39,050
+validated and the pros and cons
+has been discussed by people over
+
+301
+00:17:39,250 --> 00:17:40,280
+multiple years.
+
+302
+00:17:40,480 --> 00:17:42,440
+So this is very interesting to
+understand them.
+
+303
+00:17:42,640 --> 00:17:47,480
+They are also names of abstractions
+and they create these common vocabulary
+
+304
+00:17:48,410 --> 00:17:53,150
+so that we can go much faster to
+discuss design on the blackboard.
+
+305
+00:17:53,350 --> 00:17:57,950
+And for me, this is the key aspect of it,
+this is in the communication,
+
+306
+00:17:58,150 --> 00:18:02,210
+how can I discuss my design with
+somebody else so that you can criticize
+
+307
+00:18:02,410 --> 00:18:03,170
+it.
+
+308
+00:18:03,470 --> 00:18:06,050
+And they often separate modularity.
+
+309
+00:18:06,250 --> 00:18:09,170
+So this means that you will have
+the interface separation and
+
+310
+00:18:09,370 --> 00:18:10,130
+implementation.
+
+311
+00:18:11,240 --> 00:18:14,900
+And these Design Patterns,
+they are really the basis of most
+
+312
+00:18:15,100 --> 00:18:18,740
+of the available frameworks and
+toolkits that you have nowadays.
+
+313
+00:18:18,940 --> 00:18:21,350
+So they are really worth looking
+at them.
+

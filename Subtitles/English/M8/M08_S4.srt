@@ -1,0 +1,210 @@
+1
+00:00:03,780 --> 00:00:08,320
+Hello, in this short lecture,
+we'll discuss about magic literals.
+
+2
+00:00:08,680 --> 00:00:12,240
+This is small numbers that you may
+introduce in all your codes,
+
+3
+00:00:12,840 --> 00:00:14,580
+but that are important in fact.
+
+4
+00:00:15,920 --> 00:00:20,860
+So the idea is to think about setters
+and getters, of course,
+
+5
+00:00:21,060 --> 00:00:25,300
+and customization of these little
+numbers or little constants in your
+
+6
+00:00:25,500 --> 00:00:26,260
+code.
+
+7
+00:00:27,000 --> 00:00:28,640
+Let's have a look at this case study.
+
+8
+00:00:29,420 --> 00:00:34,000
+For example, here, in this code,
+in the Node class, I have a specific
+
+9
+00:00:34,200 --> 00:00:34,980
+number there.
+
+10
+00:00:35,820 --> 00:00:40,100
+And the idea is how can I provide
+a mean for programmers to change
+
+11
+00:00:40,300 --> 00:00:46,360
+this number in subclasses or outside
+of this code, how can I provide
+
+12
+00:00:46,560 --> 00:00:48,220
+a way to customize this value.
+
+13
+00:00:50,300 --> 00:00:55,440
+So the simple solution could be
+to introduce a new instance variable,
+
+14
+00:00:55,640 --> 00:00:56,400
+`percent`.
+
+15
+00:00:57,700 --> 00:01:00,640
+And now, use it directly in the code.
+
+16
+00:01:01,720 --> 00:01:04,960
+And then, I need to provide an
+initialization for this variable.
+
+17
+00:01:05,520 --> 00:01:10,640
+So in the `initialize` method,
+I can directly `initialize` the
+
+18
+00:01:10,840 --> 00:01:12,040
+`percent` value to 55.
+
+19
+00:01:12,380 --> 00:01:14,220
+It was the value that was there before.
+
+20
+00:01:14,840 --> 00:01:16,800
+I can also add a setter method.
+
+21
+00:01:18,280 --> 00:01:24,700
+And now, what I have is that I provide
+a way for clients to directly customize
+
+22
+00:01:24,900 --> 00:01:27,680
+this value from the external of
+the subject.
+
+23
+00:01:27,880 --> 00:01:32,640
+I can create a new node and set
+this value to 55 or 70.
+
+24
+00:01:34,840 --> 00:01:42,240
+But how can we provide a way for
+subclasses to provide a default
+
+25
+00:01:42,440 --> 00:01:44,540
+value for this percentage?
+
+26
+00:01:46,720 --> 00:01:50,100
+And the idea is to define a hook
+one time again.
+
+27
+00:01:51,500 --> 00:01:57,480
+So I can provide a default `percent`
+and I can refactor now my initialization
+
+28
+00:01:57,680 --> 00:02:01,500
+of my object and say,
+okay, the default value is computed
+
+29
+00:02:01,700 --> 00:02:03,880
+by a self-send.
+
+30
+00:02:05,940 --> 00:02:09,560
+And the good properties of this
+solution is that now in subclasses,
+
+31
+00:02:09,760 --> 00:02:15,440
+I can override the value by redefining
+the `initialize`.
+
+32
+00:02:15,640 --> 00:02:20,140
+I can override just the default
+value by overriding the default
+
+33
+00:02:20,340 --> 00:02:23,100
+`percent`, but also clients.
+
+34
+00:02:24,320 --> 00:02:28,440
+It means that code that will instantiate
+this class can use the setter to
+
+35
+00:02:28,640 --> 00:02:34,140
+define its own value and I can also
+reuse the default value if I want.
+
+36
+00:02:36,020 --> 00:02:41,220
+So this is a really nice solution
+that combines both the initialization,
+
+37
+00:02:41,420 --> 00:02:45,000
+the setter and the default hook
+for the default value.
+
+38
+00:02:46,580 --> 00:02:50,600
+As a conclusion, what is important
+and the key message is that you
+
+39
+00:02:50,800 --> 00:02:53,280
+should not add code constants in
+your code.
+
+40
+00:02:53,480 --> 00:02:58,460
+You should extract them at least
+in hooks and then you should let
+
+41
+00:02:58,660 --> 00:03:04,760
+clients customize these values in
+setters or redefine default values
+
+42
+00:03:04,960 --> 00:03:08,560
+in hooks in subclasses.
+
+43
+00:03:08,760 --> 00:03:11,400
+Another solution would be to use
+shared pool, for example,
+
+44
+00:03:11,620 --> 00:03:17,260
+in Pharo, because it allows you
+to reuse these values among the
+
+45
+00:03:17,460 --> 00:03:18,220
+hierarchy.
+

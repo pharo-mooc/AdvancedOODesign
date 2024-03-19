@@ -1,0 +1,878 @@
+1
+00:00:04,100 --> 00:00:07,280
+Hello, welcome to this presentation.
+
+2
+00:00:07,740 --> 00:00:12,180
+In this lecture, we are going to
+talk about blocks and their relationship
+
+3
+00:00:12,380 --> 00:00:13,140
+with objects.
+
+4
+00:00:13,340 --> 00:00:18,300
+We are going to think about when
+to use blocks, when to use the objects,
+
+5
+00:00:18,500 --> 00:00:23,320
+and what are the advantages and
+disadvantages of one and the other.
+
+6
+00:00:24,360 --> 00:00:28,380
+For this presentation,
+we are going to think about the
+
+7
+00:00:28,580 --> 00:00:36,080
+API and the power that blocks give
+us in Pharo and how they are powerful
+
+8
+00:00:36,280 --> 00:00:37,400
+and handy to use.
+
+9
+00:00:38,420 --> 00:00:42,580
+And then, we are going to compare
+them with small objects and show
+
+10
+00:00:42,780 --> 00:00:48,080
+how small objects that we are created
+for a given specific task are more
+
+11
+00:00:48,280 --> 00:00:51,380
+powerful than blocks in the long term.
+
+12
+00:00:51,580 --> 00:00:54,140
+Blocks are really powerful.
+
+13
+00:00:54,500 --> 00:00:59,840
+We are using them all days in Pharo
+syntax and in our object model.
+
+14
+00:01:00,540 --> 00:01:04,780
+It provides us with a good model
+to implement iterators.
+
+15
+00:01:05,320 --> 00:01:09,700
+They are really cool to generate
+new iterator definitions and also
+
+16
+00:01:09,900 --> 00:01:12,540
+to produce DSL-like APIs.
+
+17
+00:01:14,860 --> 00:01:21,160
+When we use blocks, they are central
+to our system based on message paths.
+
+18
+00:01:22,440 --> 00:01:26,780
+Remember that blocks freeze the
+execution and give the power to
+
+19
+00:01:26,980 --> 00:01:28,480
+decide when to execute them.
+
+20
+00:01:29,340 --> 00:01:33,980
+We use them, for example,
+to implement beautifully the `Boolean`
+
+21
+00:01:35,960 --> 00:01:42,800
+operators in Pharo and also to implement
+the conditional code.
+
+22
+00:01:43,240 --> 00:01:47,180
+And they are key for the compact
+syntax of Pharo.
+
+23
+00:01:47,380 --> 00:01:51,520
+We also use blocks all the time
+when we use iterators,
+
+24
+00:01:51,820 --> 00:01:52,760
+our own collections.
+
+25
+00:01:53,280 --> 00:01:58,120
+We use them to express what we are
+going to do with each of the elements.
+
+26
+00:01:58,500 --> 00:02:02,060
+For example, in this case,
+we have a collection with two numbers
+
+27
+00:02:02,260 --> 00:02:08,460
+and we are going to iterate them
+with the 'allSatisfy' operation to
+
+28
+00:02:08,660 --> 00:02:15,040
+check that all of them respond to
+whatever we pass inside the block.
+
+29
+00:02:15,300 --> 00:02:19,560
+In this case, sending them for each
+of them the message even.
+
+30
+00:02:21,100 --> 00:02:25,780
+We see that this is used in more
+complex iteration patterns,
+
+31
+00:02:26,240 --> 00:02:29,520
+like, for example, when we want
+to iterate a collection,
+
+32
+00:02:30,120 --> 00:02:36,360
+in this case, this part,
+and also do something between each
+
+33
+00:02:36,560 --> 00:02:37,320
+of the elements.
+
+34
+00:02:38,240 --> 00:02:43,800
+This iteration is more complex,
+but also it's using the power of blocks.
+
+35
+00:02:44,680 --> 00:02:51,860
+In this case, also we are using
+blocks to establish the limit when
+
+36
+00:02:52,060 --> 00:02:57,380
+we want to have a string generating
+a new string.
+
+37
+00:02:57,820 --> 00:03:02,400
+Blocks are really useful for us
+because also allows us to implement
+
+38
+00:03:02,600 --> 00:03:03,360
+new iterators.
+
+39
+00:03:03,560 --> 00:03:07,820
+If we see how, for example,
+the methods 'pairsDo:' is implemented
+
+40
+00:03:08,020 --> 00:03:12,360
+in sequenceable collection,
+this method is implemented using
+
+41
+00:03:12,560 --> 00:03:16,120
+exactly the same mechanism that
+is already present.
+
+42
+00:03:16,320 --> 00:03:21,700
+It's using the iteration one to
+
+43
+00:03:21,900 --> 00:03:29,520
+the given position to do with the
+message to do of integers and we
+
+44
+00:03:29,720 --> 00:03:31,780
+are iterating this collection.
+
+45
+00:03:33,400 --> 00:03:35,580
+As we can see, we can nest blocks.
+
+46
+00:03:36,500 --> 00:03:41,540
+Yes, the block that we are receiving
+as argument, we are using it inside
+
+47
+00:03:41,740 --> 00:03:42,500
+another block.
+
+48
+00:03:42,700 --> 00:03:48,560
+This is really, really powerful
+and we use it a lot in all the programs
+
+49
+00:03:48,760 --> 00:03:49,790
+that we write in Pharo.
+
+50
+00:03:51,720 --> 00:03:55,760
+Other cool feature that we use all
+the time about blocks is that we
+
+51
+00:03:55,960 --> 00:04:00,040
+can use it then to implement DSL-like
+APIs.
+
+52
+00:04:00,820 --> 00:04:07,060
+We can in this way generate a little
+
+53
+00:04:07,260 --> 00:04:13,580
+context that will be executed or
+when we are using the builder.
+
+54
+00:04:13,780 --> 00:04:19,400
+In this case, we are building a
+presentation, a composite presentation,
+
+55
+00:04:19,900 --> 00:04:25,880
+and we are passing it the instructions
+to build it inside.
+
+56
+00:04:27,800 --> 00:04:32,040
+This is more complex,
+but we can extract the same example.
+
+57
+00:04:32,240 --> 00:04:38,420
+For example, when we are taking the text,
+we are creating a new composite
+
+58
+00:04:38,620 --> 00:04:44,740
+text with this title and the content
+that is produced by this block.
+
+59
+00:04:45,280 --> 00:04:49,560
+In this case, taking the file and
+evaluating its content.
+
+60
+00:04:50,740 --> 00:04:56,400
+However, the blocks, even being
+so powerful, sometimes are a little
+
+61
+00:04:56,600 --> 00:05:02,580
+weak when we compare them with literal
+or small objects that we create
+
+62
+00:05:02,780 --> 00:05:04,320
+for a given task.
+
+63
+00:05:05,140 --> 00:05:10,180
+Because blocks on the spot are just
+literal objects, but they are not
+
+64
+00:05:10,380 --> 00:05:15,080
+different, they don't have any
+difference with objects that understand
+
+65
+00:05:15,280 --> 00:05:16,240
+the message `value`.
+
+66
+00:05:17,960 --> 00:05:22,440
+The good thing of using blocks is
+that we can create objects without
+
+67
+00:05:22,640 --> 00:05:27,360
+needed to create a given class or
+define a given method.
+
+68
+00:05:28,540 --> 00:05:31,400
+But it has a problem.
+
+69
+00:05:32,220 --> 00:05:38,320
+When we want to store them and change
+the state on them, it's really
+
+70
+00:05:38,520 --> 00:05:42,000
+complicated, so usually we are not
+doing.
+
+71
+00:05:42,620 --> 00:05:45,760
+We have also a single entry point to it.
+
+72
+00:05:45,960 --> 00:05:50,900
+We can only send the message `value`
+or any of its varieties with more
+
+73
+00:05:51,100 --> 00:05:51,860
+arguments.
+
+74
+00:05:53,280 --> 00:05:58,220
+When we need to pass more than one
+argument to a block, it's difficult
+
+75
+00:05:58,420 --> 00:06:04,700
+to see what is the order of them
+and what is receiving in each of them.
+
+76
+00:06:04,900 --> 00:06:09,660
+So does not expose well the arguments
+and how we need to use the blocks.
+
+77
+00:06:10,320 --> 00:06:14,340
+It looks like it's easy to write
+because blocks are easy to write.
+
+78
+00:06:14,840 --> 00:06:19,640
+In Pharo, the syntax to create a
+block is just using the square bracket.
+
+79
+00:06:20,080 --> 00:06:24,980
+But when we start extending these
+scripts, it's more difficult.
+
+80
+00:06:25,860 --> 00:06:32,400
+Because what we want to have always
+is have a rich API that allows us
+
+81
+00:06:32,600 --> 00:06:33,980
+to have more flexibility.
+
+82
+00:06:34,300 --> 00:06:37,020
+And in this case, with blocks,
+that is impossible.
+
+83
+00:06:39,920 --> 00:06:42,800
+Blocks basically works like black boxes.
+
+84
+00:06:43,060 --> 00:06:47,060
+You can only send the message of
+the `value` family, `value`,
+
+85
+00:06:47,260 --> 00:06:51,220
+`value` colon and `value`,
+`value` and so on for different
+
+86
+00:06:51,420 --> 00:06:52,560
+amount of arguments.
+
+87
+00:06:52,760 --> 00:06:57,540
+We don't have the ability to modify
+the state of the block.
+
+88
+00:06:57,760 --> 00:06:59,440
+We can only execute it.
+
+89
+00:06:59,640 --> 00:07:07,320
+We don't have access to modify easily
+the state of the block and we cannot
+
+90
+00:07:07,520 --> 00:07:12,660
+add instance variable to them to
+add behavior that we are going to,
+
+91
+00:07:12,860 --> 00:07:13,860
+for example, accumulate.
+
+92
+00:07:14,260 --> 00:07:17,540
+A nice example is what happens if
+we want a block that every time
+
+93
+00:07:17,740 --> 00:07:20,840
+that we execute will accumulate
+some information.
+
+94
+00:07:21,040 --> 00:07:26,020
+Well, you cannot do it in a really
+clean and nice way.
+
+95
+00:07:26,340 --> 00:07:30,580
+We always can hack, but at the end
+is a solution that is really bad
+
+96
+00:07:30,780 --> 00:07:33,420
+and ends with a poor quality solution.
+
+97
+00:07:35,540 --> 00:07:38,320
+The same problem, we have it with
+the arguments.
+
+98
+00:07:38,820 --> 00:07:43,740
+When we start having a more complex
+operation on the arguments,
+
+99
+00:07:43,940 --> 00:07:47,040
+for example, we want optional arguments.
+
+100
+00:07:48,000 --> 00:07:55,260
+That starts to be a problem in block
+because we cannot select which arguments
+
+101
+00:07:55,460 --> 00:07:57,000
+to pass or not to a block.
+
+102
+00:07:57,960 --> 00:08:03,280
+We have to choose exactly the order
+of arguments and which arguments
+
+103
+00:08:03,480 --> 00:08:04,240
+we are passing.
+
+104
+00:08:04,440 --> 00:08:11,340
+So if we design it wrong,
+we will only have a given order.
+
+105
+00:08:11,600 --> 00:08:13,740
+We cannot have more than one order.
+
+106
+00:08:14,300 --> 00:08:21,520
+Also, there is cull: in the system,
+but we should avoid using it because
+
+107
+00:08:21,720 --> 00:08:27,900
+it's reflected by nature and it
+is a bad practice and we have better
+
+108
+00:08:28,100 --> 00:08:31,200
+ways of representing optional arguments.
+
+109
+00:08:31,700 --> 00:08:35,940
+Even having optional arguments or
+not having optional arguments,
+
+110
+00:08:36,220 --> 00:08:40,260
+one of the main problems of blocks
+when they have more than one argument
+
+111
+00:08:40,460 --> 00:08:44,020
+is that we need to choose exactly
+what is each of them.
+
+112
+00:08:44,440 --> 00:08:48,080
+The order of the arguments that
+we are passing is important.
+
+113
+00:08:48,340 --> 00:08:57,080
+And when we see as an example,
+this message send using inject into
+
+114
+00:08:57,280 --> 00:09:03,340
+that receives a block with two
+arguments, we never know which of
+
+115
+00:09:03,540 --> 00:09:07,480
+them is the accumulator and which
+of them is the element that we are
+
+116
+00:09:07,680 --> 00:09:08,440
+iterating.
+
+117
+00:09:08,640 --> 00:09:14,700
+Remember that inject into what happened
+is that uses a `value` that is keep
+
+118
+00:09:14,900 --> 00:09:21,280
+accumulated in each loop in each
+iteration of the collection and
+
+119
+00:09:21,480 --> 00:09:25,940
+the other is the element that we
+are iterating.
+
+120
+00:09:26,140 --> 00:09:31,320
+So it's not clear, for the user
+is not clear for the reader of the code,
+
+121
+00:09:31,580 --> 00:09:33,940
+which is one or the other.
+
+122
+00:09:34,460 --> 00:09:37,960
+Also, we have that saving blocks
+is painful.
+
+123
+00:09:38,160 --> 00:09:43,380
+Block is by definition,
+a dynamic element in our language
+
+124
+00:09:43,580 --> 00:09:49,280
+and it's complicated to save it,
+to export it, to serialize it,
+
+125
+00:09:49,520 --> 00:09:55,220
+to save it to a database or to represent
+it from any kind of data.
+
+126
+00:09:56,000 --> 00:10:03,760
+Also, we cannot add any kind of
+a message to it to add new behavior
+
+127
+00:10:03,960 --> 00:10:09,320
+and having extensions via subclassing
+or adding a new implementation is
+
+128
+00:10:09,520 --> 00:10:10,280
+impossible.
+
+129
+00:10:10,480 --> 00:10:14,700
+When we have long blocks that have
+a lot of code inside,
+
+130
+00:10:15,240 --> 00:10:21,020
+we lose a big opportunity that is
+to split that code in many methods,
+
+131
+00:10:21,220 --> 00:10:27,960
+because in a block we have only
+one unit that has all the code
+
+132
+00:10:28,160 --> 00:10:35,460
+intermixed inside and we cannot
+explicit it or using template methods
+
+133
+00:10:35,660 --> 00:10:40,980
+or delegating to other methods with
+
+134
+00:10:41,180 --> 00:10:42,040
+a self-send.
+
+135
+00:10:43,140 --> 00:10:49,600
+We need to send messages and we
+need a receiver in order to be able
+
+136
+00:10:49,800 --> 00:10:54,760
+to reuse and have a nice solution.
+
+137
+00:10:55,160 --> 00:11:01,500
+So every time that we have a long
+block is a code smell that we have
+
+138
+00:11:01,700 --> 00:11:05,980
+to see and that we have to analyze
+if it's worthy or not.
+
+139
+00:11:06,420 --> 00:11:11,500
+For example, we have these two cases
+
+140
+00:11:11,700 --> 00:11:15,480
+that are doing similar code that
+are having the same effect,
+
+141
+00:11:15,860 --> 00:11:19,220
+but we want to modify it.
+
+142
+00:11:20,020 --> 00:11:25,720
+We pass from having a big block,
+a long block where we have many
+
+143
+00:11:25,920 --> 00:11:31,540
+operations to have a new 'method'
+where we can delegate to this 'method'
+
+144
+00:11:31,740 --> 00:11:32,500
+inside the block.
+
+145
+00:11:32,700 --> 00:11:38,500
+As the method is the unit of reuse,
+we want to have it and we want to
+
+146
+00:11:38,700 --> 00:11:44,740
+have this method created in a given
+class so we can start using tools on it,
+
+147
+00:11:45,340 --> 00:11:50,660
+a template method or a specialization
+in a subclass or dividing it for
+
+148
+00:11:50,860 --> 00:11:54,780
+clarity or doing whatever we want
+with it.
+
+149
+00:11:55,210 --> 00:12:00,540
+This is exactly the same example,
+but now with a real code,
+
+150
+00:12:00,840 --> 00:12:08,520
+we see the complexity of this block
+and all the messages that it's sending
+
+151
+00:12:08,720 --> 00:12:14,280
+and all the decisions that it's taking,
+and we cannot do any kind of refactoring
+
+152
+00:12:14,480 --> 00:12:15,240
+inside it.
+
+153
+00:12:15,640 --> 00:12:20,150
+The first that we need to do to
+work it better, this code to improve
+
+154
+00:12:20,350 --> 00:12:28,330
+its quality, is extract it to a
+method where we can do all the different
+
+155
+00:12:28,530 --> 00:12:31,610
+tools that we have already seen
+in all the lectures.
+
+156
+00:12:32,390 --> 00:12:39,630
+So we have here a clear problem
+that we use it all the time.
+
+157
+00:12:40,410 --> 00:12:42,630
+We want to have little objects.
+
+158
+00:12:42,950 --> 00:12:46,830
+We want to model our solution with
+objects.
+
+159
+00:12:47,030 --> 00:12:53,570
+So in this case, we will see that
+having little objects that have
+
+160
+00:12:53,770 --> 00:13:01,990
+a really nice design API and that
+has internal state can be much,
+
+161
+00:13:02,190 --> 00:13:03,730
+much powerful than blocks.
+
+162
+00:13:05,650 --> 00:13:08,870
+We can specify optional arguments.
+
+163
+00:13:09,070 --> 00:13:12,090
+We can give initial values to them.
+
+164
+00:13:12,290 --> 00:13:14,630
+We can give a different behavior.
+
+165
+00:13:14,830 --> 00:13:20,250
+We can structure the code in different
+methods, and we can delegate and
+
+166
+00:13:20,450 --> 00:13:25,870
+use polymorphism and subclassing
+and all the tools that we have in
+
+167
+00:13:26,070 --> 00:13:31,850
+our toolbox, and by having these
+
+168
+00:13:32,050 --> 00:13:37,550
+little objects that we are delegating
+the behavior instead of using a block,
+
+169
+00:13:37,810 --> 00:13:41,710
+we can always have extension and
+refactoring.
+
+170
+00:13:41,910 --> 00:13:49,290
+As a conclusion, a good way of using
+blocks is always keeping them as
+
+171
+00:13:49,490 --> 00:13:51,010
+small as possible.
+
+172
+00:13:51,430 --> 00:13:55,450
+When we start having long blocks,
+that is a code smell,
+
+173
+00:13:55,770 --> 00:13:59,890
+that is a situation that we have
+to analyze to improve the quality.
+
+174
+00:14:01,870 --> 00:14:07,150
+You see them a lot to generate DSL-like
+
+175
+00:14:07,350 --> 00:14:12,830
+constructions, DSL-like builders,
+and it's really good to do scripting,
+
+176
+00:14:13,090 --> 00:14:18,470
+but when you are defining your domain
+model, pay attention not to overuse
+
+177
+00:14:18,670 --> 00:14:24,230
+them because they are less flexible
+than having real objects that we
+
+178
+00:14:24,430 --> 00:14:28,550
+model and we create with a given
+task in mind.
+
+179
+00:14:29,890 --> 00:14:35,370
+Don't have fear to create classes
+and pass instances and create new
+
+180
+00:14:35,570 --> 00:14:40,110
+instances, small instances for represent
+our behavior and to replace blocks.
+
+181
+00:14:41,210 --> 00:14:47,350
+And this, you will learn it little
+by little because as any of the
+
+182
+00:14:47,550 --> 00:14:52,110
+discussions that we have in this MOOC,
+it requires to analyze when to use
+
+183
+00:14:52,310 --> 00:14:54,390
+it and when to not use it.
+
+184
+00:14:54,590 --> 00:14:58,610
+Because as I said before,
+blocks are really powerful and we
+
+185
+00:14:58,810 --> 00:15:03,250
+want to use them when they are useful
+and we want to avoid them when they
+
+186
+00:15:03,450 --> 00:15:05,990
+give more pain than benefits.
+

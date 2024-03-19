@@ -1,0 +1,1454 @@
+1
+00:00:04,320 --> 00:00:08,280
+Hi, in this lecture, we are going
+to discuss again about tests and
+
+2
+00:00:08,480 --> 00:00:09,560
+why they are important.
+
+3
+00:00:10,680 --> 00:00:13,500
+The goals of this lecture is to
+discuss why tests are important,
+
+4
+00:00:13,740 --> 00:00:17,700
+what are their advantages and what
+are the many techniques or some
+
+5
+00:00:17,900 --> 00:00:21,760
+of the many techniques that are
+there available to write good tests.
+
+6
+00:00:22,400 --> 00:00:27,740
+Now, before going into the detail
+of how to write good tests,
+
+7
+00:00:28,460 --> 00:00:32,740
+it's good to review why testing
+is beneficial.
+
+8
+00:00:33,440 --> 00:00:36,840
+So the first thing is that we need
+to understand that tests are like
+
+9
+00:00:37,040 --> 00:00:37,800
+life insurance.
+
+10
+00:00:38,000 --> 00:00:41,320
+So every time that we are going
+to change something in a system,
+
+11
+00:00:42,200 --> 00:00:45,480
+the test will allow us to detect
+if we introduce a problem or not.
+
+12
+00:00:46,800 --> 00:00:52,180
+So in that way, they allow us to
+have trust in the system and trust
+
+13
+00:00:52,380 --> 00:00:53,140
+in our changes.
+
+14
+00:00:53,340 --> 00:00:57,500
+We can go and modify things more
+freely without having fear that
+
+15
+00:00:57,700 --> 00:00:59,400
+we did or not break something.
+
+16
+00:00:59,760 --> 00:01:01,780
+So we are not afraid of changing.
+
+17
+00:01:03,440 --> 00:01:05,860
+Also, they will help us in understanding
+code.
+
+18
+00:01:06,700 --> 00:01:09,660
+That's something that we're going
+to discuss later in some of the slides.
+
+19
+00:01:10,620 --> 00:01:13,920
+And of course, they will not avoid
+breaking the system.
+
+20
+00:01:14,120 --> 00:01:17,980
+We can still go inside the system,
+change stuff and break it.
+
+21
+00:01:18,620 --> 00:01:24,320
+But tests can help us detect early
+if a problem was introduced or not,
+
+22
+00:01:24,540 --> 00:01:28,360
+instead of detecting it very,
+very late during the development
+
+23
+00:01:28,560 --> 00:01:29,320
+process.
+
+24
+00:01:29,520 --> 00:01:32,380
+So remember that the unit test that
+is not automated doesn't exist.
+
+25
+00:01:32,580 --> 00:01:33,340
+What does it mean?
+
+26
+00:01:33,760 --> 00:01:37,380
+That if I have to manually go and
+write the test and if I have to
+
+27
+00:01:37,580 --> 00:01:41,400
+go manually and check the results,
+they are taking so much time that
+
+28
+00:01:41,600 --> 00:01:45,040
+actually what will happen is that
+nobody will ever run them or verify
+
+29
+00:01:45,240 --> 00:01:46,000
+them.
+
+30
+00:01:46,200 --> 00:01:51,140
+So automation is something that
+will help us to do it more and more
+
+31
+00:01:51,340 --> 00:01:52,100
+often.
+
+32
+00:01:53,560 --> 00:01:57,060
+So this is important also because
+once we wrote the test,
+
+33
+00:01:57,280 --> 00:01:59,820
+we can forget about it and run it again.
+
+34
+00:02:00,020 --> 00:02:04,000
+So we can have hundreds or thousands
+of tests that will run maybe every
+
+35
+00:02:04,200 --> 00:02:05,680
+night or maybe every couple of hours.
+
+36
+00:02:05,880 --> 00:02:09,300
+Like that, we don't need to remember
+everything that we did in the past.
+
+37
+00:02:09,500 --> 00:02:12,640
+We have already a set of tests that
+we wrote in the past and we can
+
+38
+00:02:12,840 --> 00:02:13,760
+reuse them.
+
+39
+00:02:14,320 --> 00:02:19,840
+It's important that you remember
+that usually we are able to keep
+
+40
+00:02:20,040 --> 00:02:23,920
+seven plus minus two ideas in our
+head at the same time.
+
+41
+00:02:25,500 --> 00:02:29,120
+So having the writing the test,
+reusing it later is something that
+
+42
+00:02:29,320 --> 00:02:31,240
+is actually a way to flush information.
+
+43
+00:02:34,200 --> 00:02:38,440
+So of course, the other thing that
+is important is that programming
+
+44
+00:02:38,640 --> 00:02:41,040
+is about modeling the world and
+the world is changing.
+
+45
+00:02:41,320 --> 00:02:45,720
+So we need a way to cope with changes
+and to trust the way we are doing
+
+46
+00:02:45,920 --> 00:02:46,680
+the changes.
+
+47
+00:02:47,100 --> 00:02:52,580
+So tests will give us some way to
+structure our way to change the system.
+
+48
+00:02:53,920 --> 00:02:58,740
+So tests will, as I said before,
+help you to not fear changes.
+
+49
+00:02:59,740 --> 00:03:01,660
+This has many flavors.
+
+50
+00:03:02,180 --> 00:03:08,560
+In one side, if you have a system
+and you change it, of course,
+
+51
+00:03:08,820 --> 00:03:11,560
+tests will detect if you introduce
+a problem in the system.
+
+52
+00:03:11,760 --> 00:03:14,720
+In that sense, you can go and try
+different implementations for already
+
+53
+00:03:14,920 --> 00:03:15,680
+existing code.
+
+54
+00:03:16,220 --> 00:03:19,800
+And if you have tests for that part
+of the system, tests can already
+
+55
+00:03:20,000 --> 00:03:24,500
+tell you if the new implementation
+satisfies the existing specification
+
+56
+00:03:24,700 --> 00:03:25,600
+that is in the tests.
+
+57
+00:03:27,180 --> 00:03:30,160
+Another thing is that you can write
+new tests about the already existing
+
+58
+00:03:30,360 --> 00:03:33,680
+system to test that your understanding
+of the system is correct.
+
+59
+00:03:34,220 --> 00:03:38,700
+So you can actually extend your
+specification of the test to see
+
+60
+00:03:38,900 --> 00:03:40,580
+if it actually describes the
+implementation.
+
+61
+00:03:42,740 --> 00:03:45,340
+What is a good thing about tests?
+
+62
+00:03:46,320 --> 00:03:49,980
+So on one side, they will help you
+find bugs when they appear.
+
+63
+00:03:50,620 --> 00:03:56,060
+So a test that turns red or turns
+yellow, so a failing test or a test
+
+64
+00:03:56,260 --> 00:03:59,440
+with an error, it is telling you
+that there is something wrong about
+
+65
+00:03:59,640 --> 00:04:00,840
+the specification of the system.
+
+66
+00:04:02,200 --> 00:04:07,320
+On the other side, if you have lots
+of tests, you can yourself as a
+
+67
+00:04:07,520 --> 00:04:10,580
+developer, or as a team,
+you can trust your code base and
+
+68
+00:04:10,780 --> 00:04:13,420
+also transmit that trust to your
+customers and clients.
+
+69
+00:04:15,600 --> 00:04:18,400
+Tests will also help you to reproduce
+complex scenarios.
+
+70
+00:04:19,340 --> 00:04:23,900
+So you can, once you have a complex bug,
+you can write it in a test,
+
+71
+00:04:24,100 --> 00:04:27,760
+even if it is a complex test and
+reproducing the test will help you
+
+72
+00:04:27,960 --> 00:04:32,300
+to understand the bug and find a
+solution to fix it.
+
+73
+00:04:34,700 --> 00:04:38,120
+Also, once you find a bug,
+you can also write the test for it.
+
+74
+00:04:38,520 --> 00:04:43,660
+So and then that already existing
+test will make sure that if in the
+
+75
+00:04:43,860 --> 00:04:47,220
+future you find the regression and
+that bug appears again in the code base,
+
+76
+00:04:47,420 --> 00:04:49,260
+you will be able to detect it.
+
+77
+00:04:49,920 --> 00:04:53,500
+Finally, a test helps in isolating
+a problem.
+
+78
+00:04:54,040 --> 00:04:57,420
+Instead of running a test on a really
+big complex application,
+
+79
+00:04:57,860 --> 00:05:01,840
+you can create small scenarios that
+reproduce the test with the minimal
+
+80
+00:05:02,040 --> 00:05:02,800
+dependencies.
+
+81
+00:05:03,620 --> 00:05:07,000
+Reducing the dependencies is something
+that actually will help you to not
+
+82
+00:05:07,200 --> 00:05:10,640
+only find the bug, the actual cause
+of the problem, but also to fix
+
+83
+00:05:10,840 --> 00:05:12,000
+it much faster.
+
+84
+00:05:12,980 --> 00:05:16,320
+When you're writing a test suite,
+one of the things that you must
+
+85
+00:05:16,520 --> 00:05:20,400
+ensure is that you are checking,
+for example, extreme cases that
+
+86
+00:05:20,600 --> 00:05:23,100
+you're checking for null,
+zero, empty collections.
+
+87
+00:05:24,740 --> 00:05:27,680
+So for example, you need to check
+that a collection has the maximum
+
+88
+00:05:27,880 --> 00:05:30,360
+elements, the no elements at all,
+and so on.
+
+89
+00:05:31,200 --> 00:05:35,240
+You should also check complex cases
+or error cases like exceptions,
+
+90
+00:05:35,840 --> 00:05:36,600
+network issues.
+
+91
+00:05:37,080 --> 00:05:38,820
+These things actually happen in reality.
+
+92
+00:05:39,620 --> 00:05:45,720
+So the system should not only test them,
+but it should acknowledge that they
+
+93
+00:05:45,920 --> 00:05:48,920
+will happen and be prepared for it.
+
+94
+00:05:49,320 --> 00:05:54,380
+One thing that I think is pretty
+useful is to write one test for each bug,
+
+95
+00:05:54,820 --> 00:05:55,580
+at least.
+
+96
+00:05:56,260 --> 00:05:59,560
+So every time that you find a bug,
+you can write at least one test
+
+97
+00:05:59,760 --> 00:06:03,040
+for it to be able to know that in
+the future you are going to be able
+
+98
+00:06:03,240 --> 00:06:05,720
+to detect that bug if it happens again.
+
+99
+00:06:07,220 --> 00:06:12,360
+Of course, a good test suite has
+in general a good coverage.
+
+100
+00:06:12,560 --> 00:06:19,660
+So if you have a system and you
+know that your test covers 80% of
+
+101
+00:06:19,860 --> 00:06:23,940
+your code, you have some trust that
+there will be less bugs in this
+
+102
+00:06:24,140 --> 00:06:25,980
+part than in this part of the system.
+
+103
+00:06:27,460 --> 00:06:31,420
+Of course, a good test suite will
+check for abstractions and not for
+
+104
+00:06:31,620 --> 00:06:32,680
+implementations.
+
+105
+00:06:33,180 --> 00:06:36,200
+Implementations will change in the
+future, but abstractions and
+
+106
+00:06:36,400 --> 00:06:38,000
+specifications are there to stay.
+
+107
+00:06:38,580 --> 00:06:42,500
+Also, one of the things that make
+a good test suite is that you are
+
+108
+00:06:42,700 --> 00:06:45,940
+going to write many unit tests that
+test different parts of the system
+
+109
+00:06:46,140 --> 00:06:46,900
+independently.
+
+110
+00:06:47,320 --> 00:06:51,680
+Like that, if one test is failing,
+it is telling you that some part
+
+111
+00:06:51,880 --> 00:06:55,680
+of the system is breaking and not
+the other parts of the system.
+
+112
+00:06:56,300 --> 00:07:02,400
+Let's check how all of those good
+properties of test translate into
+
+113
+00:07:02,600 --> 00:07:03,360
+an example.
+
+114
+00:07:03,900 --> 00:07:08,060
+Here there is a test that checks
+how color objects are translated
+
+115
+00:07:08,260 --> 00:07:11,360
+into strings, hexadecimal strings,
+using the convert method.
+
+116
+00:07:12,640 --> 00:07:17,360
+So here we can see that a white
+color is converted to the FFFFFF,
+
+117
+00:07:17,780 --> 00:07:21,180
+the red color is translated to FF
+followed by zeros, and the color
+
+118
+00:07:21,380 --> 00:07:22,780
+black is translated to all zeros.
+
+119
+00:07:24,220 --> 00:07:27,800
+So what we can see from here and
+what we can understand from the
+
+120
+00:07:28,000 --> 00:07:30,780
+code without actually looking at
+the implementation is that the convert
+
+121
+00:07:30,980 --> 00:07:36,900
+method, it will take any color and
+it will translate it to a hexadecimal
+
+122
+00:07:37,100 --> 00:07:42,320
+representation where the first two
+digits are the red, the second two
+
+123
+00:07:42,520 --> 00:07:47,200
+digits are the green component,
+and the third digits are the blue
+
+124
+00:07:47,400 --> 00:07:48,160
+component.
+
+125
+00:07:48,720 --> 00:07:50,920
+So actually, without looking at
+the implementation, this test is
+
+126
+00:07:51,120 --> 00:07:56,800
+telling us that color green should
+
+127
+00:07:57,000 --> 00:08:03,040
+return zero for red, FF for green,
+
+128
+00:08:03,540 --> 00:08:04,360
+and zero for blue.
+
+129
+00:08:06,760 --> 00:08:10,600
+And we could actually know this
+by just looking at this specification
+
+130
+00:08:10,800 --> 00:08:12,240
+and without looking at the
+implementation.
+
+131
+00:08:14,000 --> 00:08:16,760
+In the same venue, we can actually
+look at this other test that is
+
+132
+00:08:16,960 --> 00:08:25,240
+checking that converting from an
+R00000 string will actually yield
+
+133
+00:08:25,440 --> 00:08:26,200
+us the correct color.
+
+134
+00:08:26,440 --> 00:08:30,580
+So what this test is doing is that
+it is taking all the digits from
+
+135
+00:08:30,780 --> 00:08:34,180
+zero to F to take all the potential
+possibilities here.
+
+136
+00:08:35,040 --> 00:08:38,420
+And for each of these,
+it is creating a string that will
+
+137
+00:08:38,620 --> 00:08:39,760
+have this form.
+
+138
+00:08:39,960 --> 00:08:46,060
+So it will be this plus parameter,
+parameter, 0000, yeah.
+
+139
+00:08:46,620 --> 00:08:51,560
+So, and then it's taking this string
+and it's creating a color from the
+
+140
+00:08:51,760 --> 00:08:52,520
+string.
+
+141
+00:08:53,740 --> 00:08:57,740
+We expect, of course,
+that creating a color from this string,
+
+142
+00:08:57,940 --> 00:09:03,120
+so we get a color, and converting
+it back to the string representation,
+
+143
+00:09:03,320 --> 00:09:04,960
+it should give the same string.
+
+144
+00:09:05,360 --> 00:09:07,800
+So this should be equals to the
+original string.
+
+145
+00:09:08,700 --> 00:09:13,900
+What this is checking is that from
+string and the convert method are
+
+146
+00:09:14,100 --> 00:09:15,180
+symmetric in some way.
+
+147
+00:09:15,600 --> 00:09:19,820
+So everything that is given as input
+to the fromString method should
+
+148
+00:09:20,020 --> 00:09:21,580
+be also the output of the convert
+method.
+
+149
+00:09:25,860 --> 00:09:29,920
+Now, if we take a look also at some
+tests that check the `bitShift`
+
+150
+00:09:30,140 --> 00:09:34,460
+implementation in Pharo,
+we can again look at these tests
+
+151
+00:09:34,660 --> 00:09:38,080
+and understand how this `bitShift`
+implementation works without actually
+
+152
+00:09:38,280 --> 00:09:39,680
+looking at the implementation details.
+
+153
+00:09:41,620 --> 00:09:43,660
+Two key parts make this test readable.
+
+154
+00:09:43,860 --> 00:09:49,360
+First is that they are actually
+based on how this works and how
+
+155
+00:09:49,560 --> 00:09:52,380
+it is implemented, of course,
+because we are just executing it
+
+156
+00:09:52,580 --> 00:09:53,360
+and comparing the result.
+
+157
+00:09:53,740 --> 00:09:59,800
+But also the writer of this test
+made really sure to write these
+
+158
+00:10:00,000 --> 00:10:01,540
+examples in binary.
+
+159
+00:10:01,740 --> 00:10:07,360
+Like that, since `bitShift` is a
+binary operation, we can actually,
+
+160
+00:10:07,560 --> 00:10:09,840
+just by reading it, understand what
+this is doing.
+
+161
+00:10:10,480 --> 00:10:14,000
+So if we take a number,
+so here is 1, 1 in binary,
+
+162
+00:10:14,200 --> 00:10:17,400
+so the 2r is here to indicate the base.
+
+163
+00:10:17,840 --> 00:10:20,340
+So for example, in Pharo,
+you can do 2r 1 1.
+
+164
+00:10:21,080 --> 00:10:27,440
+It's 1 1 in binary, and you can
+say 16r to put hexadecimal numbers.
+
+165
+00:10:29,160 --> 00:10:33,120
+So here, if we take 1,
+1and we shift it two to the left,
+
+166
+00:10:33,660 --> 00:10:37,660
+this will actually put two zeros
+and put the ones to the left.
+
+167
+00:10:38,240 --> 00:10:40,620
+So the result should be 1,
+1, 0, 0.
+
+168
+00:10:42,600 --> 00:10:46,420
+Likewise, if we `bitShift` instead
+of to the left, to the right,
+
+169
+00:10:46,620 --> 00:10:51,160
+using a negative shift,
+that will cut these two numbers
+
+170
+00:10:51,360 --> 00:10:52,660
+and remove them from the number.
+
+171
+00:10:52,860 --> 00:10:58,480
+So here, for example,
+shifting 1, 0, 1, 1 to the right by two,
+
+172
+00:10:59,020 --> 00:11:02,200
+it will discard the one,
+one that are to the right,
+
+173
+00:11:02,680 --> 00:11:04,820
+and it will keep only the 1,
+0.
+
+174
+00:11:05,620 --> 00:11:09,740
+Again, here we can check the same
+thing as before, as it happened
+
+175
+00:11:09,940 --> 00:11:10,700
+with numbers.
+
+176
+00:11:10,900 --> 00:11:13,100
+We can check that `bitShift`ing
+to the left and to the right,
+
+177
+00:11:13,300 --> 00:11:14,060
+they are symmetric.
+
+178
+00:11:14,260 --> 00:11:18,120
+And we can understand that property
+by just reading the test and without
+
+179
+00:11:18,320 --> 00:11:19,080
+looking at implementation.
+
+180
+00:11:19,560 --> 00:11:21,240
+So what does this test do?
+
+181
+00:11:21,440 --> 00:11:26,600
+It takes 100 numbers and it will
+just take the number one and shift
+
+182
+00:11:26,800 --> 00:11:30,940
+it n to the left and then n to the
+right.
+
+183
+00:11:31,180 --> 00:11:32,960
+And at the end, we should have the
+same number.
+
+184
+00:11:33,620 --> 00:11:37,380
+So if I take one and I shift it
+n to the left and then I shift it
+
+185
+00:11:37,580 --> 00:11:44,160
+n negated, so this returns the negative
+number for i, that should return one.
+
+186
+00:11:45,000 --> 00:11:47,840
+Now, of course, I told you before
+that we can understand implementation
+
+187
+00:11:48,040 --> 00:11:49,740
+and how it works without looking
+at the code.
+
+188
+00:11:49,940 --> 00:11:52,300
+Of course, sometimes reading the
+code is complicated.
+
+189
+00:11:53,240 --> 00:11:57,260
+Some implementations can be tricky
+and even can be really difficult
+
+190
+00:11:57,460 --> 00:11:59,340
+to read because of even performance
+reasons.
+
+191
+00:12:01,720 --> 00:12:04,180
+In this case, for example,
+the convert method that we were
+
+192
+00:12:04,380 --> 00:12:08,220
+looking before, it is defined like this.
+
+193
+00:12:08,420 --> 00:12:11,140
+So it takes first a string,
+it makes a copy of it.
+
+194
+00:12:11,360 --> 00:12:13,880
+So like that, we have a new string
+every time that the convert method
+
+195
+00:12:14,080 --> 00:12:14,840
+is executed.
+
+196
+00:12:15,040 --> 00:12:17,760
+And then, it is replacing by hand
+each of the characters,
+
+197
+00:12:17,960 --> 00:12:21,540
+so the second, third,
+fourth, fifth, sixth,
+
+198
+00:12:21,740 --> 00:12:27,160
+and seventh, so each of these after
+the numeral character.
+
+199
+00:12:28,680 --> 00:12:34,540
+And it is replacing each of them
+by a character computed automatically
+
+200
+00:12:34,740 --> 00:12:37,220
+by doing bit operations.
+
+201
+00:12:38,620 --> 00:12:42,640
+So of course, if we had to read
+this code, it wouldn't be actually
+
+202
+00:12:42,840 --> 00:12:44,100
+clear what this code is doing.
+
+203
+00:12:44,500 --> 00:12:47,960
+It is much more easily actually
+to understand this code by just
+
+204
+00:12:48,160 --> 00:12:48,920
+reading the test.
+
+205
+00:12:49,460 --> 00:12:54,940
+So one of the important points to
+understand the test and to manage
+
+206
+00:12:55,140 --> 00:12:58,700
+the test is that we need to limit
+the dependency to other components.
+
+207
+00:12:59,360 --> 00:13:03,220
+So imagine, for example,
+that we want to write the test that
+
+208
+00:13:03,420 --> 00:13:08,920
+transforms some piece of code,
+so some code here, and we want to
+
+209
+00:13:09,120 --> 00:13:10,900
+transform that code into some other
+code.
+
+210
+00:13:12,940 --> 00:13:16,140
+So our test is actually managing
+this translation.
+
+211
+00:13:16,900 --> 00:13:23,800
+Now, if this input can only be obtained
+by calling a compiler on something,
+
+212
+00:13:24,820 --> 00:13:27,880
+that means that our test is going
+to be dependent on this compiler.
+
+213
+00:13:28,880 --> 00:13:36,000
+So which means that actually our
+test can break if our conversion breaks,
+
+214
+00:13:36,980 --> 00:13:38,680
+but also if the compiler breaks.
+
+215
+00:13:38,880 --> 00:13:41,760
+So that means that we have two points
+of failure for our tests.
+
+216
+00:13:43,280 --> 00:13:48,300
+One possible solution to cope with
+this problem is to make our test
+
+217
+00:13:48,500 --> 00:13:49,360
+independent from the compiler.
+
+218
+00:13:49,620 --> 00:13:53,440
+So removing all this part from the
+test at all.
+
+219
+00:13:53,940 --> 00:14:00,740
+So what we can do is to extract
+this piece before the writing of
+
+220
+00:14:00,940 --> 00:14:05,900
+the test, so the input and reuse
+that input already generated once
+
+221
+00:14:06,100 --> 00:14:07,840
+and reuse it many, many times in
+our test.
+
+222
+00:14:08,080 --> 00:14:11,140
+So like that, our test,
+it can only perform the conversion.
+
+223
+00:14:11,900 --> 00:14:14,920
+When you write test, think about
+testing not only the positive,
+
+224
+00:14:15,120 --> 00:14:18,440
+but also the negative properties
+of the behavior you are testing.
+
+225
+00:14:19,400 --> 00:14:22,540
+So for example, when I'm talking
+about positive testing,
+
+226
+00:14:23,380 --> 00:14:27,780
+I mean, if you do the normal stuff,
+it passes, everything is okay.
+
+227
+00:14:28,220 --> 00:14:30,120
+So we are, for example,
+if we have a collection,
+
+228
+00:14:30,380 --> 00:14:32,840
+we add an element, now we have that
+element in the collection.
+
+229
+00:14:33,240 --> 00:14:36,820
+Or in a more complex case,
+that you can, for example,
+
+230
+00:14:37,020 --> 00:14:39,220
+login in an application if you use
+the correct credentials.
+
+231
+00:14:42,040 --> 00:14:46,820
+Now, if you think about also the
+negative properties of a test,
+
+232
+00:14:47,560 --> 00:14:51,760
+you should test that if you do not
+behave correctly, the test breaks
+
+233
+00:14:51,960 --> 00:14:52,720
+as expected.
+
+234
+00:14:53,460 --> 00:14:58,980
+So for example, you should not be
+able to load, log in with the incorrect
+
+235
+00:14:59,180 --> 00:14:59,940
+credentials.
+
+236
+00:15:01,020 --> 00:15:05,100
+And not only that, it should raise,
+for example, an exception with a
+
+237
+00:15:05,300 --> 00:15:11,080
+given code and like that in the UI,
+you can catch it and show a proper
+
+238
+00:15:11,280 --> 00:15:12,200
+message to the user.
+
+239
+00:15:12,720 --> 00:15:17,440
+If it just breaks and then it closes
+your browser, for example,
+
+240
+00:15:17,680 --> 00:15:21,280
+then that is not an expected error.
+
+241
+00:15:22,360 --> 00:15:24,560
+Some other positive properties of test.
+
+242
+00:15:26,040 --> 00:15:28,820
+Test, as we saw before,
+they give simple and reproducible
+
+243
+00:15:29,020 --> 00:15:29,780
+examples.
+
+244
+00:15:29,980 --> 00:15:31,920
+Just by looking at the examples
+in the test, you understand how
+
+245
+00:15:32,120 --> 00:15:32,880
+the code works.
+
+246
+00:15:33,080 --> 00:15:34,480
+Many tests have this property.
+
+247
+00:15:35,460 --> 00:15:38,840
+They also give you executable snippets
+and examples of code that you can
+
+248
+00:15:39,040 --> 00:15:41,460
+reuse in many other applications.
+
+249
+00:15:42,100 --> 00:15:44,940
+Every time that, for example,
+you want to use a library that is,
+
+250
+00:15:45,140 --> 00:15:49,760
+for example, an open source library
+that is online, you can take a look
+
+251
+00:15:49,960 --> 00:15:52,760
+at the test to understand how that
+library can be used.
+
+252
+00:15:53,400 --> 00:15:56,840
+So then in that sense,
+tests do not only give you executable
+
+253
+00:15:57,040 --> 00:15:59,480
+snippets, but they also illustrate
+the API.
+
+254
+00:15:59,680 --> 00:16:01,720
+So how is the way to use that library?
+
+255
+00:16:03,400 --> 00:16:08,340
+Also, tests will be the most up-to-date
+documentation because they are actually
+
+256
+00:16:08,540 --> 00:16:10,580
+connected with the code and they
+are going to be executed.
+
+257
+00:16:11,360 --> 00:16:13,820
+If the tests are broken,
+you are going to notice.
+
+258
+00:16:14,020 --> 00:16:17,360
+If the documentation is outdated
+and it's broken, it's more difficult
+
+259
+00:16:17,560 --> 00:16:18,320
+to know.
+
+260
+00:16:19,960 --> 00:16:22,020
+Tests will also check the conformity
+of new code.
+
+261
+00:16:22,220 --> 00:16:25,100
+If you introduce new code and new
+variations in the code or you modify
+
+262
+00:16:25,300 --> 00:16:27,800
+the existing code, tests will actually
+detect if you broke something.
+
+263
+00:16:30,000 --> 00:16:33,000
+So think about tests as a first
+client to the code.
+
+264
+00:16:33,300 --> 00:16:36,520
+So you have some code and instead
+of thinking about the actual people
+
+265
+00:16:36,720 --> 00:16:39,700
+that is going to use it,
+think about how you would use it
+
+266
+00:16:39,900 --> 00:16:40,660
+with your test.
+
+267
+00:16:40,860 --> 00:16:44,080
+So your test can be a good first
+client for your code.
+
+268
+00:16:45,480 --> 00:16:49,020
+And they also allow you to force
+a customizable design.
+
+269
+00:16:49,220 --> 00:16:52,320
+So they will force you to maintain
+a clean design that can be executed
+
+270
+00:16:52,520 --> 00:16:56,500
+in a repeated way that will not
+dirty an environment with files
+
+271
+00:16:56,700 --> 00:16:57,780
+that are created automatically and so on.
+
+272
+00:16:58,460 --> 00:17:02,980
+So the test will actually force
+you to add a lot of properties that
+
+273
+00:17:03,180 --> 00:17:05,980
+are inherent to the test in your code.
+
+274
+00:17:08,780 --> 00:17:11,820
+Of course, a good test fit should
+be deterministic.
+
+275
+00:17:12,060 --> 00:17:15,640
+That means that every time that
+you run the test, they should give
+
+276
+00:17:15,840 --> 00:17:16,620
+you the same results.
+
+277
+00:17:17,580 --> 00:17:21,120
+That is in contrast with what we
+call flaky test.
+
+278
+00:17:23,600 --> 00:17:26,120
+Flaky test is something that we
+are not going to cover in this MOOC,
+
+279
+00:17:26,320 --> 00:17:30,260
+but flaky tests are those tests
+that actually will randomly have
+
+280
+00:17:30,460 --> 00:17:31,220
+different results.
+
+281
+00:17:31,420 --> 00:17:35,560
+For example, they will sometimes
+fail because of random conditions.
+
+282
+00:17:35,760 --> 00:17:39,540
+For example, the network had problems
+and then they will fail.
+
+283
+00:17:40,760 --> 00:17:45,200
+Having flaky tests or non-deterministic
+tests actually will minimize the
+
+284
+00:17:45,400 --> 00:17:47,820
+trust that you have in your test
+because if you have tests that are
+
+285
+00:17:48,020 --> 00:17:50,480
+failing from time to time,
+suddenly you will start not trusting
+
+286
+00:17:50,680 --> 00:17:51,920
+your test suite anymore.
+
+287
+00:17:53,580 --> 00:17:56,960
+So keeping a deterministic test
+suite is important to keep trust.
+
+288
+00:17:57,960 --> 00:18:01,380
+Also, tests are self-explained because
+when you want to evolve your source
+
+289
+00:18:01,580 --> 00:18:04,460
+code, you want to evolve not only
+your application but also the tests
+
+290
+00:18:04,660 --> 00:18:07,160
+because the tests are the specification
+of your source code.
+
+291
+00:18:07,500 --> 00:18:10,500
+So the more easily and more
+self-explained your tests are,
+
+292
+00:18:10,700 --> 00:18:12,040
+the easier they are to evolve.
+
+293
+00:18:14,120 --> 00:18:19,440
+Also, it is important to keep them
+simple or short or unit,
+
+294
+00:18:19,640 --> 00:18:22,740
+as unit as possible, with as few
+assertions as possible because they
+
+295
+00:18:22,940 --> 00:18:23,700
+are easier to maintain.
+
+296
+00:18:25,300 --> 00:18:28,820
+Take into account that tests will
+change less frequently than the
+
+297
+00:18:29,020 --> 00:18:34,640
+code because tests will ideally
+test the API, test the specification
+
+298
+00:18:34,840 --> 00:18:36,180
+and not the implementation.
+
+299
+00:18:36,380 --> 00:18:38,660
+Like that, you can change the
+implementation of your source code
+
+300
+00:18:38,860 --> 00:18:41,360
+and keep the same test implementation.
+
+301
+00:18:43,100 --> 00:18:45,420
+And try to limit the dependency
+to other elements.
+
+302
+00:18:45,620 --> 00:18:50,840
+This is also key to avoid ripple
+effects in the changes.
+
+303
+00:18:51,720 --> 00:18:56,080
+In conclusion, you should know by
+now that tests are important,
+
+304
+00:18:56,520 --> 00:19:01,240
+in particularly in dynamically typed
+languages where actually we get
+
+305
+00:19:01,440 --> 00:19:04,480
+the most guarantees from them.
+
+306
+00:19:05,140 --> 00:19:09,440
+And also, not only in dynamically
+typed languages, but in any kind
+
+307
+00:19:09,640 --> 00:19:13,160
+of project, actually tests will
+help you to deliver complex projects.
+

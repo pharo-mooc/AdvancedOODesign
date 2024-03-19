@@ -1,0 +1,683 @@
+1
+00:00:04,270 --> 00:00:05,690
+Stéphane Ducasse - Welcome everybody.
+
+2
+00:00:05,990 --> 00:00:09,550
+So in this little lecture,
+I would like to discuss with you
+
+3
+00:00:09,750 --> 00:00:15,150
+some aspects of design on form
+validation and what it means in
+
+4
+00:00:15,350 --> 00:00:20,250
+terms of tree traversal or object
+traversal, accumulator,
+
+5
+00:00:20,670 --> 00:00:24,550
+how we can distribute the knowledge
+of the validation of a system.
+
+6
+00:00:24,930 --> 00:00:26,390
+So this is not a design pattern.
+
+7
+00:00:26,590 --> 00:00:27,850
+This is not a coding medium.
+
+8
+00:00:28,310 --> 00:00:32,930
+This is more a discussion around
+variation and a design point.
+
+9
+00:00:33,130 --> 00:00:35,850
+So the objective, this is to think
+of object, of course,
+
+10
+00:00:36,270 --> 00:00:41,890
+but also about structure traversal
+and distribution of behavior,
+
+11
+00:00:42,390 --> 00:00:46,390
+as well as to look at as object
+as accumulator in the sense of,
+
+12
+00:00:46,810 --> 00:00:50,530
+okay, I can have an object that
+is a basket in which other object
+
+13
+00:00:50,730 --> 00:00:51,530
+plays a result.
+
+14
+00:00:51,730 --> 00:00:55,070
+So what you see is that here on
+the screen, this is a screenshot
+
+15
+00:00:55,270 --> 00:01:00,690
+of the Iceberg Git support in Pharo
+and you can select different ways
+
+16
+00:01:00,890 --> 00:01:02,730
+of cloning or accessing your code.
+
+17
+00:01:03,130 --> 00:01:08,550
+And then here, each of these selections
+will bring a different form.
+
+18
+00:01:09,230 --> 00:01:12,250
+Basically, behind the scene,
+you don't see it, but there is an
+
+19
+00:01:12,450 --> 00:01:15,670
+option pane that will contain different
+fields.
+
+20
+00:01:15,870 --> 00:01:20,970
+And then the question,
+this is how can I help the user
+
+21
+00:01:21,170 --> 00:01:23,130
+not introducing mistake?
+
+22
+00:01:23,470 --> 00:01:26,650
+So this means that the form should
+validate the input.
+
+23
+00:01:27,310 --> 00:01:31,310
+Now, the question that we can ask
+ourselves, this is who is responsible
+
+24
+00:01:31,510 --> 00:01:32,430
+for doing the validation?
+
+25
+00:01:32,630 --> 00:01:37,630
+Is it a single field or is it this
+
+26
+00:01:37,830 --> 00:01:41,650
+group that should manage the semantic?
+
+27
+00:01:41,850 --> 00:01:45,750
+And when I report, should I report
+here at this level?
+
+28
+00:01:46,670 --> 00:01:49,390
+And when I press OK, what should I do?
+
+29
+00:01:49,990 --> 00:01:53,590
+So this is what I would like to
+discuss and how to model these kinds
+
+30
+00:01:53,790 --> 00:01:54,550
+of things.
+
+31
+00:01:55,550 --> 00:01:59,910
+So basically, to answer this question,
+we should think about how do we
+
+32
+00:02:00,110 --> 00:02:01,270
+navigate a tree of instance?
+
+33
+00:02:02,190 --> 00:02:07,350
+Can we get children that decide
+that they don't care or yes,
+
+34
+00:02:07,930 --> 00:02:09,290
+this is my report?
+
+35
+00:02:09,490 --> 00:02:11,410
+What do we report also?
+
+36
+00:02:12,370 --> 00:02:14,930
+For example, what is the validation?
+
+37
+00:02:15,270 --> 00:02:16,810
+What the validation should report?
+
+38
+00:02:17,170 --> 00:02:18,930
+Should it report a yes,
+no?
+
+39
+00:02:19,590 --> 00:02:25,050
+So the yes is easy because everything
+works well, but the no is less easy
+
+40
+00:02:25,250 --> 00:02:30,950
+because if a user mistypes something,
+we would like to give a good feedback
+
+41
+00:02:31,150 --> 00:02:31,910
+to the user.
+
+42
+00:02:32,110 --> 00:02:35,350
+We would like to say to the user,
+okay, the file that you entered
+
+43
+00:02:35,550 --> 00:02:36,430
+is not valid.
+
+44
+00:02:37,330 --> 00:02:43,410
+It should end up with dot an extension,
+the correct extension or these kinds
+
+45
+00:02:43,610 --> 00:02:44,370
+of things.
+
+46
+00:02:44,630 --> 00:02:48,030
+So basically, what we see from that
+perspective is that
+
+47
+00:02:49,030 --> 00:02:53,050
+yes/no cannot really work because we
+want to have a more semantic of
+
+48
+00:02:53,250 --> 00:02:54,010
+the mistake.
+
+49
+00:02:55,930 --> 00:03:00,850
+So when I said that we have a tree,
+you have the option pane and it
+
+50
+00:03:01,050 --> 00:03:04,710
+contains other widgets,
+in fact several other widgets.
+
+51
+00:03:05,210 --> 00:03:08,390
+So we already have a tree and it
+can be a lot more complex than that.
+
+52
+00:03:10,530 --> 00:03:14,710
+Now, in a form design,
+what we could have is that we could say,
+
+53
+00:03:15,410 --> 00:03:20,730
+any presenter, so the elementary
+widget in the tree can be responsible
+
+54
+00:03:20,930 --> 00:03:22,150
+to validate its contents.
+
+55
+00:03:22,350 --> 00:03:29,210
+So we could have, for example,
+a method that is called isValidate
+
+56
+00:03:29,410 --> 00:03:34,070
+where by default it returns true
+and a report like that.
+
+57
+00:03:34,270 --> 00:03:38,570
+We could say, the widget could say,
+oh, was my input correct?
+
+58
+00:03:38,870 --> 00:03:39,630
+Yes, no.
+
+59
+00:03:39,830 --> 00:03:44,310
+Or and then what should we do in
+terms of mistake and by sending
+
+60
+00:03:44,510 --> 00:03:47,750
+a report and by default,
+the report could be okay,
+
+61
+00:03:47,950 --> 00:03:55,450
+I am the 'OkReport' like a neutral
+operation in math, a bit in the same idea.
+
+62
+00:03:56,590 --> 00:04:01,970
+And then, for example,
+the input field that will be specialized
+
+63
+00:04:02,170 --> 00:04:06,630
+for the path could say,
+oh, you know, I already find the
+
+64
+00:04:06,830 --> 00:04:15,270
+method is valid by checking is my
+input field: contents is really ending
+
+65
+00:04:15,470 --> 00:04:17,910
+with the right extension,
+for example.
+
+66
+00:04:18,430 --> 00:04:22,990
+And then, the report in that case
+would be okay, if there is something
+
+67
+00:04:23,190 --> 00:04:27,270
+wrong, then I create a report and
+I said I was expecting a git and
+
+68
+00:04:27,470 --> 00:04:29,570
+you give me something that doesn't
+terminate.
+
+69
+00:04:29,770 --> 00:04:31,050
+So please fix it.
+
+70
+00:04:31,250 --> 00:04:35,450
+With that kind of report,
+the user interface could be a special
+
+71
+00:04:35,650 --> 00:04:39,910
+another user interface that would
+display the error to the user in
+
+72
+00:04:40,110 --> 00:04:40,870
+a nice way.
+
+73
+00:04:41,070 --> 00:04:44,750
+And what we could do also is that
+the OptionPresenter, the one that
+
+74
+00:04:44,950 --> 00:04:48,410
+contains the other fields, in that case,
+could said, oh, you know,
+
+75
+00:04:48,690 --> 00:04:52,590
+I am valid if all my children are valid.
+
+76
+00:04:52,950 --> 00:04:56,970
+The all satisfied means all the
+children should be valid and the
+
+77
+00:04:57,170 --> 00:05:02,130
+report the OptionPresenter could decide,
+okay, I create a report.
+
+78
+00:05:02,330 --> 00:05:07,030
+I iterate over my children and I
+will collect basically their reports.
+
+79
+00:05:07,230 --> 00:05:14,870
+I said, okay, if a child is not valid,
+then please add the report to the
+
+80
+00:05:15,070 --> 00:05:15,830
+report.
+
+81
+00:05:16,030 --> 00:05:17,490
+Like that at the end,
+we would have a report with all
+
+82
+00:05:17,690 --> 00:05:22,070
+the mistakes done in the form,
+because usually on long form you
+
+83
+00:05:22,270 --> 00:05:23,070
+get a lot of mistakes.
+
+84
+00:05:23,270 --> 00:05:26,670
+So what you see that the flow is
+basically like that.
+
+85
+00:05:26,870 --> 00:05:33,050
+It goes from the option pane,
+the container to each of his children.
+
+86
+00:05:33,830 --> 00:05:37,510
+And during this flow,
+to have a report, we need to know
+
+87
+00:05:37,710 --> 00:05:39,050
+if the validation failed or not.
+
+88
+00:05:39,330 --> 00:05:42,510
+We ask, okay, okay, okay.
+
+89
+00:05:43,710 --> 00:05:47,350
+The question we could ask ourselves,
+oh, maybe isValid could have written
+
+90
+00:05:47,550 --> 00:05:48,310
+a report.
+
+91
+00:05:48,510 --> 00:05:49,270
+We don't know.
+
+92
+00:05:49,470 --> 00:05:54,150
+And what is clear is that isValid
+returns the report, then in that case,
+
+93
+00:05:54,350 --> 00:05:57,490
+we should have a okay or not okay
+report and things like that.
+
+94
+00:05:57,910 --> 00:06:03,430
+By the way, this is a design like
+that that is done to validate the
+
+95
+00:06:03,630 --> 00:06:04,790
+Pharo books.
+
+96
+00:06:05,250 --> 00:06:08,310
+We want to know if a book is correct
+from a Pharo version.
+
+97
+00:06:08,510 --> 00:06:16,010
+We execute all the tests and then
+we have a kind of okay or fail test
+
+98
+00:06:16,210 --> 00:06:19,070
+and they accumulate over the execution.
+
+99
+00:06:19,270 --> 00:06:22,130
+This is a bit in the same way.
+
+100
+00:06:22,870 --> 00:06:26,490
+Now what you see that graphically,
+by the way, during the flow,
+
+101
+00:06:26,730 --> 00:06:28,790
+I will always ask, is it okay?
+
+102
+00:06:28,990 --> 00:06:29,750
+Give me a report.
+
+103
+00:06:29,950 --> 00:06:30,710
+Is it okay?
+
+104
+00:06:30,910 --> 00:06:31,670
+Give me a report.
+
+105
+00:06:31,930 --> 00:06:37,450
+And now, we could have also another
+design, which is okay,
+
+106
+00:06:37,750 --> 00:06:42,910
+I will navigate the element structure
+
+107
+00:06:43,110 --> 00:06:44,490
+and pass a basket.
+
+108
+00:06:45,130 --> 00:06:49,170
+That is basically I said,
+hey, you know, if you have a report,
+
+109
+00:06:49,510 --> 00:06:51,990
+please add it to this basket.
+
+110
+00:06:53,230 --> 00:06:55,850
+And like that, we don't have to ask.
+
+111
+00:06:56,050 --> 00:07:01,990
+We just said, can you validate yourself
+into that? An element that does not
+
+112
+00:07:02,190 --> 00:07:05,510
+have a problem, does not have to
+say if it is valid or not.
+
+113
+00:07:06,330 --> 00:07:08,790
+If it does not add a report,
+then it is valid.
+
+114
+00:07:08,990 --> 00:07:11,190
+And if it has a report,
+then there is a problem.
+
+115
+00:07:12,610 --> 00:07:14,490
+This design would be like that.
+
+116
+00:07:15,050 --> 00:07:20,930
+We could say, okay, validate into
+a report and by default do nothing.
+
+117
+00:07:21,130 --> 00:07:28,550
+And then, for containers and if,
+the PathPresenter will just say,
+
+118
+00:07:28,750 --> 00:07:32,310
+okay, in the report, please add
+this for self path.
+
+119
+00:07:32,950 --> 00:07:38,110
+And probably, you should say that
+this is a mistake on self and probably
+
+120
+00:07:38,310 --> 00:07:41,770
+not said path, but on self,
+so that the user interface can pinpoint
+
+121
+00:07:41,970 --> 00:07:43,910
+and put in red the right field.
+
+122
+00:07:44,110 --> 00:07:50,530
+Then what the OptionPresenter would
+do is that the OptionPresenter get
+
+123
+00:07:50,730 --> 00:07:53,790
+a report and he just pass it to
+these children.
+
+124
+00:07:54,350 --> 00:07:56,910
+If he want to do it via the children,
+he could also say, no,
+
+125
+00:07:57,110 --> 00:07:58,530
+I decide to do it in another way.
+
+126
+00:08:00,610 --> 00:08:06,950
+So I wanted with this little
+presentation to show example where
+
+127
+00:08:07,150 --> 00:08:12,830
+we can question interrogative form
+and we can play with different design.
+
+128
+00:08:13,030 --> 00:08:18,650
+We can let the user decide if he
+wants to join a process or so.
+
+129
+00:08:19,290 --> 00:08:23,670
+And we can also potentially have
+double dispatch between the report
+
+130
+00:08:23,870 --> 00:08:24,630
+and the container.
+
+131
+00:08:25,470 --> 00:08:30,610
+And in this lecture what I like
+
+132
+00:08:30,810 --> 00:08:32,850
+is that nothing is black and white.
+
+133
+00:08:33,050 --> 00:08:37,310
+You know, we have some lecture where
+we said, okay, this design is bad
+
+134
+00:08:37,510 --> 00:08:40,150
+or not good and this one is much better.
+
+135
+00:08:40,350 --> 00:08:41,470
+Here, this is unclear.
+
+136
+00:08:42,390 --> 00:08:46,250
+So this is a really important aspect
+of object-oriented design is that
+
+137
+00:08:46,450 --> 00:08:51,450
+you should model things and you
+should see what is your client and
+
+138
+00:08:51,650 --> 00:08:57,090
+and how does it fit, how your design
+fit with the client that you have
+
+139
+00:08:57,290 --> 00:08:58,130
+and the problem that you have.
+
+140
+00:08:58,350 --> 00:09:00,550
+So that's why this is important
+to explore design.
+
+141
+00:09:00,890 --> 00:09:05,630
+So we don't have a predefined way
+to solve the problem that I show.
+
+142
+00:09:05,830 --> 00:09:11,950
+But I really like the idea that,
+in fact, we can ask the receiver
+
+143
+00:09:12,150 --> 00:09:16,330
+to get a value or we can also do
+not care of the value,
+
+144
+00:09:16,530 --> 00:09:19,770
+but pass a container in which the
+value get accumulated.
+
+145
+00:09:20,370 --> 00:09:23,910
+And this is interesting to see that
+sometimes, especially on recursive
+
+146
+00:09:24,110 --> 00:09:28,830
+structure, passing a container to
+collect information can be a good
+
+147
+00:09:29,030 --> 00:09:29,790
+design.
+

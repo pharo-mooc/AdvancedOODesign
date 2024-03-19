@@ -1,0 +1,444 @@
+1
+00:00:04,060 --> 00:00:04,820
+Hello.
+
+2
+00:00:05,020 --> 00:00:08,840
+In this lecture, we will revisit
+the notion of registration that
+
+3
+00:00:09,040 --> 00:00:13,280
+we already discussed in a previous
+lecture using class methods.
+
+4
+00:00:15,120 --> 00:00:20,520
+So the idea is to analyze what are
+the alternatives to class-based
+
+5
+00:00:20,720 --> 00:00:26,380
+method registration and to see if
+we can design something that is
+
+6
+00:00:26,580 --> 00:00:28,540
+as dynamic, but less expensive.
+
+7
+00:00:30,580 --> 00:00:34,540
+So if you remember, before starting,
+a class is a regular object.
+
+8
+00:00:34,780 --> 00:00:39,460
+We can send messages to classes
+and each class can answer specifically.
+
+9
+00:00:39,660 --> 00:00:41,620
+We can add new methods and classes.
+
+10
+00:00:41,820 --> 00:00:46,720
+For example, if I do object
+allSubclasses, I will get allSubclasses
+
+11
+00:00:47,820 --> 00:00:53,040
+of the object and I can collect
+all classes that can answer to the
+
+12
+00:00:53,240 --> 00:00:54,000
+foo message.
+
+13
+00:00:54,380 --> 00:01:00,540
+And of course, it means that I need
+to define the `foo` method on the
+
+14
+00:01:00,740 --> 00:01:05,480
+classes or it should be inherited
+to make it work.
+
+15
+00:01:07,360 --> 00:01:10,180
+And if you remember correctly,
+in a previous lecture,
+
+16
+00:01:10,400 --> 00:01:17,060
+we already spoke about an extensible
+design by iterating over subclasses.
+
+17
+00:01:17,260 --> 00:01:22,500
+For example, in the `PillarParser`,
+we were able to compute dynamically
+
+18
+00:01:22,700 --> 00:01:27,200
+the document classes that represent
+the nodes of a document.
+
+19
+00:01:27,920 --> 00:01:32,320
+And then to parse a line,
+we were able to dynamically select
+
+20
+00:01:32,520 --> 00:01:36,100
+the right node that can parse a
+specific line.
+
+21
+00:01:36,660 --> 00:01:41,580
+So this mechanism is a kind of
+pre-registration mechanism based
+
+22
+00:01:41,780 --> 00:01:42,760
+on class methods.
+
+23
+00:01:42,960 --> 00:01:46,240
+So it means that each time a new
+class is loaded in the system,
+
+24
+00:01:46,580 --> 00:01:50,720
+a new subclass of document item,
+it will be taken into account for free.
+
+25
+00:01:50,980 --> 00:01:52,380
+You have nothing to do as a programmer.
+
+26
+00:01:53,300 --> 00:01:59,020
+But the cons is that each time you
+need to query the system.
+
+27
+00:01:59,260 --> 00:02:04,860
+You need to query the system to
+get all nodes that can parse a line,
+
+28
+00:02:05,600 --> 00:02:07,360
+all document item subclasses.
+
+29
+00:02:07,560 --> 00:02:08,640
+And this is really costly.
+
+30
+00:02:09,940 --> 00:02:14,860
+You need to do it all the time for
+nothing and this is an expensive
+
+31
+00:02:15,060 --> 00:02:15,820
+mechanism.
+
+32
+00:02:16,020 --> 00:02:17,840
+So what can we do to improve this
+situation?
+
+33
+00:02:18,880 --> 00:02:23,300
+Solution one, we could pre-compute
+the list of classes and write it
+
+34
+00:02:23,500 --> 00:02:24,260
+directly in the code.
+
+35
+00:02:24,700 --> 00:02:32,720
+So here in the code, we replaced
+the document item or subclasses
+
+36
+00:02:32,920 --> 00:02:37,820
+by a fixed collection of classes,
+section, list, and paragraph.
+
+37
+00:02:39,020 --> 00:02:41,060
+And then, we can sort them by priority.
+
+38
+00:02:41,340 --> 00:02:42,760
+We can even do better.
+
+39
+00:02:43,060 --> 00:02:48,420
+We can directly order the list correctly
+
+40
+00:02:48,620 --> 00:02:52,340
+and that the priority is directly
+embedded inside the collection.
+
+41
+00:02:56,100 --> 00:03:00,460
+So now the evaluation of this solution
+is that we do not have to query
+
+42
+00:03:00,660 --> 00:03:02,580
+the classes all the time.
+
+43
+00:03:02,780 --> 00:03:03,800
+So this is a good point.
+
+44
+00:03:04,500 --> 00:03:08,940
+But the cons is that you have to
+keep the list up to date.
+
+45
+00:03:09,140 --> 00:03:11,980
+So it means that each time you will
+load a new class in the system,
+
+46
+00:03:12,180 --> 00:03:15,060
+you need to revisit the list,
+change the code, recompile the method.
+
+47
+00:03:15,260 --> 00:03:18,540
+So this is an explicit list that
+is written in the code.
+
+48
+00:03:19,100 --> 00:03:22,040
+And this is not really extensible
+by design.
+
+49
+00:03:23,240 --> 00:03:26,960
+The next solution is to have an
+explicit registration mechanism.
+
+50
+00:03:27,230 --> 00:03:33,300
+So it means that now in the
+`PillarParser`, we will store in
+
+51
+00:03:33,500 --> 00:03:40,680
+a class variable a dictionary or
+collection of classes that can represent
+
+52
+00:03:40,880 --> 00:03:43,580
+an item, a document item.
+
+53
+00:03:46,280 --> 00:03:52,140
+And of course, I need to add a way
+for classes to register themselves.
+
+54
+00:03:52,340 --> 00:03:56,080
+So I will provide a method,
+registerClass, like that a new class
+
+55
+00:03:56,280 --> 00:03:59,660
+in the system can register itself
+in the `PillarParser` saying,
+
+56
+00:03:59,880 --> 00:04:03,940
+okay, now I can handle those elements
+in a document.
+
+57
+00:04:05,340 --> 00:04:09,920
+For example, if I have a section
+class and I load it, when I initialize
+
+58
+00:04:10,120 --> 00:04:14,480
+a class, it will register itself
+directly in the `PillarParser`.
+
+59
+00:04:15,420 --> 00:04:16,400
+The same for a paragraph.
+
+60
+00:04:20,200 --> 00:04:23,440
+So this new mechanism is very
+interesting.
+
+61
+00:04:23,640 --> 00:04:26,420
+There is no need to maintain the
+list of classes manually,
+
+62
+00:04:26,760 --> 00:04:28,400
+so the developer is free to do it.
+
+63
+00:04:28,600 --> 00:04:31,780
+It's not written explicitly in the code.
+
+64
+00:04:32,540 --> 00:04:33,640
+It's completely dynamic.
+
+65
+00:04:33,860 --> 00:04:38,260
+It means each time I will load a
+new class, the class can itself
+
+66
+00:04:38,460 --> 00:04:40,420
+register itself in the parser.
+
+67
+00:04:41,030 --> 00:04:46,400
+The registration could support purity
+and external classes can also register.
+
+68
+00:04:46,600 --> 00:04:50,440
+This is not mandatory that classes
+that register are part of the same
+
+69
+00:04:50,640 --> 00:04:53,020
+package as the `PillarParser`.
+
+70
+00:04:55,520 --> 00:04:57,120
+So here we have an example of that.
+
+71
+00:04:57,320 --> 00:05:00,480
+The extra class that could be packaged
+in another package can register
+
+72
+00:05:00,680 --> 00:05:01,580
+itself in the `PillarParser`.
+
+73
+00:05:02,800 --> 00:05:07,080
+And the really good point is that
+the extra class could be packaged
+
+74
+00:05:07,280 --> 00:05:12,640
+in a separate package from the
+`PillarParser` and also the dependency
+
+75
+00:05:12,840 --> 00:05:13,600
+is reversed.
+
+76
+00:05:13,800 --> 00:05:16,860
+It means that there is a dependency
+between the extra class and the
+
+77
+00:05:17,060 --> 00:05:20,540
+`PillarParser` and not between the
+`PillarParser` and the extra class.
+
+78
+00:05:21,840 --> 00:05:24,820
+So this is really better from the
+dependency point of view.
+
+79
+00:05:28,120 --> 00:05:32,060
+But with an explicit registration
+mechanism, also we need an
+
+80
+00:05:32,260 --> 00:05:33,600
+unregistration mechanism.
+
+81
+00:05:33,800 --> 00:05:39,060
+So it means that now this is a developer
+should provide an explicit way for
+
+82
+00:05:39,260 --> 00:05:41,920
+unregistering document item.
+
+83
+00:05:43,340 --> 00:05:48,520
+And for that, the pillar parser
+will provide a method to unregister
+
+84
+00:05:48,720 --> 00:05:49,480
+a class.
+
+85
+00:05:50,340 --> 00:05:54,540
+And of course, this is the
+responsibility of each class to
+
+86
+00:05:54,740 --> 00:05:57,520
+unregister itself when it is unloaded,
+for example.
+
+87
+00:06:01,380 --> 00:06:07,960
+As a conclusion, the pattern using
+all subclasses is a very nice pattern,
+
+88
+00:06:08,540 --> 00:06:09,520
+but it is costly.
+
+89
+00:06:10,080 --> 00:06:12,080
+So you need to know it.
+
+90
+00:06:12,660 --> 00:06:16,140
+And usually, it's much better to
+use an explicit registration mechanism,
+
+91
+00:06:16,680 --> 00:06:18,000
+but it's not free.
+
+92
+00:06:18,200 --> 00:06:21,240
+It means that you need to implement
+it and you need to provide a way
+
+93
+00:06:21,440 --> 00:06:25,060
+to unregister it, to unregister
+elements, etc.
+
+94
+00:06:25,260 --> 00:06:32,600
+So it means that it's always about
+trade-off, can I use the free mechanism
+
+95
+00:06:32,800 --> 00:06:37,240
+or should I use an explicit one
+and code it completely?
+

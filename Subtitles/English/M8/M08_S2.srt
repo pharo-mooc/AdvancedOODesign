@@ -1,0 +1,852 @@
+1
+00:00:04,300 --> 00:00:08,260
+Hello everybody, so welcome to this
+new lecture on sharing.
+
+2
+00:00:08,820 --> 00:00:14,060
+In this lecture, I will show how
+you can have sharing with possibility
+
+3
+00:00:14,260 --> 00:00:17,780
+to have instance specific values.
+
+4
+00:00:20,960 --> 00:00:23,540
+The goal of this lecture,
+this is to think about sharing.
+
+5
+00:00:24,180 --> 00:00:28,300
+What we saw in the previous one,
+this is that we could share a value
+
+6
+00:00:28,500 --> 00:00:34,180
+between different instances,
+like when we have a shared variable.
+
+7
+00:00:34,900 --> 00:00:39,600
+Now here what we will focus,
+this is really how can we share
+
+8
+00:00:39,800 --> 00:00:45,520
+a default resource and still be able to,
+depending on the usage,
+
+9
+00:00:46,180 --> 00:00:48,920
+be able to have instance specific
+values.
+
+10
+00:00:52,300 --> 00:00:56,820
+So if you remember, we have instance
+versus class sharing.
+
+11
+00:00:57,760 --> 00:01:00,900
+So on the instance, for the instance
+level, this is simple,
+
+12
+00:01:01,100 --> 00:01:05,980
+an instance variable most of the
+time will hold instance specific values.
+
+13
+00:01:06,380 --> 00:01:08,560
+So this is values that are just
+for this object.
+
+14
+00:01:09,400 --> 00:01:13,820
+And when you modify these values,
+you don't modify, you don't have
+
+15
+00:01:14,020 --> 00:01:15,140
+an impact on the other object.
+
+16
+00:01:16,060 --> 00:01:21,560
+Then you have also shared values
+that can be or shared object that
+
+17
+00:01:21,760 --> 00:01:24,140
+can be shared between different
+instance.
+
+18
+00:01:24,340 --> 00:01:28,220
+For example, all the instance of a class,
+this is what we saw with the shared
+
+19
+00:01:28,420 --> 00:01:32,240
+variable, or this is what we call
+static variable in some language
+
+20
+00:01:32,440 --> 00:01:33,800
+or class variable in others.
+
+21
+00:01:35,020 --> 00:01:39,320
+In fact, in Pharo, you have a value
+that is shared among all the instance
+
+22
+00:01:39,520 --> 00:01:40,720
+of a class and hierarchy.
+
+23
+00:01:40,920 --> 00:01:44,660
+So this means that within this
+hierarchy, this is what we show
+
+24
+00:01:44,860 --> 00:01:53,060
+in the lecture, all the instance
+of subclass will share the same value.
+
+25
+00:01:53,880 --> 00:01:55,720
+So this was the previous lecture.
+
+26
+00:01:58,000 --> 00:02:03,620
+And now, the point there of this
+lecture is that usually before we
+
+27
+00:02:03,820 --> 00:02:08,040
+were thinking in terms of is it
+shared or is it instance specific.
+
+28
+00:02:09,580 --> 00:02:15,580
+Now what we want, we want to show
+that we can have both a share a
+
+29
+00:02:15,780 --> 00:02:22,100
+default value and still be able
+to have this instance specific behavior.
+
+30
+00:02:22,680 --> 00:02:27,460
+So I will let you two seconds to
+see if you can imagine a solution.
+
+31
+00:02:32,280 --> 00:02:35,160
+Now let's study a little example to see.
+
+32
+00:02:35,540 --> 00:02:36,640
+We will do it example-based.
+
+33
+00:02:38,020 --> 00:02:40,020
+So imagine that you have a scanner.
+
+34
+00:02:40,220 --> 00:02:43,840
+So the scanner, this is a class
+that will take some string.
+
+35
+00:02:44,700 --> 00:02:50,260
+And based on an internal table,
+we said, ah, okay, we will cut the
+
+36
+00:02:50,460 --> 00:02:51,900
+strings into pieces.
+
+37
+00:02:52,600 --> 00:02:54,920
+And based on the element,
+it will return.
+
+38
+00:02:55,120 --> 00:02:58,180
+For example, we will say,
+oh, yes, this is the start with hash.
+
+39
+00:02:58,560 --> 00:02:59,600
+So this is a symbol.
+
+40
+00:03:00,040 --> 00:03:00,860
+This is a symbol.
+
+41
+00:03:01,400 --> 00:03:02,180
+That's a number.
+
+42
+00:03:02,380 --> 00:03:03,140
+This is a number.
+
+43
+00:03:03,440 --> 00:03:05,260
+And ah, okay, the rest is a string.
+
+44
+00:03:06,360 --> 00:03:11,200
+So the symbol, the scanner basically
+is taking a string and cut it into
+
+45
+00:03:11,400 --> 00:03:13,440
+different kinds of literal objects.
+
+46
+00:03:15,740 --> 00:03:19,320
+So if we look at the class,
+a possible class for the scanner
+
+47
+00:03:19,520 --> 00:03:22,020
+implementation is as follows.
+
+48
+00:03:22,320 --> 00:03:23,940
+Scanner inherit from object.
+
+49
+00:03:24,140 --> 00:03:28,100
+It has some instance variable to
+know where we are in the industry
+
+50
+00:03:28,300 --> 00:03:31,020
+and the kind of token that is currently
+done.
+
+51
+00:03:31,220 --> 00:03:34,800
+A `typeTable`, so the `typeTable`,
+this is a table that will contain
+
+52
+00:03:35,000 --> 00:03:39,240
+information like, okay,
+if I have one, probably if I start
+
+53
+00:03:39,440 --> 00:03:44,420
+with one, probably that will be
+a digit or one, two, three,
+
+54
+00:03:44,620 --> 00:03:45,380
+they are digits.
+
+55
+00:03:45,740 --> 00:03:50,920
+Or if I have a letter like a $a,
+that will be a letter,
+
+56
+00:03:52,260 --> 00:03:53,060
+those kinds of things.
+
+57
+00:03:53,660 --> 00:03:58,220
+And here what we see is that this
+class has also a shared variable
+
+58
+00:03:58,420 --> 00:03:59,180
+`TypeTable`.
+
+59
+00:04:00,600 --> 00:04:01,660
+How surprising!
+
+60
+00:04:03,960 --> 00:04:04,940
+Why do we have both?
+
+61
+00:04:06,000 --> 00:04:10,640
+Why do we have both a shared variable
+`TypeTable` and an instance variable
+
+62
+00:04:10,840 --> 00:04:11,600
+`typeTable`?
+
+63
+00:04:12,360 --> 00:04:13,760
+It looks like a bug, no?
+
+64
+00:04:14,820 --> 00:04:17,940
+No, in fact, this is a really nice
+design and this is what we will explore.
+
+65
+00:04:21,100 --> 00:04:25,020
+So let me explain a bit the key
+aspect of the implementation.
+
+66
+00:04:25,220 --> 00:04:27,480
+So `TypeTable` is a shared variable.
+
+67
+00:04:28,020 --> 00:04:32,980
+It is only `initialized` only once
+and it will hold a table of elements
+
+68
+00:04:33,180 --> 00:04:37,420
+and it is not used by any instance
+method.
+
+69
+00:04:37,620 --> 00:04:39,860
+This is a key aspect of the solution.
+
+70
+00:04:41,640 --> 00:04:45,500
+And `typeTable`, the instance variable
+with the same name, is used by every
+
+71
+00:04:45,700 --> 00:04:49,420
+instance or only by instance method.
+
+72
+00:04:49,640 --> 00:04:51,460
+It cannot be used by a class method
+anyway.
+
+73
+00:04:51,660 --> 00:04:58,340
+And it is initialized by pointing
+to the `TypeTable` shared variable.
+
+74
+00:04:59,920 --> 00:05:01,360
+Do you see where I want to go?
+
+75
+00:05:02,400 --> 00:05:04,220
+So let's look at it graphically.
+
+76
+00:05:05,000 --> 00:05:10,960
+So in fact, what we have is that
+we have the `TypeTable` shared variable
+
+77
+00:05:11,160 --> 00:05:13,440
+that is pointing to our large table.
+
+78
+00:05:13,640 --> 00:05:16,320
+So usually, we will have an entry
+for each character.
+
+79
+00:05:16,520 --> 00:05:20,840
+So we will have $a, that say,
+okay, I'm a letter one,
+
+80
+00:05:21,040 --> 00:05:25,580
+this is a digit, a space,
+this is a separator or something
+
+81
+00:05:25,780 --> 00:05:26,540
+like that.
+
+82
+00:05:28,340 --> 00:05:33,360
+And then every instance of this
+
+83
+00:05:33,560 --> 00:05:41,460
+scanner will have its instance variable
+
+84
+00:05:41,660 --> 00:05:46,480
+`typeTable` that point to what is
+referred to this `TypeTable`.
+
+85
+00:05:46,700 --> 00:05:53,360
+So this means that by default,
+every instance variable of the instance
+
+86
+00:05:53,560 --> 00:05:58,040
+scanner will point to this shared
+variable.
+
+87
+00:06:00,880 --> 00:06:07,340
+So now you can ask why do we need
+this instance variable `typeTable`?
+
+88
+00:06:08,020 --> 00:06:09,020
+And that's the trick.
+
+89
+00:06:09,500 --> 00:06:13,840
+So here with the `TypeTable` shared
+variable, we have sharing by default.
+
+90
+00:06:14,100 --> 00:06:18,180
+So each time we will create a new
+instances of a scanner,
+
+91
+00:06:20,540 --> 00:06:21,780
+the idea of this is oh,
+simple.
+
+92
+00:06:22,660 --> 00:06:24,640
+We don't have to allocate a large table.
+
+93
+00:06:24,840 --> 00:06:26,100
+We can just share it.
+
+94
+00:06:27,640 --> 00:06:33,060
+And now what we will see is that
+the instance variable will let us
+
+95
+00:06:33,260 --> 00:06:36,060
+know new instance specific
+customization.
+
+96
+00:06:36,640 --> 00:06:38,120
+So let's look at it.
+
+97
+00:06:39,060 --> 00:06:46,000
+So imagine, if I want to have a
+specific table for a given scanner,
+
+98
+00:06:46,220 --> 00:06:47,240
+what do I have to do?
+
+99
+00:06:47,840 --> 00:06:56,720
+I create a scanner and then I change,
+I copy this table and then I patch
+
+100
+00:06:56,920 --> 00:06:59,280
+it inside this `typeTable`.
+
+101
+00:07:00,320 --> 00:07:03,760
+So this means that here,
+maybe one will not be a digit anymore
+
+102
+00:07:03,960 --> 00:07:04,720
+because I don't want.
+
+103
+00:07:04,920 --> 00:07:07,720
+So I will say, okay, now in my scanner,
+one is a letter.
+
+104
+00:07:08,440 --> 00:07:10,710
+And I can do that for another one.
+
+105
+00:07:10,910 --> 00:07:15,340
+I can say, oh for this scanner,
+no, no, for this scanner curly brace
+
+106
+00:07:15,540 --> 00:07:17,540
+is something like a separator.
+
+107
+00:07:18,360 --> 00:07:23,460
+This is possible because all the
+methods have access to the instance
+
+108
+00:07:23,660 --> 00:07:28,320
+specific and never access this shared
+variable.
+
+109
+00:07:28,940 --> 00:07:35,460
+So this means that the code of the
+class was only using the instance
+
+110
+00:07:35,660 --> 00:07:36,420
+variable.
+
+111
+00:07:37,820 --> 00:07:43,020
+And this instance variable was by
+default shared, but on these two cases,
+
+112
+00:07:43,640 --> 00:07:44,400
+it is not shared.
+
+113
+00:07:44,640 --> 00:07:45,960
+It is specific to this instance.
+
+114
+00:07:46,360 --> 00:07:47,900
+So how do we use this setup?
+
+115
+00:07:50,740 --> 00:07:56,900
+So you see, so basically the scanner
+class `initialize`.
+
+116
+00:07:57,100 --> 00:08:01,020
+So here, it will just create a temporary
+variable, put a scanner table inside.
+
+117
+00:08:01,540 --> 00:08:04,040
+You see this is said,
+okay, for all the digit put digit,
+
+118
+00:08:04,240 --> 00:08:06,900
+for all the separator put separator,
+those kinds of things.
+
+119
+00:08:07,360 --> 00:08:13,520
+And at the end here, it is initializing
+the `TypeTable` shared variable
+
+120
+00:08:13,720 --> 00:08:14,560
+to point to this class.
+
+121
+00:08:14,820 --> 00:08:18,260
+So basically, what we have at the
+end of that execution,
+
+122
+00:08:18,800 --> 00:08:27,040
+we have the `TypeTable` shared variable
+that is pointing to the table.
+
+123
+00:08:32,580 --> 00:08:37,880
+Now, the key aspect is that when
+we will create a scanner instance,
+
+124
+00:08:38,080 --> 00:08:42,520
+here we `initialize` it and do all
+kinds of things.
+
+125
+00:08:42,720 --> 00:08:46,280
+And in particular, we said,
+oh, the instance variable is pointing
+
+126
+00:08:46,480 --> 00:08:47,240
+to the table.
+
+127
+00:08:47,700 --> 00:08:53,440
+So this means that, so if I redraw it,
+so I have the large table here with
+
+128
+00:08:53,640 --> 00:08:54,460
+all the information.
+
+129
+00:08:55,160 --> 00:09:01,960
+So this is the `TypeTable`,
+`TypeTable` of the class scanner.
+
+130
+00:09:03,320 --> 00:09:10,760
+And now, I have an instance,
+a scanner and the value of this scanner,
+
+131
+00:09:11,060 --> 00:09:14,880
+the `typeTable` with a lower case,
+this is an instance variable,
+
+132
+00:09:15,080 --> 00:09:17,400
+will point to this guy.
+
+133
+00:09:17,600 --> 00:09:18,860
+This is what this line is doing.
+
+134
+00:09:21,880 --> 00:09:25,620
+So like that, I have sharing by default.
+
+135
+00:09:26,940 --> 00:09:29,940
+And so far, I don't have an instance
+specific customization.
+
+136
+00:09:30,260 --> 00:09:31,260
+How do I customize?
+
+137
+00:09:32,860 --> 00:09:33,620
+This is easy.
+
+138
+00:09:33,820 --> 00:09:34,740
+I can customize like that.
+
+139
+00:09:34,940 --> 00:09:36,460
+I can say, oh, I create my new scanner.
+
+140
+00:09:36,660 --> 00:09:38,320
+So I create a new scanner instance.
+
+141
+00:09:38,880 --> 00:09:41,240
+And I will say, oh, I want to take
+the default.
+
+142
+00:09:41,440 --> 00:09:45,940
+For example, I take the default table,
+I copy it and I customize it with
+
+143
+00:09:46,140 --> 00:09:47,900
+some special message that I sent to that.
+
+144
+00:09:48,180 --> 00:09:55,260
+So in this setup, what I will have,
+I will have the scanner with the
+
+145
+00:09:55,460 --> 00:09:56,220
+`TypeTable`.
+
+146
+00:10:02,300 --> 00:10:05,500
+And here, I have a scanner.
+
+147
+00:10:09,260 --> 00:10:16,500
+And instead of pointing to this guy,
+now he will point to a copy of the
+
+148
+00:10:16,700 --> 00:10:17,460
+table.
+
+149
+00:10:17,780 --> 00:10:19,020
+Here I have a copy.
+
+150
+00:10:20,600 --> 00:10:24,060
+And here I said, oh, you know,
+here, this is my special case.
+
+151
+00:10:24,320 --> 00:10:27,820
+I want this red spot there and there
+only for this instance.
+
+152
+00:10:29,040 --> 00:10:33,620
+So, what you see that now if I do
+scanner new, then what will I get?
+
+153
+00:10:33,900 --> 00:10:39,380
+In this solution, I will have a
+scanner with an instance variable
+
+154
+00:10:41,240 --> 00:10:45,440
+that is sharing the big,
+but I can have one that is specific.
+
+155
+00:10:45,700 --> 00:10:50,320
+Now, if I want to have more instances,
+what I can do, I can create a class
+
+156
+00:10:50,520 --> 00:10:52,900
+that will do it automatically for me.
+
+157
+00:10:53,300 --> 00:10:54,640
+So let's do it.
+
+158
+00:10:54,900 --> 00:10:57,960
+So now here, I just subclass my
+scanner and I said, okay,
+
+159
+00:10:58,160 --> 00:11:00,180
+my scanner, basically I want to
+`initialize`.
+
+160
+00:11:00,460 --> 00:11:03,460
+I want to copy the table and I want
+to modify the table for me.
+
+161
+00:11:03,660 --> 00:11:05,540
+And now, the situation will be like
+that.
+
+162
+00:11:05,740 --> 00:11:10,140
+So you will have the scanner class
+with the `TypeTable`.
+
+163
+00:11:14,480 --> 00:11:16,020
+So I have the table.
+
+164
+00:11:19,440 --> 00:11:24,600
+And then, I will have a subclass
+that basically said my scanner.
+
+165
+00:11:26,280 --> 00:11:30,120
+And for my instances,
+automatically, when I have an instance,
+
+166
+00:11:30,580 --> 00:11:33,620
+I will have a copy because I do
+`typeTable` copy.
+
+167
+00:11:34,060 --> 00:11:35,180
+So we'll have a copy.
+
+168
+00:11:38,160 --> 00:11:43,760
+And this means that I can have multiple,
+all my classes here, all the instance
+
+169
+00:11:43,960 --> 00:11:46,680
+of these classes will have their
+own table.
+
+170
+00:11:48,720 --> 00:11:54,900
+While the instance of the scanner
+class here, so if I have an instance,
+
+171
+00:11:55,100 --> 00:11:59,840
+they will all share, they will all
+share this one.
+
+172
+00:12:00,400 --> 00:12:03,940
+So the idea of the design,
+it was to basically say,
+
+173
+00:12:04,160 --> 00:12:07,940
+okay, the most frequent scenario,
+this is sharing.
+
+174
+00:12:08,400 --> 00:12:09,540
+So let's favor sharing.
+
+175
+00:12:10,140 --> 00:12:17,380
+But in case the developer want to
+have instance specific or a subclass
+
+176
+00:12:17,580 --> 00:12:20,820
+with a special behavior,
+it can do it and reuse all the methods
+
+177
+00:12:21,020 --> 00:12:21,780
+of the scanner.
+
+178
+00:12:23,580 --> 00:12:28,160
+So what I show in this lecture is
+that we can get sharing by default,
+
+179
+00:12:28,580 --> 00:12:31,340
+but we can also get instance specific,
+if we need.
+
+180
+00:12:31,920 --> 00:12:35,820
+So what you see that this lecture
+is interesting because before we have,
+
+181
+00:12:36,020 --> 00:12:43,960
+oh, okay, an object as private state,
+and the state is specific to a given
+
+182
+00:12:44,160 --> 00:12:48,960
+instance, or we had another lecture
+that said, okay, we can share and
+
+183
+00:12:49,160 --> 00:12:51,620
+with different scope of sharing
+and now we can mix the two.
+
+184
+00:12:51,820 --> 00:12:55,800
+So this lecture bridge the two world
+and we can decide.
+

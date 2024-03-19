@@ -1,0 +1,1214 @@
+1
+00:00:03,950 --> 00:00:07,030
+- Hello everybody,
+welcome to this new lecture.
+
+2
+00:00:07,770 --> 00:00:10,030
+In this lecture, I will talk about
+fluid APIs.
+
+3
+00:00:10,370 --> 00:00:13,170
+I think that there are really few
+lectures in the world on that,
+
+4
+00:00:13,370 --> 00:00:17,070
+so that will be really interesting
+to see what is this tool.
+
+5
+00:00:17,630 --> 00:00:21,650
+And in particular, we will look
+at the case for the class definition
+
+6
+00:00:21,850 --> 00:00:23,350
+in Pharo as a concrete example.
+
+7
+00:00:24,610 --> 00:00:29,970
+The goal of this lecture is to think
+about methods with a large number
+
+8
+00:00:30,170 --> 00:00:34,670
+of parameters to show you what is
+in fact the fluid API and what are
+
+9
+00:00:34,870 --> 00:00:39,250
+the properties, and to think a bit
+more modular, and also to study
+
+10
+00:00:39,450 --> 00:00:42,650
+a really concrete case that is the
+class definition in Pharo.
+
+11
+00:00:42,850 --> 00:00:48,090
+So for example, the DockingBar class
+has a method with one,
+
+12
+00:00:48,290 --> 00:00:55,210
+two, three, four, five,
+six parameters, which is too much
+
+13
+00:00:55,410 --> 00:00:56,170
+in fact.
+
+14
+00:00:57,410 --> 00:01:01,330
+And what you see is that it is invoked,
+for example, in these other methods
+
+15
+00:01:01,530 --> 00:01:07,610
+with default values, because the
+
+16
+00:01:07,810 --> 00:01:11,930
+user does not know exactly what
+is the value that it should pass,
+
+17
+00:01:12,310 --> 00:01:13,510
+or if it is optional.
+
+18
+00:01:13,710 --> 00:01:16,030
+So in the case it is optional,
+it will put nil.
+
+19
+00:01:16,830 --> 00:01:21,510
+So what you see with this example
+is that first, there are too many
+
+20
+00:01:21,710 --> 00:01:27,410
+parameters, but in addition,
+it forces users to specify all the
+
+21
+00:01:27,610 --> 00:01:28,370
+parameters.
+
+22
+00:01:28,570 --> 00:01:30,870
+And when you don't know,
+you put nil.
+
+23
+00:01:31,070 --> 00:01:34,910
+It goes against the idea of limiting
+the propagation of nil,
+
+24
+00:01:35,110 --> 00:01:39,010
+as you saw in the avoid nil lecture.
+
+25
+00:01:39,710 --> 00:01:41,130
+So we can do better.
+
+26
+00:01:43,220 --> 00:01:47,860
+In addition, imagine that you would
+like to say, oh, you know,
+
+27
+00:01:48,940 --> 00:01:55,060
+as a developer, I don't need this,
+or my client do not need this optional
+
+28
+00:01:55,260 --> 00:01:56,020
+argument.
+
+29
+00:01:56,220 --> 00:02:00,360
+So I want to propose in the API
+of my class, a new method.
+
+30
+00:02:01,000 --> 00:02:06,180
+That should be okay, but it means
+that suddenly you will have to provide
+
+31
+00:02:06,380 --> 00:02:12,220
+all this variation, because how
+I remove action, I have one with action,
+
+32
+00:02:12,420 --> 00:02:14,100
+I have with key text.
+
+33
+00:02:14,480 --> 00:02:18,080
+And here, this is easy because we
+remove the optional argument at
+
+34
+00:02:18,280 --> 00:02:21,880
+the end and we go from right to left.
+
+35
+00:02:22,500 --> 00:02:25,900
+But what if we want to change the order?
+
+36
+00:02:26,100 --> 00:02:28,500
+What if the optional argument is
+in the middle?
+
+37
+00:02:28,920 --> 00:02:30,740
+It's a total mess from that perspective.
+
+38
+00:02:31,940 --> 00:02:36,520
+We will have far too many methods
+and a combinatorial explosion.
+
+39
+00:02:36,740 --> 00:02:39,800
+So let's study what is a fluid API.
+
+40
+00:02:40,400 --> 00:02:47,340
+So a fluid API, this is basically,
+instead of having mandatory parameters,
+
+41
+00:02:47,540 --> 00:02:53,040
+like here, we will cut these methods
+
+42
+00:02:53,240 --> 00:02:56,820
+into separated methods.
+
+43
+00:02:57,760 --> 00:03:02,800
+And like that, the user,
+so this expression will become like
+
+44
+00:03:03,000 --> 00:03:03,760
+that.
+
+45
+00:03:03,960 --> 00:03:06,320
+We said, okay, instead of having
+the methods add, icon,
+
+46
+00:03:06,560 --> 00:03:09,640
+help, and by the way,
+in the Java syntax, this method,
+
+47
+00:03:09,960 --> 00:03:20,040
+this is addIconhelp(w,a,h).
+
+48
+00:03:21,420 --> 00:03:27,660
+We will just say, okay,
+we just want to have x.add(w),
+
+49
+00:03:28,480 --> 00:03:31,980
+x.icon(a).
+
+50
+00:03:34,140 --> 00:03:40,540
+So we turn these single methods
+into multiple methods that are
+
+51
+00:03:40,740 --> 00:03:41,500
+autonomous.
+
+52
+00:03:42,560 --> 00:03:47,160
+And this way, we can,
+as a user, use them in a different way.
+
+53
+00:03:47,360 --> 00:03:52,280
+So this means that I could call add,
+icon, and help, or I can call icon,
+
+54
+00:03:52,480 --> 00:03:56,560
+and add, or I can also just say,
+oh, I don't need to change anything,
+
+55
+00:03:56,760 --> 00:04:00,300
+I just want to specify the help string.
+
+56
+00:04:01,100 --> 00:04:05,200
+So if we analyze this solution,
+we don't need to pass all the default
+
+57
+00:04:05,400 --> 00:04:06,160
+values around.
+
+58
+00:04:07,520 --> 00:04:09,060
+There is no combinatorial explosion.
+
+59
+00:04:09,260 --> 00:04:14,020
+So this means that from the developer
+of the class, you don't have to
+
+60
+00:04:14,220 --> 00:04:18,120
+think about all the possible variation
+that maybe your user would like to have.
+
+61
+00:04:18,400 --> 00:04:22,360
+You just specify your messages or
+the methods, the methods that are
+
+62
+00:04:22,560 --> 00:04:23,320
+needed, and no more.
+
+63
+00:04:23,660 --> 00:04:26,920
+From the user perspective,
+you can focus on the message that
+
+64
+00:04:27,120 --> 00:04:27,880
+you need.
+
+65
+00:04:28,080 --> 00:04:30,080
+You will just specify,
+oh, I need that method,
+
+66
+00:04:30,780 --> 00:04:32,060
+and we'll send this message.
+
+67
+00:04:33,320 --> 00:04:37,580
+Of course, it requires that you
+have a good and modular initialization,
+
+68
+00:04:37,800 --> 00:04:40,800
+because this means that the arguments
+that are optional, they should be
+
+69
+00:04:41,000 --> 00:04:41,760
+well initialized.
+
+70
+00:04:42,220 --> 00:04:43,200
+And you should pay attention.
+
+71
+00:04:43,400 --> 00:04:45,760
+If you have dependencies between
+parameters, then in that case,
+
+72
+00:04:45,960 --> 00:04:47,700
+maybe you will have a method.
+
+73
+00:04:48,000 --> 00:04:51,620
+For example, if I take back the example,
+you could have add, icon,
+
+74
+00:04:52,040 --> 00:04:57,680
+for example, because maybe the add
+and the icon, they are linked together
+
+75
+00:04:57,880 --> 00:04:59,660
+into an initialization.
+
+76
+00:04:59,860 --> 00:05:03,920
+But this means that you can split,
+you can still split your long,
+
+77
+00:05:04,240 --> 00:05:10,580
+your method with long parameters
+into a different variation.
+
+78
+00:05:12,500 --> 00:05:15,380
+So it has the fluid API is really nice.
+
+79
+00:05:15,620 --> 00:05:19,480
+And now, we will see a concrete case.
+
+80
+00:05:21,890 --> 00:05:25,570
+The question that we got with Pharo,
+this was, okay, how do we support
+
+81
+00:05:25,770 --> 00:05:27,550
+the evolution of class definitions?
+
+82
+00:05:28,910 --> 00:05:32,410
+Because in Pharo, we have multiple
+class definitions, and they have
+
+83
+00:05:32,610 --> 00:05:35,670
+to change because over the years,
+we introduce package,
+
+84
+00:05:36,110 --> 00:05:39,630
+we introduce multiple formats,
+like ephemerons or not.
+
+85
+00:05:40,030 --> 00:05:43,850
+And we also introduce the point
+that we have now, we don't have
+
+86
+00:05:44,050 --> 00:05:46,570
+instance variable anymore,
+we have first class instance variable.
+
+87
+00:05:46,990 --> 00:05:50,350
+And we want to do that without having
+a parameter explosion.
+
+88
+00:05:50,950 --> 00:05:52,330
+So let's look at it.
+
+89
+00:05:52,990 --> 00:05:58,070
+So Pharo is originally inspired
+by Smalltalk-80, and in Smalltalk-80,
+
+90
+00:05:58,890 --> 00:06:01,870
+one of the ways to create a class,
+so for example, this one,
+
+91
+00:06:02,130 --> 00:06:08,190
+this is a class with a variable part,
+the instance have a variable part,
+
+92
+00:06:08,510 --> 00:06:11,310
+we will use this message,
+variableSubclass, instanceVariableNames,
+
+93
+00:06:13,270 --> 00:06:16,050
+so this is already five parameters.
+
+94
+00:06:16,830 --> 00:06:19,250
+That's already too much.
+
+95
+00:06:20,190 --> 00:06:24,350
+And the funny thing is that I always
+joke this definition,
+
+96
+00:06:24,550 --> 00:06:28,070
+because I said, oh, you know,
+you have to pass default value,
+
+97
+00:06:28,270 --> 00:06:30,630
+instead of not passing the value,
+you have to pass it.
+
+98
+00:06:31,010 --> 00:06:34,890
+And here, we have to pass an empty
+string and I was always worried
+
+99
+00:06:35,090 --> 00:06:35,850
+about that.
+
+100
+00:06:36,050 --> 00:06:39,150
+I said, if this is empty,
+why do we care?
+
+101
+00:06:41,970 --> 00:06:47,270
+So first, up to Pharo 9,
+we removed one of the parameters,
+
+102
+00:06:47,470 --> 00:06:51,630
+you see, you don't see it anymore,
+because it is not frequent that
+
+103
+00:06:51,830 --> 00:06:54,290
+people use shared pools.
+
+104
+00:06:54,570 --> 00:06:56,970
+This is a lecture that you will
+see in the future.
+
+105
+00:06:57,490 --> 00:06:59,750
+Shared pools are handy,
+but when you don't use them,
+
+106
+00:06:59,950 --> 00:07:01,830
+why do I have to specify an empty
+string?
+
+107
+00:07:03,250 --> 00:07:08,010
+So in Pharo, up to Pharo 9,
+in fact, we just introduce a new
+
+108
+00:07:08,210 --> 00:07:11,830
+version where you have package instead
+of category and no pool here.
+
+109
+00:07:12,030 --> 00:07:12,790
+So we remove it.
+
+110
+00:07:13,070 --> 00:07:17,330
+So you see, this is already,
+this is another version of the class
+
+111
+00:07:17,530 --> 00:07:20,510
+definition with four parameters.
+
+112
+00:07:20,970 --> 00:07:25,010
+And then, we have to change the
+variable subclass also to have the
+
+113
+00:07:25,210 --> 00:07:26,110
+full version variation.
+
+114
+00:07:27,870 --> 00:07:30,150
+And like that, I could continue
+endlessly.
+
+115
+00:07:30,790 --> 00:07:34,350
+I guess that we have 40 different
+methods to create a class definition.
+
+116
+00:07:35,030 --> 00:07:36,090
+And this is insane.
+
+117
+00:07:37,330 --> 00:07:42,490
+So we wanted to really have modern
+class definition because we have
+
+118
+00:07:42,690 --> 00:07:43,910
+package, tags, slot.
+
+119
+00:07:44,150 --> 00:07:48,510
+We have various format like Word,
+Byte, Double Byte, Variable,
+
+120
+00:07:48,770 --> 00:07:49,530
+Indexed.
+
+121
+00:07:49,730 --> 00:07:53,210
+And then, we have new format like
+ephemerons because they are special
+
+122
+00:07:53,410 --> 00:07:56,090
+things for weak structure.
+
+123
+00:07:56,670 --> 00:07:59,650
+And we face this, we said,
+okay, we cannot continue like that.
+
+124
+00:08:01,670 --> 00:08:06,730
+So we decided to use a fluid API.
+
+125
+00:08:07,430 --> 00:08:12,690
+So this means that using optional
+argument and to be able to control
+
+126
+00:08:12,890 --> 00:08:17,130
+the mandatory parameters and only
+specify the necessary parameters.
+
+127
+00:08:17,330 --> 00:08:19,910
+Like that, we have a syntax that
+is extensible.
+
+128
+00:08:20,510 --> 00:08:25,970
+And what you will see is that it
+needs a builder and sometimes you
+
+129
+00:08:26,170 --> 00:08:28,190
+need optional default values.
+
+130
+00:08:29,070 --> 00:08:30,450
+So let's look at it.
+
+131
+00:08:30,690 --> 00:08:35,990
+So in Pharo 10 and Pharo 11,
+now we define a class like that.
+
+132
+00:08:36,710 --> 00:08:41,650
+We said, okay, I would like a subclass
+of the class ArrayedCollection.
+
+133
+00:08:43,690 --> 00:08:45,450
+And here, we have separated messages.
+
+134
+00:08:47,530 --> 00:08:49,170
+Here we have three different messages.
+
+135
+00:08:49,370 --> 00:08:52,050
+When we don't need to specify a
+layout or when we don't want to
+
+136
+00:08:52,250 --> 00:08:56,050
+have a tag or when we don't want
+to have something, this is also correct.
+
+137
+00:08:56,250 --> 00:08:57,010
+Here, this is a metaclass.
+
+138
+00:08:57,270 --> 00:09:00,130
+We can say, okay, this is the metaclass
+definition.
+
+139
+00:09:00,190 --> 00:09:03,190
+It does not have instance variable
+and this is working.
+
+140
+00:09:03,390 --> 00:09:06,490
+You see here, I don't specify things
+that are not needed.
+
+141
+00:09:06,730 --> 00:09:08,870
+The same here, I only specify what
+is needed.
+
+142
+00:09:09,430 --> 00:09:14,510
+By the way, what I want to show to you,
+this is that this little lesser,
+
+143
+00:09:14,710 --> 00:09:19,130
+lesser return a class builder and
+the other messages will configure it.
+
+144
+00:09:19,830 --> 00:09:23,550
+And what we end up to have,
+we end up to have something that
+
+145
+00:09:23,750 --> 00:09:25,650
+is modular, compact and extensible.
+
+146
+00:09:26,470 --> 00:09:28,390
+So let's look at some examples.
+
+147
+00:09:28,750 --> 00:09:33,590
+So you see here, in Pharo,
+we have a first class instance variable
+
+148
+00:09:33,790 --> 00:09:34,870
+that are called slots.
+
+149
+00:09:36,030 --> 00:09:39,530
+And this is the way we said,
+okay, this is the slot.
+
+150
+00:09:39,850 --> 00:09:44,970
+And then, we have a specific way
+to define a slot inside this definition.
+
+151
+00:09:45,990 --> 00:09:48,790
+And again, here I don't specify
+anything else than what is needed.
+
+152
+00:09:48,990 --> 00:09:50,590
+I said, okay, this is in the package.
+
+153
+00:09:51,050 --> 00:09:54,610
+This is in the tag, because in the
+package, we can have some classification
+
+154
+00:09:54,810 --> 00:09:56,070
+and the instance variable.
+
+155
+00:09:56,270 --> 00:09:57,030
+That's it.
+
+156
+00:09:57,350 --> 00:09:58,910
+We have also traits in Pharo.
+
+157
+00:09:59,190 --> 00:10:02,130
+So now in traits, I can just define
+a trait.
+
+158
+00:10:02,810 --> 00:10:06,150
+And if I don't need to have anything,
+then I don't write it.
+
+159
+00:10:06,830 --> 00:10:10,250
+Let's step back and look a bit at
+what we have, because in fact,
+
+160
+00:10:10,590 --> 00:10:17,730
+we have three kinds of messages
+in the class definition and the
+
+161
+00:10:17,930 --> 00:10:18,690
+fluid API.
+
+162
+00:10:19,170 --> 00:10:22,650
+So first, we have the starting or
+creator message.
+
+163
+00:10:22,850 --> 00:10:25,630
+In fact, it will create a kind of
+accumulator.
+
+164
+00:10:26,130 --> 00:10:34,830
+So here, when we said object << #point,
+for example, this message generate
+
+165
+00:10:35,030 --> 00:10:35,790
+a builder.
+
+166
+00:10:38,280 --> 00:10:39,340
+The builder, this is what ?
+
+167
+00:10:39,540 --> 00:10:43,920
+This is an object that will be able
+to be configured via the other message.
+
+168
+00:10:44,120 --> 00:10:47,900
+So the other message that we have here,
+the configuration/setter,
+
+169
+00:10:49,020 --> 00:10:49,980
+they are like slots.
+
+170
+00:10:50,180 --> 00:10:53,860
+For example, oh yes, I have the
+message slot and I can specify
+
+171
+00:10:54,060 --> 00:10:54,820
+something.
+
+172
+00:10:55,020 --> 00:10:59,460
+It will configure the instance of
+the builder with different values.
+
+173
+00:10:59,660 --> 00:11:02,700
+Like if I can send a message tag,
+for example, I would say,
+
+174
+00:11:02,940 --> 00:11:05,960
+okay, this class is in the tag total.
+
+175
+00:11:06,640 --> 00:11:07,400
+Okay.
+
+176
+00:11:07,600 --> 00:11:11,980
+So the builder is configured and
+we have a closing message.
+
+177
+00:11:12,380 --> 00:11:17,520
+This is the one that perform the
+action once the argument are passed
+
+178
+00:11:17,720 --> 00:11:20,100
+and that the accumulator has been
+configured.
+
+179
+00:11:20,820 --> 00:11:23,100
+In our definition, this is package.
+
+180
+00:11:23,940 --> 00:11:28,900
+The package message is really saying,
+okay, the builder has been configured.
+
+181
+00:11:29,100 --> 00:11:31,380
+Now I can do some action.
+
+182
+00:11:31,920 --> 00:11:33,180
+And this is what you see here.
+
+183
+00:11:33,560 --> 00:11:34,600
+This is the creator.
+
+184
+00:11:36,020 --> 00:11:38,720
+Oh, this guy return a builder.
+
+185
+00:11:41,490 --> 00:11:43,670
+We configure it with multiple messages.
+
+186
+00:11:43,870 --> 00:11:45,930
+We don't care of the order and things
+like that.
+
+187
+00:11:46,130 --> 00:11:46,890
+They are optional.
+
+188
+00:11:47,870 --> 00:11:49,770
+And this one is mandatory.
+
+189
+00:11:51,010 --> 00:11:55,870
+And it will send a message to the
+builder and say, please do your job now.
+
+190
+00:11:56,070 --> 00:12:02,390
+And do your job now in the case
+of a class builder, will check,
+
+191
+00:12:02,610 --> 00:12:06,230
+validate and install,
+create a new class that is configured
+
+192
+00:12:06,430 --> 00:12:07,190
+into the system.
+
+193
+00:12:07,690 --> 00:12:11,890
+Now I want to show you that in fact,
+this is also available in other system.
+
+194
+00:12:12,150 --> 00:12:16,030
+Like in Seaside, Seaside is a web
+framework for written in Pharo.
+
+195
+00:12:17,630 --> 00:12:21,930
+In Seaside, often people should
+write for each visual component,
+
+196
+00:12:22,150 --> 00:12:27,130
+they should write a method that
+is called render content on where
+
+197
+00:12:27,330 --> 00:12:28,550
+the builder is specified.
+
+198
+00:12:28,870 --> 00:12:32,090
+So the HTML is already the builder.
+
+199
+00:12:32,830 --> 00:12:34,650
+This is the framework.
+
+200
+00:12:35,930 --> 00:12:41,350
+This is the framework that created
+the builder and you have the
+
+201
+00:12:41,550 --> 00:12:42,310
+configuration.
+
+202
+00:12:43,750 --> 00:12:49,350
+These messages are configuration
+and the closing are these three
+
+203
+00:12:49,550 --> 00:12:50,310
+messages.
+
+204
+00:12:50,510 --> 00:12:52,550
+So on the simple case,
+for example, I said to the builder,
+
+205
+00:12:53,050 --> 00:12:57,610
+oh, I want that you configure yourself
+to emit a header at level three.
+
+206
+00:12:57,910 --> 00:13:00,050
+And I want, this is the text.
+
+207
+00:13:00,770 --> 00:13:05,990
+So when the people designing the
+API of Seaside, they made sure that
+
+208
+00:13:06,190 --> 00:13:12,760
+the developer will not forget to
+close the builder by having this
+
+209
+00:13:12,960 --> 00:13:15,960
+with or this is not three closing,
+but this is like that.
+
+210
+00:13:16,580 --> 00:13:23,380
+This API will create a kind of
+object that will present the <h3> to emit
+
+211
+00:13:23,580 --> 00:13:24,560
+</h3> in HTML.
+
+212
+00:13:25,660 --> 00:13:27,840
+And here what we see,
+this is another case,
+
+213
+00:13:28,040 --> 00:13:32,440
+for example, where they said,
+oh, they have again this configuration.
+
+214
+00:13:33,200 --> 00:13:37,340
+They have this fluid API that is
+a bit different from the class
+
+215
+00:13:37,540 --> 00:13:41,960
+definition, but still at the end here,
+they will have a PA or something
+
+216
+00:13:42,160 --> 00:13:43,560
+like that with hello world.
+
+217
+00:13:44,600 --> 00:13:49,220
+And then, the width is used to control
+and to give a scope.
+
+218
+00:13:49,420 --> 00:13:52,260
+So here they will do OL,
+for example, or the overall list.
+
+219
+00:13:52,680 --> 00:13:59,460
+They will close the OL and here
+inside they will generate LE item
+
+220
+00:13:59,660 --> 00:14:05,940
+one and they use the width to make
+sure that the expression is closed.
+
+221
+00:14:06,440 --> 00:14:12,300
+You see, so the width here will
+make sure that this guy is written,
+
+222
+00:14:12,580 --> 00:14:13,680
+but this is the same idea.
+
+223
+00:14:14,000 --> 00:14:20,600
+This is how can we offer an API
+where we can compose messages and
+
+224
+00:14:20,800 --> 00:14:23,260
+without having extra argument and
+too many arguments.
+
+225
+00:14:24,580 --> 00:14:28,920
+So what you see is that fluid API
+are nice because they handle the
+
+226
+00:14:29,120 --> 00:14:29,880
+combinatorial explosion.
+
+227
+00:14:30,080 --> 00:14:31,620
+There is no combinatorial explosion.
+
+228
+00:14:31,820 --> 00:14:34,080
+They handle optional argument.
+
+229
+00:14:35,560 --> 00:14:40,300
+They will force the initialization
+to have good values because your
+
+230
+00:14:40,500 --> 00:14:47,040
+object should be well initialized
+so that you can avoid to use a value.
+
+231
+00:14:47,320 --> 00:14:50,480
+And then the logic, this is the
+builder that we'll have to pay attention
+
+232
+00:14:50,680 --> 00:14:52,900
+and to be careful with the logic.
+
+233
+00:14:54,480 --> 00:15:00,110
+And like that, the default value,
+they are not passed around.
+
+234
+00:15:00,310 --> 00:15:01,070
+They are just initialized.
+
+235
+00:15:01,270 --> 00:15:02,560
+From that perspective,
+this is nice because often as a client,
+
+236
+00:15:02,760 --> 00:15:08,060
+I have no idea about if the object
+that I have is good, is a good value
+
+237
+00:15:08,260 --> 00:15:09,020
+to be initialized.
+
+238
+00:15:09,220 --> 00:15:11,280
+So like that, this is the responsibility
+of the object.
+
+239
+00:15:11,480 --> 00:15:15,780
+The builder is responsible to initialize
+well the things and to be cautious.
+
+240
+00:15:16,400 --> 00:15:19,880
+The cons is that what you see is
+that sometimes the message order
+
+241
+00:15:20,080 --> 00:15:20,840
+can be important.
+
+242
+00:15:21,040 --> 00:15:23,480
+And then in that case,
+you will have to pay attention.
+
+243
+00:15:23,680 --> 00:15:26,740
+Maybe you can use configuration
+with more than one argument and
+
+244
+00:15:26,940 --> 00:15:27,700
+things like that.
+
+245
+00:15:28,320 --> 00:15:29,440
+And there is really this need.
+
+246
+00:15:29,640 --> 00:15:36,260
+Often there is this need for a closing
+message because else the builder
+
+247
+00:15:36,460 --> 00:15:40,360
+does not know, oh, do I need to
+wait for an extra optional argument
+
+248
+00:15:40,560 --> 00:15:44,020
+or that my client will use or not?
+
+249
+00:15:44,880 --> 00:15:48,300
+So the builder need to know,
+okay, now I can proceed.
+
+250
+00:15:48,560 --> 00:15:51,820
+I can take the configuration and
+do something.
+
+251
+00:15:52,420 --> 00:15:59,020
+But for us, this is really just
+the pay to price and the result
+
+252
+00:15:59,220 --> 00:15:59,980
+is much better.
+
+253
+00:16:00,560 --> 00:16:04,400
+So as a conclusion, what you see
+is that in a fluid API,
+
+254
+00:16:05,060 --> 00:16:07,840
+you have three kinds of messages.
+
+255
+00:16:08,160 --> 00:16:10,380
+You have an object from that
+perspective.
+
+256
+00:16:10,860 --> 00:16:15,640
+You have the container creator,
+the setters that will let your client
+
+257
+00:16:15,840 --> 00:16:21,200
+configure your creator and a closer
+that will say, okay, now I can do
+
+258
+00:16:21,400 --> 00:16:22,160
+something.
+
+259
+00:16:22,360 --> 00:16:26,500
+So fluid API are really nice when
+you have many optional exclusive
+
+260
+00:16:26,700 --> 00:16:27,460
+parameters.
+
+261
+00:16:28,080 --> 00:16:32,540
+So I think that they are not used
+enough and people don't know them.
+
+262
+00:16:32,740 --> 00:16:36,520
+So that's why we decided to include
+this lecture in this MOOC. &nbsp;
+

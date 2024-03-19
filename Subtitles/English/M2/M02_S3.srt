@@ -1,0 +1,517 @@
+1
+00:00:04,460 --> 00:00:08,160
+Hello, in this sequence,
+we will speak about test-driven
+
+2
+00:00:08,360 --> 00:00:11,020
+development, so we will revisit
+testing that we already saw in a
+
+3
+00:00:11,220 --> 00:00:11,980
+previous lecture.
+
+4
+00:00:13,240 --> 00:00:15,160
+So the outline of this lecture is
+the following.
+
+5
+00:00:15,500 --> 00:00:18,920
+We will focus on test-driven development
+and what it means.
+
+6
+00:00:19,400 --> 00:00:25,740
+Then, we will exemplify it on a
+simple code, and it will allow us
+
+7
+00:00:25,940 --> 00:00:29,580
+to revisit and to rethink the notion
+of testing.
+
+8
+00:00:31,440 --> 00:00:34,160
+So, write test first.
+
+9
+00:00:34,580 --> 00:00:37,900
+Yes, the idea is to write the test
+before writing the business code
+
+10
+00:00:38,100 --> 00:00:38,860
+or the model code.
+
+11
+00:00:39,780 --> 00:00:44,100
+So there is a famous quote from
+Martin Fowler, which is the following:
+
+12
+00:00:44,320 --> 00:00:47,660
+"Whenever you attempt to type something
+into a print statement or debugger
+
+13
+00:00:47,860 --> 00:00:51,980
+expression, write it as a test instead."
+And this is exactly the essence
+
+14
+00:00:52,180 --> 00:00:53,620
+of test-driven development.
+
+15
+00:00:54,420 --> 00:00:57,840
+But in fact, TDD is about the flow,
+the workflow.
+
+16
+00:00:58,040 --> 00:01:03,080
+You should work in a specific manner
+that is in different forms,
+
+17
+00:01:03,800 --> 00:01:07,160
+that comes in different flavors,
+and this is one of these flavors here.
+
+18
+00:01:07,720 --> 00:01:10,760
+So usually you start by loading code,
+you start here.
+
+19
+00:01:12,240 --> 00:01:15,660
+And then, when you load code,
+it could be one of your packages
+
+20
+00:01:15,860 --> 00:01:18,980
+that you are working on,
+or it could be an external package.
+
+21
+00:01:19,700 --> 00:01:22,560
+You will run all the tests,
+and if they are green,
+
+22
+00:01:23,240 --> 00:01:27,700
+it's okay, but if one of the tests
+is broken, is red or yellow,
+
+23
+00:01:28,040 --> 00:01:32,140
+you should fix the test first and
+then rerun all the tests.
+
+24
+00:01:32,820 --> 00:01:35,860
+You will rerun everything,
+you are there, okay?
+
+25
+00:01:36,900 --> 00:01:41,720
+And when everything is green,
+perfect, you did it correctly,
+
+26
+00:01:42,080 --> 00:01:46,600
+and you might commit your code,
+and perhaps you can take a break.
+
+27
+00:01:46,800 --> 00:01:48,820
+So this is the next step.
+
+28
+00:01:49,640 --> 00:01:53,240
+Or now that you've committed your
+code and everything is green,
+
+29
+00:01:53,440 --> 00:01:58,060
+you can clean or refactor your code,
+and you will rerun all the tests
+
+30
+00:01:58,260 --> 00:02:01,620
+again to see if you didn't introduce
+a side effect that broke something.
+
+31
+00:02:03,760 --> 00:02:05,100
+And now, we are here.
+
+32
+00:02:05,700 --> 00:02:10,400
+At this point, all the tests are green,
+and you want to introduce a new
+
+33
+00:02:10,600 --> 00:02:13,920
+test or a new feature in your code,
+and you will start by writing the
+
+34
+00:02:14,120 --> 00:02:16,400
+test first, or modify an existing test.
+
+35
+00:02:17,440 --> 00:02:19,020
+And then, you will run this test.
+
+36
+00:02:19,400 --> 00:02:24,100
+Probably, it will be red the first time,
+but it might be green if the
+
+37
+00:02:24,300 --> 00:02:26,100
+functionality already exists in
+the code base.
+
+38
+00:02:27,580 --> 00:02:32,060
+But if it is red, if it is wrong,
+it means that you need to write the code.
+
+39
+00:02:32,260 --> 00:02:36,080
+So now it comes to writing the code
+of the functionality,
+
+40
+00:02:37,020 --> 00:02:39,660
+and then you will rerun the test
+until it is green, and you will
+
+41
+00:02:39,860 --> 00:02:41,460
+work like that in this loop.
+
+42
+00:02:41,940 --> 00:02:47,000
+I write the code, I test,
+and if the test is not green,
+
+43
+00:02:47,540 --> 00:02:49,820
+I write more code, etc.,
+etc.
+
+44
+00:02:50,700 --> 00:02:56,020
+Once this loop is finished,
+so you have a green test,
+
+45
+00:02:56,580 --> 00:02:59,680
+so now it's time for refactoring
+your code.
+
+46
+00:02:59,880 --> 00:03:04,300
+So it means that you can refactor
+your code, you can clean the code.
+
+47
+00:03:05,520 --> 00:03:09,040
+And once it's done, you should rerun
+all the tests.
+
+48
+00:03:09,560 --> 00:03:10,980
+And this is an important step.
+
+49
+00:03:12,580 --> 00:03:15,840
+And when all tests are green,
+again, you can commit.
+
+50
+00:03:16,140 --> 00:03:21,940
+So this is the workflow that you
+should do when you are doing test-driven
+
+51
+00:03:22,140 --> 00:03:22,900
+development.
+
+52
+00:03:23,100 --> 00:03:24,440
+Let's see this on an example.
+
+53
+00:03:25,020 --> 00:03:29,880
+So imagine you just created a ‘Counter‘
+class, which is completely empty.
+
+54
+00:03:31,440 --> 00:03:38,480
+And you will write a test,
+so I create a ‘Counter‘ test class.
+
+55
+00:03:38,740 --> 00:03:43,320
+Inside this class, I added a method,
+testCount, and in this method,
+
+56
+00:03:43,520 --> 00:03:45,500
+I can test the basic functionality
+of a ‘Counter‘.
+
+57
+00:03:45,960 --> 00:03:49,280
+So I will set up the context,
+‘Counter‘ new.
+
+58
+00:03:50,540 --> 00:03:54,020
+I could isolate this expression
+in a setup method of the test,
+
+59
+00:03:54,220 --> 00:03:56,480
+but here I put everything in the
+test method.
+
+60
+00:03:57,080 --> 00:04:00,540
+And then, I can exercise,
+I will set the ‘Counter‘ value here
+
+61
+00:04:00,740 --> 00:04:05,780
+to 10, and here I will assert that
+the ‘Counter‘ value is correctly set,
+
+62
+00:04:06,120 --> 00:04:06,880
+is 10.
+
+63
+00:04:08,920 --> 00:04:11,500
+So now, first, what I should do
+when I wrote the test,
+
+64
+00:04:11,700 --> 00:04:12,980
+I should execute the test.
+
+65
+00:04:13,500 --> 00:04:15,420
+And most probably, it will be red.
+
+66
+00:04:16,580 --> 00:04:20,500
+This is normal because we just defined
+the ‘Counter‘ class, but it's completely
+
+67
+00:04:20,700 --> 00:04:24,460
+empty, and there are no accessor
+inside this class.
+
+68
+00:04:24,980 --> 00:04:26,140
+So, so far, so good.
+
+69
+00:04:26,360 --> 00:04:27,520
+The test is red.
+
+70
+00:04:28,700 --> 00:04:32,700
+So now, it's time to implement the
+functionality, and then you will
+
+71
+00:04:32,900 --> 00:04:36,600
+rerun the test, and you will work
+like that until the test is green.
+
+72
+00:04:36,800 --> 00:04:42,100
+Once the test is green,
+you should run, you must run all
+
+73
+00:04:42,300 --> 00:04:45,520
+the tests of the system,
+because you might introduce some
+
+74
+00:04:45,720 --> 00:04:49,640
+side effects while coding on the
+code base, and you probably broke
+
+75
+00:04:49,840 --> 00:04:55,180
+or you might break existing tests,
+or perhaps this new functionality
+
+76
+00:04:55,380 --> 00:05:02,080
+broke some code, or either all tests
+are now wrong because their new
+
+77
+00:05:02,280 --> 00:05:06,480
+functionality is it's completely
+different.
+
+78
+00:05:07,200 --> 00:05:09,840
+In both cases, you should now fix
+all of them.
+
+79
+00:05:10,460 --> 00:05:12,780
+This is the basis of TDD.
+
+80
+00:05:15,520 --> 00:05:19,340
+So now that all tests are green,
+it's a good time to clean and refactor
+
+81
+00:05:19,540 --> 00:05:20,300
+your code.
+
+82
+00:05:20,500 --> 00:05:24,680
+And when you are okay with your code,
+you should rerun all the tests and
+
+83
+00:05:24,880 --> 00:05:28,580
+then you can commit, because you
+will commit a completely clean code
+
+84
+00:05:28,780 --> 00:05:29,540
+base.
+
+85
+00:05:29,740 --> 00:05:31,780
+What's the point of writing tests first?
+
+86
+00:05:32,100 --> 00:05:34,160
+You specify what you want in tests.
+
+87
+00:05:34,360 --> 00:05:37,380
+So the important part is that when
+you are writing a test,
+
+88
+00:05:37,580 --> 00:05:39,920
+you are writing an executable
+specification.
+
+89
+00:05:41,920 --> 00:05:46,700
+And this specification is,
+while you are writing the test,
+
+90
+00:05:47,400 --> 00:05:50,420
+you are describing what you want,
+what you want the code to do.
+
+91
+00:05:51,560 --> 00:05:56,260
+And then, when the test is written,
+it means that you can build or assemble
+
+92
+00:05:56,460 --> 00:06:00,620
+existing functionality of the code
+base to build your code.
+
+93
+00:06:01,980 --> 00:06:07,020
+Another good part of writing tests
+first is that you are your first client,
+
+94
+00:06:08,000 --> 00:06:12,760
+meaning that you will exercise your API,
+so API, this is Application Programming
+
+95
+00:06:12,960 --> 00:06:14,980
+Interface, before all others.
+
+96
+00:06:15,180 --> 00:06:19,440
+So it means that you are designing
+your API and using your API before
+
+97
+00:06:19,640 --> 00:06:20,640
+it is even implemented.
+
+98
+00:06:20,840 --> 00:06:21,740
+So it will be better.
+
+99
+00:06:21,940 --> 00:06:23,380
+You are exercising it.
+
+100
+00:06:24,480 --> 00:06:27,220
+And of course, you will exercise
+it in a clear context,
+
+101
+00:06:27,460 --> 00:06:30,380
+the context of the test,
+and you can debug it directly.
+
+102
+00:06:32,780 --> 00:06:35,440
+As a conclusion, TDD is a powerful
+feature.
+
+103
+00:06:35,640 --> 00:06:37,640
+It means that you are writing tests
+first.
+
+104
+00:06:38,200 --> 00:06:42,900
+It makes sure that you will write
+a more solid code base with fewer
+
+105
+00:06:43,100 --> 00:06:47,160
+regression because you are re-exercising
+all tests again and again.
+
+106
+00:06:48,000 --> 00:06:49,260
+And you are your first client.
+
+107
+00:06:49,460 --> 00:06:51,460
+So you will design cleaner API.
+
+108
+00:06:51,840 --> 00:06:54,760
+By the way, do not miss the next
+lecture on Xtrem TDD,
+
+109
+00:06:55,240 --> 00:06:58,580
+which is the TDD flavor that we
+are using in the Pharo community.
+

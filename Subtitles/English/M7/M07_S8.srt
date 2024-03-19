@@ -1,0 +1,584 @@
+1
+00:00:04,270 --> 00:00:08,930
+Hi, in this lecture, we are going
+to revisit `super` to see if you
+
+2
+00:00:09,130 --> 00:00:11,290
+really understood in the previous
+lectures.
+
+3
+00:00:12,070 --> 00:00:18,810
+So we will revisit `super`,
+we will also review message lookup
+
+4
+00:00:19,010 --> 00:00:23,950
+and we are going to see really briefly
+what are class methods.
+
+5
+00:00:25,350 --> 00:00:27,370
+So let's start with a little puzzle.
+
+6
+00:00:27,590 --> 00:00:29,330
+So we have the Die class.
+
+7
+00:00:29,530 --> 00:00:33,010
+It's a class method that is redefining
+new.
+
+8
+00:00:33,450 --> 00:00:40,230
+And this method is calling `super new`,
+getting some instance here and then
+
+9
+00:00:40,430 --> 00:00:41,350
+calling the initialize method.
+
+10
+00:00:41,550 --> 00:00:44,170
+So sending the message initialize
+on the instance.
+
+11
+00:00:44,630 --> 00:00:48,990
+Now we execute the Die new expression.
+
+12
+00:00:50,030 --> 00:00:54,910
+Some questions: what is `inst` in here?
+
+13
+00:00:56,130 --> 00:01:00,510
+What is `super` and what is `super new`?
+
+14
+00:01:01,210 --> 00:01:05,270
+Take a couple of minutes,
+try to understand this scenario
+
+15
+00:01:05,470 --> 00:01:08,090
+and try to write down the answers
+to these questions.
+
+16
+00:01:08,290 --> 00:01:10,430
+We are going to visit them in a
+couple of seconds.
+
+17
+00:01:10,630 --> 00:01:12,610
+Put pause to the video.
+
+18
+00:01:12,810 --> 00:01:16,250
+So some hints: `super` is not the
+superclass.
+
+19
+00:01:16,770 --> 00:01:20,390
+Remember that before,
+when we saw `super`, `super` was
+
+20
+00:01:20,590 --> 00:01:23,430
+never the superclass of the object,
+and it was never the `superclass`
+
+21
+00:01:23,950 --> 00:01:29,810
+of anything, It's neither the instance
+of a superclass or the instance
+
+22
+00:01:30,010 --> 00:01:31,450
+of the superclass of whatever.
+
+23
+00:01:33,590 --> 00:01:37,950
+Also remember that `super` is the
+message receiver.
+
+24
+00:01:38,150 --> 00:01:44,610
+So that means that somehow,
+`super` and self are the same object.
+
+25
+00:01:44,810 --> 00:01:46,450
+They reference the same object.
+
+26
+00:01:47,610 --> 00:01:52,090
+Remember also that the message that
+we are sending, we are activating,
+
+27
+00:01:52,290 --> 00:01:53,050
+is `Die new`.
+
+28
+00:01:53,870 --> 00:01:55,990
+So think about that.
+
+29
+00:01:56,190 --> 00:01:57,990
+What is the selector that we're sending?
+
+30
+00:01:58,190 --> 00:02:00,870
+What is the message and what is
+a receiver of this message?
+
+31
+00:02:01,350 --> 00:02:03,950
+So in this case, the receiver is
+the class Die.
+
+32
+00:02:04,150 --> 00:02:07,510
+So we are not sending the message
+to a normal object, a common object,
+
+33
+00:02:07,710 --> 00:02:10,630
+we're sending a message to a class
+which is a special object in the
+
+34
+00:02:10,830 --> 00:02:11,590
+language.
+
+35
+00:02:11,970 --> 00:02:13,830
+Remember how method lookup works.
+
+36
+00:02:14,030 --> 00:02:17,610
+So if we have an object,
+in this case aColoredRectangle,
+
+37
+00:02:17,810 --> 00:02:20,530
+and we send a message,
+like in this case area.
+
+38
+00:02:21,310 --> 00:02:24,110
+First what we're going to do is
+the lookup.
+
+39
+00:02:24,310 --> 00:02:29,210
+So step number one, here,
+if we take the receiver,
+
+40
+00:02:29,530 --> 00:02:32,890
+which is aColoredRectangle,
+and take its class, which is the
+
+41
+00:02:33,090 --> 00:02:36,350
+ColoredRectangle class,
+we're going to start the lookup from
+
+42
+00:02:36,550 --> 00:02:37,310
+there.
+
+43
+00:02:37,670 --> 00:02:40,490
+So starting from the class,
+we're going to go up in the hierarchy
+
+44
+00:02:40,690 --> 00:02:45,590
+looking for the method that corresponds
+with the expected selector.
+
+45
+00:02:45,790 --> 00:02:48,050
+So here, we are looking for area.
+
+46
+00:02:48,610 --> 00:02:52,230
+So ColoredRectangle doesn't define
+area but Rectangle does.
+
+47
+00:02:52,430 --> 00:02:55,590
+So it doesn't find it in 
+the ColoredRectangle subclass,
+
+48
+00:02:56,670 --> 00:03:00,730
+it will go up and find it in the
+Rectangle class.
+
+49
+00:03:00,930 --> 00:03:05,670
+It will take that method and then
+the second step of the message send
+
+50
+00:03:05,870 --> 00:03:09,290
+is to execute that method on the
+receiver.
+
+51
+00:03:09,610 --> 00:03:15,230
+So we are going to take area and
+execute width multiplied by height
+
+52
+00:03:15,430 --> 00:03:22,340
+on the colored rectangle,
+our instance that is down here.
+
+53
+00:03:22,540 --> 00:03:27,040
+So in here, what happens again is that
+we're going to take this message
+
+54
+00:03:27,240 --> 00:03:30,080
+and really it's a two-step.
+
+55
+00:03:30,280 --> 00:03:34,420
+So the method lookup is first taking
+the class and then going up.
+
+56
+00:03:34,620 --> 00:03:38,600
+So it's super important to understand
+that it's first taking the class
+
+57
+00:03:38,800 --> 00:03:44,040
+then going up the hierarchy looking
+for the method, and then the final
+
+58
+00:03:44,240 --> 00:03:48,440
+step of the message send,
+after the lookup is done in these
+
+59
+00:03:48,640 --> 00:03:51,560
+two steps is executing the method
+on the instance.
+
+60
+00:03:52,620 --> 00:03:57,540
+So the solution of the previous
+puzzle is that here, `super` is,
+
+61
+00:03:57,740 --> 00:03:59,340
+of course, the same object as `self`.
+
+62
+00:03:59,760 --> 00:04:05,340
+So if self was the Die class,
+the class Die, `super` is also the
+
+63
+00:04:05,540 --> 00:04:06,300
+Die class.
+
+64
+00:04:06,500 --> 00:04:08,940
+So `super` and self are the same
+and `super` is also the receiver.
+
+65
+00:04:10,200 --> 00:04:12,600
+What does `super new` do?
+
+66
+00:04:12,800 --> 00:04:18,380
+So `super new` will do a message
+send to `super`, which in this case
+
+67
+00:04:18,580 --> 00:04:21,340
+is a Die class, but it will change
+the method lookup.
+
+68
+00:04:21,540 --> 00:04:25,700
+If you remember, when we used `super`,
+what happened was that the method
+
+69
+00:04:25,900 --> 00:04:29,980
+lookup was changed and the lookup
+started from a different place.
+
+70
+00:04:30,180 --> 00:04:34,900
+In this case, actually every time,
+it will start from the superclass
+
+71
+00:04:35,520 --> 00:04:38,780
+of the class where the current method
+is defined.
+
+72
+00:04:38,980 --> 00:04:41,960
+So here in this case,
+this method is defined in Die class.
+
+73
+00:04:42,160 --> 00:04:45,240
+So the method lookup,
+it will start from the superclass.
+
+74
+00:04:45,440 --> 00:04:47,840
+It doesn't matter which one it is.
+
+75
+00:04:48,040 --> 00:04:51,880
+So it will always restart the lookup
+from the superclass of the current
+
+76
+00:04:52,080 --> 00:04:52,840
+class.
+
+77
+00:04:53,040 --> 00:04:57,920
+So it doesn't matter if the object
+is an instance of any other class,
+
+78
+00:04:58,120 --> 00:04:58,880
+any other subclass.
+
+79
+00:04:59,180 --> 00:05:02,620
+It will always start from the direct
+superclass of `Die class`.
+
+80
+00:05:05,820 --> 00:05:13,280
+Now, once we find that method `super
+new`, the new that is probably up
+
+81
+00:05:13,480 --> 00:05:17,020
+in the hierarchy, we're going to
+apply it to the current instance.
+
+82
+00:05:17,220 --> 00:05:20,880
+So that means that we're going to
+apply it to the current Die class.
+
+83
+00:05:23,580 --> 00:05:28,220
+Execute a new on a class will return
+us a new instance of that class.
+
+84
+00:05:28,420 --> 00:05:34,060
+So once we have the Die class,
+we're going to instantiate it and
+
+85
+00:05:34,260 --> 00:05:36,160
+that will create a Die instance.
+
+86
+00:05:38,350 --> 00:05:45,770
+That means that our instance variable
+is going to point to a die object,
+
+87
+00:05:46,610 --> 00:05:50,090
+which is the one that will receive
+the message initialize,
+
+88
+00:05:50,290 --> 00:05:52,970
+so we're going to send the message
+initialize to this guy,
+
+89
+00:05:53,170 --> 00:05:56,430
+the die object, and, then we're
+returning that instance.
+
+90
+00:05:59,220 --> 00:06:02,260
+With the drawing, what we see is
+that actually, what happens here
+
+91
+00:06:02,460 --> 00:06:03,720
+is that we have a double hierarchy.
+
+92
+00:06:03,920 --> 00:06:07,980
+This happens in reflective languages
+such as Pharo, Python or Ruby,
+
+93
+00:06:08,180 --> 00:06:13,380
+where we have our classes,
+Dice, Object, and since classes
+
+94
+00:06:13,580 --> 00:06:17,360
+are also objects, they also have
+their own classes.
+
+95
+00:06:17,560 --> 00:06:23,460
+So here, the Dice class has its
+own class, which is a Dice meta class.
+
+96
+00:06:25,320 --> 00:06:29,340
+And the same happens with object
+class. So every time that I'm going
+
+97
+00:06:29,540 --> 00:06:37,680
+to send a message to a dice object,
+the lookup will look for the class,
+
+98
+00:06:37,880 --> 00:06:40,780
+which will be this one,
+and then go up in the hierarchy.
+
+99
+00:06:41,940 --> 00:06:46,480
+In our case here, since we're sending
+the message to the Dice class,
+
+100
+00:06:46,680 --> 00:06:50,060
+we are going to look for its class
+and then go up its hierarchy.
+
+101
+00:06:50,260 --> 00:06:52,440
+It's just the same mechanism as before.
+
+102
+00:06:52,640 --> 00:06:57,340
+The only thing is that we are thinking
+about classes and the classes of
+
+103
+00:06:57,540 --> 00:07:00,200
+classes instead of just the classes
+of normal objects.
+
+104
+00:07:02,220 --> 00:07:07,120
+In summary, sending a message,
+again, is always looking up the
+
+105
+00:07:07,320 --> 00:07:09,080
+correct method and then applying
+it to the receiver.
+
+106
+00:07:09,280 --> 00:07:10,120
+That never changes.
+
+107
+00:07:10,320 --> 00:07:14,380
+Now, when we use `super` instead
+of any other message send,
+
+108
+00:07:15,320 --> 00:07:18,440
+what happens is that the method
+lookup will start in a different place.
+
+109
+00:07:18,640 --> 00:07:23,100
+It will start from the superclass
+of the class where the current method
+
+110
+00:07:23,300 --> 00:07:25,560
+or the current expression is declared.
+
+111
+00:07:28,210 --> 00:07:32,390
+You should also remember that `super`
+and self are the same object.
+
+112
+00:07:32,590 --> 00:07:37,210
+Both represent the receiver of the
+current message. And the only thing
+
+113
+00:07:37,410 --> 00:07:39,790
+that changes is the method lookup,
+where it starts.
+
+114
+00:07:41,350 --> 00:07:45,490
+Before leaving you, I leave you
+with this challenge: take a couple
+
+115
+00:07:45,690 --> 00:07:47,850
+of minutes and challenge yourself.
+
+116
+00:07:48,850 --> 00:07:53,330
+So imagine that you have this,
+you have a method `a foo` in the class A,
+
+117
+00:07:53,530 --> 00:07:56,250
+and you do super class equals self class.
+
+118
+00:07:56,450 --> 00:08:01,170
+Remember that class is just a message
+that eventually will return the
+
+119
+00:08:01,370 --> 00:08:05,190
+class of the receiver and equals
+equals is the identity,
+
+120
+00:08:05,390 --> 00:08:09,330
+so you will compare if the two compared
+objects are the same object.
+
+121
+00:08:09,530 --> 00:08:12,550
+Not if they're equals,
+but they are actually the same object.
+
+122
+00:08:13,390 --> 00:08:16,390
+So what does this return,
+true or false?
+
+123
+00:08:16,870 --> 00:08:17,790
+I leave you with that.
+

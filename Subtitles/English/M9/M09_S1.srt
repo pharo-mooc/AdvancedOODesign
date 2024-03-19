@@ -1,0 +1,1165 @@
+1
+00:00:03,840 --> 00:00:07,140
+Hi, in this lecture we are going
+to discuss about coupling and
+
+2
+00:00:07,340 --> 00:00:08,100
+encapsulation.
+
+3
+00:00:08,860 --> 00:00:12,240
+The goals of this lecture is to
+think about coupling and how coupling
+
+4
+00:00:12,440 --> 00:00:14,320
+affects different entities in our
+system.
+
+5
+00:00:15,080 --> 00:00:17,520
+We are going to present the Law
+of Demeter, which is one of the
+
+6
+00:00:17,720 --> 00:00:19,480
+principles that can guide your design.
+
+7
+00:00:20,320 --> 00:00:24,260
+We are going to discuss about the
+move behavior closer to data pattern.
+
+8
+00:00:24,460 --> 00:00:28,460
+It's a reengineering pattern from
+the Reengineering Pattern book and
+
+9
+00:00:28,660 --> 00:00:31,740
+we are going to discuss about some
+of the trade-offs of this Law of
+
+10
+00:00:31,940 --> 00:00:35,120
+Demeter, which can have benefits
+and some drawbacks.
+
+11
+00:00:36,920 --> 00:00:41,520
+Now, have you ever found yourself
+in one of these situations?
+
+12
+00:00:42,220 --> 00:00:46,180
+Telling yourself, I cannot reuse
+this component in this other
+
+13
+00:00:46,380 --> 00:00:49,200
+application, no, because it is blah,
+blah, blah, blah, blah,
+
+14
+00:00:49,700 --> 00:00:53,640
+or I cannot easily substitute this
+part of the system with another one,
+
+15
+00:00:54,140 --> 00:00:56,620
+even if it does similar stuff.
+
+16
+00:00:57,120 --> 00:01:02,360
+Or, ah, look, when something happens
+in this part of the system,
+
+17
+00:01:02,860 --> 00:01:04,400
+I get impacted here.
+
+18
+00:01:06,680 --> 00:01:10,080
+So or finally, ah, no,
+this part I cannot test,
+
+19
+00:01:10,400 --> 00:01:11,500
+no, no, it's too complicated.
+
+20
+00:01:12,500 --> 00:01:17,360
+Actually, most of these things,
+or all of them, are symptoms of
+
+21
+00:01:17,560 --> 00:01:18,320
+a coupling problem.
+
+22
+00:01:18,540 --> 00:01:22,120
+So there is a coupling in some way
+in the system, and that is so strong
+
+23
+00:01:22,320 --> 00:01:26,500
+that is preventing us evolving our
+system in some way, either by reusing,
+
+24
+00:01:26,760 --> 00:01:30,660
+substituting, changing,
+or even test our system.
+
+25
+00:01:32,600 --> 00:01:37,400
+So to illustrate this problem,
+we have this example here where
+
+26
+00:01:37,600 --> 00:01:39,060
+actually we have to read it from
+right to left.
+
+27
+00:01:39,260 --> 00:01:43,640
+So here we have some class here
+that defines this 'do()' method,
+
+28
+00:01:43,840 --> 00:01:46,600
+which is the most important thing
+right now in our example,
+
+29
+00:01:46,840 --> 00:01:52,140
+and it has a reference to a 'dependent'
+object, and this dependent object
+
+30
+00:01:52,340 --> 00:01:56,880
+has a reference to another 'IndirectDependent'
+object, so we have a chain
+
+31
+00:01:57,080 --> 00:01:57,840
+of objects.
+
+32
+00:01:58,780 --> 00:02:01,540
+And then, this 'IndirectDependent'
+has a method 'doSomething:'.
+
+33
+00:02:03,360 --> 00:02:07,020
+Finally, what happens in the 'do'
+method is that the source is telling
+
+34
+00:02:07,220 --> 00:02:11,860
+the 'dependent' to give it the 'IndirectDependent'
+ and to do the 'doSomething'.
+
+35
+00:02:12,260 --> 00:02:16,300
+So actually, the source is actually
+taking the dependent,
+
+36
+00:02:16,720 --> 00:02:19,280
+asking the dependent,
+and talking directly to the indirect
+
+37
+00:02:19,480 --> 00:02:20,240
+dependent.
+
+38
+00:02:21,660 --> 00:02:25,540
+So if you know what is Feature Envy,
+the Feature Envy code smell,
+
+39
+00:02:25,940 --> 00:02:29,500
+this is related to that,
+I invite you to look up that online.
+
+40
+00:02:31,540 --> 00:02:35,600
+Now what happens if we want to change
+some part of this application?
+
+41
+00:02:35,840 --> 00:02:39,020
+Changes are natural, so it's common
+that we are going to change stuff.
+
+42
+00:02:39,860 --> 00:02:44,560
+So the question is when we want
+to change something, how are we
+
+43
+00:02:44,760 --> 00:02:45,760
+going to be impacted?
+
+44
+00:02:46,440 --> 00:02:47,200
+Yeah.
+
+45
+00:02:48,120 --> 00:02:52,200
+So in particular here,
+if we want to change something here
+
+46
+00:02:52,400 --> 00:02:55,940
+in the indirect dependent,
+what are the possible impacts that
+
+47
+00:02:56,140 --> 00:02:57,780
+we're going to get in the rest of
+the system?
+
+48
+00:02:59,680 --> 00:03:02,980
+In this particular case,
+what we're going to get is what
+
+49
+00:03:03,180 --> 00:03:05,880
+we call waves or chains of effects
+or changes.
+
+50
+00:03:06,680 --> 00:03:09,680
+So here, what happens is that every
+time that we change something,
+
+51
+00:03:09,880 --> 00:03:15,280
+that is going to impact the direct
+users, but also if we don't control it,
+
+52
+00:03:15,480 --> 00:03:20,140
+it can make waves on other more
+indirect users.
+
+53
+00:03:20,560 --> 00:03:23,140
+So here in this case,
+if we want to, for example,
+
+54
+00:03:23,340 --> 00:03:27,800
+remove this 'doSomething' method,
+we have to go and change this do
+
+55
+00:03:28,000 --> 00:03:29,380
+method because it is calling it.
+
+56
+00:03:31,080 --> 00:03:35,380
+So all these chain reactions or waves,
+they are evil.
+
+57
+00:03:37,000 --> 00:03:39,240
+They actually create,
+they are actually created when we
+
+58
+00:03:39,440 --> 00:03:40,200
+have leaks.
+
+59
+00:03:40,320 --> 00:03:45,660
+So there is a reference to an object
+that is flowing from some place
+
+60
+00:03:45,860 --> 00:03:47,820
+to another place it should not flow.
+
+61
+00:03:48,560 --> 00:03:51,920
+So we have an indirect reference
+where it should not.
+
+62
+00:03:53,500 --> 00:03:56,080
+So what we say is that we are violating
+encapsulation.
+
+63
+00:03:56,660 --> 00:04:00,840
+So one of the key aspects,
+objects and object orientation is
+
+64
+00:04:01,040 --> 00:04:05,280
+that an object will encapsulate
+and it will hide its implementation.
+
+65
+00:04:06,440 --> 00:04:10,100
+So if we are leaking the reference
+of an object to another object,
+
+66
+00:04:10,300 --> 00:04:15,900
+we are giving the other objects
+some pointer to our own implementation.
+
+67
+00:04:16,440 --> 00:04:20,120
+So the question is, how can we limit
+this leaking?
+
+68
+00:04:22,100 --> 00:04:24,960
+One of the answers to this problem
+is to use the Law of Demeter.
+
+69
+00:04:25,940 --> 00:04:29,500
+The Law of Demeter is just a principle,
+a design principle that will give
+
+70
+00:04:29,700 --> 00:04:31,740
+us some guidance in how we can avoid
+that.
+
+71
+00:04:31,940 --> 00:04:37,460
+So the Law of Demeter says that
+we can only send messages to arguments,
+
+72
+00:04:38,320 --> 00:04:43,080
+instance variables, an object that
+we are creating, self,
+
+73
+00:04:43,280 --> 00:04:48,120
+super and our own class,
+and that we should avoid global
+
+74
+00:04:48,320 --> 00:04:51,920
+variables and objects returning
+from messages in general,
+
+75
+00:04:52,160 --> 00:04:53,100
+others and sent to self.
+
+76
+00:04:54,580 --> 00:04:57,140
+So how does it work in a real example?
+
+77
+00:04:58,000 --> 00:05:01,880
+So here, for example,
+this is a method that shows different
+
+78
+00:05:02,080 --> 00:05:03,540
+examples of things that we can do.
+
+79
+00:05:04,340 --> 00:05:09,600
+So if we have a method and we put
+ourselves in the skin of the object
+
+80
+00:05:09,800 --> 00:05:14,460
+in the receiver, so we have a parameter,
+so we can send the message self foo,
+
+81
+00:05:14,660 --> 00:05:18,080
+because the receiver is self,
+so we can send the message to ourselves.
+
+82
+00:05:19,260 --> 00:05:20,020
+Why is that?
+
+83
+00:05:20,220 --> 00:05:22,560
+Because if we change,
+we only have to change ourselves.
+
+84
+00:05:22,760 --> 00:05:23,520
+So that's okay.
+
+85
+00:05:25,600 --> 00:05:30,020
+Here we have a message sent to super,
+so that means that this,
+
+86
+00:05:30,260 --> 00:05:35,260
+if you remember the super lecture,
+will restart the method lookup from
+
+87
+00:05:35,460 --> 00:05:41,740
+the superclass of this method,
+of the class where this method is.
+
+88
+00:05:41,940 --> 00:05:46,860
+So if this method is in A and it
+has a superclass B, it's going to
+
+89
+00:05:47,060 --> 00:05:49,220
+restart the lookup in B.
+
+90
+00:05:50,300 --> 00:05:55,660
+So again, here we have somehow some
+dependency to a superclass.
+
+91
+00:05:55,980 --> 00:05:58,500
+If the superclass changes,
+we are going to get impacted,
+
+92
+00:05:58,740 --> 00:06:02,980
+but we are still in the same hierarchy,
+so still this is a controllable change.
+
+93
+00:06:04,780 --> 00:06:10,240
+Now here we are sending a message
+self to self to get the current class.
+
+94
+00:06:10,440 --> 00:06:12,860
+And that, of course, should get
+us the current class,
+
+95
+00:06:13,080 --> 00:06:17,180
+the class of the current object,
+and we are sending a message to
+
+96
+00:06:17,380 --> 00:06:18,140
+our own class.
+
+97
+00:06:18,340 --> 00:06:19,100
+So that's okay.
+
+98
+00:06:19,300 --> 00:06:21,040
+And that is allowed by the Law of
+Demeter.
+
+99
+00:06:22,940 --> 00:06:25,160
+We can also send messages to instance
+variables.
+
+100
+00:06:26,120 --> 00:06:29,980
+So to object references by instance
+variables, here we are sending a
+
+101
+00:06:30,180 --> 00:06:36,080
+message to 'instVarOne' that is referenced
+to some object, and we also allow
+
+102
+00:06:36,280 --> 00:06:40,660
+messages sent to instance variable
+accessed by a getter method.
+
+103
+00:06:40,860 --> 00:06:44,920
+So here, this is the equivalent
+of a getter method that returns
+
+104
+00:06:45,120 --> 00:06:46,360
+the value of 'instVarOne'.
+
+105
+00:06:47,280 --> 00:06:52,440
+We can also send a message to parameters
+and then we can instantiate objects
+
+106
+00:06:52,640 --> 00:06:55,720
+and since we just instantiated it,
+we can actually send it a message.
+
+107
+00:06:57,500 --> 00:07:01,360
+So what this law will enforce is
+that we are not going to be able
+
+108
+00:07:01,560 --> 00:07:05,280
+to send messages to far away objects.
+
+109
+00:07:05,480 --> 00:07:08,840
+So we don't have to skip intermediate
+objects.
+
+110
+00:07:09,040 --> 00:07:14,380
+So our source object knows this
+dependence and the dependence will
+
+111
+00:07:14,580 --> 00:07:17,700
+know the intermediate dependence,
+the indirect dependence.
+
+112
+00:07:18,380 --> 00:07:23,000
+So what the Law of Demeter tries
+to do is to avoid that this guy
+
+113
+00:07:23,200 --> 00:07:25,060
+here sends a message here.
+
+114
+00:07:25,260 --> 00:07:28,460
+So this is forbidden and this is
+forbidden too.
+
+115
+00:07:30,420 --> 00:07:34,760
+Like that, if we avoid these far
+away messages, we are going to avoid
+
+116
+00:07:34,960 --> 00:07:39,040
+dependencies and we are going to
+avoid the chain of changes if we
+
+117
+00:07:39,240 --> 00:07:40,000
+change here.
+
+118
+00:07:42,280 --> 00:07:47,580
+What the Law of Demeter will actually
+force us to do is that the source
+
+119
+00:07:47,780 --> 00:07:50,940
+here will only be able to send messages
+here and here.
+
+120
+00:07:51,820 --> 00:07:56,940
+So its action will be constrained
+to this part of the system.
+
+121
+00:07:58,040 --> 00:08:00,160
+So that means that here we are
+constraining the changes we are
+
+122
+00:08:00,360 --> 00:08:01,120
+going to do.
+
+123
+00:08:01,320 --> 00:08:04,580
+If we change the dependent here,
+that is probably going to affect
+
+124
+00:08:04,780 --> 00:08:08,280
+the source, but it's not going to
+affect anything else in the system.
+
+125
+00:08:08,480 --> 00:08:13,580
+In the same way, we are going to
+constrain the messages to indirect
+
+126
+00:08:13,780 --> 00:08:17,760
+dependent to the dependent and like
+that, if something changes in here,
+
+127
+00:08:18,160 --> 00:08:22,240
+it should only affect the dependent
+here and not the source.
+
+128
+00:08:23,000 --> 00:08:26,740
+This Law of Demeter, of course,
+can be applied in a systematic way
+
+129
+00:08:27,200 --> 00:08:30,900
+following, for example,
+here, the design pattern that is
+
+130
+00:08:31,100 --> 00:08:37,280
+called move behavior close to data,
+which has a subjective to move the
+
+131
+00:08:37,480 --> 00:08:42,780
+behavior that is being applied to
+objects close to where those objects
+
+132
+00:08:42,980 --> 00:08:43,740
+are.
+
+133
+00:08:43,940 --> 00:08:46,280
+The idea is to strengthen the
+encapsulation.
+
+134
+00:08:46,940 --> 00:08:51,940
+So to actually refactor step by
+step the code that we saw at the
+
+135
+00:08:52,140 --> 00:08:56,220
+beginning and make it closer to
+what we saw later.
+
+136
+00:08:58,680 --> 00:09:02,600
+So here, for example,
+if you see this example like this,
+
+137
+00:09:02,800 --> 00:09:07,120
+here we are in the original code
+where we have a car that is using
+
+138
+00:09:07,320 --> 00:09:11,240
+an engine and the engine is using
+a carburetor and then the engine
+
+139
+00:09:11,440 --> 00:09:14,420
+wants to increase the speed and
+to increase the speed it is taking
+
+140
+00:09:14,620 --> 00:09:19,980
+the carburetor and then changing
+a flag that is here far away to true.
+
+141
+00:09:21,500 --> 00:09:24,700
+So step by step, if we wanted to
+fix that in a refactoring,
+
+142
+00:09:25,460 --> 00:09:33,020
+we would first move this behavior
+to the engine and like that the
+
+143
+00:09:33,220 --> 00:09:35,880
+car should, since the car should
+only talk to the Engine,
+
+144
+00:09:36,160 --> 00:09:39,920
+we are going to transform this whole
+expression to 'engine.speedUp()'.
+
+145
+00:09:40,300 --> 00:09:44,740
+So we're going to add behavior,
+move behavior close to the data here.
+
+146
+00:09:45,720 --> 00:09:50,160
+And like that, we move the inner
+expression into here.
+
+147
+00:09:50,820 --> 00:09:54,820
+Like that now in this first step,
+the car doesn't depend anymore on
+
+148
+00:09:55,020 --> 00:09:55,780
+the carburetor.
+
+149
+00:09:55,980 --> 00:09:57,440
+Now the car only depends on the engine.
+
+150
+00:09:59,260 --> 00:10:02,540
+But now the problem, we just push
+the problem to the engine.
+
+151
+00:10:02,780 --> 00:10:05,940
+The engine now depends on the carburetor
+that is actually really coupled
+
+152
+00:10:06,140 --> 00:10:07,880
+with implementation of the carburetor.
+
+153
+00:10:08,440 --> 00:10:11,280
+If we decide tomorrow to change
+the implementation of the carburetor
+
+154
+00:10:11,480 --> 00:10:16,500
+and make that flag instead of a flag,
+an integer that will impact also
+
+155
+00:10:16,700 --> 00:10:21,400
+the engine, so we can also apply
+this in a second step and to hide
+
+156
+00:10:21,600 --> 00:10:26,080
+those by moving this behavior to
+the carburetor.
+
+157
+00:10:26,660 --> 00:10:31,920
+So now in the final refactoring,
+what happens is that the engine
+
+158
+00:10:32,120 --> 00:10:35,900
+will tell the carburetor to open
+the fuel valve and then the carburetor
+
+159
+00:10:36,100 --> 00:10:38,240
+can do whatever it wants in its
+implementation.
+
+160
+00:10:38,540 --> 00:10:42,620
+In this case, it will only set the
+`Boolean` as true, the flag as true.
+
+161
+00:10:44,320 --> 00:10:47,520
+In this final version,
+what happens is that the car only
+
+162
+00:10:47,720 --> 00:10:53,900
+has a dependency to the engine and
+the engine has a slight dependency
+
+163
+00:10:54,100 --> 00:10:56,220
+to the API of the carburetor.
+
+164
+00:10:56,580 --> 00:10:59,480
+All these dependencies are actually
+based not on implementations,
+
+165
+00:11:00,180 --> 00:11:10,220
+but on APIs, so they will force
+that our engine depends on the message,
+
+166
+00:11:10,420 --> 00:11:15,060
+open fuel valve and the car depends
+on the message speed up as well.
+
+167
+00:11:15,840 --> 00:11:19,160
+For another real case,
+so here we have an example taken
+
+168
+00:11:19,360 --> 00:11:27,720
+from Pharo, from the morphic UI
+framework, which is actually managing
+
+169
+00:11:27,920 --> 00:11:29,780
+the resolution change.
+
+170
+00:11:29,980 --> 00:11:32,280
+So every time that we change the
+resolution of the Pharo window,
+
+171
+00:11:32,960 --> 00:11:37,140
+this is the code that was being
+executed before, so this was fixed
+
+172
+00:11:37,340 --> 00:11:39,460
+at the mean time, but it was a good
+example for the slides.
+
+173
+00:11:40,420 --> 00:11:43,380
+So what happened here is that we
+had this morphic word that represents
+
+174
+00:11:43,580 --> 00:11:50,340
+the window, and when we were resizing
+the window, we were actually taking
+
+175
+00:11:50,540 --> 00:11:53,620
+the state of the world,
+taking the render of the world from
+
+176
+00:11:53,820 --> 00:11:58,840
+the worldstate and taking the actual
+window from the renderer,
+
+177
+00:11:59,040 --> 00:12:03,960
+asking it the backend window,
+which actually represents the physical
+
+178
+00:12:04,160 --> 00:12:09,600
+window from the operating system,
+asking it its renderer and finally
+
+179
+00:12:09,800 --> 00:12:10,560
+destroying it.
+
+180
+00:12:11,460 --> 00:12:14,640
+So this is actually not satisfying
+the Law of Demeter.
+
+181
+00:12:15,520 --> 00:12:20,140
+So the same thing happened actually
+in the lines below, all up to the end.
+
+182
+00:12:21,500 --> 00:12:26,700
+So what actually happens here is
+that if any of these method changes
+
+183
+00:12:26,900 --> 00:12:31,000
+or any of this implementation changes
+here in this chain of methods,
+
+184
+00:12:31,620 --> 00:12:34,840
+then this method will be broken too.
+
+185
+00:12:35,900 --> 00:12:38,920
+Resolution of this is,
+of course, to follow the Law of
+
+186
+00:12:39,120 --> 00:12:43,820
+Demeter to some degree,
+to refactor step by step and to
+
+187
+00:12:44,020 --> 00:12:47,200
+delegate only to the object that
+we know directly.
+
+188
+00:12:47,620 --> 00:12:49,700
+So here, for example,
+what happens is that this is the
+
+189
+00:12:49,900 --> 00:12:51,200
+original code that was refactored.
+
+190
+00:12:52,080 --> 00:12:56,560
+Now, every time that we visit the
+ResolutionChangeEvent, we are taking
+
+191
+00:12:56,760 --> 00:13:01,360
+the world state, so here we are
+not a 100% following the Law of Demeter,
+
+192
+00:13:01,600 --> 00:13:04,600
+but we are actually cutting many,
+many steps.
+
+193
+00:13:05,540 --> 00:13:08,120
+And we are telling it to update
+to the new resolution.
+
+194
+00:13:08,720 --> 00:13:13,080
+This update new resolution will
+do the main three steps that we
+
+195
+00:13:13,280 --> 00:13:15,980
+were doing before, but it was kind
+of hidden in implementation detail
+
+196
+00:13:16,180 --> 00:13:17,480
+because it was difficult to read.
+
+197
+00:13:17,900 --> 00:13:22,880
+So it is doing a full repaint followed
+by an update to resolution and checking
+
+198
+00:13:23,080 --> 00:13:23,840
+the screen size.
+
+199
+00:13:24,540 --> 00:13:28,380
+And this 'UpdateToNewResolution' is
+executing the destroy,
+
+200
+00:13:28,680 --> 00:13:30,740
+validate and update all that we
+saw before.
+
+201
+00:13:31,880 --> 00:13:34,040
+One of the funny things,
+one of the important things of this
+
+202
+00:13:34,240 --> 00:13:41,260
+example is that now we can easily
+change the renderer to implement
+
+203
+00:13:41,460 --> 00:13:44,880
+a null object, for example,
+here is NullWorldRenderer that can
+
+204
+00:13:46,220 --> 00:13:48,660
+implement an empty update to new
+resolution.
+
+205
+00:13:49,020 --> 00:13:54,980
+So now that we are not coupled to
+the implementations, we can change
+
+206
+00:13:55,180 --> 00:13:58,660
+part of the implementations,
+but other kind of implementation.
+
+207
+00:13:59,880 --> 00:14:05,460
+So finally, what you see is that
+the big method was kind of a factor
+
+208
+00:14:05,660 --> 00:14:09,510
+to a simple method in the right place,
+doing the right three things in
+
+209
+00:14:09,710 --> 00:14:11,960
+a more readable way.
+
+210
+00:14:14,320 --> 00:14:16,740
+Now it's important to understand
+that Law of Demeter, as I said,
+
+211
+00:14:16,960 --> 00:14:18,940
+is heuristic or it's just a principle.
+
+212
+00:14:19,320 --> 00:14:22,100
+So you should not follow it blindly.
+
+213
+00:14:23,300 --> 00:14:26,240
+So if you just do it too strictly,
+actually this can lead to problems
+
+214
+00:14:26,440 --> 00:14:27,680
+like a bloated class API.
+
+215
+00:14:27,880 --> 00:14:32,040
+So it can actually create them by
+the APIs for your clients.
+
+216
+00:14:33,400 --> 00:14:37,220
+For example, I will show you later
+that encapsulating collections can
+
+217
+00:14:37,420 --> 00:14:40,600
+produce large interfaces that are
+complex to follow and to maintain.
+
+218
+00:14:41,700 --> 00:14:45,660
+So it is important to understand
+what is reasonable to leak,
+
+219
+00:14:46,140 --> 00:14:48,680
+when it is important to apply the
+Law of Demeter and when it is important
+
+220
+00:14:48,880 --> 00:14:49,640
+to break it too.
+
+221
+00:14:51,440 --> 00:14:56,660
+So here, for example,
+in this case, what we have is a method,
+
+222
+00:14:56,960 --> 00:15:00,980
+a class that will wrap a collection
+that is called senders.
+
+223
+00:15:01,480 --> 00:15:06,320
+And in this case, somebody decided
+to expose all the collection API
+
+224
+00:15:06,520 --> 00:15:07,420
+in this class.
+
+225
+00:15:07,640 --> 00:15:12,100
+So here that means that then we
+have the method do that will expose
+
+226
+00:15:12,300 --> 00:15:15,240
+the do method of the sender and
+the method collect that will expose
+
+227
+00:15:15,440 --> 00:15:18,600
+collect and so on for all the other
+methods on collections.
+
+228
+00:15:18,800 --> 00:15:23,320
+So that means that the bigger the
+API of collections, the bigger the
+
+229
+00:15:23,520 --> 00:15:26,460
+API that needs to be exposed by
+this object.
+
+230
+00:15:27,420 --> 00:15:34,580
+So in this sense, maybe the hiding
+the actual collection was not the
+
+231
+00:15:34,780 --> 00:15:37,460
+right decision in this case,
+and maybe it would have been easier
+
+232
+00:15:37,660 --> 00:15:39,280
+to just expose the collection to
+the user.
+
+233
+00:15:42,000 --> 00:15:44,300
+As a conclusion, think about the
+impact of changes.
+
+234
+00:15:44,500 --> 00:15:47,840
+Think about the dependencies and
+think about what happens when you
+
+235
+00:15:48,040 --> 00:15:50,460
+change messages and change access
+to variables, moreover.
+
+236
+00:15:52,400 --> 00:15:54,460
+Remember that the Law of Demeter
+is heuristic.
+
+237
+00:15:55,000 --> 00:15:56,840
+So it doesn't work in all cases.
+
+238
+00:15:57,040 --> 00:15:59,780
+You must use it whenever it actually
+pays off.
+
+239
+00:16:00,300 --> 00:16:05,280
+So it has benefits, but it can also
+have drawbacks if it is used wrongly
+
+240
+00:16:05,480 --> 00:16:10,100
+and think about the move behavior
+close to data reengineering pattern,
+
+241
+00:16:10,300 --> 00:16:14,620
+which is a good way to move from
+a bad design to the good design
+
+242
+00:16:14,820 --> 00:16:15,580
+using the Law of Demeter.
+

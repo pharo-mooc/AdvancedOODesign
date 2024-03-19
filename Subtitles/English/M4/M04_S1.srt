@@ -1,0 +1,508 @@
+1
+00:00:03,570 --> 00:00:04,330
+Hello.
+
+2
+00:00:04,530 --> 00:00:10,010
+In this lecture, we will discuss
+something obvious, but probably
+
+3
+00:00:10,210 --> 00:00:11,490
+important to remember.
+
+4
+00:00:12,230 --> 00:00:15,350
+So methods are the elementary unit
+of reuse.
+
+5
+00:00:17,210 --> 00:00:22,850
+Executing a method is reusing code,
+obviously, but when you define a method,
+
+6
+00:00:23,990 --> 00:00:28,910
+it means that you enrich the API
+of the object, the application
+
+7
+00:00:29,110 --> 00:00:29,870
+programming interface.
+
+8
+00:00:30,330 --> 00:00:33,090
+And calling this method,
+this is the first level of reuse.
+
+9
+00:00:33,690 --> 00:00:36,650
+So let's have a look at this case study.
+
+10
+00:00:36,850 --> 00:00:41,110
+This is a long method,
+and this method is defined on a PRTree,
+
+11
+00:00:41,770 --> 00:00:44,610
+that is a tree representing a document.
+
+12
+00:00:44,810 --> 00:00:49,610
+This is part of the Pillar package,
+and we want to inspect this tree.
+
+13
+00:00:49,850 --> 00:00:55,390
+It will return a Presenter that
+displays this tree of nodes,
+
+14
+00:00:56,190 --> 00:00:58,810
+and we have different kinds of nodes
+inside this tree.
+
+15
+00:00:59,010 --> 00:01:03,290
+We might have some paragraphs,
+some titles, headers,
+
+16
+00:01:03,490 --> 00:01:04,250
+whatever.
+
+17
+00:01:04,550 --> 00:01:10,350
+And now we can wonder why clients
+of a document are forced to define
+
+18
+00:01:10,550 --> 00:01:11,870
+this behavior here.
+
+19
+00:01:12,250 --> 00:01:17,730
+Why should I test if the node that
+I want to display is a header?
+
+20
+00:01:18,210 --> 00:01:22,110
+Why is it important that clients
+test this?
+
+21
+00:01:23,030 --> 00:01:26,490
+In fact, it would be much better
+to separate things.
+
+22
+00:01:27,050 --> 00:01:33,030
+And if I introduce correctly some
+display on strings, I define a new
+
+23
+00:01:33,230 --> 00:01:34,330
+method on PRObject.
+
+24
+00:01:35,850 --> 00:01:38,930
+This is the root of the hierarchy
+of all nodes.
+
+25
+00:01:40,130 --> 00:01:44,110
+And I said that by default,
+when I want to transform a node
+
+26
+00:01:44,310 --> 00:01:48,090
+to a string, it just displays its
+class name.
+
+27
+00:01:49,630 --> 00:01:58,090
+And if I want to display as a string
+a header node, it means that I can
+
+28
+00:01:58,290 --> 00:02:01,670
+reuse, I can extend the default
+behavior.
+
+29
+00:02:02,170 --> 00:02:06,690
+It means that displaying its class name,
+but also I will concatenate the
+
+30
+00:02:06,890 --> 00:02:08,130
+level of the title.
+
+31
+00:02:10,440 --> 00:02:15,820
+So if you have trouble to understand
+this part, I invite you to revise
+
+32
+00:02:16,020 --> 00:02:17,920
+the hooks and template lecture.
+
+33
+00:02:18,120 --> 00:02:21,440
+This is a direct application of it.
+
+34
+00:02:22,280 --> 00:02:24,400
+So now let's go back to our example.
+
+35
+00:02:25,600 --> 00:02:29,740
+Now I can refactor my method,
+it's a little bit shorter,
+
+36
+00:02:30,120 --> 00:02:35,700
+and I can use directly the newly
+defined displayStringOn.
+
+37
+00:02:37,880 --> 00:02:42,920
+And I can send it to all kinds of
+nodes and it will correctly work.
+
+38
+00:02:43,120 --> 00:02:45,840
+It means that the right method will
+be selected dynamically,
+
+39
+00:02:46,520 --> 00:02:49,240
+either it will be the default
+implementation that displays the
+
+40
+00:02:49,440 --> 00:02:53,680
+class name, or if it is a header node,
+the level of the header will be
+
+41
+00:02:53,880 --> 00:02:55,360
+correctly displayed also.
+
+42
+00:02:55,740 --> 00:02:56,900
+So this is much simpler.
+
+43
+00:02:57,380 --> 00:03:02,800
+And this is just because we enrich
+the API of nodes with the fact that
+
+44
+00:03:03,000 --> 00:03:05,440
+they can display themselves as a string.
+
+45
+00:03:07,240 --> 00:03:09,580
+So let's have a look at another example.
+
+46
+00:03:09,780 --> 00:03:11,660
+This is a logic repetition.
+
+47
+00:03:12,300 --> 00:03:18,420
+If I want to convert an object to
+a string, usually we are using this
+
+48
+00:03:18,620 --> 00:03:19,380
+kind of pattern.
+
+49
+00:03:20,320 --> 00:03:26,520
+I start by creating a stream,
+and this string uses a string.
+
+50
+00:03:27,940 --> 00:03:33,300
+I can send a printOn method to the
+object and say, OK, display yourself
+
+51
+00:03:33,500 --> 00:03:36,580
+on this string, and then I get the
+content of the string.
+
+52
+00:03:38,260 --> 00:03:44,420
+So here, this is the kind of code
+that I should repeat over and over
+
+53
+00:03:44,620 --> 00:03:47,740
+each time I want to convert any
+kind of object as a string.
+
+54
+00:03:48,460 --> 00:03:52,020
+And the idea is, how can I avoid
+this kind of logic repetition?
+
+55
+00:03:53,620 --> 00:03:56,220
+And in fact, this is implemented
+in the Pharo library.
+
+56
+00:03:57,020 --> 00:03:59,800
+And the method is named streamContents.
+
+57
+00:04:01,300 --> 00:04:06,500
+And if you look at it,
+this method takes as argument a
+
+58
+00:04:06,700 --> 00:04:07,800
+block there.
+
+59
+00:04:09,240 --> 00:04:14,060
+So this method encapsulates the
+stream creation, so the string is
+
+60
+00:04:14,260 --> 00:04:15,020
+correctly created.
+
+61
+00:04:15,660 --> 00:04:18,480
+This method is optimized,
+we will see how later.
+
+62
+00:04:18,680 --> 00:04:22,240
+It hides all the details,
+so it means that from the client
+
+63
+00:04:22,440 --> 00:04:26,880
+point of view, I do not have to
+take care about creating the string,
+
+64
+00:04:27,080 --> 00:04:28,020
+the stream, etc.
+
+65
+00:04:28,680 --> 00:04:31,120
+And it encapsulates termination,
+as we will see.
+
+66
+00:04:31,380 --> 00:04:32,820
+Let's have a look at this
+implementation.
+
+67
+00:04:33,460 --> 00:04:35,780
+So in fact, this is not implemented
+in the string class.
+
+68
+00:04:36,080 --> 00:04:38,060
+This is implemented in the
+SequenceableCollection.
+
+69
+00:04:40,460 --> 00:04:43,980
+And the first, so this is implemented
+on class side.
+
+70
+00:04:44,740 --> 00:04:47,800
+And it will be inherited by stream
+class.
+
+71
+00:04:48,560 --> 00:04:54,680
+So here, I can specify the default
+size of the string that will be created.
+
+72
+00:04:55,340 --> 00:04:59,260
+And the important method is this one,
+here.
+
+73
+00:05:00,500 --> 00:05:06,600
+So first, we are creating the stream,
+and now, the important thing is
+
+74
+00:05:06,800 --> 00:05:14,240
+that I got a block as argument,
+and I can execute this block here,
+
+75
+00:05:14,440 --> 00:05:16,140
+bypassing the newly created stream.
+
+76
+00:05:16,980 --> 00:05:20,200
+So it means that I can create the
+stream, I give it to the block,
+
+77
+00:05:20,720 --> 00:05:22,340
+and the block is defined by the client.
+
+78
+00:05:23,320 --> 00:05:27,220
+And then at the end, what is important
+there, there is a little optimization
+
+79
+00:05:27,420 --> 00:05:28,180
+there.
+
+80
+00:05:28,380 --> 00:05:34,040
+It means that if the stream position
+is the same as the original content
+
+81
+00:05:34,240 --> 00:05:38,300
+size, so it means that if I inserted
+100 characters, for example,
+
+82
+00:05:39,160 --> 00:05:44,300
+in the stream, I do not need to
+copy the contents, the buffer of
+
+83
+00:05:44,500 --> 00:05:45,260
+the stream.
+
+84
+00:05:45,700 --> 00:05:50,520
+I have exactly the buffer that has
+the right size, so I can directly
+
+85
+00:05:50,720 --> 00:05:51,560
+send it.
+
+86
+00:05:52,360 --> 00:05:54,480
+OK, this is a little optimization.
+
+87
+00:05:55,420 --> 00:06:00,080
+Another example of logic encapsulation
+is the following: we want to read
+
+88
+00:06:00,280 --> 00:06:04,080
+from a file named 'tintin',
+here using asFileReference,
+
+89
+00:06:06,220 --> 00:06:11,980
+and we are sending the message
+readStreamDo, and we pass a block
+
+90
+00:06:12,180 --> 00:06:13,260
+to this method.
+
+91
+00:06:15,000 --> 00:06:19,020
+And here, in the implementation
+of this method, what it does is
+
+92
+00:06:19,220 --> 00:06:25,100
+that it automatically creates the
+stream, then the client block is
+
+93
+00:06:25,300 --> 00:06:30,300
+executed by passing the stream that
+was just created before.
+
+94
+00:06:31,200 --> 00:06:34,860
+And the really interesting point
+is that at the end of this method,
+
+95
+00:06:35,060 --> 00:06:40,560
+it automatically ensures that the
+stream is closed.
+
+96
+00:06:41,580 --> 00:06:46,740
+So it means that from the client
+point of view, we never deal with
+
+97
+00:06:46,940 --> 00:06:49,620
+the fact that we need to close the
+file at the end of reading.
+
+98
+00:06:50,900 --> 00:06:55,720
+So if we step back a little bit,
+in fact, what is really important
+
+99
+00:06:55,920 --> 00:06:58,200
+is to avoid spreading knowledge
+in clients.
+
+100
+00:06:58,620 --> 00:07:03,640
+It means that you need to encapsulate
+the logic inside the API.
+
+101
+00:07:04,440 --> 00:07:07,180
+You need to prevent clients from
+forgetting something,
+
+102
+00:07:07,380 --> 00:07:08,760
+for example closing a file.
+
+103
+00:07:10,300 --> 00:07:15,940
+And one way to build this kind of
+powerful API is to use block closure.
+
+104
+00:07:16,140 --> 00:07:22,240
+They are really useful to build
+this kind of abstraction over complex
+
+105
+00:07:22,440 --> 00:07:23,200
+logic.
+
+106
+00:07:23,760 --> 00:07:28,460
+But be careful, if you abuse about
+using blocks, it means that you
+
+107
+00:07:28,660 --> 00:07:34,420
+will have really complex API,
+and I invite you to see the Blocks
+
+108
+00:07:34,620 --> 00:07:36,640
+vs Objects lecture.
+

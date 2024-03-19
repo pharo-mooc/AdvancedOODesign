@@ -1,0 +1,1025 @@
+1
+00:00:04,080 --> 00:00:08,440
+Hi, in this lecture, we are going
+to discuss the singleton design pattern.
+
+2
+00:00:09,440 --> 00:00:12,100
+The goals of this lecture are to
+discuss the singleton pattern,
+
+3
+00:00:12,880 --> 00:00:17,300
+to have some discussions of the
+benefits and the disadvantages of it,
+
+4
+00:00:17,580 --> 00:00:21,900
+and to discuss a bit about the
+misunderstandings around it.
+
+5
+00:00:23,220 --> 00:00:25,700
+Now, if you read the original book
+from (Gangs of Four),
+
+6
+00:00:26,940 --> 00:00:31,960
+the singleton pattern is there to
+ensure that the class has only one
+
+7
+00:00:32,160 --> 00:00:35,740
+instance, and to provide a global
+access point to it.
+
+8
+00:00:35,940 --> 00:00:38,800
+So there is a single way to access
+that single instance.
+
+9
+00:00:40,080 --> 00:00:46,540
+Now, a better way to look at that
+is to see it as ensuring that a
+
+10
+00:00:46,740 --> 00:00:49,360
+class has only one instance at a
+single point in time.
+
+11
+00:00:49,560 --> 00:00:54,580
+So that means that if in the program,
+
+12
+00:00:54,780 --> 00:00:58,580
+we are trying to access the same
+instance in two different places,
+
+13
+00:00:58,780 --> 00:01:00,980
+but at the same time,
+we are going to access the same
+
+14
+00:01:01,000 --> 00:01:01,680
+instance.
+
+15
+00:01:03,400 --> 00:01:05,880
+So what is the problem here?
+
+16
+00:01:06,220 --> 00:01:09,220
+So we need a way to keep some objects
+around.
+
+17
+00:01:09,420 --> 00:01:13,200
+So we want to keep the same object
+because we want to reuse that same
+
+18
+00:01:13,400 --> 00:01:14,160
+object.
+
+19
+00:01:14,360 --> 00:01:15,580
+So that is why it is persistent.
+
+20
+00:01:15,780 --> 00:01:17,740
+We want to store it, or we want
+to save it somewhere.
+
+21
+00:01:20,360 --> 00:01:23,520
+The other way to see it is that
+we need a class with a unique instance,
+
+22
+00:01:23,720 --> 00:01:27,580
+that we don't want two instances around,
+because that could mess some stuff.
+
+23
+00:01:28,620 --> 00:01:32,360
+The solution that is proposed by
+this pattern is that we are going
+
+24
+00:01:32,560 --> 00:01:35,460
+to allocate that instance,
+we are going to instantiate it,
+
+25
+00:01:35,660 --> 00:01:38,360
+and we're going to store it the
+first time we use it.
+
+26
+00:01:38,560 --> 00:01:41,280
+And then, every time that we are
+going to use it again,
+
+27
+00:01:41,980 --> 00:01:44,940
+so instead of creating a new instance,
+we are going to return the old one
+
+28
+00:01:45,140 --> 00:01:47,560
+that we have been storing before.
+
+29
+00:01:49,240 --> 00:01:52,900
+So most of the time, we need to
+think twice about applying this
+
+30
+00:01:53,100 --> 00:01:58,160
+pattern because it has many drawbacks,
+and it has really, really limited
+
+31
+00:01:58,360 --> 00:01:59,720
+application for real.
+
+32
+00:02:01,220 --> 00:02:04,140
+So here, for example,
+let's imagine that you want to keep
+
+33
+00:02:04,340 --> 00:02:07,180
+only a single instance of a database
+connection, because of course,
+
+34
+00:02:07,380 --> 00:02:11,540
+database connections are expensive,
+and they are difficult to create,
+
+35
+00:02:12,060 --> 00:02:16,260
+and maybe there are even hardware
+limitations for it, and so on.
+
+36
+00:02:17,000 --> 00:02:22,140
+So one way of applying this pattern
+is to say, Okay, we're going to
+
+37
+00:02:22,340 --> 00:02:25,200
+use a singleton, a singleton to
+keep the database connections.
+
+38
+00:02:26,180 --> 00:02:29,680
+For example here, we are going to
+ask the database connection class
+
+39
+00:02:29,880 --> 00:02:31,800
+to give us the uniqueInstance.
+
+40
+00:02:32,440 --> 00:02:34,340
+So it's  only instance in the
+system.
+
+41
+00:02:34,860 --> 00:02:40,000
+If we ask two times in different
+places for the uniqueInstance of
+
+42
+00:02:40,200 --> 00:02:42,820
+the database connection,
+we are going to get the same object.
+
+43
+00:02:43,020 --> 00:02:46,840
+So remember that equals equals is
+the identity comparison.
+
+44
+00:02:47,040 --> 00:02:52,320
+It is telling us that db2 and db
+are two variables, but they are
+
+45
+00:02:52,520 --> 00:02:54,900
+referencing the same object,
+exactly the same object.
+
+46
+00:02:56,060 --> 00:03:00,960
+In this way, we are sure that we
+are only creating one database
+
+47
+00:03:01,160 --> 00:03:02,160
+connection and not two.
+
+48
+00:03:03,860 --> 00:03:10,920
+One possible implementation for
+this pattern is to store the instance
+
+49
+00:03:11,120 --> 00:03:16,200
+in a shared variable in the class,
+and then we have our uniqueInstance
+
+50
+00:03:16,640 --> 00:03:21,480
+method that in each access,
+it is checking if the uniqueInstance
+
+51
+00:03:21,860 --> 00:03:23,280
+variable is pointing to nil.
+
+52
+00:03:23,480 --> 00:03:27,980
+If it is nil, we are going to allocate
+it, create the new instance,
+
+53
+00:03:28,260 --> 00:03:29,020
+and store it.
+
+54
+00:03:30,060 --> 00:03:34,960
+Otherwise, we're just returning
+what has been storing there from before.
+
+55
+00:03:35,380 --> 00:03:38,040
+So that means that the first time,
+we are going to execute this method,
+
+56
+00:03:39,000 --> 00:03:40,720
+the uniqueInstance will be nil.
+
+57
+00:03:40,920 --> 00:03:45,860
+It is going to be instantiated and
+assigned and then returned.
+
+58
+00:03:46,200 --> 00:03:50,340
+The second time, the uniqueInstance
+will not be nil, then the conditional
+
+59
+00:03:50,540 --> 00:03:53,460
+code will be avoided,
+and then we are going just to return
+
+60
+00:03:53,660 --> 00:03:54,420
+the instance.
+
+61
+00:03:57,160 --> 00:04:02,540
+Now, a question could be,
+should we overwrite `new` to always
+
+62
+00:04:02,740 --> 00:04:03,500
+return the uniqueInstance?
+
+63
+00:04:04,660 --> 00:04:06,680
+This is probably a bit controversial.
+
+64
+00:04:07,100 --> 00:04:12,380
+I particularly don't like it because
+sending the message `new` conveys
+
+65
+00:04:12,580 --> 00:04:14,280
+that we are going to create a new
+instance.
+
+66
+00:04:14,760 --> 00:04:17,440
+If instead of doing that,
+we are just returning the same instance
+
+67
+00:04:17,640 --> 00:04:19,920
+all the time, then clients can be
+confused.
+
+68
+00:04:20,120 --> 00:04:24,860
+People can actually try to use this API,
+thinking that it is going to do
+
+69
+00:04:25,060 --> 00:04:27,140
+something and it is actually doing
+something else.
+
+70
+00:04:28,780 --> 00:04:34,280
+So at the end, the API is not conveying
+what it's actually doing and that
+
+71
+00:04:34,480 --> 00:04:36,080
+can create a lot of problems in
+the future.
+
+72
+00:04:36,780 --> 00:04:41,840
+Let's see some variations of the
+pattern with different namings also.
+
+73
+00:04:42,400 --> 00:04:45,620
+The one that we saw before is the
+uniqueInstance, so we can implement
+
+74
+00:04:45,820 --> 00:04:48,560
+a singleton with the uniqueInstance
+method.
+
+75
+00:04:48,760 --> 00:04:54,720
+In this case, we are just lazily
+creating the uniqueInstance on the
+
+76
+00:04:54,920 --> 00:04:57,320
+first access and then returning
+the value otherwise.
+
+77
+00:04:57,560 --> 00:05:03,260
+One way also to attack the problem
+of the `new` is that instead of
+
+78
+00:05:03,460 --> 00:05:07,240
+making `new` calling uniqueInstance,
+we can, for example, cancel it or
+
+79
+00:05:07,440 --> 00:05:08,200
+block it.
+
+80
+00:05:08,460 --> 00:05:12,600
+So for example, here what we are
+doing is that if we want everybody
+
+81
+00:05:12,800 --> 00:05:16,400
+to use the uniqueInstance method
+and not the new method,
+
+82
+00:05:16,600 --> 00:05:20,160
+what we're going to do is to write
+an error every time that the new
+
+83
+00:05:20,360 --> 00:05:21,120
+method is being called.
+
+84
+00:05:21,380 --> 00:05:24,020
+Another variation of this is to
+use the default version.
+
+85
+00:05:24,220 --> 00:05:27,020
+So these are some variations that
+you are going to find in the Pharo code,
+
+86
+00:05:27,220 --> 00:05:29,000
+for example, if you take the (standard
+live).
+
+87
+00:05:29,680 --> 00:05:36,400
+So default is a kind of a singleton,
+but here there's no reason to stop
+
+88
+00:05:36,600 --> 00:05:38,560
+the user to create new instances.
+
+89
+00:05:38,760 --> 00:05:42,520
+So we have a default instance that
+can be reused and it is a single
+
+90
+00:05:42,720 --> 00:05:45,120
+instance that can be passed around.
+
+91
+00:05:46,020 --> 00:05:48,140
+But we can create other kinds of
+instances.
+
+92
+00:05:48,340 --> 00:05:51,320
+So this name conveys that it's not
+the only one.
+
+93
+00:05:51,520 --> 00:05:52,340
+It is a default one.
+
+94
+00:05:52,540 --> 00:05:57,800
+It is a good one to use in general case,
+but we are able to create new ones
+
+95
+00:05:58,000 --> 00:05:58,760
+if we want.
+
+96
+00:06:00,700 --> 00:06:03,840
+Another possibility is to,
+for example, to implement a singleton
+
+97
+00:06:04,040 --> 00:06:05,020
+as a current instance.
+
+98
+00:06:05,660 --> 00:06:09,600
+This name conveys that this is the
+current instance and it may change
+
+99
+00:06:09,800 --> 00:06:10,560
+in the future.
+
+100
+00:06:10,760 --> 00:06:14,120
+So there's only one right now,
+but this one that is right now,
+
+101
+00:06:14,320 --> 00:06:17,540
+it can change and then later,
+we can have another only one.
+
+102
+00:06:17,740 --> 00:06:24,200
+So that means that if we see it in time,
+so maybe we have a singleton here
+
+103
+00:06:24,400 --> 00:06:28,860
+at some point, so we have object
+one and then here it changes and
+
+104
+00:06:29,060 --> 00:06:30,580
+then we have some other object too.
+
+105
+00:06:31,040 --> 00:06:34,940
+So at each point in time,
+we have a single object that will
+
+106
+00:06:35,140 --> 00:06:38,180
+be unique and then when it changes,
+we have another object,
+
+107
+00:06:38,380 --> 00:06:41,720
+but always we have only one,
+which is the current one.
+
+108
+00:06:44,650 --> 00:06:50,190
+Now, of course, you may be tempted
+to say, Ah, I can implement this
+
+109
+00:06:50,390 --> 00:06:51,310
+just as a global variable.
+
+110
+00:06:53,050 --> 00:06:57,410
+Particularly, it is important to
+avoid to use global variables first
+
+111
+00:06:57,610 --> 00:07:02,050
+because already classes work like
+global variables.
+
+112
+00:07:02,250 --> 00:07:04,570
+They provide a global access point
+to data.
+
+113
+00:07:04,970 --> 00:07:08,810
+So usually in Pharo through shared
+variables or class variables,
+
+114
+00:07:09,150 --> 00:07:10,950
+but in Java also through static
+variables.
+
+115
+00:07:11,610 --> 00:07:16,830
+But the main thing is that also,
+classes, (since we have to act),
+
+116
+00:07:17,130 --> 00:07:20,930
+they let us access the singletons
+through method, they can also allow
+
+117
+00:07:21,130 --> 00:07:23,950
+us to encapsulate behavior and to
+change it more easily later.
+
+118
+00:07:24,290 --> 00:07:29,030
+If we put objects in global variables,
+they make the system more difficult
+
+119
+00:07:29,230 --> 00:07:29,990
+to change in the future.
+
+120
+00:07:31,050 --> 00:07:34,350
+Now, in Pharo in particular,
+we have two different variations
+
+121
+00:07:34,550 --> 00:07:35,470
+of the singleton pattern.
+
+122
+00:07:36,250 --> 00:07:39,570
+One using shared variables and another
+one using class instance variables.
+
+123
+00:07:40,510 --> 00:07:46,010
+You may recall from a previous lecture
+that in Pharo, we have shared variables,
+
+124
+00:07:47,570 --> 00:07:50,530
+which are variables that are shared
+in the whole hierarchy.
+
+125
+00:07:50,730 --> 00:07:53,330
+So for example, here we have this
+variable, uniqueInstance,
+
+126
+00:07:53,710 --> 00:07:57,430
+that is a shared variable and that
+means that it is the same variable
+
+127
+00:07:57,630 --> 00:08:00,090
+that is shared by everybody in the
+hierarchy.
+
+128
+00:08:00,390 --> 00:08:04,690
+So every time that we see uniqueInstance
+in any piece of code around the
+
+129
+00:08:04,890 --> 00:08:09,090
+hierarchy, they are going to access
+the same variable, which is this one.
+
+130
+00:08:10,210 --> 00:08:14,270
+A class instance variable is defined
+in a class, but then,
+
+131
+00:08:15,630 --> 00:08:19,270
+implementation-wise,
+a copy of this variable will exist
+
+132
+00:08:19,470 --> 00:08:20,570
+in each of the subclasses.
+
+133
+00:08:20,770 --> 00:08:23,170
+So here, for example,
+we define uniqueInstance as a class
+
+134
+00:08:23,370 --> 00:08:26,570
+instance variable and then we are
+going to have actually one variable
+
+135
+00:08:26,770 --> 00:08:30,890
+in here, but we are also going to
+have one variable in each subclass.
+
+136
+00:08:31,530 --> 00:08:34,170
+How does it modify our singleton
+pattern?
+
+137
+00:08:34,450 --> 00:08:38,430
+If we implement the singleton pattern
+using a shared variable,
+
+138
+00:08:38,630 --> 00:08:43,370
+that means that we are going to
+have a singleton shared by the whole
+
+139
+00:08:43,390 --> 00:08:43,970
+hierarchy.
+
+140
+00:08:45,210 --> 00:08:46,390
+Here is our uniqueInstance.
+
+141
+00:08:48,230 --> 00:08:51,290
+However, if we implement it using
+a class instance variable,
+
+142
+00:08:51,890 --> 00:08:55,530
+we will have one singleton per class.
+
+143
+00:08:57,250 --> 00:09:02,230
+So depending on what kind of design
+that you want, these two variations
+
+144
+00:09:02,430 --> 00:09:03,950
+can give you different possibilities.
+
+145
+00:09:04,150 --> 00:09:08,110
+Now, it's important to understand
+that singleton, the singleton pattern,
+
+146
+00:09:08,310 --> 00:09:09,070
+is about time.
+
+147
+00:09:09,330 --> 00:09:14,950
+So we want to have only one instance
+available at each single point in time.
+
+148
+00:09:16,830 --> 00:09:18,790
+It's not necessarily about access.
+
+149
+00:09:18,990 --> 00:09:20,150
+It's not the most important point.
+
+150
+00:09:20,530 --> 00:09:24,510
+So yeah, the singleton is more easily
+accessible through a single point,
+
+151
+00:09:24,870 --> 00:09:29,710
+but the important point is that
+we have only one at that point.
+
+152
+00:09:30,410 --> 00:09:34,030
+One way to test yourself to see
+if you actually need to implement
+
+153
+00:09:34,230 --> 00:09:39,250
+a singleton or not is to check if
+adding an instance variable in your
+
+154
+00:09:39,450 --> 00:09:44,370
+design and parameterising it with
+an object is enough for your problem
+
+155
+00:09:44,570 --> 00:09:45,330
+or not.
+
+156
+00:09:45,830 --> 00:09:48,510
+In that case, maybe you don't need
+a singleton.
+
+157
+00:09:48,730 --> 00:09:51,910
+Actually, just putting a variable
+or parameter or even an instance
+
+158
+00:09:52,110 --> 00:09:54,910
+variable is enough and just
+parameterising it correctly.
+
+159
+00:09:56,170 --> 00:10:01,110
+Otherwise, maybe it is more complicated
+and the singleton could be an okay
+
+160
+00:10:01,310 --> 00:10:02,070
+solution.
+
+161
+00:10:02,330 --> 00:10:06,870
+One of the really negative points
+of the singleton pattern is that
+
+162
+00:10:07,070 --> 00:10:08,890
+they really harm testing.
+
+163
+00:10:09,830 --> 00:10:13,350
+Since singletons work as global
+variables because you have a single
+
+164
+00:10:13,550 --> 00:10:18,850
+instance that is accessible by the
+whole program and they survive because
+
+165
+00:10:19,050 --> 00:10:23,450
+they are persistent, they make the
+program more difficult to test because
+
+166
+00:10:23,650 --> 00:10:28,790
+maybe you want to change the singleton
+by another kind of object only for
+
+167
+00:10:28,990 --> 00:10:30,450
+the time the tests are running.
+
+168
+00:10:31,110 --> 00:10:34,290
+So for example, when you're running
+the test, you want to exchange that
+
+169
+00:10:34,490 --> 00:10:36,270
+singleton by another singleton object.
+
+170
+00:10:36,790 --> 00:10:42,250
+So in that case, maybe you want
+to go to a lighter singleton pattern
+
+171
+00:10:42,450 --> 00:10:47,430
+like what we saw before,
+the current variation or the default.
+
+172
+00:10:49,060 --> 00:10:53,420
+Like that, for example,
+the current allows you to replace
+
+173
+00:10:53,620 --> 00:10:58,100
+a singleton during the run of the
+test or the default one allows you to,
+
+174
+00:10:58,300 --> 00:11:02,560
+instead of using the singleton directly,
+you can allocate your own objects
+
+175
+00:11:02,760 --> 00:11:07,300
+when you're using it in the test
+without using the default general
+
+176
+00:11:07,500 --> 00:11:08,260
+and global.
+
+177
+00:11:10,370 --> 00:11:14,670
+Be careful also, since the singleton
+is a shared object but that is shared
+
+178
+00:11:14,870 --> 00:11:17,790
+by all the system, it is also shared
+by the process in the test.
+
+179
+00:11:17,990 --> 00:11:21,850
+So if many tests are going to share
+the same singleton, it may happen
+
+180
+00:11:22,050 --> 00:11:25,310
+that one test can break the singleton
+to another test.
+
+181
+00:11:25,930 --> 00:11:29,850
+It's the same thing as if you were
+running a test that writes a file
+
+182
+00:11:30,050 --> 00:11:30,850
+or deletes a file.
+
+183
+00:11:31,310 --> 00:11:34,870
+So all other tests that were depending
+on those files will be broken now.
+
+184
+00:11:35,670 --> 00:11:40,670
+So every kind of global state,
+let them be files or global variables,
+
+185
+00:11:41,190 --> 00:11:44,070
+can break your tests.
+
+186
+00:11:45,330 --> 00:11:48,730
+Let's see an example with the
+`RPackageOrganizer`, which is a
+
+187
+00:11:48,930 --> 00:11:53,270
+singleton in Pharo, and it should
+not be destroyed when the tests are run.
+
+188
+00:11:53,470 --> 00:11:58,730
+So there is a singleton and the
+tests need to be running and not
+
+189
+00:11:58,930 --> 00:12:00,930
+breaking the actual singleton instance.
+
+190
+00:12:02,190 --> 00:12:06,050
+So this is a bit of complicated code,
+so I will explain it.
+
+191
+00:12:06,330 --> 00:12:10,110
+Every time that we want to run the
+tests in the RPackage test,
+
+192
+00:12:10,310 --> 00:12:13,850
+what we're going to do is to call
+this method `withOrganizer do`.
+
+193
+00:12:14,330 --> 00:12:18,090
+What we're going to do is to send
+the organiser that we're going to
+
+194
+00:12:18,290 --> 00:12:23,370
+use for testing and a block of the
+thing that we want to do in the test.
+
+195
+00:12:24,590 --> 00:12:29,430
+What this method is going to make
+sure is that this NewOrganizer is
+
+196
+00:12:29,630 --> 00:12:35,950
+available globally during the execution
+of a block and then, after the execution
+
+197
+00:12:36,150 --> 00:12:38,910
+of the block is done,
+it is going to restore the previous
+
+198
+00:12:39,110 --> 00:12:39,870
+global singleton.
+
+199
+00:12:40,070 --> 00:12:45,350
+So here what happens is that first,
+it is taking the previous singleton,
+
+200
+00:12:45,550 --> 00:12:50,630
+which is actually the default variable,
+the default object, it's going to
+
+201
+00:12:50,830 --> 00:12:53,850
+unregister it and then it's going
+to register the new singleton,
+
+202
+00:12:54,050 --> 00:12:57,790
+the one that is being coming as
+parameter, the argument that comes
+
+203
+00:12:57,990 --> 00:12:58,750
+as parameter.
+
+204
+00:12:59,870 --> 00:13:03,170
+It is going to register it,
+then it is executing the code,
+
+205
+00:13:03,410 --> 00:13:11,350
+the block, and then as a final step,
+it is going to restore the old object,
+
+206
+00:13:11,550 --> 00:13:17,390
+the old organiser, and unregister
+the one that was here,
+
+207
+00:13:17,590 --> 00:13:18,390
+the transient one.
+
+208
+00:13:21,040 --> 00:13:25,760
+So as a conclusion, singleton is
+a design pattern that helps us to
+
+209
+00:13:25,960 --> 00:13:28,060
+have only one instance at a single time.
+
+210
+00:13:29,100 --> 00:13:34,040
+However, we should be careful to
+avoid singleton as globals and in
+
+211
+00:13:34,240 --> 00:13:36,740
+general avoid singletons because
+they act as a global variable and
+
+212
+00:13:36,940 --> 00:13:41,860
+it comes with all the negative
+properties of global variables and
+
+213
+00:13:42,060 --> 00:13:42,820
+global states.
+
+214
+00:13:43,020 --> 00:13:47,360
+In particular, singletons make tests
+difficult to write and they are
+
+215
+00:13:47,560 --> 00:13:48,720
+on themselves difficult to test.
+

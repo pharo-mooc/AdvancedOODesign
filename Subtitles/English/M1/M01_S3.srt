@@ -1,0 +1,371 @@
+1
+00:00:05,170 --> 00:00:09,070
+- Hello, in this lecture,
+we'll discuss the basics of inheritance
+
+2
+00:00:09,270 --> 00:00:12,230
+and we'll come back to some things
+that you already saw in previous
+
+3
+00:00:12,430 --> 00:00:13,190
+lectures.
+
+4
+00:00:14,210 --> 00:00:18,270
+First of all, the goal of this lecture
+is to discuss what exactly inheritance
+
+5
+00:00:18,470 --> 00:00:19,850
+is, and when to use it.
+
+6
+00:00:20,190 --> 00:00:25,370
+And by the way, notice that in Pharo,
+we have exactly the same inheritance
+
+7
+00:00:25,570 --> 00:00:26,330
+model as in Java.
+
+8
+00:00:27,250 --> 00:00:30,610
+Inheritance basically is a reuse
+mechanism.
+
+9
+00:00:31,370 --> 00:00:35,770
+It comes from the fact that we don't
+want to reimplement all the codes
+
+10
+00:00:35,970 --> 00:00:39,070
+that already exist, and usually,
+a code exists in classes.
+
+11
+00:00:39,550 --> 00:00:43,890
+It means that we want to customize
+it and extend it, but we don't want
+
+12
+00:00:44,090 --> 00:00:45,090
+to reimplement it.
+
+13
+00:00:45,430 --> 00:00:51,030
+Sometimes, we want to specialize
+it and express a delta in subclasses.
+
+14
+00:00:51,230 --> 00:00:55,990
+So, what we want is to adapt existing
+code by extending the behavior and
+
+15
+00:00:56,190 --> 00:01:00,050
+the state in existing classes,
+and we don't want to reimplement
+
+16
+00:01:00,250 --> 00:01:01,010
+everything.
+
+17
+00:01:01,210 --> 00:01:03,510
+The solution for that is class
+inheritance.
+
+18
+00:01:05,110 --> 00:01:10,770
+We need to extend the existing definition
+of classes in subclasses.
+
+19
+00:01:10,990 --> 00:01:12,950
+So, let's take an example.
+
+20
+00:01:13,150 --> 00:01:15,130
+What can we do when we create a new class?
+
+21
+00:01:15,450 --> 00:01:17,410
+Here, I create a new class,
+`ColoredRectangle`.
+
+22
+00:01:19,250 --> 00:01:21,530
+This is a subclass of `Rectangle`.
+
+23
+00:01:22,370 --> 00:01:24,090
+What can I do in a subclass?
+
+24
+00:01:24,290 --> 00:01:30,270
+I can add a state, I can add a behavior,
+I can use superclass behavior and state,
+
+25
+00:01:30,530 --> 00:01:34,320
+and I can redefine superclass behavior
+to specialize it.
+
+26
+00:01:35,890 --> 00:01:38,350
+So, let's start with the hierarchy.
+
+27
+00:01:39,950 --> 00:01:44,810
+If I look at the hierarchy of classes,
+the root of the hierarchy is usually
+
+28
+00:01:45,010 --> 00:01:45,770
+the `Object` class.
+
+29
+00:01:46,870 --> 00:01:51,150
+All classes eventually inherit from
+`Object`, and the `Object` class
+
+30
+00:01:51,350 --> 00:01:54,650
+defines the common behavior of all
+objects.
+
+31
+00:01:54,850 --> 00:01:58,370
+It raises errors when we send a
+message that is not understood,
+
+32
+00:01:59,330 --> 00:02:01,930
+it provides some accessors to access
+the class of an object,
+
+33
+00:02:02,250 --> 00:02:03,010
+etc.
+
+34
+00:02:03,230 --> 00:02:06,790
+In Pharo, there is a subtle difference
+from other languages.
+
+35
+00:02:07,050 --> 00:02:10,610
+We have the `ProtoObject` class,
+which is a superclass of `Object`,
+
+36
+00:02:11,230 --> 00:02:12,790
+and it has a special purpose.
+
+37
+00:02:13,170 --> 00:02:17,370
+This is not really important for
+the comprehension of all the object
+
+38
+00:02:17,570 --> 00:02:20,510
+models, this is just a little difference
+in the Pharo language.
+
+39
+00:02:20,710 --> 00:02:25,250
+It raises as much error as possible,
+and it allows for building advanced
+
+40
+00:02:25,450 --> 00:02:28,110
+techniques and advanced tools,
+such as proxy objects and things
+
+41
+00:02:28,310 --> 00:02:29,070
+like that.
+
+42
+00:02:29,530 --> 00:02:32,130
+In the rest of the lecture,
+we'll just use the `Object` class.
+
+43
+00:02:32,770 --> 00:02:36,290
+So, if we look at inheritance,
+there are two aspects of inheritance.
+
+44
+00:02:36,830 --> 00:02:40,650
+The first one is the static aspect
+for instance variables.
+
+45
+00:02:41,090 --> 00:02:45,970
+During the class creation,
+I can compute all the instance variables
+
+46
+00:02:46,170 --> 00:02:46,930
+of a class.
+
+47
+00:02:47,130 --> 00:02:50,610
+And then, there is the dynamic aspect
+for behavior.
+
+48
+00:02:50,810 --> 00:02:54,990
+During the execution,
+I can send messages to objects,
+
+49
+00:02:55,750 --> 00:02:59,290
+and here I will dynamically select
+the method to execute.
+
+50
+00:03:00,210 --> 00:03:02,830
+Let's have a closer look at these
+two aspects.
+
+51
+00:03:03,730 --> 00:03:06,830
+First, when I define the
+`ColoredRectangle` subclass here,
+
+52
+00:03:07,030 --> 00:03:13,990
+I can see that this `ColoredRectangle`
+class has four instance variables.
+
+53
+00:03:15,270 --> 00:03:18,430
+Two of them are defined directly
+in the `ColoredRectangle` class,
+
+54
+00:03:19,390 --> 00:03:22,550
+and two of them are defined in the
+superclass.
+
+55
+00:03:23,470 --> 00:03:29,110
+In fact, the instance variables
+are computed by the union of all
+
+56
+00:03:29,310 --> 00:03:30,730
+instance variables in the hierarchy
+chain.
+
+57
+00:03:31,390 --> 00:03:33,390
+Usually, there is no duplicate in
+the chain.
+
+58
+00:03:33,950 --> 00:03:36,930
+Otherwise, I will have shadowing
+in the name of the instance variable.
+
+59
+00:03:37,450 --> 00:03:40,450
+For behavior, when I send a message…
+
+60
+00:03:40,650 --> 00:03:42,170
+Here, I have an object,
+`aColoredRectangle`.
+
+61
+00:03:43,090 --> 00:03:45,910
+It is an instance of the
+`ColoredRectangle` class.
+
+62
+00:03:46,370 --> 00:03:51,630
+If I send a message to this object,
+for example, I send the area message.
+
+63
+00:03:53,150 --> 00:03:58,170
+It means that the system will first
+look at the class of the receiver
+
+64
+00:03:58,650 --> 00:04:01,110
+- you already saw that - in the
+`ColoredRectangle` class.
+
+65
+00:04:02,270 --> 00:04:04,590
+It will check if the area
+message exists.
+
+66
+00:04:04,910 --> 00:04:07,690
+And if it does not, it will continue
+in the superclass.
+
+67
+00:04:07,890 --> 00:04:10,990
+And then, it will find it here in
+the `Rectangle` class.
+
+68
+00:04:11,330 --> 00:04:14,590
+This is why we said that the inheritance
+of behavior is dynamic.
+
+69
+00:04:15,110 --> 00:04:18,730
+What you should know in this lecture,
+what are the key messages,
+
+70
+00:04:19,030 --> 00:04:23,270
+is that inheritance allows developers
+to add state and behavior and to
+
+71
+00:04:23,470 --> 00:04:24,750
+refine behavior in subclasses.
+
+72
+00:04:25,670 --> 00:04:27,850
+Usually, a class has only one superclass.
+
+73
+00:04:28,050 --> 00:04:29,610
+This is a single inheritance model.
+
+74
+00:04:31,030 --> 00:04:34,850
+All classes of the system eventually
+inherit from `Object` which provides
+
+75
+00:04:35,050 --> 00:04:37,110
+the basic behavior for all objects
+in the system.
+
+76
+00:04:37,970 --> 00:04:41,410
+Inheritance of state is static,
+as we saw, so the instance variable
+
+77
+00:04:41,610 --> 00:04:46,210
+is computed from all instance variables
+defined in the hierarchy of class
+
+78
+00:04:47,250 --> 00:04:49,130
+and the inheritance of behavior
+is dynamic.
+

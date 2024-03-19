@@ -1,0 +1,947 @@
+1
+00:00:03,760 --> 00:00:04,980
+Welcome everybody.
+
+2
+00:00:07,260 --> 00:00:09,860
+This is a new lecture on global
+variables.
+
+3
+00:00:10,920 --> 00:00:14,100
+It complements one of the lectures
+that we saw in the previous module.
+
+4
+00:00:14,840 --> 00:00:19,220
+What we will see during this lecture
+is that global variables can be
+
+5
+00:00:19,420 --> 00:00:22,360
+disguised, so sometimes we don't
+see them at first but they still
+
+6
+00:00:22,560 --> 00:00:27,180
+exist and we will study several
+cases that happen in Pharo or that
+
+7
+00:00:27,380 --> 00:00:28,740
+have been discussed in the mailing list.
+
+8
+00:00:30,910 --> 00:00:36,210
+So the idea is that we want to show
+
+9
+00:00:36,410 --> 00:00:40,050
+that globals are not nice because
+they are globally shared.
+
+10
+00:00:40,250 --> 00:00:42,630
+We saw that in the previous lecture,
+they are difficult to test.
+
+11
+00:00:42,830 --> 00:00:47,430
+And in this lecture, we really want
+to show that they can have different
+
+12
+00:00:47,630 --> 00:00:53,030
+forms, and for that, we will really
+study one by one four case studies
+
+13
+00:00:53,230 --> 00:00:59,670
+and we will show that when you don't
+have global variables,
+
+14
+00:00:59,930 --> 00:01:03,310
+you can dispatch, and when you have
+a global, you cannot.
+
+15
+00:01:04,790 --> 00:01:05,550
+So let's start.
+
+16
+00:01:08,160 --> 00:01:11,120
+So this is what I call the autopsy
+of an error.
+
+17
+00:01:11,320 --> 00:01:16,220
+So in Pharo code, in the past,
+we often had this expression,
+
+18
+00:01:16,500 --> 00:01:18,660
+`Smalltalk`, `icons`,
+`iconNamed`, things like that.
+
+19
+00:01:18,860 --> 00:01:20,820
+So let me explain what it is.
+
+20
+00:01:21,020 --> 00:01:27,560
+`Smalltalk`, this is a global variable
+that is a namespace that contains
+
+21
+00:01:27,760 --> 00:01:35,040
+all the classes of `Smalltalk` and
+also some globals that point to
+
+22
+00:01:35,240 --> 00:01:36,000
+some objects.
+
+23
+00:01:36,400 --> 00:01:42,240
+So here, the expression `Smalltalk`
+icons` refers to an icon manager,
+
+24
+00:01:42,440 --> 00:01:46,960
+and here, the code means,
+Okay, global icon manager,
+
+25
+00:01:47,200 --> 00:01:48,980
+please give me the icon named #window.
+
+26
+00:01:49,260 --> 00:01:51,880
+So I'm stressing the fact that this
+is a global variable.
+
+27
+00:01:52,080 --> 00:01:53,440
+Normally, you just read it like that.
+
+28
+00:01:54,080 --> 00:01:54,840
+Okay?
+
+29
+00:01:55,040 --> 00:01:56,880
+So what can we conclude from this?
+
+30
+00:01:59,420 --> 00:02:03,920
+First, this guy is a global variable.
+
+31
+00:02:04,920 --> 00:02:10,800
+What if I want to have a different
+set of icons that is specific to
+
+32
+00:02:11,000 --> 00:02:12,160
+my specific application?
+
+33
+00:02:13,080 --> 00:02:13,840
+I cannot.
+
+34
+00:02:14,040 --> 00:02:19,080
+I will have to go and patch this
+global icon provider.
+
+35
+00:02:19,620 --> 00:02:25,960
+And then, it means that any user
+of the icon that I change will be
+
+36
+00:02:26,160 --> 00:02:26,920
+impacted.
+
+37
+00:02:27,940 --> 00:02:32,100
+So basically, I cannot compare,
+for example, if I am doing a design,
+
+38
+00:02:32,360 --> 00:02:36,560
+often, you want to have a black
+theme or white theme with different
+
+39
+00:02:36,760 --> 00:02:37,740
+icon sets: you cannot.
+
+40
+00:02:38,240 --> 00:02:40,700
+You cannot because there is only one.
+
+41
+00:02:41,300 --> 00:02:44,460
+In the community, some people proposed
+the following solution.
+
+42
+00:02:44,700 --> 00:02:48,240
+They said, Oh, you know,
+a better way is to do that.
+
+43
+00:02:48,440 --> 00:02:50,260
+So what does it mean?
+
+44
+00:02:50,500 --> 00:02:53,900
+It means that they send the message
+asIcon to a `Symbol`.
+
+45
+00:02:54,100 --> 00:02:58,980
+So in fact, these people,
+they propose to extend the class
+
+46
+00:02:59,180 --> 00:03:00,800
+`Symbol` with a new method.
+
+47
+00:03:01,180 --> 00:03:03,820
+That was basically doing the same
+thing here.
+
+48
+00:03:04,200 --> 00:03:07,940
+So in Pharo, what I mean extend,
+it means that in Pharo,
+
+49
+00:03:08,140 --> 00:03:13,580
+a package can add a method to another
+class that is not packaged in this
+
+50
+00:03:13,780 --> 00:03:14,540
+package.
+
+51
+00:03:14,740 --> 00:03:16,420
+So this means that I said,
+Oh, dear class there,
+
+52
+00:03:16,620 --> 00:03:20,120
+I want that you get this method,
+but only when this package is loaded.
+
+53
+00:03:20,320 --> 00:03:24,980
+So that's why we can add methods
+in kernel classes, because `Symbol`
+
+54
+00:03:25,180 --> 00:03:25,940
+is a kernel class.
+
+55
+00:03:27,300 --> 00:03:32,900
+So let's analyze the situation.
+
+56
+00:03:33,840 --> 00:03:36,840
+This solution does not duplicate
+this expression everywhere.
+
+57
+00:03:37,040 --> 00:03:41,360
+So this is already something because
+it means that there is only one
+
+58
+00:03:41,560 --> 00:03:45,340
+place in the system where I can
+change it if I want.
+
+59
+00:03:45,600 --> 00:03:49,180
+But still, this is a global,
+I still cannot have two icon states
+
+60
+00:03:49,380 --> 00:03:50,140
+in the system.
+
+61
+00:03:50,980 --> 00:03:55,680
+So what we will see is that a global
+variable can be disguised,
+
+62
+00:03:56,060 --> 00:03:57,200
+but it is still there.
+
+63
+00:03:57,620 --> 00:03:59,760
+There is one place here where we
+can edit it.
+
+64
+00:03:59,980 --> 00:04:02,440
+But fundamentally, this is still
+one instance variable.
+
+65
+00:04:02,820 --> 00:04:04,420
+And this was based on message passing.
+
+66
+00:04:04,620 --> 00:04:06,220
+So you could say, Oh,
+yes, I send a message.
+
+67
+00:04:06,420 --> 00:04:07,180
+This is okay.
+
+68
+00:04:07,380 --> 00:04:11,180
+No, there is only one icon table
+in this system.
+
+69
+00:04:11,380 --> 00:04:14,280
+We cannot dispatch to a different
+object.
+
+70
+00:04:15,520 --> 00:04:16,800
+There is no different object.
+
+71
+00:04:17,040 --> 00:04:19,380
+There is only here one `Symbol`.
+
+72
+00:04:20,700 --> 00:04:24,740
+So this means that my application
+cannot extend or slightly change
+
+73
+00:04:24,940 --> 00:04:28,120
+icons because I will have impact
+everywhere.
+
+74
+00:04:28,820 --> 00:04:32,140
+Still, I cannot have two icons set
+at the same place.
+
+75
+00:04:33,160 --> 00:04:36,000
+So now, you should wonder what is
+the solution.
+
+76
+00:04:36,640 --> 00:04:41,820
+So a better approach,
+this is that the framework,
+
+77
+00:04:42,020 --> 00:04:47,360
+here, for example, the application
+that is holding the menu propose
+
+78
+00:04:47,560 --> 00:04:52,100
+a method that is called `iconNamed`
+that can be dispatched to this guy.
+
+79
+00:04:52,440 --> 00:04:59,440
+And then, this `iconNamed` method
+will just do some things and it can ask,
+
+80
+00:04:59,660 --> 00:05:05,300
+Oh, I have an icon provider and
+I will ask the icon to this provider.
+
+81
+00:05:05,500 --> 00:05:09,680
+So like that, every application can say,
+Oh, I want to be configured with
+
+82
+00:05:09,880 --> 00:05:13,060
+a different icon set and manage that.
+
+83
+00:05:13,380 --> 00:05:17,780
+So this is the way it is done in
+the spec framework to build application
+
+84
+00:05:17,980 --> 00:05:18,740
+in Pharo.
+
+85
+00:05:19,080 --> 00:05:20,860
+We don't use a global variable.
+
+86
+00:05:21,940 --> 00:05:27,060
+Every application has its own iconProvider
+, and then we can dispatch
+
+87
+00:05:27,080 --> 00:05:27,800
+there.
+
+88
+00:05:28,240 --> 00:05:33,620
+So it is modular because every
+application can decide what they
+
+89
+00:05:33,820 --> 00:05:35,400
+want to do, how they want to be
+configured.
+
+90
+00:05:36,640 --> 00:05:43,500
+Each receiver may do something different
+and they can be configured silently,
+
+91
+00:05:43,700 --> 00:05:44,680
+but still.
+
+92
+00:05:44,880 --> 00:05:46,360
+we will share the same common behavior.
+
+93
+00:05:46,560 --> 00:05:49,180
+So this is the reuse as it should
+be done.
+
+94
+00:05:51,280 --> 00:05:56,300
+So when we want to access
+programmatically a class for doing
+
+95
+00:05:56,500 --> 00:06:02,560
+a script or things that are a bit
+strange in Pharo, we ask the namespace,
+
+96
+00:06:02,760 --> 00:06:06,220
+we say Namespace, give me all the
+globals in the system.
+
+97
+00:06:06,440 --> 00:06:10,360
+This is a dictionary basically that
+is holding a reference to classes,
+
+98
+00:06:10,560 --> 00:06:13,500
+and give me the class that is named
+#point.
+
+99
+00:06:17,930 --> 00:06:20,870
+So people were saying,
+Oh, this is too long.
+
+100
+00:06:21,070 --> 00:06:23,530
+I have to type this code and things
+like that.
+
+101
+00:06:23,770 --> 00:06:26,670
+And they wanted to have a shorter
+version for scripting.
+
+102
+00:06:26,870 --> 00:06:28,990
+So what they proposed,
+they proposed something like that.
+
+103
+00:06:29,190 --> 00:06:36,230
+You know, we want again to extend
+the `Symbol` with a new method and
+
+104
+00:06:36,430 --> 00:06:37,190
+do that.
+
+105
+00:06:39,530 --> 00:06:41,990
+And of course, this is shorter,
+but this is not good.
+
+106
+00:06:43,190 --> 00:06:46,050
+So there is a difference between the two.
+
+107
+00:06:46,910 --> 00:06:51,250
+I hope that now you see it,
+but let's look at the difference.
+
+108
+00:06:52,090 --> 00:06:53,930
+So I have the same limit as before.
+
+109
+00:06:54,130 --> 00:06:55,640
+global is an entry point.
+
+110
+00:06:57,710 --> 00:07:06,140
+And when I write #point asClasses,
+
+111
+00:07:08,540 --> 00:07:12,960
+I have only one `Symbol` in the system,
+one class.
+
+112
+00:07:13,480 --> 00:07:16,500
+This is an instance of the class
+`Symbol`.
+
+113
+00:07:19,360 --> 00:07:21,860
+So I cannot have multiple
+implementations.
+
+114
+00:07:22,880 --> 00:07:24,200
+I cannot dispatch.
+
+115
+00:07:24,400 --> 00:07:25,380
+I have only one place.
+
+116
+00:07:26,440 --> 00:07:31,720
+So imagine that, for example,
+I would like to access a class that
+
+117
+00:07:31,920 --> 00:07:33,160
+is remote.
+
+118
+00:07:34,280 --> 00:07:37,400
+asClass will only access the one
+in the system.
+
+119
+00:07:38,620 --> 00:07:40,520
+I cannot dispatch.
+
+120
+00:07:40,800 --> 00:07:43,160
+I only have one object here,
+this `Symbol`.
+
+121
+00:07:44,200 --> 00:07:48,160
+It could be, by the way,
+it could be a rectangle.
+
+122
+00:07:48,480 --> 00:07:49,300
+That would be the same.
+
+123
+00:07:50,140 --> 00:07:53,800
+When I say that we have multiple,
+let's be clear.
+
+124
+00:07:54,000 --> 00:07:57,260
+We have multiple instances,
+but we have only one class.
+
+125
+00:07:58,320 --> 00:08:05,040
+So if you remember the first lecture
+of this MOOC, then there is no way
+
+126
+00:08:05,240 --> 00:08:08,080
+that I can dispatch to a different
+behavior.
+
+127
+00:08:09,820 --> 00:08:16,600
+Here, what this message implies,
+this is that there is only one namespace
+
+128
+00:08:16,800 --> 00:08:17,560
+in the system.
+
+129
+00:08:18,800 --> 00:08:22,100
+There is no way that I can dispatch
+to another place.
+
+130
+00:08:22,300 --> 00:08:26,920
+So you see, this is again a disguised
+global variable.
+
+131
+00:08:27,880 --> 00:08:32,080
+And that's why we are really against
+the introduction and the use of
+
+132
+00:08:32,280 --> 00:08:34,520
+asClass in Pharo.
+
+133
+00:08:34,780 --> 00:08:38,140
+People can use that if they want,
+but we don't want to use it internally
+
+134
+00:08:38,340 --> 00:08:42,760
+in the system because we want to be able,
+for example, to browse Pharo codes
+
+135
+00:08:42,960 --> 00:08:44,940
+that are running on other machines.
+
+136
+00:08:45,180 --> 00:08:47,080
+And if we do that, we cannot.
+
+137
+00:08:48,800 --> 00:08:53,560
+So the possible solution,
+this is just to delegate to the system.
+
+138
+00:08:53,760 --> 00:08:56,340
+We could say, Oh, you know,
+self-class environment.
+
+139
+00:08:56,600 --> 00:09:01,240
+Environment means, Okay,
+to a class, go to your namespace
+
+140
+00:09:01,440 --> 00:09:02,380
+and look for a class.
+
+141
+00:09:03,040 --> 00:09:05,780
+And in that case, the class can
+have different environments.
+
+142
+00:09:05,980 --> 00:09:07,940
+It can be configured differently.
+
+143
+00:09:10,180 --> 00:09:13,960
+So let's look at a fourth case study.
+
+144
+00:09:15,440 --> 00:09:18,400
+When you browse the Pharo code,
+sometimes you see these kinds of code.
+
+145
+00:09:18,600 --> 00:09:20,640
+And you will start to understand
+the pattern.
+
+146
+00:09:22,710 --> 00:09:26,030
+So this is the code when you want
+to browse a method.
+
+147
+00:09:27,410 --> 00:09:30,970
+It says, Oh, for example,
+here it said, Okay, what is the
+
+148
+00:09:31,170 --> 00:09:31,930
+currentClassOrMetaClass?
+
+149
+00:09:32,130 --> 00:09:37,830
+If this is not nil, I will invoke
+the browser and open the class with
+
+150
+00:09:38,030 --> 00:09:38,910
+the currentMessage.
+
+151
+00:09:39,390 --> 00:09:45,030
+And then we will be able to see
+all the implementers of that message.
+
+152
+00:09:46,690 --> 00:09:50,190
+Again, now you should know and you
+should understand, Aha,
+
+153
+00:09:50,610 --> 00:09:54,570
+again, the ugly global variable.
+
+154
+00:09:55,550 --> 00:10:01,870
+Because here, `Smalltalk`,
+`Smalltalk` tools.
+
+155
+00:10:03,110 --> 00:10:06,750
+This is pointing to a tool registry
+mechanism.
+
+156
+00:10:06,950 --> 00:10:10,930
+So there is one in the system and
+we will ask the browser in that.
+
+157
+00:10:11,270 --> 00:10:13,510
+So again, one single entry point.
+
+158
+00:10:14,810 --> 00:10:17,390
+Everybody will refer to this single
+entry point.
+
+159
+00:10:17,910 --> 00:10:19,040
+And this is monolithic thinking.
+
+160
+00:10:19,240 --> 00:10:25,330
+So this means that you cannot exercise
+code that will open this browser
+
+161
+00:10:25,530 --> 00:10:28,890
+and that you would get two different
+browsers because you are trying
+
+162
+00:10:29,090 --> 00:10:33,870
+to see what is the best one that
+will fit the scenario.
+
+163
+00:10:35,090 --> 00:10:40,090
+So you can have only one toolset
+possible at the same time.
+
+164
+00:10:40,350 --> 00:10:41,170
+This could be okay.
+
+165
+00:10:41,390 --> 00:10:44,970
+But we should really understand
+that this is what it means.
+
+166
+00:10:47,030 --> 00:10:51,850
+And you see, this is not because
+I send a message to a global that,
+
+167
+00:10:52,130 --> 00:10:56,790
+in fact, I'm not manipulating
+conceptually a global variable.
+
+168
+00:10:57,890 --> 00:10:58,930
+So what is the solution?
+
+169
+00:10:59,370 --> 00:11:03,230
+A possible solution, this is,
+Okay, this means that the ID of
+
+170
+00:11:03,430 --> 00:11:08,490
+Pharo should be defined as an
+application, and that this application
+
+171
+00:11:08,690 --> 00:11:11,870
+should, for example, have a
+toolEnvironment instance variable,
+
+172
+00:11:12,570 --> 00:11:13,470
+instantiate the toolEnvironment.
+
+173
+00:11:14,450 --> 00:11:19,670
+And then after just do that,
+which will be okay because it means
+
+174
+00:11:19,870 --> 00:11:23,130
+that each application will be able
+to dispatch.
+
+175
+00:11:24,070 --> 00:11:28,810
+We could even have a different
+toolEnvironment for a given application.
+
+176
+00:11:29,050 --> 00:11:31,590
+What we should consider here is
+that there are still some points
+
+177
+00:11:31,790 --> 00:11:32,830
+to consider in this lecture.
+
+178
+00:11:33,530 --> 00:11:39,590
+So with a global variable,
+when it changes, all its users are
+
+179
+00:11:39,790 --> 00:11:42,130
+updated for free, which is nice.
+
+180
+00:11:42,330 --> 00:11:45,370
+You don't have to go over and say,
+Okay, you change, you change,
+
+181
+00:11:45,570 --> 00:11:46,330
+you change.
+
+182
+00:11:46,530 --> 00:11:51,290
+No, because there is only one place
+centralized where everybody refer
+
+183
+00:11:51,490 --> 00:11:52,250
+to that.
+
+184
+00:11:52,450 --> 00:11:57,270
+So you get the sharing and you get
+the update of the sharing for free.
+
+185
+00:11:58,330 --> 00:11:59,850
+Now, this is not modular.
+
+186
+00:12:00,230 --> 00:12:04,290
+So this means that when you have
+another solution, we should think
+
+187
+00:12:04,490 --> 00:12:09,110
+about how do we handle the fact
+that a tool may change.
+
+188
+00:12:09,310 --> 00:12:13,590
+So from that perspective,
+it means that browsers may register
+
+189
+00:12:13,790 --> 00:12:14,550
+to the toolEnvironment.
+
+190
+00:12:14,810 --> 00:12:17,830
+So like that, they get notified
+and updated when there is something
+
+191
+00:12:18,030 --> 00:12:18,790
+that changes.
+
+192
+00:12:20,350 --> 00:12:23,690
+In this way, if you have a registration
+mechanism, it means that you can load,
+
+193
+00:12:23,890 --> 00:12:29,250
+for example, a new package containing
+a new tool and it can declare and say,
+
+194
+00:12:29,450 --> 00:12:31,110
+Oh, you know, I'm an alternate browser.
+
+195
+00:12:31,310 --> 00:12:34,230
+I'm available if necessary,
+or those kinds of things.
+
+196
+00:12:34,430 --> 00:12:39,830
+So it's open more possibility,
+but we have to pay attention that
+
+197
+00:12:41,310 --> 00:12:46,490
+the solution should take into account
+that the shared variable should
+
+198
+00:12:46,690 --> 00:12:47,450
+be updated.
+
+199
+00:12:47,650 --> 00:12:52,750
+So as a conclusion, yes,
+try to avoid to use global.
+
+200
+00:12:53,990 --> 00:12:57,550
+And this is very important in
+object-oriented design to think modular.
+
+201
+00:12:59,050 --> 00:13:03,090
+Give a chance also to objects to
+specialize messages, because like
+
+202
+00:13:03,290 --> 00:13:05,290
+that you have a handle to variation.
+
+203
+00:13:07,090 --> 00:13:12,530
+And every object can decide how
+to react to a specific message.
+

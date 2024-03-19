@@ -1,0 +1,752 @@
+1
+00:00:03,820 --> 00:00:08,320
+Pablo Tesone - Hello and welcome
+to this lecture about parametrized
+
+2
+00:00:08,520 --> 00:00:09,280
+tests.
+
+3
+00:00:09,840 --> 00:00:16,740
+The idea of this lecture is to show
+how we can reuse test logic with
+
+4
+00:00:16,940 --> 00:00:21,780
+a lot of different values,
+how we can run our test with all
+
+5
+00:00:21,980 --> 00:00:26,880
+possible combinations of these values,
+and doing so, to present the
+
+6
+00:00:27,080 --> 00:00:31,120
+parametrized test, we are going
+to use a naïve example that shows
+
+7
+00:00:31,320 --> 00:00:35,640
+the power on how we can complete
+these two goals.
+
+8
+00:00:37,440 --> 00:00:40,380
+Let's start with a simple problem.
+
+9
+00:00:41,000 --> 00:00:48,520
+We have a simple test that asserts
+assuming two different fractions
+
+10
+00:00:48,720 --> 00:00:50,440
+give us the correct number.
+
+11
+00:00:51,760 --> 00:00:56,960
+But this test only tests this specific
+case with these specific values.
+
+12
+00:00:57,420 --> 00:01:03,820
+So we need to have a way of generalizing
+it to make it more powerful and
+
+13
+00:01:04,020 --> 00:01:09,500
+to cover more cases, so we are more
+sure that our code is good and we
+
+14
+00:01:09,700 --> 00:01:16,380
+can continue implementing new parts
+of the system and having always
+
+15
+00:01:16,580 --> 00:01:19,200
+the assurance that this test will work.
+
+16
+00:01:20,000 --> 00:01:25,380
+So, how we can reuse this test to
+
+17
+00:01:25,580 --> 00:01:26,820
+execute for more values?
+
+18
+00:01:27,180 --> 00:01:32,800
+Well, this is the idea that we will
+want to have different values for
+
+19
+00:01:33,000 --> 00:01:33,760
+executing.
+
+20
+00:01:33,960 --> 00:01:41,020
+The first attempt that we can do
+is using a collection with two
+
+21
+00:01:41,220 --> 00:01:47,360
+collections inside where we have
+the two operands of our test.
+
+22
+00:01:47,600 --> 00:01:52,140
+So we are going to, in the first
+iteration of this collection,
+
+23
+00:01:52,340 --> 00:01:58,260
+we are going to take the first operand,
+
+24
+00:01:58,600 --> 00:02:01,140
+the second operand, and their result.
+
+25
+00:02:01,380 --> 00:02:07,380
+And for each of these triplet,
+we are going to execute the assert
+
+26
+00:02:07,580 --> 00:02:12,440
+and we are going to test that our
+zoom is working as we want.
+
+27
+00:02:13,820 --> 00:02:19,360
+But if we want to have more tests
+that reuse the same idea,
+
+28
+00:02:19,560 --> 00:02:23,620
+we will have to repeat the same
+code pattern everywhere.
+
+29
+00:02:23,860 --> 00:02:29,380
+And also, we will have to repeat
+the values that we are given and
+
+30
+00:02:29,580 --> 00:02:33,820
+the configuration that we are given
+to all the tests where we want to
+
+31
+00:02:34,020 --> 00:02:34,780
+reuse it.
+
+32
+00:02:34,980 --> 00:02:38,860
+And as we always say,
+we don't want to duplicate code.
+
+33
+00:02:39,060 --> 00:02:42,060
+We don't want to duplicate,
+in this case, the loop.
+
+34
+00:02:42,640 --> 00:02:48,140
+Also, as you see, the complexity
+of this test has raised a lot.
+
+35
+00:02:48,480 --> 00:02:54,740
+We passed from a single line test
+to a loop and a collection and values
+
+36
+00:02:54,940 --> 00:02:59,480
+and this test started gaining complexity
+easily.
+
+37
+00:03:01,810 --> 00:03:06,730
+So what is the solution that we
+are proposing in this lecture is
+
+38
+00:03:06,930 --> 00:03:08,870
+the idea of using parametrized tests.
+
+39
+00:03:09,510 --> 00:03:15,050
+Basically, a parametrized test is
+a test case where we can put from
+
+40
+00:03:15,250 --> 00:03:19,950
+outside different set of parameters
+to execute more and more cases.
+
+41
+00:03:21,250 --> 00:03:26,570
+Basically, what we are going to
+come back is to having our test
+
+42
+00:03:26,770 --> 00:03:29,970
+method in the same sense that we
+had before.
+
+43
+00:03:30,350 --> 00:03:34,850
+Just in this case, we are going
+to replace the constant with instance
+
+44
+00:03:35,050 --> 00:03:35,810
+variables.
+
+45
+00:03:36,010 --> 00:03:40,010
+We are going to have a number one,
+a second number and the result.
+
+46
+00:03:40,430 --> 00:03:45,410
+And we are going to sum the two
+numbers and compare it with the result.
+
+47
+00:03:46,530 --> 00:03:52,330
+We are going to define our test
+case class extending,
+
+48
+00:03:53,290 --> 00:03:55,790
+inheriting from parametrized test case.
+
+49
+00:03:57,070 --> 00:04:02,730
+You should remember that when we
+define a test case class,
+
+50
+00:04:02,930 --> 00:04:04,730
+we extend from test case.
+
+51
+00:04:04,930 --> 00:04:08,270
+In this case, we are going to use
+parametrized test case and we are
+
+52
+00:04:08,470 --> 00:04:13,010
+going to define the instance variables
+that we need for this test.
+
+53
+00:04:14,510 --> 00:04:19,030
+So once we have the test written
+and the instance variable that will
+
+54
+00:04:19,230 --> 00:04:22,650
+collect our values, we have to give
+the different values that we want
+
+55
+00:04:22,850 --> 00:04:24,970
+to have for these cases.
+
+56
+00:04:25,170 --> 00:04:31,730
+We are going to come to the class
+side of our test class and define
+
+57
+00:04:31,930 --> 00:04:32,730
+the method testParameters.
+
+58
+00:04:34,210 --> 00:04:39,230
+These method testParameters will
+return a ParametrizedTestMatrix.
+
+59
+00:04:40,730 --> 00:04:45,910
+Basically, this object is the one
+that has the responsibility to contain
+
+60
+00:04:46,110 --> 00:04:49,030
+all the cases that we are going
+to execute.
+
+61
+00:04:50,530 --> 00:04:55,130
+In this first example,
+we are going to add the cases one by one.
+
+62
+00:04:56,210 --> 00:05:01,850
+You see in this, we are adding the
+first case for our test,
+
+63
+00:05:02,190 --> 00:05:06,250
+where we have the first number will
+be a two, the second number will
+
+64
+00:05:06,450 --> 00:05:11,490
+be a float one, 1.0 and the result
+should be a three.
+
+65
+00:05:12,010 --> 00:05:19,170
+And then we added a second case
+with the fractions as they were before.
+
+66
+00:05:19,370 --> 00:05:27,950
+So we have extended our test cases
+with these two cases,
+
+67
+00:05:28,310 --> 00:05:33,790
+one for the integers and float and
+one for the fractions.
+
+68
+00:05:35,390 --> 00:05:43,610
+If we added more and more cases,
+the cases will be added in this method.
+
+69
+00:05:43,950 --> 00:05:46,110
+Well, what are the benefits of this?
+
+70
+00:05:46,390 --> 00:05:52,770
+Well, basically that our test continues
+being the simplest one that we can
+
+71
+00:05:52,970 --> 00:05:53,890
+write.
+
+72
+00:05:54,730 --> 00:06:02,410
+We can reuse this by accessing to
+the variables and we can rewrite
+
+73
+00:06:02,610 --> 00:06:03,770
+different tests.
+
+74
+00:06:04,250 --> 00:06:12,250
+In this case, we are going to write
+a test for testing in a different way,
+
+75
+00:06:12,450 --> 00:06:13,730
+but we can reuse it.
+
+76
+00:06:13,930 --> 00:06:19,670
+We should recall, we call this test minus.
+
+77
+00:06:22,130 --> 00:06:25,610
+And the idea is that we can use
+these instance variables with the
+
+78
+00:06:25,810 --> 00:06:28,790
+different cases in different tests
+and reuse them.
+
+79
+00:06:29,130 --> 00:06:34,010
+So every time we add a new case,
+it will affect to all the test method
+
+80
+00:06:34,210 --> 00:06:34,970
+that we have.
+
+81
+00:06:35,490 --> 00:06:40,490
+So we can execute our test with
+different configurations and we
+
+82
+00:06:40,690 --> 00:06:44,870
+always add new configurations to
+cover more and more cases in a more
+
+83
+00:06:45,070 --> 00:06:47,430
+clean way than adding it to a
+collection.
+
+84
+00:06:48,730 --> 00:06:51,170
+Let's see another problem,
+another variation.
+
+85
+00:06:51,670 --> 00:06:58,770
+Let's see if we have tests to testing
+collections, to testing an object
+
+86
+00:06:58,970 --> 00:07:01,350
+where we can enclose different objects
+inside.
+
+87
+00:07:01,750 --> 00:07:04,450
+In this case, we are going to write
+the simplest one.
+
+88
+00:07:04,650 --> 00:07:10,480
+We are starting testing first a
+collection of the class bag and
+
+89
+00:07:10,680 --> 00:07:14,000
+we are adding, yes, the string 'a'.
+
+90
+00:07:16,140 --> 00:07:19,800
+Once we add the string 'a',
+we can ask the collection if it
+
+91
+00:07:20,000 --> 00:07:24,860
+includes this object and we can
+ask the collection its size and
+
+92
+00:07:25,060 --> 00:07:26,120
+it should be one.
+
+93
+00:07:26,360 --> 00:07:29,120
+We have the assert written for our test.
+
+94
+00:07:29,320 --> 00:07:31,140
+This test is perfect.
+
+95
+00:07:31,340 --> 00:07:35,340
+It has exactly what we want,
+but the problem is that this test
+
+96
+00:07:36,720 --> 00:07:42,220
+is limited just to one kind of
+
+97
+00:07:42,420 --> 00:07:45,940
+collection and one kind of element
+inside.
+
+98
+00:07:46,780 --> 00:07:49,700
+So let's try to do it a little more
+generic.
+
+99
+00:07:51,160 --> 00:07:58,800
+And the first change we can do is
+to introduce an instance variable
+
+100
+00:07:59,000 --> 00:08:03,220
+holding the collectionClass that
+we are testing.
+
+101
+00:08:03,600 --> 00:08:07,900
+We are going to execute this test
+with many collection classes.
+
+102
+00:08:08,100 --> 00:08:11,980
+We are going to create many kinds
+of different collections and we
+
+103
+00:08:12,180 --> 00:08:17,560
+are all testing them with the string
+to see if we can put in a string
+
+104
+00:08:17,760 --> 00:08:20,640
+inside and if the size is correct.
+
+105
+00:08:22,160 --> 00:08:24,060
+So we do exactly the same.
+
+106
+00:08:24,800 --> 00:08:31,860
+We have to extend from parametrized
+test case and add the instance variable
+
+107
+00:08:32,060 --> 00:08:32,820
+collectionClass.
+
+108
+00:08:33,740 --> 00:08:38,880
+Up to here is normal development
+as we were doing before.
+
+109
+00:08:39,260 --> 00:08:43,100
+And the idea now is that we are
+going to provide the test parameters
+
+110
+00:08:44,920 --> 00:08:47,000
+with different cases.
+
+111
+00:08:47,640 --> 00:08:52,320
+In this case, we are going to say
+a little more complex,
+
+112
+00:08:52,560 --> 00:08:56,920
+but more flexible message to take
+a test matrix is that we are going
+
+113
+00:08:57,120 --> 00:09:03,680
+to say for the selector for the
+instance variable that we are going
+
+114
+00:09:03,880 --> 00:09:08,000
+to access through collectionClass,
+we are going to give different options.
+
+115
+00:09:08,200 --> 00:09:11,960
+In this case, we are going to give set,
+bag and OrderedCollection.
+
+116
+00:09:13,060 --> 00:09:18,040
+What we will do is that it will
+run all the tests, first with set,
+
+117
+00:09:18,380 --> 00:09:20,400
+then with bag and then with
+OrderedCollection.
+
+118
+00:09:21,280 --> 00:09:26,800
+In this case, we have extended our
+test case from only testing with
+
+119
+00:09:27,000 --> 00:09:30,680
+bag to include other kinds of
+collections.
+
+120
+00:09:30,980 --> 00:09:33,320
+But what if we want more?
+
+121
+00:09:33,680 --> 00:09:39,460
+What if we want also to change the
+kind of object that we are storing
+
+122
+00:09:39,660 --> 00:09:40,420
+in the collection?
+
+123
+00:09:40,620 --> 00:09:44,860
+In this case, we are only using strings,
+but we want to test also with numbers,
+
+124
+00:09:45,100 --> 00:09:48,300
+other objects and different elements
+inside.
+
+125
+00:09:48,540 --> 00:09:52,240
+So we can test that the collection,
+the implementation of collection
+
+126
+00:09:52,440 --> 00:09:54,980
+can support more than strings.
+
+127
+00:09:56,220 --> 00:09:58,820
+So let's do exactly the same.
+
+128
+00:09:59,140 --> 00:10:05,020
+Now we are going to keep the item
+as an instance variable and we are
+
+129
+00:10:05,220 --> 00:10:07,900
+going to create a setter for it.
+
+130
+00:10:08,740 --> 00:10:14,680
+And we are going to use this instance
+variable in the test instead of
+
+131
+00:10:14,880 --> 00:10:18,740
+the constant value as we had before.
+
+132
+00:10:19,700 --> 00:10:23,720
+So once we added the new instance
+variable and we are using in the test,
+
+133
+00:10:24,000 --> 00:10:30,240
+we have to declare in the test
+parameters that we need to add different
+
+134
+00:10:30,440 --> 00:10:33,460
+options for this new instance variable.
+
+135
+00:10:33,680 --> 00:10:39,080
+We do it in the same way that we
+have done it before, configuring
+
+136
+00:10:39,280 --> 00:10:45,420
+the test matrix, the ParametrizedTestMatrix 
+object with saying that
+
+137
+00:10:45,620 --> 00:10:48,480
+for the given selector,
+in this case, item, we are going
+
+138
+00:10:48,680 --> 00:10:50,360
+to add three different options.
+
+139
+00:10:51,180 --> 00:10:55,000
+The number one, the string 'a' and
+the character c.
+
+140
+00:10:55,620 --> 00:11:01,560
+In this case, the test will execute
+for all the combinations that we
+
+141
+00:11:01,760 --> 00:11:06,760
+have in this test matrix will produce
+the combinations to execute the
+
+142
+00:11:06,960 --> 00:11:08,700
+test in all the possible values.
+
+143
+00:11:08,900 --> 00:11:15,260
+It will take a set and it will test
+it with a number one and a string
+
+144
+00:11:15,460 --> 00:11:16,840
+'a' and a character c.
+
+145
+00:11:17,040 --> 00:11:20,140
+Then we'll take the bag and we'll
+do the same with the three others.
+
+146
+00:11:20,340 --> 00:11:23,540
+And then we'll take the other collection
+doing the same for the three.
+
+147
+00:11:23,840 --> 00:11:26,140
+So it will execute nine cases.
+
+148
+00:11:26,340 --> 00:11:28,240
+It will generate the nine possible
+cases.
+
+149
+00:11:28,440 --> 00:11:31,980
+It will run all possible combinations
+of these options.
+
+150
+00:11:32,380 --> 00:11:36,460
+In this case, we'll combine the
+three of items and the three of
+
+151
+00:11:36,660 --> 00:11:38,640
+collectionClass having nine tests
+in total.
+
+152
+00:11:38,900 --> 00:11:43,620
+So as a conclusion, parametrized
+tests are handy when we want to
+
+153
+00:11:43,820 --> 00:11:47,400
+repeat the same test for different
+values, when we can generate all
+
+154
+00:11:47,600 --> 00:11:51,700
+possible values and explore better
+the space of our solution.
+
+155
+00:11:51,900 --> 00:11:57,540
+So we cover more and more cases
+and we are safe that our code is
+
+156
+00:11:57,740 --> 00:11:59,240
+working for more and more cases.
+
+157
+00:11:59,800 --> 00:12:05,120
+Also, it's a good way of organizing
+all these cases, organizing all
+
+158
+00:12:05,320 --> 00:12:10,400
+these different values and combinations
+in a way that is more flexible and
+
+159
+00:12:10,600 --> 00:12:12,720
+that we can maintain easily in the
+future.
+

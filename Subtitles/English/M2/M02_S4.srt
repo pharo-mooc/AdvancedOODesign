@@ -1,0 +1,1140 @@
+1
+00:00:03,860 --> 00:00:06,360
+Hello and welcome to this lecture.
+
+2
+00:00:06,840 --> 00:00:10,300
+In this lecture, we are going to
+talk about Xtreme Test Driven
+
+3
+00:00:10,500 --> 00:00:11,260
+Development.
+
+4
+00:00:12,700 --> 00:00:18,420
+The outline of this lecture will
+be the presentation of Xtreme Test
+
+5
+00:00:18,620 --> 00:00:19,380
+Driven Development.
+
+6
+00:00:19,980 --> 00:00:25,300
+Basically, it is a reversion of
+TDD but with steroids.
+
+7
+00:00:25,820 --> 00:00:28,920
+We are going to do much more and
+win much more.
+
+8
+00:00:29,120 --> 00:00:34,100
+We are going to see how this new
+technique is integrated in a live
+
+9
+00:00:34,300 --> 00:00:37,300
+programming environment and how
+to get the best of it.
+
+10
+00:00:37,760 --> 00:00:42,640
+We are going to show how the smart
+tools in our programming environment
+
+11
+00:00:42,840 --> 00:00:46,960
+provide us with the support for
+doing Xtreme TDD.
+
+12
+00:00:47,620 --> 00:00:51,220
+And also we are going to see how
+to do it (by real).
+
+13
+00:00:53,220 --> 00:01:00,760
+The idea of Xtreme TDD is to always
+keep the flow, to never break the flow.
+
+14
+00:01:01,360 --> 00:01:06,320
+We want to write a test,
+execute the test and when we have
+
+15
+00:01:06,520 --> 00:01:10,640
+an error, we are going to fix the
+error in the debugger.
+
+16
+00:01:10,840 --> 00:01:15,060
+We are going to define methods,
+modify methods on the debugger.
+
+17
+00:01:15,260 --> 00:01:20,020
+The idea is that we can continue
+always executing the test until
+
+18
+00:01:20,220 --> 00:01:21,760
+we have a green test.
+
+19
+00:01:21,960 --> 00:01:27,580
+That is our main objective,
+having always green tests.
+
+20
+00:01:29,500 --> 00:01:32,180
+We are going to start with a really
+simple example.
+
+21
+00:01:32,560 --> 00:01:37,500
+But this example will give us a
+lot of space to apply the technique
+
+22
+00:01:37,700 --> 00:01:40,560
+and will show us how powerful it is.
+
+23
+00:01:41,080 --> 00:01:43,100
+There is nothing simpler in this
+example.
+
+24
+00:01:43,300 --> 00:01:45,340
+It's just that it has little code.
+
+25
+00:01:45,620 --> 00:01:48,120
+We are going to implement a simple
+counter.
+
+26
+00:01:48,320 --> 00:01:54,500
+We are going to focus on the process,
+on the different steps that we are
+
+27
+00:01:54,700 --> 00:01:55,460
+going to do.
+
+28
+00:01:55,660 --> 00:02:00,580
+And we are showing that this can
+be done in all our daily work.
+
+29
+00:02:01,940 --> 00:02:07,280
+We are going to start with an empty
+package, with an empty package in Pharo.
+
+30
+00:02:07,880 --> 00:02:11,820
+In this empty package,
+first we are going to do is to create
+
+31
+00:02:12,020 --> 00:02:12,780
+a test.
+
+32
+00:02:12,980 --> 00:02:17,100
+The test is our main unit in the
+Xtreme TDD.
+
+33
+00:02:17,300 --> 00:02:21,120
+We work always creating first a test.
+
+34
+00:02:21,360 --> 00:02:25,840
+We are going to create an empty
+test case class or we can start
+
+35
+00:02:26,040 --> 00:02:29,920
+from an existing test case class
+where we are going to add a new test.
+
+36
+00:02:30,260 --> 00:02:33,060
+In this case, we are creating an
+empty one.
+
+37
+00:02:34,380 --> 00:02:37,600
+So we start writing our first test.
+
+38
+00:02:38,360 --> 00:02:43,920
+Remember that always in our test,
+we are going to have an action that
+
+39
+00:02:44,120 --> 00:02:46,300
+we are going to execute.
+
+40
+00:02:46,500 --> 00:02:51,320
+And the most important is that we
+are going to have some asserts that
+
+41
+00:02:51,520 --> 00:02:54,320
+will validate that that action is
+correct.
+
+42
+00:02:54,660 --> 00:02:58,720
+In this case, we are writing a simple
+test where we are creating a new
+
+43
+00:02:58,920 --> 00:03:00,260
+object of the class counter.
+
+44
+00:03:00,920 --> 00:03:04,800
+And we are going to send the message
+count 22.
+
+45
+00:03:06,060 --> 00:03:10,940
+So once we send this message,
+the actual value inside the counter
+
+46
+00:03:11,140 --> 00:03:16,020
+that we are accessing with the message
+count will return 22.
+
+47
+00:03:16,220 --> 00:03:17,580
+And this is our test.
+
+48
+00:03:17,780 --> 00:03:21,080
+This is what we want that our program
+to do.
+
+49
+00:03:23,900 --> 00:03:29,700
+We are going to write this in our
+class browser, and we are going
+
+50
+00:03:29,900 --> 00:03:35,260
+to see that already, when we write
+this code, the counter class name,
+
+51
+00:03:35,460 --> 00:03:39,340
+the name of the counter class in
+our code is marked different because
+
+52
+00:03:39,540 --> 00:03:40,680
+this class does not exist.
+
+53
+00:03:40,880 --> 00:03:42,320
+We didn't create it yet.
+
+54
+00:03:42,520 --> 00:03:47,840
+And we are going to compile this
+method as it is.
+
+55
+00:03:48,380 --> 00:03:51,780
+So the system already knows that
+the class does not exist.
+
+56
+00:03:51,980 --> 00:03:58,180
+So when we compile the method,
+we are going to define a new class.
+
+57
+00:03:58,680 --> 00:04:03,480
+It says clearly that there is a
+known variable, in this case,
+
+58
+00:04:03,860 --> 00:04:08,060
+the class counter, and we are going
+to define it a new class,
+
+59
+00:04:08,260 --> 00:04:12,140
+so we can start implementing our
+program.
+
+60
+00:04:14,120 --> 00:04:19,200
+Once we select to define a new class,
+we see that we are offered with
+
+61
+00:04:19,400 --> 00:04:21,460
+a template or a simple class definition.
+
+62
+00:04:22,120 --> 00:04:26,480
+In this case, for following the
+Xtreme TDD as we should,
+
+63
+00:04:26,940 --> 00:04:31,680
+we are going to create it in the
+most simple default class that we have.
+
+64
+00:04:31,880 --> 00:04:36,500
+We are going to create our class
+counter as a subclass of object
+
+65
+00:04:36,700 --> 00:04:41,680
+and we are not going to add any
+instance variable as they will emerge
+
+66
+00:04:41,880 --> 00:04:46,120
+as we are making our test green.
+
+67
+00:04:46,700 --> 00:04:51,000
+Remember that all the objective
+of Xtreme TDD is to have green test.
+
+68
+00:04:51,200 --> 00:04:54,960
+We are going to implement the code
+that is necessary to have our test
+
+69
+00:04:55,160 --> 00:04:55,920
+green.
+
+70
+00:04:56,120 --> 00:05:00,660
+So we click on OK and we are going
+to generate the class.
+
+71
+00:05:00,860 --> 00:05:07,440
+We see that now, in our browser,
+we have our class with the test
+
+72
+00:05:07,640 --> 00:05:11,200
+and we are also having our new class
+counter.
+
+73
+00:05:11,640 --> 00:05:18,840
+And now, the code in our method
+is painted correctly.
+
+74
+00:05:19,040 --> 00:05:23,400
+It has the nice color showing that
+the class exists in the system.
+
+75
+00:05:24,340 --> 00:05:28,500
+So we have defined the test,
+but still we didn't execute it.
+
+76
+00:05:28,700 --> 00:05:32,980
+Remember that in Xtreme TDD,
+we were creating the test,
+
+77
+00:05:33,240 --> 00:05:38,540
+executing it and then working out
+to make the test green.
+
+78
+00:05:39,860 --> 00:05:41,860
+So what we are going to do is run
+the test.
+
+79
+00:05:42,240 --> 00:05:47,900
+The easiest way to run a single
+test case is to click on the little
+
+80
+00:05:48,100 --> 00:05:51,860
+ball that we have next to the test
+method.
+
+81
+00:05:52,240 --> 00:05:56,240
+We are going to click there and,
+of course, we are going to have
+
+82
+00:05:56,440 --> 00:05:57,200
+a debugger.
+
+83
+00:05:57,400 --> 00:05:58,620
+This is really cool.
+
+84
+00:05:58,820 --> 00:06:00,280
+The debugger is your friend.
+
+85
+00:06:00,660 --> 00:06:01,420
+Don't panic.
+
+86
+00:06:01,800 --> 00:06:02,980
+Don't close the debugger.
+
+87
+00:06:03,280 --> 00:06:06,700
+The debugger is the most powerful
+tool in Xtreme TDD.
+
+88
+00:06:07,280 --> 00:06:10,320
+We need to work with the debugger.
+
+89
+00:06:10,520 --> 00:06:16,180
+The first thing in a debugger is
+always reading the message,
+
+90
+00:06:16,380 --> 00:06:17,300
+reading the problem.
+
+91
+00:06:17,500 --> 00:06:21,160
+We have to read because if not,
+we don't understand what is happening.
+
+92
+00:06:21,360 --> 00:06:26,640
+So in this case, it's clearly saying
+that an instance of counter did
+
+93
+00:06:26,840 --> 00:06:29,240
+not understand the message count colon.
+
+94
+00:06:30,860 --> 00:06:31,620
+Why?
+
+95
+00:06:31,820 --> 00:06:35,880
+Because we have never implemented
+any method in the class counter.
+
+96
+00:06:36,380 --> 00:06:40,260
+So any instance of counter will
+never have this method.
+
+97
+00:06:40,760 --> 00:06:46,020
+And we see in the debugger important
+information that we see the message
+
+98
+00:06:46,220 --> 00:06:51,680
+that is trying to send and where
+in the code it's sending this message.
+
+99
+00:06:53,740 --> 00:06:58,680
+So what we are going to do without
+closing the debugger is to create
+
+100
+00:06:58,880 --> 00:07:00,340
+the method on the fly.
+
+101
+00:07:00,760 --> 00:07:06,220
+So we can continue implementing
+our solution and making our test green.
+
+102
+00:07:06,820 --> 00:07:11,720
+So we are going to click on the
+button Create to create a new method.
+
+103
+00:07:12,280 --> 00:07:17,620
+In this case, in the class counter
+that is the one that is missing
+
+104
+00:07:17,820 --> 00:07:20,080
+the method count colon.
+
+105
+00:07:21,900 --> 00:07:26,560
+Once we click in the button,
+the system will create a new method
+
+106
+00:07:26,760 --> 00:07:30,420
+for us and it will install it in
+the counter class.
+
+107
+00:07:31,120 --> 00:07:36,780
+Also, we'll restart the execution
+in the debugger and will bring us
+
+108
+00:07:36,980 --> 00:07:41,940
+to the execution point where this
+method should be executed.
+
+109
+00:07:42,680 --> 00:07:48,880
+We see that the implementation that
+the debugger provides us is basically
+
+110
+00:07:49,080 --> 00:07:53,120
+a default implementation that says well,
+we have a method that will receive
+
+111
+00:07:53,320 --> 00:07:55,640
+an integer and it should be implemented.
+
+112
+00:07:56,000 --> 00:07:57,800
+We don't have the actual code.
+
+113
+00:07:58,000 --> 00:08:02,400
+So we came here and we are going
+to write the code that we want to
+
+114
+00:08:02,600 --> 00:08:06,480
+happen or we want to be executed
+when this method is executed.
+
+115
+00:08:07,240 --> 00:08:12,060
+In this case, what we want to do
+is take the value of the argument
+
+116
+00:08:12,260 --> 00:08:15,620
+and store it in an instance variable
+of name count.
+
+117
+00:08:16,040 --> 00:08:23,760
+We are going to write the assignation
+here and before writing before saving
+
+118
+00:08:23,960 --> 00:08:29,160
+the method we can see again that
+count is marked in red showing off
+
+119
+00:08:29,360 --> 00:08:31,960
+that we don't have this instance
+variable.
+
+120
+00:08:32,160 --> 00:08:34,500
+But we don't need to panic,
+we don't need to go away,
+
+121
+00:08:34,700 --> 00:08:36,220
+we don't need to close the debugger.
+
+122
+00:08:36,420 --> 00:08:40,760
+We are going to save the method
+and once we save the method with
+
+123
+00:08:40,960 --> 00:08:48,580
+command s or the right button Accept,
+a new pop-up will appear asking
+
+124
+00:08:48,780 --> 00:08:52,200
+us what we want to do with the unknown
+variable count.
+
+125
+00:08:52,400 --> 00:08:57,840
+Remember always to read the messages,
+always to read what the system is
+
+126
+00:08:58,040 --> 00:09:00,540
+proposing us before closing and
+panicking.
+
+127
+00:09:00,880 --> 00:09:05,000
+It's so easy, just reading and following
+and doing what we want.
+
+128
+00:09:05,200 --> 00:09:09,780
+In this case, as there is an unknown
+variable we want to declare it as
+
+129
+00:09:09,980 --> 00:09:14,120
+a new instance variable and we select
+the second option.
+
+130
+00:09:15,520 --> 00:09:20,140
+In this case, the tool,
+the debugger will compile the new
+
+131
+00:09:20,340 --> 00:09:24,020
+method and we create the missing
+instance variable.
+
+132
+00:09:24,220 --> 00:09:30,440
+And now we see that our method is
+correctly colored, showing us that
+
+133
+00:09:30,640 --> 00:09:36,640
+the variable exists and is defined
+in the class count.
+
+134
+00:09:38,080 --> 00:09:42,260
+Well, we have our method correctly
+written, we have the variable that
+
+135
+00:09:42,460 --> 00:09:47,580
+has been created with some little
+clicks and now what we have to do
+
+136
+00:09:47,780 --> 00:09:50,780
+is to continue executing our test.
+
+137
+00:09:51,240 --> 00:09:57,540
+For doing so, we can tell our debugger
+to proceed and continue executing
+
+138
+00:09:57,740 --> 00:09:58,500
+our code.
+
+139
+00:09:58,700 --> 00:10:04,560
+We click on the button 'Proceed' and
+the execution of the test will continue.
+
+140
+00:10:04,900 --> 00:10:09,180
+Let's recall what happened at this
+point.
+
+141
+00:10:10,120 --> 00:10:16,180
+We see that the system when there
+is an error show us the ability
+
+142
+00:10:16,380 --> 00:10:18,140
+to create a new method for us.
+
+143
+00:10:19,140 --> 00:10:23,140
+When we click on Create a New Method,
+the system will create a new method
+
+144
+00:10:23,340 --> 00:10:29,920
+for us, will remove all the error
+in the message not understood and
+
+145
+00:10:30,120 --> 00:10:35,860
+will replace it in the stack in
+the call stack with our method just
+
+146
+00:10:36,060 --> 00:10:37,420
+to be executed.
+
+147
+00:10:39,200 --> 00:10:45,340
+We can then edit and modify or not
+the method and then we can continue
+
+148
+00:10:45,540 --> 00:10:47,460
+the execution of our test.
+
+149
+00:10:48,340 --> 00:10:52,280
+Like this, we are going to start
+adding the methods and the instance
+
+150
+00:10:52,480 --> 00:10:56,260
+variable and the classes and all
+the elements that are needed for
+
+151
+00:10:56,460 --> 00:10:57,860
+making our test green.
+
+152
+00:10:59,140 --> 00:11:05,680
+This process allows us to keep always
+a green test or our objective is
+
+153
+00:11:05,880 --> 00:11:07,120
+always to have a green test.
+
+154
+00:11:07,960 --> 00:11:13,380
+To talk a little more in technical
+detail, when we create a new method,
+
+155
+00:11:13,580 --> 00:11:17,460
+the system OK will create the new
+method that is easy to see because
+
+156
+00:11:17,660 --> 00:11:23,040
+it's what we asked, but also will
+remove from the stack all the error
+
+157
+00:11:23,240 --> 00:11:29,820
+of the message not understood and
+will replace the call to the error
+
+158
+00:11:30,020 --> 00:11:32,100
+with the call to our new method.
+
+159
+00:11:33,260 --> 00:11:40,040
+When the system propose us a new method,
+it will be created using the message
+
+160
+00:11:40,240 --> 00:11:41,100
+'self shouldBeImplemented'.
+
+161
+00:11:42,720 --> 00:11:46,560
+This message has two important
+responsibility.
+
+162
+00:11:46,760 --> 00:11:52,320
+First, 'shouldBeImplemented' is just
+an exception that will be raised
+
+163
+00:11:52,520 --> 00:11:57,400
+so the debugger will stop again
+and we can continue editing our method.
+
+164
+00:11:57,600 --> 00:12:03,300
+But also is really good because
+it's a documentation that this method
+
+165
+00:12:03,500 --> 00:12:05,640
+has not been yet implemented.
+
+166
+00:12:06,100 --> 00:12:11,880
+So if we find in our class method
+that sending should be implemented,
+
+167
+00:12:12,080 --> 00:12:17,800
+is a clear point to see what is
+the next thing to do or the next
+
+168
+00:12:18,000 --> 00:12:18,900
+thing to implement.
+
+169
+00:12:21,460 --> 00:12:26,860
+So if we continue executing our example,
+if we return to the moment that
+
+170
+00:12:27,060 --> 00:12:33,540
+I click on 'Proceed', we can see that
+this error will continue this cycle
+
+171
+00:12:33,740 --> 00:12:39,620
+of executing, finding an error and
+modifying the methods and continue
+
+172
+00:12:39,820 --> 00:12:43,240
+will execute because that is the
+procedure in Xtreme TDD.
+
+173
+00:12:43,440 --> 00:12:48,200
+And we will find that in this case
+we are going to have another error,
+
+174
+00:12:48,400 --> 00:12:54,360
+but this one is that the instance
+of counter did not understand count.
+
+175
+00:12:55,080 --> 00:12:58,700
+This is a different method and this
+is a different message,
+
+176
+00:12:58,900 --> 00:13:01,060
+but is the same idea.
+
+177
+00:13:01,260 --> 00:13:07,960
+We are going to create it again
+clicking on 'Create', but in this case,
+
+178
+00:13:08,160 --> 00:13:13,700
+the debugger will help us a lot
+because it will realize that the
+
+179
+00:13:13,900 --> 00:13:19,400
+method count follows the convention
+
+180
+00:13:19,600 --> 00:13:22,420
+that it is named as an instance
+variable.
+
+181
+00:13:22,620 --> 00:13:26,760
+It follows the convention of being
+a getter of an instance variable.
+
+182
+00:13:26,960 --> 00:13:33,520
+So it proposes us with a better
+initial proposal for the new method.
+
+183
+00:13:33,720 --> 00:13:38,720
+In this case, just implemented it
+as return of the count instance
+
+184
+00:13:38,920 --> 00:13:39,680
+variable.
+
+185
+00:13:41,200 --> 00:13:46,400
+If this method that is proposed
+by the debugger is good enough we
+
+186
+00:13:46,600 --> 00:13:50,600
+can always click on 'Proceed',
+but if it's not we can have here
+
+187
+00:13:50,800 --> 00:13:55,840
+the moment to modify it and change
+it and change the code that we want
+
+188
+00:13:56,040 --> 00:13:57,680
+for our method count.
+
+189
+00:13:59,080 --> 00:14:04,020
+Once we click on 'Proceed',
+in this case because it's a good
+
+190
+00:14:04,220 --> 00:14:09,750
+solution, it's a good method for
+
+191
+00:14:09,790 --> 00:14:10,710
+the implementation for count just
+right on the instance variable,
+
+192
+00:14:10,910 --> 00:14:17,800
+we will see that now our test is
+green and we can be happy about that.
+
+193
+00:14:18,000 --> 00:14:24,200
+We can have green test and that
+makes us happy because we know that
+
+194
+00:14:24,400 --> 00:14:28,020
+this little functionality that we
+have implemented in our program
+
+195
+00:14:28,220 --> 00:14:28,980
+is working.
+
+196
+00:14:29,720 --> 00:14:32,680
+This is one cycle of Xtreme TDD.
+
+197
+00:14:32,880 --> 00:14:36,200
+What we have done is run all the tests.
+
+198
+00:14:36,660 --> 00:14:42,200
+When this, all the tests are green,
+it's important that all the tests
+
+199
+00:14:42,400 --> 00:14:45,200
+are green, we are ready to commit.
+
+200
+00:14:45,520 --> 00:14:51,380
+We are ready to save our work and
+put a point that we can always return
+
+201
+00:14:51,580 --> 00:14:52,340
+to.
+
+202
+00:14:53,000 --> 00:14:56,500
+Once we commit and we are safe that
+our code is stored correctly,
+
+203
+00:14:56,700 --> 00:15:01,500
+we can write a new test testing
+another functionality of our program
+
+204
+00:15:01,700 --> 00:15:06,200
+and this test, of course,
+will start being read will start
+
+205
+00:15:06,400 --> 00:15:10,160
+producing errors and then we are
+going to fix the minimal to make
+
+206
+00:15:10,360 --> 00:15:11,120
+it green.
+
+207
+00:15:11,620 --> 00:15:17,800
+Why Xtreme TDD is so powerful and
+why we are talking about it in this
+
+208
+00:15:18,000 --> 00:15:22,760
+lecture is because when we are doing
+Xtreme TDD, we have more information
+
+209
+00:15:22,960 --> 00:15:25,720
+than when we are just developing.
+
+210
+00:15:25,960 --> 00:15:32,420
+We are not guessing about the context
+when we are coding the methods because
+
+211
+00:15:32,620 --> 00:15:38,240
+basically, we have the context in
+our debugger.
+
+212
+00:15:39,060 --> 00:15:42,840
+We can see the method that we are
+executing.
+
+213
+00:15:43,120 --> 00:15:48,160
+We can see the object that we are using,
+all the arguments, all the objects
+
+214
+00:15:48,360 --> 00:15:51,780
+that are accessible and we can have
+all the information of the context.
+
+215
+00:15:52,320 --> 00:15:54,880
+This is a much better context.
+
+216
+00:15:55,080 --> 00:16:00,320
+As I say, we have all access to
+the instance state that we are
+
+217
+00:16:00,520 --> 00:16:05,200
+executing, we are accessing the
+objects that we have access to and
+
+218
+00:16:05,400 --> 00:16:10,340
+we don't need to think a lot because
+the debugger is helping us with
+
+219
+00:16:10,540 --> 00:16:11,960
+the correct context.
+
+220
+00:16:12,160 --> 00:16:17,340
+And also, in a live programming
+environment, we can always interact
+
+221
+00:16:17,540 --> 00:16:21,100
+with all the objects that we have
+in the debugger.
+
+222
+00:16:21,780 --> 00:16:27,440
+Like this, it's quite easy to find
+what is the better solution and
+
+223
+00:16:27,640 --> 00:16:31,220
+the minimal code that we need to
+write to make our test green again.
+
+224
+00:16:33,120 --> 00:16:39,200
+The idea is that our tests are always
+guiding us really guiding and driving
+
+225
+00:16:39,400 --> 00:16:43,340
+us to find the nice and good solution.
+
+226
+00:16:44,280 --> 00:16:49,280
+When you are working with Xtreme
+TDD that is one of the tools one
+
+227
+00:16:49,480 --> 00:16:53,820
+of the techniques that we do all
+the time, the recommendations we
+
+228
+00:16:54,020 --> 00:16:59,200
+can do for you is always try to
+get an object as fast as possible,
+
+229
+00:16:59,400 --> 00:17:04,900
+is the easy way because having an
+object give us context about the
+
+230
+00:17:05,100 --> 00:17:09,100
+problem, context about the solution
+and give us a better way of thinking.
+
+231
+00:17:09,300 --> 00:17:17,100
+Always try to write a test that
+test the scenario that you are using,
+
+232
+00:17:17,300 --> 00:17:18,400
+that you are developing.
+
+233
+00:17:18,600 --> 00:17:23,980
+Remember that the test as we are
+writing unit test should test a
+
+234
+00:17:24,180 --> 00:17:30,760
+little part of our program and it
+will always focus on a little scenario.
+
+235
+00:17:30,960 --> 00:17:35,980
+And the idea is that we make that
+scenario work and we make that test
+
+236
+00:17:36,180 --> 00:17:36,940
+green.
+
+237
+00:17:37,140 --> 00:17:43,120
+Of course, the idea is that we do
+a cycle of Xtreme TDD and then another,
+
+238
+00:17:43,320 --> 00:17:44,700
+and another and another,
+we loop.
+
+239
+00:17:44,900 --> 00:17:51,360
+Remember, we write a test,
+we make it green, we commit and
+
+240
+00:17:51,560 --> 00:17:56,220
+then we repeat until we have all
+our cases covered with tests.
+

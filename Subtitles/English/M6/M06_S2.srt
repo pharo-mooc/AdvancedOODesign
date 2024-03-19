@@ -1,0 +1,427 @@
+1
+00:00:04,080 --> 00:00:04,840
+Guillermo Polito - Hi.
+
+2
+00:00:05,100 --> 00:00:07,640
+In this lecture, we're going to
+discuss again double dispatch,
+
+3
+00:00:07,840 --> 00:00:13,420
+in the case of non-symmetrical use
+of double dispatch. So we're going
+
+4
+00:00:13,620 --> 00:00:18,220
+to look at double dispatch again,
+but we're going to see that it doesn't
+
+5
+00:00:18,420 --> 00:00:21,040
+have to be symmetrical as we have
+seen in previous examples.
+
+6
+00:00:21,240 --> 00:00:26,020
+So remember, in the previous lectures,
+we have seen the paper,
+
+7
+00:00:26,220 --> 00:00:31,340
+scissor, stone example where we
+could make stone versus paper or
+
+8
+00:00:31,540 --> 00:00:35,480
+paper versus scissors and so it's
+a paper scissors rock game.
+
+9
+00:00:35,960 --> 00:00:38,400
+And then, the result was the one
+that win.
+
+10
+00:00:38,600 --> 00:00:39,360
+Yeah.
+
+11
+00:00:39,640 --> 00:00:43,340
+Now the problem with this is that
+it could lead you to the confusion
+
+12
+00:00:43,540 --> 00:00:48,600
+that always having a double dispatch
+requires to have a symmetrical
+
+13
+00:00:48,800 --> 00:00:49,560
+implementation.
+
+14
+00:00:49,760 --> 00:00:55,980
+So here actually, in stone we had
+to implement the versus scissors
+
+15
+00:00:57,300 --> 00:01:01,580
+versus stone and versus paper.
+
+16
+00:01:04,160 --> 00:01:08,600
+We had to do actually the same in
+the paper, for example.
+
+17
+00:01:09,200 --> 00:01:13,600
+So we had to implement each of the
+versus methods in each of the classes.
+
+18
+00:01:13,800 --> 00:01:16,780
+So that is not actually always the case.
+
+19
+00:01:16,980 --> 00:01:20,580
+To put you in context,
+let's imagine a game model of a Sokoban.
+
+20
+00:01:20,780 --> 00:01:25,340
+Sokoban is a game where we have
+a little person that is going to
+
+21
+00:01:25,540 --> 00:01:32,340
+push boxes in a maze and the objective
+of the game is to put each box on
+
+22
+00:01:32,540 --> 00:01:33,780
+top of each of these dots.
+
+23
+00:01:34,200 --> 00:01:38,720
+Yeah, so in our model,
+we have boxes we have boxes that
+
+24
+00:01:38,920 --> 00:01:40,880
+are above the target,
+so like this one.
+
+25
+00:01:41,080 --> 00:01:44,380
+We have empty blocks,
+which represent the empty square
+
+26
+00:01:44,580 --> 00:01:46,580
+where we are going to be able to walk.
+
+27
+00:01:46,780 --> 00:01:51,320
+We have a player, we have walls
+that we can't trespass.
+
+28
+00:01:51,520 --> 00:01:54,900
+Let's imagine an implementation
+that actually is implemented with
+
+29
+00:01:55,100 --> 00:01:55,860
+too many ifs.
+
+30
+00:01:56,060 --> 00:01:58,820
+What is happening here is that here
+we have a block here.
+
+31
+00:01:59,020 --> 00:02:03,880
+This block is a block in the game
+So here for example, this could be a box,
+
+32
+00:02:04,080 --> 00:02:06,400
+it could be a player,
+it could be a wall.
+
+33
+00:02:06,600 --> 00:02:09,020
+And then, here what we're doing
+is to try to draw it,
+
+34
+00:02:09,860 --> 00:02:13,180
+So to implement that,
+what is happening here is that we
+
+35
+00:02:13,380 --> 00:02:15,820
+are taking the block and we are
+asking are you a wall,
+
+36
+00:02:16,020 --> 00:02:20,120
+then I will draw a wall,
+are you a player, then I'm going
+
+37
+00:02:20,320 --> 00:02:21,500
+to draw a player and so on.
+
+38
+00:02:21,700 --> 00:02:25,000
+If we wanted to implement this using
+double dispatch, one of the way
+
+39
+00:02:25,200 --> 00:02:31,380
+to implement it is to directly delegate
+to the block object.
+
+40
+00:02:31,580 --> 00:02:38,040
+So instead of asking the block what
+it is and then deciding how to draw it,
+
+41
+00:02:38,240 --> 00:02:42,740
+what we can say is "okay block,
+you know who you are.
+
+42
+00:02:42,940 --> 00:02:46,960
+So draw yourself on this canvas
+and I am the view".
+
+43
+00:02:48,000 --> 00:02:53,320
+Then each kind of block for example
+the wall or the empty blocks,
+
+44
+00:02:53,840 --> 00:02:57,960
+they can tell the view,
+okay, draw a wall or draw an empty
+
+45
+00:02:58,160 --> 00:02:59,020
+block in this canvas.
+
+46
+00:02:59,940 --> 00:03:04,400
+So here what is happening is that
+to be able to draw something,
+
+47
+00:03:05,020 --> 00:03:07,100
+we are doing a double dispatch.
+
+48
+00:03:07,300 --> 00:03:13,620
+The decision to draw,
+it is shared between the game view
+
+49
+00:03:13,820 --> 00:03:17,640
+that knows how to draw different
+elements like drawing a wall or
+
+50
+00:03:17,840 --> 00:03:24,440
+drawing an empty block and the block
+itself that actually knows how to
+
+51
+00:03:24,640 --> 00:03:25,720
+dispatch to the view.
+
+52
+00:03:26,260 --> 00:03:31,980
+What this solution help us to do
+is to for example, change and have
+
+53
+00:03:32,180 --> 00:03:35,920
+different kind of canvases and views
+to be able to draw.
+
+54
+00:03:36,120 --> 00:03:39,460
+So we are doing double dispatch
+between the different kind of blocks.
+
+55
+00:03:39,660 --> 00:03:46,840
+So we have the block hierarchy,
+block 1, block two, block three.
+
+56
+00:03:47,780 --> 00:03:51,960
+And then, we are going to have canvases
+or views and we are going to be
+
+57
+00:03:52,160 --> 00:03:54,820
+able to have different kind of canvases
+to draw differently for.
+
+58
+00:03:55,020 --> 00:03:59,600
+So for example, here we could have
+an HTML view that will draw in one
+
+59
+00:03:59,800 --> 00:04:06,360
+way and we could have for example
+a vectorized or a 3D canvas that
+
+60
+00:04:06,560 --> 00:04:07,780
+will draw it in a different way.
+
+61
+00:04:07,980 --> 00:04:11,500
+So what is happening here is that
+we're telling the view how to draw
+
+62
+00:04:11,700 --> 00:04:16,520
+an element and before that we are
+telling the block that it has to
+
+63
+00:04:16,720 --> 00:04:20,220
+draw itself because the only one
+that knows how to draw itself,
+
+64
+00:04:22,340 --> 00:04:25,680
+what kind of element it is is the
+element itself.
+
+65
+00:04:25,880 --> 00:04:30,200
+So we are telling the element draw
+yourself and then the element will
+
+66
+00:04:30,400 --> 00:04:34,540
+tell the canvas or the view oh,
+I am a block, draw myself.
+
+67
+00:04:34,740 --> 00:04:40,600
+So in this way we can have a really
+a modular system where we can change
+
+68
+00:04:40,800 --> 00:04:45,060
+the canvases, add new kind of blocks
+without rewriting the entire system.
+
+69
+00:04:45,300 --> 00:04:48,660
+So that is why sending messages
+is a powerful tool.
+
+70
+00:04:49,820 --> 00:04:54,120
+What happened here is that what
+I told you: actually the double dispatch
+
+71
+00:04:54,960 --> 00:04:56,820
+doesn't need to be symmetrical.
+
+72
+00:04:57,020 --> 00:04:59,640
+What happens is that you need to
+look at the double dispatch like
+
+73
+00:04:59,840 --> 00:05:00,600
+a matrix.
+
+74
+00:05:00,800 --> 00:05:02,640
+So in this case, for example,
+we have all the different kind of
+
+75
+00:05:02,840 --> 00:05:03,600
+blocks.
+
+76
+00:05:03,800 --> 00:05:13,160
+We have walls, we have empty blocks,
+we have players and then we have
+
+77
+00:05:13,360 --> 00:05:20,560
+all the different canvases;
+canvas one, HTML, 3D.
+
+78
+00:05:21,620 --> 00:05:28,120
+So in the previous case when we had rock,
+paper, scissors, we had rock,
+
+79
+00:05:28,320 --> 00:05:31,760
+paper, scissors here and we have
+also rock, paper, scissors in there.
+
+80
+00:05:31,960 --> 00:05:33,880
+That's why we had a symmetrical model.
+
+81
+00:05:34,080 --> 00:05:39,160
+But in this case, what we're crossing
+is the different blocks and the
+
+82
+00:05:39,360 --> 00:05:40,120
+different canvases.
+
+83
+00:05:40,320 --> 00:05:46,540
+So in this case, our model and our
+double dispatch is not symmetrical.
+
+84
+00:05:46,740 --> 00:05:50,260
+In conclusion, double dispatch is
+a good way to add the variation
+
+85
+00:05:50,460 --> 00:05:55,180
+point without hardcoding all the
+entire path of execution.
+
+86
+00:05:55,380 --> 00:06:00,120
+It is modular because we can add
+new elements in the decision process
+
+87
+00:06:00,320 --> 00:06:04,500
+by adding for example in our case,
+new canvases or new blocks.
+
+88
+00:06:04,700 --> 00:06:08,320
+And it can be symmetrical as in
+the case of the rock,
+
+89
+00:06:08,520 --> 00:06:12,500
+paper, scissors or it can be
+asymmetrical like in this case here.
+

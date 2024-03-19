@@ -1,0 +1,853 @@
+1
+00:00:03,480 --> 00:00:05,760
+Hello, welcome to this lecture.
+
+2
+00:00:06,180 --> 00:00:10,320
+We are going to analyze in this
+lecture how to turn procedures to
+
+3
+00:00:10,520 --> 00:00:14,640
+objects and what are the good advantages
+of this.
+
+4
+00:00:15,920 --> 00:00:20,760
+The goals for this lecture is to
+present the idea that objects
+
+5
+00:00:20,960 --> 00:00:25,180
+representing procedures,
+representing algorithms are really
+
+6
+00:00:25,380 --> 00:00:31,460
+powerful and we want to use them
+when we need to have complex algorithms.
+
+7
+00:00:32,420 --> 00:00:38,280
+It is basic idea is to take some
+`Behavior` to take some procedure
+
+8
+00:00:38,480 --> 00:00:42,160
+and convert it in object,
+in one or more object.
+
+9
+00:00:42,620 --> 00:00:46,380
+We are going to explore a basic
+example and we are going to see
+
+10
+00:00:46,580 --> 00:00:52,020
+how this example if we start adding
+variations and if we start adding
+
+11
+00:00:52,220 --> 00:00:56,520
+configurations start getting bigger
+and bigger and it is not manageable
+
+12
+00:00:56,720 --> 00:01:01,060
+and we need to create objects to
+represent them.
+
+13
+00:01:01,700 --> 00:01:03,060
+Let's start with our example.
+
+14
+00:01:03,580 --> 00:01:07,920
+If we take any class in Pharo and
+we send the message `printHierarchy`,
+
+15
+00:01:08,360 --> 00:01:12,720
+we can see a textual representation
+of its hierarchy.
+
+16
+00:01:13,140 --> 00:01:18,820
+It has in one side the receiver,
+the class that we are printing,
+
+17
+00:01:19,680 --> 00:01:24,840
+the superclasses of it and the
+subclasses of it and for each of
+
+18
+00:01:25,040 --> 00:01:28,680
+these classes we are also printing
+the instance variables.
+
+19
+00:01:29,600 --> 00:01:30,840
+This is really cool.
+
+20
+00:01:31,040 --> 00:01:35,720
+It allows us to have a nice simple
+tool that generates a textual
+
+21
+00:01:35,920 --> 00:01:38,360
+representation of our hierarchies.
+
+22
+00:01:38,620 --> 00:01:42,820
+If we see the code that implements this,
+we see that it's kind of
+
+23
+00:01:43,020 --> 00:01:43,780
+straightforward.
+
+24
+00:01:43,980 --> 00:01:51,200
+We have a `printHierarchy` in `Behavior`
+that is the superclass of the class
+
+25
+00:01:51,400 --> 00:01:58,320
+meta object and we see here that
+what it's doing is first iterating
+
+26
+00:01:58,520 --> 00:02:04,820
+all the superclasses and printing
+them and then doing the same with
+
+27
+00:02:05,020 --> 00:02:05,980
+the subclasses.
+
+28
+00:02:06,180 --> 00:02:09,500
+In this case, delegating in another
+method.
+
+29
+00:02:09,940 --> 00:02:16,720
+If we see the printSubclassesOn,
+this is implemented by doing a new
+
+30
+00:02:16,920 --> 00:02:20,600
+`tab` in the printing,
+then putting the name of the class
+
+31
+00:02:20,800 --> 00:02:22,520
+and then printing the instance
+variables.
+
+32
+00:02:23,400 --> 00:02:27,640
+This is for the current class that
+we are printing and then what it's
+
+33
+00:02:27,840 --> 00:02:33,460
+doing is that it's starting to iterate
+on all the subclasses and doing
+
+34
+00:02:33,660 --> 00:02:37,080
+this printing in a recursive way.
+
+35
+00:02:38,180 --> 00:02:43,780
+It does some kind of ordering so
+we can print the subclasses always
+
+36
+00:02:43,980 --> 00:02:48,100
+in the same order, but basically
+what it's doing is applying the
+
+37
+00:02:48,300 --> 00:02:50,800
+same procedure to the subclasses.
+
+38
+00:02:51,880 --> 00:02:52,860
+This is really good.
+
+39
+00:02:53,060 --> 00:02:58,480
+It's a good solution because this
+procedure has been split in two
+
+40
+00:02:58,680 --> 00:03:00,240
+methods that are quite simple.
+
+41
+00:03:00,440 --> 00:03:05,560
+We have one method that is responsible
+for printing the superclasses of
+
+42
+00:03:05,760 --> 00:03:09,330
+the class and one method that is
+responsible for printing the subclasses
+
+43
+00:03:09,370 --> 00:03:10,100
+of the class.
+
+44
+00:03:10,740 --> 00:03:16,700
+All the state that is needed by
+this procedure is passed as arguments,
+
+45
+00:03:16,900 --> 00:03:20,480
+so we have a really clean and nice
+solution.
+
+46
+00:03:20,840 --> 00:03:25,740
+The problem starts when we start
+to add new features to this solution
+
+47
+00:03:25,940 --> 00:03:28,300
+and we want to have other requirements.
+
+48
+00:03:28,580 --> 00:03:30,500
+We start seeing the limits of it.
+
+49
+00:03:30,860 --> 00:03:33,720
+What happens if we need to filter
+some subclasses?
+
+50
+00:03:33,920 --> 00:03:39,780
+In the case of this class RBLintRule,
+we will see that has a lot of subclasses
+
+51
+00:03:39,980 --> 00:03:43,520
+so we want to filter them or we
+want to show some of them.
+
+52
+00:03:43,720 --> 00:03:47,260
+What happens if we want to show,
+I don't know, the first three,
+
+53
+00:03:47,500 --> 00:03:51,740
+the first four or none of the
+subclasses?
+
+54
+00:03:51,940 --> 00:03:56,620
+For example, what happens if we
+want to decide to print or not the
+
+55
+00:03:56,820 --> 00:04:01,820
+superclasses depending on if they
+are in a package or not because
+
+56
+00:04:02,020 --> 00:04:06,540
+for example, we want to only print
+the superclasses that are part of
+
+57
+00:04:06,740 --> 00:04:11,080
+our own package and we don't care
+about printing object or proto object
+
+58
+00:04:11,280 --> 00:04:15,700
+or any of the classes that are part
+of the Pharo system?
+
+59
+00:04:17,300 --> 00:04:20,580
+What if we want to print or not
+instance variables?
+
+60
+00:04:21,880 --> 00:04:25,620
+These are some little examples of
+possible configurations that we
+
+61
+00:04:25,820 --> 00:04:27,840
+want to do to our hierarchy printer.
+
+62
+00:04:28,040 --> 00:04:33,580
+But now if we want to do it,
+we have to add more and more arguments
+
+63
+00:04:33,780 --> 00:04:41,060
+to our method to print that those
+arguments also will be passed to
+
+64
+00:04:41,260 --> 00:04:46,600
+the printSubclassesOn that we have
+in the that is doing the procedure
+
+65
+00:04:46,800 --> 00:04:47,720
+for the subclasses.
+
+66
+00:04:47,920 --> 00:04:53,380
+As we see, we can start having
+an explosion of new arguments that
+
+67
+00:04:53,580 --> 00:04:54,520
+we have to add.
+
+68
+00:04:55,500 --> 00:05:01,260
+Also we cannot start adding this
+state as instance variable because
+
+69
+00:05:01,460 --> 00:05:05,220
+the implementation of this printer
+is directly in `Behavior`.
+
+70
+00:05:05,420 --> 00:05:10,480
+It will affect all the classes in
+the system so it's not a good idea,
+
+71
+00:05:10,680 --> 00:05:16,740
+it's not a good solution to add
+instance variables in all the classes
+
+72
+00:05:16,940 --> 00:05:19,200
+of the system just for printing.
+
+73
+00:05:20,160 --> 00:05:26,280
+Also it is complicated to configure
+this printer because if we have
+
+74
+00:05:26,480 --> 00:05:31,280
+a printer that requires 10 new arguments
+and we just want to use it as before,
+
+75
+00:05:31,480 --> 00:05:36,460
+we are going to pass values to these
+arguments and know what are the
+
+76
+00:05:36,660 --> 00:05:39,620
+values to pass when we want the
+default `Behavior`.
+
+77
+00:05:39,820 --> 00:05:45,420
+So what we want to do is turn this
+procedure into a simple object that
+
+78
+00:05:45,620 --> 00:05:48,100
+we can configure in a simple way.
+
+79
+00:05:48,520 --> 00:05:56,450
+In this case, if we want to configure
+our printer in the default way,
+
+80
+00:05:56,650 --> 00:05:59,660
+we are only going to create it because
+when we instantiate this printer,
+
+81
+00:05:59,860 --> 00:06:03,660
+it will have the default configuration
+and we are going to send the messages
+
+82
+00:06:03,860 --> 00:06:08,640
+only to modify the `Behavior` that
+we want from it.
+
+83
+00:06:08,860 --> 00:06:12,880
+A more complex idea, this is a really
+really simple one we are going to
+
+84
+00:06:13,080 --> 00:06:17,920
+print the rectangle class not showing
+the instance variable not showing
+
+85
+00:06:18,120 --> 00:06:21,060
+the superclasses, but we can get
+more and more complex.
+
+86
+00:06:21,260 --> 00:06:28,780
+And for example saying okay we want
+to print the RBNode class not showing
+
+87
+00:06:28,980 --> 00:06:32,260
+the instances, not showing the
+superclasses we can send or not
+
+88
+00:06:32,460 --> 00:06:36,520
+this message if we want or not and
+then we can pass for example one
+
+89
+00:06:36,720 --> 00:06:39,940
+or more or two collections saying
+which are the classes to exclude
+
+90
+00:06:40,140 --> 00:06:42,740
+and which are the classes that we
+are limiting on.
+
+91
+00:06:43,040 --> 00:06:48,900
+As we see, we have different ways
+of configuring our hierarchy printer
+
+92
+00:06:49,100 --> 00:06:54,720
+object because now we have a more
+flexible element that we can play
+
+93
+00:06:54,920 --> 00:06:59,380
+and do all the tools that we already
+have seen in this MOOC.
+
+94
+00:06:59,580 --> 00:07:02,160
+Let's see a little of its
+implementation.
+
+95
+00:07:02,360 --> 00:07:06,400
+We see that it's a really simple object.
+
+96
+00:07:06,600 --> 00:07:12,820
+It has all the state required for
+executing the procedure.
+
+97
+00:07:13,020 --> 00:07:17,840
+We are going to create it with the
+instance variables that are required
+
+98
+00:07:18,040 --> 00:07:20,980
+to do the procedure itself.
+
+99
+00:07:21,180 --> 00:07:25,760
+And the most important part is that
+when we instantiate it,
+
+100
+00:07:25,960 --> 00:07:30,020
+it will come with default values
+for this for the default `Behavior`.
+
+101
+00:07:30,220 --> 00:07:36,800
+And then, we can have a nice API,
+very fluid API that we can interact
+
+102
+00:07:37,000 --> 00:07:38,800
+with it to configure it.
+
+103
+00:07:39,000 --> 00:07:44,480
+We can configure it directly saying,
+okay class printer I don't want
+
+104
+00:07:44,680 --> 00:07:47,940
+you to show the instance variables.
+
+105
+00:07:48,140 --> 00:07:52,360
+When we send this message,
+it will store that in an instance
+
+106
+00:07:52,560 --> 00:07:57,180
+variable knowing to show or not
+the state or we want to be limited
+
+107
+00:07:57,380 --> 00:08:01,060
+to some specific collection of classes
+and we can talk to them.
+
+108
+00:08:01,260 --> 00:08:06,780
+And also, we can add all the kind
+of API that we need for implementing
+
+109
+00:08:06,980 --> 00:08:12,680
+for example decorations if we want
+to add more `tab`s between each
+
+110
+00:08:12,880 --> 00:08:16,660
+of the elements or we want to leave
+white lines in the middle.
+
+111
+00:08:16,860 --> 00:08:22,100
+All that `Behavior` is implemented
+in the `ClassHierarchyPrinter` object.
+
+112
+00:08:23,140 --> 00:08:25,380
+Let's see another example.
+
+113
+00:08:25,580 --> 00:08:29,000
+In this case, we are going to talk
+about a date printer.
+
+114
+00:08:29,200 --> 00:08:33,560
+A date printer is a really nice
+example of this because we have
+
+115
+00:08:33,760 --> 00:08:39,200
+different formats of printing dates,
+even we have different format that
+
+116
+00:08:39,400 --> 00:08:43,700
+change from language to language
+from different ways of printing
+
+117
+00:08:43,900 --> 00:08:48,140
+in French, in English,
+in Spanish and also we have different
+
+118
+00:08:48,340 --> 00:08:51,740
+format that are printed different
+ways depending on our program.
+
+119
+00:08:51,940 --> 00:08:57,800
+We can have the day and month complete,
+
+120
+00:08:58,000 --> 00:09:01,800
+we can have the day and a short
+month or different representation
+
+121
+00:09:02,000 --> 00:09:06,160
+with different separators of the
+numbers or different order depending.
+
+122
+00:09:06,360 --> 00:09:11,440
+And the question is, we implement
+all this `Behavior` in the classic
+
+123
+00:09:11,640 --> 00:09:17,780
+`printOn:` method that is in date,
+it will be a little limited.
+
+124
+00:09:17,980 --> 00:09:23,360
+We will have to choose for only
+one and accepting that the others
+
+125
+00:09:23,560 --> 00:09:28,320
+are not there or we will have to
+have an explosion of different `printOn`
+
+126
+00:09:28,580 --> 00:09:32,380
+methods or different way of configuring
+it with arguments.
+
+127
+00:09:32,580 --> 00:09:39,140
+So what we want in this case is
+to have an object that represent
+
+128
+00:09:39,340 --> 00:09:43,480
+us the date printer and that we
+can configure in the different formats.
+
+129
+00:09:43,680 --> 00:09:48,920
+This object exists and we have a
+really more complex example that
+
+130
+00:09:49,120 --> 00:09:54,780
+is the timestamp format is two different
+ways of representing a timestamp.
+
+131
+00:09:54,980 --> 00:10:01,700
+A timestamp is just a date with
+the time in the highest precision
+
+132
+00:10:01,900 --> 00:10:02,660
+that we can.
+
+133
+00:10:02,860 --> 00:10:05,240
+So we can represent that in different
+way.
+
+134
+00:10:05,440 --> 00:10:07,380
+We can print them in different way.
+
+135
+00:10:07,580 --> 00:10:14,780
+And this is the work of the timestamp
+format, is basically an implementation
+
+136
+00:10:14,980 --> 00:10:19,920
+of this printing a textual
+representation for a timestamp and
+
+137
+00:10:20,120 --> 00:10:22,700
+can be also used for parsing.
+
+138
+00:10:22,900 --> 00:10:28,360
+So we can get from a date or a
+timestamp, we can get the text
+
+139
+00:10:28,560 --> 00:10:32,500
+representation in different format
+and from this test representation,
+
+140
+00:10:32,700 --> 00:10:38,860
+we can also parse using the same object,
+using the same configuration we
+
+141
+00:10:39,060 --> 00:10:42,120
+can parse a given string.
+
+142
+00:10:43,520 --> 00:10:53,220
+So in this case, we can see that
+we can parse the timestamp and read
+
+143
+00:10:53,420 --> 00:11:03,760
+it from a string and also we can
+format this string and say how it
+
+144
+00:11:03,960 --> 00:11:07,160
+has been printed this timestamp.
+
+145
+00:11:07,900 --> 00:11:12,580
+It has the two operations,
+but the important thing is that
+
+146
+00:11:12,780 --> 00:11:18,440
+the timestamp format encapsulate
+this complex printing and the timestamp
+
+147
+00:11:18,640 --> 00:11:22,740
+itself, the object timestamp does
+not need to know how to be printed.
+
+148
+00:11:22,940 --> 00:11:28,000
+In this case, we can show another
+example when we configure the timestamp
+
+149
+00:11:28,200 --> 00:11:35,020
+format with a given format for the
+date and when we parse the new string,
+
+150
+00:11:35,220 --> 00:11:38,220
+we get the correct time.
+
+151
+00:11:38,420 --> 00:11:43,160
+As we see in this example,
+we are taking the timestamp format,
+
+152
+00:11:43,360 --> 00:11:49,140
+configuring it and then using it
+for one of these operations of parsing
+
+153
+00:11:49,340 --> 00:11:53,520
+a day a string and obtaining a date
+or taking a date or a timestamp
+
+154
+00:11:53,720 --> 00:11:56,320
+and printing it as a string.
+
+155
+00:11:56,520 --> 00:12:03,320
+If we do a little analysis of all this,
+of all this lecture, we have the
+
+156
+00:12:03,520 --> 00:12:07,720
+idea of creating little objects
+give us the power because they can
+
+157
+00:12:07,920 --> 00:12:08,680
+be configured.
+
+158
+00:12:08,880 --> 00:12:13,580
+We can modify them to have different
+internal state to act in different ways.
+
+159
+00:12:13,780 --> 00:12:19,240
+We can have in this way all the
+
+160
+00:12:19,440 --> 00:12:23,500
+state that is needed for the procedure,
+for the computation that we are
+
+161
+00:12:23,700 --> 00:12:26,780
+doing for the complex algorithm
+complex or not.
+
+162
+00:12:26,980 --> 00:12:30,300
+But we have all the state and all
+the configuration.
+
+163
+00:12:30,500 --> 00:12:35,680
+Then we can have nice APIs that
+we can configure and make the user
+
+164
+00:12:35,880 --> 00:12:41,960
+of this procedure happier,
+easier to read, more flexible because
+
+165
+00:12:42,160 --> 00:12:46,700
+we are not thinking about adding
+a lot of arguments to the procedure.
+
+166
+00:12:46,960 --> 00:12:51,940
+But we are configuring object and
+the object can have specific initial
+
+167
+00:12:52,140 --> 00:12:56,500
+values that already are useful for
+most of the situations.
+
+168
+00:12:56,700 --> 00:13:01,760
+And as we have a little object and
+these objects are independent,
+
+169
+00:13:01,960 --> 00:13:08,240
+we can write beautiful tests on them,
+so we can test if they are working
+
+170
+00:13:08,440 --> 00:13:09,200
+as we want.
+
+171
+00:13:09,400 --> 00:13:13,440
+This idea of turning method,
+turning procedure, turning `Behavior`
+
+172
+00:13:13,640 --> 00:13:18,000
+into object is a key point of the
+command design pattern and the Visitor
+
+173
+00:13:18,200 --> 00:13:18,960
+pattern.
+
+174
+00:13:19,160 --> 00:13:20,900
+And is a really powerful idea.
+
+175
+00:13:21,100 --> 00:13:24,460
+You have to think always if you
+want to take your procedures,
+
+176
+00:13:24,660 --> 00:13:32,120
+your actions and reify them as objects
+to gain flexibility and to gain
+
+177
+00:13:32,320 --> 00:13:38,920
+the ability to configure and add
+new features in the future and make
+
+178
+00:13:39,120 --> 00:13:40,200
+it more maintainable.
+

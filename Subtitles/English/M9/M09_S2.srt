@@ -1,0 +1,423 @@
+1
+00:00:04,430 --> 00:00:05,190
+Hello!
+
+2
+00:00:05,390 --> 00:00:10,290
+In this lecture, we'll discuss class
+methods and how to use them.
+
+3
+00:00:11,270 --> 00:00:14,950
+What you will learn, basically,
+is that in Pharo, class methods
+
+4
+00:00:15,150 --> 00:00:16,470
+are normal virtual methods.
+
+5
+00:00:17,070 --> 00:00:21,030
+It means that you can send messages
+to classes and the method lookup
+
+6
+00:00:21,230 --> 00:00:24,590
+will work normally, like regular
+objects.
+
+7
+00:00:26,330 --> 00:00:31,570
+Most class methods are usually used
+to create new instances,
+
+8
+00:00:31,770 --> 00:00:35,910
+but sometimes they can do other
+things and we will see that it can
+
+9
+00:00:36,110 --> 00:00:36,870
+be really useful.
+
+10
+00:00:39,080 --> 00:00:40,480
+Let's have a look at this case study.
+
+11
+00:00:41,300 --> 00:00:42,960
+Imagine that we want to parse this
+string.
+
+12
+00:00:43,600 --> 00:00:46,180
+This is a string representation
+of a document.
+
+13
+00:00:46,400 --> 00:00:51,280
+Here, we have a title,
+a list of items, and maybe a paragraph
+
+14
+00:00:51,480 --> 00:00:55,300
+there, and we want to create a parser
+for this piece of text.
+
+15
+00:00:58,910 --> 00:01:01,970
+Here, we have a design of this system.
+
+16
+00:01:02,390 --> 00:01:06,290
+We have a Parser class,
+and we have a superclass here,
+
+17
+00:01:06,490 --> 00:01:11,330
+`DocumentItem`, with subclasses
+that represent the node elements
+
+18
+00:01:11,530 --> 00:01:12,850
+of the text that we want to parse.
+
+19
+00:01:14,110 --> 00:01:17,650
+The interesting point is that in
+this design, each `DocumentItem`
+
+20
+00:01:18,070 --> 00:01:21,650
+subclass knows if it can parse a line.
+
+21
+00:01:22,210 --> 00:01:26,530
+So, the `canParse:` method there
+is implemented in all subclasses,
+
+22
+00:01:26,730 --> 00:01:28,250
+and this is a class-side method.
+
+23
+00:01:28,950 --> 00:01:34,070
+It means that if I give it a piece
+of text, it can answer a Boolean
+
+24
+00:01:34,270 --> 00:01:37,490
+if it can parse this text or not.
+
+25
+00:01:38,730 --> 00:01:44,350
+And then, the second point is that
+each class knows how to create an
+
+26
+00:01:44,550 --> 00:01:47,610
+instance of itself using this piece
+of text.
+
+27
+00:01:50,520 --> 00:01:54,800
+Given that, the parser is implemented
+like this, we have two methods in
+
+28
+00:01:55,000 --> 00:02:01,040
+the parser: the documentClasses
+that computes the collection of
+
+29
+00:02:01,240 --> 00:02:05,400
+all classes that can parse a piece
+of text.
+
+30
+00:02:06,280 --> 00:02:12,340
+Here, in this expression,
+we will query the system to get
+
+31
+00:02:12,540 --> 00:02:15,740
+all subclasses of the `DocumentItem`
+class dynamically.
+
+32
+00:02:16,320 --> 00:02:20,440
+Then, we will order these subclasses
+by priority.
+
+33
+00:02:22,780 --> 00:02:28,200
+Now that we have a collection of
+classes, we can iterate over it,
+
+34
+00:02:28,660 --> 00:02:32,600
+over this collection,
+and using the `canParse` message,
+
+35
+00:02:33,400 --> 00:02:37,480
+we can find the first one that can
+parse a specific line of text.
+
+36
+00:02:41,070 --> 00:02:45,770
+This is a really useful pattern
+because it means that I can easily
+
+37
+00:02:45,970 --> 00:02:48,450
+add new subclasses and it works
+perfectly.
+
+38
+00:02:49,550 --> 00:02:51,970
+This pattern is also used in the
+command line interface.
+
+39
+00:02:52,190 --> 00:02:53,770
+Let's have a look at another example.
+
+40
+00:02:54,730 --> 00:02:59,590
+For example, here, I have a command
+line - this is a Pharo virtual machine
+
+41
+00:03:00,370 --> 00:03:07,870
+- I have the Pharo image,
+and this part of the command line
+
+42
+00:03:08,070 --> 00:03:12,070
+is handled by the `CommandLineHandler`.
+
+43
+00:03:14,270 --> 00:03:18,390
+And we have specific classes in
+the system that can handle those
+
+44
+00:03:18,590 --> 00:03:19,350
+commands.
+
+45
+00:03:19,590 --> 00:03:23,010
+And we have a lot of different commands
+that are supported by this system.
+
+46
+00:03:23,370 --> 00:03:24,970
+Here, this is an eval command.
+
+47
+00:03:25,530 --> 00:03:29,810
+This is a keyword that defines the
+kind of command that can evaluate
+
+48
+00:03:30,010 --> 00:03:31,690
+the expression that is right after.
+
+49
+00:03:33,390 --> 00:03:39,110
+So, it means that each class or
+each application in the system can
+
+50
+00:03:39,310 --> 00:03:40,490
+introduce its own `CommandLineHandler`.
+
+51
+00:03:41,230 --> 00:03:42,870
+This is an extensible solution.
+
+52
+00:03:43,590 --> 00:03:44,370
+How is it done?
+
+53
+00:03:45,410 --> 00:03:46,790
+This is exactly the same pattern.
+
+54
+00:03:46,990 --> 00:03:51,310
+In the `CommandLineHandler`,
+we will first query the system to
+
+55
+00:03:51,510 --> 00:03:53,110
+detect all handlers in the system.
+
+56
+00:03:54,150 --> 00:03:55,870
+This is done there.
+
+57
+00:03:59,240 --> 00:04:05,340
+It means that it will detect all
+subclasses, and I will exclude those
+
+58
+00:04:05,540 --> 00:04:06,600
+that are abstract.
+
+59
+00:04:08,080 --> 00:04:11,800
+And then, I will select the one
+that is responsible for a particular
+
+60
+00:04:12,000 --> 00:04:12,760
+command.
+
+61
+00:04:14,300 --> 00:04:15,300
+How is it implemented?
+
+62
+00:04:16,100 --> 00:04:20,360
+There is a default implementation
+in the `CommandLineHandler` class.
+
+63
+00:04:20,560 --> 00:04:23,880
+It is responsible for arguments,
+I will pass the arguments,
+
+64
+00:04:24,080 --> 00:04:30,000
+and it will answer a Boolean if
+this class can deal with this kind
+
+65
+00:04:30,200 --> 00:04:30,960
+of command.
+
+66
+00:04:31,420 --> 00:04:38,740
+Then, here I am in the subclass
+EvaluateCommandLineHandler, and
+
+67
+00:04:38,940 --> 00:04:43,480
+I have a hook method there,
+self commandName, that is redefined
+
+68
+00:04:43,680 --> 00:04:46,020
+in the subclass
+EvaluateCommandLineHandler, that
+
+69
+00:04:46,220 --> 00:04:47,280
+just returns the eval.
+
+70
+00:04:47,600 --> 00:04:53,760
+So, it means that all commands that
+start with the eval keyword will
+
+71
+00:04:53,960 --> 00:04:58,180
+be handled by this class,
+EvaluateCommandLineHandler.
+
+72
+00:05:00,200 --> 00:05:05,460
+This design is completely extensible
+by adding new subclasses of the
+
+73
+00:05:05,660 --> 00:05:06,420
+`CommandLineHandler`.
+
+74
+00:05:09,440 --> 00:05:11,560
+This design, as we said,
+is completely modular.
+
+75
+00:05:11,860 --> 00:05:15,700
+This is extensible by construction,
+but there are some cons.
+
+76
+00:05:16,560 --> 00:05:19,940
+Checking all subclasses all the
+time is really costly.
+
+77
+00:05:20,580 --> 00:05:25,700
+Each time you ask a class for all
+its subclasses, this is a costly
+
+78
+00:05:25,900 --> 00:05:31,340
+operation because all classes usually
+know their superclass,
+
+79
+00:05:31,540 --> 00:05:34,580
+but they don't know their subclasses,
+so it means that you need to iterate
+
+80
+00:05:34,780 --> 00:05:38,660
+over all classes of the system to
+get the subclasses.
+
+81
+00:05:39,020 --> 00:05:42,340
+And then, you probably don't need
+such a dynamic behavior.
+
+82
+00:05:42,540 --> 00:05:46,660
+Sometimes it is useful,
+but sometimes this is not so important
+
+83
+00:05:46,860 --> 00:05:48,320
+to query the system each time.
+
+84
+00:05:50,100 --> 00:05:55,320
+In conclusion, classes are regular
+objects, and we can send them messages.
+
+85
+00:05:55,520 --> 00:05:59,500
+The method lookup is exactly the
+same as for regular objects.
+
+86
+00:06:00,000 --> 00:06:04,540
+It goes to the class of the receiver,
+and it follows the inheritance chain.
+
+87
+00:06:05,400 --> 00:06:11,500
+Pharo makes it very easy to iterate
+over subclasses and it allows for
+
+88
+00:06:11,700 --> 00:06:14,020
+really modular and extensible design,
+as we saw.
+
+89
+00:06:14,820 --> 00:06:16,520
+But the problem is that it is really
+costly.
+
+90
+00:06:18,540 --> 00:06:22,520
+This is something that we will address
+in the next lecture on Registration.
+

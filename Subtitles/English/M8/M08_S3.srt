@@ -1,0 +1,487 @@
+1
+00:00:04,850 --> 00:00:06,230
+- Hello everybody.
+
+2
+00:00:06,950 --> 00:00:10,010
+Welcome to this lecture on sharing,
+another one.
+
+3
+00:00:10,350 --> 00:00:12,970
+This is more specific to Pharo.
+
+4
+00:00:13,450 --> 00:00:16,170
+I will explain in this lecture what
+are shared pools.
+
+5
+00:00:17,290 --> 00:00:20,510
+Shared pools, in essence,
+are how we can do a static sharing
+
+6
+00:00:20,710 --> 00:00:22,730
+of state between different hierarchies.
+
+7
+00:00:25,630 --> 00:00:30,520
+The goal of the lecture is to revisit
+sharing so that you understand shared
+
+8
+00:00:30,720 --> 00:00:34,490
+pools because this is something
+that a few people know in fact.
+
+9
+00:00:37,650 --> 00:00:43,570
+We saw in the previous lecture that
+we can share a state within a hierarchy
+
+10
+00:00:43,770 --> 00:00:44,690
+using shared variables.
+
+11
+00:00:45,090 --> 00:00:49,170
+The question now is, how can we
+share the value between different
+
+12
+00:00:49,370 --> 00:00:50,130
+hierarchies?
+
+13
+00:00:51,370 --> 00:00:58,210
+Basically, if I do it graphically,
+a shared variable can be accessed
+
+14
+00:00:58,410 --> 00:00:59,530
+in all this space.
+
+15
+00:01:00,190 --> 00:01:04,010
+Now the problem is that sometimes
+I have another hierarchy here and
+
+16
+00:01:04,210 --> 00:01:06,170
+I want to access this value.
+
+17
+00:01:06,530 --> 00:01:09,210
+How do we do it, because we don't
+want to repeat it here?
+
+18
+00:01:11,830 --> 00:01:16,270
+If you remember, a shared variable
+can be accessed from instance methods
+
+19
+00:01:16,470 --> 00:01:19,270
+or class methods and all the subclasses
+within a hierarchy.
+
+20
+00:01:19,530 --> 00:01:29,820
+This means that I have a class here
+with a shared variable and all the
+
+21
+00:01:30,020 --> 00:01:38,370
+subclasses here and there can access
+
+22
+00:01:38,570 --> 00:01:39,950
+this shared variable.
+
+23
+00:01:43,810 --> 00:01:48,490
+If you remember, in the previous
+lecture, I showed that in the `Color`
+
+24
+00:01:48,690 --> 00:01:49,450
+class.
+
+25
+00:01:49,650 --> 00:01:54,110
+The `Color` class initialized the
+shared variable and the instance
+
+26
+00:01:54,310 --> 00:01:59,390
+variable methods, like `privateBlue`,
+can access this in the `Color` methods
+
+27
+00:01:59,590 --> 00:02:03,250
+and the `Color` class can access
+that by initializing the value.
+
+28
+00:02:03,450 --> 00:02:04,550
+It also could read the value.
+
+29
+00:02:05,270 --> 00:02:07,110
+This was what was in the previous
+lecture.
+
+30
+00:02:08,910 --> 00:02:13,950
+Now the key point of this lecture
+is that we can share within a hierarchy,
+
+31
+00:02:14,150 --> 00:02:17,150
+but how can we share between different
+hierarchies?
+
+32
+00:02:17,470 --> 00:02:22,110
+For example, line feed and all
+the constants, like carriage return,
+
+33
+00:02:22,310 --> 00:02:27,510
+that are related to `Text`,
+we want to have them in the `String`
+
+34
+00:02:27,710 --> 00:02:30,130
+hierarchy, but we want to have them
+in the `Text` hierarchy.
+
+35
+00:02:30,330 --> 00:02:32,930
+But a text is not a string and a
+string is not a text.
+
+36
+00:02:33,650 --> 00:02:39,590
+So, how do we avoid repeating the
+same code and the same constant
+
+37
+00:02:39,790 --> 00:02:42,250
+in these two or three hierarchies?
+
+38
+00:02:42,970 --> 00:02:43,730
+That's the point.
+
+39
+00:02:43,930 --> 00:02:47,570
+For that, Pharo uses shared pools.
+
+40
+00:02:48,490 --> 00:02:49,370
+What is a shared pool?
+
+41
+00:02:49,570 --> 00:02:55,810
+This is a group of shared variables
+and the shared pool will define
+
+42
+00:02:56,010 --> 00:03:00,230
+the variables and will initialize
+the value of its shared variables.
+
+43
+00:03:00,430 --> 00:03:05,350
+Then, users - the classes - will
+just declare that they use a shared
+
+44
+00:03:05,550 --> 00:03:08,450
+pool to access its shared variables.
+
+45
+00:03:09,550 --> 00:03:10,690
+Let's look at it.
+
+46
+00:03:12,290 --> 00:03:14,310
+You see, for example,
+for the `ChronologyConstants`,
+
+47
+00:03:14,850 --> 00:03:22,330
+like how many Nano Seconds you have
+in a Second, the MonthNames or
+
+48
+00:03:22,530 --> 00:03:25,110
+how many seconds are in one hour,
+the days in a month, and all these
+
+49
+00:03:25,310 --> 00:03:30,750
+kinds of things, those are defined
+
+50
+00:03:30,950 --> 00:03:37,070
+in a `ChronologyConstants` shared pool,
+which inherits from the class
+
+51
+00:03:37,270 --> 00:03:41,670
+`SharedPool`, and it defines a set
+of shared variables.
+
+52
+00:03:42,730 --> 00:03:47,350
+You see, for example,
+the shared pool, the
+
+53
+00:03:47,550 --> 00:03:50,510
+`ChronologyConstants` class,
+because a shared pool is a kind
+
+54
+00:03:50,710 --> 00:03:54,990
+of a class, has an `initialize` method,
+and it will just say how many seconds
+
+55
+00:03:55,190 --> 00:04:02,170
+there are in a day, how many seconds
+in a minute, how many minutes per hour,
+
+56
+00:04:02,370 --> 00:04:03,310
+how many hours per day,
+etc.
+
+57
+00:04:03,510 --> 00:04:12,470
+It will initialize all these shared
+variables that are grouped in a
+
+58
+00:04:12,670 --> 00:04:13,430
+shared pool.
+
+59
+00:04:16,890 --> 00:04:17,650
+Then, the users.
+
+60
+00:04:20,270 --> 00:04:24,910
+If `DateAndTime` wants to access
+all this logic, it will just say,
+
+61
+00:04:25,110 --> 00:04:29,670
+"I want to use the shared pool
+`ChronologyConstants`".
+
+62
+00:04:32,880 --> 00:04:36,860
+Notice that you can also define
+some of its own instance variables,
+
+63
+00:04:37,060 --> 00:04:40,240
+there's no problem, `DateAndTime`
+will have seconds, and all these
+
+64
+00:04:40,440 --> 00:04:42,320
+kinds of information: `#offset`,
+`#julianDayNumber`, etc.
+
+65
+00:04:43,120 --> 00:04:51,760
+It can also define its own shared
+variables and reuse this group of
+
+66
+00:04:51,960 --> 00:04:52,920
+shared variables.
+
+67
+00:04:54,320 --> 00:04:56,820
+They have been initialized so it
+can use them.
+
+68
+00:04:57,020 --> 00:05:03,600
+Here, what you see is that as soon
+as the class `DateAndTime` declares
+
+69
+00:05:03,800 --> 00:05:09,340
+that it is using the shared pool,
+it will be able to access the class
+
+70
+00:05:09,540 --> 00:05:12,980
+variable of the shared pool as if
+defined in the class.
+
+71
+00:05:13,180 --> 00:05:21,780
+So, `SecondsInDay`, which was in
+the `ChronologyConstants` shared pool,
+
+72
+00:05:23,620 --> 00:05:27,660
+is a class variable defined in the
+`ChronologyConstants` shared pool,
+
+73
+00:05:27,860 --> 00:05:31,080
+but we can access this directly
+because the class `DateAndTime`
+
+74
+00:05:31,660 --> 00:05:35,360
+declared it wanted to use this shared
+pool.
+
+75
+00:05:35,560 --> 00:05:38,300
+You can do the same at the class level.
+
+76
+00:05:39,600 --> 00:05:43,120
+For example, the `Duration` class
+will use `SecondsInDay` because
+
+77
+00:05:43,320 --> 00:05:47,200
+it also wants to use
+`ChronologyConstants`.
+
+78
+00:05:51,670 --> 00:05:56,670
+You see here, for example,
+`Week`, which is a subclass of
+
+79
+00:05:56,870 --> 00:06:01,910
+`Timespan`, will have its own shared
+
+80
+00:06:02,110 --> 00:06:09,510
+variables and use the same shared pool,
+and it will be able to use `DayNames`,
+
+81
+00:06:09,850 --> 00:06:14,190
+which is a shared variable of the
+`ChronologyConstants` shared pool.
+
+82
+00:06:15,810 --> 00:06:18,650
+There is no problem, we can mix
+everything, this is what I already
+
+83
+00:06:18,850 --> 00:06:23,250
+said before, we can mix shared
+variables, instance variables,
+
+84
+00:06:23,450 --> 00:06:24,770
+and shared pools together.
+
+85
+00:06:25,670 --> 00:06:30,610
+In fact, the compiler will just
+go and pick up the right information
+
+86
+00:06:30,810 --> 00:06:31,750
+in the right place.
+
+87
+00:06:34,500 --> 00:06:38,880
+I have one warning and I'm not sure
+that I stressed it enough in the
+
+88
+00:06:39,080 --> 00:06:43,360
+shared variable lecture:
+only put constant objects in shared
+
+89
+00:06:43,560 --> 00:06:44,320
+pools.
+
+90
+00:06:44,520 --> 00:06:48,720
+You can put objects that are changing,
+but you should always consider that
+
+91
+00:06:48,920 --> 00:06:52,780
+if you change the value in a shared
+pool or in a shared variable,
+
+92
+00:06:52,980 --> 00:06:58,720
+it will impact all the objects that
+are using them.
+
+93
+00:06:59,420 --> 00:07:02,420
+They are shared, so a change impacts
+everybody.
+
+94
+00:07:03,540 --> 00:07:07,520
+In general, we expect a shared variable
+to be constant.
+
+95
+00:07:08,440 --> 00:07:12,680
+The conclusion is that shared pools
+are really handy for sharing constants
+
+96
+00:07:12,880 --> 00:07:15,940
+between different hierarchies.
+
+97
+00:07:16,140 --> 00:07:19,960
+They are really nice for managing
+constants for bindings.
+
+98
+00:07:20,160 --> 00:07:23,440
+For example, if you want to bind
+a C-libraries, you will often have
+
+99
+00:07:23,640 --> 00:07:26,940
+to have a lot of constants and you
+can group them.
+
+100
+00:07:27,140 --> 00:07:32,520
+Like that, from the user of such
+a constant, this is easy,
+
+101
+00:07:32,720 --> 00:07:37,320
+it just uses a shared pool and not
+thousands of class variables.
+
+102
+00:07:38,620 --> 00:07:43,260
+Pay attention that this is always
+better to use constants in shared
+
+103
+00:07:43,460 --> 00:07:44,440
+variables and shared pools.
+

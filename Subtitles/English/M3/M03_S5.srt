@@ -1,0 +1,1275 @@
+1
+00:00:03,760 --> 00:00:04,800
+Hello everybody.
+
+2
+00:00:05,220 --> 00:00:09,240
+So in this lecture, I want to show
+you how we can go from the usage
+
+3
+00:00:09,440 --> 00:00:11,080
+of a global variable to a parameter.
+
+4
+00:00:11,700 --> 00:00:17,160
+This is basic, but this is really
+an important point because it will
+
+5
+00:00:17,360 --> 00:00:19,900
+improve the testability of your
+application.
+
+6
+00:00:21,520 --> 00:00:24,610
+So the goal of this lecture,
+this is to show that globals,
+
+7
+00:00:24,810 --> 00:00:28,240
+in fact global variables are not
+a fatality.
+
+8
+00:00:28,440 --> 00:00:32,740
+Some of them can be turned into
+computational parameters such as
+
+9
+00:00:32,940 --> 00:00:33,700
+instance variable.
+
+10
+00:00:33,900 --> 00:00:38,380
+And then, during the process,
+we should understand that as usual
+
+11
+00:00:38,580 --> 00:00:39,380
+they are pro and cons.
+
+12
+00:00:39,580 --> 00:00:41,360
+Sometimes you can do it,
+sometimes you cannot.
+
+13
+00:00:42,180 --> 00:00:46,420
+At least this is interesting to
+know the idea so that you can apply
+
+14
+00:00:46,620 --> 00:00:47,380
+it or not.
+
+15
+00:00:48,020 --> 00:00:52,600
+So what I will do is that I will
+take a simple example with a
+
+16
+00:00:52,800 --> 00:00:53,920
+Transcript usage in Pharo.
+
+17
+00:00:54,120 --> 00:00:57,300
+People use that a lot and that
+introduces some problems.
+
+18
+00:00:57,500 --> 00:01:01,960
+I will show you how we can cure
+that and then step back and rethink
+
+19
+00:01:02,160 --> 00:01:05,080
+a bit the approach.
+
+20
+00:01:05,500 --> 00:01:09,740
+This is related to the bad usage
+of the Singleton Design Pattern,
+
+21
+00:01:09,940 --> 00:01:11,720
+which I call a plague in fact.
+
+22
+00:01:12,300 --> 00:01:13,620
+So let's look at it.
+
+23
+00:01:14,580 --> 00:01:18,820
+So the `Transcript` in Pharo,
+this is a kind of STD output where
+
+24
+00:01:19,020 --> 00:01:22,700
+this is a global variable that is
+pointing to a log stream instance
+
+25
+00:01:22,900 --> 00:01:24,840
+and everybody can write on this stream.
+
+26
+00:01:25,040 --> 00:01:28,860
+So here for example, you see that
+the compiler wrote that the class
+
+27
+00:01:29,060 --> 00:01:34,420
+counter has a count instance variable
+that is undeclared.
+
+28
+00:01:34,640 --> 00:01:36,760
+So we don't care of what is written.
+
+29
+00:01:37,340 --> 00:01:42,680
+What we care is that this `Transcript`
+is basically a global variable pointing
+
+30
+00:01:42,880 --> 00:01:43,720
+to a log file.
+
+31
+00:01:44,080 --> 00:01:48,460
+Usually, people write such kinds
+of expressions, `Transcript` show foo,
+
+32
+00:01:48,660 --> 00:01:49,860
+cr for carriage return.
+
+33
+00:01:50,100 --> 00:01:51,600
+This means introduce a new line.
+
+34
+00:01:51,800 --> 00:01:54,540
+This is a bit outdated API and they
+do something.
+
+35
+00:01:54,740 --> 00:01:55,600
+So that's okay.
+
+36
+00:01:55,820 --> 00:01:59,740
+When you do it like that in development,
+it can give you some traces.
+
+37
+00:02:00,460 --> 00:02:03,620
+Usually, it can work.
+
+38
+00:02:03,820 --> 00:02:06,160
+Let's say it like that because if
+you have too many of them you will
+
+39
+00:02:06,360 --> 00:02:07,720
+not see anything in your log at the end.
+
+40
+00:02:08,160 --> 00:02:11,360
+So maybe it's better to use a debugger,
+but this is another discussion.
+
+41
+00:02:11,980 --> 00:02:15,100
+So now what is the core of the problem?
+
+42
+00:02:16,720 --> 00:02:21,840
+This is when you have `Transcript`
+show expression like that in released
+
+43
+00:02:22,040 --> 00:02:22,800
+software.
+
+44
+00:02:23,000 --> 00:02:29,400
+Because if you have that in your domain,
+it means that somehow you want to
+
+45
+00:02:29,600 --> 00:02:30,380
+have a specific log.
+
+46
+00:02:30,620 --> 00:02:35,220
+That this log is potentially part
+of your domain or that you want
+
+47
+00:02:35,420 --> 00:02:36,460
+to do something with it.
+
+48
+00:02:36,660 --> 00:02:39,280
+Else, you would have removed it
+when you deployed your software.
+
+49
+00:02:40,920 --> 00:02:44,540
+So now, there is also another related
+issue.
+
+50
+00:02:44,740 --> 00:02:48,920
+This is, how do you make sure that
+those logs are correct?
+
+51
+00:02:50,400 --> 00:02:56,340
+So what if we want to write tests
+that the logging that you have in
+
+52
+00:02:56,540 --> 00:03:00,220
+your software is logging correctly
+what it should log?
+
+53
+00:03:00,560 --> 00:03:03,040
+Because of course, you can write
+your code like that and pray and
+
+54
+00:03:03,240 --> 00:03:04,100
+expect that it will work.
+
+55
+00:03:04,300 --> 00:03:07,260
+Or if you are a good software engineer,
+what you want to do, you want to
+
+56
+00:03:07,460 --> 00:03:11,060
+make sure that yes, these traits
+are super important for my domain
+
+57
+00:03:11,260 --> 00:03:14,080
+and I want to have the guarantee
+that they are there and that they
+
+58
+00:03:14,280 --> 00:03:15,880
+contain the right information.
+
+59
+00:03:16,080 --> 00:03:19,840
+Because if you rely on this information,
+then you should test it.
+
+60
+00:03:20,780 --> 00:03:25,040
+This is a problem because first,
+maybe you don't want the extra
+
+61
+00:03:25,240 --> 00:03:29,780
+dependency to `Transcript` because
+`Transcript` is a tool from the
+
+62
+00:03:29,980 --> 00:03:30,740
+Pharo IDE.
+
+63
+00:03:30,940 --> 00:03:33,460
+So why do you want to depend on
+a tool from the Pharo IDE?
+
+64
+00:03:33,660 --> 00:03:34,740
+But why not?
+
+65
+00:03:35,060 --> 00:03:39,940
+More important, your log is mixed
+with all the logs of the system.
+
+66
+00:03:40,220 --> 00:03:43,140
+Because everybody that use the
+`Transcript` will just write logs there.
+
+67
+00:03:43,340 --> 00:03:48,560
+So you don't want to have your log
+that are dirtied by other people
+
+68
+00:03:48,760 --> 00:03:51,660
+and you want to control this stuff,
+especially if the logs are important
+
+69
+00:03:51,860 --> 00:03:54,900
+for your case, because you want
+to analyze them or things like that.
+
+70
+00:03:55,120 --> 00:03:59,980
+You don't want to have to jump over
+the log of other tools that maybe
+
+71
+00:04:00,180 --> 00:04:02,960
+only happen when you build on the
+server or not.
+
+72
+00:04:03,160 --> 00:04:07,460
+And what is really more important
+is that you cannot easily write
+
+73
+00:04:07,660 --> 00:04:11,260
+tests to be sure that your log is up,
+is happening correctly.
+
+74
+00:04:11,980 --> 00:04:16,660
+And for me, this is really the key
+aspect of using a global variable.
+
+75
+00:04:17,220 --> 00:04:20,880
+So the solution, basically,
+this is to apply modern object-oriented
+
+76
+00:04:21,180 --> 00:04:21,940
+techniques.
+
+77
+00:04:22,140 --> 00:04:25,220
+Let's call them locality and
+encapsulation.
+
+78
+00:04:26,000 --> 00:04:29,940
+So the idea, this is instead of
+pointing to a global variable,
+
+79
+00:04:30,140 --> 00:04:35,200
+I will just introduce in my domain
+an instance variable that I will
+
+80
+00:04:35,400 --> 00:04:36,660
+initialize and that I will control.
+
+81
+00:04:36,860 --> 00:04:38,280
+So this is what I am doing here.
+
+82
+00:04:38,480 --> 00:04:44,440
+So previously, if you see in this class,
+make abstract block, there was this
+
+83
+00:04:44,640 --> 00:04:45,900
+log in the iterate.
+
+84
+00:04:46,660 --> 00:04:49,040
+And now, what we will do,
+we just said, oh, you know,
+
+85
+00:04:49,800 --> 00:04:53,920
+I want in the initialize,
+I will create, I will add a new
+
+86
+00:04:54,120 --> 00:04:54,880
+instance variable.
+
+87
+00:04:55,280 --> 00:04:58,080
+I initialize to a string that I control.
+
+88
+00:04:58,960 --> 00:05:03,540
+And so, in another place in the code,
+for example, they were using closeMe.
+
+89
+00:05:04,640 --> 00:05:10,460
+Here, I use the logStream to put
+information in that log string.
+
+90
+00:05:10,980 --> 00:05:16,280
+The side effect is that you can
+get the butter and the money for
+
+91
+00:05:16,480 --> 00:05:17,240
+the butter.
+
+92
+00:05:17,680 --> 00:05:24,980
+So this means that if I introduce
+a setter that will be able to let
+
+93
+00:05:25,180 --> 00:05:29,200
+people modify the stream in which
+I will write, then you could pass
+
+94
+00:05:29,400 --> 00:05:31,010
+a `Transcript` there.
+
+95
+00:05:31,210 --> 00:05:34,180
+So this means that you can say,
+oh, you know, you have this
+
+96
+00:05:34,380 --> 00:05:39,820
+MicAbstractBlock, now I want that
+it uses the `Transcript` when I'm
+
+97
+00:05:40,020 --> 00:05:40,840
+in development mode.
+
+98
+00:05:41,800 --> 00:05:45,400
+But when I am testing,
+I want not to use the `Transcript`,
+
+99
+00:05:45,600 --> 00:05:49,240
+but to use the default stream that
+I have initialized.
+
+100
+00:05:49,800 --> 00:05:52,440
+The bonus, and for me,
+this is the key aspect of that,
+
+101
+00:05:52,640 --> 00:05:54,560
+is that you can write your test
+in isolation.
+
+102
+00:05:54,860 --> 00:05:58,440
+You can say, oh, for my test,
+can you please use this stream?
+
+103
+00:05:58,640 --> 00:06:02,020
+And you will not have the information
+of all the other people that are
+
+104
+00:06:02,220 --> 00:06:02,980
+writing in the log.
+
+105
+00:06:04,180 --> 00:06:08,240
+So if we look at it visually,
+imagine that you have your object.
+
+106
+00:06:08,720 --> 00:06:13,260
+So this object refer to the `Transcript`
+and write something in the `Transcript`.
+
+107
+00:06:13,780 --> 00:06:15,860
+This one write something in the
+`Transcript`.
+
+108
+00:06:16,260 --> 00:06:19,340
+There will be another one that will
+write something in the `Transcript`.
+
+109
+00:06:19,740 --> 00:06:22,340
+And I have no idea of the order
+that will be the total mess.
+
+110
+00:06:23,980 --> 00:06:28,120
+Now what we can do is that basically
+what we did is that we turn this
+
+111
+00:06:28,320 --> 00:06:32,660
+object using a global variable into
+an object that have a state and said,
+
+112
+00:06:32,880 --> 00:06:34,780
+oh, you know, I want to use this state.
+
+113
+00:06:35,500 --> 00:06:37,460
+Oh, I want this one to use this state.
+
+114
+00:06:37,660 --> 00:06:38,600
+It is this own state.
+
+115
+00:06:38,800 --> 00:06:40,220
+So here, it will be a different one.
+
+116
+00:06:40,420 --> 00:06:43,260
+And this one, that will be another one,
+you know, like, oh, yes,
+
+117
+00:06:43,460 --> 00:06:44,820
+they are nice little state.
+
+118
+00:06:45,580 --> 00:06:48,100
+Each of my object will have its
+own private state.
+
+119
+00:06:48,440 --> 00:06:52,280
+And if I want, I can say,
+oh, you know, guys, you two you
+
+120
+00:06:52,480 --> 00:06:57,980
+share the same state because for
+I want that you share that you mix
+
+121
+00:06:58,180 --> 00:07:00,020
+your log in the system,
+I don't care.
+
+122
+00:07:01,160 --> 00:07:03,520
+So we went from a system that is
+monolithic.
+
+123
+00:07:03,800 --> 00:07:10,300
+There is only one `Transcript` from
+everybody to a stream pair instances.
+
+124
+00:07:10,720 --> 00:07:12,080
+And that's super nice.
+
+125
+00:07:12,280 --> 00:07:16,420
+So we went from a monolithic system
+to a parameterizable system.
+
+126
+00:07:16,620 --> 00:07:18,840
+So now I can decide what I want to do.
+
+127
+00:07:19,340 --> 00:07:21,440
+So in this solution, I can decide.
+
+128
+00:07:21,640 --> 00:07:22,880
+In this one, I cannot.
+
+129
+00:07:23,300 --> 00:07:24,140
+I have only one.
+
+130
+00:07:24,400 --> 00:07:25,460
+So okay, there is only one.
+
+131
+00:07:25,660 --> 00:07:26,420
+You want more?
+
+132
+00:07:26,620 --> 00:07:27,380
+There is only one.
+
+133
+00:07:27,580 --> 00:07:28,480
+So do you see the pattern?
+
+134
+00:07:28,680 --> 00:07:29,960
+So let's look at this piece of code.
+
+135
+00:07:30,160 --> 00:07:32,780
+So this is a scroll bar,
+defaultScrollBarTarget.
+
+136
+00:07:33,880 --> 00:07:35,420
+Whatever it is, we don't really care.
+
+137
+00:07:35,620 --> 00:07:38,440
+We create an instance of a text area.
+
+138
+00:07:38,720 --> 00:07:41,380
+And then, we set the background
+color of this text area.
+
+139
+00:07:41,580 --> 00:07:42,780
+And here we said, oh,
+color.
+
+140
+00:07:43,000 --> 00:07:46,360
+I want a light gray and I want a
+very much lighter gray.
+
+141
+00:07:46,640 --> 00:07:53,180
+And then, we can ask yourself,
+oh, and what if I am in a dark or
+
+142
+00:07:53,380 --> 00:07:55,200
+in a light theme and I want another
+color?
+
+143
+00:07:55,480 --> 00:08:01,340
+I cannot do anything because here,
+this is that would be that one,
+
+144
+00:08:01,540 --> 00:08:04,700
+which means this color here,
+that is here.
+
+145
+00:08:04,920 --> 00:08:06,060
+And I don't want that.
+
+146
+00:08:06,560 --> 00:08:08,240
+So what is the solution for that?
+
+147
+00:08:09,400 --> 00:08:11,780
+Because I out coded here,
+basically the color.
+
+148
+00:08:11,980 --> 00:08:16,000
+So this means that there will be
+only one, this light gray color.
+
+149
+00:08:16,860 --> 00:08:20,260
+And in fact, now, if we just do
+the following, we said,
+
+150
+00:08:20,460 --> 00:08:23,980
+okay, in my initialized methods,
+which is a constructor,
+
+151
+00:08:24,700 --> 00:08:29,200
+this is the equivalent of a constructor
+in Java, I will introduce an instance
+
+152
+00:08:29,400 --> 00:08:39,300
+variable, default background color,
+where I assign my color and I pass here.
+
+153
+00:08:39,500 --> 00:08:41,960
+I don't use this color,
+but I use this variable.
+
+154
+00:08:42,420 --> 00:08:49,540
+It means that if I have a setter
+like here with this setter,
+
+155
+00:08:49,740 --> 00:08:50,700
+I will do it.
+
+156
+00:08:50,900 --> 00:08:54,520
+I will go from a design where I
+add my rub.
+
+157
+00:08:55,960 --> 00:09:03,520
+I have an instance of RubScrollText,
+which has one color.
+
+158
+00:09:03,720 --> 00:09:11,080
+And I have a RubScrollText that
+point to the same color to a design
+
+159
+00:09:11,280 --> 00:09:14,160
+that is like, oh, yes,
+this is my little color.
+
+160
+00:09:14,400 --> 00:09:15,180
+I use this one.
+
+161
+00:09:15,380 --> 00:09:18,960
+This is my little, I have a color
+that is the background,
+
+162
+00:09:19,160 --> 00:09:20,460
+the default background color.
+
+163
+00:09:21,140 --> 00:09:23,000
+And each of them can have their own.
+
+164
+00:09:24,440 --> 00:09:29,120
+Once I am in this situation,
+I can decide or not to share the same.
+
+165
+00:09:29,400 --> 00:09:30,300
+It's just a pointer.
+
+166
+00:09:30,500 --> 00:09:34,300
+So I can say, please share this one,
+but not you.
+
+167
+00:09:34,640 --> 00:09:36,660
+And here you are green,
+for example.
+
+168
+00:09:39,200 --> 00:09:43,540
+So you see, I show you the pattern
+with the `Transcript` and then I
+
+169
+00:09:43,740 --> 00:09:47,440
+show you the pattern with a color,
+which has nothing to do with that.
+
+170
+00:09:47,840 --> 00:09:49,900
+But this is exactly the same problem.
+
+171
+00:09:50,280 --> 00:09:55,120
+This is you will go from a monolithic
+system to a parameterized system.
+
+172
+00:09:55,700 --> 00:10:00,600
+So when you think about it,
+instance variable are state of object.
+
+173
+00:10:00,800 --> 00:10:03,400
+This is what we said okay in
+object-oriented design,
+
+174
+00:10:04,360 --> 00:10:06,400
+the instance variable represent
+the state of object.
+
+175
+00:10:06,800 --> 00:10:11,120
+But what you can see is that instance
+variable, they are also kind of
+
+176
+00:10:11,320 --> 00:10:13,120
+the parameters of your computation.
+
+177
+00:10:13,320 --> 00:10:15,620
+So you perform a computation.
+
+178
+00:10:16,460 --> 00:10:20,920
+And then, this computation is taking
+the parameters into account.
+
+179
+00:10:21,140 --> 00:10:25,080
+And then, you from the outside or not,
+you can change the parameters that
+
+180
+00:10:25,280 --> 00:10:27,780
+you want to do and you can control
+your computation.
+
+181
+00:10:28,220 --> 00:10:33,720
+So instead of having only one parameter,
+you can add the parameters that you want.
+
+182
+00:10:33,920 --> 00:10:35,060
+And that's make a big difference.
+
+183
+00:10:35,560 --> 00:10:40,180
+So what is interesting is that this
+can be shared between classes or not.
+
+184
+00:10:40,380 --> 00:10:44,780
+You can see there is this shared
+variable in Pharo, which are
+
+185
+00:10:44,980 --> 00:10:48,120
+approximately the same as static
+variable in Java.
+
+186
+00:10:48,600 --> 00:10:49,600
+And there is a lecture.
+
+187
+00:10:49,800 --> 00:10:51,860
+So we will see that we have several
+lectures.
+
+188
+00:10:52,060 --> 00:10:53,900
+We have a module that is called
+Sharing Object.
+
+189
+00:10:54,420 --> 00:10:58,740
+And we will talk about sharing,
+how we can share or not those values.
+
+190
+00:10:59,280 --> 00:11:04,280
+But you can start to think about
+sharing when you have more than one.
+
+191
+00:11:04,940 --> 00:11:07,660
+Because if you have one,
+it means that everybody shares.
+
+192
+00:11:07,900 --> 00:11:09,860
+So there is only one solution,
+everybody shares.
+
+193
+00:11:10,380 --> 00:11:14,980
+And we want to have a discourse
+that is a bit more fine-grained.
+
+194
+00:11:15,320 --> 00:11:18,460
+Maybe some of them want to share,
+some of them do not want.
+
+195
+00:11:18,720 --> 00:11:24,720
+So what you see is that about globals
+variables, the pro is that this is easy.
+
+196
+00:11:24,920 --> 00:11:26,740
+You don't have to have an instance
+variable in your domain.
+
+197
+00:11:26,940 --> 00:11:27,700
+Sometimes you cannot.
+
+198
+00:11:27,900 --> 00:11:32,280
+So you cannot add an instance variable
+to your domain object.
+
+199
+00:11:32,920 --> 00:11:36,480
+You don't have to initialize such
+globals because it exists already there.
+
+200
+00:11:36,680 --> 00:11:40,020
+Or there is one system that will
+create it and then all the other ones,
+
+201
+00:11:40,220 --> 00:11:40,980
+they will use it.
+
+202
+00:11:41,540 --> 00:11:43,820
+The cons there basically,
+you have only one.
+
+203
+00:11:44,620 --> 00:11:45,680
+So you cannot have two.
+
+204
+00:11:46,260 --> 00:11:48,080
+By construction, you cannot have two.
+
+205
+00:11:48,760 --> 00:11:55,800
+So imagine you cannot have,
+for example, two themes side by side.
+
+206
+00:11:56,000 --> 00:11:59,940
+You cannot see the user interface
+in white and black at the same time
+
+207
+00:12:00,140 --> 00:12:00,940
+because there is only one.
+
+208
+00:12:01,220 --> 00:12:03,760
+So it can be black for everybody
+or white for everybody.
+
+209
+00:12:03,960 --> 00:12:04,960
+So you cannot compare.
+
+210
+00:12:06,420 --> 00:12:07,560
+Testing is difficult.
+
+211
+00:12:07,760 --> 00:12:12,460
+When you have a global variable,
+if your tests are doing side effect
+
+212
+00:12:12,660 --> 00:12:17,960
+on the global variable,
+you may destroy it or you may destroy
+
+213
+00:12:18,160 --> 00:12:21,700
+invariant because sometimes in your
+tests, you want to test some extreme
+
+214
+00:12:21,900 --> 00:12:22,660
+cases.
+
+215
+00:12:22,860 --> 00:12:25,900
+So this means that when you want
+to write test and you have globals
+
+216
+00:12:26,100 --> 00:12:27,860
+variable, you should really be careful.
+
+217
+00:12:28,060 --> 00:12:31,280
+You should be able to copy the state
+of the global variable,
+
+218
+00:12:32,380 --> 00:12:36,260
+do your computation, modification,
+and restore the state after.
+
+219
+00:12:36,460 --> 00:12:37,600
+And sometimes you cannot.
+
+220
+00:12:38,480 --> 00:12:42,100
+So we should always go with care
+when you have a global variable.
+
+221
+00:12:42,460 --> 00:12:45,660
+And the cons is that when you have
+a global, you cannot initialize
+
+222
+00:12:45,860 --> 00:12:49,960
+it or specialize it for your context.
+
+223
+00:12:50,380 --> 00:12:51,140
+It is there.
+
+224
+00:12:52,660 --> 00:12:53,620
+The parameterization.
+
+225
+00:12:53,820 --> 00:12:55,780
+So what I show is that this is
+interesting to have it,
+
+226
+00:12:55,980 --> 00:12:57,240
+but sometimes you just cannot.
+
+227
+00:12:57,620 --> 00:12:59,920
+You cannot add an instance variable
+to your object.
+
+228
+00:13:00,280 --> 00:13:01,040
+Why?
+
+229
+00:13:01,240 --> 00:13:03,800
+Because maybe you have millions
+of objects and if you add an instance
+
+230
+00:13:04,000 --> 00:13:07,480
+variable to each of your millions
+of objects, then you will have two
+
+231
+00:13:07,680 --> 00:13:08,460
+millions of objects.
+
+232
+00:13:10,040 --> 00:13:14,660
+So it's always this tension between
+can we do it or not?
+
+233
+00:13:15,940 --> 00:13:19,620
+Maybe you have a fixed size for
+your object and this is inherited
+
+234
+00:13:19,820 --> 00:13:22,680
+and you have a constraint that is
+inherited in the database and you
+
+235
+00:13:22,880 --> 00:13:23,760
+cannot change the database.
+
+236
+00:13:24,080 --> 00:13:25,920
+So you cannot change your object.
+
+237
+00:13:26,140 --> 00:13:29,140
+So from that perspective,
+there will be lecture on sharing
+
+238
+00:13:29,340 --> 00:13:34,180
+and you have the Flyweight Design
+Pattern that is about how can we
+
+239
+00:13:34,380 --> 00:13:39,080
+control a bit the memory explosion
+or reuse or things like that.
+
+240
+00:13:39,900 --> 00:13:42,660
+So what I suggest, this is the last
+point.
+
+241
+00:13:42,860 --> 00:13:49,480
+Here this is at least factor in a method,
+a single entry point to your global
+
+242
+00:13:49,680 --> 00:13:53,980
+usage because maybe in the future,
+it will be easier for you to experiment
+
+243
+00:13:54,180 --> 00:13:55,140
+or to change.
+
+244
+00:13:55,380 --> 00:14:00,380
+So what I mean here is that instead
+of saying my method M1 global,
+
+245
+00:14:01,140 --> 00:14:07,820
+my method M2 global access,
+my method M3 global access,
+
+246
+00:14:08,020 --> 00:14:09,040
+I think that you see the pattern.
+
+247
+00:14:09,380 --> 00:14:10,760
+You don't do that.
+
+248
+00:14:11,420 --> 00:14:18,240
+What you do is that you do M1 self
+
+249
+00:14:18,440 --> 00:14:27,160
+use Global, M2 self use Global,
+
+250
+00:14:27,980 --> 00:14:30,460
+M3, of course, this is more complex
+than that.
+
+251
+00:14:30,840 --> 00:14:32,780
+Usually, you have code around.
+
+252
+00:14:33,660 --> 00:14:36,460
+So you have code around all these
+methods and things like that.
+
+253
+00:14:37,020 --> 00:14:41,540
+And then you define a little method
+that is called use global and your
+
+254
+00:14:41,740 --> 00:14:44,020
+method use global, you will write
+global.
+
+255
+00:14:45,020 --> 00:14:45,780
+So like that.
+
+256
+00:14:46,520 --> 00:14:51,660
+So if we scratch that,
+it means that if I want to change
+
+257
+00:14:51,860 --> 00:14:54,020
+this design, I just have to change
+this method.
+
+258
+00:14:54,220 --> 00:14:57,800
+If I change use global,
+I can modify all the places that
+
+259
+00:14:58,000 --> 00:15:01,120
+were using directly my global variable
+and I can experiment.
+
+260
+00:15:01,640 --> 00:15:05,300
+So like that, this is what I said
+by factor the global usage to these
+
+261
+00:15:05,500 --> 00:15:06,260
+future changes.
+
+262
+00:15:07,660 --> 00:15:13,200
+So in general, my suggestion,
+this is avoid as much as possible
+
+263
+00:15:13,400 --> 00:15:14,540
+the use of global variables.
+
+264
+00:15:14,940 --> 00:15:18,440
+They go against object-oriented design.
+
+265
+00:15:18,960 --> 00:15:24,980
+From that perspective,
+I would say as a general reflex,
+
+266
+00:15:25,320 --> 00:15:27,960
+try to avoid to use Singleton Design
+Pattern.
+
+267
+00:15:28,160 --> 00:15:31,020
+So first, you will have to read
+the lecture, check the lecture that
+
+268
+00:15:31,220 --> 00:15:31,980
+we wrote.
+
+269
+00:15:32,340 --> 00:15:35,140
+But there is a high chance that
+you don't need a Singleton.
+
+270
+00:15:36,080 --> 00:15:39,480
+And once you will have watched the
+Singleton lecture, you will know
+
+271
+00:15:39,680 --> 00:15:40,440
+what I mean.
+
+272
+00:15:41,100 --> 00:15:45,560
+In general, Singleton,
+which are globals and global variables,
+
+273
+00:15:46,420 --> 00:15:48,980
+make your code less modular and
+less testable.
+
+274
+00:15:49,980 --> 00:15:51,560
+And this is always a problem.
+

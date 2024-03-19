@@ -1,0 +1,272 @@
+1
+00:00:04,210 --> 00:00:08,050
+Hello, in this lecture,
+we will discuss a specific point,
+
+2
+00:00:08,330 --> 00:00:12,690
+the ‘DieHandle‘ new vs ‘self‘ class new,
+and the fact that you should never
+
+3
+00:00:12,890 --> 00:00:14,730
+hardcode class name in your code.
+
+4
+00:00:16,390 --> 00:00:20,230
+Before starting, let's have a look,
+let's remember that ‘self‘ always
+
+5
+00:00:20,430 --> 00:00:24,730
+represents the receiver of the message,
+and classes are regular objects
+
+6
+00:00:24,930 --> 00:00:27,630
+in Pharo and you can send them messages
+too.
+
+7
+00:00:29,710 --> 00:00:38,380
+So in this example, we are using
+a plus message that we send to a
+
+8
+00:00:38,580 --> 00:00:45,300
+‘DieHandle‘ object, and this message
+is important because it allows us
+
+9
+00:00:45,500 --> 00:00:50,600
+to sum objects, dice in fact.
+
+10
+00:00:51,420 --> 00:00:56,380
+And you have the implementation
+of this method here, and now let's
+
+11
+00:00:56,580 --> 00:00:59,880
+analyze what happens if we do a
+subclass of ‘DieHandle‘.
+
+12
+00:01:00,280 --> 00:01:04,000
+If I do a ‘MemoDieHandle‘,
+which is a subclass of ‘DieHandle‘,
+
+13
+00:01:04,600 --> 00:01:09,560
+and then I send the plus message
+to an instance of this subclass,
+
+14
+00:01:10,420 --> 00:01:16,720
+in fact what happens is that we
+will get back a ‘DieHandle‘ instance,
+
+15
+00:01:17,320 --> 00:01:18,700
+instead of a ‘MemoDieHandle‘.
+
+16
+00:01:21,840 --> 00:01:27,100
+This is because the plus method
+that is selected by the lookup is
+
+17
+00:01:27,300 --> 00:01:32,660
+the one inherited from ‘DieHandle‘,
+the superclass, and it always returns
+
+18
+00:01:32,860 --> 00:01:36,380
+a ‘DieHandle‘ object,
+because the name of the class is
+
+19
+00:01:36,580 --> 00:01:38,420
+hardcoded in the code of the plus
+method.
+
+20
+00:01:39,680 --> 00:01:46,520
+So what we can do about that is
+that we can extract this code in
+
+21
+00:01:46,720 --> 00:01:49,840
+a hook method like we saw in a previous
+lecture.
+
+22
+00:01:50,500 --> 00:01:55,640
+So here, we extract it in a
+‘handleClass‘ method,
+
+23
+00:01:55,980 --> 00:01:59,980
+and we implement it like that,
+return ‘DieHandle‘.
+
+24
+00:02:01,360 --> 00:02:04,940
+And the good thing about that is
+that it means that in a subclass,
+
+25
+00:02:05,140 --> 00:02:09,600
+‘MemoDieHandle‘, now we can redefine
+this method and we can directly
+
+26
+00:02:09,800 --> 00:02:10,680
+return a ‘MemoDieHandle‘.
+
+27
+00:02:11,980 --> 00:02:18,080
+So now it means that if I send the
+message plus to a ‘MemoDieHandle‘,
+
+28
+00:02:19,480 --> 00:02:22,280
+I will get back a ‘MemoDieHandle‘.
+
+29
+00:02:24,080 --> 00:02:25,120
+So now it's correct.
+
+30
+00:02:27,320 --> 00:02:30,780
+So from the extensibility point of view,
+this is a really nice solution because
+
+31
+00:02:30,980 --> 00:02:36,020
+now I can provide new subclasses,
+I can redefine this hook,
+
+32
+00:02:36,420 --> 00:02:39,440
+and I can specify which kind of
+instance should be returned.
+
+33
+00:02:40,400 --> 00:02:45,940
+But the drawback is that if a
+subclass is defined but does not
+
+34
+00:02:46,140 --> 00:02:50,660
+redefine this hook, if the developer
+forgets about it, it means that
+
+35
+00:02:50,860 --> 00:02:53,240
+it will be the wrong instance that
+will be returned.
+
+36
+00:02:54,060 --> 00:02:55,280
+So we can do better.
+
+37
+00:02:56,160 --> 00:02:58,360
+And a better solution is this one.
+
+38
+00:02:58,700 --> 00:03:02,740
+Instead of hardcoding directly the
+name of the class inside the handle
+
+39
+00:03:02,940 --> 00:03:07,500
+class method, it means that I can
+return the ‘self‘ class,
+
+40
+00:03:08,000 --> 00:03:09,700
+the class of the receiver.
+
+41
+00:03:10,320 --> 00:03:14,540
+And it means that now it will be
+always the class of the receiver
+
+42
+00:03:14,740 --> 00:03:15,500
+that is returned.
+
+43
+00:03:16,020 --> 00:03:16,940
+And it is dynamic.
+
+44
+00:03:17,200 --> 00:03:21,320
+It means that according to the receiver,
+it will be the class of the receiver
+
+45
+00:03:21,520 --> 00:03:22,280
+that will be returned.
+
+46
+00:03:23,580 --> 00:03:27,120
+So it means that it is the same
+kind of the receiver that will be
+
+47
+00:03:27,320 --> 00:03:32,100
+treated automatically with one
+implementation in the ‘DieHandle‘ class.
+
+48
+00:03:32,860 --> 00:03:38,060
+It will behave correctly for all
+subclasses.
+
+49
+00:03:38,320 --> 00:03:44,080
+So as a summary, first of all,
+do not hardcode class names in your
+
+50
+00:03:44,280 --> 00:03:45,040
+code, never.
+
+51
+00:03:45,860 --> 00:03:51,800
+At least, provide a hook, like that
+subclasses can redefine it and
+
+52
+00:03:52,000 --> 00:03:53,920
+specify which kind of instances
+they want.
+
+53
+00:03:55,020 --> 00:03:57,300
+But a better solution,
+if your language supports it,
+
+54
+00:03:57,500 --> 00:04:03,000
+such as Pharo, is to directly provide
+a good default implementation by
+
+55
+00:04:03,200 --> 00:04:07,220
+returning the class of the receiver
+using ‘self‘ class.
+
+56
+00:04:08,020 --> 00:04:12,940
+Like that, you will directly get
+the right instances in subclasses.
+
+57
+00:04:13,140 --> 00:04:15,620
+And this is an extensible solution
+by default.
+

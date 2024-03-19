@@ -1,0 +1,617 @@
+1
+00:00:04,140 --> 00:00:04,900
+- Hello!
+
+2
+00:00:05,100 --> 00:00:08,140
+In this lecture, we will have some
+discussions about
+
+3
+00:00:08,300 --> 00:00:09,860
+the Visitor design pattern.
+
+4
+00:00:10,700 --> 00:00:14,660
+The goal is to revisit the Visitor
+design pattern and to discuss some
+
+5
+00:00:14,860 --> 00:00:17,980
+specific points or variations that
+we could have on it.
+
+6
+00:00:18,440 --> 00:00:24,960
+For example, about the navigation
+control, about cons that are usually
+
+7
+00:00:25,160 --> 00:00:29,220
+against the Visitor pattern,
+or about the method granularity
+
+8
+00:00:29,420 --> 00:00:31,460
+or the double dispatch shortcutting.
+
+9
+00:00:31,660 --> 00:00:34,260
+First of all, controlling the traversal.
+
+10
+00:00:34,780 --> 00:00:41,080
+A visitor embeds the traversal of
+a tree structure, and usually,
+
+11
+00:00:41,280 --> 00:00:45,600
+this traversal could be either on
+the visitor side or on the domain side.
+
+12
+00:00:46,560 --> 00:00:51,200
+Usually, this is on the visitor side,
+but it depends on the context.
+
+13
+00:00:51,400 --> 00:00:52,740
+Let's give an example of it.
+
+14
+00:00:53,000 --> 00:00:57,420
+Here, in this design,
+we chose to put the traversal on
+
+15
+00:00:57,620 --> 00:00:58,640
+the visitor side.
+
+16
+00:00:58,840 --> 00:01:04,980
+It means that here, in the `visitPlus`
+method of the evaluator, the visitor,
+
+17
+00:01:05,960 --> 00:01:11,020
+we recursively visit the left side
+and the right side of
+
+18
+00:01:11,200 --> 00:01:12,620
+the `Plus` structure.
+
+19
+00:01:12,820 --> 00:01:17,900
+In this alternative design,
+the recursion is not done at all
+
+20
+00:01:18,100 --> 00:01:18,860
+in the `visitPlus`.
+
+21
+00:01:19,940 --> 00:01:22,680
+Here, this is done on the domain side.
+
+22
+00:01:22,880 --> 00:01:28,240
+It means that when we accept the
+visitor in a `Plus`, we will directly
+
+23
+00:01:28,440 --> 00:01:33,400
+send the visit message on the left
+side and the visit message on the
+
+24
+00:01:33,600 --> 00:01:34,680
+right side to the visitor.
+
+25
+00:01:36,180 --> 00:01:41,680
+Here, this is the domain side that
+initiates the visiting of the tree
+
+26
+00:01:41,880 --> 00:01:42,640
+structure.
+
+27
+00:01:42,860 --> 00:01:48,900
+Let's talk about another aspect
+of visitors: it externalizes the
+
+28
+00:01:49,100 --> 00:01:50,760
+behavior out of domain objects.
+
+29
+00:01:50,960 --> 00:01:56,120
+It means that some operations are
+modularized inside visitors and
+
+30
+00:01:56,320 --> 00:01:58,360
+not directly in the classes of the
+domain.
+
+31
+00:02:00,380 --> 00:02:06,840
+On the contrary, it provides a clear
+separation between the states of
+
+32
+00:02:07,040 --> 00:02:09,380
+the operation and the state of domain
+objects.
+
+33
+00:02:09,800 --> 00:02:13,660
+Because now, you can embed specific
+states for a specific operation
+
+34
+00:02:13,860 --> 00:02:16,340
+inside its visitor class.
+
+35
+00:02:17,020 --> 00:02:23,140
+And then, you will have the possibility
+to package operations independently.
+
+36
+00:02:24,320 --> 00:02:27,740
+And it provides you with an incremental
+definition of operations because
+
+37
+00:02:27,940 --> 00:02:31,480
+this is just a matter of adding
+a new visitor in a new subclass.
+
+38
+00:02:32,900 --> 00:02:37,860
+It brings a lot by extracting the
+operations from the domain object
+
+39
+00:02:38,060 --> 00:02:39,460
+and putting them in the visitors.
+
+40
+00:02:40,300 --> 00:02:43,080
+Now let's talk about another variation
+point.
+
+41
+00:02:43,280 --> 00:02:47,020
+When we are using a language that
+supports a class extension,
+
+42
+00:02:47,220 --> 00:02:52,960
+like Pharo, it means that we can
+directly introduce new methods inside
+
+43
+00:02:53,160 --> 00:02:56,500
+existing classes, and those new
+methods could belong to another
+
+44
+00:02:56,700 --> 00:03:00,520
+package in the class in which we
+define these new methods.
+
+45
+00:03:01,600 --> 00:03:06,700
+This is really nice because we could
+imagine inserting `accept`methods
+
+46
+00:03:07,620 --> 00:03:12,660
+inside existing classes and packaging
+those `accept` methods in a visitor
+
+47
+00:03:12,860 --> 00:03:13,620
+package.
+
+48
+00:03:14,820 --> 00:03:21,940
+But it wouldn't be that good because
+it would prevent us from defining
+
+49
+00:03:22,140 --> 00:03:27,740
+a specific state for a visitor because
+we can package methods separately
+
+50
+00:03:27,940 --> 00:03:29,920
+but we cannot introduce a new state.
+
+51
+00:03:31,140 --> 00:03:35,620
+And then, a visitor is an encapsulation
+of a complex operation.
+
+52
+00:03:35,840 --> 00:03:38,160
+It means that reifying the visitor
+is always good.
+
+53
+00:03:40,160 --> 00:03:42,580
+Now let's talk about the methods'
+granularity.
+
+54
+00:03:43,600 --> 00:03:45,680
+For that, you could compare those
+two designs.
+
+55
+00:03:46,360 --> 00:03:50,400
+We have a `SimpleNodeVisitor` here
+and we have a `ProgramNodeVisitor`.
+
+56
+00:03:51,280 --> 00:03:53,980
+The only difference is that inside
+this one we have one method,
+
+57
+00:03:54,180 --> 00:03:58,340
+`visitNode`, a generic method,
+and inside this visitor,
+
+58
+00:03:58,540 --> 00:03:59,660
+we have multiple methods.
+
+59
+00:04:00,460 --> 00:04:05,240
+And the idea is that the
+`ProgramNodeVisitor` has a richer API.
+
+60
+00:04:06,060 --> 00:04:09,380
+Each time this method,
+for example, `visitTemporaryVariable`,
+
+61
+00:04:10,360 --> 00:04:16,280
+is executed, it means that we know
+
+62
+00:04:16,480 --> 00:04:18,960
+that the parameter is a temporary
+variable.
+
+63
+00:04:19,340 --> 00:04:26,500
+So, there is a context that is embedded
+inside each method of the visitor.
+
+64
+00:04:28,040 --> 00:04:30,020
+So, a visit method encodes a context.
+
+65
+00:04:30,780 --> 00:04:35,340
+And then, a too-high-level API will
+require a lot of tests.
+
+66
+00:04:35,560 --> 00:04:39,080
+It means that here, in the simple
+version, if I want to write the
+
+67
+00:04:39,280 --> 00:04:43,740
+code inside of this method,
+I will probably need to test what
+
+68
+00:04:43,940 --> 00:04:48,060
+the parameter (n) is - is it a local
+variable?
+
+69
+00:04:48,260 --> 00:04:49,260
+Is it a temporary variable?
+
+70
+00:04:49,460 --> 00:04:50,220
+What is it?
+
+71
+00:04:50,420 --> 00:04:51,480
+- to have the correct action.
+
+72
+00:04:53,260 --> 00:04:59,220
+On the contrary, when the API is richer,
+it means that this is automatically
+
+73
+00:04:59,420 --> 00:05:02,440
+done because the domain calls a
+specific method.
+
+74
+00:05:04,020 --> 00:05:08,560
+Usually, this is much better to
+have a richer API on your visitor.
+
+75
+00:05:10,280 --> 00:05:12,920
+Now let's talk about shortcutting
+the double dispatch.
+
+76
+00:05:13,360 --> 00:05:14,880
+Here's an example.
+
+77
+00:05:16,180 --> 00:05:23,040
+I have a `visit` method in the visitor
+`RBProgramNodeVisitor`, and inside
+
+78
+00:05:23,240 --> 00:05:26,980
+this method, there is a message send,
+`visitVariable`.
+
+79
+00:05:28,740 --> 00:05:30,260
+The visitor is doing a self-send.
+
+80
+00:05:30,460 --> 00:05:33,800
+Usually, we call it a shortcut.
+
+81
+00:05:34,520 --> 00:05:40,320
+We are shortcutting the double dispatch
+because the visitor is doing a
+
+82
+00:05:40,520 --> 00:05:45,320
+self-send, so it means that we do
+not let the domain decide and dispatch
+
+83
+00:05:45,520 --> 00:05:49,700
+directly to the domain side so that
+it will double dispatch to the visitor
+
+84
+00:05:49,900 --> 00:05:50,660
+side.
+
+85
+00:05:51,760 --> 00:05:55,660
+Like that, it prevents the use of
+more specialized API.
+
+86
+00:05:56,020 --> 00:06:01,200
+It means that the domain side could
+send us a message: `visitLocalVariable`
+
+87
+00:06:02,000 --> 00:06:03,920
+or `visitTemporaryVariable` or
+`visitInstanceVariable`.
+
+88
+00:06:04,820 --> 00:06:08,460
+It could directly test for us using
+the double dispatch.
+
+89
+00:06:09,820 --> 00:06:13,680
+That's why this is normally better
+to not shortcut the double dispatch
+
+90
+00:06:13,880 --> 00:06:18,260
+and use a form of code like that:
+`each acceptVisitor: self`,
+
+91
+00:06:20,380 --> 00:06:22,720
+and not sending directly the message
+`visitVariable`.
+
+92
+00:06:23,260 --> 00:06:27,360
+Another discussion or variation
+point when we are designing a visitor
+
+93
+00:06:27,560 --> 00:06:33,920
+is that when we are using a collection
+in the domain, we sometimes wonder
+
+94
+00:06:34,120 --> 00:06:38,740
+if it's necessary to turn this
+collection into a domain element.
+
+95
+00:06:39,760 --> 00:06:44,500
+When we have a collection,
+it may be important for the visitor
+
+96
+00:06:44,700 --> 00:06:47,420
+to take some action or some specific
+operation on those collections.
+
+97
+00:06:48,220 --> 00:06:51,560
+Usually, this is a variation point,
+this is a design choice.
+
+98
+00:06:51,760 --> 00:06:58,400
+Should I promote this collection
+in my domain or should I provide
+
+99
+00:06:58,600 --> 00:07:02,060
+an API on my visitor,
+like `visitArrayOf` or something
+
+100
+00:07:02,260 --> 00:07:04,740
+like that? This is always a trade-off.
+
+101
+00:07:06,180 --> 00:07:09,780
+Now building a generic visitor is
+usually difficult.
+
+102
+00:07:11,120 --> 00:07:22,280
+Usually, this is much better to
+have an `AbstractVisitor` class.
+
+103
+00:07:22,480 --> 00:07:27,040
+You could define an API on this
+class for each visit method and
+
+104
+00:07:27,320 --> 00:07:34,880
+you will have a lot of subclasses
+that specialize this API for special
+
+105
+00:07:35,080 --> 00:07:35,840
+cases.
+
+106
+00:07:36,760 --> 00:07:41,160
+Like that, I can provide some families
+of visitors and share codes between
+
+107
+00:07:41,360 --> 00:07:42,120
+them.
+
+108
+00:07:42,940 --> 00:07:44,740
+Now let's discuss another point.
+
+109
+00:07:45,060 --> 00:07:49,220
+When we are using a statically typed
+language, we have two alternatives
+
+110
+00:07:49,420 --> 00:07:50,240
+to implement a visitor.
+
+111
+00:07:51,000 --> 00:07:55,940
+The first one could be to have one
+method `visit`, and this is the same one,
+
+112
+00:07:56,140 --> 00:07:59,280
+with different parameter types:
+`(Number)`, `(Plus)`,
+
+113
+00:07:59,480 --> 00:08:00,280
+and `(Times)`.
+
+114
+00:08:01,460 --> 00:08:05,820
+An alternative design could be to
+have multiple methods - `visitNumber`,
+
+115
+00:08:06,020 --> 00:08:11,120
+`visitPlus`, and `visitTimes` -
+with specific parameter types.
+
+116
+00:08:13,140 --> 00:08:18,600
+The first case here is called
+
+117
+00:08:20,500 --> 00:08:25,480
+overloading because we are using
+the same method with different parameter
+
+118
+00:08:25,680 --> 00:08:26,440
+types.
+
+119
+00:08:26,640 --> 00:08:30,780
+Usually, this is not the right way
+to design a visitor because you
+
+120
+00:08:30,980 --> 00:08:34,120
+will have to cast your object explicitly
+everywhere in your code.
+
+121
+00:08:35,160 --> 00:08:41,220
+You might execute the wrong method,
+and to understand what is this point,
+
+122
+00:08:41,420 --> 00:08:44,780
+I encourage you to see the lecture
+about overload vs.
+
+123
+00:08:44,980 --> 00:08:45,740
+override.
+
+124
+00:08:48,830 --> 00:08:54,110
+In conclusion, Visitor is a very
+nice design pattern but it could
+
+125
+00:08:54,310 --> 00:08:55,250
+be tricky to master.
+
+126
+00:08:55,790 --> 00:09:01,590
+And usually, it helps a lot if you
+carefully use the `accept` and `visit`
+
+127
+00:09:01,790 --> 00:09:02,650
+vocabulary.
+
+128
+00:09:03,690 --> 00:09:05,700
+Visitor is powerful for complex
+structure operations,
+
+129
+00:09:05,900 --> 00:09:09,950
+and as we saw, we can modularize
+operations outside of domain objects.
+
+130
+00:09:10,510 --> 00:09:14,070
+And it provides a kind of pluggable
+recursive treatment of a composite
+
+131
+00:09:14,270 --> 00:09:15,030
+structure.
+

@@ -1,0 +1,1241 @@
+1
+00:00:04,540 --> 00:00:06,920
+Hello, welcome to this lecture.
+
+2
+00:00:07,320 --> 00:00:11,480
+In this lecture, we are going to
+talk about an example of a monolithic
+
+3
+00:00:11,680 --> 00:00:14,600
+application and what are the impacts
+of it.
+
+4
+00:00:16,580 --> 00:00:21,220
+The goals for this lecture is first
+to think about how we can customize
+
+5
+00:00:21,420 --> 00:00:25,440
+our elements, how we can customize
+our application.
+
+6
+00:00:26,050 --> 00:00:30,440
+We are going to talk a lot about
+modularity and we are going to analyze
+
+7
+00:00:30,640 --> 00:00:36,220
+an example, a real example from
+Squeak and its implementation in Pharo.
+
+8
+00:00:36,420 --> 00:00:41,700
+We are going to analyze how we handle
+`Preferences` and optional configuration
+
+9
+00:00:41,900 --> 00:00:43,510
+in Pharo and in Squeak.
+
+10
+00:00:45,060 --> 00:00:48,900
+We have, in both cases,
+we want to have a way of configuring
+
+11
+00:00:49,100 --> 00:00:53,980
+our system, configuring our tools
+to work in the way that we want.
+
+12
+00:00:54,540 --> 00:01:01,900
+So in both cases, we have a setting
+browser where we can set all the
+
+13
+00:01:02,100 --> 00:01:05,320
+customizations, all the settings
+that we want for our tools.
+
+14
+00:01:05,600 --> 00:01:10,420
+For example, the colors,
+the direction of the text,
+
+15
+00:01:10,640 --> 00:01:14,520
+the fonts that we are using,
+the size of those fonts and all
+
+16
+00:01:14,720 --> 00:01:18,320
+these settings are applied on our tools.
+
+17
+00:01:19,420 --> 00:01:26,580
+So, what we want to do is basically
+to have a way that we can configure
+
+18
+00:01:26,780 --> 00:01:33,340
+our application to work in the way
+our `Preferences` say it and we
+
+19
+00:01:33,540 --> 00:01:37,640
+want to have only one way of handling
+this dependency in all the systems.
+
+20
+00:01:37,840 --> 00:01:44,320
+So we give a single entry point
+to the user how to configure the system,
+
+21
+00:01:44,520 --> 00:01:48,220
+but also how to use it from the
+developer point of view,
+
+22
+00:01:48,420 --> 00:01:50,520
+how to use the setting system.
+
+23
+00:01:50,900 --> 00:01:56,040
+So we want a modular definition
+of the `Preferences` so we have
+
+24
+00:01:56,240 --> 00:01:57,900
+them in a single point.
+
+25
+00:01:59,660 --> 00:02:05,760
+We also want that our objects,
+our domain object, does not have
+
+26
+00:02:05,960 --> 00:02:10,900
+a dependency with the `Preferences`
+because every time that we modify
+
+27
+00:02:11,100 --> 00:02:15,980
+the preference or modify our objects
+will affect on another part of the
+
+28
+00:02:16,180 --> 00:02:17,700
+system and that is not desirable.
+
+29
+00:02:18,220 --> 00:02:25,340
+So, how we can do this idea of having
+a detached mode, a detached preference
+
+30
+00:02:25,540 --> 00:02:30,140
+module and also still having the
+ability to change the behavior of
+
+31
+00:02:30,340 --> 00:02:31,100
+our application.
+
+32
+00:02:34,320 --> 00:02:37,840
+Let's look at the first solution
+that we have to analyze.
+
+33
+00:02:38,420 --> 00:02:43,320
+In Squeak 3.8, there was already
+a solution to this problem.
+
+34
+00:02:43,520 --> 00:02:48,440
+There was an object that called
+`Preferences` that was basically
+
+35
+00:02:48,640 --> 00:02:53,060
+a Facade for managing these
+`Preferences`.
+
+36
+00:02:53,900 --> 00:02:57,280
+This is a bad design pattern,
+but we are going to describe it
+
+37
+00:02:57,480 --> 00:02:58,680
+now why it is.
+
+38
+00:02:59,020 --> 00:03:04,540
+Basically, this object `Preferences`
+was referenced by other elements
+
+39
+00:03:04,740 --> 00:03:09,360
+in the system in a total of 617 times.
+
+40
+00:03:09,780 --> 00:03:13,500
+So all over the system was using
+this `Preferences` class.
+
+41
+00:03:14,960 --> 00:03:20,180
+So it ended being a really huge
+dependency of everybody.
+
+42
+00:03:20,640 --> 00:03:25,060
+Everybody, doesn't matter what you
+are doing, we’re using this
+
+43
+00:03:25,260 --> 00:03:26,020
+`Preferences` class.
+
+44
+00:03:26,280 --> 00:03:31,080
+If you are reading a PNG or compiling
+a method, you are using the
+
+45
+00:03:31,280 --> 00:03:32,040
+`Preferences` class.
+
+46
+00:03:32,240 --> 00:03:38,020
+All the subsystems were basically
+having a dependency to this
+
+47
+00:03:38,220 --> 00:03:39,360
+`Preferences` class.
+
+48
+00:03:41,400 --> 00:03:47,380
+For example, if we have a morph
+that represents a morph is a graphic
+
+49
+00:03:47,580 --> 00:03:51,480
+element in Pharo and in Squeak,
+but let's say a graphic element
+
+50
+00:03:51,680 --> 00:03:52,780
+that represents a menu.
+
+51
+00:03:53,460 --> 00:03:56,700
+Well, does this menu have round
+corners or not?
+
+52
+00:03:56,900 --> 00:03:58,200
+Well, that is a preference.
+
+53
+00:03:58,400 --> 00:04:04,040
+So if we were using or not round
+corners was delegating this question
+
+54
+00:04:04,240 --> 00:04:06,360
+to the `Preferences` class.
+
+55
+00:04:07,960 --> 00:04:09,740
+Other part, a button.
+
+56
+00:04:10,080 --> 00:04:16,640
+A button that we have and it should
+or not use a standard font or have
+
+57
+00:04:16,840 --> 00:04:17,600
+a specific font.
+
+58
+00:04:17,800 --> 00:04:18,940
+Which is the font to use?
+
+59
+00:04:19,440 --> 00:04:22,340
+Well, again we ask to the `Preferences`.
+
+60
+00:04:24,360 --> 00:04:28,660
+This is, you can tell me,
+okay, in this kind of problem we
+
+61
+00:04:28,860 --> 00:04:31,660
+have the UI elements asking to the
+`Preferences`.
+
+62
+00:04:32,200 --> 00:04:36,280
+We have a dependency between the
+UI elements and the `Preferences`.
+
+63
+00:04:36,740 --> 00:04:43,140
+It can be good, but this also pass,
+this also happens in a core part
+
+64
+00:04:43,340 --> 00:04:44,100
+of the system.
+
+65
+00:04:44,340 --> 00:04:50,280
+For example, when we were printing
+the template for creating a new
+
+66
+00:04:50,480 --> 00:04:55,300
+subclass of a given class,
+we had also a reference to the
+
+67
+00:04:55,500 --> 00:05:00,720
+`Preferences` class asking if we
+are using a type of syntax or an
+
+68
+00:05:00,920 --> 00:05:01,900
+alternative one.
+
+69
+00:05:02,100 --> 00:05:05,900
+Another example, in this case,
+the input sensor.
+
+70
+00:05:06,100 --> 00:05:10,600
+The input sensor is the object that
+takes care of handling the events
+
+71
+00:05:10,800 --> 00:05:15,720
+of keyboards and mouse and in this
+time was asking if we have to swap
+
+72
+00:05:15,920 --> 00:05:18,000
+or not the Alt key.
+
+73
+00:05:18,200 --> 00:05:24,800
+And look again, we have a dependency
+with the `Preferences` class.
+
+74
+00:05:25,180 --> 00:05:31,900
+So a lot of part of the system were
+pointing to this `Preferences` class.
+
+75
+00:05:32,160 --> 00:05:36,960
+So we have basically that a lot
+of modules of the system,
+
+76
+00:05:37,300 --> 00:05:45,820
+we have our UI modules,
+but our compiler, our input handlers,
+
+77
+00:05:46,620 --> 00:05:50,240
+everything was passing through the
+`Preferences`.
+
+78
+00:05:50,960 --> 00:05:56,800
+We have that this preference class
+was referenced all over the system.
+
+79
+00:05:57,120 --> 00:06:01,560
+If I have to add a new preference,
+a new alternative of configuration,
+
+80
+00:06:01,760 --> 00:06:05,060
+I have to touch the same `Preferences`
+class.
+
+81
+00:06:06,460 --> 00:06:12,040
+As we see, all the components in
+
+82
+00:06:12,240 --> 00:06:18,500
+the system were using,
+were depending on this `Preferences`
+
+83
+00:06:18,700 --> 00:06:19,460
+class.
+
+84
+00:06:21,600 --> 00:06:27,000
+So we have a dependency of mostly
+everybody on `Preferences`.
+
+85
+00:06:27,520 --> 00:06:31,820
+We cannot remove this class.
+
+86
+00:06:32,020 --> 00:06:35,820
+We cannot remove the `Preferences`
+system because it's not optional.
+
+87
+00:06:36,300 --> 00:06:39,460
+Everybody depends on it at this point.
+
+88
+00:06:39,860 --> 00:06:42,920
+If everybody depends on it,
+we have to have it always.
+
+89
+00:06:44,680 --> 00:06:51,040
+And every time we add a new dependency
+on it, we made that this new component
+
+90
+00:06:51,240 --> 00:06:55,800
+also depends in all the other components
+in the system because remember that
+
+91
+00:06:56,000 --> 00:07:00,500
+if we have one component,
+the UI, and this one has a dependency
+
+92
+00:07:00,700 --> 00:07:02,040
+on the `Preferences`.
+
+93
+00:07:03,920 --> 00:07:07,000
+And we modify the preference to
+add a new value.
+
+94
+00:07:07,720 --> 00:07:13,340
+For example, now that it will be
+used by the proxy, the HTTP proxy,
+
+95
+00:07:13,540 --> 00:07:15,060
+we add a new thing here.
+
+96
+00:07:15,600 --> 00:07:22,860
+Now we have added also a dependency
+to our HTTP proxy.
+
+97
+00:07:24,180 --> 00:07:24,940
+The proxy.
+
+98
+00:07:26,300 --> 00:07:31,880
+So in an indirect way,
+we end up having a dependency between
+
+99
+00:07:32,080 --> 00:07:36,080
+these two models that does not have
+nothing to do one with the other.
+
+100
+00:07:36,820 --> 00:07:41,500
+Clearly, we are in a really bad
+situation and we end with a really
+
+101
+00:07:41,700 --> 00:07:44,000
+heavy, heavy monolithic system.
+
+102
+00:07:45,860 --> 00:07:52,720
+So in this example, we can see clearly
+that the combination of Facade and
+
+103
+00:07:52,920 --> 00:07:57,780
+singleton are really bad for having
+a modular system.
+
+104
+00:07:58,540 --> 00:08:04,340
+Usually, we should say that a Facade
+should basically never be used or
+
+105
+00:08:04,540 --> 00:08:06,840
+rarely if we are nice enough.
+
+106
+00:08:07,340 --> 00:08:12,660
+Because it's a good idea that proposes
+
+107
+00:08:12,860 --> 00:08:16,040
+a single point of entry,
+but this idea is only applicable
+
+108
+00:08:16,240 --> 00:08:17,980
+in little scenarios.
+
+109
+00:08:20,660 --> 00:08:25,180
+Also, a Facade is always disguised
+as a global variable,
+
+110
+00:08:25,660 --> 00:08:29,360
+and we already have talked in this
+MOOC what is the impact of having
+
+111
+00:08:29,560 --> 00:08:35,120
+global variables and how they are
+bad for modularity, the ability
+
+112
+00:08:35,320 --> 00:08:39,500
+to write tests for it,
+and a global variable is usually
+
+113
+00:08:39,700 --> 00:08:40,460
+not recommended.
+
+114
+00:08:42,880 --> 00:08:48,140
+You can see also the lectures about
+Singleton to see more and understand
+
+115
+00:08:48,340 --> 00:08:56,040
+when is correctly to use this and
+when is correctly to use the idea
+
+116
+00:08:56,240 --> 00:08:57,120
+of global variable.
+
+117
+00:08:57,520 --> 00:09:04,180
+But in mostly of the scenarios,
+we are with a smell, a code smell,
+
+118
+00:09:04,380 --> 00:09:08,320
+what we say, because this shows
+a potential problem.
+
+119
+00:09:09,340 --> 00:09:11,600
+So what is an alternative to this?
+
+120
+00:09:11,800 --> 00:09:18,140
+Well, what we want to do is that
+the modules or the components that
+
+121
+00:09:18,340 --> 00:09:24,060
+have parts that we can customize,
+that we can set by settings,
+
+122
+00:09:24,620 --> 00:09:29,800
+we'll expose them via methods in
+
+123
+00:09:30,000 --> 00:09:30,820
+its own declaration.
+
+124
+00:09:31,980 --> 00:09:35,440
+We will see this more clearly with
+an example.
+
+125
+00:09:36,100 --> 00:09:41,940
+The class of the component that
+we are configuring will declare
+
+126
+00:09:42,140 --> 00:09:45,520
+which are these points of customization.
+
+127
+00:09:47,640 --> 00:09:52,620
+Then with this declaration,
+we can generate the UI for the user.
+
+128
+00:09:54,160 --> 00:10:02,800
+And once the UI is modified by the user,
+we can configure the resulting objects.
+
+129
+00:10:03,560 --> 00:10:04,320
+What is the idea?
+
+130
+00:10:04,800 --> 00:10:09,460
+The idea is that, for example,
+if we need to have in our previous
+
+131
+00:10:09,660 --> 00:10:13,500
+example of the MenuMorph,
+we have to have the option to have
+
+132
+00:10:13,700 --> 00:10:15,380
+or not round corners.
+
+133
+00:10:15,680 --> 00:10:22,720
+What we are going to do is add a
+class instance variable or a shared
+
+134
+00:10:22,920 --> 00:10:25,480
+variable with this value stored.
+
+135
+00:10:25,940 --> 00:10:30,040
+So we don't need to ask here the
+`Preferences`.
+
+136
+00:10:30,240 --> 00:10:36,600
+The same for the basic button to
+get its own standard font.
+
+137
+00:10:36,800 --> 00:10:43,320
+It will ask it to itself or it will
+ask it to its class, but always
+
+138
+00:10:43,520 --> 00:10:44,480
+inside the module.
+
+139
+00:10:44,880 --> 00:10:49,400
+The MenuMorph will use a shared
+variable or an instance variable
+
+140
+00:10:49,600 --> 00:10:51,480
+that is defined inside the MenuMorph.
+
+141
+00:10:54,640 --> 00:10:59,520
+This sounds really obvious and it's
+sounds that is the really great
+
+142
+00:10:59,720 --> 00:11:04,000
+idea to do, but in the beginning
+it's not so evident.
+
+143
+00:11:05,360 --> 00:11:10,700
+So an object we have to design it
+to be customizable.
+
+144
+00:11:11,180 --> 00:11:15,780
+We need to put the points of extension
+that we want and we need to think
+
+145
+00:11:15,980 --> 00:11:21,800
+when these are modified and what
+are the states that we can customize.
+
+146
+00:11:22,440 --> 00:11:27,780
+And of course, this state should
+be always internal to the object.
+
+147
+00:11:28,060 --> 00:11:30,380
+As I said before, for example,
+in the case of the MenuMorph,
+
+148
+00:11:31,080 --> 00:11:35,240
+the variable should be in the class
+MenuMorph or really close to the
+
+149
+00:11:35,440 --> 00:11:36,200
+class MenuMorph.
+
+150
+00:11:38,920 --> 00:11:42,200
+Let's see an example of how to implement
+it more correctly.
+
+151
+00:11:42,960 --> 00:11:45,340
+We have a show progress bar.
+
+152
+00:11:45,540 --> 00:11:48,940
+Morph is a UI component that shows
+a progress bar.
+
+153
+00:11:49,140 --> 00:11:56,360
+Basically, it's a square that has
+a label and a bar that gets filled
+
+154
+00:11:57,780 --> 00:12:01,820
+as long as we are finishing the
+task that we are finishing.
+
+155
+00:12:02,020 --> 00:12:02,780
+It's a progress bar.
+
+156
+00:12:04,480 --> 00:12:07,900
+We have an option in this progress
+bar that affects all the progress
+
+157
+00:12:08,100 --> 00:12:11,200
+bar that can be interruptible or not.
+
+158
+00:12:11,400 --> 00:12:12,580
+We can interrupt this process.
+
+159
+00:12:12,780 --> 00:12:14,200
+Basically, we have a flag.
+
+160
+00:12:14,400 --> 00:12:22,120
+We want a flag to have a button
+here to cancel the action that we
+
+161
+00:12:22,320 --> 00:12:23,080
+are doing.
+
+162
+00:12:23,280 --> 00:12:24,040
+Okay.
+
+163
+00:12:24,240 --> 00:12:27,440
+This is something that we want to
+configure because depending on the
+
+164
+00:12:27,640 --> 00:12:31,360
+system, the application that we
+are building, we want it to have
+
+165
+00:12:31,560 --> 00:12:37,220
+it or to not have it the boot.
+
+166
+00:12:37,960 --> 00:12:39,520
+So how we do this?
+
+167
+00:12:39,840 --> 00:12:45,800
+Well, in the class side of the
+ShowProgressBarMorph, we are going
+
+168
+00:12:46,000 --> 00:12:50,700
+to add a new shared variable that
+is called `IsInterruptible`.
+
+169
+00:12:51,160 --> 00:12:56,360
+We are going to give it with the
+lazy initialization a default value.
+
+170
+00:12:57,280 --> 00:13:05,320
+Then, of course, we are going to
+add to be accessible a nice accessor
+
+171
+00:13:05,520 --> 00:13:06,280
+`IsInterruptible`.
+
+172
+00:13:07,120 --> 00:13:12,740
+And also, we are going to add an
+
+173
+00:13:12,940 --> 00:13:16,380
+instance side element to access
+the same accessor.
+
+174
+00:13:18,160 --> 00:13:23,580
+Now, when we want to decide or not
+to draw the button, the interruption
+
+175
+00:13:23,780 --> 00:13:27,280
+button, we are going to ask directly
+to self.
+
+176
+00:13:29,160 --> 00:13:34,520
+As we see, the configuration is
+doing what we asked is inside the
+
+177
+00:13:34,720 --> 00:13:40,800
+ShowProgressBarMorph in this time
+is in the class side,
+
+178
+00:13:41,000 --> 00:13:45,260
+but is in the same class and we
+are using it accessing directly
+
+179
+00:13:45,460 --> 00:13:46,220
+with self.
+
+180
+00:13:46,420 --> 00:13:49,080
+So it's local to our class.
+
+181
+00:13:53,760 --> 00:13:58,020
+Once we do that, we have to declare
+that we have a point of extension.
+
+182
+00:13:58,220 --> 00:13:59,060
+How we do that?
+
+183
+00:13:59,260 --> 00:14:05,060
+Well, we are going to add a new
+method in our class side that will
+
+184
+00:14:05,260 --> 00:14:08,440
+have the name that we want,
+but it's important that receives
+
+185
+00:14:10,660 --> 00:14:15,400
+and a new argument that is the builder,
+the setting builder.
+
+186
+00:14:16,660 --> 00:14:21,520
+This setting builder is what we
+are going to use to configure how
+
+187
+00:14:21,720 --> 00:14:24,560
+we want to present it to the user.
+
+188
+00:14:25,320 --> 00:14:29,800
+The idea is that we want to present
+it to the user with a checkbox.
+
+189
+00:14:30,420 --> 00:14:35,920
+So we have to give to this checkbox
+the text that we are going to have,
+
+190
+00:14:36,600 --> 00:14:41,340
+the description that is the text
+that will appear when the user put
+
+191
+00:14:41,540 --> 00:14:42,780
+the mouse on top of it.
+
+192
+00:14:42,980 --> 00:14:47,900
+And what is the value that we are
+going to change when it's clicked or not.
+
+193
+00:14:48,380 --> 00:14:51,680
+This is done by this builder of
+settings.
+
+194
+00:14:52,160 --> 00:14:55,840
+As you see, we are talking about
+the property isInterruptable.
+
+195
+00:14:56,680 --> 00:14:58,720
+We are giving a default value.
+
+196
+00:14:58,920 --> 00:15:02,120
+We are giving the description and
+the label.
+
+197
+00:15:04,060 --> 00:15:10,720
+So in this way, the class
+ShowProgressBarMorph is describing
+
+198
+00:15:10,920 --> 00:15:16,640
+to the settings how to expose the
+settings and this code is only called,
+
+199
+00:15:17,420 --> 00:15:22,860
+this message is only sent when the
+settings needs to create the window.
+
+200
+00:15:23,060 --> 00:15:30,300
+If we don't have a setting window
+in the system, if we remove the
+
+201
+00:15:30,500 --> 00:15:34,400
+settings package from the system
+or the module, this message will
+
+202
+00:15:34,600 --> 00:15:35,940
+never be called.
+
+203
+00:15:36,180 --> 00:15:39,900
+This message will never be sent
+and this method will never execute
+
+204
+00:15:40,100 --> 00:15:44,560
+and we don't have now a dependency.
+
+205
+00:15:44,760 --> 00:15:46,560
+We have a really slight dependency.
+
+206
+00:15:49,740 --> 00:15:58,800
+This is, once we describe it,
+how to present the setting to the user,
+
+207
+00:15:59,020 --> 00:16:02,660
+we can see that now the setting
+browser can take that information
+
+208
+00:16:02,860 --> 00:16:08,800
+and generate in the correct place
+that is where we describe it the
+
+209
+00:16:09,000 --> 00:16:11,780
+checkbox, so the user can set or
+not the value.
+
+210
+00:16:12,900 --> 00:16:20,400
+As we see, let's see a little more
+about the architecture that we have.
+
+211
+00:16:21,040 --> 00:16:25,240
+We have a really layered architecture
+where we have split the
+
+212
+00:16:25,440 --> 00:16:26,200
+responsibilities.
+
+213
+00:16:27,200 --> 00:16:31,760
+In one way, we have a setting browser
+that is our UI.
+
+214
+00:16:33,360 --> 00:16:39,300
+This setting browser will collect
+all the methods that in this case
+
+215
+00:16:39,500 --> 00:16:44,440
+we collected using a technique using
+this pragma, but this is anecdotic,
+
+216
+00:16:44,720 --> 00:16:50,080
+but it will collect all the methods
+that describes the settings and
+
+217
+00:16:50,280 --> 00:16:57,640
+will send this message to each of
+them to get the description of the
+
+218
+00:16:57,840 --> 00:16:58,760
+setting to show.
+
+219
+00:17:00,120 --> 00:17:06,460
+The domain we see here is clearly
+separated and the domain will use
+
+220
+00:17:06,660 --> 00:17:08,760
+its internal customization hooks.
+
+221
+00:17:08,960 --> 00:17:14,040
+It will use its internal state to
+customize itself and it will declare
+
+222
+00:17:14,240 --> 00:17:17,640
+these customization hooks to the
+settings.
+
+223
+00:17:18,540 --> 00:17:24,760
+So we have a really smaller dependency
+
+224
+00:17:24,960 --> 00:17:27,220
+between these two components.
+
+225
+00:17:28,800 --> 00:17:31,100
+We have simplified the dependency.
+
+226
+00:17:32,900 --> 00:17:39,160
+So it's important that we see two
+different concepts in this.
+
+227
+00:17:39,400 --> 00:17:45,720
+One is that we want that our modules
+have a layered dependency.
+
+228
+00:17:45,940 --> 00:17:53,820
+We don't want all the domain depends
+on a specific tool or in this case,
+
+229
+00:17:54,020 --> 00:17:54,780
+the setting framework.
+
+230
+00:17:55,020 --> 00:18:01,700
+We want our domain of application,
+our solution to the business problem
+
+231
+00:18:01,900 --> 00:18:07,120
+not to depend on the setting framework
+because we are not mixing layers.
+
+232
+00:18:08,400 --> 00:18:13,360
+So also the settings,
+the descriptions of the settings
+
+233
+00:18:13,560 --> 00:18:17,900
+should not depend on how they are
+presented.
+
+234
+00:18:18,140 --> 00:18:23,040
+We have a division as we said before
+between the UI and how the settings
+
+235
+00:18:23,240 --> 00:18:24,200
+are modeled.
+
+236
+00:18:29,420 --> 00:18:33,760
+Other thing that we really want
+to stress is that we have a real
+
+237
+00:18:33,960 --> 00:18:40,140
+modular system where the parts of
+the system can be loaded independently
+
+238
+00:18:40,800 --> 00:18:44,680
+and we don't have dependencies that
+are unneeded.
+
+239
+00:18:44,920 --> 00:18:52,340
+We don't want our system to depend
+on the settings if it's not extremely
+
+240
+00:18:52,540 --> 00:18:53,300
+required.
+
+241
+00:18:53,500 --> 00:18:58,460
+We want the model, the domain to
+just depend on other things of the
+
+242
+00:18:58,660 --> 00:18:59,420
+domain.
+
+243
+00:19:00,320 --> 00:19:06,280
+We have to recall also that to have
+a nice level of customization we
+
+244
+00:19:06,480 --> 00:19:08,920
+have to design our component.
+
+245
+00:19:09,120 --> 00:19:11,420
+We have to design our objects to
+be customizable.
+
+246
+00:19:11,620 --> 00:19:16,320
+We don't need to let it add to the
+last moment because we have to think
+
+247
+00:19:16,520 --> 00:19:19,760
+all the points of customization
+and extension in advance.
+
+248
+00:19:20,800 --> 00:19:25,960
+Also all this customization,
+all the logic should be internal
+
+249
+00:19:26,160 --> 00:19:30,400
+and we should be able to expose
+the minimal possible.
+
+250
+00:19:32,320 --> 00:19:36,280
+Of course we don't want to have
+this logic tied to a preference
+
+251
+00:19:36,480 --> 00:19:41,240
+object and we want to be able to
+set them from outside.
+
+252
+00:19:43,300 --> 00:19:52,740
+As a conclusion, a good architecture
+should not use extensively global
+
+253
+00:19:52,940 --> 00:19:53,700
+variables.
+
+254
+00:19:53,900 --> 00:19:59,060
+We have to avoid global variables
+because they are complex to maintain
+
+255
+00:19:59,260 --> 00:20:00,140
+and complex to test.
+
+256
+00:20:00,540 --> 00:20:05,480
+We also need to avoid Singleton
+and Facade because they are patterns
+
+257
+00:20:05,680 --> 00:20:08,520
+that usually are used wrong.
+
+258
+00:20:10,640 --> 00:20:16,500
+And our theory, our position is
+that the Facade is really useful
+
+259
+00:20:16,700 --> 00:20:20,580
+for problems that look like the
+compiler, when we want to have a
+
+260
+00:20:20,780 --> 00:20:25,960
+single entry point to a place but
+maybe it should not be singlet.
+
+261
+00:20:26,580 --> 00:20:31,460
+And, of course, the last point that
+we talk is that all the customizations
+
+262
+00:20:31,660 --> 00:20:37,360
+should be internal first and then
+we should have a way of exposing,
+
+263
+00:20:37,560 --> 00:20:43,120
+but all the questions and all the
+conditional code about customization
+
+264
+00:20:43,320 --> 00:20:46,520
+should be done internally to the
+class and the whole.
+

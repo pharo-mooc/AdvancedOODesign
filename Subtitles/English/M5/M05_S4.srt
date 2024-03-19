@@ -1,0 +1,640 @@
+1
+00:00:04,270 --> 00:00:08,110
+Hello, in this lecture,
+we will discuss about delegation
+
+2
+00:00:08,310 --> 00:00:09,230
+and inheritance.
+
+3
+00:00:10,090 --> 00:00:13,390
+So the goal of this lecture is to
+analyze different designs of the
+
+4
+00:00:13,590 --> 00:00:18,150
+same system, some based on inheritance
+and some based on delegation.
+
+5
+00:00:18,470 --> 00:00:22,870
+And the idea is to compare those
+designs, given some criteria or hints,
+
+6
+00:00:23,090 --> 00:00:24,850
+to analyze which one is the best one.
+
+7
+00:00:25,130 --> 00:00:29,390
+So the exercise setup that we will
+use is imagine that we want to design
+
+8
+00:00:29,590 --> 00:00:32,730
+a text editor with different algorithms
+to format the text.
+
+9
+00:00:32,930 --> 00:00:33,970
+So how can we do that?
+
+10
+00:00:34,170 --> 00:00:40,330
+So perhaps we have some text formatting
+for teX, or text formatting that is fast,
+
+11
+00:00:40,930 --> 00:00:44,310
+another text formatting that is
+slow but very precise,
+
+12
+00:00:44,750 --> 00:00:45,510
+etc.
+
+13
+00:00:45,710 --> 00:00:49,210
+The agenda of this lecture will
+be the following: we will do a first
+
+14
+00:00:49,410 --> 00:00:54,010
+design based on inheritance,
+another design based on conditionals,
+
+15
+00:00:54,550 --> 00:00:57,290
+then we will define some criteria
+to compare those solutions,
+
+16
+00:00:57,890 --> 00:01:02,030
+and we will then see a third solution
+based on delegation and we will
+
+17
+00:01:02,230 --> 00:01:02,990
+evaluate.
+
+18
+00:01:03,190 --> 00:01:05,250
+So let's start with an inheritance
+based solution.
+
+19
+00:01:06,250 --> 00:01:12,270
+So we will create a ‘TextEditor‘
+class there, and this ‘TextEditor‘
+
+20
+00:01:12,630 --> 00:01:16,350
+will display the text that is stored
+in this instance variable,
+
+21
+00:01:16,590 --> 00:01:21,110
+and we will have a format method there,
+which is abstract in this case,
+
+22
+00:01:21,610 --> 00:01:25,290
+and we will have one subclass per
+text formatting algorithm.
+
+23
+00:01:25,950 --> 00:01:29,610
+So for example, we could have
+SlowFormattingTextEditor there,
+
+24
+00:01:29,870 --> 00:01:33,890
+and here we can implement it in
+a separate method, and we can have
+
+25
+00:01:34,090 --> 00:01:38,050
+the FastFormattingTextEditor and
+the NullFormattingTextEditor, for
+
+26
+00:01:38,250 --> 00:01:39,010
+example.
+
+27
+00:01:39,610 --> 00:01:44,410
+So it means that we can have different
+‘TextEditors‘, each one specialized
+
+28
+00:01:44,610 --> 00:01:46,030
+in a specific algorithm.
+
+29
+00:01:46,470 --> 00:01:49,530
+Another solution using only one
+class is the following:
+
+30
+00:01:50,090 --> 00:01:54,950
+so here we still have one ‘TextEditor‘
+with a text to display in an instance
+
+31
+00:01:55,150 --> 00:02:00,230
+variable, but given a currentSelection
+which stores a key, for example
+
+32
+00:02:00,430 --> 00:02:06,110
+here this is slow, given this key,
+we will test, and we will directly
+
+33
+00:02:06,310 --> 00:02:08,110
+execute the right formatting algorithm.
+
+34
+00:02:08,530 --> 00:02:12,050
+For example,
+FormatSlowButPreciseColoring, and
+
+35
+00:02:12,250 --> 00:02:13,370
+we give the text as a parameter.
+
+36
+00:02:13,770 --> 00:02:19,230
+We could even, with this single
+class scenario, use meta-programming.
+
+37
+00:02:19,430 --> 00:02:23,670
+For example, if I want to avoid testing,
+because now you know that explicit
+
+38
+00:02:23,870 --> 00:02:27,350
+(texting) in the clients is usually
+not the best solution,
+
+39
+00:02:28,430 --> 00:02:35,650
+the idea is to have a list of formatters
+here, and then I will store for each,
+
+40
+00:02:36,050 --> 00:02:40,850
+this is a dictionary,
+and for each key I can store the
+
+41
+00:02:41,050 --> 00:02:45,630
+name of the selector that I should
+apply to correctly format the text,
+
+42
+00:02:46,730 --> 00:02:52,190
+and in this format, I will perform,
+so perform, this is the meta-programming
+
+43
+00:02:52,390 --> 00:02:57,470
+method, I will give the name of
+the selector that I want to invoke,
+
+44
+00:02:58,410 --> 00:03:00,030
+and the parameter that I want to pass.
+
+45
+00:03:01,290 --> 00:03:03,410
+But this is exactly the same solution
+as before.
+
+46
+00:03:04,590 --> 00:03:07,710
+So now, what are the criteria to
+compare this kind of solution?
+
+47
+00:03:07,970 --> 00:03:12,790
+So first, the addition,
+what is the cost of defining a new
+
+48
+00:03:12,990 --> 00:03:13,870
+formatting algorithm?
+
+49
+00:03:14,970 --> 00:03:15,730
+Is it easy?
+
+50
+00:03:16,550 --> 00:03:21,290
+Can I package different algorithms
+in separate packages,
+
+51
+00:03:21,490 --> 00:03:26,270
+like that I can load them afterwards,
+like plugins or something like that?
+
+52
+00:03:26,590 --> 00:03:31,070
+And finally, is it easy to dynamically
+switch to another formatting algorithm?
+
+53
+00:03:33,300 --> 00:03:37,000
+So let's review the different solutions
+given those criteria.
+
+54
+00:03:37,700 --> 00:03:41,880
+For example, the inheritance-based
+solution: on the pro side,
+
+55
+00:03:42,080 --> 00:03:46,040
+this is easy to add a new formatting
+algorithm because I just need to
+
+56
+00:03:46,240 --> 00:03:50,180
+add a new subclass, and this is
+easy to package them separately,
+
+57
+00:03:50,680 --> 00:03:54,180
+so it means I can take one of those
+classes, put it in a separate package,
+
+58
+00:03:54,380 --> 00:03:55,800
+and I can load it afterwards.
+
+59
+00:03:58,980 --> 00:04:04,420
+On the cons side, this is more difficult
+to dynamically switch to another
+
+60
+00:04:04,620 --> 00:04:08,920
+formatting algorithm,
+because if I instantiated my
+
+61
+00:04:09,120 --> 00:04:13,260
+‘TextEditor‘ at the beginning,
+when I open it, it means that then,
+
+62
+00:04:13,460 --> 00:04:16,600
+when I want to change the formatting
+algorithm, perhaps I will need to
+
+63
+00:04:16,800 --> 00:04:18,240
+close it and to recreate the instance.
+
+64
+00:04:18,880 --> 00:04:20,720
+So this is not convenient at all.
+
+65
+00:04:22,040 --> 00:04:25,500
+And another point here,
+this is the addition.
+
+66
+00:04:26,160 --> 00:04:30,820
+So it was a pro, but it is also a con,
+because there is a combinatorial
+
+67
+00:04:31,020 --> 00:04:33,100
+explosion that we will explain in
+the next slide.
+
+68
+00:04:33,860 --> 00:04:38,260
+So here, if I have a lot of concerns
+in my ‘TextEditor‘, for example,
+
+69
+00:04:38,460 --> 00:04:40,920
+I have a Single-Pane,
+Multi-Pane ‘TextEditor‘,
+
+70
+00:04:41,920 --> 00:04:45,380
+I must take care of completion,
+grammatical verification,
+
+71
+00:04:45,680 --> 00:04:46,960
+compilation, etc.
+
+72
+00:04:47,380 --> 00:04:50,420
+It means that I may end up with
+a hierarchy like that.
+
+73
+00:04:51,460 --> 00:04:56,160
+So it means I will have the
+SlowFormattingTextEditor, like before,
+
+74
+00:04:56,480 --> 00:04:59,540
+but then I need to have a subclass
+for the single pane
+
+75
+00:04:59,760 --> 00:05:00,520
+SlowFormattingTextEditor.
+
+76
+00:05:01,700 --> 00:05:03,920
+And then I will have the
+MultiPaneSlowFormattingTextEditor.
+
+77
+00:05:06,000 --> 00:05:08,600
+But I also have the
+SpellMultiPaneSlowFormattingTextEditor.
+
+78
+00:05:11,040 --> 00:05:13,220
+And then you can see now the explosion.
+
+79
+00:05:14,060 --> 00:05:17,860
+So I will have a lot of subclasses
+for each different concern that
+
+80
+00:05:18,060 --> 00:05:18,820
+I want to combine.
+
+81
+00:05:20,120 --> 00:05:24,360
+Moreover, the API of the text editor,
+if I want to have a uniform API
+
+82
+00:05:24,560 --> 00:05:30,080
+for my clients, it means that it
+may be not clear because everything
+
+83
+00:05:30,280 --> 00:05:32,740
+will be mixed up inside the text
+editor class.
+
+84
+00:05:33,780 --> 00:05:37,300
+Now let's evaluate the
+conditionals-based solution with
+
+85
+00:05:37,500 --> 00:05:38,260
+a single class.
+
+86
+00:05:38,760 --> 00:05:43,720
+On the pro side, it is really easy
+to dynamically switch between one
+
+87
+00:05:43,920 --> 00:05:45,640
+formatting algorithm to another one.
+
+88
+00:05:46,540 --> 00:05:50,980
+But on the con side, this is more
+difficult to add a new formatting
+
+89
+00:05:51,180 --> 00:05:54,660
+algorithm because I need to recompile
+to edit and recompile the code that
+
+90
+00:05:54,860 --> 00:05:55,940
+is already written in a class.
+
+91
+00:05:56,720 --> 00:05:59,920
+And of course, since there is only
+one class, this is difficult to
+
+92
+00:06:00,120 --> 00:06:00,940
+package them separately.
+
+93
+00:06:02,240 --> 00:06:06,820
+So now you can take one minute to
+imagine a new solution using a
+
+94
+00:06:07,020 --> 00:06:07,780
+delegation.
+
+95
+00:06:07,980 --> 00:06:11,700
+So it means that inside your text
+editor, you will delegate the formatting
+
+96
+00:06:11,900 --> 00:06:14,180
+algorithm to another object,
+a formatter.
+
+97
+00:06:14,940 --> 00:06:19,480
+So here the solution is based on
+the delegation.
+
+98
+00:06:19,680 --> 00:06:28,120
+So it means that in the format method
+there, I will send the format message
+
+99
+00:06:28,320 --> 00:06:29,760
+to a formatter object.
+
+100
+00:06:30,640 --> 00:06:33,540
+And the formatter object,
+now I have a setter in myEditor.
+
+101
+00:06:33,940 --> 00:06:35,420
+You can see it there.
+
+102
+00:06:36,580 --> 00:06:40,140
+And I can say, OK, the formatter
+will be a FastFormatter.
+
+103
+00:06:41,040 --> 00:06:42,580
+And here you have a hierarchy.
+
+104
+00:06:42,780 --> 00:06:49,920
+There, this hierarchy,
+that can be as complex as I want
+
+105
+00:06:50,120 --> 00:06:51,180
+of formatters.
+
+106
+00:06:51,940 --> 00:06:53,780
+And all those formatters are
+polymorphic.
+
+107
+00:06:53,980 --> 00:06:55,680
+They all understand the format method.
+
+108
+00:06:57,020 --> 00:07:01,120
+So it means that now I can dynamically
+change the formatter on myEditor.
+
+109
+00:07:01,480 --> 00:07:05,160
+And I just need to send the format
+message to myEditor.
+
+110
+00:07:05,600 --> 00:07:08,080
+And myEditor will forward this message
+to the formatter.
+
+111
+00:07:09,200 --> 00:07:12,420
+So now I have an extensible solution
+by delegation.
+
+112
+00:07:14,810 --> 00:07:19,330
+So if I evaluate this solution,
+so now the addition is easy.
+
+113
+00:07:19,590 --> 00:07:23,090
+It's just a matter of adding a new
+subclass of the formatter.
+
+114
+00:07:23,770 --> 00:07:28,510
+Packaging is easy because I can
+take some formatter class and put
+
+115
+00:07:28,710 --> 00:07:29,570
+it in a separate package.
+
+116
+00:07:30,450 --> 00:07:34,330
+This is easy to dynamically switch
+to another formatting algorithm
+
+117
+00:07:35,130 --> 00:07:40,630
+because it's just a matter of using
+the setter on my text editor.
+
+118
+00:07:41,430 --> 00:07:45,110
+And there is a uniform API between
+the editors and the formatters.
+
+119
+00:07:45,310 --> 00:07:46,470
+This is the format message.
+
+120
+00:07:47,970 --> 00:07:53,370
+On the con side, the formatter should
+access the state of the ‘TextEditor‘.
+
+121
+00:07:53,810 --> 00:07:56,750
+So it means that the text,
+the position, and everything that
+
+122
+00:07:56,950 --> 00:08:00,290
+it contains in the ‘TextEditor‘
+might be useful to the formatter
+
+123
+00:08:00,490 --> 00:08:03,450
+to correctly show the formatting text.
+
+124
+00:08:04,470 --> 00:08:07,870
+The API of the ‘TextEditor‘ should
+be opened to support it.
+
+125
+00:08:08,070 --> 00:08:11,010
+So it means that it breaks a little
+bit the encapsulation of the
+
+126
+00:08:11,210 --> 00:08:11,970
+‘TextEditor‘.
+
+127
+00:08:13,130 --> 00:08:18,390
+And this design is a perfect typical
+example of the Strategy Design Pattern.
+
+128
+00:08:18,910 --> 00:08:24,290
+So as a conclusion, inheritance
+is about incremental and static
+
+129
+00:08:24,490 --> 00:08:25,250
+definition.
+
+130
+00:08:25,450 --> 00:08:30,570
+It can lead to static design and
+it helps defining abstractions.
+
+131
+00:08:31,450 --> 00:08:34,770
+But delegation on the other hand
+brings runtime flexibility and
+
+132
+00:08:34,970 --> 00:08:35,730
+modularity.
+
+133
+00:08:36,370 --> 00:08:38,290
+But there is nothing such as a free
+lunch.
+
+134
+00:08:38,490 --> 00:08:41,490
+So it means that both of them have
+pro and cons.
+
+135
+00:08:42,070 --> 00:08:45,830
+And it means that you need to evaluate
+what is best in your design.
+

@@ -1,0 +1,841 @@
+1
+00:00:04,320 --> 00:00:05,280
+Hello.
+
+2
+00:00:05,800 --> 00:00:08,800
+In this lecture, we'll discuss about
+very nice and common design pattern,
+
+3
+00:00:09,000 --> 00:00:10,600
+which is a composite design pattern.
+
+4
+00:00:11,820 --> 00:00:14,240
+So the outline of this lecture will
+be the following.
+
+5
+00:00:14,580 --> 00:00:19,520
+We will first start with some examples
+that motivate the need for the Composite
+
+6
+00:00:19,720 --> 00:00:23,980
+design pattern, then we will present
+it in detail and we will have some
+
+7
+00:00:24,180 --> 00:00:28,340
+discussions about it,
+about its advantages and its cons.
+
+8
+00:00:31,700 --> 00:00:37,340
+So first, imagine that we want to
+describe or to design a system in
+
+9
+00:00:37,540 --> 00:00:38,800
+which we have some file entries.
+
+10
+00:00:39,320 --> 00:00:43,620
+So a file entry could be either
+a regular file, like there,
+
+11
+00:00:44,340 --> 00:00:46,780
+or a folder, like there.
+
+12
+00:00:47,640 --> 00:00:50,320
+And in a folder, you can put some
+different file entries,
+
+13
+00:00:50,520 --> 00:00:53,160
+you can put also regular files or
+folders.
+
+14
+00:00:53,360 --> 00:00:54,840
+So you have a recursive definition.
+
+15
+00:00:55,740 --> 00:00:58,000
+So it means that you have a tree
+structure.
+
+16
+00:00:59,120 --> 00:01:02,600
+And the idea is how to model that
+efficiently in an object-oriented
+
+17
+00:01:02,800 --> 00:01:03,560
+manner.
+
+18
+00:01:04,120 --> 00:01:06,600
+But we have other examples of this
+kind of tree structures.
+
+19
+00:01:06,800 --> 00:01:09,660
+For example, we could have the
+description of a document.
+
+20
+00:01:09,880 --> 00:01:14,620
+So a document is composed of a title,
+a table of content, chapters.
+
+21
+00:01:15,040 --> 00:01:18,180
+A chapter is composed of sections,
+and then some sections are composed
+
+22
+00:01:18,380 --> 00:01:21,340
+of paragraphs, figures,
+lists, and subsections.
+
+23
+00:01:21,540 --> 00:01:25,680
+So it means that you have a recursion
+there also, a section is composed
+
+24
+00:01:25,880 --> 00:01:26,800
+of sections, etc.
+
+25
+00:01:27,640 --> 00:01:31,940
+So how can we model that efficiently
+in an object-oriented system?
+
+26
+00:01:33,520 --> 00:01:38,140
+And finally, a last example about
+this kind of tree structure,
+
+27
+00:01:38,400 --> 00:01:43,220
+a Diagram is composed of elements,
+and an element could be a Circle,
+
+28
+00:01:44,160 --> 00:01:46,420
+a Segment, a Text,
+or a group of elements.
+
+29
+00:01:46,620 --> 00:01:48,000
+So it means a Diagram.
+
+30
+00:01:49,560 --> 00:01:56,720
+So now the question is how can we
+draw Diagram elements and Diagram
+
+31
+00:01:56,920 --> 00:01:59,440
+in a uniform way from the client's
+point of view?
+
+32
+00:02:00,640 --> 00:02:07,420
+Can we avoid testing in the client
+side or check if we are trying to
+
+33
+00:02:07,620 --> 00:02:10,620
+draw elements or Diagrams?
+
+34
+00:02:10,980 --> 00:02:12,000
+This is the point.
+
+35
+00:02:13,460 --> 00:02:16,300
+And the answer is yes,
+of course, we can.
+
+36
+00:02:16,500 --> 00:02:20,520
+So to avoid this, it means that
+we need to have a common API between
+
+37
+00:02:20,720 --> 00:02:22,760
+the elements and the `Diagrams`.
+
+38
+00:02:23,620 --> 00:02:29,120
+And for example, here in this design,
+so all elements, simple ones,
+
+39
+00:02:29,540 --> 00:02:35,620
+which are called leaves,
+answer to the `draw` message there.
+
+40
+00:02:36,300 --> 00:02:39,900
+But composite elements,
+here a `Diagram`, it's composed
+
+41
+00:02:40,100 --> 00:02:44,480
+of `Graphic`, and a `Graphic` could
+be either a leaf or a `Diagram`.
+
+42
+00:02:44,860 --> 00:02:48,240
+So the recursion is in this link there.
+
+43
+00:02:49,440 --> 00:02:53,660
+Here, a `Diagram` is composed of
+elements, and we can `add` and `remove`
+
+44
+00:02:53,860 --> 00:02:57,440
+elements, but it also understands
+the `draw` message.
+
+45
+00:02:58,660 --> 00:02:59,640
+And this is the point.
+
+46
+00:03:00,680 --> 00:03:03,640
+So the intent of the composite design
+pattern is the following.
+
+47
+00:03:03,920 --> 00:03:08,580
+We want to compose objects in a
+tree structure to represent part-world
+
+48
+00:03:08,780 --> 00:03:09,540
+hierarchies.
+
+49
+00:03:09,740 --> 00:03:15,140
+And the idea is to let clients treat
+individual objects and composition
+
+50
+00:03:15,340 --> 00:03:18,820
+objects uniformly, because they
+will answer the same API.
+
+51
+00:03:19,460 --> 00:03:23,880
+And for example, if in my client
+code I have an object called a`Graphic`,
+
+52
+00:03:24,480 --> 00:03:27,180
+I don't know if it is a composite
+one or if it is a leaf.
+
+53
+00:03:27,780 --> 00:03:32,460
+But I can send the `draw` message,
+the same message, and it will respond
+
+54
+00:03:32,660 --> 00:03:36,600
+accordingly, being a `Text`,
+a `Circle` or a `Diagram`,
+
+55
+00:03:36,800 --> 00:03:37,720
+a group of elements.
+
+56
+00:03:40,100 --> 00:03:43,700
+So the essence of the composite
+design pattern is the following.
+
+57
+00:03:43,940 --> 00:03:45,760
+This is a `drawing` that you can
+find in books.
+
+58
+00:03:46,780 --> 00:03:50,040
+You have four different roles;
+the client, the component,
+
+59
+00:03:50,860 --> 00:03:55,500
+a leaf, you may have multiple leaves,
+and a Composite, and the recursion
+
+60
+00:03:55,700 --> 00:03:57,960
+is in the Composite class.
+
+61
+00:04:01,160 --> 00:04:04,960
+So the essence of this Composite
+design pattern, what is key,
+
+62
+00:04:05,200 --> 00:04:08,820
+is that leaves and the Composite
+offer the same API.
+
+63
+00:04:09,120 --> 00:04:14,160
+This is this uniformity that avoid
+testing in the client's code,
+
+64
+00:04:15,040 --> 00:04:16,160
+which we want to do.
+
+65
+00:04:17,240 --> 00:04:20,260
+And then, each leaf does something
+different.
+
+66
+00:04:20,560 --> 00:04:23,600
+It just needs to implement the same API,
+but it's not mandatory to do the
+
+67
+00:04:23,800 --> 00:04:24,560
+same thing.
+
+68
+00:04:24,760 --> 00:04:26,900
+Each leaf can have a different
+operation.
+
+69
+00:04:28,820 --> 00:04:33,680
+So the Composite element offers
+the same API and plus some functionality
+
+70
+00:04:33,880 --> 00:04:34,740
+to manage the children.
+
+71
+00:04:35,260 --> 00:04:37,540
+So you can `add` and `remove` children
+in the composition.
+
+72
+00:04:38,640 --> 00:04:43,500
+And of course, since they have the
+same API, leaves and composite are
+
+73
+00:04:43,700 --> 00:04:46,500
+substitutable, clients do not have
+to check.
+
+74
+00:04:46,900 --> 00:04:51,440
+So let's go back to the example
+and let's analyze all the participants
+
+75
+00:04:51,640 --> 00:04:53,540
+in the design pattern to really
+understand the point.
+
+76
+00:04:54,200 --> 00:04:57,940
+So first of all, we have the client,
+and the client can manipulate all
+
+77
+00:04:58,140 --> 00:05:00,380
+objects in the composition through
+the component interface.
+
+78
+00:05:00,660 --> 00:05:05,340
+And here the component interface
+is defined by the `Graphic` class here.
+
+79
+00:05:06,160 --> 00:05:08,100
+And it defines one method here.
+
+80
+00:05:08,300 --> 00:05:09,080
+This is a `draw` method.
+
+81
+00:05:09,280 --> 00:05:13,180
+So it means that all objects in
+the composition should understand
+
+82
+00:05:13,380 --> 00:05:14,140
+the `draw` message.
+
+83
+00:05:17,120 --> 00:05:19,100
+And now, we have the component
+interface.
+
+84
+00:05:20,700 --> 00:05:25,420
+So here, this is what we said,
+it declares the common interface
+
+85
+00:05:25,620 --> 00:05:26,800
+for all objects in the composition.
+
+86
+00:05:27,340 --> 00:05:29,220
+It may implement a default behavior.
+
+87
+00:05:29,480 --> 00:05:33,420
+So here, you can see that the `draw`
+method here could be either abstract
+
+88
+00:05:33,620 --> 00:05:35,180
+or it could be concrete.
+
+89
+00:05:35,740 --> 00:05:42,000
+It could provide default implementation
+for all objects in the composition.
+
+90
+00:05:43,920 --> 00:05:49,540
+And maybe you want to also declare
+here in the component accessor to
+
+91
+00:05:49,740 --> 00:05:52,280
+manage children, but this is not
+mandatory.
+
+92
+00:05:54,980 --> 00:06:02,440
+Then you have some leaves and leaves,
+here we have three kinds of leaf.
+
+93
+00:06:04,340 --> 00:06:09,780
+So a leaf represents an object with
+no children in the composition and
+
+94
+00:06:09,980 --> 00:06:15,560
+it defines a primitive operation,
+but it must conform to the common API.
+
+95
+00:06:18,440 --> 00:06:21,720
+And finally, we have the composite
+there.
+
+96
+00:06:23,040 --> 00:06:26,260
+So the composite also implements
+a polymorphic API.
+
+97
+00:06:26,460 --> 00:06:28,220
+Here this is a `draw` method.
+
+98
+00:06:28,880 --> 00:06:30,080
+And basically what does it do?
+
+99
+00:06:30,280 --> 00:06:35,440
+It just forwards a message to all
+elements that are in the composite,
+
+100
+00:06:36,160 --> 00:06:37,200
+all children in fact.
+
+101
+00:06:38,420 --> 00:06:40,760
+And of course, it has some operation.
+
+102
+00:06:40,960 --> 00:06:44,020
+Here, this is `add` and `remove`,
+to `add` and `remove` elements in
+
+103
+00:06:44,220 --> 00:06:44,980
+the composite.
+
+104
+00:06:47,320 --> 00:06:51,040
+What is important is to understand
+that a design pattern is a name
+
+105
+00:06:51,240 --> 00:06:57,640
+and an intent, but it can have multiple
+implementations with some pro and cons.
+
+106
+00:06:57,840 --> 00:07:01,140
+For example, we could have a different
+implementation in a dynamically
+
+107
+00:07:01,340 --> 00:07:02,240
+typed language.
+
+108
+00:07:03,000 --> 00:07:06,660
+For example, this is not mandatory
+for the 'leaf' class and the 'composite'
+
+109
+00:07:06,860 --> 00:07:11,300
+class here to have a common superclass,
+because what we need in fact,
+
+110
+00:07:11,780 --> 00:07:13,120
+this is a common API.
+
+111
+00:07:13,320 --> 00:07:18,080
+And since they both implement the
+operation method, here it means
+
+112
+00:07:18,280 --> 00:07:21,580
+that from the client point of view,
+they are polymorphic objects.
+
+113
+00:07:21,780 --> 00:07:26,540
+So it means that I can send the
+message operation to both leaves
+
+114
+00:07:26,740 --> 00:07:30,000
+and the composite elements and it
+will work perfectly.
+
+115
+00:07:31,080 --> 00:07:35,280
+Of course, not having a common
+superclass, this is not possible
+
+116
+00:07:35,480 --> 00:07:38,340
+to share code between the leaves
+and the composite.
+
+117
+00:07:39,680 --> 00:07:43,500
+And it is more difficult to recognize
+the composite design pattern.
+
+118
+00:07:46,560 --> 00:07:49,880
+Another extreme implementation would
+be to only use one class,
+
+119
+00:07:50,380 --> 00:07:51,480
+the composite class.
+
+120
+00:07:52,420 --> 00:07:56,420
+And inside this representation with
+a single class, in fact,
+
+121
+00:07:56,640 --> 00:07:59,300
+the leaves are replaced with a composite
+with no children.
+
+122
+00:07:59,840 --> 00:08:01,360
+This is basic.
+
+123
+00:08:02,140 --> 00:08:03,580
+The gain is not really clear.
+
+124
+00:08:03,780 --> 00:08:07,580
+And in my opinion, this is not really
+a nice design, because if you have
+
+125
+00:08:07,780 --> 00:08:10,240
+only a single class, you will not
+benefit from dispatching.
+
+126
+00:08:10,900 --> 00:08:13,960
+Because if you remember correctly,
+when you're sending a message,
+
+127
+00:08:14,460 --> 00:08:15,380
+you are making a choice.
+
+128
+00:08:15,580 --> 00:08:16,660
+The system will make a choice.
+
+129
+00:08:16,860 --> 00:08:18,520
+It will lookup the method in the
+hierarchy class.
+
+130
+00:08:18,720 --> 00:08:22,500
+And the fewer classes you have,
+the fewer choices you have.
+
+131
+00:08:23,760 --> 00:08:26,820
+So usually, this is much better
+to have a hierarchy of classes.
+
+132
+00:08:27,880 --> 00:08:31,560
+There are some frequently asked
+questions about the composite design
+
+133
+00:08:31,760 --> 00:08:33,920
+pattern that we can review now.
+
+134
+00:08:34,380 --> 00:08:36,920
+Can the composite contain any type
+of child?
+
+135
+00:08:38,000 --> 00:08:38,880
+Yes, definitely.
+
+136
+00:08:39,980 --> 00:08:43,780
+The only thing that we need to take
+care is that they implement a common
+
+137
+00:08:43,980 --> 00:08:44,740
+API.
+
+138
+00:08:45,500 --> 00:08:48,400
+And for example, sometimes this
+is difficult when you want to introduce
+
+139
+00:08:48,600 --> 00:08:52,980
+in your composite objects that come
+from third-party libraries.
+
+140
+00:08:53,180 --> 00:08:58,040
+So it means that perhaps you will
+need some adapters or wrappers to
+
+141
+00:08:58,240 --> 00:09:01,480
+enforce this common API on these
+third-party objects.
+
+142
+00:09:02,920 --> 00:09:06,340
+Can we limit the depth of a composite
+object, the number of children?
+
+143
+00:09:06,540 --> 00:09:08,280
+Of course, we can in the composite
+class.
+
+144
+00:09:08,480 --> 00:09:12,380
+So it means in the `add` and `remove`
+methods, I can check the depth,
+
+145
+00:09:12,580 --> 00:09:13,340
+for example.
+
+146
+00:09:14,460 --> 00:09:17,320
+And then, can we have different
+composites in the same system?
+
+147
+00:09:17,780 --> 00:09:18,540
+Yes.
+
+148
+00:09:18,740 --> 00:09:21,460
+And each composite in the system
+can have different constraints and
+
+149
+00:09:21,660 --> 00:09:22,420
+different behavior.
+
+150
+00:09:22,940 --> 00:09:26,900
+We may have some different variations
+about composite behavior.
+
+151
+00:09:27,880 --> 00:09:30,440
+So far, we only saw the simple forward
+message send.
+
+152
+00:09:31,020 --> 00:09:35,520
+So it means that the composite will
+only send forward the message to
+
+153
+00:09:35,720 --> 00:09:41,800
+all children and merges the results
+without performing any other behavior.
+
+154
+00:09:43,120 --> 00:09:48,140
+But it could also selectively forward
+the message to one of the children,
+
+155
+00:09:48,760 --> 00:09:49,800
+conditionally, of course.
+
+156
+00:09:50,820 --> 00:09:56,280
+Or it can extend the behavior by
+adding an extra behavior and delegate
+
+157
+00:09:56,480 --> 00:09:57,240
+to the leaves.
+
+158
+00:09:57,440 --> 00:10:01,760
+Or it can completely override the
+behavior of the leaves and have
+
+159
+00:10:01,960 --> 00:10:02,780
+its own behavior.
+
+160
+00:10:05,040 --> 00:10:08,120
+The composite design pattern is
+really interesting because it can
+
+161
+00:10:08,320 --> 00:10:10,180
+work perfectly with other design
+patterns.
+
+162
+00:10:10,380 --> 00:10:15,040
+For example, we will see that the
+composite and Visitor are really
+
+163
+00:10:15,240 --> 00:10:17,440
+nice together and play very nice
+together.
+
+164
+00:10:18,120 --> 00:10:20,360
+And Visitors, we will see it in
+another lecture.
+
+165
+00:10:20,720 --> 00:10:23,700
+This is to implement specific operations
+on composite.
+
+166
+00:10:24,740 --> 00:10:28,120
+But composites can also be used
+with factories because sometimes
+
+167
+00:10:28,320 --> 00:10:30,600
+this is difficult to create this
+kind of tree structure.
+
+168
+00:10:31,400 --> 00:10:34,280
+And using factories can help to
+have different kinds of elements
+
+169
+00:10:34,480 --> 00:10:35,300
+in the tree structure.
+
+170
+00:10:35,820 --> 00:10:39,900
+As a conclusion, composite is about
+compositing objects into tree structure
+
+171
+00:10:40,100 --> 00:10:41,640
+to represent partial hierarchies.
+
+172
+00:10:41,840 --> 00:10:44,460
+Composite provides a uniform API
+to clients.
+
+173
+00:10:45,580 --> 00:10:51,680
+So leaves and composite are treated
+uniformly by clients without checking
+
+174
+00:10:51,880 --> 00:10:52,640
+anything.
+
+175
+00:10:53,160 --> 00:10:55,340
+And the composite design pattern
+is completely extensible.
+
+176
+00:10:55,540 --> 00:10:59,180
+This is really easy to `add` new
+type of leaves by subclassing.
+
+177
+00:10:59,380 --> 00:11:03,760
+Of course, we will see that composites
+play very nicely with other design
+
+178
+00:11:03,960 --> 00:11:06,360
+patterns such as Visitors in a future
+lecture.
+

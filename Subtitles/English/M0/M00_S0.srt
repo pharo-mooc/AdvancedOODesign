@@ -1,0 +1,526 @@
+1
+00:00:04,180 --> 00:00:05,120
+- Hello, everybody.
+
+2
+00:00:05,800 --> 00:00:08,890
+I'm Stéphane Ducasse,
+and I will present with Luc Fabresse,
+
+3
+00:00:09,090 --> 00:00:13,360
+Guillermo Polito, and Pablo Tesone
+this MOOC around advanced
+
+4
+00:00:13,560 --> 00:00:14,320
+object-oriented design.
+
+5
+00:00:16,940 --> 00:00:21,560
+So what will see in this MOOC is
+that we will focus on really the
+
+6
+00:00:21,760 --> 00:00:22,820
+roots of object-oriented design.
+
+7
+00:00:23,180 --> 00:00:26,420
+From that perspective,
+we will not present any modeling
+
+8
+00:00:26,620 --> 00:00:31,640
+strategies or methodologies or even
+visual languages like UML.
+
+9
+00:00:31,970 --> 00:00:35,900
+In fact, we will focus on the key
+mechanisms that will help you to
+
+10
+00:00:36,100 --> 00:00:38,470
+design robust and extensible
+application.
+
+11
+00:00:38,670 --> 00:00:43,790
+From that perspective,
+this MOOC is unique from the mixture
+
+12
+00:00:43,990 --> 00:00:46,850
+of the different facets that we
+are bringing together.
+
+13
+00:00:47,050 --> 00:00:51,200
+What we should also consider is
+that all in all, we have around
+
+14
+00:00:51,400 --> 00:00:55,190
+60 or more years of experience designing
+complex systems.
+
+15
+00:00:56,290 --> 00:00:57,670
+So why this MOOC?
+
+16
+00:00:57,870 --> 00:01:02,160
+In fact, we did the Pharo MOOC,
+which was really a good success.
+
+17
+00:01:02,360 --> 00:01:06,190
+And then, we realized that people
+love it so much that we have to
+
+18
+00:01:06,390 --> 00:01:09,180
+focus on the Pharo MOOC part that
+is on design.
+
+19
+00:01:09,380 --> 00:01:11,950
+I just want to show you this quote
+where this guy said, "Oh,
+
+20
+00:01:12,280 --> 00:01:15,850
+I spent the last 15 years or so
+in software development,
+
+21
+00:01:16,050 --> 00:01:19,210
+and following this MOOC,
+I realized that I hadn't really
+
+22
+00:01:19,410 --> 00:01:22,900
+grasped the essence of object-oriented
+design."  And for me,
+
+23
+00:01:23,100 --> 00:01:25,300
+the aspect of essence was really
+important.
+
+24
+00:01:25,500 --> 00:01:29,020
+And I said, okay, so this means
+that really, we should stress this
+
+25
+00:01:29,220 --> 00:01:35,080
+part and this MOOC, the current one,
+is really a focus on all this mechanism
+
+26
+00:01:35,280 --> 00:01:37,180
+and the essence of object-oriented
+programming.
+
+27
+00:01:37,690 --> 00:01:39,910
+From that perspective,
+it is also language-agnostic.
+
+28
+00:01:40,720 --> 00:01:43,930
+What you will learn in this MOOC,
+you can apply it in any object-oriented
+
+29
+00:01:44,170 --> 00:01:44,950
+language.
+
+30
+00:01:45,490 --> 00:01:47,000
+So what are the objectives?
+
+31
+00:01:47,200 --> 00:01:50,650
+Basically, we will revisit the basic
+elements such as encapsulation,
+
+32
+00:01:50,850 --> 00:01:51,610
+delegation.
+
+33
+00:01:51,810 --> 00:01:56,800
+We will also make you think about
+essential aspects of our object-oriented
+
+34
+00:01:57,000 --> 00:02:01,720
+design, such as message passing,
+how do we express choices.
+
+35
+00:02:02,470 --> 00:02:06,340
+We will present some key Design
+Patterns, not all of them,
+
+36
+00:02:06,540 --> 00:02:09,760
+because the point is not to do a
+catalog, but to select the one that
+
+37
+00:02:09,960 --> 00:02:12,940
+we like and that we believe are
+much more interesting.
+
+38
+00:02:13,140 --> 00:02:16,450
+We will also analyze real case studies
+that we will take from Pharo,
+
+39
+00:02:17,110 --> 00:02:22,030
+and then we will also we will have
+four lectures on some specific Pharo
+
+40
+00:02:22,230 --> 00:02:23,230
+code idioms.
+
+41
+00:02:23,530 --> 00:02:28,690
+So this MOOC is divided in 10 modules
+that are somehow interrelated.
+
+42
+00:02:28,890 --> 00:02:32,740
+So you can consume a bit the MOOC
+in the way you want, but this is
+
+43
+00:02:32,940 --> 00:02:35,290
+better to follow the numbering that
+we propose.
+
+44
+00:02:35,490 --> 00:02:37,480
+We will start with the Message.
+
+45
+00:02:37,680 --> 00:02:40,990
+So really the roots, with some
+Test-Driven development because
+
+46
+00:02:41,190 --> 00:02:45,160
+we are really big fans of Test-Driven
+and we think that this is super
+
+47
+00:02:45,360 --> 00:02:46,120
+important.
+
+48
+00:02:46,320 --> 00:02:51,400
+We will see the Hook and template
+approach, revisit what are Objects
+
+49
+00:02:51,600 --> 00:02:52,840
+with States and Behavior.
+
+50
+00:02:53,040 --> 00:02:57,820
+Then we will start to sketch and
+present some Elementary Design Pattern,
+
+51
+00:02:58,900 --> 00:03:02,500
+introduce after Double Dispatch,
+which is really important for more
+
+52
+00:03:02,700 --> 00:03:03,780
+advanced Design Patterns.
+
+53
+00:03:03,980 --> 00:03:07,450
+And then, you will see there will
+be some aspects that are really
+
+54
+00:03:07,650 --> 00:03:13,960
+covered in lecture, like Sharing
+of Objects or even this Inversion
+
+55
+00:03:14,160 --> 00:03:14,920
+of Control.
+
+56
+00:03:15,120 --> 00:03:18,190
+So from that perspective,
+all this mixture will make this
+
+57
+00:03:18,390 --> 00:03:23,680
+MOOC really powerful sets of concept
+that you can really learn.
+
+58
+00:03:24,700 --> 00:03:28,360
+Now the code example in this MOOC
+are from Pharo.
+
+59
+00:03:28,560 --> 00:03:29,320
+Why?
+
+60
+00:03:29,520 --> 00:03:31,990
+Because we are the Pharo creators
+and for us, Pharo, this is super
+
+61
+00:03:32,190 --> 00:03:35,350
+simple and beautiful,
+so that's why we naturally choose it.
+
+62
+00:03:35,550 --> 00:03:38,230
+It would not have made sense that
+we use another language,
+
+63
+00:03:38,430 --> 00:03:41,980
+so you will have to read a bit the
+syntax.
+
+64
+00:03:42,580 --> 00:03:46,210
+For that, you take one of the lectures
+of the previous MOOC and I think
+
+65
+00:03:46,410 --> 00:03:48,700
+that in a couple of hours,
+you get started.
+
+66
+00:03:48,900 --> 00:03:52,870
+And in general, we will show the
+Java equivalent, if this is important.
+
+67
+00:03:53,070 --> 00:03:53,830
+So why Pharo?
+
+68
+00:03:54,160 --> 00:03:55,720
+This is what I explained before.
+
+69
+00:03:55,930 --> 00:03:57,820
+From that perspective,
+this is a pure object-oriented language.
+
+70
+00:03:58,630 --> 00:04:03,250
+So we don't have all the type system,
+the type constraints of other languages.
+
+71
+00:04:03,450 --> 00:04:06,100
+We have only objects,
+messages and lambda expressions.
+
+72
+00:04:06,300 --> 00:04:11,320
+So this means that you can map that
+to JavaScript or to Python if you want,
+
+73
+00:04:11,520 --> 00:04:16,990
+just check the complement MOOC,
+with two or three videos there,
+
+74
+00:04:17,190 --> 00:04:19,060
+you can get started and follow this
+MOOC.
+
+75
+00:04:19,930 --> 00:04:24,670
+I just want to stress one aspect
+here is that if you take the literature
+
+76
+00:04:24,870 --> 00:04:28,990
+on polymorphism, you will have all
+kinds of definitions and we have
+
+77
+00:04:29,190 --> 00:04:33,970
+one that is if it works like a duck,
+if it swims like a duck,
+
+78
+00:04:34,600 --> 00:04:36,700
+if it quacks like a duck,
+it's probably a duck.
+
+79
+00:04:36,900 --> 00:04:37,660
+What does it mean?
+
+80
+00:04:37,860 --> 00:04:42,090
+It means that in all this MOOC,
+when we say that we want polymorphic
+
+81
+00:04:42,290 --> 00:04:46,140
+or that we want to use polymorphism,
+this is that you expose objects
+
+82
+00:04:46,340 --> 00:04:48,000
+that expose the same API.
+
+83
+00:04:48,240 --> 00:04:52,710
+This is objects that are substitutable,
+so we can take an object and place
+
+84
+00:04:52,910 --> 00:04:55,470
+another one that is polymorphic
+and the program should continue
+
+85
+00:04:55,670 --> 00:04:56,970
+to somehow work.
+
+86
+00:04:57,170 --> 00:05:02,250
+And the key aspect also is that
+polymorphic objects does not imply
+
+87
+00:05:02,450 --> 00:05:03,480
+that there are subtypes.
+
+88
+00:05:03,960 --> 00:05:10,180
+So you can have two objects with
+an API here, with an API and I am
+
+89
+00:05:10,380 --> 00:05:12,470
+a client and I expect this API.
+
+90
+00:05:12,670 --> 00:05:13,490
+That's okay.
+
+91
+00:05:13,690 --> 00:05:16,930
+I don't have to have a subtype
+relationship between those.
+
+92
+00:05:17,600 --> 00:05:18,760
+We don't need that.
+
+93
+00:05:18,960 --> 00:05:20,660
+If we have it, then this is good.
+
+94
+00:05:20,860 --> 00:05:24,360
+If we don't have it, then this is
+like that.
+
+95
+00:05:24,570 --> 00:05:27,750
+So remember this definition because
+we use it a lot.
+
+96
+00:05:27,950 --> 00:05:32,250
+So what I wanted to say as a conclusion
+is that this is really a unique MOOC.
+
+97
+00:05:32,640 --> 00:05:35,980
+It took us something like four years
+to prepare it.
+
+98
+00:05:36,180 --> 00:05:39,750
+We applied it in all kinds of lectures
+during this four years,
+
+99
+00:05:39,950 --> 00:05:43,370
+some slides went over six or seven
+or 10 revisions.
+
+100
+00:05:43,570 --> 00:05:48,000
+We have accumulated something like
+60 years of experience in
+
+101
+00:05:48,200 --> 00:05:49,890
+object-oriented design and practices.
+
+102
+00:05:50,430 --> 00:05:53,400
+We are building Pharo,
+and Pharo is a complex system.
+
+103
+00:05:53,600 --> 00:05:54,870
+And not only Pharo, by the way.
+
+104
+00:05:55,070 --> 00:05:58,740
+We will really use the concrete
+case and try to make them understandable
+
+105
+00:05:58,940 --> 00:06:02,100
+because when you want to have a
+concrete case, often they can be
+
+106
+00:06:02,300 --> 00:06:03,060
+complex.
+
+107
+00:06:03,260 --> 00:06:07,710
+And finally, what you will learn
+in this MOOC is really actionable
+
+108
+00:06:07,910 --> 00:06:09,600
+in any object-oriented languages.
+
+109
+00:06:09,800 --> 00:06:13,680
+So try to avoid to think,
+"Oh yes, this is a MOOC on Pharo."
+
+110
+00:06:13,880 --> 00:06:15,360
+This is not a MOOC on Pharo.
+
+111
+00:06:15,560 --> 00:06:17,940
+This is a MOOC on advanced
+object-oriented design.    &nbsp;
+

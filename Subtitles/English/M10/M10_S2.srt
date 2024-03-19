@@ -1,0 +1,1230 @@
+1
+00:00:05,070 --> 00:00:07,010
+Hello, welcome to this lecture.
+
+2
+00:00:07,070 --> 00:00:11,080
+In this lecture we are going to talk
+about subclassing and subtyping.
+
+3
+00:00:12,490 --> 00:00:17,660
+The goals for this lecture is to discuss
+the relationship between having an API
+
+4
+00:00:18,089 --> 00:00:20,579
+and what happens when we have a subclass.
+
+5
+00:00:21,419 --> 00:00:26,189
+Also, what happens with this API
+and the clients of a given class.
+
+6
+00:00:26,790 --> 00:00:31,000
+We need to compare subtyping
+and subclassing and we are
+
+7
+00:00:31,010 --> 00:00:35,685
+going to  , this content,
+, concepts,  , impact the design.
+
+8
+00:00:37,065 --> 00:00:40,035
+Subtyping is good, even in
+dynamically typed language.
+
+9
+00:00:42,025 --> 00:00:43,575
+Let's start with a simple example.
+
+10
+00:00:44,575 --> 00:00:48,285
+Let's see this, um, snippet of code.
+
+11
+00:00:48,644 --> 00:00:54,865
+We can see that we are defining a class
+poem as an extension of a 'LinkedList'.
+
+12
+00:00:55,974 --> 00:00:57,298
+What do you think about it?
+
+13
+00:00:57,298 --> 00:01:00,005
+Of course, this code, we can write it.
+
+14
+00:01:00,045 --> 00:01:01,645
+It's a valid code.
+
+15
+00:01:02,275 --> 00:01:05,184
+What, but the question
+is, does it make sense?
+
+16
+00:01:06,225 --> 00:01:07,175
+It's a good idea.
+
+17
+00:01:07,175 --> 00:01:07,225
+Yeah.
+
+18
+00:01:08,080 --> 00:01:13,440
+If we think about the API of our
+poem class, the instances of poem
+
+19
+00:01:13,680 --> 00:01:18,659
+should understood at word, where we
+pass a word, and then we can ask if
+
+20
+00:01:18,659 --> 00:01:27,299
+it's a, it is a haiku or if it's in
+Alexandrine mode, but also in this
+
+21
+00:01:27,299 --> 00:01:32,180
+case, as we are extended 'LinkedList',
+we have a lot of methods that you
+
+22
+00:01:32,180 --> 00:01:33,630
+shouldn't, we should not understand.
+
+23
+00:01:33,880 --> 00:01:41,010
+For example, 'addBeforeLink' or all the
+methods that are defined in 'LinkedList'.
+
+24
+00:01:42,010 --> 00:01:43,190
+Let's see another example.
+
+25
+00:01:44,610 --> 00:01:49,149
+This looks a little more to have a
+little more sense than the previous one.
+
+26
+00:01:49,290 --> 00:01:55,249
+We are defining our class 'Stack'
+also as a subclass of 'LinkedList'.
+
+27
+00:01:57,259 --> 00:02:01,420
+Of course, this code is valid,
+but again, does it make sense?
+
+28
+00:02:02,940 --> 00:02:07,830
+A, an API that we are expecting to
+have in a 'Stack' includes operations
+
+29
+00:02:07,840 --> 00:02:16,240
+like pop, push, size, or top, but all
+the other methods in a 'LinkedList'
+
+30
+00:02:17,155 --> 00:02:19,255
+They apply to the, our 'Stack'.
+
+31
+00:02:19,865 --> 00:02:22,735
+They are valid in the
+context of our object.
+
+32
+00:02:25,905 --> 00:02:32,674
+As you can see,  , in the two previous
+examples, we have to think about the API
+
+33
+00:02:33,225 --> 00:02:41,714
+when we are using subclassing because
+the subclassing mechanism is intended to
+
+34
+00:02:41,715 --> 00:02:44,924
+reuse code, to reuse the superclass code.
+
+35
+00:02:45,484 --> 00:02:50,295
+And it's not thinking about the API
+that we are exposing to our clients.
+
+36
+00:02:54,155 --> 00:02:55,425
+One interesting.
+
+37
+00:02:55,975 --> 00:03:01,684
+Thing is that the previous examples
+were in our little reduced shower
+
+38
+00:03:01,714 --> 00:03:08,245
+like syntax because in both cases,
+in dynamic type languages and in
+
+39
+00:03:08,305 --> 00:03:14,579
+statically type languages, subtyping
+and some classing,  , really useful.
+
+40
+00:03:14,595 --> 00:03:15,494
+They are really useful.
+
+41
+00:03:15,525 --> 00:03:19,245
+We need to use them in the
+good points that we care.
+
+42
+00:03:19,714 --> 00:03:25,045
+And the subtyping and the sub classing
+has nothing to do with the type checker.
+
+43
+00:03:25,470 --> 00:03:30,290
+The type checker, as we have seen in
+other lectures, is there for checking
+
+44
+00:03:30,299 --> 00:03:37,140
+that we are having the variables pointing
+to possible good types of objects.
+
+45
+00:03:37,710 --> 00:03:42,320
+So basically, as we said, it's just
+checking that we put squares into
+
+46
+00:03:42,360 --> 00:03:44,819
+squares and circles into circles.
+
+47
+00:03:46,160 --> 00:03:48,439
+Let's continue with a simple example.
+
+48
+00:03:49,089 --> 00:03:53,579
+Again, we are thinking about
+implementing a 'Stack'.
+
+49
+00:03:54,549 --> 00:03:58,820
+And again, we are thinking them
+from the point of view of the API.
+
+50
+00:03:59,100 --> 00:04:01,570
+That the client want to use in a 'Stack'.
+
+51
+00:04:01,880 --> 00:04:07,310
+We want to push elements, which
+want to access the top element and
+
+52
+00:04:07,310 --> 00:04:11,929
+maybe pop in one of the elements and
+get in the one that is on the top.
+
+53
+00:04:12,560 --> 00:04:16,600
+Also, we want to ask if it
+is empty or not this 'Stack'.
+
+54
+00:04:17,570 --> 00:04:22,040
+We can see that these operations
+have sense for our 'Stack'.
+
+55
+00:04:22,200 --> 00:04:28,459
+We have a API that have sense and that
+is useful for the, for the client.
+
+56
+00:04:31,050 --> 00:04:36,080
+Let's see one alternative to
+implement,  , the 'Stack' is to have
+
+57
+00:04:36,080 --> 00:04:38,419
+a subclass of OrderedCollection.
+
+58
+00:04:38,440 --> 00:04:43,099
+We are going to have our OrderedCollection
+that is already existing in the
+
+59
+00:04:43,099 --> 00:04:49,479
+system and we are going to extend
+it to implement our 'Stack'.
+
+60
+00:04:51,269 --> 00:04:56,520
+Easily, we can implement the pop
+as removeFirst, as this method
+
+61
+00:04:56,659 --> 00:04:59,000
+also returns the first element.
+
+62
+00:04:59,250 --> 00:05:03,950
+We can implement the push as addFirst.
+
+63
+00:05:04,350 --> 00:05:09,680
+We are,  , in the ordered collection,
+, always pushing and popping in
+
+64
+00:05:09,680 --> 00:05:11,520
+our 'Stack' in the first element.
+
+65
+00:05:11,900 --> 00:05:15,210
+And we can access the top just
+by getting the first element.
+
+66
+00:05:16,549 --> 00:05:20,390
+By this, we are going
+to have some advantages.
+
+67
+00:05:20,460 --> 00:05:26,020
+Implementing the 'Stack' like this will
+give us all the reuse of the code that is
+
+68
+00:05:26,110 --> 00:05:32,660
+interesting in,  ,  , Ordered collection,
+like an implementation of size includes.
+
+69
+00:05:32,975 --> 00:05:37,705
+Do collect and so on that are
+interesting for our 'Stack'.
+
+70
+00:05:39,085 --> 00:05:45,375
+So we, we see that we are using the sub
+classing as a way of getting code reuse.
+
+71
+00:05:45,375 --> 00:05:49,485
+We are winning the implementation,
+reusing the implementations
+
+72
+00:05:49,755 --> 00:05:51,525
+that are useful for us.
+
+73
+00:05:53,045 --> 00:05:54,664
+But there is a problem.
+
+74
+00:05:55,505 --> 00:06:00,665
+What do we do with the rest of the API
+existing in order collection, for example?
+
+75
+00:06:01,285 --> 00:06:04,560
+Now our 'Stack' understands
+all the methods.
+
+76
+00:06:05,419 --> 00:06:08,179
+All the messages that are
+in our direct collection.
+
+77
+00:06:08,179 --> 00:06:16,679
+So we can add an element before a given
+one, we can remove different elements or
+
+78
+00:06:16,679 --> 00:06:19,089
+access the 'Stack' in different positions.
+
+79
+00:06:19,119 --> 00:06:25,649
+Not only in the first one, basically,
+but we are saying when we are making
+
+80
+00:06:25,659 --> 00:06:31,239
+that, we have our order collection
+and a subclass for the 'Stack'.
+
+81
+00:06:31,889 --> 00:06:33,620
+We are saying that all.
+
+82
+00:06:34,395 --> 00:06:39,755
+Our instances of a 'Stack' are
+instances of ordered collection, and
+
+83
+00:06:39,755 --> 00:06:43,974
+that is not what we want because a
+'Stack' is not an ordered collection.
+
+84
+00:06:45,224 --> 00:06:50,639
+Yes, in this case, we cannot, or
+we don't want to have a 'Stack'.
+
+85
+00:06:51,230 --> 00:06:55,940
+A 'Stack' as a replacement of an
+ordered collection, because an 'Stack'
+
+86
+00:06:56,160 --> 00:07:00,989
+has another API, it has another use
+and is intended for another scenario.
+
+87
+00:07:02,350 --> 00:07:08,109
+Again, we can see, for example, the
+examples of methods that are defined
+
+88
+00:07:08,109 --> 00:07:11,100
+in an ordered collection, but that
+don't make sense in the 'Stack'.
+
+89
+00:07:11,740 --> 00:07:19,920
+For example, we can add an element
+in the, in a given position.
+
+90
+00:07:20,570 --> 00:07:23,150
+Breaking the logic of the 'Stack'.
+
+91
+00:07:23,565 --> 00:07:27,635
+Where in the 'Stack' we always access
+through the top of the 'Stack'.
+
+92
+00:07:27,685 --> 00:07:29,075
+So we are breaking the 'Stack'.
+
+93
+00:07:29,685 --> 00:07:31,365
+This breaks completely.
+
+94
+00:07:31,695 --> 00:07:38,815
+The 'Stack' is broken and the same happen
+if we can add elements at the end, or
+
+95
+00:07:38,815 --> 00:07:45,745
+we can remove elements from the,  , the
+top are using remove first directly or
+
+96
+00:07:46,065 --> 00:07:47,885
+removing any of the elements inside.
+
+97
+00:07:48,640 --> 00:07:52,260
+All these methods, what they
+do is that they break our
+
+98
+00:07:52,260 --> 00:07:53,630
+implementation of a 'Stack'.
+
+99
+00:07:55,610 --> 00:08:00,469
+One easy solution that we can
+think as good is, okay, we are
+
+100
+00:08:00,489 --> 00:08:03,870
+going to cancel all the operations
+that we don't want to expose.
+
+101
+00:08:04,180 --> 00:08:09,609
+In this case, for example, we are
+taking remote feed first and raising
+
+102
+00:08:09,650 --> 00:08:14,890
+an error when this is,  , this
+message is sent to the 'Stack',
+
+103
+00:08:17,140 --> 00:08:22,870
+but this can get really complicated
+because we were using remove first.
+
+104
+00:08:23,594 --> 00:08:31,625
+In our pop implementation, you remember is
+here, so we need to avoid implementation.
+
+105
+00:08:32,095 --> 00:08:38,194
+We can do it using super, but this
+is really, really, really ugly.
+
+106
+00:08:38,495 --> 00:08:46,835
+And we should not do it because basically,
+, make the solution much complex and it
+
+107
+00:08:46,835 --> 00:08:49,525
+makes it more difficult to evolve in time.
+
+108
+00:08:51,405 --> 00:08:55,775
+So taking this into consideration.
+
+109
+00:08:57,315 --> 00:09:00,375
+We can see that there is
+no a simple relationship.
+
+110
+00:09:00,375 --> 00:09:05,145
+There is no clear relationship between
+a 'Stack' and ordered collection.
+
+111
+00:09:06,315 --> 00:09:09,355
+We are analyzing this
+relationship from the API.
+
+112
+00:09:09,385 --> 00:09:12,275
+We are thinking them from
+the point of the client.
+
+113
+00:09:14,035 --> 00:09:22,034
+The interface that we expose in
+the 'Stack' is not an extension or
+
+114
+00:09:22,034 --> 00:09:24,164
+a subset of the other collection.
+
+115
+00:09:24,354 --> 00:09:25,154
+There is no.
+
+116
+00:09:25,640 --> 00:09:29,200
+way that we can find
+this kind of extension.
+
+117
+00:09:29,270 --> 00:09:32,860
+It's not that we are adding new operations
+to order a collection, but keeping the
+
+118
+00:09:32,860 --> 00:09:38,340
+previous one or just using some part of
+them, let's see another example, let's
+
+119
+00:09:38,340 --> 00:09:40,239
+imagine we have a counting 'Stack'.
+
+120
+00:09:40,749 --> 00:09:46,479
+, this 'Stack' will count every time
+that we do pop or push to have a, an
+
+121
+00:09:46,479 --> 00:09:50,860
+accountant of the operations that we
+are doing, but eventually we'll do pop.
+
+122
+00:09:51,360 --> 00:09:58,880
+Exactly the same that an 'Stack', in
+this case, we will have our 'Stack'
+
+123
+00:10:00,790 --> 00:10:04,720
+and our counting 'Stack', a subclass.
+
+124
+00:10:04,810 --> 00:10:09,000
+The counting 'Stack' could be a subclass
+of a 'Stack', basically is doing
+
+125
+00:10:10,040 --> 00:10:12,950
+the same plus a little differential.
+
+126
+00:10:13,620 --> 00:10:15,870
+Let's compare with the previous case.
+
+127
+00:10:16,849 --> 00:10:25,469
+We have here in a user of our goal that
+is, has its program, it's com, it's
+
+128
+00:10:26,109 --> 00:10:31,790
+.
+Basically using an ordered collection
+and it's using an ordered collection
+
+129
+00:10:31,819 --> 00:10:33,620
+and this program works perfect.
+
+130
+00:10:35,380 --> 00:10:41,719
+And in the other side, we have
+another piece of client code that is
+
+131
+00:10:41,719 --> 00:10:47,789
+using the 'Stack' and it's using the
+operations defined in a 'Stack' and
+
+132
+00:10:47,790 --> 00:10:49,449
+this program also works correctly.
+
+133
+00:10:51,969 --> 00:10:59,750
+By having a subclasses, we can
+see now that what happened when
+
+134
+00:10:59,750 --> 00:11:05,125
+we replace Our ordered collection
+by any of its subclasses.
+
+135
+00:11:06,705 --> 00:11:11,475
+If we take in this scenario, if we
+take now and we are using an 'Stack',
+
+136
+00:11:12,135 --> 00:11:17,854
+we will see that this 'Stack',
+we are using it sending the same
+
+137
+00:11:17,854 --> 00:11:22,984
+messages that we are using to order
+a collection that works, but it's
+
+138
+00:11:22,985 --> 00:11:27,435
+breaking the nature of the 'Stack'
+is breaking the usage of the 'Stack'.
+
+139
+00:11:27,785 --> 00:11:36,585
+In this case, we see that an 'Stack'
+is not an ordered collection.
+
+140
+00:11:39,085 --> 00:11:43,995
+In the other example, now we change
+the user of 'Stack' in this second
+
+141
+00:11:44,065 --> 00:11:49,554
+user for the user of counting 'Stack'
+and we keep exactly the same program.
+
+142
+00:11:50,295 --> 00:11:57,854
+In this case, the program will work
+and will do what the client code
+
+143
+00:11:58,085 --> 00:12:03,285
+wants with the addition that our
+counting 'Stack' in behind the scenes
+
+144
+00:12:03,525 --> 00:12:05,585
+will count the number of operations.
+
+145
+00:12:05,905 --> 00:12:14,465
+And this example works because accounting
+'Stack' Is a, a 'Stack' has a valid
+
+146
+00:12:14,585 --> 00:12:18,145
+API and they are a clear replacement.
+
+147
+00:12:20,405 --> 00:12:27,655
+So how we implement the 'Stack' after
+this analysis in abstract, well, we can
+
+148
+00:12:27,655 --> 00:12:33,435
+implement the 'Stack' just extending from
+object, not breaking the,  , breaking,
+
+149
+00:12:33,454 --> 00:12:37,370
+sorry, the, um, relationship with
+or the recollection and we can do
+
+150
+00:12:37,505 --> 00:12:40,555
+is implemented it with composition.
+
+151
+00:12:41,305 --> 00:12:42,204
+We can do that.
+
+152
+00:12:42,204 --> 00:12:43,675
+Our 'Stack' is implemented.
+
+153
+00:12:44,380 --> 00:12:48,930
+Using a collection inside, could be
+an ordered collection inside, and
+
+154
+00:12:49,180 --> 00:12:53,640
+we can directly use it in this way.
+
+155
+00:12:54,590 --> 00:12:59,829
+So it's better always to use
+composition before using, um,
+
+156
+00:12:59,829 --> 00:13:02,380
+subclassing when it's not needed.
+
+157
+00:13:02,950 --> 00:13:08,380
+Remember, subclassing or inheritance
+is intended for code reuse.
+
+158
+00:13:10,310 --> 00:13:14,030
+We are reusing the code that
+is defined in the superclass.
+
+159
+00:13:14,575 --> 00:13:20,165
+And we will add a different
+specification in some of the parts.
+
+160
+00:13:24,814 --> 00:13:33,214
+The, the idea is that, um, we can override
+part of the code, but we are not going
+
+161
+00:13:33,214 --> 00:13:35,624
+to replace all the implementations.
+
+162
+00:13:35,994 --> 00:13:43,415
+And also remember that is the more
+novel is that a subclass can be used
+
+163
+00:13:43,415 --> 00:13:46,694
+as a replacement of the superclass.
+
+164
+00:13:46,745 --> 00:13:48,644
+But this is not always true.
+
+165
+00:13:48,704 --> 00:13:49,045
+It depends.
+
+166
+00:13:49,905 --> 00:13:58,395
+What it changed in the subclass the
+consequences of using a subclass when we
+
+167
+00:13:58,395 --> 00:14:05,455
+don't Need to is that basically we start
+making our code more complex and making
+
+168
+00:14:05,515 --> 00:14:12,315
+it more difficult to understand we make
+more difficult then later to how to evolve
+
+169
+00:14:12,965 --> 00:14:19,784
+this and Forces us to use a strange hacks
+and a strange code like the for example
+
+170
+00:14:19,784 --> 00:14:24,510
+the one that we had To use super to skip
+the implementation in the current class.
+
+171
+00:14:26,100 --> 00:14:32,550
+The idea of subtyping is that we
+are going to inherit the interface.
+
+172
+00:14:32,550 --> 00:14:36,600
+We are going to have the same
+messages that we are going to
+
+173
+00:14:36,600 --> 00:14:38,849
+understand in all the types.
+
+174
+00:14:39,179 --> 00:14:44,970
+We are going to work, make
+two objects work in a similar
+
+175
+00:14:44,970 --> 00:14:46,610
+way, interact with each other.
+
+176
+00:14:47,319 --> 00:14:52,799
+A good way of thinking it is
+with numbers and fractions.
+
+177
+00:14:53,685 --> 00:15:00,335
+They are completely different,
+, objects, but they have the same API,
+
+178
+00:15:00,345 --> 00:15:02,734
+so we can make them work together.
+
+179
+00:15:02,904 --> 00:15:07,265
+The same happen when we
+have collections and arrays.
+
+180
+00:15:07,725 --> 00:15:11,994
+Arrays are,  , examples of collection
+and they should work in the
+
+181
+00:15:12,005 --> 00:15:13,945
+context where we use collections.
+
+182
+00:15:14,595 --> 00:15:16,194
+The same happen with fractions.
+
+183
+00:15:16,235 --> 00:15:20,425
+We have to use them in the
+context where we use numbers.
+
+184
+00:15:21,605 --> 00:15:27,204
+So what we are doing always is that a
+subclass from the subtyping point of
+
+185
+00:15:27,204 --> 00:15:37,425
+view have to always redify and refine how
+a better,  , be more specific that the
+
+186
+00:15:37,425 --> 00:15:45,545
+one define it in the superclass one code
+smell that show us that we are using bad.
+
+187
+00:15:45,845 --> 00:15:52,165
+The sub classing and subtyping
+is that that example that we
+
+188
+00:15:52,170 --> 00:15:54,775
+seen before of canceling methods.
+
+189
+00:15:56,005 --> 00:16:01,825
+This is a sign of a bad design and
+eventually we are going to pay the
+
+190
+00:16:01,845 --> 00:16:04,155
+cost of taking a bad decision now.
+
+191
+00:16:04,995 --> 00:16:08,875
+Let's analyze this new example.
+
+192
+00:16:09,015 --> 00:16:10,455
+We have a restricted 'Stack'.
+
+193
+00:16:10,664 --> 00:16:14,185
+This 'Stack' allows us only
+push new elements that are
+
+194
+00:16:14,365 --> 00:16:16,095
+smaller than the top element.
+
+195
+00:16:17,835 --> 00:16:20,485
+We can implement it,
+the push, in this way.
+
+196
+00:16:20,705 --> 00:16:23,685
+What is the good superclass for this?
+
+197
+00:16:24,565 --> 00:16:25,935
+Maybe it's a 'Stack'.
+
+198
+00:16:27,085 --> 00:16:27,794
+It looks like a 'Stack'.
+
+199
+00:16:28,095 --> 00:16:37,115
+We, what we want is an 'Stack', but the
+problem with that, we need to be sure
+
+200
+00:16:37,295 --> 00:16:43,204
+if the, if the client, if the clients
+that are using them will be affected
+
+201
+00:16:43,305 --> 00:16:50,365
+or not by this new,  , restricted
+'Stack', maybe this kind of behavior
+
+202
+00:16:50,365 --> 00:16:52,775
+should be better handled in the client.
+
+203
+00:16:53,175 --> 00:16:57,045
+And not hidden in the restricted
+style, but maybe it's not
+
+204
+00:16:57,185 --> 00:16:58,785
+a mandatory or possible.
+
+205
+00:16:59,055 --> 00:17:03,814
+This depends on the
+problem we are solving.
+
+206
+00:17:04,125 --> 00:17:11,244
+And also a subclass that does not have to
+make sure that the client program works.
+
+207
+00:17:14,024 --> 00:17:17,984
+We can talk a little about the
+Liskov substitution principle.
+
+208
+00:17:18,564 --> 00:17:25,335
+Basically, what it says that if
+we have two objects, two different
+
+209
+00:17:25,344 --> 00:17:32,045
+types, S and T, We have a program
+that works with the object of type T.
+
+210
+00:17:33,985 --> 00:17:40,294
+This program should be unchanging
+or should work exactly the same when
+
+211
+00:17:40,294 --> 00:17:42,004
+we change one object to the other.
+
+212
+00:17:42,485 --> 00:17:48,245
+If they are the S is a subtype of T.
+
+213
+00:17:49,155 --> 00:17:55,004
+In this case, what we are talking about is
+the objects should have the same behavior.
+
+214
+00:17:55,615 --> 00:18:00,014
+They should have to be what
+is called behavioral typing.
+
+215
+00:18:02,145 --> 00:18:06,455
+Most of the time, we are not going
+to guarantee this, because when we
+
+216
+00:18:06,685 --> 00:18:11,764
+subclass, we are going to change
+the behavior because if not, we are
+
+217
+00:18:11,774 --> 00:18:13,385
+going to use the original object.
+
+218
+00:18:13,385 --> 00:18:21,854
+A subclass often,  , change slightly
+the behavior that, um, that we
+
+219
+00:18:21,855 --> 00:18:23,664
+implement in the superclass.
+
+220
+00:18:25,134 --> 00:18:30,405
+This,  , Liskov substitution principle
+looks a little useless in this context.
+
+221
+00:18:30,655 --> 00:18:36,575
+But what is important That we
+maintain the idea of the API.
+
+222
+00:18:39,565 --> 00:18:48,054
+When we are having the inheritance on
+polymorphic, we have to be sure that when,
+
+223
+00:18:48,054 --> 00:18:55,435
+, we have two objects that we want to use
+them polymorphic in a polymorphic way.
+
+224
+00:18:55,905 --> 00:19:02,425
+We need to be sure that we are con
+, conforming and we have interfaces that
+
+225
+00:19:02,425 --> 00:19:04,735
+we can substitute one to the other.
+
+226
+00:19:05,955 --> 00:19:08,210
+In this way, the idea is that we can.
+
+227
+00:19:09,004 --> 00:19:16,985
+Use one of the implementations or
+the other without caring,  , if
+
+228
+00:19:17,185 --> 00:19:18,225
+it's one or the other.
+
+229
+00:19:18,254 --> 00:19:21,205
+That, basically, is the
+idea behind polymorphism.
+
+230
+00:19:21,750 --> 00:19:27,460
+And the only way that that happened is
+that both objects had the same interface.
+
+231
+00:19:29,370 --> 00:19:33,500
+When we are subtyping,  , using
+inheritance for it's having
+
+232
+00:19:34,069 --> 00:19:38,379
+subtyping, we create families of
+classes with the similar interfaces.
+
+233
+00:19:40,169 --> 00:19:46,139
+At id, and usually we create an
+abstract subclass, that we are
+
+234
+00:19:46,139 --> 00:19:50,400
+going to define abstract, and then
+we will have concrete classes.
+
+235
+00:19:51,480 --> 00:19:57,580
+What we do with this is that we want to
+define in the abstract subclass, the API
+
+236
+00:19:57,680 --> 00:20:00,600
+that we want to use from the clients.
+
+237
+00:20:01,749 --> 00:20:08,409
+When we are,  , using this kind
+of,  , abstract classes and
+
+238
+00:20:08,409 --> 00:20:13,320
+the concrete subclasses, we
+are,  , helping to reuse the code.
+
+239
+00:20:13,700 --> 00:20:16,909
+We push the common code
+in the abstract subclass.
+
+240
+00:20:16,910 --> 00:20:18,910
+And also we are ensuring that.
+
+241
+00:20:19,240 --> 00:20:22,360
+We are creating polymorphic objects.
+
+242
+00:20:22,970 --> 00:20:28,879
+One point really important is this
+last point, is that well, we can
+
+243
+00:20:28,885 --> 00:20:37,050
+create polymorphic objects by having,
+, subclasses, by using,  , inheritance
+
+244
+00:20:37,500 --> 00:20:44,170
+to create subclasses of alu glass, but
+also remember always that we can have,
+
+245
+00:20:45,310 --> 00:20:48,700
+we can implement the same interface in.
+
+246
+00:20:49,284 --> 00:20:53,284
+Classes that are completely independent
+or they are in different hierarchies.
+
+247
+00:20:53,685 --> 00:20:58,084
+And this also is,  , useful
+and we are going to use it a
+
+248
+00:20:58,084 --> 00:21:00,355
+lot when we use polymorphism.
+
+249
+00:21:01,264 --> 00:21:06,694
+Basically when we have extend or
+inheritance or create a subclass,
+
+250
+00:21:07,905 --> 00:21:11,945
+we are mixing two concepts
+because we are creating in a
+
+251
+00:21:11,945 --> 00:21:16,274
+way, a subtype and a subclass.
+
+252
+00:21:17,815 --> 00:21:21,954
+We have to be sure what
+we are doing with it.
+
+253
+00:21:22,840 --> 00:21:28,670
+Remembering that sub classing
+is about program reuse.
+
+254
+00:21:28,760 --> 00:21:33,440
+We want to reuse the goal that is
+in the super class and subtyping
+
+255
+00:21:33,470 --> 00:21:38,070
+is about creating family of
+classes that share the common API.
+
+256
+00:21:38,870 --> 00:21:44,800
+We can have a subtyping without
+having sub classing, but always that
+
+257
+00:21:44,800 --> 00:21:50,170
+we subclass, we are subtyping, so
+we have to pay attention to that.
+
+258
+00:21:50,550 --> 00:21:53,730
+Not always that we want
+to use,  , to reuse coal.
+
+259
+00:21:54,155 --> 00:21:55,955
+We are going to use subclassing.
+
+260
+00:21:56,355 --> 00:22:02,555
+So like that, when we only want
+subtyping, when we only want the,
+
+261
+00:22:02,655 --> 00:22:09,955
+the, the common API, it's better
+to avoid the,  , subclassing.
+
+262
+00:22:09,975 --> 00:22:16,845
+We need to use subclassing when is
+for,  , reusing the program code.
+

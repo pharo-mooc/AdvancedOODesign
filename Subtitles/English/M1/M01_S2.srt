@@ -1,0 +1,566 @@
+1
+00:00:05,360 --> 00:00:09,400
+- In this lecture, we'll discuss
+the Essence of Dispatch,
+
+2
+00:00:10,260 --> 00:00:13,740
+and we will see that it is important
+to let the receiver decide.
+
+3
+00:00:15,060 --> 00:00:18,220
+First of all, let's start with an
+example that we already saw in the
+
+4
+00:00:18,420 --> 00:00:19,180
+previous lecture.
+
+5
+00:00:19,420 --> 00:00:21,880
+This is a `Boolean` example with
+multiple classes.
+
+6
+00:00:22,080 --> 00:00:25,880
+Here, you have two subclasses,
+True and False, subclasses of the
+
+7
+00:00:26,080 --> 00:00:26,840
+`Boolean` class.
+
+8
+00:00:27,460 --> 00:00:32,840
+When you send a `not` message to
+an object, it will correctly respond
+
+9
+00:00:33,040 --> 00:00:37,420
+whether it is the true instance
+or the false instance that receives it.
+
+10
+00:00:37,660 --> 00:00:42,400
+So, we never test exactly which
+object receives the message `not`.
+
+11
+00:00:43,380 --> 00:00:47,400
+And based on the class of the receiver,
+it will respond accordingly.
+
+12
+00:00:49,700 --> 00:00:51,000
+What's the point of this example?
+
+13
+00:00:51,860 --> 00:00:56,180
+In this lecture, we will focus on
+why it is really useful.
+
+14
+00:00:57,180 --> 00:01:00,040
+We'll probably never reimplement
+`Booleans` in the future,
+
+15
+00:01:00,240 --> 00:01:02,640
+because in most object-oriented
+languages it is already there.
+
+16
+00:01:02,840 --> 00:01:06,980
+So, what are the lessons to learn
+and what are the properties of this
+
+17
+00:01:07,180 --> 00:01:07,940
+solution?
+
+18
+00:01:08,780 --> 00:01:10,420
+Imagine that we have more than two
+classes.
+
+19
+00:01:10,620 --> 00:01:13,900
+Instead of having just True and False,
+we have a lot of classes.
+
+20
+00:01:14,100 --> 00:01:16,580
+Here, we have a huge hierarchy of
+classes.
+
+21
+00:01:17,140 --> 00:01:20,360
+And now imagine that you need to
+implement a new method.
+
+22
+00:01:20,960 --> 00:01:25,880
+Inside this method, you will have
+to test to introduce some conditions
+
+23
+00:01:26,080 --> 00:01:29,100
+for each case for different classes.
+
+24
+00:01:29,960 --> 00:01:30,840
+How will we do that?
+
+25
+00:01:31,440 --> 00:01:33,360
+We will not test each case.
+
+26
+00:01:33,560 --> 00:01:35,440
+In fact, we will use a message send.
+
+27
+00:01:36,480 --> 00:01:40,540
+Sending a message selects the right
+method to execute based on the class
+
+28
+00:01:40,740 --> 00:01:41,500
+of the receiver.
+
+29
+00:01:41,700 --> 00:01:43,140
+This is what we saw in the `Boolean`
+example.
+
+30
+00:01:44,160 --> 00:01:47,340
+And it can be seen as a condition
+without explicit ifs.
+
+31
+00:01:47,660 --> 00:01:50,800
+This is a dynamic choice,
+so you don't need to explicitly
+
+32
+00:01:51,000 --> 00:01:51,920
+test in your code.
+
+33
+00:01:52,320 --> 00:01:53,260
+Let's take an example.
+
+34
+00:01:53,500 --> 00:01:58,200
+For example, here we have a collection
+of multiple objects that are instances
+
+35
+00:01:58,400 --> 00:01:59,160
+of different classes.
+
+36
+00:01:59,360 --> 00:02:04,760
+So, a is an instance of the class `A`,
+bb is an instance of the class `BB`,
+
+37
+00:02:05,100 --> 00:02:05,860
+etc.
+
+38
+00:02:06,520 --> 00:02:11,460
+Now we'll send the message `operation`
+to each of these instances.
+
+39
+00:02:14,100 --> 00:02:20,160
+Basically, it will answer correctly
+according to the class of the receiver.
+
+40
+00:02:20,440 --> 00:02:26,020
+So, we never tested whether it is
+the method `operation` from `A`
+
+41
+00:02:26,220 --> 00:02:28,000
+or the method `operation` from `BB`.
+
+42
+00:02:28,940 --> 00:02:33,540
+It's automatically done by the message
+send, by the lookup.
+
+43
+00:02:33,740 --> 00:02:39,400
+It will select the right method
+in the right class given the receiver
+
+44
+00:02:39,600 --> 00:02:40,360
+class.
+
+45
+00:02:43,020 --> 00:02:46,820
+And this solution is even better
+because we can introduce,
+
+46
+00:02:47,020 --> 00:02:48,880
+for example, a new class in the
+hierarchy.
+
+47
+00:02:49,120 --> 00:02:55,080
+Here, we introduced the `AA` class,
+and we have a new instance in the
+
+48
+00:02:55,280 --> 00:02:56,040
+collection.
+
+49
+00:02:56,380 --> 00:03:00,300
+And here, what happened is that
+I didn't change the client code.
+
+50
+00:03:00,800 --> 00:03:04,200
+This is exactly the same code and
+it worked perfectly.
+
+51
+00:03:05,980 --> 00:03:07,520
+This is an extensible solution.
+
+52
+00:03:08,460 --> 00:03:11,780
+So, sending a message is a choice
+operator.
+
+53
+00:03:11,980 --> 00:03:15,320
+It means that each time you send
+a message, the execution engine,
+
+54
+00:03:15,520 --> 00:03:19,880
+the virtual machine, selects the
+right method depending on the class
+
+55
+00:03:20,080 --> 00:03:20,840
+of the receiver.
+
+56
+00:03:21,520 --> 00:03:25,940
+The next question is,
+how do we express choices as a
+
+57
+00:03:26,140 --> 00:03:26,900
+programmer?
+
+58
+00:03:28,500 --> 00:03:31,160
+Let's take these two designs.
+
+59
+00:03:32,280 --> 00:03:36,060
+Could we have the same `Boolean`
+solution with only a single class,
+
+60
+00:03:36,260 --> 00:03:37,060
+like here?
+
+61
+00:03:37,620 --> 00:03:41,580
+Would it be possible to implement
+the `not` method and the `or` method
+
+62
+00:03:41,780 --> 00:03:42,960
+without if?
+
+63
+00:03:43,940 --> 00:03:45,480
+The answer is no, of course not.
+
+64
+00:03:46,840 --> 00:03:52,820
+If you want to have an implementation
+without an explicit if in the code,
+
+65
+00:03:53,020 --> 00:03:54,400
+you need to have multiple classes.
+
+66
+00:03:55,220 --> 00:04:00,720
+It means that the classes play the
+role of the case.
+
+67
+00:04:02,040 --> 00:04:04,000
+They express the choices in the code.
+
+68
+00:04:04,780 --> 00:04:07,140
+It means that a class represents a choice.
+
+69
+00:04:07,540 --> 00:04:09,260
+This is an important point.
+
+70
+00:04:10,440 --> 00:04:14,620
+Now that we understand this point,
+we can compare something more general.
+
+71
+00:04:14,820 --> 00:04:18,480
+We can have a `Fat Class` here,
+on this side, and here we have a
+
+72
+00:04:18,680 --> 00:04:19,440
+hierarchy of classes.
+
+73
+00:04:20,540 --> 00:04:26,540
+Now, we understand that the hierarchy
+of classes is a better design because
+
+74
+00:04:26,740 --> 00:04:28,540
+this is a more modular design.
+
+75
+00:04:29,120 --> 00:04:33,620
+We isolate each point in a different
+class of hierarchy.
+
+76
+00:04:34,700 --> 00:04:37,620
+We don't need to introduce complex
+conditions in the code,
+
+77
+00:04:37,980 --> 00:04:42,520
+because we just send messages,
+and the right method will be explicitly
+
+78
+00:04:42,720 --> 00:04:44,400
+chosen by the lookup algorithm.
+
+79
+00:04:45,940 --> 00:04:51,140
+And then we can even specialize
+the behavior inside subclasses.
+
+80
+00:04:51,340 --> 00:04:56,660
+We don't need to recompile existing
+methods, because when I add a new class,
+
+81
+00:04:56,860 --> 00:04:59,880
+I can introduce a new method inside
+this class, and it does not change
+
+82
+00:05:00,080 --> 00:05:01,340
+the code of other classes.
+
+83
+00:05:02,500 --> 00:05:05,460
+And as the programmer,
+we can only focus on one class at a time,
+
+84
+00:05:05,660 --> 00:05:07,540
+so one given concept at a time.
+
+85
+00:05:10,340 --> 00:05:13,080
+The message dispatch supports modularity.
+
+86
+00:05:13,360 --> 00:05:18,600
+For example, with the hierarchy
+of classes, we can even package classes.
+
+87
+00:05:18,800 --> 00:05:22,760
+For example, class `D` here,
+we can package it in a separate package.
+
+88
+00:05:23,880 --> 00:05:26,400
+This is better from the modularity
+point of view because it means that
+
+89
+00:05:26,600 --> 00:05:28,240
+it is not mandatory to load this package.
+
+90
+00:05:28,440 --> 00:05:32,980
+We can load it dynamically as a plugin,
+for example, or we can even not
+
+91
+00:05:33,180 --> 00:05:33,940
+load it at all.
+
+92
+00:05:36,820 --> 00:05:42,360
+And then, if we load this extra package,
+this plugin, the client code does
+
+93
+00:05:42,560 --> 00:05:43,320
+not change.
+
+94
+00:05:43,520 --> 00:05:45,520
+This is what we saw in the example
+before.
+
+95
+00:05:46,300 --> 00:05:51,560
+It means that instances of the `D`
+class will correctly work with all
+
+96
+00:05:51,760 --> 00:05:53,200
+client codes without changing them.
+
+97
+00:05:55,400 --> 00:05:59,880
+So, message send is powerful,
+and message sends are supporting choices.
+
+98
+00:06:00,500 --> 00:06:04,120
+The execution engine acts as a
+conditional switch.
+
+99
+00:06:04,640 --> 00:06:06,060
+It means that you need to use it.
+
+100
+00:06:06,320 --> 00:06:08,600
+You don't need to test explicitly
+in your code.
+
+101
+00:06:09,420 --> 00:06:14,520
+But for that, you need to introduce
+a hierarchy of classes to have cases.
+
+102
+00:06:16,100 --> 00:06:21,320
+Then, this is a kind of extensible
+switch statement by adding new classes
+
+103
+00:06:21,520 --> 00:06:22,280
+in your hierarchy.
+
+104
+00:06:25,480 --> 00:06:28,700
+The second message in this lecture
+is to let the receiver decide.
+
+105
+00:06:28,940 --> 00:06:33,720
+Sending a message to an object means
+that there is a lookup algorithm
+
+106
+00:06:33,920 --> 00:06:36,120
+that will select the right method
+to execute.
+
+107
+00:06:36,900 --> 00:06:38,300
+So, the client does not decide.
+
+108
+00:06:38,500 --> 00:06:41,980
+You send the message and you let
+the lookup algorithm decide which
+
+109
+00:06:42,180 --> 00:06:42,940
+method to execute.
+
+110
+00:06:43,620 --> 00:06:45,180
+And the client code is more declarative.
+
+111
+00:06:45,380 --> 00:06:49,300
+It means that you give orders to
+objects*, and they will answer correctly.
+
+112
+00:06:51,630 --> 00:06:55,170
+And then, of course, we can have
+different receivers that we can
+
+113
+00:06:55,370 --> 00:06:56,130
+substitute dynamically.
+
+114
+00:06:56,510 --> 00:06:59,290
+It means that if we load an extra
+package, an extension,
+
+115
+00:06:59,490 --> 00:07:03,750
+or a plugin, and there are new objects,
+they will answer correctly without
+
+116
+00:07:03,950 --> 00:07:04,750
+breaking the client code.
+
+117
+00:07:06,150 --> 00:07:10,730
+So, in summary of this lecture,
+what is it important to remember?
+
+118
+00:07:11,210 --> 00:07:16,130
+Avoid conditionals as much as possible
+in your code, use objects and messages
+
+119
+00:07:16,330 --> 00:07:21,570
+whenever you can, let the receiver
+decide, do not ask but tell your
+
+120
+00:07:21,770 --> 00:07:26,930
+object what to do, let the system
+select the right method to execute,
+
+121
+00:07:27,970 --> 00:07:30,290
+and the class hierarchy supports
+dynamic dispatch.
+
+122
+00:07:30,790 --> 00:07:34,090
+So, use class hierarchy and introduce
+more classes in your design.
+

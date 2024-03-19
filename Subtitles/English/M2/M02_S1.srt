@@ -1,0 +1,1243 @@
+1
+00:00:04,800 --> 00:00:08,540
+Hi, in this lecture, I'm going to
+tell you about the minimum you should
+
+2
+00:00:08,740 --> 00:00:09,560
+know about testing.
+
+3
+00:00:10,180 --> 00:00:15,560
+So the goal of this lecture is that
+you learn, you understand what is
+
+4
+00:00:15,760 --> 00:00:17,280
+the benefit of having tests.
+
+5
+00:00:17,480 --> 00:00:21,400
+So how can you trust that you made
+a change in some big system?
+
+6
+00:00:21,600 --> 00:00:25,400
+So you have your big system here
+and you make a change here.
+
+7
+00:00:25,720 --> 00:00:27,540
+How can you know that you didn't
+break anything?
+
+8
+00:00:27,880 --> 00:00:28,640
+Yeah?
+
+9
+00:00:28,840 --> 00:00:31,480
+Imagine that you work in a financial
+system and you want that your clients
+
+10
+00:00:31,680 --> 00:00:32,440
+don't lose any money.
+
+11
+00:00:32,920 --> 00:00:37,340
+So in those critical places,
+you should know that you didn't
+
+12
+00:00:37,540 --> 00:00:38,300
+break anything.
+
+13
+00:00:38,500 --> 00:00:42,380
+So how can you trust that your change
+didn't break anything?
+
+14
+00:00:42,580 --> 00:00:44,760
+How can you trust also that the
+system is working properly,
+
+15
+00:00:45,020 --> 00:00:46,960
+even if you didn't make any changes?
+
+16
+00:00:48,440 --> 00:00:53,260
+We are going to see how unit testing
+can help us to do that and how you
+
+17
+00:00:53,460 --> 00:00:54,220
+write tests.
+
+18
+00:00:54,420 --> 00:00:55,680
+So what are the main points of testing?
+
+19
+00:00:55,880 --> 00:01:00,520
+So if you make a change in your system,
+I have my system here,
+
+20
+00:01:00,720 --> 00:01:02,980
+I make a change, so what is a test?
+
+21
+00:01:03,180 --> 00:01:04,060
+So a test will verify.
+
+22
+00:01:04,260 --> 00:01:08,120
+It's a piece of code that will verify
+automatically that everything that
+
+23
+00:01:08,320 --> 00:01:12,400
+was depending on this piece of code
+that changed is still working.
+
+24
+00:01:12,800 --> 00:01:13,560
+Yeah?
+
+25
+00:01:13,760 --> 00:01:15,200
+And it will tell you,
+yeah, it's okay, it's okay,
+
+26
+00:01:15,400 --> 00:01:16,160
+it's okay.
+
+27
+00:01:16,620 --> 00:01:19,640
+So in this sense, tests are like
+life insurance.
+
+28
+00:01:19,900 --> 00:01:24,080
+You can become aware of a regression
+or a side effect in the system that
+
+29
+00:01:24,280 --> 00:01:25,040
+you were not expecting.
+
+30
+00:01:25,240 --> 00:01:29,560
+So you can go over and change stuff
+here and there.
+
+31
+00:01:29,780 --> 00:01:35,080
+And you know that if your tests are okay,
+then you should be at least confident
+
+32
+00:01:35,280 --> 00:01:36,400
+that you didn't break anything.
+
+33
+00:01:36,600 --> 00:01:39,160
+So it actually removes pressure
+from development.
+
+34
+00:01:40,440 --> 00:01:43,600
+In that sense, also tests will enable
+future evolution because that means
+
+35
+00:01:43,800 --> 00:01:48,560
+that we can freely go and change
+things in the system knowing that
+
+36
+00:01:48,760 --> 00:01:52,420
+we didn't break anything and it
+removes fear of change.
+
+37
+00:01:52,620 --> 00:01:56,600
+So you're not going to fear that,
+ah, what are the possible things
+
+38
+00:01:56,800 --> 00:01:58,420
+that may be broken if I change
+something?
+
+39
+00:01:58,780 --> 00:02:02,220
+So you can just change something
+and see if your tests are broken or not.
+
+40
+00:02:03,060 --> 00:02:09,360
+So of course, tests will not prevent
+bugs, but they can help you detect
+
+41
+00:02:09,560 --> 00:02:11,180
+unnoticed problems in the system.
+
+42
+00:02:11,540 --> 00:02:15,960
+I'm going to insist very hard here
+that an automated test actually
+
+43
+00:02:16,160 --> 00:02:16,920
+does not exist.
+
+44
+00:02:18,420 --> 00:02:21,500
+So what is important about the test
+is that it can be executed many,
+
+45
+00:02:21,700 --> 00:02:25,280
+many times automatically and without
+any human intervention.
+
+46
+00:02:25,660 --> 00:02:28,700
+The main goal of a test,
+of an automated test,
+
+47
+00:02:28,900 --> 00:02:31,360
+is that you can make it run,
+for example, in a robot,
+
+48
+00:02:31,560 --> 00:02:33,180
+in a continuous integration environment.
+
+49
+00:02:34,400 --> 00:02:38,340
+We can make them run in a loop every
+time that there is a new change
+
+50
+00:02:38,540 --> 00:02:39,600
+that comes into the system.
+
+51
+00:02:39,880 --> 00:02:41,880
+So we can integrate something,
+a new change.
+
+52
+00:02:42,220 --> 00:02:46,280
+And if something breaks,
+we are going to automatically be
+
+53
+00:02:46,480 --> 00:02:48,880
+notified of something that happened.
+
+54
+00:02:49,080 --> 00:02:54,260
+Unit tests will ensure that also
+you can correctly specify the behavior
+
+55
+00:02:54,460 --> 00:02:55,220
+of a class.
+
+56
+00:02:55,420 --> 00:02:59,840
+You can not only try to check that
+everything is working okay but you
+
+57
+00:03:00,040 --> 00:03:03,360
+can use them to document the behavior
+of your system.
+
+58
+00:03:03,860 --> 00:03:07,620
+What we're going to say is that
+a unit test will test a single feature.
+
+59
+00:03:07,820 --> 00:03:09,220
+That is why it is called a unit test.
+
+60
+00:03:09,420 --> 00:03:13,300
+So it doesn't test a big part of
+the system.
+
+61
+00:03:13,500 --> 00:03:16,940
+So we're going to split our system
+into many small pieces.
+
+62
+00:03:18,380 --> 00:03:22,760
+Usually, each part, each one of
+these pieces is either a module
+
+63
+00:03:22,960 --> 00:03:27,180
+or a feature, feature one,
+feature two, and then each test
+
+64
+00:03:27,380 --> 00:03:28,940
+is going to test one of these features.
+
+65
+00:03:29,200 --> 00:03:33,340
+You have to think that tests are
+like scaffolding.
+
+66
+00:03:33,540 --> 00:03:37,300
+So they are actually surrounding
+your feature to make sure that it
+
+67
+00:03:37,500 --> 00:03:38,260
+will work.
+
+68
+00:03:39,440 --> 00:03:44,620
+If you make one test per scenario,
+this also will make sure that you
+
+69
+00:03:44,820 --> 00:03:48,600
+will identify really clearly when
+there is one feature that is broken
+
+70
+00:03:48,800 --> 00:03:50,500
+and you will not get polluted results.
+
+71
+00:03:50,700 --> 00:03:54,020
+So if this feature is broken,
+you want to know that this feature
+
+72
+00:03:54,220 --> 00:03:56,240
+is broken and not all the dependent
+ones.
+
+73
+00:03:57,900 --> 00:04:01,400
+So being able to identify each feature
+installation helps you to detect
+
+74
+00:04:01,600 --> 00:04:03,280
+the causes of the problems before.
+
+75
+00:04:04,040 --> 00:04:04,900
+So what is a test?
+
+76
+00:04:05,280 --> 00:04:06,980
+So a test has three main parts.
+
+77
+00:04:07,600 --> 00:04:13,440
+First, it will have a context,
+which is the main description of
+
+78
+00:04:13,640 --> 00:04:14,400
+the scenario.
+
+79
+00:04:14,820 --> 00:04:18,940
+Then we have a stimulus,
+so something that we do on top of
+
+80
+00:04:19,140 --> 00:04:20,580
+that context to provoke a change.
+
+81
+00:04:21,100 --> 00:04:24,520
+And finally, we have a check of
+how that stimulus should have,
+
+82
+00:04:24,980 --> 00:04:27,540
+what that stimulus should have provoked.
+
+83
+00:04:27,980 --> 00:04:29,520
+That we're going to check with
+assertions.
+
+84
+00:04:30,000 --> 00:04:33,180
+So we have something,
+we have a scenario, we're going
+
+85
+00:04:33,380 --> 00:04:37,400
+to make a change, and then we're
+going to observe what happened and
+
+86
+00:04:37,600 --> 00:04:42,560
+test that our observations of the
+system satisfy what we expected.
+
+87
+00:04:43,160 --> 00:04:44,920
+Let's go with a concrete example.
+
+88
+00:04:45,120 --> 00:04:52,300
+Here, for example, we can apply
+this template of a test to testing set.
+
+89
+00:04:52,760 --> 00:04:56,940
+Yeah, a set is a collection of objects
+that doesn't support duplicate elements.
+
+90
+00:04:58,520 --> 00:05:02,780
+So in this case, our set,
+if we try to add a duplicate element,
+
+91
+00:05:02,980 --> 00:05:04,960
+it will only add the first one.
+
+92
+00:05:05,260 --> 00:05:09,080
+And the second time we add the same
+element, it will just ignore it.
+
+93
+00:05:09,280 --> 00:05:10,040
+Yeah?
+
+94
+00:05:10,240 --> 00:05:12,000
+So in this case, what is our context?
+
+95
+00:05:12,200 --> 00:05:15,840
+So we create an `empty` set,
+or first, we create a set that doesn't
+
+96
+00:05:16,040 --> 00:05:16,800
+have any elements.
+
+97
+00:05:17,620 --> 00:05:21,600
+Our stimulus is that we're going
+to add twice the same element to
+
+98
+00:05:21,800 --> 00:05:22,560
+that set.
+
+99
+00:05:23,140 --> 00:05:27,700
+So the first time that we add the
+element to a set, the set is going
+
+100
+00:05:27,900 --> 00:05:28,660
+to store it.
+
+101
+00:05:28,860 --> 00:05:30,720
+The second time, the set is going
+to ignore it.
+
+102
+00:05:31,620 --> 00:05:33,000
+Or that is what we expect.
+
+103
+00:05:34,340 --> 00:05:37,880
+In the third part of our test,
+we're going to check exactly those
+
+104
+00:05:38,080 --> 00:05:38,840
+expectations.
+
+105
+00:05:39,040 --> 00:05:41,880
+So we are going to check that the
+set contains exactly one element
+
+106
+00:05:42,080 --> 00:05:42,840
+and not two.
+
+107
+00:05:43,040 --> 00:05:45,900
+So it should have ignored the second
+element.
+
+108
+00:05:47,380 --> 00:05:51,200
+Translating that to code in Pharo
+gives us something like this.
+
+109
+00:05:51,400 --> 00:05:55,520
+So here we have one class,
+which is a subclass of TestCase
+
+110
+00:05:57,140 --> 00:06:00,260
+and is where we are going to store
+all the tests for sets.
+
+111
+00:06:01,540 --> 00:06:04,420
+And then each of the tests is going
+to be written as a method.
+
+112
+00:06:04,700 --> 00:06:07,300
+So here, for example,
+we have the testAdd is our method
+
+113
+00:06:07,500 --> 00:06:12,560
+that is going to express our testing
+scenario.
+
+114
+00:06:13,400 --> 00:06:17,380
+So here, our test, we have divided
+it in three parts using comments.
+
+115
+00:06:17,620 --> 00:06:19,200
+So here, for example,
+we have the "Context",
+
+116
+00:06:19,400 --> 00:06:20,720
+then the "Stimulus", and then the
+"Check".
+
+117
+00:06:22,040 --> 00:06:24,500
+So the "Context" is doing exactly
+what we said before.
+
+118
+00:06:24,700 --> 00:06:28,400
+We are going to instantiate the
+sets and store it in a variable.
+
+119
+00:06:28,640 --> 00:06:30,600
+Then we're going to add two times
+the same object.
+
+120
+00:06:31,200 --> 00:06:37,600
+And then we're going to assert that
+the size of our set is equal to one.
+
+121
+00:06:38,920 --> 00:06:42,720
+The same test can be written in
+Java using, for example,
+
+122
+00:06:42,920 --> 00:06:44,580
+(Junit40) in this way.
+
+123
+00:06:44,800 --> 00:06:48,000
+So in Java, we can inherit from
+object directly.
+
+124
+00:06:48,520 --> 00:06:51,960
+And then to mark a test as a test,
+we need to use the test annotation.
+
+125
+00:06:53,020 --> 00:06:56,780
+And then the test goes exactly as
+it was before in Pharo.
+
+126
+00:06:57,020 --> 00:07:00,300
+So we need a //Context,
+//Stimulus, and a //Check with an
+
+127
+00:07:00,500 --> 00:07:01,260
+assertion.
+
+128
+00:07:01,460 --> 00:07:04,280
+When we run a test, three main things
+can happen.
+
+129
+00:07:04,980 --> 00:07:08,780
+We can have a success,
+which means that the tests run okay,
+
+130
+00:07:08,980 --> 00:07:11,240
+and all our expectations work correctly.
+
+131
+00:07:12,760 --> 00:07:16,340
+Second, we can have a failure if
+one of our assertions did not work
+
+132
+00:07:16,540 --> 00:07:17,300
+as expected.
+
+133
+00:07:17,500 --> 00:07:28,860
+So for example, our assert:
+collection size equals:1.
+
+134
+00:07:30,280 --> 00:07:33,180
+This didn't return 1,
+it returned 2.
+
+135
+00:07:33,380 --> 00:07:37,300
+So we will have a failure if an
+assertion doesn't work as expected.
+
+136
+00:07:38,360 --> 00:07:42,920
+Third, we're going to have an error
+if there is an unexpected condition,
+
+137
+00:07:43,120 --> 00:07:44,960
+such as, for example,
+an exception at runtime.
+
+138
+00:07:47,540 --> 00:07:51,460
+For example, here, if our set
+implementation is not correct,
+
+139
+00:07:51,960 --> 00:07:56,680
+and we have two elements,
+two times the element 5 inside the
+
+140
+00:07:56,880 --> 00:07:59,900
+collection, and this returns 2,
+here we're going to have a failure.
+
+141
+00:08:02,980 --> 00:08:07,720
+Usually these in testing frameworks,
+they are set with the yellow color.
+
+142
+00:08:12,720 --> 00:08:16,200
+We can have an error when,
+for example, we have an unexpected
+
+143
+00:08:16,400 --> 00:08:18,060
+exception inside the test.
+
+144
+00:08:18,260 --> 00:08:20,900
+So for example, here,
+we have a test that is asserting
+
+145
+00:08:21,100 --> 00:08:21,860
+something.
+
+146
+00:08:22,060 --> 00:08:23,760
+In this case, we are asserting the
+same thing as before,
+
+147
+00:08:24,040 --> 00:08:27,700
+but we are sending this message
+that is an unknown message.
+
+148
+00:08:27,900 --> 00:08:31,280
+The `foobar` method is not in the
+set hierarchy.
+
+149
+00:08:32,680 --> 00:08:35,440
+So here, this will rise,
+it does not understand the exception.
+
+150
+00:08:39,020 --> 00:08:41,520
+And since our test was not written
+to expect an exception,
+
+151
+00:08:41,880 --> 00:08:46,060
+this is an unexpected failure and
+also called an error.
+
+152
+00:08:46,940 --> 00:08:50,080
+Now, what happens if we have many
+tests that have the same context?
+
+153
+00:08:50,460 --> 00:08:57,400
+There is one way that is provided
+by many testing frameworks to reuse
+
+154
+00:08:57,600 --> 00:08:58,700
+the test context.
+
+155
+00:09:00,160 --> 00:09:01,960
+So why do we want to do that?
+
+156
+00:09:02,220 --> 00:09:06,140
+Because duplicating the test context
+will probably cause problems in
+
+157
+00:09:06,340 --> 00:09:07,560
+the future if we want to evolve
+our tests.
+
+158
+00:09:07,760 --> 00:09:11,180
+So if we want to change the context
+for all our tests, then we have
+
+159
+00:09:11,380 --> 00:09:13,180
+to change all the potential repeated
+code.
+
+160
+00:09:13,740 --> 00:09:15,200
+So duplication is never a good idea.
+
+161
+00:09:16,560 --> 00:09:20,080
+So this means also that changing
+the test will be more complicated.
+
+162
+00:09:20,400 --> 00:09:23,640
+So people will think twice before
+changing something, and that is not good.
+
+163
+00:09:23,840 --> 00:09:29,020
+So we want to be able to change
+the code much more easily;
+
+164
+00:09:29,480 --> 00:09:31,820
+not only the code of the application,
+but also the code of the test.
+
+165
+00:09:33,320 --> 00:09:36,640
+So most of the frameworks offer
+then this `setUp` method that you
+
+166
+00:09:36,840 --> 00:09:41,680
+can redefine to create a context
+that will be executed before each test.
+
+167
+00:09:42,600 --> 00:09:46,060
+So in this case, what will happen
+is that imagine that we have four
+
+168
+00:09:46,260 --> 00:09:49,040
+different test methods:
+so the Test 1, the Test 2,
+
+169
+00:09:49,240 --> 00:09:50,240
+the Test 3, and the Test 4.
+
+170
+00:09:50,440 --> 00:09:53,700
+So if we have a #`setUp` method
+and a #tearDown method,
+
+171
+00:09:54,620 --> 00:09:57,840
+the #setUp method and the #tearDown
+method will be executed before and
+
+172
+00:09:58,040 --> 00:09:59,400
+after each Test method.
+
+173
+00:09:59,720 --> 00:10:02,140
+So in this case, we are going to
+execute the #setUp,
+
+174
+00:10:02,540 --> 00:10:06,560
+the Test, then the #tearDown,
+then the #setUp again,
+
+175
+00:10:06,920 --> 00:10:09,220
+the Test, the #tearDown,
+the #setUp, the Test,
+
+176
+00:10:09,420 --> 00:10:10,280
+the #tearDown, and so on.
+
+177
+00:10:11,920 --> 00:10:14,720
+So this 'setUp' will allow us to
+reuse the context.
+
+178
+00:10:14,920 --> 00:10:19,180
+So we are going to be able to initialize
+our context only once in the code,
+
+179
+00:10:19,400 --> 00:10:22,620
+and this will be executed many times
+by the framework automatically.
+
+180
+00:10:23,120 --> 00:10:25,760
+And the 'tearDown' will help us to
+clean up the system.
+
+181
+00:10:25,960 --> 00:10:27,260
+So this is also useful.
+
+182
+00:10:27,460 --> 00:10:33,080
+For example, if the `setUp` is creating
+a file, usually the tearDown can
+
+183
+00:10:33,280 --> 00:10:40,040
+tear down or destroy the file to
+avoid that our test leaves a dirty
+
+184
+00:10:40,240 --> 00:10:41,100
+system behind.
+
+185
+00:10:41,900 --> 00:10:45,020
+To do this, for example,
+one thing that we can do to refer
+
+186
+00:10:45,220 --> 00:10:48,460
+to our previous test is that we
+can define `empty`.
+
+187
+00:10:48,660 --> 00:10:51,940
+Instead of using a temporary variable
+we can use an instance variable,
+
+188
+00:10:52,140 --> 00:10:56,840
+an attribute of the class,
+and the `setUp` method can set that
+
+189
+00:10:57,040 --> 00:10:59,600
+variable that we can then use in
+the test.
+
+190
+00:11:01,660 --> 00:11:04,580
+Remember, tests help us to trust
+the system.
+
+191
+00:11:04,940 --> 00:11:07,580
+So you don't need to build all of
+them at once.
+
+192
+00:11:07,780 --> 00:11:09,840
+You can build them incrementally
+and on demand.
+
+193
+00:11:10,700 --> 00:11:14,900
+So every time, for example,
+one strategy to manage the writing
+
+194
+00:11:15,100 --> 00:11:17,740
+of tests is that every time that
+we find the bug, we can write the
+
+195
+00:11:17,940 --> 00:11:18,700
+test for the bug.
+
+196
+00:11:19,760 --> 00:11:22,780
+And later, if that bug reappears,
+if we have a regression,
+
+197
+00:11:23,060 --> 00:11:25,380
+our test will actually detect that
+problem.
+
+198
+00:11:26,660 --> 00:11:30,500
+One way also to develop the system
+that will be handled in a separate
+
+199
+00:11:30,700 --> 00:11:34,360
+lecture is that we can write the
+test before the code as a specification.
+
+200
+00:11:35,100 --> 00:11:38,560
+So you want that your system behaves
+like this, and then you can implement
+
+201
+00:11:38,760 --> 00:11:41,300
+the behavior for that test.
+
+202
+00:11:41,720 --> 00:11:45,580
+So this is going to be talked about
+in the lecture of TDD.
+
+203
+00:11:47,220 --> 00:11:51,380
+Also, since tests then can be thought
+about as an active documentation
+
+204
+00:11:51,580 --> 00:11:56,080
+that is going to be executable,
+it's always in sync with your code
+
+205
+00:11:56,280 --> 00:12:00,100
+because if you run your test and
+you make sure that your tests are green,
+
+206
+00:12:01,120 --> 00:12:04,820
+then those tests are actually specifying
+what should happen with your system.
+
+207
+00:12:06,000 --> 00:12:09,520
+However, be careful because writing
+tests, they have a cost.
+
+208
+00:12:09,840 --> 00:12:11,840
+So you have to write them,
+you have to maintain them,
+
+209
+00:12:12,040 --> 00:12:14,460
+you have to run them,
+maybe in a continuous integration
+
+210
+00:12:14,660 --> 00:12:18,340
+`setUp`, so they consume also energy
+and runtime.
+
+211
+00:12:20,040 --> 00:12:23,800
+So be sure that you make them
+worthwhile.
+
+212
+00:12:26,180 --> 00:12:28,880
+But the payoff is huge if you can
+ensure that.
+
+213
+00:12:30,860 --> 00:12:34,360
+Of course, you cannot cover everything
+with just tests, so nobody can.
+
+214
+00:12:34,560 --> 00:12:35,320
+Really complicated.
+
+215
+00:12:36,060 --> 00:12:40,100
+So some strategies that you can
+use to define tests is that write
+
+216
+00:12:40,300 --> 00:12:44,380
+tests when you find a bug,
+instead of trying to write tests
+
+217
+00:12:44,580 --> 00:12:46,120
+for all your code at once.
+
+218
+00:12:48,080 --> 00:12:51,660
+You can then, once you have the
+test that is breaking,
+
+219
+00:12:51,860 --> 00:12:56,360
+either with a failure or with an
+error showing the defect,
+
+220
+00:12:56,700 --> 00:12:59,940
+then you can fix your code until
+the test succeeds.
+
+221
+00:13:00,880 --> 00:13:03,900
+Taking this to the extreme,
+you can use TDD that will be treated
+
+222
+00:13:04,100 --> 00:13:08,460
+more in detail in another lecture,
+but the idea is that you are going
+
+223
+00:13:08,660 --> 00:13:09,420
+to start with the test.
+
+224
+00:13:09,780 --> 00:13:12,980
+You are going to use the test not
+for testing, but actually to describe
+
+225
+00:13:13,180 --> 00:13:14,140
+the behavior of your system.
+
+226
+00:13:14,740 --> 00:13:18,580
+So the test is actually you start
+from writing the specification in
+
+227
+00:13:18,780 --> 00:13:22,360
+an executable way, and then you
+are going to implement the specification
+
+228
+00:13:22,560 --> 00:13:23,520
+written in your test.
+
+229
+00:13:25,320 --> 00:13:28,700
+So tests are going to be written
+step-by-step as you develop and
+
+230
+00:13:28,900 --> 00:13:31,700
+as you increment the features in
+your system for every new piece
+
+231
+00:13:31,900 --> 00:13:32,660
+of functionality.
+
+232
+00:13:33,820 --> 00:13:35,000
+What makes a good test?
+
+233
+00:13:35,200 --> 00:13:38,920
+So if you want to have some rules
+of thumb, the first thing that is
+
+234
+00:13:39,120 --> 00:13:40,560
+important is that tests should be
+repeatable.
+
+235
+00:13:40,760 --> 00:13:45,640
+So you should be able to run them many,
+many times without any human
+
+236
+00:13:45,840 --> 00:13:46,600
+intervention.
+
+237
+00:13:46,800 --> 00:13:47,680
+So why?
+
+238
+00:13:47,880 --> 00:13:50,720
+Because you want that to run,
+in a CI setting, for example,
+
+239
+00:13:51,340 --> 00:13:53,080
+in an automatic way.
+
+240
+00:13:54,360 --> 00:13:59,140
+You would want that your tests don't
+write files that are not deleted later,
+
+241
+00:13:59,340 --> 00:14:01,900
+because maybe if you write a file
+and you don't delete it,
+
+242
+00:14:02,100 --> 00:14:06,040
+maybe a later test will fail because
+a previous test wrote the file.
+
+243
+00:14:07,340 --> 00:14:11,100
+So you want that somehow the `setUp`
+and the tearDown ensure that that
+
+244
+00:14:11,300 --> 00:14:14,620
+test doesn't leave anything dirty
+in the system.
+
+245
+00:14:15,200 --> 00:14:16,620
+You don't want any human intervention.
+
+246
+00:14:16,820 --> 00:14:20,360
+You want that the test automatically
+tells you if everything was wrong or not.
+
+247
+00:14:20,560 --> 00:14:24,080
+And if something went wrong,
+you want that the test automatically
+
+248
+00:14:24,660 --> 00:14:26,620
+tells you what was wrong in the system.
+
+249
+00:14:28,360 --> 00:14:31,700
+You want that the tests are
+self-described and easy to read,
+
+250
+00:14:32,220 --> 00:14:36,160
+because tests are not only for the
+machines, but also for the people
+
+251
+00:14:36,360 --> 00:14:37,620
+that are going to use them as
+documentation.
+
+252
+00:14:38,700 --> 00:14:41,880
+And you have to make sure that tests
+change less often than the system
+
+253
+00:14:42,080 --> 00:14:43,120
+otherwise, they don't pay off.
+
+254
+00:14:43,400 --> 00:14:47,700
+So that is why the test should be
+more about the specification than
+
+255
+00:14:47,900 --> 00:14:48,660
+the implementation.
+
+256
+00:14:49,160 --> 00:14:51,700
+Like that, you can change the
+implementation as much as you want
+
+257
+00:14:52,340 --> 00:14:55,060
+without changing the actual
+specification.
+
+258
+00:14:56,120 --> 00:14:58,820
+In conclusion, so invest in writing
+tests.
+
+259
+00:14:59,220 --> 00:15:02,840
+They are the best scaffolding and
+they let you trust the system that
+
+260
+00:15:03,040 --> 00:15:03,800
+you're writing.
+
+261
+00:15:04,000 --> 00:15:09,060
+You can use TDD, an Xtreme TDD,
+starting by writing a test and then
+
+262
+00:15:09,260 --> 00:15:16,180
+making that test pass and making
+it green and be sure that tests
+
+263
+00:15:16,380 --> 00:15:17,140
+are a good investment.
+

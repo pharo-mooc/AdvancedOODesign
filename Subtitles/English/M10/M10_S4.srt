@@ -1,0 +1,579 @@
+1
+00:00:04,280 --> 00:00:05,040
+Hello.
+
+2
+00:00:05,240 --> 00:00:09,640
+In this lecture, we'll discuss something
+really important, it is about
+
+3
+00:00:09,840 --> 00:00:13,020
+polymorphic objects, and they are
+the support of software evolution.
+
+4
+00:00:13,720 --> 00:00:15,620
+The goals of this lecture are the
+following.
+
+5
+00:00:16,200 --> 00:00:21,300
+We will speak that what is polymorphic
+objects and why they are key to
+
+6
+00:00:21,500 --> 00:00:24,880
+software evolution, and then what
+about them in statically typed
+
+7
+00:00:25,080 --> 00:00:25,840
+languages.
+
+8
+00:00:26,040 --> 00:00:31,680
+And then we will see that in these
+kinds of languages, we will need
+
+9
+00:00:31,880 --> 00:00:33,480
+the concept of interface.
+
+10
+00:00:35,420 --> 00:00:36,960
+So let's start with an example.
+
+11
+00:00:37,560 --> 00:00:43,760
+So here, we have a hierarchy of classes,
+`Shape`, which is the root of the
+
+12
+00:00:43,960 --> 00:00:46,360
+hierarchy, and then we have different
+kinds of `Shapes`.
+
+13
+00:00:46,600 --> 00:00:52,780
+We have a circle, rectangle,
+triangle, and all of them implement
+
+14
+00:00:52,980 --> 00:00:55,400
+the same message, `draw`.
+
+15
+00:00:55,980 --> 00:01:01,280
+So it means that we have a polymorphic
+API there, `draw`, and we can manipulate
+
+16
+00:01:01,480 --> 00:01:02,340
+any kind of `Shape`.
+
+17
+00:01:04,420 --> 00:01:09,740
+Okay, and now we have a client,
+`Canvas`, that implements the method
+
+18
+00:01:09,940 --> 00:01:14,260
+display, and inside this method,
+we will manipulate a collection
+
+19
+00:01:14,460 --> 00:01:17,520
+of `Shapes` by sending each of them
+the `draw` message.
+
+20
+00:01:19,180 --> 00:01:22,720
+And now, each `Shape` will answer
+accordingly because of the lookup.
+
+21
+00:01:23,340 --> 00:01:27,640
+And now the question is,
+how can we support `Rhombus` in
+
+22
+00:01:27,840 --> 00:01:29,320
+this kind of design?
+
+23
+00:01:31,160 --> 00:01:32,960
+Solution one, it's easy.
+
+24
+00:01:33,160 --> 00:01:37,660
+I can add a new class in my system,
+a new subclass of the `Shape` class
+
+25
+00:01:37,860 --> 00:01:39,380
+that implements the `draw` message.
+
+26
+00:01:40,280 --> 00:01:45,520
+So I will redefine the `draw` method,
+and now it will work perfectly.
+
+27
+00:01:47,020 --> 00:01:51,280
+But if I cannot subclass the `Shape`
+class because, for example,
+
+28
+00:01:51,480 --> 00:01:54,600
+it could be a third-party class,
+or it could be in another library,
+
+29
+00:01:54,800 --> 00:01:57,520
+or it could be a `final` class in
+the Java programming language.
+
+30
+00:01:58,100 --> 00:02:01,420
+So it means I cannot introduce this
+link.
+
+31
+00:02:03,480 --> 00:02:05,600
+So `Rhombus` cannot be a subclass
+of `Shape`.
+
+32
+00:02:07,620 --> 00:02:12,760
+And I can still create this `Rhombus`
+class.
+
+33
+00:02:12,960 --> 00:02:16,600
+I can still implement the `draw`
+method in this class.
+
+34
+00:02:17,200 --> 00:02:21,160
+So it means that it should play
+nicely with the `Canvas`.
+
+35
+00:02:21,580 --> 00:02:25,880
+And if we look at the code,
+if I implement the `Rhombus` like that,
+
+36
+00:02:27,140 --> 00:02:30,660
+it will answer to the `draw` message
+and it will play nicely.
+
+37
+00:02:30,860 --> 00:02:34,180
+I can introduce some `Rhombus` instances
+in the `Shapes` collection and it
+
+38
+00:02:34,380 --> 00:02:38,680
+will work perfectly, even if the
+`Rhombus` is not a subclass of `Shape`.
+
+39
+00:02:42,260 --> 00:02:43,660
+So what does it mean?
+
+40
+00:02:43,860 --> 00:02:50,220
+It means that producing polymorphic
+objects is good for the substitutability
+
+41
+00:02:50,420 --> 00:02:52,940
+point of view, and it's key to software
+evolutions.
+
+42
+00:02:53,300 --> 00:02:56,940
+So it means that if I have some
+existing code, I can inject new
+
+43
+00:02:57,140 --> 00:03:01,100
+kind of objects in this existing code,
+and it will work perfectly if they
+
+44
+00:03:01,300 --> 00:03:02,900
+answer to the polymorphic API.
+
+45
+00:03:06,600 --> 00:03:10,640
+And objects do not have to be from
+the same hierarchy to work together.
+
+46
+00:03:11,020 --> 00:03:13,280
+They just need to implement the
+same polymorphic API.
+
+47
+00:03:14,880 --> 00:03:21,120
+Okay, in dynamically typed languages,
+this is usually named Duck typing.
+
+48
+00:03:21,460 --> 00:03:25,700
+It means that if an object works
+like a duck and quacks like a duck,
+
+49
+00:03:26,000 --> 00:03:26,760
+then it's a duck.
+
+50
+00:03:27,140 --> 00:03:28,800
+It works perfectly like that.
+
+51
+00:03:30,040 --> 00:03:32,200
+And now what about statically typed
+languages?
+
+52
+00:03:32,400 --> 00:03:37,640
+In those kinds of languages,
+for example, if I declare a variable
+
+53
+00:03:37,840 --> 00:03:44,460
+s of type `Shape`, it means that
+this variable can contain either
+
+54
+00:03:44,660 --> 00:03:47,800
+an instance of `Shape` or one of
+its subclasses.
+
+55
+00:03:48,000 --> 00:03:57,840
+So it means I could also write s
+equal new circle, and it works.
+
+56
+00:03:58,560 --> 00:04:01,080
+Okay, because circle is a subclass
+of `Shape`.
+
+57
+00:04:03,500 --> 00:04:08,420
+And if I want to implement now a
+`Rhombus` as a subclass of `Shape`,
+
+58
+00:04:09,480 --> 00:04:10,240
+it will work.
+
+59
+00:04:10,440 --> 00:04:13,940
+But if I cannot, because,
+for example, `Shape` is the `final`
+
+60
+00:04:14,140 --> 00:04:17,240
+class or whatever, or I cannot do that.
+
+61
+00:04:19,120 --> 00:04:28,640
+So it means that when I will try
+to do `Shape s` equal new `Rhombus`,
+
+62
+00:04:29,100 --> 00:04:30,240
+it will not work at all.
+
+63
+00:04:30,760 --> 00:04:31,960
+I cannot do that.
+
+64
+00:04:32,900 --> 00:04:34,080
+So what can I do?
+
+65
+00:04:35,040 --> 00:04:38,440
+And in fact, in statically typed
+languages, they introduce the concept
+
+66
+00:04:38,640 --> 00:04:39,400
+of interface.
+
+67
+00:04:39,960 --> 00:04:44,220
+An interface has a name,
+defines a type, has one or more
+
+68
+00:04:44,420 --> 00:04:46,400
+supertypes and contains a group
+of methods.
+
+69
+00:04:47,580 --> 00:04:51,360
+And we might introduce some default
+implementation for some method.
+
+70
+00:04:51,900 --> 00:04:53,440
+And why is this concept needed?
+
+71
+00:04:53,640 --> 00:04:57,540
+Because it allows developers to
+define subtypes out of class
+
+72
+00:04:57,740 --> 00:04:58,500
+hierarchies.
+
+73
+00:04:58,840 --> 00:05:04,720
+And it can be used by the type checker
+to check subtypes relationship without
+
+74
+00:05:04,920 --> 00:05:06,120
+the support of classes.
+
+75
+00:05:06,960 --> 00:05:08,580
+Let's see on an example.
+
+76
+00:05:09,840 --> 00:05:13,180
+Now I define a new interface,
+`IShape`.
+
+77
+00:05:14,180 --> 00:05:18,200
+Inside this interface,
+I declare the `draw` method.
+
+78
+00:05:18,400 --> 00:05:25,000
+So it means that now the `Shape`
+class can implement this interface.
+
+79
+00:05:25,700 --> 00:05:26,700
+And what does it mean?
+
+80
+00:05:27,380 --> 00:05:33,840
+It means that I must implement the
+`draw` method inside this class.
+
+81
+00:05:34,340 --> 00:05:38,360
+This is mandatory to fulfill the
+requirement of the `IShape` interface.
+
+82
+00:05:40,020 --> 00:05:42,700
+And from the client point of view,
+in the `Canvas` class,
+
+83
+00:05:42,960 --> 00:05:46,460
+it means that now when I want to
+manipulate a collection of `Shapes`,
+
+84
+00:05:46,940 --> 00:05:51,260
+I will declare a collection array
+list of `IShape` and not `Shape`,
+
+85
+00:05:51,760 --> 00:05:52,860
+the interface name.
+
+86
+00:05:53,680 --> 00:05:59,440
+So it means that any object instances
+of any class in the system that
+
+87
+00:05:59,640 --> 00:06:04,340
+implements the `IShape` interface
+can be added in this collection.
+
+88
+00:06:07,960 --> 00:06:11,540
+So given this design,
+it means that now I can implement
+
+89
+00:06:11,740 --> 00:06:15,840
+a `Rhombus` class that extends the
+object class and not the `Shape` one.
+
+90
+00:06:17,060 --> 00:06:19,880
+And implement the `IShape` interface.
+
+91
+00:06:20,800 --> 00:06:24,120
+I must implement the `draw` method
+inside this class.
+
+92
+00:06:25,200 --> 00:06:27,620
+And it will work perfectly from
+the client point of view,
+
+93
+00:06:27,820 --> 00:06:30,720
+because now I can introduce some
+`Rhombus` instances inside the
+
+94
+00:06:30,920 --> 00:06:33,560
+collection in `Canvas` and it will
+work perfectly with the `Canvas`.
+
+95
+00:06:34,980 --> 00:06:38,520
+So a class must implement the method
+mentioned in the interface.
+
+96
+00:06:38,720 --> 00:06:39,480
+This is what we saw.
+
+97
+00:06:39,680 --> 00:06:43,340
+The `draw` method must be implemented
+in the class that implements the
+
+98
+00:06:43,540 --> 00:06:44,740
+`IShape` interface.
+
+99
+00:06:45,540 --> 00:06:49,280
+A class may implement many interfaces.
+
+100
+00:06:51,240 --> 00:06:52,900
+So this is not like inheritance.
+
+101
+00:06:53,100 --> 00:06:55,100
+This is not a single superclass.
+
+102
+00:06:56,440 --> 00:07:01,060
+And an interface may be composed
+of multiple interfaces.
+
+103
+00:07:04,440 --> 00:07:08,520
+So from the typing point of view,
+it means that now when I declare
+
+104
+00:07:08,720 --> 00:07:13,840
+a collection, a type like that,
+it means that here I am restricting
+
+105
+00:07:14,040 --> 00:07:17,120
+the possible solution,
+the extensibility of the code.
+
+106
+00:07:17,900 --> 00:07:24,060
+Here I can only introduce in this
+collection instances of the `Shape`
+
+107
+00:07:24,260 --> 00:07:25,880
+class or one of its subclasses.
+
+108
+00:07:27,280 --> 00:07:31,920
+Whereas in this solution,
+I can introduce in this collection
+
+109
+00:07:32,120 --> 00:07:38,140
+any instance, any object in the
+system that its class implements
+
+110
+00:07:38,340 --> 00:07:39,100
+this interface.
+
+111
+00:07:39,980 --> 00:07:45,320
+So this is a more open design without
+restricting the evolution.
+
+112
+00:07:46,360 --> 00:07:47,660
+But don't be confused.
+
+113
+00:07:48,240 --> 00:07:50,460
+Interfaces are nominal types.
+
+114
+00:07:50,660 --> 00:07:52,340
+So it means that we give it a name.
+
+115
+00:07:52,560 --> 00:07:53,640
+It is declarative.
+
+116
+00:07:53,840 --> 00:07:56,920
+And this is really different from
+the typing, duck typing that we
+
+117
+00:07:57,120 --> 00:07:59,080
+saw in the dynamically typed context.
+
+118
+00:08:00,420 --> 00:08:04,920
+So type compatibility in this context
+is defined and based on the name,
+
+119
+00:08:05,120 --> 00:08:05,880
+the name of the type.
+
+120
+00:08:06,240 --> 00:08:12,500
+And two interfaces are only compatible
+if they have the same name,
+
+121
+00:08:13,060 --> 00:08:14,360
+regardless of their contents.
+
+122
+00:08:14,720 --> 00:08:18,620
+So it means that if I define two
+different interfaces with two different
+
+123
+00:08:18,820 --> 00:08:21,340
+names, but the same contents,
+the `draw` method inside,
+
+124
+00:08:21,880 --> 00:08:22,700
+they are not compatible.
+

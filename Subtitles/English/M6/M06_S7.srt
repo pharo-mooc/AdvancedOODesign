@@ -1,0 +1,1544 @@
+1
+00:00:04,920 --> 00:00:07,920
+- Hello everybody, welcome to this
+lecture on Double Dispatch.
+
+2
+00:00:08,120 --> 00:00:12,510
+This is an alternate lecture from
+the other one where we will really
+
+3
+00:00:12,710 --> 00:00:15,150
+add numbers as a Kata,
+as an exercise.
+
+4
+00:00:15,350 --> 00:00:19,500
+The outline is that we will see
+some fun exercises that you should do,
+
+5
+00:00:19,700 --> 00:00:24,060
+think about them, and then step
+back to see what we learned.
+
+6
+00:00:24,390 --> 00:00:28,890
+The idea is that you will do exercises
+and I will do exercises with you,
+
+7
+00:00:29,090 --> 00:00:38,280
+where you get access to three
+primitives: `addi` to add two integers,
+
+8
+00:00:38,480 --> 00:00:43,260
+`addf` to add two floats,
+and `asFloat` that converts one
+
+9
+00:00:43,460 --> 00:00:44,820
+integer into a float.
+
+10
+00:00:45,150 --> 00:00:48,150
+With that, we will build an addition
+between numbers.
+
+11
+00:00:48,350 --> 00:00:51,930
+Basically, the goal of the first
+part of the lecture is to support
+
+12
+00:00:52,130 --> 00:00:57,570
+the addition with the same `+` message
+with the numbers 1 + 2,
+
+13
+00:00:57,770 --> 00:01:02,820
+the integers 1 + 2, the float 1.1 + 2,
+
+14
+00:01:03,510 --> 00:01:06,330
+adding an integer plus a float,
+and two floats.
+
+15
+00:01:07,440 --> 00:01:12,300
+The idea is that we will not use
+any explicit conditionals.
+
+16
+00:01:12,500 --> 00:01:14,490
+Let me give you first some hints.
+
+17
+00:01:15,720 --> 00:01:19,320
+You saw in the first lecture that
+sending a message is making a choice
+
+18
+00:01:19,520 --> 00:01:23,250
+and that classes support choice
+expressions.
+
+19
+00:01:23,450 --> 00:01:30,060
+Basically, it means that we will
+have two classes: `Integer` and `Float`.
+
+20
+00:01:30,260 --> 00:01:35,730
+Nothing is new here, so we will
+
+21
+00:01:36,300 --> 00:01:37,170
+have these two.
+
+22
+00:01:37,370 --> 00:01:40,740
+And by the way, in the second part
+of the lecture, we will add fractions,
+
+23
+00:01:40,940 --> 00:01:42,510
+so we will have integers,
+floats, and fractions.
+
+24
+00:01:45,730 --> 00:01:51,310
+It means that if we have two classes,
+then we will have at least two methods
+
+25
+00:01:51,510 --> 00:01:55,090
+`+` and we will have a third one
+in Fractions in the future.
+
+26
+00:01:55,690 --> 00:02:00,070
+What I will do during this lecture
+is that you will have to fill up
+
+27
+00:02:00,270 --> 00:02:01,030
+some text.
+
+28
+00:02:01,230 --> 00:02:04,570
+What I suggest is that you try to
+do it and you just look at the video.
+
+29
+00:02:06,670 --> 00:02:09,090
+You can pause when I have a "fill
+me up :)".
+
+30
+00:02:09,290 --> 00:02:14,260
+This means that you can pause,
+take a pen at home, and try to fill
+
+31
+00:02:14,460 --> 00:02:15,220
+it up.
+
+32
+00:02:15,630 --> 00:02:18,480
+This means that you have two classes,
+`Float` and `Integer`,
+
+33
+00:02:19,020 --> 00:02:21,000
+with two methods `+`,
+`+ aNumber`.
+
+34
+00:02:21,960 --> 00:02:27,940
+It means that the exercise is to
+fill up these two methods.
+
+35
+00:02:29,760 --> 00:02:35,370
+Another hint that is a bit obvious,
+but this is very interesting to see,
+
+36
+00:02:35,730 --> 00:02:39,540
+is that when I execute a method,
+I know that the receiver of the
+
+37
+00:02:39,740 --> 00:02:43,830
+method is an instance of the class
+or a subclass of that class.
+
+38
+00:02:44,030 --> 00:02:50,390
+So, this means that I have already
+some information and we will use
+
+39
+00:02:50,590 --> 00:02:53,180
+this information as part of the
+solution.
+
+40
+00:02:54,210 --> 00:02:55,220
+Now let's start.
+
+41
+00:02:55,590 --> 00:02:58,590
+Imagine that we add one method that
+is called `sumWithInteger:`.
+
+42
+00:02:58,790 --> 00:03:05,480
+With the primitive, we know how
+to do it because we know how to
+
+43
+00:03:05,680 --> 00:03:07,070
+add two integers together.
+
+44
+00:03:09,670 --> 00:03:15,010
+This means that in the class `Integer`,
+`sumWithInteger:` should be
+
+45
+00:03:15,210 --> 00:03:15,970
+straightforward.
+
+46
+00:03:17,260 --> 00:03:18,340
+Let's look at it.
+
+47
+00:03:18,540 --> 00:03:24,190
+So, `sumWithInteger:` in the class
+`Integer`, when I have an argument
+
+48
+00:03:24,390 --> 00:03:30,610
+that is `anInteger`, I will just
+call the primitive `addi` with `self``
+
+49
+00:03:30,810 --> 00:03:32,500
+and the argument and I'm done.
+
+50
+00:03:32,700 --> 00:03:38,290
+Here, there is a strong assumption
+that the argument `anInteger` is
+
+51
+00:03:39,250 --> 00:03:41,050
+an instance of the class `Integer`.
+
+52
+00:03:41,920 --> 00:03:45,620
+Now the point is that we know that
+we have `sumWithInteger:` here,
+
+53
+00:03:46,690 --> 00:03:53,980
+so the question is, how do we use
+this `sumWithInteger:` from the
+
+54
+00:03:54,190 --> 00:03:54,950
+other one?
+
+55
+00:03:56,030 --> 00:03:58,520
+Our idea here is that we are basically
+working on that.
+
+56
+00:03:58,720 --> 00:03:59,480
+So, it should work.
+
+57
+00:03:59,680 --> 00:04:04,340
+Now we should be able to have a
+solution for `1 + 2`,
+
+58
+00:04:05,240 --> 00:04:07,430
+where 1 and 2 are integers.
+
+59
+00:04:07,630 --> 00:04:11,290
+So, imagine the solution.
+
+60
+00:04:16,760 --> 00:04:17,980
+Let's see the solution.
+
+61
+00:04:18,180 --> 00:04:22,820
+Here, what I do is that when I do
+`1 + 2`, this means that this method
+
+62
+00:04:23,020 --> 00:04:28,080
+will be executed, `aNumber` will be 2,
+and then I just send `sumWithInteger:`
+
+63
+00:04:28,730 --> 00:04:29,490
+to `aNumber`.
+
+64
+00:04:29,960 --> 00:04:33,830
+I don't know if normally that is
+`aNumber`, but at least in that
+
+65
+00:04:34,030 --> 00:04:36,410
+typical scenario, I assume that
+this is correct.
+
+66
+00:04:37,250 --> 00:04:41,330
+Since this is an integer,
+this method will be executed.
+
+67
+00:04:41,720 --> 00:04:44,000
+I ended up with the correct result.
+
+68
+00:04:45,920 --> 00:04:51,080
+Just to explain, let's take this
+code and we will make sure that
+
+69
+00:04:51,280 --> 00:04:53,600
+we understand where the arguments
+are going inside.
+
+70
+00:04:53,800 --> 00:04:57,590
+Here, we are looking at the execution
+on `1 + 2`.
+
+71
+00:04:57,790 --> 00:05:03,150
+So, 1 is an integer, so `+` will
+
+72
+00:05:03,350 --> 00:05:05,940
+be on the `Integer` class,
+so this is this method.
+
+73
+00:05:06,140 --> 00:05:10,500
+And you see here, I took the code
+and put it in parentheses,
+
+74
+00:05:10,700 --> 00:05:16,290
+or I replaced the text with the
+actual argument.
+
+75
+00:05:16,490 --> 00:05:17,520
+Here I said `1 + 2`.
+
+76
+00:05:18,420 --> 00:05:21,990
+This is this call, `1 + 2`,
+and then I will do `2 sumWithInteger:
+
+77
+00:05:22,190 --> 00:05:22,950
+1`.
+
+78
+00:05:23,430 --> 00:05:28,170
+What is super important is to see
+that we switched it and it means
+
+79
+00:05:28,370 --> 00:05:31,080
+that now I'm looking for
+`sumWithInteger:` in the class
+
+80
+00:05:31,280 --> 00:05:32,040
+`Integer`.
+
+81
+00:05:32,340 --> 00:05:33,100
+This is this one.
+
+82
+00:05:33,330 --> 00:05:40,230
+I'm calling `2 sumWithInteger:
+1` and I end up doing this.
+
+83
+00:05:41,370 --> 00:05:48,000
+By the way, this trick of looking
+out the argument, the receiver,
+
+84
+00:05:48,200 --> 00:05:52,230
+and the argument of the message
+flow within the text is a very nice
+
+85
+00:05:52,430 --> 00:05:56,100
+way to understand the ping-pong
+that is actually happening during
+
+86
+00:05:56,300 --> 00:05:57,120
+the Double Dispatch.
+
+87
+00:05:57,320 --> 00:06:01,890
+I saw that this is really helping
+people to understand the Double
+
+88
+00:06:02,090 --> 00:06:02,850
+Dispatch.
+
+89
+00:06:04,240 --> 00:06:08,680
+Now the question is: what about
+2 + a Float?
+
+90
+00:06:09,100 --> 00:06:13,000
+Because when I do that,
+if this is a Float, I will have 2 here,
+
+91
+00:06:13,200 --> 00:06:18,460
+`aNumber` will be a Float,
+and I have 1.2 with 2.
+
+92
+00:06:19,090 --> 00:06:22,930
+And the system said, "I don't know
+what is `sumWithInteger:` when I'm
+
+93
+00:06:23,130 --> 00:06:23,890
+a Float".
+
+94
+00:06:24,090 --> 00:06:24,850
+So, you know what?
+
+95
+00:06:25,180 --> 00:06:28,840
+We should define `sumWithInteger:`
+on `Float`.
+
+96
+00:06:30,070 --> 00:06:30,850
+Let's do it!
+
+97
+00:06:31,050 --> 00:06:33,160
+What is `` sumWithInteger:` on `Float`?
+
+98
+00:06:35,520 --> 00:06:38,630
+Take a moment; normally with the
+primitives, we know how to do it.
+
+99
+00:06:38,830 --> 00:06:44,660
+So, `sumWithInteger:` with `Float`,
+this is basically calling add Float,
+
+100
+00:06:44,860 --> 00:06:50,120
+`addf` with `self, asFloat`,
+and converting the integer as a Float,
+
+101
+00:06:50,320 --> 00:06:51,080
+and we have it.
+
+102
+00:06:53,220 --> 00:06:57,060
+Now we have the solution,
+so this means that when I send a
+
+103
+00:06:57,260 --> 00:07:04,110
+message `+` to 2, I will select
+this method and 1.2 will be here
+
+104
+00:07:04,310 --> 00:07:08,220
+because 1.2 is here, and then I
+will call `sumWithInteger:`, but
+
+105
+00:07:08,420 --> 00:07:09,180
+on the class `Float`.
+
+106
+00:07:09,380 --> 00:07:13,140
+So, I will call this one here and
+then I convert so I'm done.
+
+107
+00:07:13,340 --> 00:07:19,470
+Again, I just did the same,
+you can press, and you can follow.
+
+108
+00:07:19,670 --> 00:07:20,580
+I did the same.
+
+109
+00:07:20,780 --> 00:07:22,980
+I see, okay, yes, it goes like that.
+
+110
+00:07:23,180 --> 00:07:26,460
+This guy is here, and it goes like that.
+
+111
+00:07:26,660 --> 00:07:32,400
+So, now I call this guy here and
+it happens.
+
+112
+00:07:32,600 --> 00:07:36,270
+Again, what you see, and this is
+really important, is that I send
+
+113
+00:07:36,470 --> 00:07:38,370
+a new message to the argument.
+
+114
+00:07:38,570 --> 00:07:40,530
+What do we do when we add two Floats?
+
+115
+00:07:40,730 --> 00:07:45,060
+Because before we only had `Integer`
+and now we have `Float`.
+
+116
+00:07:46,470 --> 00:07:48,860
+This means that we have to define
+`+` on `Integer`.
+
+117
+00:07:49,110 --> 00:07:51,060
+How do we define `+` on `Integer`?
+
+118
+00:07:51,420 --> 00:07:53,250
+Take a moment to think about it.
+
+119
+00:07:53,450 --> 00:08:01,850
+Basically, what we should do is
+we should define a new method like that.
+
+120
+00:08:02,050 --> 00:08:02,960
+We should say `aNumber sumWithFloat:`.
+
+121
+00:08:03,160 --> 00:08:03,920
+Why?
+
+122
+00:08:04,430 --> 00:08:10,420
+Because we don't know if 'aNumber'
+is an `Integer` or a `Float`.
+
+123
+00:08:10,620 --> 00:08:16,850
+So, since we don't know,
+we define `+` with this method.
+
+124
+00:08:17,050 --> 00:08:21,560
+The impact is that we will have
+to define `sumWithFloat:` on the
+
+125
+00:08:21,760 --> 00:08:23,420
+class `Integer` and the class `Float`.
+
+126
+00:08:23,620 --> 00:08:30,830
+Now, you see, I added `sumWithFloat:`
+on two classes: the class `Integer`
+
+127
+00:08:31,030 --> 00:08:31,790
+and the class `Float`.
+
+128
+00:08:31,990 --> 00:08:36,260
+So, `sumWithFloat:` on the class
+`Float` is easy because I used the
+
+129
+00:08:36,460 --> 00:08:40,640
+same primitive, `addf` with `self`
+and `aFloat` because this is a Float.
+
+130
+00:08:41,180 --> 00:08:45,280
+And here, `sumWithFloat:` on the
+class `Integer`, what do I do?
+
+131
+00:08:45,480 --> 00:08:50,900
+I have `aFloat` as an argument,
+so I convert the argument `asFloat`
+
+132
+00:08:51,260 --> 00:08:52,020
+and I add it.
+
+133
+00:08:52,610 --> 00:09:01,380
+And what you see is that with this
+piece of code, we can add `aFloat
+
+134
+00:09:01,580 --> 00:09:04,250
++ aNumber` and `aNumber + aFloat`.
+
+135
+00:09:07,160 --> 00:09:08,970
+You can also do the same exercise.
+
+136
+00:09:09,170 --> 00:09:12,470
+What I suggest is that I will not
+go into the details, but you see
+
+137
+00:09:12,670 --> 00:09:19,910
+that if I have the `+` here,
+I have a Float, so the Float means
+
+138
+00:09:20,110 --> 00:09:23,870
+that I will execute this one,
+and then I will execute `sumWithFloat:`,
+
+139
+00:09:24,680 --> 00:09:30,360
+which is this one, and then
+`sumWithFloat:`.
+
+140
+00:09:31,540 --> 00:09:35,950
+You can follow each time the flow
+of messages.
+
+141
+00:09:36,150 --> 00:09:42,320
+So, what you see is that the previous
+code supported all that.
+
+142
+00:09:43,190 --> 00:09:46,670
+If you do not get it fully,
+what I suggest you do,
+
+143
+00:09:47,090 --> 00:09:50,960
+and it works really well,
+is to do exactly the exercise of
+
+144
+00:09:51,160 --> 00:09:56,240
+following the argument on the text,
+on the code.
+
+145
+00:09:56,440 --> 00:10:06,200
+Basically, you take this,
+you take cases, and you select where
+
+146
+00:10:06,400 --> 00:10:08,660
+the methods are going,
+and which method is executed;
+
+147
+00:10:08,860 --> 00:10:09,890
+it works really well.
+
+148
+00:10:14,270 --> 00:10:15,030
+Let's step back.
+
+149
+00:10:15,230 --> 00:10:16,190
+We see that we have two things.
+
+150
+00:10:16,390 --> 00:10:17,180
+We have two kinds of messages.
+
+151
+00:10:17,380 --> 00:10:23,330
+We have the message `+` defined
+on two classes, `Integer` and `Float`.
+
+152
+00:10:24,360 --> 00:10:29,400
+And we have `sumWithInteger:` or
+`sumWithFloat:` that are defined
+
+153
+00:10:29,600 --> 00:10:32,070
+on two classes, `Integer` and `Float`.
+
+154
+00:10:33,000 --> 00:10:36,960
+The fact that I am sending this message,
+I am doing a second dispatch.
+
+155
+00:10:37,440 --> 00:10:40,680
+I have a first dispatch between
+the two implementations here,
+
+156
+00:10:40,880 --> 00:10:44,010
+and I have a second dispatch between
+the two implementations here.
+
+157
+00:10:44,210 --> 00:10:49,350
+So, this means that `+` will select
+the correct one and once we send
+
+158
+00:10:49,550 --> 00:10:52,920
+the message `sumWithInteger:` or
+`sumWithFloat:`, we will also select
+
+159
+00:10:53,120 --> 00:10:56,160
+the correct methods of each of those
+methods.
+
+160
+00:10:56,360 --> 00:11:00,120
+Now, let's say that we want to add
+fractions.
+
+161
+00:11:00,510 --> 00:11:05,070
+A fraction is an object with a numerator
+and denominator, like in maths,
+
+162
+00:11:05,550 --> 00:11:06,690
+nothing special.
+
+163
+00:11:07,560 --> 00:11:08,490
+This is a fraction.
+
+164
+00:11:10,050 --> 00:11:14,640
+We know how to compute `asFloat`
+getting the denominator and getting
+
+165
+00:11:14,840 --> 00:11:15,600
+the numerator.
+
+166
+00:11:15,800 --> 00:11:17,670
+And now we want to support this.
+
+167
+00:11:17,870 --> 00:11:22,350
+I want to add a fraction plus an
+integer.
+
+168
+00:11:22,550 --> 00:11:26,980
+I want to add a float with a fraction
+or fractions together.
+
+169
+00:11:29,230 --> 00:11:30,250
+How do we do that?
+
+170
+00:11:31,420 --> 00:11:32,680
+First things first.
+
+171
+00:11:32,880 --> 00:11:39,220
+We have a Fraction class and then
+we define a `+` method on this Fraction
+
+172
+00:11:39,420 --> 00:11:40,180
+class.
+
+173
+00:11:40,380 --> 00:11:41,580
+You see, it follows the same pattern.
+
+174
+00:11:42,130 --> 00:11:43,480
+What should we do?
+
+175
+00:11:44,390 --> 00:11:50,120
+Take a moment, you will see that
+we should probably add something
+
+176
+00:11:50,320 --> 00:11:55,580
+like that: `sumWithFraction`.
+
+177
+00:11:58,800 --> 00:12:00,530
+This is what we did for the previous
+one.
+
+178
+00:12:00,730 --> 00:12:01,500
+Let's check.
+
+179
+00:12:01,700 --> 00:12:03,960
+Yes, this is correct.
+
+180
+00:12:04,560 --> 00:12:10,380
+Now it means that we will have to
+define `sumWithFraction` in the
+
+181
+00:12:10,580 --> 00:12:13,080
+class `Fraction`, the class `Integer`,
+and the class `Float`.
+
+182
+00:12:14,040 --> 00:12:18,240
+Let's start with the class `Fraction`.
+
+183
+00:12:18,440 --> 00:12:31,620
+A fraction in a fraction,
+you know the maths, this is that
+
+184
+00:12:31,820 --> 00:12:32,580
+kind of thing.
+
+185
+00:12:34,960 --> 00:12:35,720
+Let's do it.
+
+186
+00:12:36,640 --> 00:12:40,480
+You see, this is a bit verbose because
+I send messages, but I create a
+
+187
+00:12:40,680 --> 00:12:44,050
+fraction with a numerator and a
+denominator, and this is done.
+
+188
+00:12:45,360 --> 00:12:49,740
+Now it means that this code supports
+this because when I send the message
+
+189
+00:12:49,940 --> 00:12:54,270
+`+`, I will select the `+` in the
+class Fraction, this one,
+
+190
+00:12:54,720 --> 00:12:58,350
+and then I will use `sumWithFraction.`
+This is a fraction, so I will create
+
+191
+00:12:58,550 --> 00:12:59,310
+these kinds of things.
+
+192
+00:12:59,510 --> 00:13:02,820
+With these two methods,
+I already support fraction addition,
+
+193
+00:13:03,020 --> 00:13:03,780
+but I want more.
+
+194
+00:13:03,990 --> 00:13:09,930
+I want fractions plus integers and
+fractions plus floats.
+
+195
+00:13:10,470 --> 00:13:11,280
+Let's do it!
+
+196
+00:13:11,480 --> 00:13:17,400
+Now, we will define these two methods
+in the two different classes.
+
+197
+00:13:19,050 --> 00:13:21,120
+This is exactly this definition.
+
+198
+00:13:21,870 --> 00:13:29,400
+For this one, we have a float added
+to a fraction, so we have 0.3 +
+
+199
+00:13:29,600 --> 00:13:30,960
+a fraction, 2/3.
+
+200
+00:13:32,010 --> 00:13:35,550
+We will convert this one as a float
+and we will add it.
+
+201
+00:13:35,750 --> 00:13:43,480
+Here, this is what we do,
+we said: let's convert the fraction
+
+202
+00:13:43,680 --> 00:13:49,060
+as a float and `self` is a float,
+and then we invoke the primitive
+
+203
+00:13:49,260 --> 00:13:55,450
+`add float` that will take these
+two and do the addition.
+
+204
+00:13:57,250 --> 00:14:03,310
+This means that if we see,
+now we'll manage to support well
+
+205
+00:14:04,570 --> 00:14:10,810
+a fraction plus fraction,
+a fraction plus a float,
+
+206
+00:14:11,440 --> 00:14:14,740
+and a fraction plus an integer.
+
+207
+00:14:16,510 --> 00:14:19,840
+But we have still some things to fix.
+
+208
+00:14:22,230 --> 00:14:26,510
+What about 1 + a fraction?
+
+209
+00:14:26,710 --> 00:14:27,950
+This means that I have an integer.
+
+210
+00:14:28,150 --> 00:14:33,440
+Here, when I send the message `+`,
+I will look in the class `Integer`.
+
+211
+00:14:35,180 --> 00:14:36,620
+I will look for this `+`.
+
+212
+00:14:37,370 --> 00:14:42,710
+What you see is that the definition
+of `+` was the following.
+
+213
+00:14:42,910 --> 00:14:47,870
+It said, "Okay, I have a number
+and I will send `sumWithInteger:`
+
+214
+00:14:49,490 --> 00:14:51,440
+to this number, here a fraction".
+
+215
+00:14:51,640 --> 00:14:53,450
+What do we have to do?
+
+216
+00:14:53,650 --> 00:14:56,900
+We have to define the method
+`sumWithInteger:` inside the Fraction
+
+217
+00:14:57,100 --> 00:14:57,860
+class.
+
+218
+00:14:58,060 --> 00:14:59,620
+So, let's do that.
+
+219
+00:14:59,820 --> 00:15:04,800
+Basically, here we end up with the
+
+220
+00:15:05,000 --> 00:15:09,600
+same kind of code because we will
+have a fraction with an integer.
+
+221
+00:15:09,800 --> 00:15:14,520
+So, a fraction plus an integer,
+we will do…
+
+222
+00:15:19,490 --> 00:15:21,260
+And this is what this code is doing.
+
+223
+00:15:21,460 --> 00:15:26,030
+I create a new function where I
+sum and multiply the denum,
+
+224
+00:15:26,230 --> 00:15:26,990
+etc.
+
+225
+00:15:27,350 --> 00:15:34,340
+This means that with this definition,
+now we support the addition of an
+
+226
+00:15:34,540 --> 00:15:35,990
+integer with a fraction.
+
+227
+00:15:36,190 --> 00:15:41,870
+Basically, we should do exactly
+the same for this case because the
+
+228
+00:15:42,070 --> 00:15:43,190
+receiver can be a float.
+
+229
+00:15:43,390 --> 00:15:48,360
+So, when the receiver is a float,
+what should we do?
+
+230
+00:15:48,560 --> 00:15:53,520
+We should define the method
+`sumWithFloat:` in the class Fraction.
+
+231
+00:15:54,090 --> 00:15:57,810
+What I suggest is that you do it
+because I know how to do it and
+
+232
+00:15:58,010 --> 00:15:58,980
+this is always the same.
+
+233
+00:16:00,150 --> 00:16:03,300
+Now I just want to show you the
+complete code.
+
+234
+00:16:03,500 --> 00:16:09,690
+Here, this is the complete code
+for the integration and the definition
+
+235
+00:16:09,890 --> 00:16:11,530
+of the management of fractions.
+
+236
+00:16:11,730 --> 00:16:18,420
+So, you have three methods in the
+
+237
+00:16:19,610 --> 00:16:23,720
+class Fraction, one method in Integer,
+and one method in Float,
+
+238
+00:16:25,500 --> 00:16:32,910
+plus the `+` to support the integration
+of additions that can manage Float,
+
+239
+00:16:33,180 --> 00:16:35,220
+Fraction, and Integer.
+
+240
+00:16:37,700 --> 00:16:38,840
+Now you can relax.
+
+241
+00:16:39,140 --> 00:16:42,750
+If you really want to understand
+for real or if you need it,
+
+242
+00:16:42,950 --> 00:16:45,710
+just take a pen and follow the calls.
+
+243
+00:16:46,160 --> 00:16:51,350
+The code in the previous slide manages
+all those cases.
+
+244
+00:16:51,550 --> 00:16:53,300
+So, this is quite nice.
+
+245
+00:16:54,770 --> 00:17:00,770
+And even more than that,
+it will manage 1.5 + 0.5,
+
+246
+00:17:00,970 --> 00:17:02,900
+for example, without problems.
+
+247
+00:17:03,100 --> 00:17:07,640
+So, let's step back.
+
+248
+00:17:07,840 --> 00:17:15,050
+What we saw is that the essence
+of Double Dispatch is in this code.
+
+249
+00:17:15,350 --> 00:17:23,080
+You have a class X, you have your
+message +, and then an argument.
+
+250
+00:17:24,130 --> 00:17:30,740
+And then, what we do is that we
+send a new message to the argument.
+
+251
+00:17:31,280 --> 00:17:36,990
+This means that the system selects
+first the message based…
+
+252
+00:17:37,190 --> 00:17:42,290
+if you have an X, it will select
+this one, and we will have a Y that
+
+253
+00:17:42,490 --> 00:17:46,940
+will have plus a something,
+and then we will do the same:
+
+254
+00:17:47,140 --> 00:17:54,070
+a something `sumWithY:self`.
+
+255
+00:17:55,110 --> 00:17:57,760
+So, the first time when we send a message
+
+256
+00:17:58,930 --> 00:18:00,640
+to 'aX', it will select this one.
+
+257
+00:18:00,840 --> 00:18:04,720
+If we have 'aY' + something,
+we will select this one,
+
+258
+00:18:04,920 --> 00:18:13,120
+and then we will have the other
+messages that are the helper message
+
+259
+00:18:13,320 --> 00:18:14,770
+where we will do the second dispatch.
+
+260
+00:18:15,040 --> 00:18:18,970
+In fact, we have one dispatch and
+a second dispatch.
+
+261
+00:18:19,170 --> 00:18:21,310
+That's why this is called Double
+Dispatch.
+
+262
+00:18:23,740 --> 00:18:28,240
+What you see is that we could add
+`Fraction` without changing any
+
+263
+00:18:28,440 --> 00:18:29,740
+of the previous methods.
+
+264
+00:18:30,760 --> 00:18:36,270
+This is quite cool because this
+means that we could add a complex
+
+265
+00:18:36,470 --> 00:18:38,460
+number or something else to the story.
+
+266
+00:18:40,470 --> 00:18:44,640
+This is an illustration of sending
+a message is making a choice,
+
+267
+00:18:45,090 --> 00:18:48,330
+and this is based on the idea that
+you have a primary message and double
+
+268
+00:18:48,530 --> 00:18:49,840
+dispatching messages.
+
+269
+00:18:50,040 --> 00:18:53,730
+What you should notice also is that
+sometimes people do triple dispatch,
+
+270
+00:18:54,180 --> 00:18:59,690
+typically for the graphics library,
+because they have a canvas,
+
+271
+00:19:00,060 --> 00:19:05,010
+Cairo or Metal for example,
+and they will select the pen - is
+
+272
+00:19:05,210 --> 00:19:06,790
+it a line like that?
+
+273
+00:19:06,990 --> 00:19:10,020
+- and the texture inside the brush.
+
+274
+00:19:11,250 --> 00:19:14,190
+They don't want to do checks,
+so they can do a triple dispatch
+
+275
+00:19:14,460 --> 00:19:15,810
+to do these kinds of things.
+
+276
+00:19:18,220 --> 00:19:21,160
+What you should see is that Double
+Dispatch is really the essence of
+
+277
+00:19:21,360 --> 00:19:22,570
+the Visitor Design Pattern.
+
+278
+00:19:22,770 --> 00:19:29,020
+Then, we will use it to do the ping
+pong between composite patterns
+
+279
+00:19:29,380 --> 00:19:35,560
+and some algorithms that will be
+applied to those composite structures.
+
+280
+00:19:35,760 --> 00:19:40,360
+Again, the Double Dispatch is a
+clear illustration of the "Don't ask,
+
+281
+00:19:40,560 --> 00:19:41,320
+Tell" principle.
+
+282
+00:19:42,540 --> 00:19:47,730
+And it is often used for events
+and drawings and things like that.
+
+283
+00:19:47,930 --> 00:19:53,490
+Now, one question is when not to
+
+284
+00:19:53,690 --> 00:19:54,850
+use Double Dispatch.
+
+285
+00:19:55,050 --> 00:19:58,080
+In fact, first, the simple one is
+that if you don't have a different
+
+286
+00:19:58,280 --> 00:20:00,410
+class to dispatch on,
+then you cannot use it.
+
+287
+00:20:00,610 --> 00:20:02,940
+This is not that you can,
+this is that you cannot.
+
+288
+00:20:03,140 --> 00:20:08,910
+Basically, you need a different
+instance of a different class to
+
+289
+00:20:09,110 --> 00:20:12,630
+be able to dispatch, to execute
+a different method.
+
+290
+00:20:12,830 --> 00:20:19,860
+Second, what I would say is that
+if you have a limited case with
+
+291
+00:20:20,060 --> 00:20:26,310
+two or three methods that you have
+to check and you know that it will
+
+292
+00:20:26,510 --> 00:20:30,840
+never change, maybe you don't have
+to bother to introduce Double Dispatch.
+
+293
+00:20:33,360 --> 00:20:35,940
+What are the drawbacks of Double
+Dispatch?
+
+294
+00:20:36,660 --> 00:20:42,070
+Overusing it may force to create
+a lot of many little classes.
+
+295
+00:20:42,270 --> 00:20:45,630
+It can lead to a design that is
+a bit more obscure and difficult
+
+296
+00:20:45,830 --> 00:20:46,590
+to follow.
+
+297
+00:20:46,790 --> 00:20:49,350
+Sometimes, a simple condition can
+be good too.
+
+298
+00:20:49,710 --> 00:20:52,440
+We should not be ultimate on that.
+
+299
+00:20:52,830 --> 00:20:54,420
+Design is about tradeoffs.
+
+300
+00:20:54,620 --> 00:20:56,730
+And then, you have to decide.
+
+301
+00:20:56,930 --> 00:20:59,430
+Now, for you to decide,
+you should really understand how
+
+302
+00:20:59,630 --> 00:21:02,310
+it works and practice it so that
+you can say, "No, I don't want to
+
+303
+00:21:02,610 --> 00:21:04,200
+use it" or "I want to use it".
+
+304
+00:21:04,400 --> 00:21:11,690
+Now, I would like to talk about
+overloading because Double Dispatch
+
+305
+00:21:11,890 --> 00:21:16,080
+is also useful in statically typed
+languages such as Java.
+
+306
+00:21:16,280 --> 00:21:21,640
+Sometimes, people don't understand
+it and they get into trouble.
+
+307
+00:21:21,840 --> 00:21:26,690
+What I mean is that the typical
+case of a Visitor Design Pattern
+
+308
+00:21:26,890 --> 00:21:31,700
+where you will use only one visit
+method that uses the overloading
+
+309
+00:21:31,900 --> 00:21:38,480
+of the language will work sometimes
+and sometimes won't work because
+
+310
+00:21:38,680 --> 00:21:41,300
+the static typing will select the
+wrong methods.
+
+311
+00:21:41,500 --> 00:21:47,180
+So, if you use overloading for visitors,
+you will learn it the hard way.
+
+312
+00:21:47,380 --> 00:21:50,270
+And I think that in any case,
+this is good because you will learn it.
+
+313
+00:21:50,470 --> 00:21:55,390
+But what I know is that I will not
+use overloading to support Double
+
+314
+00:21:55,590 --> 00:22:00,200
+Dispatch because it does not work
+in real cases.
+
+315
+00:22:00,400 --> 00:22:08,100
+In conclusion, what you saw is that
+Double Dispatch is powerful.
+
+316
+00:22:08,300 --> 00:22:13,290
+We could implement all this conversion
+between this addition without any
+
+317
+00:22:13,490 --> 00:22:14,340
+conditional.
+
+318
+00:22:14,540 --> 00:22:15,310
+This is modular.
+
+319
+00:22:15,510 --> 00:22:19,860
+We could add the fraction without
+changing any methods.
+
+320
+00:22:20,610 --> 00:22:23,970
+At the end of the day,
+what we did was just send an extra
+
+321
+00:22:24,170 --> 00:22:28,740
+message to the argument and we'll
+use late binding so that the correct
+
+322
+00:22:28,940 --> 00:22:29,820
+method is executed.
+
+323
+00:22:30,020 --> 00:22:33,360
+So, in the end, this is super simple.
+
+324
+00:22:34,620 --> 00:22:37,800
+Now what you should pay attention
+to is that if you use Double Dispatch,
+
+325
+00:22:38,400 --> 00:22:43,830
+you can make the program execution
+a bit difficult to follow for people
+
+326
+00:22:44,030 --> 00:22:46,650
+when they are debugging or things
+like that, because suddenly another
+
+327
+00:22:46,850 --> 00:22:51,480
+object can receive a message and
+you are not expecting it or things
+
+328
+00:22:51,680 --> 00:22:52,440
+like that.
+
+329
+00:22:52,830 --> 00:22:55,020
+At runtime, it's happened,
+but when you read the code,
+
+330
+00:22:55,220 --> 00:22:58,710
+especially typically when you have
+a dynamically typed language,
+
+331
+00:22:58,910 --> 00:23:01,020
+this may not be obvious.
+
+332
+00:23:01,220 --> 00:23:04,050
+You should pay attention that this
+is potentially a drawback of the
+
+333
+00:23:04,250 --> 00:23:05,010
+solution.
+

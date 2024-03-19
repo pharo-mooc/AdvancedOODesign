@@ -1,0 +1,745 @@
+1
+00:00:04,530 --> 00:00:06,830
+Hello, welcome to this lecture.
+
+2
+00:00:07,390 --> 00:00:09,830
+In this presentation,
+we are going to introduce the idea
+
+3
+00:00:10,030 --> 00:00:10,790
+of `TypeObject`.
+
+4
+00:00:11,550 --> 00:00:15,350
+The goal for this presentation is
+to introduce the difference between
+
+5
+00:00:15,550 --> 00:00:20,230
+having information for a set of objects,
+a family of objects, and some specific
+
+6
+00:00:20,430 --> 00:00:21,370
+for each of them.
+
+7
+00:00:22,410 --> 00:00:26,250
+We are going to see that this is
+another way of sharing the information,
+
+8
+00:00:26,450 --> 00:00:28,670
+and we are going finally to introduce
+`TypeObject`.
+
+9
+00:00:30,290 --> 00:00:31,870
+Let's start with an example.
+
+10
+00:00:32,490 --> 00:00:36,770
+Imagine that we have a collection
+of cactus, and we have a family
+
+11
+00:00:36,970 --> 00:00:39,590
+of cactus of different kinds.
+
+12
+00:00:39,790 --> 00:00:43,970
+We will have different species of
+cactus, but we are going to have
+
+13
+00:00:44,170 --> 00:00:47,150
+different cactus of each of these
+species.
+
+14
+00:00:48,030 --> 00:00:53,730
+So we are going to have information
+that is depending for each of the
+
+15
+00:00:53,930 --> 00:00:56,430
+plants and for each of the families.
+
+16
+00:00:57,230 --> 00:01:00,970
+We are going to have here the difference
+between having information for each
+
+17
+00:01:01,170 --> 00:01:05,490
+of the elements, for each of the
+individuals in our collection and
+
+18
+00:01:05,690 --> 00:01:07,470
+the description of all of them.
+
+19
+00:01:08,450 --> 00:01:11,150
+Because for each of them,
+we can have different flowers,
+
+20
+00:01:11,350 --> 00:01:16,630
+different colors, different pest attack,
+different dates of planting and
+
+21
+00:01:16,830 --> 00:01:17,590
+collecting.
+
+22
+00:01:17,790 --> 00:01:22,150
+And this information is different
+from each of the individual plants,
+
+23
+00:01:22,350 --> 00:01:25,490
+but we are going to have common
+information for each of the species.
+
+24
+00:01:28,010 --> 00:01:31,630
+Still, we are going to have,
+as I say, common information for
+
+25
+00:01:31,830 --> 00:01:33,250
+all the plants of a given species.
+
+26
+00:01:33,450 --> 00:01:38,510
+For example, we are going to have
+the name, the type, the origin,
+
+27
+00:01:38,710 --> 00:01:40,930
+and all the information that we
+can have from them.
+
+28
+00:01:42,470 --> 00:01:45,250
+Let's see another example to make
+it clear.
+
+29
+00:01:46,010 --> 00:01:50,310
+If we have a system to handle video
+rental, we are going to have the
+
+30
+00:01:50,510 --> 00:01:54,150
+difference between each physical
+movie and the movie itself.
+
+31
+00:01:54,350 --> 00:01:59,490
+We are going to have each object
+representing a BluRay and a specific
+
+32
+00:01:59,690 --> 00:02:00,830
+instance of a BluRay.
+
+33
+00:02:01,030 --> 00:02:05,510
+And we are going to see there,
+for example, if the BluRay is scratched
+
+34
+00:02:05,710 --> 00:02:07,230
+or if the box is broken.
+
+35
+00:02:07,430 --> 00:02:10,790
+And then we are going to have
+information about the movie itself.
+
+36
+00:02:13,970 --> 00:02:18,810
+In this case, how we can implement
+this dichotomy of having information
+
+37
+00:02:19,010 --> 00:02:24,090
+that is common to many objects and
+information that is specific of
+
+38
+00:02:24,290 --> 00:02:25,050
+each instance?
+
+39
+00:02:25,330 --> 00:02:29,310
+Well, we can implement this by two
+different solutions.
+
+40
+00:02:29,510 --> 00:02:32,830
+The first solution is that we can
+have all the information in a given
+
+41
+00:02:33,030 --> 00:02:36,250
+class, in a given object.
+
+42
+00:02:36,930 --> 00:02:41,190
+So we can have in the instance of
+the movie or in the instance of
+
+43
+00:02:41,390 --> 00:02:44,910
+the cactus, all the information
+from the family and from itself,
+
+44
+00:02:45,430 --> 00:02:46,830
+or we can have them separate.
+
+45
+00:02:47,150 --> 00:02:48,710
+Let's see the first alternative.
+
+46
+00:02:50,010 --> 00:02:54,490
+Let's put them together all in a
+single instance, in a single object.
+
+47
+00:02:54,830 --> 00:02:58,890
+So we will have in the same object
+all the common information.
+
+48
+00:02:59,090 --> 00:03:03,750
+We are going to have the information,
+for example, for the video,
+
+49
+00:03:03,950 --> 00:03:08,110
+we are going to have the information
+if the box is okay, if this is scratched
+
+50
+00:03:08,310 --> 00:03:09,070
+or not.
+
+51
+00:03:09,270 --> 00:03:12,330
+But also, we are going to have the
+title of the movie, the actors in
+
+52
+00:03:12,530 --> 00:03:15,750
+the movie, and all the information
+that is common to all the instances.
+
+53
+00:03:16,310 --> 00:03:20,470
+The problem with this is that we
+will not be able to change this
+
+54
+00:03:20,670 --> 00:03:24,670
+information dynamically in two senses.
+
+55
+00:03:24,870 --> 00:03:29,630
+One is that we cannot add new
+information or we cannot change
+
+56
+00:03:29,830 --> 00:03:30,830
+the type of the movie.
+
+57
+00:03:31,030 --> 00:03:33,790
+We cannot say that now,
+this movie is one or other.
+
+58
+00:03:34,750 --> 00:03:39,830
+And also our instance,
+we are going to get really big because
+
+59
+00:03:40,030 --> 00:03:43,590
+we start having all the information
+related to this movie.
+
+60
+00:03:45,090 --> 00:03:49,390
+Moreover, we are going to have
+duplicated information in all instances.
+
+61
+00:03:49,590 --> 00:03:53,510
+For example, if we have,
+again, the same example about movies,
+
+62
+00:03:53,710 --> 00:03:58,470
+if we have two objects,
+two instances representing two different
+
+63
+00:03:58,670 --> 00:04:02,870
+BluRays of a single movie,
+I don't know the movie Rambo III,
+
+64
+00:04:03,230 --> 00:04:08,770
+we are going to have the same duplicated
+information about the actors,
+
+65
+00:04:08,970 --> 00:04:13,110
+about the movie, about the release
+date and common information duplicated
+
+66
+00:04:13,950 --> 00:04:15,270
+in both objects.
+
+67
+00:04:16,150 --> 00:04:22,030
+So if we have to modify them because
+we have to fix some information on this,
+
+68
+00:04:22,230 --> 00:04:24,290
+we are going to modify all the
+instances.
+
+69
+00:04:24,490 --> 00:04:27,450
+And also, we have duplication of
+this information.
+
+70
+00:04:28,710 --> 00:04:31,870
+So the idea is to introduce the
+concept of `TypeObject`.
+
+71
+00:04:32,490 --> 00:04:37,810
+In `TypeObject`, we are going to
+describe in a single object the
+
+72
+00:04:38,010 --> 00:04:41,830
+description of our initial object.
+
+73
+00:04:42,030 --> 00:04:46,730
+For example, we are going to separate
+the `plant` and its `plantDescription`.
+
+74
+00:04:48,050 --> 00:04:51,450
+What we are going to put in each
+of these objects, we are going to
+
+75
+00:04:51,650 --> 00:04:55,570
+have two different objects,
+is that we are going to have in
+
+76
+00:04:55,770 --> 00:05:03,110
+the `plant` side all the information
+that is specific to this `plant`.
+
+77
+00:05:03,510 --> 00:05:08,330
+And we are going to have,
+for example, there the position,
+
+78
+00:05:08,530 --> 00:05:16,730
+what is in our collection physically
+or the date we planted it or a lot
+
+79
+00:05:16,930 --> 00:05:18,810
+of the information that is specific
+to this `plant`.
+
+80
+00:05:19,010 --> 00:05:21,610
+And then, in the description,
+we are going to put the information
+
+81
+00:05:21,810 --> 00:05:26,310
+that is common to all the plants
+of this same species.
+
+82
+00:05:26,910 --> 00:05:31,510
+We are going to have,
+for example, the scientific name
+
+83
+00:05:31,710 --> 00:05:35,710
+of the species, the kind of species,
+the origin of the species,
+
+84
+00:05:35,910 --> 00:05:42,170
+what are the specific features of
+this family of plants.
+
+85
+00:05:42,470 --> 00:05:46,890
+In this case, we are going to share
+the description between many instances.
+
+86
+00:05:47,110 --> 00:05:53,150
+We are going to have different objects
+`plant`, that represent different
+
+87
+00:05:53,350 --> 00:05:55,470
+cacti in our collection.
+
+88
+00:05:58,280 --> 00:06:03,960
+And all of them will share the same
+
+89
+00:06:04,160 --> 00:06:09,440
+description representing the species
+of our plants.
+
+90
+00:06:10,540 --> 00:06:15,460
+We are going to gather all the
+description-specific properties
+
+91
+00:06:15,660 --> 00:06:17,000
+in a single object.
+
+92
+00:06:17,200 --> 00:06:21,460
+That is the objective of the
+`TypeObject`, having an object that
+
+93
+00:06:21,660 --> 00:06:25,320
+describes the common information
+of many of them.
+
+94
+00:06:26,940 --> 00:06:29,740
+In this way, we don't have repeated
+information.
+
+95
+00:06:30,020 --> 00:06:34,240
+We don't have information in each
+of the instances, but the common one,
+
+96
+00:06:34,440 --> 00:06:37,560
+we pass it all together in a single
+point.
+
+97
+00:06:38,000 --> 00:06:42,760
+Remember that having a single point
+is always better because if we want
+
+98
+00:06:42,960 --> 00:06:46,700
+to update the information here,
+it's easy and we can change it only
+
+99
+00:06:46,900 --> 00:06:47,660
+once.
+
+100
+00:06:47,860 --> 00:06:51,020
+And also, we don't have a duplication
+in memory.
+
+101
+00:06:52,080 --> 00:06:57,360
+More specific example,
+we want to define the instance-specific
+
+102
+00:06:58,020 --> 00:07:01,940
+properties, the properties that
+are specific for a single object.
+
+103
+00:07:02,960 --> 00:07:09,400
+We want to define properties that
+are basically from the description
+
+104
+00:07:09,600 --> 00:07:10,560
+of that instance.
+
+105
+00:07:11,120 --> 00:07:12,340
+In this example, it's clearer.
+
+106
+00:07:13,060 --> 00:07:16,380
+We see that for the `plant`,
+we are going to have specific
+
+107
+00:07:16,580 --> 00:07:18,400
+information for each of them.
+
+108
+00:07:18,600 --> 00:07:22,920
+For example, the size,
+the age, when it was attacked by
+
+109
+00:07:23,120 --> 00:07:23,880
+a given pest.
+
+110
+00:07:24,520 --> 00:07:28,420
+And in the description,
+we are going to have all the common
+
+111
+00:07:28,620 --> 00:07:31,020
+information for all the same species.
+
+112
+00:07:31,220 --> 00:07:36,140
+For example, in which set of countries
+is it or what are the other names for it.
+
+113
+00:07:36,480 --> 00:07:44,360
+Like this, we can have divided what
+is the instance-specific information
+
+114
+00:07:44,560 --> 00:07:48,780
+and we can have the kind or `TypeObject`
+information.
+
+115
+00:07:49,220 --> 00:07:54,260
+Having the `TypeObject` as a separate
+object of our instance is that we
+
+116
+00:07:54,460 --> 00:07:59,280
+can change depending on the domain,
+we are now able to change the
+
+117
+00:07:59,480 --> 00:08:05,780
+`TypeObject` of a `plant` or of
+a given instance.
+
+118
+00:08:05,980 --> 00:08:10,540
+In this case, it depends a lot on
+the domain, but we can do that.
+
+119
+00:08:10,740 --> 00:08:14,160
+Our descriptions evolve while the
+program executes.
+
+120
+00:08:14,900 --> 00:08:22,600
+We can have that our `plant` starts
+having a given type, a given
+
+121
+00:08:22,800 --> 00:08:23,560
+description.
+
+122
+00:08:26,340 --> 00:08:31,760
+And then, in a part of our program,
+in a part of the lifetime of our object,
+
+123
+00:08:32,300 --> 00:08:36,100
+we realize that this `plant` is
+not from this species.
+
+124
+00:08:36,300 --> 00:08:40,820
+We can easily change to another
+description.
+
+125
+00:08:41,200 --> 00:08:45,740
+Of course, in the example of the plants,
+this is not normal because the `plant`
+
+126
+00:08:45,940 --> 00:08:48,500
+does not evolve from one species
+to the other.
+
+127
+00:08:48,740 --> 00:08:51,320
+But this is a way of handling that.
+
+128
+00:08:51,520 --> 00:08:56,000
+We can have now a dynamic relationship
+between the object itself,
+
+129
+00:08:56,260 --> 00:08:59,860
+the instance of representing our
+object in the real life,
+
+130
+00:09:00,060 --> 00:09:02,060
+with the description of it.
+
+131
+00:09:02,660 --> 00:09:06,380
+And also, one important thing is
+that as we have a single point where
+
+132
+00:09:06,580 --> 00:09:09,520
+the descriptions, this already we
+have said, but it's important.
+
+133
+00:09:11,300 --> 00:09:15,660
+As we have a single point of description
+for a given family, if we change
+
+134
+00:09:15,860 --> 00:09:19,720
+that single point, for example,
+adding or changing one of the
+
+135
+00:09:19,920 --> 00:09:22,200
+attributes, it will affect all described
+instances.
+
+136
+00:09:22,400 --> 00:09:27,560
+And this is what we want to have,
+coherence between the plants because
+
+137
+00:09:27,760 --> 00:09:31,240
+the worst case scenario that we
+can have in the other solution where
+
+138
+00:09:31,440 --> 00:09:36,420
+all the information is in a single
+object, but is duplicated in different
+
+139
+00:09:36,620 --> 00:09:41,940
+instances, is that we rename or
+we fix a typo in the scientific
+
+140
+00:09:42,140 --> 00:09:46,100
+name of the `plant` and we have
+some plants with the typo and some
+
+141
+00:09:46,300 --> 00:09:47,860
+plants that are okay.
+
+142
+00:09:48,060 --> 00:09:49,860
+So this is a bad problem.
+
+143
+00:09:50,200 --> 00:09:54,580
+But fixing a typo in the `plant`
+description, it only takes changing
+
+144
+00:09:54,780 --> 00:09:55,900
+it in a single point.
+
+145
+00:09:56,340 --> 00:10:00,160
+As a conclusion, the idea of
+`TypeObject` is that we want to
+
+146
+00:10:00,360 --> 00:10:03,260
+reify the description of a given object.
+
+147
+00:10:03,460 --> 00:10:06,840
+We want to split the object in two
+different parts.
+
+148
+00:10:07,040 --> 00:10:10,100
+One part that is specific for a
+given instance and one part that
+
+149
+00:10:10,300 --> 00:10:12,640
+is common between many instances.
+
+150
+00:10:12,840 --> 00:10:15,860
+Like this, we can make explicit
+this relationship.
+
+151
+00:10:16,560 --> 00:10:20,940
+As we do always when we create objects,
+we are going to encapsulate the
+
+152
+00:10:21,140 --> 00:10:22,040
+state and the behavior.
+
+153
+00:10:22,240 --> 00:10:26,460
+In this case, we are going to extract
+the behavior that is common to a
+
+154
+00:10:26,660 --> 00:10:27,420
+set of objects.
+
+155
+00:10:28,680 --> 00:10:32,820
+And in doing that, we can now have
+a dynamic way of changing this
+
+156
+00:10:33,020 --> 00:10:37,020
+description and a more flexible
+way to handle in a single point
+
+157
+00:10:37,220 --> 00:10:38,120
+all these descriptions.
+

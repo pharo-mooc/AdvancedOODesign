@@ -1,0 +1,408 @@
+1
+00:00:04,500 --> 00:00:10,440
+Hi, today, we are going to see hooks
+again, in particular in the context
+
+2
+00:00:10,640 --> 00:00:15,060
+of instance hooks and classes for
+the case of instantiation.
+
+3
+00:00:16,700 --> 00:00:19,900
+So we are going to discuss and think
+about hooks.
+
+4
+00:00:20,580 --> 00:00:21,840
+What are the granularity of hooks?
+
+5
+00:00:22,040 --> 00:00:24,800
+So there are big hooks,
+small hooks, so they will allow
+
+6
+00:00:25,000 --> 00:00:25,920
+us to do different things.
+
+7
+00:00:26,350 --> 00:00:30,260
+We will put in practice hooks in
+the case of instance creation to
+
+8
+00:00:30,460 --> 00:00:33,060
+understand in particularly factory
+methods.
+
+9
+00:00:38,820 --> 00:00:42,700
+And we are going to talk about how
+do we customize instance creation
+
+10
+00:00:42,900 --> 00:00:44,040
+and if we do it or not.
+
+11
+00:00:44,380 --> 00:00:45,520
+So let's start with an example.
+
+12
+00:00:45,980 --> 00:00:48,140
+So here we have a piece of code.
+
+13
+00:00:48,340 --> 00:00:50,600
+This piece of code is in the case
+of a visitor.
+
+14
+00:00:50,800 --> 00:00:52,560
+Actually, that is anecdotal here.
+
+15
+00:00:53,460 --> 00:00:58,000
+But what here is happening is that
+every time that we are going to
+
+16
+00:00:58,200 --> 00:01:03,000
+visit something, we are going to
+instantiate a new scope,
+
+17
+00:01:03,800 --> 00:01:09,320
+store it, use it, and then do something
+with it, return it or not.
+
+18
+00:01:10,040 --> 00:01:14,460
+Now let's imagine that I want to
+change the kind of scope I want
+
+19
+00:01:14,660 --> 00:01:15,740
+to instantiate here.
+
+20
+00:01:15,940 --> 00:01:18,660
+So what are the different solutions
+that I have?
+
+21
+00:01:20,560 --> 00:01:26,360
+One possible thing to do is to extract
+the class into its own method.
+
+22
+00:01:26,940 --> 00:01:31,940
+So instead of hard-coding the class
+there and sending new to the direct
+
+23
+00:01:32,140 --> 00:01:35,200
+class, I can make a method that
+returns the class that I am going
+
+24
+00:01:35,400 --> 00:01:40,840
+to use and send new to the result
+of this message.
+
+25
+00:01:41,840 --> 00:01:46,040
+So of course, this can only be done
+in languages where classes are first
+
+26
+00:01:46,240 --> 00:01:49,320
+class objects like Pharo,
+Python, Ruby.
+
+27
+00:01:49,640 --> 00:01:51,660
+You are not going to be able to
+do it in Java.
+
+28
+00:01:53,360 --> 00:01:58,760
+But this solution is already something
+very good and we can already work
+
+29
+00:01:58,960 --> 00:01:59,720
+on this.
+
+30
+00:02:00,220 --> 00:02:06,360
+So the first clear conclusion of
+this solution is that we can create
+
+31
+00:02:06,560 --> 00:02:09,080
+subclasses of our class,
+like for example we can have
+
+32
+00:02:09,280 --> 00:02:14,840
+CHInterpreter2, that can redefine
+that method and use a different class.
+
+33
+00:02:15,740 --> 00:02:20,440
+So now we are able to extend our
+implementation by just redefining
+
+34
+00:02:20,640 --> 00:02:22,780
+our class and redefining just one
+little method.
+
+35
+00:02:24,000 --> 00:02:30,400
+One alternative solution to that
+is instead of redefining that class
+
+36
+00:02:30,600 --> 00:02:37,560
+using a message or using actually
+a subclass, is to store that class
+
+37
+00:02:37,760 --> 00:02:38,760
+into an instance variable.
+
+38
+00:02:39,740 --> 00:02:44,000
+Like that every time that we create
+an interpreter, we can tell it what
+
+39
+00:02:44,200 --> 00:02:46,380
+is the ScopeClass it's going to use.
+
+40
+00:02:47,260 --> 00:02:51,160
+And then every time that we are
+going to access the class that we
+
+41
+00:02:51,360 --> 00:02:53,480
+want to instantiate, we just need
+to use this variable.
+
+42
+00:02:55,200 --> 00:02:59,300
+This design will allow us to change
+the kind of scope we are going to
+
+43
+00:02:59,500 --> 00:03:01,140
+use per instance and not per class.
+
+44
+00:03:01,340 --> 00:03:03,680
+So this is actually much more flexible.
+
+45
+00:03:05,980 --> 00:03:10,040
+Now what happens if we want to have
+a more complex instantiation?
+
+46
+00:03:10,640 --> 00:03:14,840
+For example, actually what happens
+here is that we are taking the class
+
+47
+00:03:15,040 --> 00:03:16,120
+and we are sending a message new.
+
+48
+00:03:17,040 --> 00:03:23,080
+So this message new is going to
+instantiate the class and configure
+
+49
+00:03:23,280 --> 00:03:25,600
+it with default values of its instance
+variables.
+
+50
+00:03:25,800 --> 00:03:31,620
+But what happens if for example
+this instance is actually a really
+
+51
+00:03:31,820 --> 00:03:35,200
+complex object and we wanted to
+instantiate and configure a really
+
+52
+00:03:35,400 --> 00:03:37,660
+complex graph of objects inside
+the scope?
+
+53
+00:03:40,600 --> 00:03:43,820
+So actually what happens here is
+that maybe instead of new,
+
+54
+00:03:44,020 --> 00:03:47,160
+what we wanted to do is to send
+a different message with parameters
+
+55
+00:03:47,360 --> 00:03:48,240
+or something like that.
+
+56
+00:03:48,440 --> 00:03:53,340
+But here, we cannot actually do
+it because maybe one of the scope
+
+57
+00:03:53,540 --> 00:03:58,680
+actually doesn't need all that and
+another scope, yes, it does need that.
+
+58
+00:03:59,400 --> 00:04:03,940
+So that means that actually the
+hook at this level is not enough,
+
+59
+00:04:04,140 --> 00:04:05,300
+it's really too small.
+
+60
+00:04:06,480 --> 00:04:07,840
+So maybe we can do better.
+
+61
+00:04:08,540 --> 00:04:15,080
+Another solution is to instead of
+actually just extracting the class
+
+62
+00:04:15,280 --> 00:04:19,160
+that we are going to use,
+we can extract the entire creation
+
+63
+00:04:19,360 --> 00:04:25,980
+of the scope and like that we just
+extracted the creation of the object
+
+64
+00:04:26,180 --> 00:04:28,840
+to a separate method,
+but now this method becomes
+
+65
+00:04:29,040 --> 00:04:33,380
+overwriteable and then a subclass
+can decide to exchange this object
+
+66
+00:04:33,580 --> 00:04:39,980
+instantiation and configuration
+by a completely different
+
+67
+00:04:40,180 --> 00:04:40,940
+implementation.
+
+68
+00:04:44,120 --> 00:04:50,020
+Now if you can only pass a class,
+if we only keep the original hook,
+
+69
+00:04:50,220 --> 00:04:54,820
+the problem is that we cannot customize
+object instantiation.
+
+70
+00:04:55,140 --> 00:04:59,260
+Languages where classes are first
+class objects we can do really strange
+
+71
+00:04:59,460 --> 00:05:02,960
+tricks to do it, yes it is possible,
+but actually the solution at the
+
+72
+00:05:03,160 --> 00:05:04,280
+end is not very nice.
+
+73
+00:05:04,480 --> 00:05:12,280
+So the last solution that I showed
+you helps you to customize and access
+
+74
+00:05:12,480 --> 00:05:15,420
+different protocols depending on
+the kind of scope that you want
+
+75
+00:05:15,620 --> 00:05:16,380
+to instantiate.
+
+76
+00:05:17,760 --> 00:05:21,820
+Now a different variation,
+a final variation for this pattern
+
+77
+00:05:22,020 --> 00:05:26,520
+is that we can also extend this
+hook with parameters.
+
+78
+00:05:26,720 --> 00:05:31,820
+So we can add a parameter to the hook,
+like that we can send arguments
+
+79
+00:05:32,020 --> 00:05:38,000
+here and then each subclass can
+redefine this and use the argument
+
+80
+00:05:38,200 --> 00:05:39,060
+as it pleases.
+
+81
+00:05:39,420 --> 00:05:43,800
+In conclusion, having class hooks
+is nice because they help us redefine
+
+82
+00:05:44,000 --> 00:05:47,620
+instantiation of objects,
+but it's important to think about
+
+83
+00:05:47,820 --> 00:05:48,820
+the granularity of those hooks.
+
+84
+00:05:49,220 --> 00:05:52,220
+So the bigger the hook,
+it's probably the more difficult
+
+85
+00:05:52,420 --> 00:05:57,340
+to reuse code, but also it is easier
+to redefine some part of the system
+
+86
+00:05:57,540 --> 00:05:58,360
+that are more complicated.
+

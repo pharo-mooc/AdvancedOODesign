@@ -1,0 +1,791 @@
+1
+00:00:04,820 --> 00:00:07,780
+Welcome to this lecture on sharing.
+
+2
+00:00:08,660 --> 00:00:11,800
+In fact, during this lecture,
+I would like to present yet another
+
+3
+00:00:12,000 --> 00:00:13,660
+variation on sharing.
+
+4
+00:00:16,380 --> 00:00:19,660
+If you remember what we saw previously
+is that we have shared variables.
+
+5
+00:00:20,160 --> 00:00:24,440
+Shared variables or static variables
+allows to share an information or
+
+6
+00:00:24,640 --> 00:00:28,020
+an object between all the instances
+of a class and the subclasses.
+
+7
+00:00:29,060 --> 00:00:34,380
+We also saw that we could mix instance
+variable and shared variable to
+
+8
+00:00:34,580 --> 00:00:38,940
+support a solution that will offer
+sharing by default and instance-based
+
+9
+00:00:39,140 --> 00:00:41,760
+customization when we want.
+
+10
+00:00:42,300 --> 00:00:47,660
+And there is also a design pattern
+flyweight that will go back to this
+
+11
+00:00:47,860 --> 00:00:48,620
+topic.
+
+12
+00:00:49,260 --> 00:00:53,180
+And in this lecture, we will present
+a variation that was taken from
+
+13
+00:00:53,380 --> 00:00:54,880
+the Bloc graphical framework.
+
+14
+00:00:57,660 --> 00:01:00,840
+So basically, in the Bloc graphical
+framework, you have a ‘BlElement‘.
+
+15
+00:01:01,340 --> 00:01:05,520
+So this is the really basic graphical
+element.
+
+16
+00:01:05,720 --> 00:01:09,500
+It has many properties,
+like ‘background‘, ‘border‘,
+
+17
+00:01:09,700 --> 00:01:10,720
+‘clipChildren‘, ‘elevation‘,
+‘geometry‘, ‘compositingMode‘,
+
+18
+00:01:10,980 --> 00:01:11,980
+‘visibility‘, ‘opacity‘…
+
+19
+00:01:14,640 --> 00:01:15,740
+So plenty of them.
+
+20
+00:01:16,560 --> 00:01:19,400
+How those properties are managed?
+
+21
+00:01:22,070 --> 00:01:23,370
+They are managed this way.
+
+22
+00:01:24,050 --> 00:01:30,890
+In fact, the properties are grouped
+in an instance of ‘BlElementVisuals‘,
+
+23
+00:01:31,410 --> 00:01:35,230
+with an S, which is strange from
+
+24
+00:01:35,430 --> 00:01:37,650
+a domain perspective.
+
+25
+00:01:39,450 --> 00:01:42,790
+And you see that for example,
+when I ask the border of an element,
+
+26
+00:01:42,990 --> 00:01:49,490
+the methods in the class ‘BlElement‘
+will delegate to the visual instance.
+
+27
+00:01:49,990 --> 00:01:55,730
+The same with 'clipChildren' and this
+is the same for all the properties
+
+28
+00:01:55,930 --> 00:01:56,890
+that we showed previously.
+
+29
+00:01:59,830 --> 00:02:06,970
+So in fact, these Default visuals,
+they are shared between all the
+
+30
+00:02:07,170 --> 00:02:07,930
+instances.
+
+31
+00:02:08,130 --> 00:02:10,690
+Now in Bloc, the property can be
+modified.
+
+32
+00:02:11,010 --> 00:02:14,950
+You have an element, it should be
+displayed, it should be clipped
+
+33
+00:02:15,150 --> 00:02:16,610
+or things like that, you can do
+it dynamically.
+
+34
+00:02:18,710 --> 00:02:23,350
+So in the design that I will show,
+the developer really wanted to see
+
+35
+00:02:23,550 --> 00:02:27,710
+if they can support property
+modification without paying the
+
+36
+00:02:27,910 --> 00:02:30,790
+price of adding an instance variable
+for all the shared default.
+
+37
+00:02:31,310 --> 00:02:36,430
+In fact, they wanted to see:
+can we have the same than with the
+
+38
+00:02:36,630 --> 00:02:41,630
+mixing sharing lecture that we saw
+before, but without having to have
+
+39
+00:02:41,830 --> 00:02:43,230
+this extra instance variable.
+
+40
+00:02:45,950 --> 00:02:48,970
+What you see here is that this is
+the overview of the design.
+
+41
+00:02:49,330 --> 00:02:55,030
+So you have ‘BlElementVisuals‘,
+which is the super class of the system.
+
+42
+00:02:55,810 --> 00:03:00,050
+It defines shared variable here
+and there and multiples of them.
+
+43
+00:03:01,450 --> 00:03:06,210
+And then you have two subclasses,
+‘BlDefaultVisuals‘ and
+
+44
+00:03:06,410 --> 00:03:07,170
+‘BLCustomVisuals‘.
+
+45
+00:03:08,870 --> 00:03:12,470
+And this one will be shared by default.
+
+46
+00:03:13,870 --> 00:03:16,870
+And based on the modification,
+when we modify a property,
+
+47
+00:03:17,070 --> 00:03:21,230
+it will create an instance of this
+one and this is what we will see.
+
+48
+00:03:25,310 --> 00:03:30,250
+So as I said, you see here,
+you have the super class
+
+49
+00:03:30,450 --> 00:03:31,210
+‘BlElementVisuals‘.
+
+50
+00:03:31,490 --> 00:03:33,450
+It has some shared variable,
+DefaultBackground, DefaultBorder,
+
+51
+00:03:33,650 --> 00:03:34,410
+DefaultGeometry, DefaultVisibility.
+
+52
+00:03:37,150 --> 00:03:40,490
+The 'defaultBackground' method just
+returned the shared variable.
+
+53
+00:03:41,410 --> 00:03:49,250
+And then some other methods are
+abstract and the subclass will define
+
+54
+00:03:49,450 --> 00:03:50,210
+them.
+
+55
+00:03:51,560 --> 00:03:59,900
+Now the ‘DefaultVisuals‘ will basically
+
+56
+00:04:00,100 --> 00:04:05,300
+use a singleton pattern to initialize
+
+57
+00:04:05,500 --> 00:04:06,260
+the visuals.
+
+58
+00:04:07,700 --> 00:04:14,540
+So this means that each instance
+of the Bl classes will have via
+
+59
+00:04:14,740 --> 00:04:21,380
+the visual instance variable access
+to the unique instance of the Default.
+
+60
+00:04:24,020 --> 00:04:29,120
+So this way, all the shared variables,
+all the shared states,
+
+61
+00:04:29,320 --> 00:04:33,500
+the shared properties are shared
+among all the instances of the class
+
+62
+00:04:33,700 --> 00:04:34,460
+‘BlElement‘.
+
+63
+00:04:38,120 --> 00:04:47,400
+And now, what you have is you have
+for example the accessor like 'background'
+
+64
+00:04:47,600 --> 00:04:51,960
+that will access the default value
+that accesses…
+
+65
+00:04:52,160 --> 00:04:55,440
+returns the shared variable.
+
+66
+00:04:57,750 --> 00:05:00,210
+Now there is a catch in the system.
+
+67
+00:05:00,530 --> 00:05:06,230
+This is that when you want to modify
+
+68
+00:05:06,430 --> 00:05:10,710
+a property, in fact you don't want
+to modify the property of the complete
+
+69
+00:05:10,910 --> 00:05:15,050
+system, of all the instances,
+because suddenly, all the ‘BlElements‘
+
+70
+00:05:15,470 --> 00:05:18,070
+that were hidden could be visible.
+
+71
+00:05:18,270 --> 00:05:21,090
+And you just want to have one of those.
+
+72
+00:05:21,570 --> 00:05:27,730
+So since they cannot do instance,
+or they can do, but since they don't
+
+73
+00:05:27,930 --> 00:05:33,130
+do it the same way as in the previous
+lecture, what they do here is that
+
+74
+00:05:33,330 --> 00:05:39,200
+the setter will create an instance
+
+75
+00:05:39,400 --> 00:05:40,160
+of the other class.
+
+76
+00:05:40,360 --> 00:05:41,740
+You remember there was this hierarchy.
+
+77
+00:05:42,180 --> 00:05:47,460
+I showed the hierarchy with the
+two classes with this one that was
+
+78
+00:05:47,660 --> 00:05:48,420
+shared.
+
+79
+00:05:49,960 --> 00:05:55,760
+And at this moment, this setter
+
+80
+00:05:55,960 --> 00:05:59,240
+is basically creating an instance
+of this class.
+
+81
+00:06:00,320 --> 00:06:01,600
+And this is what we are doing here.
+
+82
+00:06:01,860 --> 00:06:10,440
+So this means that when the system
+invokes the background setter,
+
+83
+00:06:10,940 --> 00:06:16,140
+it will not modify the shared variable
+or the shared instance.
+
+84
+00:06:16,820 --> 00:06:24,920
+It will create a new instance and
+then modify the property of this
+
+85
+00:06:25,120 --> 00:06:25,880
+new instance.
+
+86
+00:06:26,080 --> 00:06:30,000
+This is an instance that is made
+to be modified, in fact.
+
+87
+00:06:33,220 --> 00:06:37,960
+So this means that at the level
+of the 'CustomVisuals' classes,
+
+88
+00:06:38,620 --> 00:06:41,840
+we will have instance variable for
+geometry, border, background,
+
+89
+00:06:42,040 --> 00:06:42,840
+outskirts, effect.
+
+90
+00:06:43,300 --> 00:06:48,440
+And then, in that case,
+we have a normal setter.
+
+91
+00:06:49,800 --> 00:06:55,040
+What it means, it means that for
+a specific instance, an instance
+
+92
+00:06:55,240 --> 00:07:00,060
+of ‘BLCustomVisuals‘ will be stored
+in the place of the singleton.
+
+93
+00:07:00,960 --> 00:07:03,040
+And like that, it will keep the
+accumulation.
+
+94
+00:07:03,240 --> 00:07:10,040
+So this means that what you see
+is that as soon as I got one setter,
+
+95
+00:07:12,080 --> 00:07:18,160
+a new instance of custom will be
+put in the visual instance variable
+
+96
+00:07:18,360 --> 00:07:24,260
+and then all the following methods
+will just continue to access the
+
+97
+00:07:24,460 --> 00:07:26,080
+instance variable multiple times.
+
+98
+00:07:26,720 --> 00:07:33,300
+So what I want to say here is that
+this happens only once per instance.
+
+99
+00:07:34,060 --> 00:07:39,420
+Because if you change the color
+or if you change the 'outskirts',
+
+100
+00:07:39,980 --> 00:07:41,040
+that will be the same.
+
+101
+00:07:41,640 --> 00:07:46,480
+An instance of BLCustomVisuals will
+be created, and then in that case,
+
+102
+00:07:46,680 --> 00:07:49,660
+this is this setter that will be
+executed.
+
+103
+00:07:53,910 --> 00:07:56,130
+So now what is really…
+
+104
+00:07:56,350 --> 00:07:59,510
+there is a catch in fact,
+is that in this design,
+
+105
+00:08:01,330 --> 00:08:04,030
+this design kind of hijacked the
+setter semantic.
+
+106
+00:08:04,530 --> 00:08:10,790
+Because usually, as a programmer,
+I don't expect to have to store
+
+107
+00:08:10,990 --> 00:08:13,330
+the result of a setter,
+typically.
+
+108
+00:08:16,100 --> 00:08:19,700
+If I don't know, I will write something
+like that and the system will not
+
+109
+00:08:19,900 --> 00:08:22,160
+change and will not behave the right
+way.
+
+110
+00:08:23,100 --> 00:08:29,900
+And this is because on the
+'BLDefaultVisuals', the setter returns
+
+111
+00:08:30,100 --> 00:08:30,860
+this new instance.
+
+112
+00:08:31,060 --> 00:08:34,020
+So here, this is really returning
+the new instance.
+
+113
+00:08:35,160 --> 00:08:38,720
+So that's why I really need to have
+this assignment.
+
+114
+00:08:39,140 --> 00:08:43,900
+And this is really surprising when
+you first encounter it because it's
+
+115
+00:08:44,100 --> 00:08:49,120
+always strange to ask ourselves,
+"Oh, why do I need to store the
+
+116
+00:08:49,320 --> 00:08:50,140
+result of a setter?
+
+117
+00:08:50,340 --> 00:08:55,160
+Because normally I just modify the
+receiver." But no, in this design,
+
+118
+00:08:56,440 --> 00:08:57,560
+let me go back here.
+
+119
+00:08:59,300 --> 00:09:04,600
+You see, here I'm returning a new
+instance for a setter.
+
+120
+00:09:05,960 --> 00:09:07,880
+And then, in that case,
+I have to store it.
+
+121
+00:09:12,770 --> 00:09:16,610
+Now we can ask ourselves what is
+the difference with the previous
+
+122
+00:09:16,810 --> 00:09:22,610
+design that I showed in the other
+lecture, where we had two variables,
+
+123
+00:09:22,830 --> 00:09:25,730
+a shared variable and an instance
+variable with the same name.
+
+124
+00:09:26,110 --> 00:09:30,670
+If you remember, we initialized
+the table and we could share the
+
+125
+00:09:30,870 --> 00:09:32,950
+table by default via the instance
+variable.
+
+126
+00:09:33,410 --> 00:09:37,850
+Or we could copy the table in the
+instance variable and in that case
+
+127
+00:09:38,050 --> 00:09:39,730
+have instance-specific behavior.
+
+128
+00:09:40,890 --> 00:09:45,330
+In fact, first, in this design,
+they grouped the different values
+
+129
+00:09:45,530 --> 00:09:46,370
+into a single object.
+
+130
+00:09:46,590 --> 00:09:57,880
+So this means that ‘BLElementVisuals‘
+and 'BLCustomization', or 'Custom',
+
+131
+00:09:58,080 --> 00:10:06,060
+I don't remember, 'Visuals',
+they are a group of objects.
+
+132
+00:10:06,560 --> 00:10:09,080
+But from that perspective,
+they are nearly similar to the type
+
+133
+00:10:09,280 --> 00:10:11,600
+table because the type table is
+also a group of dictionaries.
+
+134
+00:10:11,800 --> 00:10:15,600
+But here this is not just a table.
+
+135
+00:10:15,800 --> 00:10:17,300
+This is a group of attributes.
+
+136
+00:10:18,620 --> 00:10:23,440
+Now with this design,
+you are not forced to have this
+
+137
+00:10:23,640 --> 00:10:24,400
+instance variable.
+
+138
+00:10:24,600 --> 00:10:30,600
+So this means that you can remove
+the instance variable from the solution.
+
+139
+00:10:31,940 --> 00:10:35,100
+But we still have the instance-based
+and sharing.
+
+140
+00:10:35,300 --> 00:10:41,240
+So that's why this is an interesting
+alternative to what we show in the
+
+141
+00:10:41,440 --> 00:10:42,200
+previous lecture.
+
+142
+00:10:45,120 --> 00:10:49,260
+Now, as a conclusion and analysis,
+the question that we can ask ourselves
+
+143
+00:10:49,460 --> 00:10:51,340
+is that is this complexity needed?
+
+144
+00:10:52,200 --> 00:10:58,060
+I mean, is it worth to really hijack
+the default setter patterns?
+
+145
+00:10:58,960 --> 00:11:00,220
+It could be.
+
+146
+00:11:00,660 --> 00:11:05,140
+Now, when I look at the design,
+I was always thinking,
+
+147
+00:11:05,740 --> 00:11:10,340
+okay, is it so costly to have this
+extra instance variable per instance
+
+148
+00:11:10,540 --> 00:11:17,680
+so that we could have the shared
+by default and the instance specific?
+
+149
+00:11:19,200 --> 00:11:20,920
+I don't know what it means.
+
+150
+00:11:21,120 --> 00:11:23,660
+It means that memory analysis should
+be done.
+
+151
+00:11:24,400 --> 00:11:29,440
+If you have millions of objects,
+then maybe, yes, getting one instance
+
+152
+00:11:29,640 --> 00:11:34,460
+more for multiple millions of objects,
+then it means that you will consume
+
+153
+00:11:34,660 --> 00:11:35,500
+space for nothing.
+
+154
+00:11:36,020 --> 00:11:39,280
+Just in case one object would not
+share the default.
+
+155
+00:11:40,620 --> 00:11:46,300
+Then there is also the question of:
+are the default well chosen?
+
+156
+00:11:47,060 --> 00:11:51,200
+Because maybe you will have a
+statistical distribution that is
+
+157
+00:11:51,400 --> 00:11:55,200
+completely not good because all
+your objects, they will say,
+
+158
+00:11:55,400 --> 00:11:57,080
+"No, I'm always a visible object.
+
+159
+00:11:57,280 --> 00:11:59,820
+Do not hide me." So in that case,
+it should not be the default.
+
+160
+00:12:02,760 --> 00:12:07,900
+As this is a message that is implicit
+in this MOOC, this is that design
+
+161
+00:12:08,100 --> 00:12:11,440
+decisions, they always should take
+into account the context.
+
+162
+00:12:12,420 --> 00:12:16,680
+And usually, it can happen that
+in your software, you will have
+
+163
+00:12:16,880 --> 00:12:20,840
+a design decision at a given moment
+in time of your software and then
+
+164
+00:12:21,040 --> 00:12:24,860
+you will have a new requirement
+or a new scenario that will make
+
+165
+00:12:25,060 --> 00:12:29,520
+you change the design and consider,
+"Okay, the decision that I took
+
+166
+00:12:29,720 --> 00:12:32,780
+previously was working well at that
+time and now I have to change it."
+
+167
+00:12:33,080 --> 00:12:36,040
+So this is also why, from that
+perspective, you should also invest
+
+168
+00:12:36,240 --> 00:12:40,200
+in tests because the tests,
+they will let you change your design
+
+169
+00:12:40,840 --> 00:12:42,260
+and make your system evolve.
+

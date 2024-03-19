@@ -1,0 +1,1011 @@
+1
+00:00:03,950 --> 00:00:06,370
+- Hi, in this lecture, we are going to
+
+2
+00:00:06,570 --> 00:00:10,830
+discuss about the Decorator design
+pattern, which is a composable
+
+3
+00:00:11,030 --> 00:00:12,410
+alternative to subclassing.
+
+4
+00:00:13,770 --> 00:00:16,590
+So the goal of this lecture is to
+think about the Decorator,
+
+5
+00:00:16,790 --> 00:00:19,230
+the Decorator pattern,
+to discuss about the different
+
+6
+00:00:19,430 --> 00:00:23,390
+inconveniences and the benefits of it,
+and to think about APIs in general,
+
+7
+00:00:23,590 --> 00:00:27,210
+and how actually APIs will have
+an impact on the different designs
+
+8
+00:00:27,410 --> 00:00:28,190
+of the Decorator.
+
+9
+00:00:29,350 --> 00:00:34,670
+So from the book, the Decorator
+will help you to attach new
+
+10
+00:00:34,870 --> 00:00:36,490
+responsibilities to an object dynamic.
+
+11
+00:00:36,790 --> 00:00:41,810
+What does it mean is that we are
+going to have an object and then
+
+12
+00:00:42,010 --> 00:00:46,510
+we're going to attach some other
+object that will extend the behavior
+
+13
+00:00:46,710 --> 00:00:47,470
+of this object.
+
+14
+00:00:47,670 --> 00:00:51,510
+So this is a way to actually attach
+behavior by changing objects and
+
+15
+00:00:51,710 --> 00:00:57,070
+not by extending classes like in
+
+16
+00:00:57,270 --> 00:00:58,030
+inheritance.
+
+17
+00:00:58,650 --> 00:01:05,010
+So the main point is that dynamically,
+we can decide if this Decorator
+
+18
+00:01:05,210 --> 00:01:08,150
+will be there or not at runtime.
+
+19
+00:01:08,630 --> 00:01:10,130
+That is why it said dynamically.
+
+20
+00:01:13,000 --> 00:01:20,260
+Now, if we look at the main drawing,
+the main design of the Decorator in UML,
+
+21
+00:01:20,540 --> 00:01:24,480
+what we see is that we have a client,
+the client is the object that is
+
+22
+00:01:24,680 --> 00:01:29,540
+going to use the Decorator,
+and we have here the main Decorator
+
+23
+00:01:29,740 --> 00:01:30,500
+part.
+
+24
+00:01:31,940 --> 00:01:37,800
+So the Decorator is either what
+we are going to say a decoree,
+
+25
+00:01:38,000 --> 00:01:38,960
+which is the main object.
+
+26
+00:01:39,280 --> 00:01:41,620
+It is the object that is going to
+do the main operation.
+
+27
+00:01:42,020 --> 00:01:47,660
+And then we are going to have Decorators
+that are going to wrap this decoree
+
+28
+00:01:47,860 --> 00:01:49,240
+to extend the behavior.
+
+29
+00:01:50,420 --> 00:01:58,200
+And by default, a Decorator will
+know the decoree and delegate the
+
+30
+00:01:58,400 --> 00:01:59,940
+operation to the decoree.
+
+31
+00:02:00,140 --> 00:02:05,750
+So that means that every time that
+we have a Decorator, a decoree and
+
+32
+00:02:05,950 --> 00:02:11,760
+we have a Decorator, the Decorator
+
+33
+00:02:11,960 --> 00:02:16,030
+knows the decoree and then every
+time that we are going to say,
+
+34
+00:02:16,230 --> 00:02:22,560
+ah, do operation to the Decorator,
+the Decorator will do something
+
+35
+00:02:22,760 --> 00:02:25,980
+and then eventually will tell the
+decoree do operation.
+
+36
+00:02:26,180 --> 00:02:28,440
+So it's a pattern really based on
+delegation.
+
+37
+00:02:30,840 --> 00:02:32,720
+Of course, you can mix this with
+inheritance.
+
+38
+00:02:32,920 --> 00:02:36,620
+You can have many different ways
+of Decorees and many different
+
+39
+00:02:36,820 --> 00:02:37,660
+Decorators.
+
+40
+00:02:37,860 --> 00:02:39,740
+So as many as you want.
+
+41
+00:02:40,620 --> 00:02:48,880
+And what will happen is that at the end,
+the only objects in the dynamic
+
+42
+00:02:49,080 --> 00:02:52,860
+graph that no other objects here
+will be the Decorators.
+
+43
+00:02:53,060 --> 00:02:58,940
+So the Decorators can be chained
+in a way that we have a Decorator,
+
+44
+00:02:59,140 --> 00:03:02,660
+a Decorator, a Decorator,
+but the Decorees will be leaves.
+
+45
+00:03:04,040 --> 00:03:06,040
+So they will be the end of the chains.
+
+46
+00:03:06,380 --> 00:03:08,240
+The Decorators will be the leaves here.
+
+47
+00:03:08,440 --> 00:03:10,200
+So here we are going to see the decoree.
+
+48
+00:03:11,440 --> 00:03:14,760
+So a Decorator, we say it wraps
+an instance of a decoree.
+
+49
+00:03:15,080 --> 00:03:17,480
+It displays between the client and
+the decoree.
+
+50
+00:03:17,680 --> 00:03:22,620
+So in my drawings before,
+I didn't put the client,
+
+51
+00:03:22,940 --> 00:03:26,860
+but actually it is one of the most
+important parts in the Decorator
+
+52
+00:03:27,060 --> 00:03:30,620
+pattern when taking the decision
+of deploying it or not.
+
+53
+00:03:30,900 --> 00:03:33,560
+So here, for example,
+we have a Decorator, a decoree,
+
+54
+00:03:33,760 --> 00:03:37,440
+a decoree that is going to be decorated
+by some Decorator.
+
+55
+00:03:39,000 --> 00:03:43,420
+And the client is the one that is
+going to be using the Decorator
+
+56
+00:03:43,620 --> 00:03:46,540
+here and the Decorator is going
+to delegate something to the decoree
+
+57
+00:03:46,740 --> 00:03:48,520
+and the decoree is going to do its
+operation.
+
+58
+00:03:49,140 --> 00:03:52,040
+So what is important here is that
+the messages will actually flow
+
+59
+00:03:52,240 --> 00:03:54,260
+from the client to the decoree.
+
+60
+00:03:55,520 --> 00:03:57,600
+So the Decorator can do many things.
+
+61
+00:03:57,800 --> 00:03:58,820
+It can intercept messages.
+
+62
+00:03:59,160 --> 00:04:01,780
+It can decide, for example,
+to do something before,
+
+63
+00:04:01,980 --> 00:04:04,820
+after, or instead the decoree.
+
+64
+00:04:05,020 --> 00:04:09,040
+So it can also, the Decorator can
+decide to not delegate to the decoree.
+
+65
+00:04:10,200 --> 00:04:13,180
+One thing that happens is that
+Decorators can be nested.
+
+66
+00:04:13,380 --> 00:04:19,480
+As we saw before, Decorator can
+know another Decorator and all these
+
+67
+00:04:19,680 --> 00:04:22,780
+chain of Decorators are transparent
+to the client.
+
+68
+00:04:23,040 --> 00:04:28,160
+So a client actually will have probably
+
+69
+00:04:28,360 --> 00:04:32,380
+some piece of code that we will
+say object operation,
+
+70
+00:04:35,640 --> 00:04:39,760
+but here the object could be a Decorator
+or it could be the decoree.
+
+71
+00:04:39,960 --> 00:04:43,460
+So actually the client is completely
+independent of how the Decorator
+
+72
+00:04:43,660 --> 00:04:44,480
+chain is composed.
+
+73
+00:04:45,060 --> 00:04:52,560
+It could be just the simple decoree
+or it could be actually a chain
+
+74
+00:04:52,760 --> 00:04:54,580
+of Decorators followed by the decoree.
+
+75
+00:04:59,530 --> 00:05:03,210
+What's important here is that there
+is a really strong implication.
+
+76
+00:05:03,690 --> 00:05:07,790
+The decoree and the Decorator must
+expose the same API because the
+
+77
+00:05:07,990 --> 00:05:09,570
+client should be agnostic of that.
+
+78
+00:05:09,870 --> 00:05:14,330
+It should be agnostic of the fact
+that it's been talking to the decoree
+
+79
+00:05:14,530 --> 00:05:15,290
+or the Decorator.
+
+80
+00:05:15,490 --> 00:05:18,670
+So the decoree and Decorators should
+have the same API.
+
+81
+00:05:21,590 --> 00:05:26,170
+If we see an example here with Streams,
+so here what we see is that we have
+
+82
+00:05:26,370 --> 00:05:29,850
+a binary stream accessing the standard
+input output.
+
+83
+00:05:30,210 --> 00:05:31,590
+So here it's a standard output.
+
+84
+00:05:32,230 --> 00:05:34,530
+The standard output, of course,
+it's a binary stream.
+
+85
+00:05:35,990 --> 00:05:40,930
+So it just knows how to write binary
+data in zeros and ones.
+
+86
+00:05:41,590 --> 00:05:46,550
+And if we want to put text in there,
+we need to encode that in some encoding.
+
+87
+00:05:46,750 --> 00:05:53,490
+So what we're going to do is we
+have our Stdio object.
+
+88
+00:05:53,970 --> 00:05:58,750
+And if we want to write text,
+we need to decorate it with a character
+
+89
+00:05:58,950 --> 00:05:59,710
+stream.
+
+90
+00:06:03,330 --> 00:06:05,090
+What is the responsibility of the
+character stream?
+
+91
+00:06:05,610 --> 00:06:08,450
+The responsibility of the character
+stream, of course, is to receive
+
+92
+00:06:08,650 --> 00:06:11,130
+text and transform it into bytes.
+
+93
+00:06:13,800 --> 00:06:17,600
+Of course, we can again,
+in this example, wrap this character
+
+94
+00:06:17,800 --> 00:06:22,760
+stream with another Decorator,
+which is a Decorator that will add
+
+95
+00:06:22,960 --> 00:06:27,400
+new lines and it will manage how
+they are printed, independent of
+
+96
+00:06:27,600 --> 00:06:28,360
+the platform.
+
+97
+00:06:29,800 --> 00:06:33,640
+Here, every time that we give text
+to the new line Decorator,
+
+98
+00:06:33,860 --> 00:06:39,900
+it will transform the text to replace
+the new lines for some platform
+
+99
+00:06:40,100 --> 00:06:42,860
+to maybe for the current platform.
+
+100
+00:06:43,300 --> 00:06:48,260
+There are many ways to wrap those
+streams.
+
+101
+00:06:48,460 --> 00:06:52,760
+So here, for example,
+there is another example in the
+
+102
+00:06:52,960 --> 00:06:54,680
+file class, the file reference class.
+
+103
+00:06:55,080 --> 00:06:58,740
+Every time that we want to read
+a file in Pharo, we're going to
+
+104
+00:06:58,940 --> 00:07:03,360
+ask the file for a stream,
+a readStream with an encoding.
+
+105
+00:07:05,100 --> 00:07:09,540
+Dynamically, the FileReference will
+decide to create a binaryReadStream
+
+106
+00:07:10,180 --> 00:07:16,700
+and to wrap it with a new character
+Decorator using the encoding that
+
+107
+00:07:16,900 --> 00:07:17,660
+we asked as parameter.
+
+108
+00:07:18,740 --> 00:07:24,320
+So, dynamically, it is the FileReference
+that is deciding to create and wrap
+
+109
+00:07:24,520 --> 00:07:25,460
+the binaryReadStream.
+
+110
+00:07:27,380 --> 00:07:30,580
+If you want to check the implementation
+of this, of course, here we have
+
+111
+00:07:30,780 --> 00:07:34,840
+the NewLineWriteStream that knows,
+for example, the stream,
+
+112
+00:07:35,040 --> 00:07:41,820
+which is the decoree,
+and it knows several data that it
+
+113
+00:07:42,020 --> 00:07:44,900
+uses to actually replace the new lines.
+
+114
+00:07:45,100 --> 00:07:50,340
+So, for example, here it knows the #cr,
+the #lf characters, the #previous
+
+115
+00:07:50,540 --> 00:07:54,440
+character, and the #lineEnding that
+is going to be replacing.
+
+116
+00:07:55,560 --> 00:07:59,900
+And then, it needs to implement
+all the basic API of streams,
+
+117
+00:08:00,100 --> 00:08:05,000
+like, for example, close and flush,
+to be able to be polymorphic with
+
+118
+00:08:05,200 --> 00:08:06,980
+the original stream that is going
+to be wrapping.
+
+119
+00:08:07,520 --> 00:08:11,500
+So here, we see the close method
+is going to just call the close
+
+120
+00:08:11,700 --> 00:08:14,440
+method in the stream,
+or the flush method is going to
+
+121
+00:08:14,640 --> 00:08:15,600
+call the flush method in the stream.
+
+122
+00:08:19,290 --> 00:08:23,190
+Now, here what we see is a test
+that is actually testing the behavior
+
+123
+00:08:23,390 --> 00:08:25,010
+of our new line stream.
+
+124
+00:08:26,470 --> 00:08:33,090
+What we're having here in this first
+line is string composed by ab,
+
+125
+00:08:33,430 --> 00:08:37,290
+and in the middle we are going to
+have a new line depending on the
+
+126
+00:08:37,490 --> 00:08:38,250
+current platform.
+
+127
+00:08:38,450 --> 00:08:43,470
+So, for example, if we are on Windows,
+we are going to have a cr character
+
+128
+00:08:43,670 --> 00:08:47,170
+of return, and if we are in Linux,
+we are going probably to have a
+
+129
+00:08:47,370 --> 00:08:49,150
+line feed followed by a character
+return.
+
+130
+00:08:49,510 --> 00:08:53,090
+So depending on the platform we are on,
+we are going to have different line
+
+131
+00:08:53,290 --> 00:08:54,050
+ending convention.
+
+132
+00:08:55,330 --> 00:09:01,010
+And then, what we're going to do
+is to craft different strings using
+
+133
+00:09:01,210 --> 00:09:03,010
+different line endings.
+
+134
+00:09:04,050 --> 00:09:07,270
+So here we take three different
+line endings, just cr,
+
+135
+00:09:07,630 --> 00:09:13,530
+lf, and crlf, we are going to craft
+a string using that line ending,
+
+136
+00:09:13,950 --> 00:09:20,530
+and then we are going to write it
+using the line ending write stream
+
+137
+00:09:20,730 --> 00:09:25,090
+to see that it actually matches
+the string that we expect.
+
+138
+00:09:25,330 --> 00:09:28,890
+So here we are testing that our
+NewLineWriterStream is actually
+
+139
+00:09:29,090 --> 00:09:32,310
+transforming the different line
+ending conventions to the expected
+
+140
+00:09:32,510 --> 00:09:33,750
+string, which is the one of the
+platform.
+
+141
+00:09:34,350 --> 00:09:37,670
+Now, if we take a look at
+implementation, the NewLineWriterStream,
+
+142
+00:09:38,450 --> 00:09:41,450
+as I showed you before,
+it will just redefine most of the
+
+143
+00:09:41,650 --> 00:09:44,050
+method to call the decoree.
+
+144
+00:09:44,310 --> 00:09:49,150
+But here it needs to manage what
+happens when we try to put a character
+
+145
+00:09:49,350 --> 00:09:50,110
+in the string.
+
+146
+00:09:50,310 --> 00:09:52,190
+So when we want to write a character
+in the string.
+
+147
+00:09:52,950 --> 00:09:56,130
+So what it is doing here is that
+every time that we're going to write
+
+148
+00:09:56,330 --> 00:10:01,130
+the character, it is checking first
+the previous characters and the
+
+149
+00:10:01,330 --> 00:10:06,430
+current character to see if they
+match the cr, crlf, or the lf pattern.
+
+150
+00:10:07,050 --> 00:10:10,050
+And in that case, if it matches
+one of those, it will just write
+
+151
+00:10:10,250 --> 00:10:11,010
+a newLine.
+
+152
+00:10:11,710 --> 00:10:16,470
+Of course, this newLine will follow
+the current platform newLine as
+
+153
+00:10:16,670 --> 00:10:17,430
+we saw before.
+
+154
+00:10:17,950 --> 00:10:21,350
+Otherwise, if it doesn't match any
+of those, that means that it's probably
+
+155
+00:10:21,550 --> 00:10:23,470
+just a normal character like a.
+
+156
+00:10:24,430 --> 00:10:29,290
+And if it is the case,
+it will just delegate the writing
+
+157
+00:10:29,490 --> 00:10:30,950
+to the decoree.
+
+158
+00:10:31,150 --> 00:10:33,810
+So calling the stream and saying,
+okay, next put this character.
+
+159
+00:10:34,210 --> 00:10:37,350
+What we just saw before is that
+all Decorators should have the same API.
+
+160
+00:10:38,130 --> 00:10:42,130
+So in this case, close,
+flush should be redefined to just
+
+161
+00:10:42,330 --> 00:10:43,870
+delegate to the decoree.
+
+162
+00:10:44,070 --> 00:10:49,190
+But then nextPut, contents next,
+probably need to be redefined and
+
+163
+00:10:49,390 --> 00:10:52,590
+specify specific behavior for our
+Decorator.
+
+164
+00:10:54,030 --> 00:10:58,350
+Now, one of the benefits of this
+Decorator implementation is that
+
+165
+00:10:58,550 --> 00:11:03,510
+the Decorators can be shared and
+replaced by different kind of Decorator.
+
+166
+00:11:03,750 --> 00:11:07,170
+So we can compose different chains
+in different ways and obtain different
+
+167
+00:11:07,370 --> 00:11:08,130
+behavior.
+
+168
+00:11:08,330 --> 00:11:10,930
+We say that Decorators attach additional
+responsibilities to an object.
+
+169
+00:11:11,270 --> 00:11:15,270
+Yeah, so we have our objects,
+the decoree that is going to be
+
+170
+00:11:15,470 --> 00:11:16,390
+wrapped by a Decorator.
+
+171
+00:11:16,750 --> 00:11:21,250
+And the Decorator will actually
+delegate behavior to the decoree.
+
+172
+00:11:21,990 --> 00:11:25,690
+Now, as we saw before in the example
+of the file reference,
+
+173
+00:11:25,990 --> 00:11:31,350
+it is the file reference that is
+creating the pair or the chain of
+
+174
+00:11:31,550 --> 00:11:32,310
+Decorators.
+
+175
+00:11:33,010 --> 00:11:37,810
+So we should really control how
+the Decorator chain is created because
+
+176
+00:11:38,010 --> 00:11:41,610
+the client actually doesn't know
+if it is talking to the Decorator
+
+177
+00:11:41,810 --> 00:11:43,850
+or to the decoree.
+
+178
+00:11:44,090 --> 00:11:47,630
+So if we're actually giving the
+reference of our object to the client,
+
+179
+00:11:47,850 --> 00:11:50,730
+we need to create the correct chain
+with the correct configuration and
+
+180
+00:11:50,930 --> 00:11:51,710
+give it to him.
+
+181
+00:11:52,670 --> 00:11:57,850
+There is a strong implication from
+this is that if we have a client here,
+
+182
+00:11:59,550 --> 00:12:03,390
+of course, the client doesn't know
+which kind of object it is talking to.
+
+183
+00:12:03,690 --> 00:12:08,470
+But the Decorator, it doesn't know
+either if it is being used by the
+
+184
+00:12:08,670 --> 00:12:12,330
+direct client or by another Decorator.
+
+185
+00:12:12,890 --> 00:12:15,430
+And it is also the case for the decoree.
+
+186
+00:12:15,630 --> 00:12:18,430
+The decoree doesn't know if it is
+used by a Decorator or by another
+
+187
+00:12:18,630 --> 00:12:19,390
+client.
+
+188
+00:12:19,590 --> 00:12:25,110
+So this means that changing the
+decoration chain or removing one
+
+189
+00:12:25,310 --> 00:12:28,910
+decoration in the middle of the
+execution is not an easy task.
+
+190
+00:12:29,650 --> 00:12:33,070
+So that is the same pattern is actually
+not made for that.
+
+191
+00:12:33,450 --> 00:12:36,330
+And doing that adds a lot of complexity
+to the code.
+
+192
+00:12:36,530 --> 00:12:40,610
+So when you should not or maybe
+it's difficult to use the Decorator.
+
+193
+00:12:41,570 --> 00:12:43,790
+When the decorations should have
+different APIs.
+
+194
+00:12:44,150 --> 00:12:49,330
+So the main point of using the Decorator
+is that both the Decorators and
+
+195
+00:12:49,530 --> 00:12:53,270
+the Decorees have the same API like
+that the client doesn't need to
+
+196
+00:12:53,470 --> 00:12:54,230
+check anything.
+
+197
+00:12:54,430 --> 00:12:55,530
+It can just use them polymorphically.
+
+198
+00:12:56,190 --> 00:13:00,990
+If they have different APIs,
+that is by construction impossible to do.
+
+199
+00:13:01,450 --> 00:13:04,650
+So we cannot apply the Decorator
+pattern in that case.
+
+200
+00:13:05,750 --> 00:13:09,470
+Of course, if we need to change
+the Decorator chain dynamically,
+
+201
+00:13:10,170 --> 00:13:12,570
+it also complexifies the task of
+using Decorators.
+
+202
+00:13:12,990 --> 00:13:15,630
+So maybe we need to think twice
+before doing this.
+
+203
+00:13:16,010 --> 00:13:18,310
+Maybe the Decorator is not the best
+solution for the case.
+
+204
+00:13:19,310 --> 00:13:22,950
+Also, it happens that sometimes
+APIs are huge.
+
+205
+00:13:23,150 --> 00:13:24,630
+Maybe you have hundreds of methods.
+
+206
+00:13:25,570 --> 00:13:30,630
+So that means that maintaining huge
+APIs where Decorators will only
+
+207
+00:13:30,830 --> 00:13:36,050
+override one or two methods,
+maybe it is not worth to have a
+
+208
+00:13:36,250 --> 00:13:37,010
+Decorator in that case.
+
+209
+00:13:39,050 --> 00:13:42,990
+In conclusion, today we saw that
+Decorators can represent composable
+
+210
+00:13:43,190 --> 00:13:47,670
+facets of an object that can be
+reusable and even dynamically
+
+211
+00:13:47,870 --> 00:13:48,630
+composable.
+
+212
+00:13:49,290 --> 00:13:52,650
+We should pay attention that all
+the Decorators should implement
+
+213
+00:13:52,850 --> 00:13:53,610
+the same API.
+
+214
+00:13:54,290 --> 00:13:59,980
+And the Decorator pattern is a modular
+pattern, but it expects us to have
+
+215
+00:14:00,180 --> 00:14:00,940
+a common API. &nbsp;
+
