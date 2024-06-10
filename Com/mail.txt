@@ -1,0 +1,96 @@
+Bonjour,
+
+Dans le cadre de la sortie prochaine du MOOC "Advanced Object-Oriented Design and Development with Pharo" le lundi 17/06, voici, comme convenu, un kit de communication contenant toutes les informations essentielles ainsi que quelques visuels.
+
+Les visuels
+Vous trouverez en pièce-jointe : 
+le page de présentation du cours avec toutes les infos importantes (date d'ouverture, durée d'effort, durée de disponibilité du cours etc.)
+le plan du cours 
+la page auteurs
+la vignette du cours sans cadre Inria
+la vignette du cours avec cadre Inria
+Le teaser : 
+utiliser le lien YouTube du teaser : https://www.youtube.com/watch?v=9HMYS-mzDKQ&t=1s
+Les informations à mentionner :
+le lien d'inscription au MOOC : https://www.fun-mooc.fr/en/courses/advanced-object-oriented-design-and-development-with-pharo/
+la date de début du cours : le lundi 17 juin 2024
+le format : self-paced, 1-year access
+citer pour chaque post : @inria et @inrialearninglab
+Ajouter les hashtags suivants : #AdvancedDesignMOOC #MOOC #Pharo #ObjectOrientedDesign #Programming
+
+Voici 2 messages type de communication à valider pour les réseaux sociaux et rassemblant différentes informations.
+
+Le 1er message qui présente le MOOC : 
+
+🚀 Get ready for a new #MOOC "Advanced Object-Oriented Design"! 
+Understand the key mechanisms and the essence of OOD with the following topics:
+
+✔Understanding messages
+✔Test-Driven Design
+✔Hooks: support for evolution
+✔Objects: state and behavior
+✔Elementary design patterns
+✔Double dispatch
+✔Object creation
+✔Sharing objects
+✔Inversion of control
+✔About types
+
+You will find:
+📹 Videos to explain main concepts & tools
+💡Quizzes and exercises that we've packaged together in companion exercises book
+📚Lectures with command transcripts & explanations
+
+🗓️ Course starts on June.17
+👉 Enroll for free: https://urlr.me/M6hSr
+⏱️ Pace: Self-Paced, 1-year access
+🗣️ English
+🎯 PhD students, researchers, master's students, teachers, engineers
+
+👥👥@stephaneducasse
+  @lucfabresse
+  @guillermopolito
+  @pablotesone
+  @stepharo
+👋 @FunMoocs
+  @laurentromary
+  @inrialearninglab
+  @inria
+    @imt 
+
+#AdvancedDesignMOOC #Pharo #ObjectOrientedDesign #Programming
+
+Le 2nd message citant les auteurs du MOOC :
+
+🚀 Get ready for a new #MOOC "Advanced Object-Oriented Design"! 
+In this MOOC, @Stephane Ducasse, @LucFabresse, @GuillermoPolito and @PabloTesone, researchers in computer science, will explain:
+
+✔Understanding messages
+✔Test-Driven Design
+✔Hooks: support for evolution
+✔Objects: state and behavior
+✔Elementary design patterns
+✔Double dispatch
+✔Object creation
+✔Sharing objects
+✔Inversion of control
+✔About types
+
+You will find:
+📹 Videos to explain main concepts & tools
+💡 Quizzes and exercises that we've packaged together in companion exercises book
+📚 Lectures with command transcripts & explanations
+
+🗓️ Course starts on June.17
+👉 Enroll for free: https://urlr.me/M6hSr
+⏱️ Pace: Self-Paced, 1-year access
+🗣️ English
+🎯 PhD students, researchers, master's students, teachers, engineers
+   
+👋 @FunMoocs
+  @laurentromary
+  @inrialearninglab
+  @inria
+
+#AdvancedDesignMOOC #Pharo #ObjectOrientedDesign #Programming
+
