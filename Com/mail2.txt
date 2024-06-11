@@ -1,0 +1,61 @@
+Programmation objet immersive en Pharo / Live Object Programming in Pharo - session 1
+
+English version bellow
+
+Bonjour à toutes et tous,
+
+Inscrivez-vous gratuitement au nouveau MOOC "Advanced Object-Oriented Design and Development with Pharo" (AOOD) disponible à partir du 17 juin sur FUN !
+
+Le MOOC AOOD ne porte pas sur le Pharo mais sur la conception orientée objet et présente un large éventail de sujets sur ce thème, des points de base aux points avancés. De ce point de vue, le MOOC AOOD prolonge le MOOC Pharo.
+
+Les sujets suivants vous aideront à comprendre les mécanismes clés et l'essence de la conception orientée objet :
+
+Comprendre les messages
+Conception pilotée par les tests
+Hooks : support pour l'évolution
+Objets : état et comportement
+Modèles de conception élémentaires
+Double distribution
+Création d'objets
+Partage d'objets
+Inversion de contrôle
+A propos des types
+Ce MOOC est composé de 10 modules combinant des vidéos, des quiz et des exercices.
+
+Rythme : Autonome, accès pour 1 an
+Le MOOC est en anglais.
+
+Pour en savoir plus et vous inscrire gratuitement, cliquez ici : https://www.fun-mooc.fr/en/cours/advanced-object-oriented-design-and-development-with-pharo/
+
+A bientôt !
+
+L'équipe pédagogique du MOOC
+
+Dear all,
+
+Enroll for free to the new MOOC ‘Advanced Object-Oriented Design and Development with Pharo’ (AOOD) available from 17 June on FUN!
+
+The AOOD MOOC is not about Pharo but about object-oriented design and presents a large set of topics on this subject from basic to advanced points. From this perspective, AOOD MOOC extends the Pharo MOOC.
+The following topics will help you to understand the key mechanisms and the essence of Object-Oriented Design:
+
+Understanding messages
+Test-Driven Design
+Hooks: support for evolution
+Objects: state and behavior
+Elementary design patterns
+Double dispatch
+Object creation
+Sharing objects
+Inversion of control
+About types
+This MOOC is made up of 10 modules combining videos, quizzes and exercises.
+
+Pace: Self-Paced, 1-year access
+The MOOC is in English
+
+To read more and register for free, click here: https://www.fun-mooc.fr/en/cours/advanced-object-oriented-design-and-development-with-pharo/
+
+Feel free to circulate information around you,
+
+The MOOC pedagogical team
+
