@@ -79,13 +79,15 @@ ${slide:title=Set testcase in Java (Junit40)}$
 [[[
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.HashSet;
+import java.util.Set;
 
 class SetTest {
 
 @Test
 public void testAdd() {
     //Context 
-	Set empty = new Counter();
+	Set empty = new HashSet();
     
     //Stimulus 
 	empty.add(5);
