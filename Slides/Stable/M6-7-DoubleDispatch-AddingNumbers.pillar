@@ -28,16 +28,16 @@ ${slide:title=Implement Integer and Float addition}$
 3.1
 > 2 + 1.3
 3.3
-> 1.1 + 2.2 
+> 1.1 + 2.2
 3.3
 ]]]
 
-- Implement ==\+== 
+- Implement ==\+==
 - But with not a single explicit conditional (no ==if==)
 
 ${slide:title=First hints}$
 
-- Sending a message is making a choice 
+- Sending a message is making a choice
 - Classes support choice expressions
 
 
@@ -130,7 +130,7 @@ ${slide:title=Now we can add 1+2}$
 
 [[[
 	Integer >> + aNumber
-		^ aNumber sumWithInteger: self 
+		^ aNumber sumWithInteger: self
 
 	Integer >> sumWithInteger: anInteger
 		^ addi(self, anInteger)
@@ -148,7 +148,7 @@ ${slide:title=Following computation with: 1 + 2}$
 
 [[[
 	Integer (1) >> + 2
-		^ 2 sumWithInteger: 1 
+		^ 2 sumWithInteger: 1
 
 	Integer (2) >> sumWithInteger: 1
 		^ addi(2, 1)
@@ -160,7 +160,7 @@ ${slide:title=What about 2 + 1.2?}$
 
 [[[
 	Integer >> + aNumber
-		^ aNumber sumWithInteger: self 
+		^ aNumber sumWithInteger: self
 
 	Integer >> sumWithInteger: anInteger
 		^ addi(self, anInteger)
@@ -170,7 +170,7 @@ ${slide:title=What about 2 + 1.2?}$
 	Float >> + aNumber
 
 	Oops....?
-	
+
 ]]]
 
 Looks like we need ==sumWithInteger: anInteger== on ==Float==
@@ -200,7 +200,7 @@ ${slide:title=Now we support 2 + 1.2}$
 
 [[[
 	Integer >> + aNumber
-		^ aNumber sumWithInteger: self 
+		^ aNumber sumWithInteger: self
 
 	Integer >> sumWithInteger: anInteger
 		^ addi(self, anInteger)
@@ -208,7 +208,7 @@ ${slide:title=Now we support 2 + 1.2}$
 
 
 	Float >> + aNumber
-	
+
 
 	Float >> sumWithInteger: anInteger
 		^ addf(self, asFloat(anInteger))
@@ -241,7 +241,7 @@ ${slide:title=What about 1.2 \+ 2.1?}$
 		^ aNumber sumWithInteger: self
 	Integer >> sumWithInteger: anInteger
 		^ addi(self , anInteger)
-		
+
 
 
 	Float >> + aNumber
@@ -261,7 +261,7 @@ ${slide:title=We are supporting: 1.2 \+ 2.1}$
 		^ aNumber sumWithInteger: self
 	Integer >> sumWithInteger: anInteger
 		^ addi(self , anInteger)
-		
+
 
 
 	Float >> + aNumber
@@ -285,7 +285,7 @@ ${slide:title=Supporting 1.2\+ 2}$
 >		^ addf(aFloat, asFloat(self))
 
 	Float >> + aNumber
-		^ aNumber sumWithFloat: self 
+		^ aNumber sumWithFloat: self
 	Float >> sumWithInteger: anInteger
 		^ addf(self, asFloat(anInteger))
 
@@ -305,7 +305,7 @@ ${slide:title=Following computation with: 1.2 \+ 2}$
 >		^ addf(1.2, asFloat(2))
 
 >	Float (1.2) >> + 2
->		^ 2 sumWithFloat: 1.2 
+>		^ 2 sumWithFloat: 1.2
 	Float >> sumWithInteger: anInteger
 		^ addf(self, asFloat(anInteger))
 	Float >> sumWithFloat: aFloat
@@ -323,18 +323,18 @@ ${slide:title=Ok now relax}$
 1 + 2
 1.1 + 2
 2 + 1.3
-1.1 + 2.2 
+1.1 + 2.2
 ]]]
 
 ${slide:title=Key point}$
 
 [[[
 Integer >> + aNumber
-	^ aNumber sumWithInteger: self 
+	^ aNumber sumWithInteger: self
 ]]]
 
 ""Two"" messages: Two choices
-- one for \+: 
+- one for \+:
 -- will select ==Integer== or ==Float== implementation
 - one for ==sumWithInteger:==, ==sumWithFloat:==
 -- will select ==Integer== or ==Float== implementation
@@ -344,10 +344,10 @@ ${slide:title=Exercise 2: How to add Fraction?}$
 [[[
 f := Fraction num: 1 denum: 2.
 
-> f num 
+> f num
 1
-> f denum 
-2 
+> f denum
+2
 > f asFloat
 0.5
 ]]]
@@ -392,7 +392,7 @@ ${slide:title=Supports (1/2) + (4/3)}$
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
-		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum) 
+		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum)
 			denum: aFrac denum * self denum
 	...
 ]]]
@@ -403,7 +403,7 @@ ${slide:title=Taking care of Integers and Floats as arguments}$
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
-		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum) 
+		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum)
 			denum: aFrac denum * self denum
 
 	Integer >> sumWithFraction: aFrac
@@ -421,11 +421,11 @@ ${slide:title=Now supporting: (1/2) + 1 and (1/2) + 2.1}$
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
-		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum) 
+		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum)
 			denum: aFrac denum * self denum
 	...
 	Integer >> sumWithFraction: aFrac
-		^ Fraction num: (self * aFrac denum) + aFrac num denum: aFrac denum		
+		^ Fraction num: (self * aFrac denum) + aFrac num denum: aFrac denum
 	Float >> sumWithFraction: aFrac
 		^ addf(self, aFrac asFloat)
 ]]]
@@ -436,7 +436,7 @@ ${slide:title=What about 1 + (1/2)?}$
 	Integer >> + aNumber
 		^ aNumber sumWithInteger: self
 		...
-	
+
 ]]]
 
 We should define ==Fraction>>sumWithInteger:==
@@ -449,7 +449,7 @@ ${slide:title=What about 1 + (1/2)}$
 
 	Fraction >> sumWithInteger: anInteger
 		...
-	
+
 ]]]
 
 
@@ -460,7 +460,7 @@ ${slide:title=Fraction >> sumWithInteger: }$
 		^ aNumber sumWithInteger: self
 
 	Fraction >> sumWithInteger: anInteger
-		^ Fraction num: (self num + anInteger * aFrac denum) denum: aFrac denum
+		^ Fraction num: (self num + anInteger * self denum) denum: self denum
 	...
 ]]]
 
@@ -474,10 +474,10 @@ ${slide:title=Full code for Fraction }$
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
-		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum) 
+		^ Fraction num: (self num * aFrac denum) + (aFrac num * self denum)
 			denum: aFrac denum * self denum
 	Fraction >> sumWithInteger: anInteger
-		^ Fraction num: (self num + anInteger * aFrac denum) denum: aFrac denum
+		^ Fraction num: (self num + anInteger * self denum) denum: self denum
 	Fraction >> sumWithFloat: aFloat
 		^ addf(self aFloat, aFloat)
 	Integer >> sumWithFraction: aFrac
@@ -502,19 +502,19 @@ ${slide:title=Key point}$
 
 [[[
 X >> + aNumber
-	^ aNumber sumWithX: self 
+	^ aNumber sumWithX: self
 ]]]
 
 ""Two"" messages: Two choices
-- one for \+: 
+- one for \+:
 -- select one ==Integer==, ==Float==, or ==Fraction== implementation
-- one for ==sumWithInteger:==, ....: 
+- one for ==sumWithInteger:==, ....:
 -- select one ==Integer==, ==Float==, or ==Fraction== implementation
 
 
 ${slide:title=Stepping back}$
 
-- We could add ==Fraction== without changing any previous methods 
+- We could add ==Fraction== without changing any previous methods
 - Another example of "Sending a message is making a choice"
 
 ""Different kinds of messages""
