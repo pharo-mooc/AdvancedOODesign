@@ -16,7 +16,7 @@ We create a die handle, add some die to it, and roll it.
 
 [[[
 | handle |
-handle := DieHandle new 
+handle := DieHandle new
 		addDie: (Die withFaces: 6);
 		addDie: (Die withFaces: 10);
 		yourself.
@@ -76,10 +76,10 @@ ${slide:title=NewRequirement2 asTest }$
 [[[
 DieTest >> testAddingADieAndHandle
 	| hd |
-	hd := (Die faces: 6)
+	hd := (Die withFaces: 6)
 		+
 		(DieHandle new
-			addDie: 6;
+			addDie: (Die withFaces: 6);
 			yourself).
 	self assert: hd dice size equals: 2
 ]]]
@@ -95,7 +95,7 @@ Die >> + aDieOrADieHandle
 ]]]
 
 We are on class ==Die== so we
-- systematically create a dieHandle with the receiver and 
+- systematically create a dieHandle with the receiver and
 - sum it with the argument
 
 ${slide:title=Possible solution with conditions}$
@@ -120,7 +120,7 @@ DieHandle >> + aDieOrADieHandle
 
 ${slide:title=Limits of this approach}$
 
-- Works for two cases but does not really scale! 
+- Works for two cases but does not really scale!
 - Each time you have a new case you have to change this method
 - If we have different objects that should interact with different operations e.g.,
 -- different kinds of text objects: list, figures, paragraph, section, title, text, reference...
@@ -129,7 +129,7 @@ ${slide:title=Limits of this approach}$
 ${slide:title=Hints}$
 
 - Sending a message is making a choice
--- the system ""selects the correct"" method for a given receiver and executes it 
+-- the system ""selects the correct"" method for a given receiver and executes it
 - To select a method based on the receiver AND the argument, we have to send a message to the argument
 
 ${slide:title=Sketch of the solution}$
@@ -147,23 +147,23 @@ ${slide:title=First adding two dice}$
 
 A first try
 
-[[[	
+[[[
 Die >> + aDie
-	
-	^ DieHandle new 
-			addDie: self; 
-			addDie: aDie; 
+
+	^ DieHandle new
+			addDie: self;
+			addDie: aDie;
 			yourself
 ]]]
 
 
 ${slide:title=Limits}$
 
-[[[	
+[[[
 Die >> + aDie
-	^ DieHandle new 
-			addDie: self; 
-			addDie: aDie; 
+	^ DieHandle new
+			addDie: self;
+			addDie: aDie;
 			yourself
 ]]]
 
@@ -171,7 +171,7 @@ But ==aDie== can be:
 - A dice
 - A die handle
 
-For example as in 
+For example as in
 [[[
 (Die withFaces: 6) + 2 D20
 ]]]
@@ -184,14 +184,14 @@ Adding two dice is useful, let us keep it and rename it:
 [[[
 Die >> sumWithDie: aDie
 
-	^ DieHandle new 
-			addDie: self; 
+	^ DieHandle new
+			addDie: self;
 			addDie: aDie; yourself
 ]]]
 
 Now we just say to the argument that we want to add a die
 [[[
-Die >> + aDicable	
+Die >> + aDicable
 	^ aDicable sumWithDie: self
 ]]]
 
@@ -201,7 +201,7 @@ ${slide:title=Adding Two Dice and Ready for More}$
 
 ${slide:title=Handling DieHandle as Argument}$
 
-For example: 
+For example:
 [[[
 (Die withFaces: 6) + 2 D20
 ]]]
@@ -229,7 +229,7 @@ ${slide:title=Sending a Message is Making a Choice}$
 ${slide:title=Sending a Message is Making a Choice}$
 
 We get two messages/choices:
-- One message for ==\+== 
+- One message for ==\+==
 - One message for ==sumWithDie:==
 
 
