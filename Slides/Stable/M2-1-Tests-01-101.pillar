@@ -38,7 +38,7 @@ ${slide:title=Unit tests}$
 ${slide:title=Anatomy of a test}$
 
 A test:
-- Creates a ""context"" 
+- Creates a ""context""
 - Performs a ""stimulus"": an action in the context
 - ""Checks"" the result with ""assertions""
 
@@ -59,17 +59,17 @@ TestCase subclass: #SetTest
 ]]]
 
 [[[
-SetTest >> testAdd 
+SetTest >> testAdd
     | empty |
     "Context"
     empty := Set new.
 
     "Stimulus"
     empty add: 5.
-    empty add: 5. 
+    empty add: 5.
 
     "Check"
-    self assert: empty size equals: 1.        
+    self assert: empty size equals: 1.
 
 SetTest run: #testAdd
 ]]]
@@ -77,25 +77,22 @@ SetTest run: #testAdd
 ${slide:title=Set testcase in Java (Junit40)}$
 
 [[[
+import java.util.Set;
+import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.HashSet;
-import java.util.Set;
 
 class SetTest {
+    @Test
+    public void testAdd() {
+        Set empty = new HashSet();    // context
 
-@Test
-public void testAdd() {
-    //Context 
-	Set empty = new HashSet();
-    
-    //Stimulus 
-	empty.add(5);
-	empty.add(5); 
-    
-    //Check
-	assertEquals(empty.size(),1);
-} }
+        empty.add(5);                               //Stimulus
+        empty.add(5);
+
+        assertEquals(empty.size(),1); //Check
+    }
+}
 ]]]
 
 
@@ -111,13 +108,13 @@ ${slide:title=A failure}$
 If we get ==empty size== returning 2 instead of 1.
 
 [[[
-SetTest >> testAdd 
+SetTest >> testAdd
     | empty |
     empty := Set new.
-    
+
     empty add: 5.
     empty add: 5.
-    
+
     self assert: empty size equals: 1.
 ]]]
 
@@ -126,7 +123,7 @@ ${slide:title=An error}$
 Sending the message ==foobar:== raises an exception.
 
 [[[
-SetTest >> testAdd 
+SetTest >> testAdd
     | empty |
     empty := Set new.
     empty foobar: 5.
