@@ -57,17 +57,56 @@ MicRootBlock >> fromFile: aFile
 !>
 
 
-<!slide|title=Question&tag=nh5p
+<!slide|title=Q2
 
 How do we get the file from any document element?
 
-```
-Microdown parserFile: '# section 2
+!>
 
-- bullet 1
-- bullet 2
+<!slide|title=Q2
 
-```
+Without condition, of course
 
 !>
 
+<!slide|title=Just tell
+
+Without condition, of course
+
+!>
+
+<!slide|title=Just tell
+
+```
+MicRootBlock >> fromFile
+	^ self propertyAt: #file 
+
+```
+!>
+
+<!slide|title=Q2 cont
+
+What about any element such as figures, inputfile?
+
+```
+MicElementBlock >> fromFile
+	...
+```
+!>
+
+<!slide|title=Just delegate
+
+```
+MicElementBlock >> fromFile
+	"Let us bubble up to the root to get the file"
+	^ self parent fromFile
+
+```
+!>
+
+<!slide|title=Stepping back
+
+- No need for asking
+- There is an implicit condition: a message!
+
+!>
