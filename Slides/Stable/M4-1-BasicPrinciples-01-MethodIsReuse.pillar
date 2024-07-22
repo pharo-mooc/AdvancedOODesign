@@ -15,7 +15,7 @@ Obvious but it is always good to hear it again
 ${slide:title=Case Study}$
 
 [[[
-PRTree >> inpectionPresenter
+PRTree >> inspectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
@@ -71,7 +71,7 @@ ${slide:title=And send a message}$
 Sending a message will call a method (reuse its code)!
 
 [[[
-PRTree>>inpectionPresenter
+PRTree>>inspectionPresenter
     <inspectorPresentationOrder: 35 title: 'PillarTree'>
     ^ SpTreePresenter new
         roots: { self };
