@@ -19,7 +19,7 @@ This creates a new _result folder with all the files and the correct pdf
 latexmk _result/pdf/TestLatex/AAA.tex -pdflatex=lualatex  -pdf -ps- -f -interaction=nonstopmode -outdir=_resultLua
 ```
 
-This is working
+This is working. 
 
 
 ### Not working attempts
@@ -81,5 +81,22 @@ cp -r _result /tmp/testing/_result
 cd /tmp/testing/
 ```
 
-I do not get why this crap of latex does not find the figures of the support since they are copied.
+- I do not get why this crap of latex does not find the figures of the support since they are copied.
+
+
+- So the beamer file contains references that latex cannot resolve so edit the files and remove the last 
+slides from the generated tex file. -> This does not work either. 
+
+- added icon-pharo.png in figure -> this does not work either
+
+- Let us look at the Pillar invocation.
+
+The pillar invocation is in abosolute paths 
+
+```
+latexmk /tmp/testing/_result/pdf/TestLatex/AAA.tex -pdflatex=lualatex  -pdf -ps- -f -interaction=nonstopmode -outdir=/tmp/testing/_resultLua
+```
+
+This does not change.
+
 
