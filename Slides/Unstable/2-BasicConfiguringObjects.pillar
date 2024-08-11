@@ -70,7 +70,7 @@ NewCommandLineRunner class >> defaultReporterClass: aClass
 
 -  All instances of all subclasses of NewCommandLineRunner will share the same default class
  
- ${slide:title=class side Initialization}$
+${slide:title=class side Initialization}$
 
 [[[	
 NewCommandLineRunner class >> initialize
