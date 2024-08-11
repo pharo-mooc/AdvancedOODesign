@@ -99,4 +99,12 @@ latexmk /tmp/testing/_result/pdf/TestLatex/AAA.tex -pdflatex=lualatex  -pdf -ps-
 
 This does not change.
 
+### So working in this repo
+
+Making lualatex in another repo is a hell and I could not find a way to make it work. 
+So I did the following: 
+- I introduced two little commands to switch configuration. 
+- Note that the converter from pillar slide to microdown slides in the released version of pillar is not correct since it does not emit a cr befor a code block so I pasted a correct version of AAA.md to be able to continue to work on the #=0 problem.
+
+
 
