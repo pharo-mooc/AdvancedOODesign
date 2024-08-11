@@ -103,8 +103,42 @@ This does not change.
 
 Making lualatex in another repo is a hell and I could not find a way to make it work. 
 So I did the following: 
-- I introduced two little commands to switch configuration. 
+- I introduced two little commands to switch configurations toMDConf.sh and toPillarConf.sh
 - Note that the converter from pillar slide to microdown slides in the released version of pillar is not correct since it does not emit a cr befor a code block so I pasted a correct version of AAA.md to be able to continue to work on the #=0 problem.
 
+```
+toMDConf.sh
+/Users/ducasse/Documents/Pharo/vms/120-x64/Pharo.app/Contents/MacOS/Pharo /Users/ducasse/Documents/Pharo/images/p12-PillarAgain1/p12-PillarAgain1.image  clap build pdf TestLatex/AAA.md
+```
 
+### Found the problem
 
+In the configuration of advanced mooc we do not specify the template so it uses the in _support and this one was edited by luc. 
+
+```
+{
+  "title":"My First Presentation - The main title",
+  "subtitle": "and a cool sub",
+  "author": "Joe Rabbit",
+  "complement" : "Rabbit Corp 4.0",
+  "date": "March 2020",
+  "latexWriter" : #micBeamer
+}
+```
+In the archetype the configuration uses: 
+
+```
+{
+  "title":"My First Presentation - The main title",
+  "subtitle": "and a cool sub",
+  "author": "Joe Rabbit",
+  "complement" : "Rabbit Corp 4.0",
+  "date": "March 2020",
+  "latexWriter" : #micBeamer,
+  "template" : "slides.pharobeamer.template"
+}
+```
+
+And this template has certainly a problem in the beamer template listing and it breaks when used.
+
+Ok now it works! so this means that the #a=0 is a problem with the template in the archetype!

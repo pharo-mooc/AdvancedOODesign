@@ -70,7 +70,7 @@ CZScoped << #CZField
 	package: 'Citezen-Model'
 ]]]
 
-${slide:title=Consequence$
+${slide:title=Consequence}$
 
 [[[
 CZField >> isDoi
@@ -111,7 +111,7 @@ Not having a class hierarchy:
 
 ${slide:title=Transform self type}$
 
-+Not implementation>file://figures/TransformSelfType.png.png|width=80+
++Not implementation>file://figures/TransformSelfType.png|width=80+
 
 
 ${slide:title=The case of the Memento DP}$
