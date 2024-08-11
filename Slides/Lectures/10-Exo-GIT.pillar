@@ -25,7 +25,7 @@ ${slide:title=About Pharo}$
 
 All the code samples and examples are taken using and from Pharo (*http://www.pharo.org*)
 
-+>file://figures/Pharo.jpg+
++>file://figures/Pharo.png+
 
 
 ${slide:title= Why Pharo?}$
