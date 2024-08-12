@@ -1,8 +1,8 @@
 {
-    "title":"Polymorphism at work",
-    "subtitle":"",
-    "author":""
+    "title" : "Polymorphism at work",
+    "author" : "foobar"
 }
+
 
 ${slide:title=Goal}$
 
