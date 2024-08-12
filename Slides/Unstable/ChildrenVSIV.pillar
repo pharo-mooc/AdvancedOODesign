@@ -32,12 +32,6 @@ In microdown implementation, instance variables are for non-children (i.e., elem
 A code block body and arguments are just holidng strings and mic elements.
 
 [[[
-```language=pharo
-1 + 2
-```
-]]]
-
-[[[
 MicAbstractBlock subclass: #MicStartStopMarkupBlock
 	instanceVariableNames: 'isClosed body firstLine'
 ]]]
