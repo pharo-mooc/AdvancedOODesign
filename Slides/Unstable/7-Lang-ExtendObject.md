@@ -1,39 +1,30 @@
 {
-	"title":"About extending objects",
-	"author":"S. Ducasse"
+"title" : "About extending objects",
+"subtitle" : "",
+"author" : "S. Ducasse"
 }
 
-${slide:title=Goal}$
-
+# Goal
 - Revisit conditional
 - Think about visibility
 
-${slide:title=Recall}$
-
-- ==x isKindOf: Class== or ==x class = Class== are against OOP
+# Recall
+- `x isKindOf: Class` or `x class = Class` are against OOP
 - Do not ask, tell
 
-
-${slide:title=About class extension}$
-
+# About class extension
 In Pharo a package can define a method in a class that is not in the extending package.
-
 - Powerful mechanism.
-
 - Here STEF
 
-
-
-${slide:title=About isFoo methods}$
-
+# About isFoo methods
 - Be suspicious about conditional logic
-- An isFoo (isArray, isPair, ...) is still a conditional and asking form
-- It does not support a tell (from Do not ask, Tell) 
+- An isFoo \(isArray, isPair, ...\) is still a conditional and asking form
+- It does not support a tell \(from Do not ask, Tell\) 
 
+# About isFoo methods
 
-${slide:title=About isFoo methods}$
-
-[[[
+```
 printOn: stream
 
 	stream nextPutAll: self label.
@@ -43,9 +34,6 @@ printOn: stream
 				do: [ :node | node printOn: stream ]
 				separatedBy: [ stream << ', ' ] ]
 		ifFalse: [ model printOn: stream ]
-]]]
-
+```
 - Why the model cannot be a collection?
 - It can be a collection with a single element or more.
-
-

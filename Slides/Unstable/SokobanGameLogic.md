@@ -1,22 +1,22 @@
 {
-    "title":"Distributing Responsibility",
-    "subtitle":""
+"title" : "Distributing Responsibility",
+"subtitle" : ""
 }
 
-${slide:title=Building map from specification}$
+# Building map from specification
 
-[[[
+```
 | importer game |
 importer := SkBoardImporter new. 
 game := importer buildMapFor: 
 '######
 #@$ . #
 #######'.
-]]]
+```
 
-${slide:title=Building map from specification}$
+# Building map from specification
 
-[[[
+```
 SkBoardImporter >> buildMapFor: aString
 
 	self buildEmptyFor: aString.
@@ -27,12 +27,11 @@ SkBoardImporter >> buildMapFor: aString
 			game initializeElement: new atLine: lineNumber column: columnNumber ] ].
 	game finalize.
 	^ game
-]]]
+```
 
+# Building map from specification
 
-${slide:title=Building map from specification}$
-
-[[[
+```
 SkBoard >> finalize
 	"A player and boxes should have a previous location set as ground."
 
@@ -40,37 +39,34 @@ SkBoard >> finalize
 	map do: [ :each | ( each isKindOf: SkBox )
 		ifTrue: [ each previousBackground: (SkGround new position: each position; yourself)] ].
 	self identifyPlayerAndBoxes
-]]]
+```
 
-[[[
+```
 SkBoard >> identifyPlayerAndBoxes
 
 	player := map detect: [ :each | each  isPlayer ].
 	boxes := OrderedCollection new.
 	map do: [ :each | each isBox ifTrue: [ boxes add: each ] ]
-]]]
+```
 
-
-
-${slide:title=Analysis}$
-
+# Analysis
 - Responsibilities are concentred in Board
 - Forced to check to identify element
 
-${slide:title=Preparing holding boxes}$
+# Preparing holding boxes
 
-[[[
+```
 SkBoard >> initialize
 	super initialize.
 	boxes := OrderedCollection new. 
 	
 SkBoard >> addBox: aBox
 	boxes add: aBox	
-]]]
+```
 
-${slide:title=Introducting a hook}$
+# Introducting a hook
 
-[[[
+```
 SKBoard >> initializeElement: anElement 
 	atLine: lineNumber 
 	column: columnNumber
@@ -79,40 +75,36 @@ SKBoard >> initializeElement: anElement
 	anElement position: columnNumber @ lineNumber.
 	self atRow: lineNumber atColumn: columnNumber put: anElement.
 	anElement postCreationAction
-]]]
+```
 
-${slide:title=Specialization of hook}$
+# Specialization of hook
 
-[[[
+```
 SKElement >> postCreationAction
 	self
-]]]
+```
 
-[[[
+```
 SKPlayer >> postCreationAction 
 	board setPlayer: self.
 	self previousBackground: self newGround
-]]]
+```
 
-[[[
+```
 SkBox >> postCreationAction 
 	board addBox: self.
 	self previousBackground: self newGround
-]]]
+```
 
-[[[
+```
 SKMovable >> newGround
 	^ (SkGround new position: self position; yourself)
-]]]
+```
 
-${slide:title= Removing useless methods}$
+#  Removing useless methods
+- No need for `finalize`
+- No need for `identifyPlayer`
 
-- No need for ==finalize==
-- No need for ==identifyPlayer==
-
-${slide:title=Conclusion}$
-
+# Conclusion
 - No need to check and query
 - No need 
-
-

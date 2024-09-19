@@ -1,16 +1,16 @@
 {
-    "title" : "Avoid Hardcoding Classes",
-    "author" : "S. Ducasse"
+"title" : "Avoid Hardcoding Classes",
+"subtitle" : "",
+"author" : "S. Ducasse"
 }
 
-${slide:title=Goal}$
-
+# Goal
 - Think that a class is a kind of global
 - Think about parametrization
 
-${slide:title=A simple case }$
+# A simple case 
 
-[[[
+```
 EFTest >> testAssignment
 
 	| source expr |
@@ -18,18 +18,15 @@ EFTest >> testAssignment
 	source := (EFFormatter new installNewContext:
 	           (self perform: configurationSelector) yourself) format: expr.
 	self assert: source equals: 'a := 1'
-]]]
-
+```
 What if we want to check that an alternate Formatter is satisfying the test?
-
-${slide:title=Solution}$
-
+# Solution
 - Do not hardcode class name
 - Define test parameters
 
-${slide:title=Step 1}$
+# Step 1
 
-[[[
+```
 EFTest >> testAssignment
 
 	| source expr |
@@ -37,44 +34,41 @@ EFTest >> testAssignment
 	source := (self formatterClass new installNewContext:
 	           (self perform: configurationSelector) yourself) format: expr.
 	self assert: source equals: 'a := 1'
-]]]
+```
 
-[[[
+```
 EFTest >> parserClass
 	^ RBParser
-]]]
+```
 
-[[[
+```
 EFTest >> formatterClass
 	^ EFFormatter
-]]]
+```
 
-${slide:title=Step 2: state and setter}$
+# Step 2: state and setter
 
-[[[
+```
 EFTest >> formatterClass: aFormatterClass
 	formatterClass := aFormatterClass
-]]]
+```
 
+# Step 3: introducing test parameters
 
-${slide:title=Step 3: introducing test parameters}$
-
-[[[
+```
 EFTest class >> testParameters
 
 	^ ParametrizedTestMatrix new
 		addCase: { #formatterClass -> EFFormatter. #contextClass -> EFContext };
 		addCase: { #formatterClass -> AlternateFormatter. #contextClass -> EFContext };
 		yourself.
-]]]
-
+```
 - All the tests will run for each configuration. 
-- Now we can turn ==parserClass== as a test parameter if needed!
+- Now we can turn `parserClass` as a test parameter if needed!
 
+# Having a nice logic
 
-${slide:title=Having a nice logic}$
-
-[[[
+```
 EFTest >> testAssignment
 
 	| source expr |
@@ -82,29 +76,26 @@ EFTest >> testAssignment
 	source := (self formatterClass new installNewContext:
 	           (self perform: configurationSelector) yourself) format: expr.
 	self assert: source equals: 'a := 1'
-]]]
-
+```
 into 
-[[[
+```
 testAssignment
 	| source expr |
 	expr := self parseExpression: 'a:=1'.
 	source := self formatter format: expr.
 	self assert: source equals: 'a := 1'
-]]]
+```
 
-${slide:title=And finally}$
+# And finally
 
-[[[
+```
 EFTest >> testAssignment
 	self 
 		assert: (self formatExpression: 'a:=1') 
 		equals: 'a := 1'
-]]]
+```
 
-
-${slide:title=Conclusion}$
-
+# Conclusion
 - Factor out class references
-- Ease extension by overriding (Remember self-sends are plans for reuse)
+- Ease extension by overriding \(Remember self-sends are plans for reuse\)
 - Support test parametrization

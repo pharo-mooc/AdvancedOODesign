@@ -1,18 +1,17 @@
 {
-    "title":"Basic about asString and printString",
-    "author":"S. Ducasse"
+"title" : "Basic about asString and printString",
+"subtitle" : "",
+"author" : "S. Ducasse"
 }
 
-${slide:title=Goal}$
-
+# Goal
 - Think about intermediary object creation
 - How to avoid spurious objects
-- ==asString== and ==printString== inside ==printOn:==
+- `asString` and `printString` inside `printOn:`
 
+# printString: setting the stage
 
-${slide:title=printString: setting the stage}$
-
-[[[
+```
 Object >> printString
 		"Answer a String whose characters are a description of the receiver. 
 		If you want to print without a character limit, use fullPrintString."
@@ -24,11 +23,11 @@ Object >> printStringLimitedTo: limit
 	If you want to print without a character limit, use fullPrintString."
 
 	^self printStringLimitedTo: limit using: [:s | self printOn: s]
-]]]
+```
 
-${slide:title=printString creates its own stream!}$
+# printString creates its own stream!
 
-[[[
+```
 printProtocol: protocol sourceCode: sourceCode
 
 	^ String streamContents: [ :stream |
@@ -37,15 +36,14 @@ printProtocol: protocol sourceCode: sourceCode
 			nextPutAll: protocol printString;
 			nextPut: $"; cr; cr;
 			nextPutAll: sourceCode ]	
-]]]
-
-==protocol printString==
+```
+`protocol printString`
 - Creates a new stream
 - Get its contents to be able to put in the first stream
 
-${slide:title=Better use print:}$
+# Better use print:
 
-[[[
+```
 printProtocol: protocol sourceCode: sourceCode
 
 	^ String streamContents: [ :stream |
@@ -54,46 +52,41 @@ printProtocol: protocol sourceCode: sourceCode
 			print: protocol;
 			nextPut: $"; cr; cr;
 			nextPutAll: sourceCode ]	
-]]]
+```
 
-[[[
+```
 Stream >> print: anObject
 	"Have anObject print itself on the receiver."
 
 	anObject printOn: self
-]]]
+```
 
-${slide:title=The case of displayStringOn:}$
-
+# The case of displayStringOn:
 - When we get a stream, better use it directly
-[[[
+
+```
 MessageTally >> displayStringOn: aStream
 	self displayIdentifierOn: aStream.
 	aStream 
 		nextPutAll: ' (';
 		nextPutAll: self tally printString;
 		nextPutAll: ')'
-]]]
-
-==self tally printString==
+```
+`self tally printString`
 - Creates a new stream
 - Get its contents to be able to put in the first stream
 
-${slide:title=Better}$
+# Better
 
-[[[
+```
 MessageTally >> displayStringOn: aStream
 	self displayIdentifierOn: aStream.
 	aStream 
 		nextPutAll: ' (';
 		print: self tally;
 		nextPutAll: ')'
-]]]
-
+```
 - No creation of intermediary streams
 
-
-${slide:title=Conclusion}$
-
+# Conclusion
 - Let the object decide if it wants to join a process but passing a container
-

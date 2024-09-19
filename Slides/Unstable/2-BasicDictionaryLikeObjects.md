@@ -1,17 +1,17 @@
 {
-    "title":"An Object vs. a Class Hierarchy",
-    "author":"S. Ducasse"
+"title" : "An Object vs. a Class Hierarchy",
+"subtitle" : "",
+"author" : "S. Ducasse"
 }
 
-${slide:title=Goal}$
-
+# Goal
 - Remember the Implementing Not Lectures
 - Transform Self Type Check Reengineering pattern
 - Discussion on Memento
 
-${slide:title=Example: BibTeX}$
+# Example: BibTeX
 
-[[[
+```
 @book{Blac09a,
   author = {Andrew P. Black and St\'ephane Ducasse and Oscar Nierstrasz and Damien Pollet and Damien Cassou and Marcus Denker},
   title = {Pharo by Example},
@@ -34,51 +34,47 @@ ${slide:title=Example: BibTeX}$
   title = {A new modular implementation for Stateful Traits},
   journal = {Science of Computer Programming},
   ...
+```
 
-]]]
+# A single class in Citezen
 
-${slide:title=A single class in Citezen}$
-
-[[[
+```
 CZScoped << #CZEntry
 	slots: { #type . #key . #fields };
 	sharedVariables: { #ExtendedFieldKeys . #FieldKeysToRemove };
 	sharedPools: { CZFieldPool };
 	package: 'Citezen-Model'
-]]]
+```
 
+# Consequences
 
-${slide:title=Consequences}$
-
-[[[
+```
 isArticle
 	^ self type = #article
-]]]
+```
 
-[[[
+```
 isBook
 	^ self type = #book
-]]]
-
+```
 And their senders...
+# Another example: CZField
 
-${slide:title=Another example: CZField}$
-
-[[[
+```
 CZScoped << #CZField
 	slots: { #key . #value };
 	package: 'Citezen-Model'
-]]]
+```
 
-${slide:title=Consequence}$
+# Consequence
 
-[[[
+```
 CZField >> isDoi
 
 	^ key = #doi
-]]]
+```
 
-[[[
+```
 CZField >> visitField: aField
 
 	self outputStream nextPutAll: '<span class="', aField key,'">'.
@@ -97,11 +93,9 @@ CZField >> visitField: aField
 	aField isPDF
 			ifTrue: [outputStream nextPutAll: '">PDF</a>'].
 	outputStream nextPutAll: '</span>'.
-]]]
+```
 
-
-${slide:title=When using a Fat class}$
-
+# When using a Fat class
 Not having a class hierarchy: 
 - Not possible to dispatch logic because there is only one class 
 - Simple extensions require many changes to the conditional code
@@ -109,18 +103,11 @@ Not having a class hierarchy:
 - Adding a new behavior always results in changes to the same set of methods and always results in adding a new case to the conditional code.
 - Remember the Implementing Not Lectures
 
-${slide:title=Transform self type}$
-
-+Not implementation>file://figures/TransformSelfType.png|width=80+
-
-
-${slide:title=The case of the Memento DP}$
-
+# Transform self type
+![Not implementation](figures/TransformSelfType.png width=80)
+# The case of the Memento DP
 Sometimes you need to be able to edit a temporary version of an object
 - Memento allows one to save and reload the state of an object without revealing implementation details
 - To have a generic Memento we can use a kind of dictionary to hold field values of the copied object
 
-${slide:title=Conclusion}$
-
-
-
+# Conclusion
