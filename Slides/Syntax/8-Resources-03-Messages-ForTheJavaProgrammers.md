@@ -1,35 +1,30 @@
 {
-    "title":"Messages for Java Programmers",
-    "slidesid" : "xxx"
+"title" : "Messages for Java Programmers",
+"subtitle" : "",
+"slidesid" : "xxx"
 }
 
-${slide:title=Only objects and messages}$
-
-- code in Pharo ""only"" manipulates objects: mouse, booleans, arrays, numbers, compressed, strings, windows, scrollbars, canvas, files, trees, compiler, sound, url, socket, fonts, text, collections, stack, shortcut, streams, ...
+# Only objects and messages
+- code in Pharo **only** manipulates objects: mouse, booleans, arrays, numbers, compressed, strings, windows, scrollbars, canvas, files, trees, compiler, sound, url, socket, fonts, text, collections, stack, shortcut, streams, ...
 - messages and assignments are the only way to do something
 
-
-${slide:title=Equivalence}$
-
+# Equivalence
 In Java
-[[[
+```
     ArrayList<String> strings = new ArrayList<String>();
-]]]
-
+```
 In Pharo
-[[[
+```
 strings := OrderedCollection new.
-]]]
-
+```
 - 1 assignment, 1 message sent
-- ==new== is a message sent to a class
+- `new` is a message sent to a class
 - no static typing
 - no generics
 
-${slide:title=Equivalence}$
-
+# Equivalence
 In Java
-[[[language=java
+```language=java
 Thread regThread = new Thread(
   new Runnable() {
     @Override
@@ -38,152 +33,137 @@ Thread regThread = new Thread(
     }
   });
 regThread.start();
-]]]
-
+```
 In Pharo
-[[[
+```
 [ self doSomething ] fork
-]]]
+```
 
-${slide:title=Equivalence}$
-
+# Equivalence
 In Java 8
-[[[language=java
+```language=java
 new Thread(() -> this.doSomething()).start();
-]]]
-
+```
 In Pharo
-[[[
+```
 [ self doSomething ] fork
-]]]
+```
 
-
-${slide:title=Three kinds of messages}$
-
+# Three kinds of messages
 - Unary
-[[[
+
+```
 5 factorial
 Transcript cr
-]]]
-
+```
 - Binary
-[[[
+
+```
 3 + 4
 5 -> 10
-]]]
-
+```
 - Keyword-based
-[[[
+
+```
 Transcript show: 'hello world'
 2 between: 0 and: 5
-]]]
+```
 
-${slide:title=Keyword messages for Java developers}$
-
+# Keyword messages for Java developers
 In Java
-[[[language=java
+```language=java
     receiver.keyword1keyword2(arg1, arg2)
-]]]
-
+```
 In Pharo
-[[[
+```
     anObject keyword1: arg1 keyword2: arg2
-]]]
+```
 
-${slide:title=Keyword messages for Java developers}$
-
+# Keyword messages for Java developers
 In Java
-[[[
+```
     postman.send(mail,recipient);
-]]]
+```
 
-${slide:title=Keyword messages for Java developers}$
+# Keyword messages for Java developers
 
-[[[
+```
     postman.send(mail,recipient);
     postman . send ( mail , recipient );
-]]]
+```
 
+# Keyword messages for Java developers
 
-${slide:title=Keyword messages for Java developers}$
-
-[[[
+```
     postman.send(mail,recipient);
     postman . send ( mail , recipient );
     postman send mail recipient
-]]]
+```
 
-${slide:title=Keyword messages for Java developers}$
+# Keyword messages for Java developers
 
-[[[
+```
     postman.send(mail,recipient);
     postman . send ( mail , recipient );
     postman send mail recipient
     postman send mail to recipient
-]]]
+```
 
-${slide:title=Keyword messages for Java developers}$
+# Keyword messages for Java developers
 
-[[[
+```
     postman.send(mail,recipient);
     postman . send ( mail , recipient );
     postman send mail recipient
     postman send mail to recipient
     postman send: mail to: recipient
-]]]
+```
 
-
-${slide:title=Keyword messages for Java developers}$
-
+# Keyword messages for Java developers
 In Java
-[[[language=java
+```language=java
     postman.send(mail,recipient);
-]]]
-
+```
 In Pharo
-[[[
+```
     postman send: mail to: recipient
-]]]
-
+```
 - the message
--- is named ==send:to:==
--- is sent to ==postman==
--- includes two arguments (==mail== and ==recipient==)
+  - is named `send:to:`
+  - is sent to `postman`
+  - includes two arguments \(`mail` and `recipient`\)
 
-${slide:title=Conditionals are just messages}$
-
-- in Java, ==if==, ==else==, ==for==, ==while==, ==do==, ... are language keywords
+# Conditionals are just messages
+- in Java, `if`, `else`, `for`, `while`, `do`, ... are language keywords
 - in Pharo, conditional expressions are messages
 - booleans are objects
 
-[[[
+```
 fullName isEmpty
    ifTrue: [ 'FirstnameLastname' ]
    ifFalse: [ fullName ]
-]]]
+```
 
-${slide:title=Loops are just messages}$
+# Loops are just messages
 
-[[[
+```
 4 timesRepeat: [ self doSomething ]
-]]]
+```
 
-[[[
+```
 0 to: 100 do: [ :i | ... ]
-]]]
+```
 
-[[[
+```
 0 to: 100 by: 3 do: [ :i | ... ]
-]]]
+```
 
-[[[
+```
 aCollection do: [ :each | ... ]
-]]]
+```
 
-${slide:title=Summary}$
-
+# Summary
 - Three kinds of messages: unary, binary and keywords
-- () > unary > binary > keywords
+- \(\) > unary > binary > keywords
 - Conditionals are messages
 - Loops too
-
