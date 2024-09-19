@@ -1,51 +1,49 @@
-{
-    "title" : "Stone Paper Scissors - J version",
-    "slidesid" : "From the Design Corner",
-    "author" : "Stéphane Ducasse"
-}
-
-
-${slide:title=Let us start with a test}$
-
-[[[
+{ 
+"title" : "Stone Paper Scissors - J version", 
+"slidesid" : "From the Design Corner",
+"subtitle" : "",
+"author" : "Stéphane Ducasse" 
+} 
+ 
+ 
+# Let us start with a test 
+ 
+``` 
 @Test
 	public void testStoneVsStone() {
 		assertEquals(new Stone().play(new Stone()),"draw");
-		}
-]]]
-
-
-${slide:title=Now the Stone class...}$
-[[[
+		} 
+``` 
+ 
+# Now the Stone class... 
+ 
+``` 
 class Stone {
 	public String play (Stone h){
 		return ...
 	}
-}
-]]]
-
-
-${slide:title=A hint}$
-
-No there is no need for conditionals.
-
-${slide:title=A second hint}$
-
-- Sending a message is making a choice
-- When writing a method I know the class of the message receiver. Dull not quite!
-
-${slide:title=So Stone...}$
-[[[
+} 
+``` 
+ 
+# A hint 
+No there is no need for conditionals. 
+# A second hint 
+- Sending a message is making a choice 
+- When writing a method I know the class of the message receiver. Dull not quite! 
+ 
+# So Stone... 
+ 
+``` 
 class Stone {
 	public String play (Stone h){
 		return h.playAgainstStone(this);
 	}
-}
-]]]
-
-
-${slide:title=Now playAgainstStone ...}$
-[[[
+} 
+``` 
+ 
+# Now playAgainstStone ... 
+ 
+``` 
 class Stone {
 	public String play (Stone h){
 		return h.playAgainstStone(this);
@@ -53,11 +51,12 @@ class Stone {
 	public String playAgainstStone(Stone s){
 		return ...
 	}
-}
-]]]
-
-${slide:title=Stone...}$
-[[[
+} 
+``` 
+ 
+# Stone... 
+ 
+``` 
 class Stone {
 	public String play (Stone h){
 		return h.playAgainstStone(this);
@@ -65,51 +64,50 @@ class Stone {
 	public String playAgainstStone(Stone s){
 		return "draw";
 	}
-}
-]]]
-
-${slide:title=Another test...}$
-[[[
+} 
+``` 
+ 
+# Another test... 
+ 
+``` 
 @Test
 	public void testStoneVsPaper() {
 		assertEquals(new Stone().play(new Paper()),"paper");
-		}
-]]]
-
-${slide:title=Paper...}$
-[[[
+		} 
+``` 
+ 
+# Paper... 
+ 
+``` 
 class Paper {
 	public String playAgainstStone(Paper s){
 		return "paper";
 	}
-}
-]]]
-
-${slide:title=Well this is Java, ...}$
-
-- The previous code cannot compile because Paper and Stone are unrelated
-- All the types should be known
-- All the methods should be reachable statically
-
-Two solutions:
-- Common superclass
-- Using interfaces
-
-
-${slide:title=Defining and using an interface}$
-
-[[[
+} 
+``` 
+ 
+# Well this is Java, ... 
+- The previous code cannot compile because Paper and Stone are unrelated 
+- All the types should be known 
+- All the methods should be reachable statically 
+Two solutions: 
+- Common superclass 
+- Using interfaces 
+ 
+# Defining and using an interface 
+ 
+``` 
 interface IHand {
     String play (IHand h);
     String playAgainstStone (IHand s);
     String playAgainstScissors (IHand s);
     String playAgainstPaper (IHand p);
- }
-]]]
-
-
-${slide:title=Stone...}$
-[[[
+ } 
+``` 
+ 
+# Stone... 
+ 
+``` 
 class Stone {
 	public String play (IHand h){
 		return h.playAgainstStone(this);
@@ -117,23 +115,24 @@ class Stone {
 	public String playAgainstStone(IHand s){
 		return "draw";
 	}
-}
-]]]
-
-
-${slide:title=Full Solution: Stone}$
-[[[
+} 
+``` 
+ 
+# Full Solution: Stone 
+ 
+``` 
 class Stone implements IHand {
     public String play (IHand h){
         return h.playAgainstStone(this);
     }
     public String playAgainstStone(IHand s){ return "draw";}
     public String playAgainstScissors(IHand s){ return "stone";}
-    public String playAgainstPaper(IHand s){ return "paper";}}
-]]]
-
-${slide:title=Full Solution: Scissors}$
-[[[
+    public String playAgainstPaper(IHand s){ return "paper";}} 
+``` 
+ 
+# Full Solution: Scissors 
+ 
+``` 
 class Scissors implements IHand {
     public String play (IHand h){
         return h.playAgainstScissors(this);
@@ -141,35 +140,29 @@ class Scissors implements IHand {
     public String playAgainstStone(IHand s){ return "stone";}
     public String playAgainstScissors(IHand s){ return "draw";}
     public String playAgainstPaper(IHand s){ return "scissors";}
-}
-]]]
-
-${slide:title=Full Solution: Paper}$
-[[[
+} 
+``` 
+ 
+# Full Solution: Paper 
+ 
+``` 
 class Paper implements IHand {
     public String play (IHand h){
         return h.playAgainstPaper(this);}
     public String playAgainstStone(IHand s){ return "paper";}
     public String playAgainstScissors(IHand s){ return "scissors";}
     public String playAgainstPaper(IHand s){ return "draw";}
-}
-]]]
-
-
-${slide:title=Another possible solution}$
-
-+An overview of a possible solution using double dispatch.>file://figures/StonePaperScissors.pdf|width=80+
-
-${slide:title=Remark}$
-
-In this example we do not need to pass the argument during the double dispatch.
-
-Usually double dispatch 
-- uses arguments
-- is between more classes (document elements and operations)
-
-${slide:title=Conclusion}$
-
-- Powerful
-- Modular
-- Just sending an extra message to an argument and using late binding
+} 
+``` 
+ 
+# Another possible solution 
+![An overview of a possible solution using double dispatch.](figures/StonePaperScissors.pdf width=80) 
+# Remark 
+In this example we do not need to pass the argument during the double dispatch.Usually double dispatch  
+- uses arguments 
+- is between more classes \(document elements and operations\) 
+ 
+# Conclusion 
+- Powerful 
+- Modular 
+- Just sending an extra message to an argument and using late binding 
