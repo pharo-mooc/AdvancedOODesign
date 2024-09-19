@@ -14,12 +14,7 @@ buildSlide() {
 	cp _result/pdf/${f%}.pdf __results
 }
 
-for PILLAR_FILE in $(find Slides/Syntax -name '*.pillar')
+for PILLAR_FILE in $(find Slides/Lectures -name '*.pillar')
 do
 	buildSlide $PILLAR_FILE
 done
-
-# for PILLAR_FILE in $(find Slides/Lectures -name '*.pillar')
-# do
-# 	buildSlide $PILLAR_FILE
-# done
