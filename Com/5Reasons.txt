@@ -1,0 +1,30 @@
+5 raisons de suivre le MOOC “Advanced object oriented design and development with Pharo”
+
+Si vous êtes ingénieur, scientifique ou en reconversion, le MOOC “Advanced Object-Oriented Design and Development with Pharo” est une opportunité unique pour affiner vos compétences en programmation orientée objet. Avec une audience internationale, ce MOOC est réalisé en anglais avec sous-titrage.
+
+Raison n°1 : Approfondissez les concepts avancés de la programmation orientée objet
+
+Que vous soyez débutant ou expérimenté, ce MOOC vous plonge dans l’essence de la conception orientée objet (OOD).
+Vous découvrirez des mécanismes fondamentaux comme « l’envoi de messages » et les « hooks », ainsi que des modèles de conception élémentaires qui vous permettront d’améliorer vos projets logiciels. Pharo est le langage utilisé pour illustrer les concepts présentés, mais ils peuvent être reproduits avec d’autres langages comme Python, JavaScript ou C#.
+
+Raison n°2 : Maîtrisez le Test Driven Development (TDD)
+
+Le TDD est une approche incontournable pour écrire un code de qualité. Ce MOOC vous guide à travers les meilleures pratiques pour intégrer le TDD dans vos projets, assurant des conceptions robustes et fiables.
+Vous serez en mesure de transformer vos idées en solutions concrètes, testées et optimisées.
+
+Raison n°3 : Un contenu pédagogique riche et varié
+
+Avec plus de 60 vidéos réparties sur 10 modules, vous aurez accès à un large éventail de connaissances.
+Des petites mises en situation aux quiz, ce parcours inclut des exercices de conception pratiques qui permettent de mettre en œuvre immédiatement les concepts appris.
+
+Raison n°4 : Conçu par des enseignants experts
+
+Ce MOOC est animé par des scientifiques reconnus d’Inria et des établissements partenaires (Institut Mines-Telecom), avec plus de 60 ans d’expérience collective dans l’enseignement de la conception orientée objet. Vous apprendrez directement des meilleurs dans ce domaine, avec des conseils basés sur des recherches de pointe et des applications concrètes.
+
+Raison n°5 : Rejoignez une communauté active d’apprenants du monde entier
+
+Grâce au forum associé au MOOC, vous aurez l’opportunité d’échanger avec plus de 250 contributeurs non seulement sur les contenus du cours, mais également sur des thématiques plus larges liées au langage de programmation Pharo. Cet espace d’échange vous permettra de partager vos expériences et de rester informé des dernières actualités.
+
+
+#Luc
+
