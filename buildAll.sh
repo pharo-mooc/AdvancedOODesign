@@ -4,19 +4,15 @@ rm -fr __results
 mkdir __results
 
 buildSlide() {
-    f=$1
+	f=$(dirname $1)/$(basename $1 .md)
 	echo $f
-	pillar build pdf $f
-	echo _result/pdf/${f%.pillar}.pdf
-	cp _result/pdf/${f%.pillar}.pdf __results
+	pillar build pdf $f.md
+	echo _result/pdf/${f%.md}.pdf
+	cp _result/pdf/${f%.md}.pdf __results
 }
 
-for PILLAR_FILE in $(find Slides/Stable -name '*.pillar')
+for MD_FILE in $(find Slides/Stable -name '*.md')
 do
-	buildSlide $PILLAR_FILE
+	buildSlide $MD_FILE
 done
 
-# for PILLAR_FILE in $(find Slides/Lectures -name '*.pillar')
-# do
-# 	buildSlide $PILLAR_FILE
-# done

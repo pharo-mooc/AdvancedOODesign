@@ -3,8 +3,6 @@
 %rm -fr __results
 %mkdir __results
 
-./toMDConf.sh
-
 buildSlide() {
 	f=$(dirname $1)/$(basename $1 .pillar)
 	echo $f
@@ -14,7 +12,7 @@ buildSlide() {
 	cp _result/pdf/${f%}.pdf __results
 }
 
-for PILLAR_FILE in $(find Slides/Lectures -name '*.pillar')
+for PILLAR_FILE in $(find Slides/ExtraSlides -name '*.pillar')
 do
 	buildSlide $PILLAR_FILE
 done
