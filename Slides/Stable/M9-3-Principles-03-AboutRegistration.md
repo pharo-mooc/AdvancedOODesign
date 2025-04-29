@@ -36,7 +36,9 @@ Each class is able to:
 !> 
  
 # Remember... 
-An extensible design by iterating subclasses:<!columns|width=100 
+An extensible design by iterating subclasses:
+
+<!columns|width=100 
  
 <!column|width=70 
  
