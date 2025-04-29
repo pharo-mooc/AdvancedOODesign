@@ -12,21 +12,15 @@
 To support 
 ``` 
 (DieHandle new add: (Die faces: 4); yourself) 
-
 	+ (DieHandle new add: (Die faces: 6); yourself) 
 ``` 
 We defined `+` as 
 ``` 
 DieHandle >> + aDieHandle 
-
   | handle | 
-
   handle := DieHandle new. 
-
   self dice do: [ :each | handle addDie: each ]. 
-
   aDieHandle dice do: [ :each | handle addDie: each ]. 
-
   ^ handle 
 ``` 
  
@@ -34,15 +28,12 @@ DieHandle >> + aDieHandle
  
 ``` 
     DieHandle << #MemoDieHandle 
-
         ... 
 ``` 
  
 ``` 
 (MemoDieHandle new add: (Die faces: 4); yourself) 
-
    + (MemoDieHandle new add: (Die faces: 6); yourself) 
-
 > aDieHandle 
 ``` 
 - We get a `DieHandle` instance back and not a `MemoDieHandle` instance! 
@@ -52,43 +43,37 @@ DieHandle >> + aDieHandle
  
 ``` 
 DieHandle >> + aDieHandle 
-
   | handle | 
-
   handle := self handleClass new. 
-
   self dice do: [ :each | handle addDie: each ]. 
-
   aDieHandle dice do: [ :each | handle addDie: each ]. 
-
   ^ handle 
-``` 
- 
+```
+
 ``` 
 DieHandle >> handleClass 
-
   ^ DieHandle 
 ``` 
+
 A subclass may redefine `handleClass` 
 ``` 
 MemoDieHandle >> handleClass 
-
   ^ MemoDieHandle 
 ``` 
  
 # Solution 1: Creating a hook method 
- 
+
 ``` 
 (MemoDieHandle new add: (Die faces: 4); yourself) 
-
    + (MemoDieHandle new add: (Die faces: 6); yourself) 
-
 > aMemoDieHandle 
 ``` 
 We get an instance of the subclass! 
+
+
 # But we can do better! 
 <!columns|width=100 
- 
+
 <!column|width=70 
  
 **Pros:** 
@@ -100,41 +85,32 @@ We get an instance of the subclass!
 !> 
  
 <!column|width=30 
- 
- 
+
+
 !> 
- 
- 
+
 !> 
  
 # Solution 2 
  
 ``` 
 DieHandle >> + aDieHandle 
-
   | handle | 
-
   handle := self handleClass new. 
-
   self dice do: [ :each | handle addDie: each ]. 
-
   aDieHandle dice do: [ :each | handle addDie: each ]. 
-
   ^ handle 
 
- 
-
 DieHandle >> handleClass 
-
     ^ self class 
 ``` 
 - `self class` always returns the class of the receiver \(it works for subclasses too!\) 
 - We get instances of the same kind of the receiver 
- 
+
+
 # Summary 
 <!columns|width=100 
- 
- 
+
 <!column|width=58 
  
 - Do not hardcode class use 
@@ -146,11 +122,8 @@ DieHandle >> handleClass
  
 ``` 
 DieHandle >> + aDieHandle 
-
   | handle | 
-
   handle := DieHandle new. 
-
   ... 
 ``` 
  
@@ -173,15 +146,10 @@ DieHandle >> + aDieHandle
  
 ``` 
   ... 
-
   handle := self handleClass new. 
-
   ... 
-
  
-
 DieHandle >> handleClass 
-
     ^ DieHandle 
 ``` 
  
@@ -205,10 +173,9 @@ DieHandle >> handleClass
  
 ``` 
 DieHandle >> handleClass 
-
   ^ self class 
 ``` 
- 
+
 !> 
  
  
