@@ -105,16 +105,16 @@ code block'
 Here is an example of 
 code block
 ```
-' 
-``` 
- 
+
 # Microdown builder analysis 
+
 - Provides a high-level API to script Microdown text 
 - Avoid string manipulation! 
 - Let Microdown evolves without impacting users! 
- 
+
+
 # Seaside builder 
- 
+
 ``` 
 ScrapBook >> renderContentOn: html
 	html heading: 'Hello world'.
@@ -128,6 +128,8 @@ such as:'.
 		html listItem: 'And lots more...' ] 
 ``` 
 ![](figures/hello-world-list.png width=45) 
+
+
 # When to apply it 
 - The domain is structured and has some regularity in the object creation 
 - When we want one single entry point \(e.g., refactoring\) 
