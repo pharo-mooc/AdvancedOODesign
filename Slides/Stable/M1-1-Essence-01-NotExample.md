@@ -27,7 +27,7 @@ Propose an implementation of Not in a world where:
 - You have: `true`, `false` objects 
 - You only have objects and messages 
 How would you implement the message `not`? 
-``` 
+```
    false not 
 
    -> true 
@@ -66,17 +66,13 @@ The Pharo implementation uses three classes:
  
 ``` 
 False >> not 
-
    "Negation -- answer true since the receiver is false." 
-
    ^ true 
 ``` 
  
 ``` 
 True >> not 
-
    "Negation -- answer false since the receiver is true." 
-
    ^ false 
 ``` 
  
@@ -95,17 +91,12 @@ True >> not
  
 ``` 
 true | true -> true 
-
 true | false -> true 
-
 true | anything -> true 
 
- 
 
 false | true -> true 
-
 false | false -> false 
-
 false | anything -> anything 
 ``` 
  
@@ -113,9 +104,7 @@ false | anything -> anything
  
 ``` 
 Boolean >> | aBoolean 
-
    "Abstract method. Evaluating Or: Evaluate the argument. 
-
    Answer true if either the receiver or the argument is true." 
 
    self subclassResponsibility 
@@ -125,9 +114,7 @@ Boolean >> | aBoolean
  
 ``` 
 false | true -> true 
-
 false | false -> false 
-
 false | anything -> anything 
 ``` 
  
@@ -135,15 +122,12 @@ false | anything -> anything
  
 ``` 
 false | true -> true 
-
 false | false -> false 
-
 false | anything -> anything 
 ``` 
  
 ``` 
 False >> | aBoolean 
-
    "Evaluating Or -- answer with the argument, aBoolean." 
 
    ^ aBoolean 
@@ -153,9 +137,7 @@ False >> | aBoolean
  
 ``` 
 true | true -> true 
-
 true | false -> true 
-
 true | anything -> true 
 ``` 
  
@@ -163,15 +145,12 @@ true | anything -> true
  
 ``` 
 true | true -> true 
-
 true | false -> true 
-
 true | anything -> true 
 ``` 
  
 ``` 
 True >> | aBoolean 
-
    "Evaluating Or -- answer true since the receiver is true." 
 
    ^ true 
@@ -181,7 +160,6 @@ True >> | aBoolean
 The object `true` is the receiver of the message! 
 ``` 
 True>> | aBoolean 
-
    "Evaluating disjunction (Or) -- answer true since the receiver is true." 
 
    ^ true 
@@ -189,7 +167,6 @@ True>> | aBoolean
 So we can write it like the following: 
 ``` 
 True >> | aBoolean 
-
    "Evaluating disjunction (Or) -- answer true since the receiver is true." 
 
    ^ self 
