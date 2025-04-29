@@ -245,6 +245,27 @@ We should define `+` on `Float`
 >		^ addf(self, aFloat) 
 ``` 
  
+# Full version
+ 
+``` 
+	Integer >> + aNumber
+		^ aNumber sumWithInteger: self
+	Integer >> sumWithInteger: anInteger
+		^ addi(self , anInteger)
+
+	Integer >> sumWithFloat: aFloat
+		^ addf(aFloat, asFloat(self))
+
+	Float >> + aNumber
+		^ aNumber sumWithFloat: self
+	Float >> sumWithInteger: anInteger
+		^ addf(self, asFloat(anInteger))
+
+	Float >> sumWithFloat: aFloat
+		^ addf(self, aFloat) 
+``` 
+ 
+ 
 # Following computation with: 1.2 + 2 
  
 ``` 
@@ -332,7 +353,7 @@ It follows the same pattern
  
 # Supports (1/2) + (4/3) 
  
-``` 
+```
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
@@ -343,7 +364,7 @@ It follows the same pattern
  
 # Taking care of Integers and Floats as arguments 
  
-``` 
+```
 	Fraction >> + aNumber
 		^ aNumber sumWithFraction: self
 	Fraction >> sumWithFraction: aFrac
