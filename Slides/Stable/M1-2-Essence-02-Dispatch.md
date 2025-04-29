@@ -20,33 +20,19 @@
  
 ``` 
 MicAbstractBlock 
-
 		MicAbstractAnnotatedBlock 
-
 			    MicAnnotatedBlock 
-
 		MicContinuousMarkedBlock 
-
 			    MicCommentBlock 
-
 			    MicQuoteBlock 
-
 			    MicTableBlock 
-
 		MicListBlock 
-
 			    MicOrderedListBlock 
-
 			    MicUnorderedListBlock 
-
 		MicParagraphBlock 
-
 			    MacParagraphBlock 
-
 			    MacRawParagraphBlock 
-
 		MicRootBlock 
-
 		MicSectionBlock 
 ``` 
  
@@ -55,31 +41,19 @@ MicAbstractBlock
 <!column|width=55 
  
  
-``` 
+```
 	    MicSingleLineBlock 
-
 	        	MicAnchorBlock 
-
 	        	MicHeaderBlock 
-
 	        	MicHorizontalLineBlock 
-
 	    MicStartStopMarkupBlock 
-
 	    	    MicEnvironmentBlock 
-
 	    	    ... 
-
 	    	    MicMetaDataBlock 
-
 	    	    MicSameStartStopMarkupBlock 
-
 	    	    	    MicCodeBlock 
-
 	    	    	    MicMathBlock 
-
 	    	    	    	    MicMathBlockExtensionForTest 
-
 	    	    	    	    MicMultilineComment 
 ``` 
 Imagine a method that has one condition for each of these cases! 
@@ -106,7 +80,6 @@ aCollection := {a . bb . c}.
 ... 
 
 aCollection do: [ :e | 
-
     e operation] 
 ``` 
  
@@ -132,7 +105,6 @@ aCollection := {a . bb . c . aa}.
 ... 
 
 aCollection do: [ :e | 
-
     e operation] 
 ``` 
  
@@ -156,12 +128,14 @@ aCollection do: [ :e |
 - Could we have the same solution for `not` with a **single** `Boolean` class? 
 - No! We would have conditionals in the `not` and `or` methods! 
 ![](figures/Design-FatVsDispatchBoolean.pdf width=75) 
+
 # Classes play case distinct choices 
 - To activate the choice operator we must have **choices** 
 - A **class** represents a choice \(a case\) 
  
 # One class vs. a hierarchy 
 ![](figures/Design-FatVsDispatch.pdf width=75) 
+
 # Class hierarchy supports dynamic dispatch 
 - More **modular** 
 - No need to introduce **complex** conditions 
@@ -169,8 +143,10 @@ aCollection do: [ :e |
 - No need to **recompile existing** methods 
 - You only focus on one class at a time 
 ![](figures/Design-FatVsDispatch.pdf width=50) 
+
 # Message dispatch supports modularity 
 ![](figures/Design-FatVsDispatchWithPackages.pdf width=65)We can package different classes into different packages \(better modularity\) 
+
 # Limit impact of changes 
 ![](figures/Design-FatVsDispatchWithPackages2.pdf width=65) 
 - If a client receives instances of `D` \(in addition to classes of first package\), its code does not have to change 
