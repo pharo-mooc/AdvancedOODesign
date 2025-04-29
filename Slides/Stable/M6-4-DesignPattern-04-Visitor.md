@@ -11,23 +11,19 @@
 - Discussions on pros and cons 
  
 # Example: basic arithmetic expressions 
+
 Imagine a simple mathematical system 
+
+```
+1 + (3 * 2)
+```
+
 ``` 
 Plus
 	left: (Number value: 1)
 	right: (Times left: (Number value: 3) right: (Number value: 2)) 
-``` 
-Remarks: 
-- In this example, we reify everything 
-- Pharo supports class extension 
-  - So, no need to wrap numbers with our own `Number`, we could directly extend the Pharo core `Number` 
- 
-``` 
-Plus
-	left: 1
-	right: (Times left: 3 right: 2) 
-``` 
- 
+```
+
 # Basic arithmetic expressions as Composite 
 <!columns|width=100 
  
