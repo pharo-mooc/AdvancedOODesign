@@ -216,6 +216,6 @@ _ 'if for each object o1 of type S there is another object o2 of type T such tha
 - Subclassing/subtyping is not related to static typing 
  
 # Conclusion 
-- Subclassing is about  program specification **reuse** 
+- Subtyping is about  program specification **reuse** 
 - Subtyping is about creating **family of classes sharing common API** 
 - **Avoid** subclassing: it is a bad idea when you want subtyping 

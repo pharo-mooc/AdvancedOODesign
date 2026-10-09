@@ -5,7 +5,7 @@
 }
 
 # Lectures Web Site
-- [https://github.com/UnivLille-Meta/Miage23](https://github.com/UnivLille-Meta/Miage23)
+- [https://github.com/UnivLille-Meta/Miage-C3P](https://github.com/UnivLille-Meta/MiageC3P)
 - All slides are at [https://rmod-files.lille.inria.fr/?dir=DesignCoffeeClub/](https://rmod-files.lille.inria.fr/?dir=DesignCoffeeClub/)
 
 # From previous year students
@@ -115,21 +115,12 @@ Practice, learn, practice
   - read resources about the Mollasson
 
 # Grading
-- One presentation 
-  - Week 5
-- Two exams: week 7 and week 12
-- Work done as exemplified by Pull Requests
-- Short weekly report showing
-  - what has been done
-  - what's next
-  - actions to learn \(discord chat, watching videos\)
-  - actions to help others
-  - PR
+- Check ReadMe
 
 # Schedule
 Check Calendar file
 # Admin
-- [https://github.com/UnivLille-Meta/Miage23](https://github.com/UnivLille-Meta/Miage23) pour le cours
+- [https://github.com/UnivLille-Meta/Miage-C3P](https://github.com/UnivLille-Meta/Miage-C3P) pour le cours
 - All slides are at [https://rmod-files.lille.inria.fr/DesignCoffeeClub/2023-Miage/](https://rmod-files.lille.inria.fr/DesignCoffeeClub/2023-Miage/)
 
 # Resources
